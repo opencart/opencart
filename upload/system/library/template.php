@@ -32,15 +32,6 @@ class Template {
 	/**
 	 *
 	 *
-	 * @param    mixed $value
-	 */
-	public function addFilter($key, $value) {
-		$this->adaptor->addFilter($key, $value);
-	}
-
-	/**
-	 *
-	 *
 	 * @param    string $key
 	 * @param    mixed $value
 	 */
@@ -53,10 +44,11 @@ class Template {
 	 *
 	 * @param    string $template
 	 * @param    bool $cache
+	 * @param    string &$template_code (optional modified template code from pre-events)
 	 *
 	 * @return    string
 	 */
-	public function render($template, $cache = false) {
-		return $this->adaptor->render($template, $cache);
+	public function render($template, $cache = false, &$template_code=null) {
+		return $this->adaptor->render($template, $cache, $template_code);
 	}
 }

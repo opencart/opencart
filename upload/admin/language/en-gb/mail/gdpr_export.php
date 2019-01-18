@@ -19,7 +19,6 @@ $_['text_addresses']  = 'Addresses';
 $_['text_address']    = 'Address';
 $_['text_history']    = 'Login History';
 $_['text_ip']         = 'IP';
-$_['text_country']    = 'Country';
 $_['text_date_added'] = 'Date Added';
 
 // Entry

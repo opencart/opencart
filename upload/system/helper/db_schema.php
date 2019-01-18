@@ -2312,13 +2312,18 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'code',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'email',
 				'type' => 'varchar(96)',
 				'not_null' => true
 			),
 			array(
-				'name' => 'status',
-				'type' => 'tinyint(1)',
+				'name' => 'action',
+				'type' => 'varchar(6)',
 				'not_null' => true
 			),
 			array(
@@ -4034,6 +4039,11 @@ function db_schema() {
 				'auto_increment' => true
 			),
 			array(
+				'name' => 'variant_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'model',
 				'type' => 'varchar(64)',
 				'not_null' => true
@@ -4071,6 +4081,11 @@ function db_schema() {
 			array(
 				'name' => 'location',
 				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'variant',
+				'type' => 'text',
 				'not_null' => true
 			),
 			array(

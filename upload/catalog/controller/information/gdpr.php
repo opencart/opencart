@@ -83,7 +83,7 @@ class ControllerInformationGdpr extends Controller {
 
 			$this->load->model('account/gdpr');
 
-			$results = $this->model_account_gdpr->getGdprByEmail($email);
+			$results = $this->model_account_gdpr->getGdprsByEmail($email);
 
 			foreach ($results as $result) {
 				if ($result['action'] == $action) {
@@ -116,7 +116,7 @@ class ControllerInformationGdpr extends Controller {
 		//$gdpr_info = $this->model_account_gdpr->getGdprByCode($code);
 
 		//if ($gdpr_info) {
-			$this->load->language('account/gdpr');
+			$this->load->language('information/gdpr');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 

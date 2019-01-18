@@ -1,5 +1,5 @@
 <?php
-/* BBCode Converter that converts BBCode writen in ckeditor */
+/* BBCode Converter that converts BBCode written for OpenCart */
 function bbcode_decode($string) {
 	$pattern = array();
 	$replace = array();

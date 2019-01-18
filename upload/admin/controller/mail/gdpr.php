@@ -1,5 +1,23 @@
 <?php
 class ControllerMailGdpr extends Controller {
+	// admin/model/customer/gdpr/editStatus
+	public function index(&$route, &$args, &$output) {
+		$gdpr_info = $this->model_customer_gdpr->getGdpr($args[0]);
+
+		if ($gdpr_info) {
+			// If action equals remove than we send approve email
+			if (($gdpr_info['action'] == 'remove') && $args[1] == '1') {
+				$this->approve();
+			}elseif (($gdpr_info['action'] == 'export') && $args[1] == '2') {
+				$this->export();
+			}
+
+			if ($args[1] == '-1') {
+				$this->deny();
+			}
+		}
+	}
+
 	// admin/model/customer/gdpr/approveGdpr
 	public function approve(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');
@@ -7,7 +25,20 @@ class ControllerMailGdpr extends Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->language('mail/gdpr_approve');
+			// Send the email in the correct language
+			$this->load->model('localisation/language');
+
+			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
+
+			if ($language_info) {
+				$language_code = $language_info['code'];
+			} else {
+				$language_code = $this->config->get('config_language');
+			}
+
+			$language = new Language($language_code);
+			$language->load($language_code);
+			$language->load('mail/gdpr_approve');
 
 			if ($this->config->get('config_logo')) {
 				$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
@@ -15,9 +46,9 @@ class ControllerMailGdpr extends Controller {
 				$data['logo'] = '';
 			}
 
-			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
-			$data['text_limit'] = sprintf($this->language->get('text_limit'), $this->config->get('config_gdpr_limit'));
-			$data['text_a'] = sprintf($this->language->get('text_a'), $this->config->get('config_gdpr_limit'));
+			$data['text_hello'] = sprintf($language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+			$data['text_limit'] = sprintf($language->get('text_limit'), $this->config->get('config_gdpr_limit'));
+			$data['text_a'] = sprintf($language->get('text_a'), $this->config->get('config_gdpr_limit'));
 
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -32,7 +63,7 @@ class ControllerMailGdpr extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
 			$mail->setHtml($this->load->view('mail/gdpr_approve', $data));
 			$mail->send();
 		}
@@ -45,7 +76,20 @@ class ControllerMailGdpr extends Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->language('mail/gdpr_deny');
+			// Send the email in the correct language
+			$this->load->model('localisation/language');
+
+			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
+
+			if ($language_info) {
+				$language_code = $language_info['code'];
+			} else {
+				$language_code = $this->config->get('config_language');
+			}
+
+			$language = new Language($language_code);
+			$language->load($language_code);
+			$language->load('mail/gdpr_deny');
 
 			if ($this->config->get('config_logo')) {
 				$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
@@ -53,7 +97,7 @@ class ControllerMailGdpr extends Controller {
 				$data['logo'] = '';
 			}
 
-			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+			$data['text_hello'] = sprintf($language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
 
 			$this->load->model('setting/store');
 
@@ -78,7 +122,7 @@ class ControllerMailGdpr extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
 			$mail->setHtml($this->load->view('mail/gdpr_deny', $data));
 			$mail->send();
 		}
@@ -91,7 +135,20 @@ class ControllerMailGdpr extends Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info && $this->request->get['route'] == '') {
-			$this->load->language('mail/gdpr_delete');
+			// Send the email in the correct language
+			$this->load->model('localisation/language');
+
+			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
+
+			if ($language_info) {
+				$language_code = $language_info['code'];
+			} else {
+				$language_code = $this->config->get('config_language');
+			}
+
+			$language = new Language($language_code);
+			$language->load($language_code);
+			$language->load('mail/gdpr_delete');
 
 			if ($this->config->get('config_logo')) {
 				$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
@@ -99,7 +156,7 @@ class ControllerMailGdpr extends Controller {
 				$data['logo'] = '';
 			}
 
-			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+			$data['text_hello'] = sprintf($language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
 
 			$this->load->model('setting/store');
 
@@ -124,24 +181,36 @@ class ControllerMailGdpr extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8'));
 			$mail->setHtml($this->load->view('mail/gdpr_delete', $data));
 			$mail->send();
 		}
 	}
 
-
 	// catalog/model/customer/gdpr/addGdpr
 	//public function data(&$route, &$args, &$output) {
-	public function export() {
+	public function export(&$route, &$args, &$output) {
 		$args[0] = 3;
 
-		$this->load->model('account/customer');
+		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_account_customer->getCustomer($args[0]);
+		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->language('mail/gdpr_export');
+			// Send the email in the correct language
+			$this->load->model('localisation/language');
+
+			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
+
+			if ($language_info) {
+				$language_code = $language_info['code'];
+			} else {
+				$language_code = $this->config->get('config_language');
+			}
+
+			$language = new Language($language_code);
+			$language->load($language_code);
+			$language->load('mail/gdpr_export');
 
 			if ($this->config->get('config_logo')) {
 				$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
@@ -149,19 +218,19 @@ class ControllerMailGdpr extends Controller {
 				$data['logo'] = '';
 			}
 
-			$data['text_hello'] = sprintf($this->language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+			$data['text_hello'] = sprintf($language->get('text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
 
-			$data['firstname'] = $this->customer->getFirstname();
-			$data['lastname'] = $this->customer->getFirstname();
+			$data['firstname'] = $this->customer->getFirstName();
+			$data['lastname'] = $this->customer->getLastName();
 			$data['email'] = $this->customer->getEmail();
 			$data['telephone'] = $this->customer->getTelephone();
 
 			// Addresses
 			$data['addresses'] = array();
 
-			$this->load->model('account/address');
+			$this->load->model('customer/customer');
 
-			$results = $this->model_account_address->getAddresses($args[0]);
+			$results = $this->model_customer_customer->getAddresses($customer_id);
 
 			foreach ($results as $result) {
 				$address = array(
@@ -181,20 +250,22 @@ class ControllerMailGdpr extends Controller {
 			}
 
 			// Order Addresses
-			$this->load->model('account/order');
+			$this->load->model('sale/order');
 
-			$results = $this->model_account_order->getOrders($args[0]);
+			$results = $this->model_sale_order->getOrders($customer_id);
 
 			foreach ($results as $result) {
+				$order_info = $this->model_sale_order->getOrder($result['order_id']);
+
 				$address = array(
-					'firstaname' => $result['payment_firstaname'],
-					'lastname'   => $result['payment_lastname'],
-					'address_1'  => $result['payment_address_1'],
-					'address_2'  => $result['payment_address_2'],
-					'city'       => $result['payment_city'],
-					'postcode'   => $result['payment_postcode'],
-					'country'    => $result['payment_country'],
-					'zone'       => $result['payment_zone']
+					'firstname'  => $order_info['payment_firstname'],
+					'lastname'   => $order_info['payment_lastname'],
+					'address_1'  => $order_info['payment_address_1'],
+					'address_2'  => $order_info['payment_address_2'],
+					'city'       => $order_info['payment_city'],
+					'postcode'   => $order_info['payment_postcode'],
+					'country'    => $order_info['payment_country'],
+					'zone'       => $order_info['payment_zone']
 				);
 
 				if (!in_array($address, $data['addresses'])) {
@@ -202,14 +273,14 @@ class ControllerMailGdpr extends Controller {
 				}
 
 				$address = array(
-					'firstname' => $result['shipping_firstname'],
-					'lastname'  => $result['shipping_lastname'],
-					'address_1' => $result['shipping_address_1'],
-					'address_2' => $result['shipping_address_2'],
-					'city'      => $result['shipping_city'],
-					'postcode'  => $result['shipping_postcode'],
-					'country'   => $result['shipping_country'],
-					'zone'      => $result['shipping_zone']
+					'firstname' => $order_info['shipping_firstname'],
+					'lastname'  => $order_info['shipping_lastname'],
+					'address_1' => $order_info['shipping_address_1'],
+					'address_2' => $order_info['shipping_address_2'],
+					'city'      => $order_info['shipping_city'],
+					'postcode'  => $order_info['shipping_postcode'],
+					'country'   => $order_info['shipping_country'],
+					'zone'      => $order_info['shipping_zone']
 				);
 
 				if (!in_array($address, $data['addresses'])) {
@@ -220,15 +291,14 @@ class ControllerMailGdpr extends Controller {
 			// Ip's
 			$data['ips'] = array();
 
-			$this->load->model('account/customer');
+			$this->load->model('customer/customer');
 
-			$results = $this->model_account_customer->getIps($args[0]);
+			$results = $this->model_customer_customer->getIps($customer_id);
 
 			foreach ($results as $result) {
 				$data['ips'][] = array(
 					'ip'         => $result['ip'],
-					'country'    => $result['country'],
-					'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+					'date_added' => date($language->get('datetime_format'), strtotime($result['date_added']))
 				);
 			}
 
@@ -250,9 +320,10 @@ class ControllerMailGdpr extends Controller {
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+			$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
 			$mail->setHtml($this->load->view('mail/gdpr', $data));
 			$mail->send();
 			*/
 		}
+	}
 }

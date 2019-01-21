@@ -376,7 +376,7 @@ class ControllerCatalogProduct extends Controller {
 				'quantity'   => $result['quantity'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['variant_id'] ? '&variant_id=' . $result['variant_id'] : ''). $url),
-				'variant'    => $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&variant_id=' . $result['product_id'] . $url)
+				'variant'    => ($result['variant_id'] ? $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&variant_id=' . $result['product_id'] . $url) : '')
 			);
 		}
 
@@ -1006,16 +1006,16 @@ class ControllerCatalogProduct extends Controller {
 					if ($option_value_info) {
 						$product_option_value_data[] = array(
 							'product_option_value_id' => $product_option_value['product_option_value_id'],
-							'option_value_id' => $product_option_value['option_value_id'],
-							'name' => $option_value_info['name'],
-							'quantity' => $product_option_value['quantity'],
-							'subtract' => $product_option_value['subtract'],
-							'price' => $product_option_value['price'],
-							'price_prefix' => $product_option_value['price_prefix'],
-							'points' => $product_option_value['points'],
-							'points_prefix' => $product_option_value['points_prefix'],
-							'weight' => $product_option_value['weight'],
-							'weight_prefix' => $product_option_value['weight_prefix']
+							'option_value_id'         => $product_option_value['option_value_id'],
+							'name'                    => $option_value_info['name'],
+							'quantity'                => $product_option_value['quantity'],
+							'subtract'                => $product_option_value['subtract'],
+							'price'                   => $product_option_value['price'],
+							'price_prefix'            => $product_option_value['price_prefix'],
+							'points'                  => $product_option_value['points'],
+							'points_prefix'           => $product_option_value['points_prefix'],
+							'weight'                  => $product_option_value['weight'],
+							'weight_prefix'           => $product_option_value['weight_prefix']
 						);
 					}
 				}

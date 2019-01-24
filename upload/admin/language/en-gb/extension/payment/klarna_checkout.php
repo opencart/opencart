@@ -163,7 +163,7 @@ $_['button_process_settlement']			 = 'Process Settlement Files';
 // Error
 $_['error_warning']						 = 'Warning: Please check the form carefully for errors!';
 $_['error_php_version']					 = 'Minimum version of PHP 5.4.0 is required!';
-$_['error_ssl']							 = 'You must enable "Use SSL" in the store settings and have an SSL certificate installed!';
+$_['error_ssl']							 = 'You must use SSL and have an SSL certificate installed!';
 $_['error_account_minimum']				 = 'Please add at least one account.';
 $_['error_locale']						 = 'Please enter a valid locale.';
 $_['error_account_currency']			 = 'Account list contains one or more duplicate currencies.';

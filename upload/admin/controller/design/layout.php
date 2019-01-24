@@ -6,7 +6,7 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('design/layout');
 
 		$this->getList();
@@ -38,7 +38,7 @@ class ControllerDesignLayout extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerDesignLayout extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerDesignLayout extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerDesignLayout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('design/layout/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('design/layout/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('design/layout/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/layout/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['layouts'] = array();
 
@@ -175,7 +175,7 @@ class ControllerDesignLayout extends Controller {
 			$data['layouts'][] = array(
 				'layout_id' => $result['layout_id'],
 				'name'      => $result['name'],
-				'edit'      => $this->url->link('design/layout/edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url, true)
+				'edit'      => $this->url->link('design/layout/edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)
 			);
 		}
 
@@ -211,7 +211,7 @@ class ControllerDesignLayout extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url, true);
+		$data['sort_name'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -223,13 +223,12 @@ class ControllerDesignLayout extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $layout_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $layout_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($layout_total - $this->config->get('config_limit_admin'))) ? $layout_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $layout_total, ceil($layout_total / $this->config->get('config_limit_admin')));
 
@@ -276,21 +275,21 @@ class ControllerDesignLayout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['layout_id'])) {
-			$data['action'] = $this->url->link('design/layout/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('design/layout/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/layout/edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id'] . $url, true);
+			$data['action'] = $this->url->link('design/layout/edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -312,7 +311,7 @@ class ControllerDesignLayout extends Controller {
 
 		if (isset($this->request->post['layout_route'])) {
 			$data['layout_routes'] = $this->request->post['layout_route'];
-		} elseif (isset($this->request->get['layout_id'])) {
+		} elseif (!empty($layout_info)) {
 			$data['layout_routes'] = $this->model_design_layout->getLayoutRoutes($this->request->get['layout_id']);
 		} else {
 			$data['layout_routes'] = array();
@@ -323,13 +322,13 @@ class ControllerDesignLayout extends Controller {
 		$this->load->model('setting/module');
 
 		$data['extensions'] = array();
-		
+
 		// Get a list of installed modules
 		$extensions = $this->model_setting_extension->getInstalled('module');
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
-			$this->language->load('extension/module/' . $code, 'extension');
+			$this->load->language('extension/module/' . $code, 'extension');
 
 			$module_data = array();
 
@@ -354,43 +353,43 @@ class ControllerDesignLayout extends Controller {
 		// Modules layout
 		if (isset($this->request->post['layout_module'])) {
 			$layout_modules = $this->request->post['layout_module'];
-		} elseif (isset($this->request->get['layout_id'])) {
+		} elseif (!empty($layout_info)) {
 			$layout_modules = $this->model_design_layout->getLayoutModules($this->request->get['layout_id']);
 		} else {
 			$layout_modules = array();
 		}
 
 		$data['layout_modules'] = array();
-		
+
 		// Add all the modules which have multiple settings for each module
 		foreach ($layout_modules as $layout_module) {
 			$part = explode('.', $layout_module['code']);
-		
-			$this->language->load('extension/module/' . $part[0]);
+
+			$this->load->language('extension/module/' . $part[0]);
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
 					'name'       => strip_tags($this->language->get('heading_title')),
 					'code'       => $layout_module['code'],
-					'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'], true),
 					'position'   => $layout_module['position'],
-					'sort_order' => $layout_module['sort_order']
+					'sort_order' => $layout_module['sort_order'],
+					'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'])
 				);
 			} else {
 				$module_info = $this->model_setting_module->getModule($part[1]);
-				
+
 				if ($module_info) {
 					$data['layout_modules'][] = array(
 						'name'       => strip_tags($module_info['name']),
 						'code'       => $layout_module['code'],
-						'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[1], true),
 						'position'   => $layout_module['position'],
-						'sort_order' => $layout_module['sort_order']
+						'sort_order' => $layout_module['sort_order'],
+						'edit'   	 => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[1])
 					);
-				}				
+				}
 			}
-		}		
-		
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

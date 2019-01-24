@@ -19,7 +19,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['button_delete_card'] = $this->language->get('button_delete_card');
 
-		$data['action'] = $this->url->link('extension/payment/sagepay_server/send', '', true);
+		$data['action'] = $this->url->link('extension/payment/sagepay_server/send', 'language=' . $this->config->get('config_language'));
 
 		if ($this->config->get('payment_sagepay_server_card') == '1') {
 			$data['sagepay_server_card'] = true;
@@ -39,7 +39,6 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 	}
 
 	public function send() {
-
 		$payment_data = array();
 
 		if ($this->config->get('payment_sagepay_server_test') == 'live') {
@@ -62,12 +61,12 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
-		$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
+		$payment_data['Vendor'] = strtolower($this->config->get('payment_sagepay_server_vendor'));
 		$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'T' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
-		$payment_data['NotificationURL'] = $this->url->link('extension/payment/sagepay_server/callback', '', true);
+		$payment_data['NotificationURL'] = $this->url->link('extension/payment/sagepay_server/callback', 'language=' . $this->config->get('config_language'));
 		$payment_data['TxType'] = $this->config->get('payment_sagepay_server_transaction');
 
 		$payment_data['BillingSurname'] = substr($order_info['payment_lastname'], 0, 20);
@@ -142,12 +141,12 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		}
 
 		$order_totals = $this->model_checkout_order->getOrderTotals($this->session->data['order_id']);
-		
+
 		foreach ($order_totals as $total) {
 			$str_basket .= ":" . str_replace(":", " ", $total['title']) . ":::::" . $this->currency->format($total['value'], $order_info['currency_code'], false, false);
 			$cart_rows++;
 		}
-		
+
 		$str_basket = $cart_rows . $str_basket;
 
 		$payment_data['Basket'] = $str_basket;
@@ -201,8 +200,8 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/sagepay_server');
 
-		$success_page = $this->url->link('extension/payment/sagepay_server/success', '', true);
-		$error_page = $this->url->link('extension/payment/sagepay_server/failure', '', true);
+		$success_page = $this->url->link('extension/payment/sagepay_server/success', 'language=' . $this->config->get('config_language'));
+		$error_page = $this->url->link('extension/payment/sagepay_server/failure', 'language=' . $this->config->get('config_language'));
 		$end_ln = chr(13) . chr(10);
 
 		if (isset($this->request->post['VendorTxCode'])) {
@@ -363,7 +362,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 		 * * component that is included to create our own signature to compare with **
 		 * * the contents of the VPSSignature field in the POST.  Check the Sage Pay Server protocol **
 		 * * if you need clarification on this process * */
-		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . $str_tx_auth_no . $this->config->get('payment_sagepay_server_vendor') . urldecode($str_avs_cv2) . $str_security_key
+		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . $str_tx_auth_no . strtolower($this->config->get('payment_sagepay_server_vendor')) . urldecode($str_avs_cv2) . $str_security_key
 				. $str_address_result . $str_postcode_result . $str_cv2_result . $str_gift_aid . $str_3d_secure_status . $str_cavv
 				. $str_address_status . $str_payer_status . $str_card_type . $str_last_4_digits . $str_decline_code . $str_expiry_date . $str_bank_auth_code;
 
@@ -442,9 +441,9 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 				}
 			}
 
-			$this->response->redirect($this->url->link('checkout/success', '', true));
+			$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 		} else {
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 	}
 
@@ -453,7 +452,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 		$this->session->data['error'] = $this->language->get('text_generic_error');
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', true));
+		$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 	}
 
 	public function delete() {
@@ -470,7 +469,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
 			$payment_data['VPSProtocol'] = '3.00';
-			$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
+			$payment_data['Vendor'] = strtolower($this->config->get('payment_sagepay_server_vendor'));
 			$payment_data['TxType'] = 'REMOVETOKEN';
 			$payment_data['Token'] = $card['token'];
 

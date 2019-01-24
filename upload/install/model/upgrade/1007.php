@@ -11,13 +11,13 @@ class ModelUpgrade1007 extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'theme'");
 		
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'theme', `code` = 'theme_default'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'theme', `code` = 'default'");
 			
 			// Setting
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_directory', `value` = 'default'");
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_status', `value` = '1'");		
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_status', `value` = '1'");
 		}
-				
+		
 		// Setting
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_product_limit' WHERE `code` = 'config' AND `key` = 'config_product_limit'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_product_description_length' WHERE `code` = 'config' AND `key` = 'config_product_description_length'");

@@ -34,14 +34,14 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 						
 						$output .= '<item>';
 						$output .= '<title><![CDATA[' . $product['name'] . ']]></title>';
-						$output .= '<link>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</link>';
+						$output .= '<link>' . $this->url->link('product/product', 'language=' . $this->config->get('config_language') .  '&product_id=' . $product['product_id']) . '</link>';
 						$output .= '<description><![CDATA[' . strip_tags(html_entity_decode($product['description'], ENT_QUOTES, 'UTF-8')) . ']]></description>';
 						$output .= '<g:brand><![CDATA[' . html_entity_decode($product['manufacturer'], ENT_QUOTES, 'UTF-8') . ']]></g:brand>';
 						$output .= '<g:condition>new</g:condition>';
 						$output .= '<g:id>' . $product['product_id'] . '</g:id>';
 
 						if ($product['image']) {
-							$output .= '  <g:image_link>' . $this->model_tool_image->resize($product['image'], 500, 500) . '</g:image_link>';
+							$output .= '  <g:image_link>' .  htmlspecialchars($this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), 500, 500), ENT_COMPAT | ENT_XML1) . '</g:image_link>';
 						} else {
 							$output .= '  <g:image_link></g:image_link>';
 						}

@@ -9,12 +9,12 @@ class ControllerReportReport extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -36,13 +36,13 @@ class ControllerReportReport extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
-				$this->language->load('extension/report/' . $code, 'extension');
+				$this->load->language('extension/report/' . $code, 'extension');
 				
 				$data['reports'][] = array(
 					'text'       => $this->language->get('extension')->get('heading_title'),
 					'code'       => $code,
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code, true)
+					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code)
 				);
 			}
 		}

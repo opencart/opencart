@@ -122,12 +122,12 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 					$json['ACSURL'] = (string)$verify_3ds->url;
 					$json['MD'] = $md;
 					$json['PaReq'] = (string)$verify_3ds->pareq;
-					$json['TermUrl'] = $this->url->link('extension/payment/globalpay_remote/acsReturn', '', true);
+					$json['TermUrl'] = $this->url->link('extension/payment/globalpay_remote/acsReturn', 'language=' . $this->config->get('config_language'));
 
 					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
 					$this->response->output();
-					die();
+-					die();
 				}
 
 				// Cardholder Not Enrolled. Shift in liability. ECI = 6
@@ -152,7 +152,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 						$this->response->addHeader('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
 						$this->response->output();
-						die();
+-						die();
 					} else {
 						$eci_ref = 2;
 						$xid = '';
@@ -174,8 +174,6 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 						$this->response->addHeader('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
-						$this->response->output();
-						die();
 					} else {
 						$eci_ref = 3;
 						if ($this->request->post['cc_type'] == 'mc') {
@@ -211,7 +209,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		if ($capture_result->result != '00') {
 			$json['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';
 		} else {
-			$json['success'] = $this->url->link('checkout/success');
+			$json['success'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -296,7 +294,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 					$this->session->data['error'] = $this->language->get('error_3d_unsuccessful');
 
-					$this->response->redirect($this->url->link('checkout/checkout', '', true));
+					$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 					die();
 				}
 			}
@@ -324,12 +322,12 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			if ($capture_result->result != '00') {
 				$this->session->data['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';
 
-				$this->response->redirect($this->url->link('checkout/checkout', '', true));
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			} else {
-				$this->response->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 	}
 }

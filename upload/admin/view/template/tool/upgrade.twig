@@ -1,0 +1,207 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div id="collapse">
+      <div class="card">
+        <div class="card-header" data-toggle="collapse" data-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
+        <div id="collapse-version" data-parent="#collapse" class="collapse show">
+          <div class="card-body">
+            <fieldset>
+              {% if error_warning %}
+                <legend class="text-danger" id="btn-version">{{ text_update }}</legend>
+              {% else %}
+                <legend id="btn-version">{{ text_update }}</legend>
+              {% endif %}
+            </fieldset>
+            <div class="alert alert-info">
+              <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
+              <ol>
+                <li>{{ text_make }}
+                  <br/>
+                  {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
+                  <br/>
+                  {{ text_cloud }} <a href="{{ opencart_account }}" target="_blank">{{ text_here }}</a>.
+                </li>
+                <li>{{ text_check }}</li>
+                <li>{{ text_better }}</li>
+              </ol>
+            </div>
+            <fieldset>
+              <legend id="version">{{ text_change }}</legend>
+              <textarea wrap="off" rows="10" readonly class="form-control">{{ log }}</textarea>
+            </fieldset>
+            <br/>
+            <div class="text-right"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
+        <div id="collapse-compatible" data-parent="#collapse" class="collapse">
+          <div class="card-body">
+            <div class="alert alert-warning">
+              {{ text_before }}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="text-left">{{ column_name }}</td>
+                  <td class="text-center">{{ column_compatible }}</td>
+                  <td class="text-center">{{ column_available }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if extensions %}
+                  {% for extension in extensions %}
+                    <tr>
+                      <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
+                      <td class="text-center">{% if extension.compatible %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
+                      <td class="text-center">{% if extension.available %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td class="text-center" colspan="3">{{ text_no_results }}</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+            <br/>
+            <div class="text-right"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
+        <div id="collapse-upgrade" data-parent="#collapse" class="collapse">
+          <div class="card-body">
+            <fieldset>
+              <legend>{{ text_progress }}</legend>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
+                <div class="col-sm-10">
+                  <div id="progress-download" class="progress">
+                    <div id="progress-bar" class="progress-bar"></div>
+                  </div>
+                  <div id="progress-text"></div>
+                </div>
+              </div>
+              <div class="col-sm-10 offset-sm-2">
+                <div class="form-group row">
+                  {% if upgrade %}
+                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-play"></i> {{ button_start }}</button>
+                  {% else %}
+                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fas fa-play"></i> {{ button_start }}</button>
+                  {% endif %}
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>{{ text_log }}</legend>
+              <textarea id="log" wrap="off" rows="10" readonly class="form-control"></textarea>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-upgrade').on('click', function() {
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	$('#progress-text').html('{{ text_download }}');
+	$('#log').append('{{ text_download }}' + "\n");
+
+	$.ajax({
+		url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-upgrade').button('loading');
+		},
+		success: function(json) {
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
+				$('#log').append(json['error'] + "\n");
+			}
+
+			if (json['text']) {
+				$('#progress-bar').css('width', '20%');
+				$('#progress-text').html(json['text']);
+				$('#log').append(json['text'] + "\n");
+			}
+
+			if (json['next']) {
+				next(json['next'], 1);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			$('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+function next(url, i) {
+	i = i + 1;
+
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(json) {
+			$('#progress-bar').css('width', (i * 20) + '%');
+
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
+				$('#log').append(json['error'] + "\n");
+
+				$('#button-upgrade').button('reset');
+			}
+
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+				$('#log').append(json['success'] + "\n");
+
+				$('#button-upgrade').button('reset');
+			}
+
+			if (json['text']) {
+				$('#progress-text').html(json['text']);
+				$('#log').append(json['text'] + "\n");
+			}
+
+			if (json['next']) {
+				next(json['next'], i);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			$('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+
+//--></script>
+{{ footer }}

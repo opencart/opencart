@@ -59,10 +59,10 @@ class ControllerExtensionPaymentNochex extends Controller {
 		$data['email_address'] = $order_info['email'];
 		$data['customer_phone_number']= $order_info['telephone'];
 		$data['test'] = $this->config->get('payment_nochex_test');
-		$data['success_url'] = $this->url->link('checkout/success', '', true);
-		$data['cancel_url'] = $this->url->link('checkout/payment', '', true);
-		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'method=decline', true);
-		$data['callback_url'] = $this->url->link('extension/payment/nochex/callback', 'order=' . $this->session->data['order_id'], true);
+		$data['success_url'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+		$data['cancel_url'] = $this->url->link('checkout/payment', 'language=' . $this->config->get('config_language'));
+		$data['declined_url'] = $this->url->link('extension/payment/nochex/callback', 'language=' . $this->config->get('config_language') . '&method=decline');
+		$data['callback_url'] = $this->url->link('extension/payment/nochex/callback', 'language=' . $this->config->get('config_language') . '&order=' . $this->session->data['order_id']);
 
 		return $this->load->view('extension/payment/nochex', $data);
 	}
@@ -73,7 +73,7 @@ class ControllerExtensionPaymentNochex extends Controller {
 		if (isset($this->request->get['method']) && $this->request->get['method'] == 'decline') {
 			$this->session->data['error'] = $this->language->get('error_declined');
 
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		if (isset($this->request->post['order_id'])) {
@@ -89,7 +89,7 @@ class ControllerExtensionPaymentNochex extends Controller {
 		if (!$order_info) {
 			$this->session->data['error'] = $this->language->get('error_no_order');
 
-			$this->response->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Fraud Verification Step.
@@ -120,6 +120,6 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		// Since it returned, the customer should see success.
 		// It's up to the store owner to manually verify payment.
-		$this->response->redirect($this->url->link('checkout/success', '', true));
+		$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 	}
 }

@@ -1,10 +1,9 @@
 <?php
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
-
+	private $version = '3.0';
 	private $error = array();
 
 	public function index() {
-
 		$this->load->language('extension/payment/amazon_login_pay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -19,7 +18,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			if (isset($this->request->post['language_reload'])) {
-				$this->response->redirect($this->url->link('payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true));
+				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay', 'user_token=' . $this->session->data['user_token'], true));
 			} else {
 				$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
 			}
@@ -72,6 +71,10 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		} else {
 			$data['error_curreny'] = '';
 		}
+
+		$data['heading_title'] = $this->language->get('heading_title') . ' ' . $this->version;
+
+		$data['https_catalog'] = HTTPS_CATALOG;
 
 		$data['breadcrumbs'] = array();
 

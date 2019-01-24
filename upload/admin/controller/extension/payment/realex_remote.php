@@ -14,7 +14,7 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -39,21 +39,21 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/realex_remote', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/realex_remote', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/payment/realex_remote', 'user_token=' . $this->session->data['user_token'], true);
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['action'] = $this->url->link('extension/payment/realex_remote', 'user_token=' . $this->session->data['user_token']);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_realex_remote_merchant_id'])) {
 			$data['payment_realex_remote_merchant_id'] = $this->request->post['payment_realex_remote_merchant_id'];
@@ -213,9 +213,9 @@ class ControllerExtensionPaymentRealexRemote extends Controller {
 
 				$data['auto_settle'] = $realex_order['settle_type'];
 
-				$data['order_id'] = $this->request->get['order_id'];
-				
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
+
+				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/realex_remote_order', $data);
 			}

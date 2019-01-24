@@ -30,9 +30,9 @@ class ControllerExtensionModulePPBraintreeButton extends Controller {
 				 * selected a shipping option yet. The user does not see this amount during checkout but the figure
 				 * may be too low if buying a low value item and shipping is more than 50% of the item value.
 				 */
+				$data['action'] = $this->url->link('extension/payment/pp_braintree/expressConfirm', 'language=' . $this->config->get('config_language'));
 				$data['auth_total'] = $this->cart->getTotal() * 1.5;
 				$data['currency_code'] = $this->session->data['currency'];
-				$data['action'] = $this->url->link('extension/payment/pp_braintree/expressConfirm', '', true);
 
 				return $this->load->view('extension/module/pp_braintree_button', $data);
 			}

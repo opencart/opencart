@@ -4,6 +4,7 @@ $_['heading_title']     = 'Sales Report';
 
 // Text
 $_['text_extension']    = 'Extensions';
+$_['text_edit']         = 'Edit Sales Report';
 $_['text_success']      = 'Success: You have modified sales report!';
 $_['text_filter']       = 'Filter';
 $_['text_year']         = 'Years';

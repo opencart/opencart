@@ -11,8 +11,8 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 
 		$xml  = '<request>';
 		$xml .= '	<version>1.2</version>';
-		$xml .= '	<result_url>' . $this->url->link('checkout/success', '', true) . '</result_url>';
-		$xml .= '	<server_url>' . $this->url->link('extension/payment/liqpay/callback', '', true) . '</server_url>';
+		$xml .= '	<result_url>' . $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')) . '</result_url>';
+		$xml .= '	<server_url>' . $this->url->link('extension/payment/liqpay/callback', 'language=' . $this->config->get('config_language')) . '</server_url>';
 		$xml .= '	<merchant_id>' . $this->config->get('payment_liqpay_merchant') . '</merchant_id>';
 		$xml .= '	<order_id>' . $this->session->data['order_id'] . '</order_id>';
 		$xml .= '	<amount>' . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . '</amount>';

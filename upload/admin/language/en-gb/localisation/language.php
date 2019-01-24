@@ -27,8 +27,8 @@ $_['help_status']       = 'Hide/Show it in language dropdown';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify languages!';
-$_['error_exists']      = 'Warning: You added before the language!';
-$_['error_name']        = 'Language Name must be between 3 and 32 characters!';
+$_['error_exists']      = 'Warning: You have already added this language!';
+$_['error_name']        = 'Language Name must be between 1 and 32 characters!';
 $_['error_code']        = 'Language Code must at least 2 characters!';
 $_['error_locale']      = 'Locale required!';
 $_['error_default']     = 'Warning: This language cannot be deleted as it is currently assigned as the default store language!';

@@ -8,16 +8,16 @@
     </thead>
     <tbody>
       {% if histories %}
-      {% for history in histories %}
-      <tr>
-        <td class="text-left">{{ history.date_added }}</td>
-        <td class="text-left">{{ history.comment }}</td>
-      </tr>
-      {% endfor %}
+        {% for history in histories %}
+          <tr>
+            <td class="text-left">{{ history.date_added }}</td>
+            <td class="text-left">{{ history.comment }}</td>
+          </tr>
+        {% endfor %}
       {% else %}
-      <tr>
-        <td class="text-center" colspan="2">{{ text_no_results }}</td>
-      </tr>
+        <tr>
+          <td class="text-center" colspan="2">{{ text_no_results }}</td>
+        </tr>
       {% endif %}
     </tbody>
   </table>

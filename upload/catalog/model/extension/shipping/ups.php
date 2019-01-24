@@ -264,7 +264,7 @@ class ModelExtensionShippingUps extends Model {
 							continue;
 						}
 
-						if ($this->config->get('ups_' . strtolower($this->config->get('shipping_ups_origin')) . '_' . $code)) {
+						if ($this->config->get('shipping_ups_' . strtolower($this->config->get('shipping_ups_origin')) . '_' . $code)) {
 							$quote_data[$code] = array(
 								'code'         => 'ups.' . $code,
 								'title'        => $service_code[$this->config->get('shipping_ups_origin')][$code],

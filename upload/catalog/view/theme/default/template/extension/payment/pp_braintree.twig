@@ -1,6 +1,6 @@
 <div id="braintree-alert" class="alert alert-danger" style="display:none;"></div>
-<div id="braintree-loading" style="text-align: center"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i> <span>{{ text_loading }}</span></div>
-<div id="braintree-choose" style="display: none;" class="form-horizontal">
+<div id="braintree-loading" style="text-align: center"><i class="fas fa-spinner fa-pulse fa-2x fa-fw"></i> <span>{{ text_loading }}</span></div>
+<div id="braintree-choose" style="display: none;">
   {% if vaulted_payment_count > 0 %}
   <input type="hidden" name="payment_type" value="saved" id="tab-option" />
   <ul class="nav nav-tabs">
@@ -9,12 +9,12 @@
   </ul>
   {% endif %}
 </div>
-<form id="braintree-new" style="display:none;" method="post" action="{{ payment_url }}" class="form-horizontal" autocomplete="off">
+<form id="braintree-new" style="display:none;" method="post" action="{{ payment_url }}" autocomplete="off">
   <fieldset>
 
     {% if payment_pp_braintree_paypal_option %}
-      <div class="form-group">
-        <label class="col-sm-2 control-label">{{ text_pay_by_paypal }}</label>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{ text_pay_by_paypal }}</label>
         <div class="col-sm-10">
             <script src="https://www.paypalobjects.com/api/button.js?" data-merchant="braintree" data-id="paypal-button" data-button="checkout" data-color="{{ payment_pp_braintree_paypal_button_colour }}" data-size="{{ payment_pp_braintree_paypal_button_size }}" data-shape="{{ payment_pp_braintree_paypal_button_shape }}" data-button_type="submit" data-button_disabled="false"></script>
         </div>
@@ -24,7 +24,7 @@
           <label class="col-sm-2" style="text-align: right;">{{ entry_remember_paypal_method }}</label>
           <div class="col-sm-10">
             <div class="form-check">
-              <label class="form-check-label">
+              <label>
                 <input type="checkbox" id="vault-method-paypal" {% if payment_pp_braintree_paypal_check_vault == 1 %}checked="checked" {% endif %}/>
               </label>
             </div>
@@ -33,8 +33,8 @@
       {% endif %}
       <hr />
     {% endif %}
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="input-card-number">{{ entry_card }}</label>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="input-card-number">{{ entry_card }}</label>
       <div class="col-sm-5">
         <div id="input-card-number" class="form-control"></div>
       </div>
@@ -49,8 +49,8 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">{{ entry_expires }}</label>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ entry_expires }}</label>
       <div class="col-sm-3">
         <div id="input-card-expiration-month" class="form-control"></div>
       </div>
@@ -58,8 +58,8 @@
         <div id="input-card-expiration-year" class="form-control"></div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">{{ entry_cvv }}</label>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">{{ entry_cvv }}</label>
       <div class="col-sm-2">
         <div id="input-card-cvv" class="form-control"></div>
       </div>
@@ -69,27 +69,27 @@
         <label class="col-sm-2" style="text-align: right;">{{ entry_remember_card_method }}</label>
         <div class="col-sm-10">
           <div class="form-check">
-            <label class="form-check-label">
+            <label>
               <input type="checkbox" id="vault-method-card" {% if payment_pp_braintree_card_check_vault == 1 %}checked="checked" {% endif %}/>
             </label>
           </div>
         </div>
       </div>
     {% endif %}
-    <div class="form-group">
+    <div class="form-group row">
       <div class="col-sm-12">
-        <button type="submit" id="submit-new" class="btn btn-primary button-submit pull-right braintree-button">{{ button_confirm }}</button>
+        <button type="submit" id="submit-new" class="btn btn-primary button-submit float-right braintree-button">{{ button_confirm }}</button>
       </div>
     </div>
   </fieldset>
 </form>
-<form id="braintree-vaulted" style="display:none;" method="post" action="{{ payment_url }}" class="form-horizontal" autocomplete="off">
+<form id="braintree-vaulted" style="display:none;" method="post" action="{{ payment_url }}" autocomplete="off">
   {% if vaulted_payment_count > 0 %}
   <fieldset>
     {% for vaulted_payment_method in vaulted_payment_methods.cards %}
     <div class="row" id="vaulted-method-{{ vaulted_payment_method.token }}">
       <div class="col-sm-1">
-        <input type="radio" name="vaulted_payment_method" class="pull-right vaulted-card" value="{{ vaulted_payment_method.token }}" />
+        <input type="radio" name="vaulted_payment_method" class="float-right vaulted-card" value="{{ vaulted_payment_method.token }}" />
         <input type="hidden" id="vaulted-payment-cvv-nonce-{{ vaulted_payment_method.token }}" value="" />
       </div>
       <div class="col-sm-1"><img class="card-logo" src="{{ vaulted_payment_method.image }}" /></div>
@@ -100,16 +100,16 @@
     {% endfor %}
     {% for vaulted_payment_method in vaulted_payment_methods.paypal %}
     <div class="row" id="vaulted-method-{{ vaulted_payment_method.token }}">
-      <div class="col-sm-1"><input type="radio" name="vaulted_payment_method" class="pull-right" value="{{ vaulted_payment_method.token }}"/></div>
+      <div class="col-sm-1"><input type="radio" name="vaulted_payment_method" class="float-right" value="{{ vaulted_payment_method.token }}"/></div>
       <div class="col-sm-1"><img class="card-logo" src="{{ vaulted_payment_method.image }}" /></div>
       <div class="col-sm-10">{{ vaulted_payment_method.name }}<br />[<a id="{{ vaulted_payment_method.token }}" class="remove-vault-method braintree-button">{{ text_remove }}</a>]</div>
     </div>
     <hr />
     {% endfor %}
   </fieldset>
-  <div class="form-group">
+  <div class="form-group row">
     <div class="col-sm-12">
-      <a id="submit-vaulted" class="btn btn-primary button-submit pull-right braintree-button">{{ button_confirm }}</a>
+      <a id="submit-vaulted" class="btn btn-primary button-submit float-right braintree-button">{{ button_confirm }}</a>
     </div>
   </div>
   {% endif %}
@@ -117,9 +117,9 @@
 <div id="braintree-3d-secure" style="display:none;">
   <div class="col-sm-0 col-md-0 col-lg-3"></div>
   <div class="col-sm-12 col-md-12 col-lg-6">
-    <div class="panel panel-default">
+    <div class="card">
       <div class="panel-heading text-center">{{ text_authentication }}</div>
-      <div class="panel-body" id="braintree-3ds-body"></div>
+      <div class="card-body" id="braintree-3ds-body"></div>
       <div class="panel-footer text-center">
         <a id="braintree-3ds-close" href="#" class="braintree-button">{{ button_cancel }}</a>
       </div>

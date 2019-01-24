@@ -3,22 +3,20 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
+      <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
-      </ul>
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_edit }}</h3>
-      </div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_edit }}</div>
+      <div class="card-body">
         <div class="row">
           <div class="col-lg-3 col-md-3 col-sm-12">
-            <div class="list-group">
+            <div class="list-group mb-3">
               <div class="list-group-item">
                 <h4 class="list-group-item-heading">{{ text_store }}</h4>
               </div>
@@ -26,7 +24,7 @@
                 <select name="store_id" class="form-control">
                   <option value="0">{{ text_default }}</option>
                   {% for store in stores %}
-                  <option value="{{ store.store_id }}">{{ store.name }}</option>
+                    <option value="{{ store.store_id }}">{{ store.name }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -39,16 +37,15 @@
             </div>
           </div>
           <div class="col-lg-9 col-md-9 col-sm-12">
-            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_twig }}</div>
+            <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_twig }}</div>
             <div id="recent">
               <fieldset>
                 <legend>{{ text_history }}</legend>
                 <div id="history"></div>
               </fieldset>
-            </div>            
+            </div>
             <div id="code" style="display: none;">
-              <ul class="nav nav-tabs">
-              </ul>
+              <ul class="nav nav-tabs"></ul>
               <div class="tab-content"></div>
             </div>
           </div>
@@ -56,34 +53,35 @@
       </div>
     </div>
   </div>
-  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
-  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-  <script type="text/javascript"><!--
-$('select[name="store_id"]').on('change', function(e) {
+</div>
+<link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
+<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
+<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script>
+<script type="text/javascript"><!--
+$('select[name=\'store_id\']').on('change', function(e) {
 	$.ajax({
-		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val(),
+		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\']').val(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name="store_id"]').prop('disabled', true);
+			$('select[name=\'store_id\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('select[name="store_id"]').prop('disabled', false);
+			$('select[name=\'store_id\']').prop('disabled', false);
 		},
 		success: function(json) {
 			html = '';
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
@@ -95,43 +93,41 @@ $('select[name="store_id"]').on('change', function(e) {
 	});
 });
 
-$('select[name="store_id"]').trigger('change');
+$('select[name=\'store_id\']').trigger('change');
 
 $('#path').on('click', 'a.directory', function(e) {
-	console.log($(node).attr('href'));
-	
 	e.preventDefault();
 
-	var node = this;
-	
+	var element = this;
+
 	$.ajax({
-		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+		url: 'index.php?route=design/theme/path&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\']').val() + '&path=' + $(element).attr('href'),
 		dataType: 'json',
 		beforeSend: function() {
-			$(node).find('i').removeClass('fa-arrow-right');
-			$(node).find('i').addClass('fa-circle-o-notch fa-spin');
+			$(element).find('i').removeClass('fa-arrow-right');
+			$(element).find('i').addClass('fa-circle-notch fa-spin');
 		},
 		complete: function() {
-			$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
-			$(node).find('i').addClass('fa-arrow-right');
+			$(element).find('i').removeClass('fa-circle-notch fa-spin');
+			$(element).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
 			html = '';
 
 			if (json['directory']) {
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item directory">' + json['directory'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['file']) {
 				for (i = 0; i < json['file'].length; i++) {
-					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item file">' + json['file'][i]['name'] + ' <i class="fa fa-arrow-right fa-fw pull-right"></i></a>';
+					html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
 				}
 			}
 
 			if (json['back']) {
-				html += '<a href="' + json['back']['path'] + '" class="list-group-item directory">' + json['back']['name'] + ' <i class="fa fa-arrow-left fa-fw pull-right"></i></a>';
+				html += '<a href="' + json['back']['path'] + '" class="list-group-item list-group-item-action directory">' + json['back']['name'] + ' <i class="fas fa-arrow-left fa-fw float-right"></i></a>';
 			}
 
 			$('#path').html(html);
@@ -142,54 +138,56 @@ $('#path').on('click', 'a.directory', function(e) {
 	});
 });
 
+var editor = [];
+
 $('#path').on('click', 'a.file', function(e) {
 	e.preventDefault();
 
-	var node = this;
-	
+	var element = this;
+
 	// Check if the file has an extension
-	var pos = $(node).attr('href').lastIndexOf('.');
+	var pos = $(element).attr('href').lastIndexOf('.');
 
 	if (pos != -1) {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').slice(0, pos).replace(/\//g, '-').replace(/_/g, '-');
+		var tab_id = $('select[name=\'store_id\']').val() + '-' + $(element).attr('href').slice(0, pos).replace(/\//g, '-').replace(/_/g, '-');
 	} else {
-		var tab_id = $('select[name="store_id"]').val() + '-' + $(node).attr('href').replace(/\//g, '-').replace(/_/g, '-');
+		var tab_id = $('select[name=\'store_id\']').val() + '-' + $(element).attr('href').replace(/\//g, '-').replace(/_/g, '-');
 	}
-	
-	if (!$('#tab-' + tab_id).length) {
-		$.ajax({
-			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $('select[name="store_id"]').val() + '&path=' + $(node).attr('href'),
+
+	if (!editor['#tab-' + tab_id]) {
+		editor['#tab-' + tab_id] = $.ajax({
+			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\']').val() + '&path=' + $(element).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
-				$(node).find('i').removeClass('fa-arrow-right');
-				$(node).find('i').addClass('fa-circle-o-notch fa-spin');
+				$(element).find('i').removeClass('fa-arrow-right');
+				$(element).find('i').addClass('fa-circle-notch fa-spin');
 			},
 			complete: function() {
-				$(node).find('i').removeClass('fa-circle-o-notch fa-spin');
-				$(node).find('i').addClass('fa-arrow-right');
+				$(element).find('i').removeClass('fa-circle-notch fa-spin');
+				$(element).find('i').addClass('fa-arrow-right');
 			},
 			success: function(json) {
 				if (json['code']) {
 					$('#code').show();
 					$('#recent').hide();
 
-					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
+					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).attr('href').split('/').join(' / ') + '&nbsp;&nbsp;<i class="fas fa-minus-circle"></i></a></li>');
 
-					html  = '<div class="tab-pane" id="tab-' + tab_id + '">';
-					html += '  <textarea name="code" rows="10"></textarea>';
-					html += '  <input type="hidden" name="store_id" value="' + $('select[name="store_id"]').val() + '" />';
-					html += '  <input type="hidden" name="path" value="' + $(node).attr('href') + '" />';
+					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
+					html += '  <textarea name="code" rows="10" class="form-control"></textarea>';
+					html += '  <input type="hidden" name="store_id" value="' + $('select[name=\'store_id\']').val() + '" />';
+					html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" />';
 					html += '  <br />';
-					html += '  <div class="pull-right">';
-					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>';
-					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-recycle"></i> {{ button_reset }}</button>';
+					html += '  <div class="float-right">';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
+					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';
 
 					$('.tab-content').append(html);
 
 					$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
-					
+
 					// Initialize codemirrror
 					var codemirror = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
 						mode: 'text/html',
@@ -211,22 +209,28 @@ $('#path').on('click', 'a.file', function(e) {
 	}
 });
 
-$('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
+$('#code .nav-tabs').on('click', 'i.fas.fa-minus-circle', function(e) {
 	e.preventDefault();
 
-	if ($(this).parent().parent().is('li.active')) {
-		index = $(this).parent().parent().index();
+	// 1. Remove tab functionality
+	$(this).parent().removeAttr('data-toggle');
 
-		if (index == 0) {
-			$(this).parent().parent().parent().find('li').eq(index + 1).find('a').tab('show');
-		} else {
-			$(this).parent().parent().parent().find('li').eq(index - 1).find('a').tab('show');
-		}
+	var remove = $(this).parent().attr('href');
+
+	// 2. Remove entry in the editor array
+	if (editor[remove]) {
+		delete editor[remove];
 	}
 
+	// 3. Remove the tab
 	$(this).parent().parent().remove();
 
-	$($(this).parent().attr('href')).remove();
+	// 4. Remove the tab panel
+	$(remove).remove();
+
+	if ($(this).parent().hasClass('active')) {
+		$('.nav-tabs li:last-child a').tab('show');
+	}
 
 	if (!$('#code > ul > li').length) {
 		$('#code').hide();
@@ -235,31 +239,31 @@ $('.nav-tabs').on('click', 'i.fa-minus-circle', function(e) {
 });
 
 $('.tab-content').on('click', '.btn-primary', function(e) {
-	var node = this;
+	var element = this;
 
 	var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
-				
+
 	$.ajax({
-		url: 'index.php?route=design/theme/save&user_token={{ user_token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+		url: 'index.php?route=design/theme/save&user_token={{ user_token }}&store_id=' + $('.tab-content .active input[name=\'store_id\']').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
 		type: 'post',
 		data: 'code=' + encodeURIComponent(editor.getValue()),
 		dataType: 'json',
 		beforeSend: function() {
-			$(node).button('loading');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(node).button('reset');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
-			
+
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
 				$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 			}
 		},
@@ -271,30 +275,30 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
 
 $('.tab-content').on('click', '.btn-danger', function(e) {
 	if (confirm('{{ text_confirm }}')) {
-		var node = this;
+		var element = this;
 
 		$.ajax({
-			url: 'index.php?route=design/theme/reset&user_token={{ user_token }}&store_id=' + $('.tab-content .active input[name="store_id"]').val() + '&path=' + $('.tab-content .active input[name="path"]').val(),
+			url: 'index.php?route=design/theme/reset&user_token={{ user_token }}&store_id=' + $('.tab-content .active input[name=\'store_id\']').val() + '&path=' + $('.tab-content .active input[name=\'path\']').val(),
 			dataType: 'json',
 			beforeSend: function() {
-				$(node).button('loading');
+				$(element).button('loading');
 			},
 			complete: function() {
-				$(node).button('reset');
+				$(element).button('reset');
 			},
 			success: function(json) {
 				$('.alert-dismissible').remove();
-				
+
 				if (json['error']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-				
+
 				var codemirror = $('.tab-content .active .CodeMirror')[0].CodeMirror;
-				
+
 				codemirror.setValue(json['code']);
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -304,7 +308,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
 	}
 });
 
-$('#history').delegate('.pagination a', 'click', function(e) {
+$('#history').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#history').load(this.href);
@@ -315,43 +319,43 @@ $('#history').load('index.php?route=design/theme/history&user_token={{ user_toke
 $('#history').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
 
-	var node = this;
-	
-	// Check if the file has an extension
-	var tab_id = $(node).parent().parent().find('input[name="store_id"]').val() + '-' + $(node).parent().parent().find('input[name="path"]').val().replace(/\//g, '-').replace(/_/g, '-');
+	var element = this;
 
-	if (!$('#tab-' + tab_id).length) {
+	// Check if the file has an extension
+	var tab_id = $(element).parent().parent().find('input[name=\'store_id\']').val() + '-' + $(element).parent().parent().find('input[name=\'path\']').val().replace(/\//g, '-').replace(/_/g, '-');
+
+	if (!editor['#tab-' + tab_id]) {
 		$.ajax({
-			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $(node).parent().parent().find('input[name="store_id"]').val() + '&path=' + $(node).parent().parent().find('input[name="path"]').val(),
+			url: 'index.php?route=design/theme/template&user_token={{ user_token }}&store_id=' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '&path=' + $(element).parent().parent().find('input[name=\'path\']').val(),
 			dataType: 'json',
 			beforeSend: function() {
-				$(node).button('loading');
+				$(element).button('loading');
 			},
 			complete: function() {
-				$(node).button('reset');
+				$(element).button('reset');
 			},
 			success: function(json) {
 				if (json['code']) {
 					$('#code').show();
 					$('#recent').hide();
 
-					$('.nav-tabs').append('<li><a href="#tab-' + tab_id + '" data-toggle="tab">' + $(node).parent().parent().find('input[name="path"]').val().split('/').join(' / ') + '&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></a></li>');
+					$('.nav-tabs').append('<li class="nav-item"><a href="#tab-' + tab_id + '" data-toggle="tab" class="nav-link">' + $(element).parent().parent().find('input[name=\'path\']').val().split('/').join(' / ') + '&nbsp;&nbsp;<i class="fas fa-minus-circle"></i></a></li>');
 
-					html  = '<div class="tab-pane" id="tab-' + tab_id + '">';
+					html = '<div class="tab-pane" id="tab-' + tab_id + '">';
 					html += '  <textarea name="code" rows="10"></textarea>';
-					html += '  <input type="hidden" name="store_id" value="' + $(node).parent().parent().find('input[name="store_id"]').val() + '" />';
-					html += '  <input type="hidden" name="path" value="' + $(node).parent().parent().find('input[name="path"]').val() + '.twig" />';
+					html += '  <input type="hidden" name="store_id" value="' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '" />';
+					html += '  <input type="hidden" name="path" value="' + $(element).parent().parent().find('input[name=\'path\']').val() + '.twig" />';
 					html += '  <br />';
-					html += '  <div class="pull-right">';
-					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fa fa-floppy-o"></i> {{ button_save }}</button>';
-					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fa fa-recycle"></i> {{ button_reset }}</button>';
+					html += '  <div class="float-right">';
+					html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
+					html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
 					html += '  </div>';
 					html += '</div>';
 
 					$('.tab-content').append(html);
 
 					$('.nav-tabs a[href=\'#tab-' + tab_id + '\']').tab('show');
-					
+
 					// Initialize codemirrror
 					var codemirror = CodeMirror.fromTextArea(document.querySelector('.tab-content .active textarea'), {
 						mode: 'text/html',
@@ -375,29 +379,29 @@ $('#history').on('click', '.btn-primary', function(e) {
 
 $('#history').on('click', '.btn-danger', function(e) {
 	e.preventDefault();
-	
+
 	if (confirm('{{ text_confirm }}')) {
-		var node = this;
+		var element = this;
 
 		$.ajax({
-			url: $(node).attr('href'),
+			url: $(element).attr('href'),
 			dataType: 'json',
 			beforeSend: function() {
-				$(node).button('loading');
+				$(element).button('loading');
 			},
 			complete: function() {
-				$(node).button('reset');
+				$(element).button('reset');
 			},
 			success: function(json) {
 				$('.alert-dismissible').remove();
-				
+
 				if (json['error']) {
-					$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				if (json['success']) {
-					$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
+					$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
 					$('#history').load('index.php?route=design/theme/history&user_token={{ user_token }}');
 				}
 			},
@@ -407,6 +411,5 @@ $('#history').on('click', '.btn-danger', function(e) {
 		});
 	}
 });
-//--></script> 
-</div>
-{{ footer }} 
+//--></script>
+{{ footer }}

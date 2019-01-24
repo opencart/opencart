@@ -16,7 +16,7 @@ class ControllerCommonCart extends Controller {
 			'taxes'  => &$taxes,
 			'total'  => &$total
 		);
-			
+
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
@@ -56,7 +56,7 @@ class ControllerCommonCart extends Controller {
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
-				$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 			} else {
 				$image = '';
 			}
@@ -86,7 +86,7 @@ class ControllerCommonCart extends Controller {
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
-				
+
 				$price = $this->currency->format($unit_price, $this->session->data['currency']);
 				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
 			} else {
@@ -104,7 +104,7 @@ class ControllerCommonCart extends Controller {
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			);
 		}
 
@@ -130,8 +130,8 @@ class ControllerCommonCart extends Controller {
 			);
 		}
 
-		$data['cart'] = $this->url->link('checkout/cart');
-		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
+		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		return $this->load->view('common/cart', $data);
 	}

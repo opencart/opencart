@@ -52,8 +52,10 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$this->model_extension_payment_divido->setMerchant($this->config->get('payment_divido_api_key'));
 
 		$plans = $this->model_extension_payment_divido->getCartPlans($this->cart);
+
 		foreach ($plans as $key => $plan) {
 			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
+
 			if ($plan->min_amount > $planMinTotal) {
 				unset($plans[$key]);
 			}
@@ -198,13 +200,10 @@ class ControllerExtensionPaymentDivido extends Controller {
 		$deposit_amount = round(($deposit / 100) * $total, 2, PHP_ROUND_HALF_UP);
 
 		$shop_url = $this->config->get('config_url');
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			$shop_url = $this->config->get('config_ssl');
-		}
 
-		$callback_url = $this->url->link('extension/payment/divido/update', '', true);
-		$return_url = $this->url->link('checkout/success', '', true);
-		$checkout_url = $this->url->link('checkout/checkout', '', true);
+		$callback_url = $this->url->link('extension/payment/divido/update', 'language=' . $this->config->get('config_language'));
+		$return_url = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+		$checkout_url = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		$salt = uniqid('', true);
 		$hash = $this->model_extension_payment_divido->hashOrderId($order_id, $salt);

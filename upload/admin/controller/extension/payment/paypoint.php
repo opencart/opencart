@@ -14,7 +14,7 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -33,22 +33,22 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/paypoint', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/payment/paypoint', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/payment/paypoint', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/paypoint', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		if (isset($this->request->post['payment_paypoint_merchant'])) {
 			$data['payment_paypoint_merchant'] = $this->request->post['payment_paypoint_merchant'];
@@ -84,26 +84,26 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['paypoint_geo_zone_id'])) {
-			$data['paypoint_geo_zone_id'] = $this->request->post['paypoint_geo_zone_id'];
+		if (isset($this->request->post['payment_paypoint_geo_zone_id'])) {
+			$data['payment_paypoint_geo_zone_id'] = $this->request->post['payment_paypoint_geo_zone_id'];
 		} else {
-			$data['paypoint_geo_zone_id'] = $this->config->get('paypoint_geo_zone_id');
+			$data['payment_paypoint_geo_zone_id'] = $this->config->get('payment_paypoint_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['paypoint_status'])) {
-			$data['paypoint_status'] = $this->request->post['paypoint_status'];
+		if (isset($this->request->post['payment_paypoint_status'])) {
+			$data['payment_paypoint_status'] = $this->request->post['payment_paypoint_status'];
 		} else {
-			$data['paypoint_status'] = $this->config->get('paypoint_status');
+			$data['payment_paypoint_status'] = $this->config->get('payment_paypoint_status');
 		}
 
-		if (isset($this->request->post['paypoint_sort_order'])) {
-			$data['paypoint_sort_order'] = $this->request->post['paypoint_sort_order'];
+		if (isset($this->request->post['payment_paypoint_sort_order'])) {
+			$data['payment_paypoint_sort_order'] = $this->request->post['payment_paypoint_sort_order'];
 		} else {
-			$data['paypoint_sort_order'] = $this->config->get('paypoint_sort_order');
+			$data['payment_paypoint_sort_order'] = $this->config->get('payment_paypoint_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

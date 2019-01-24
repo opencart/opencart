@@ -4,14 +4,12 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 		$this->load->language('extension/payment/pp_payflow');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_start_date'] = $this->language->get('text_start_date');
 		$data['text_issue'] = $this->language->get('text_issue');
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
 		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_start_date'] = $this->language->get('entry_cc_start_date');
 		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
 		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
 		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
@@ -109,11 +107,10 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 		$request .= '&EMAIL=' . urlencode($order_info['email']);
 		$request .= '&ACCT=' . urlencode(str_replace(' ', '', $this->request->post['cc_number']));
 		$request .= '&ACCTTYPE=' . urlencode($this->request->post['cc_type']);
-		$request .= '&CARDSTART=' . urlencode($this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], - 2, 2));
 		$request .= '&EXPDATE=' . urlencode($this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], - 2, 2));
 		$request .= '&CVV2=' . urlencode($this->request->post['cc_cvv2']);
 		$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
-		$request .= '&BUTTONSOURCE=' . urlencode('OpenCart_2.0_PFP');
+		$request .= '&BUTTONSOURCE=' . urlencode('OpenCart_3.1_PFP');
 
 		if (!$this->config->get('payment_pp_payflow_test')) {
 			$curl = curl_init('https://payflowpro.paypal.com');
@@ -162,7 +159,7 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_pp_payflow_order_status_id'), $message, false);
 
-			$json['success'] = $this->url->link('checkout/success');
+			$json['success'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		} else {
 			switch ($response_info['RESULT']) {
 				case '1':

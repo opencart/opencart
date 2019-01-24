@@ -2,47 +2,44 @@
 <div id="account-reset" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></lis>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-    {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-    {% set class = 'col-sm-9' %}
-    {% else %}
-    {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend>{{ text_password }}</legend>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">
-              <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control" />
+              <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control"/>
               {% if error_password %}
-              <div class="text-danger">{{ error_password }}</div>
-              {% endif %} </div>
+                <div class="text-danger">{{ error_password }}</div>
+              {% endif %}
+            </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-confirm">{{ entry_confirm }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-confirm">{{ entry_confirm }}</label>
             <div class="col-sm-10">
-              <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control" />
+              <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control"/>
               {% if error_confirm %}
-              <div class="text-danger">{{ error_confirm }}</div>
-              {% endif %}</div>
+                <div class="text-danger">{{ error_confirm }}</div>
+              {% endif %}
+            </div>
           </div>
         </fieldset>
-        <div class="buttons clearfix">
-          <div class="pull-left"><a href="{{ back }}" class="btn btn-default">{{ button_back }}</a></div>
-          <div class="pull-right">
+        <div class="d-inline-block pt-2 pd-2 w-100">
+          <div class="float-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+          <div class="float-right">
             <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
       </form>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 {{ footer }}

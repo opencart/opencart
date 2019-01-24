@@ -9,12 +9,12 @@ class ControllerDesignTheme extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -72,19 +72,18 @@ class ControllerDesignTheme extends Controller {
 				'route'      => $result['route'],
 				'theme'      => $result['theme'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('design/theme/template', 'user_token=' . $this->session->data['user_token'], true),
-				'delete'     => $this->url->link('design/theme/delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'], true)
+				'edit'       => $this->url->link('design/theme/template', 'user_token=' . $this->session->data['user_token']),
+				'delete'     => $this->url->link('design/theme/delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'])
 			);
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $history_total;
-		$pagination->page = $page;
-		$pagination->limit = 10;
-		$pagination->url = $this->url->link('design/theme/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}', true);
-
-		$data['pagination'] = $pagination->render();
-
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $history_total,
+			'page'  => $page,
+			'limit' => 10,
+			'url'   => $this->url->link('design/theme/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+		));
+		
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
 		$this->response->setOutput($this->load->view('design/theme_history', $data));
@@ -174,6 +173,8 @@ class ControllerDesignTheme extends Controller {
 		// This is only here for compatibility with old themes.
 		if ($theme == 'theme_default') {
 			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);
+		} else {
+			$theme = 'default';
 		}
 
 		if (isset($this->request->get['path'])) {
@@ -188,10 +189,10 @@ class ControllerDesignTheme extends Controller {
 
 		if ($theme_info) {
 			$json['code'] = html_entity_decode($theme_info['code']);
+		} elseif (is_file(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_MODIFICATION . 'catalog/view')) == DIR_MODIFICATION . 'catalog/view')) {
+			$json['code'] = file_get_contents(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path);
 		} elseif (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
-		} elseif (is_file(DIR_CATALOG . 'view/theme/default/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/default/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
-			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/default/template/' . $path);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

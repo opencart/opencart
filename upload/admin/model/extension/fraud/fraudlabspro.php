@@ -8,7 +8,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 				`is_high_risk_country` CHAR(2) NOT NULL,
 				`distance_in_km` VARCHAR(10) NOT NULL,
 				`distance_in_mile` VARCHAR(10) NOT NULL,
-				`ip_address` VARCHAR(15) NOT NULL,
+				`ip_address` VARCHAR(39) NOT NULL,
 				`ip_country` VARCHAR(2) NOT NULL,
 				`ip_continent` VARCHAR(20) NOT NULL,
 				`ip_region` VARCHAR(21) NOT NULL,
@@ -54,15 +54,15 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 		");
 
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "fraudlabspro` CHANGE COLUMN `ip_address` `ip_address` VARCHAR(39) NOT NULL;");
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` (`language_id`, `name`) VALUES (1, 'Fraud');");
 		$status_fraud_id = $this->db->getLastId();
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` (`language_id`, `name`) VALUES (1, 'Fraud Review');");
-		
+
 		$status_fraud_review_id = $this->db->getLastId();
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraud_fraudlabspro_score', '80', '0');");
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraud_fraudlabspro_order_status_id', '" . (int)$status_fraud_id . "', '0');");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraud_fraudlabspro_review_status_id', '" . (int)$status_fraud_review_id . "', '0');");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraud_fraudlabspro_approve_status_id', '2', '0');");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`code`, `key`, `value`, `serialized`) VALUES ('fraudlabspro', 'fraud_fraudlabspro_reject_status_id', '8', '0');");
@@ -90,18 +90,13 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		$store_info = $this->model_setting_store->getStore($store_id);
 
 		if ($store_info) {
-			$url = $store_info['ssl'];
+			$url = $store_info['url'];
 		} else {
-			$url = HTTPS_CATALOG;
+			$url = HTTP_CATALOG;
 		}
 
 		if (isset($this->session->data['cookie'])) {
 			$curl = curl_init();
-
-			// Set SSL if required
-			if (substr($url, 0, 5) == 'https') {
-				curl_setopt($curl, CURLOPT_PORT, 443);
-			}
 
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);

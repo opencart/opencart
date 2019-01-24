@@ -4,6 +4,8 @@ $registry = new Registry();
 
 // Config
 $config = new Config();
+
+// Load the default config
 $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
@@ -49,8 +51,18 @@ set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 	return true;
 });
 
+set_exception_handler(function($e) use ($log, $config) {
+	if ($config->get('error_display')) {
+		echo '<b>' . get_class($e) . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+	}
+
+	if ($config->get('error_log')) {
+		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+	}
+});
+
 // Event
-$event = new Event($registry);
+$event = new \Event($registry);
 $registry->set('event', $event);
 
 // Event Register
@@ -72,12 +84,16 @@ $registry->set('request', new Request());
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$response->setCompression($config->get('config_compression'));
+$response->setCompression($config->get('response_compression'));
 $registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
-	$registry->set('db', new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+	$db = new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+	$registry->set('db', $db);
+
+	// Sync PHP and DB time zones.
+	$db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
 }
 
 // Session
@@ -105,7 +121,7 @@ if ($config->get('session_autostart')) {
 
 	$session->start($session_id);
 
-	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+	setcookie($config->get('session_name'), $session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 }
 
 // Cache
@@ -113,15 +129,12 @@ $registry->set('cache', new Cache($config->get('cache_engine'), $config->get('ca
 
 // Url
 if ($config->get('url_autostart')) {
-	$registry->set('url', new Url($config->get('site_url'), $config->get('site_ssl')));
+	$registry->set('url', new Url($config->get('site_url')));
 }
 
 // Language
 $language = new Language($config->get('language_directory'));
 $registry->set('language', $language);
-
-// OpenBay Pro
-$registry->set('openbay', new Openbay($registry));
 
 // Document
 $registry->set('document', new Document());

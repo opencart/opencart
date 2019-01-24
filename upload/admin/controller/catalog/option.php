@@ -38,7 +38,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogOption extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true));
+			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerCatalogOption extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
-		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['options'] = array();
 
@@ -176,7 +176,7 @@ class ControllerCatalogOption extends Controller {
 				'option_id'  => $result['option_id'],
 				'name'       => $result['name'],
 				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url, true)
+				'edit'       => $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)
 			);
 		}
 
@@ -212,8 +212,8 @@ class ControllerCatalogOption extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url, true);
-		$data['sort_sort_order'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url, true);
+		$data['sort_name'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
 
 		$url = '';
 
@@ -225,13 +225,12 @@ class ControllerCatalogOption extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $option_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $option_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($option_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($option_total - $this->config->get('config_limit_admin'))) ? $option_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $option_total, ceil($option_total / $this->config->get('config_limit_admin')));
 
@@ -284,21 +283,21 @@ class ControllerCatalogOption extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true)
+			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		if (!isset($this->request->get['option_id'])) {
-			$data['action'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$data['action'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id'] . $url, true);
+			$data['action'] = $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['cancel'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['option_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
@@ -312,7 +311,7 @@ class ControllerCatalogOption extends Controller {
 
 		if (isset($this->request->post['option_description'])) {
 			$data['option_description'] = $this->request->post['option_description'];
-		} elseif (isset($this->request->get['option_id'])) {
+		} elseif (!empty($option_info)) {
 			$data['option_description'] = $this->model_catalog_option->getOptionDescriptions($this->request->get['option_id']);
 		} else {
 			$data['option_description'] = array();
@@ -336,7 +335,7 @@ class ControllerCatalogOption extends Controller {
 
 		if (isset($this->request->post['option_value'])) {
 			$option_values = $this->request->post['option_value'];
-		} elseif (isset($this->request->get['option_id'])) {
+		} elseif (!empty($option_info)) {
 			$option_values = $this->model_catalog_option->getOptionValueDescriptions($this->request->get['option_id']);
 		} else {
 			$option_values = array();
@@ -347,7 +346,7 @@ class ControllerCatalogOption extends Controller {
 		$data['option_values'] = array();
 
 		foreach ($option_values as $option_value) {
-			if (is_file(DIR_IMAGE . $option_value['image'])) {
+			if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $option_value['image'];
 				$thumb = $option_value['image'];
 			} else {
@@ -359,7 +358,7 @@ class ControllerCatalogOption extends Controller {
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize($thumb, 100, 100),
+				'thumb'                    => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
 				'sort_order'               => $option_value['sort_order']
 			);
 		}
@@ -386,6 +385,36 @@ class ControllerCatalogOption extends Controller {
 
 		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['option_value'])) {
 			$this->error['warning'] = $this->language->get('error_type');
+		}
+
+		if (isset($this->request->post['option_value'])) {
+			if ($this->request->get['option_id']) {
+				$option_id = $this->request->get['option_id'];
+			} else {
+				$option_id = '';
+			}
+
+			if ($option_id) {
+				$this->load->model('catalog/option');
+							
+				$this->load->model('catalog/product');
+				
+				$option_info = $this->model_catalog_product->getProductsOptionValueByOptionId($option_id);
+	
+				foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
+					$option_value_list[] = array(
+						'option_value_id' => $option_value['option_value_id']
+					);
+				}
+				
+				foreach ($option_info as $option) {
+					if (!in_array($option, $option_value_list)) {
+						$product_total = $this->model_catalog_product_option->getTotalProductsByOptionId($option_id);
+	
+						$this->error['warning'] = sprintf($this->language->get('error_option'), $product_total);
+					}
+				}
+			}
 		}
 
 		if (isset($this->request->post['option_value'])) {
@@ -444,8 +473,8 @@ class ControllerCatalogOption extends Controller {
 					$option_values = $this->model_catalog_option->getOptionValues($option['option_id']);
 
 					foreach ($option_values as $option_value) {
-						if (is_file(DIR_IMAGE . $option_value['image'])) {
-							$image = $this->model_tool_image->resize($option_value['image'], 50, 50);
+						if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
+							$image = $this->model_tool_image->resize(html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'), 50, 50);
 						} else {
 							$image = $this->model_tool_image->resize('no_image.png', 50, 50);
 						}

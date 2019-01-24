@@ -74,7 +74,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
-		$data['response_url'] = HTTPS_SERVER . 'index.php?route=extension/payment/globalpay/notify';
+		$data['response_url'] = HTTP_SERVER . 'index.php?route=extension/payment/globalpay/notify';
 
 		return $this->load->view('extension/payment/globalpay', $data);
 	}
@@ -93,7 +93,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 		//Check to see if hashes match or not
 		if ($hash != $this->request->post['SHA1HASH']) {
 			$data['text_response'] = $this->language->get('text_hash_failed');
-			$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+			$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		} else {
 			$this->load->model('checkout/order');
 
@@ -208,42 +208,42 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 				}
 
 				$data['text_response'] = $this->language->get('text_success');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/success', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 			} elseif ($this->request->post['RESULT'] == "101") {
 				// Decline
 				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			} elseif ($this->request->post['RESULT'] == "102") {
 				// Referal B
 				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_pending_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			} elseif ($this->request->post['RESULT'] == "103") {
 				// Referal A
 				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_stolen_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			} elseif ($this->request->post['RESULT'] == "200") {
 				// Error Connecting to Bank
 				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			} elseif ($this->request->post['RESULT'] == "204") {
 				// Error Connecting to Bank
 				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			} elseif ($this->request->post['RESULT'] == "205") {
 				// Comms Error
 				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			} else {
 				// Other error
 				$this->model_extension_payment_globalpay->addHistory($order_id, $this->config->get('payment_globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_generic_error');
-				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', true));
+				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 		}
 

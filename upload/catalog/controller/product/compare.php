@@ -20,7 +20,7 @@ class ControllerProductCompare extends Controller {
 				$this->session->data['success'] = $this->language->get('text_remove');
 			}
 
-			$this->response->redirect($this->url->link('product/compare'));
+			$this->response->redirect($this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -29,12 +29,12 @@ class ControllerProductCompare extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('product/compare')
+			'href' => $this->url->link('product/compare', 'language=' . $this->config->get('config_language'))
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -55,8 +55,8 @@ class ControllerProductCompare extends Controller {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 
 			if ($product_info) {
-				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_height'));
+				if (is_file(DIR_IMAGE . html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'))) {
+					$image = $this->model_tool_image->resize(html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_compare_height'));
 				} else {
 					$image = false;
 				}
@@ -109,8 +109,8 @@ class ControllerProductCompare extends Controller {
 					'width'        => $this->length->format($product_info['width'], $product_info['length_class_id']),
 					'height'       => $this->length->format($product_info['height'], $product_info['length_class_id']),
 					'attribute'    => $attribute_data,
-					'href'         => $this->url->link('product/product', 'product_id=' . $product_id),
-					'remove'       => $this->url->link('product/compare', 'remove=' . $product_id)
+					'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id),
+					'remove'       => $this->url->link('product/compare', 'language=' . $this->config->get('config_language') . '&remove=' . $product_id)
 				);
 
 				foreach ($attribute_groups as $attribute_group) {
@@ -125,7 +125,7 @@ class ControllerProductCompare extends Controller {
 			}
 		}
 
-		$data['continue'] = $this->url->link('common/home');
+		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -165,7 +165,7 @@ class ControllerProductCompare extends Controller {
 				$this->session->data['compare'][] = $this->request->post['product_id'];
 			}
 
-			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare'));
+			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
 
 			$json['total'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 		}

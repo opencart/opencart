@@ -2,84 +2,91 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-location" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right">
+        <button type="submit" form="form-location" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
+      <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
-      </ul>
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
-      <div class="panel-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-location" class="form-horizontal">
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-location">
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               {% if error_name %}
-              <div class="text-danger">{{ error_name }}</div>
+                <div class="invalid-tooltip">{{ error_name }}</div>
               {% endif %}
             </div>
           </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-address">{{ entry_address }}</label>
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-address">{{ entry_address }}</label>
             <div class="col-sm-10">
               <textarea type="text" name="address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ address }}</textarea>
               {% if error_address %}
-              <div class="text-danger">{{ error_address }}</div>
-             {% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geocode"><span data-toggle="tooltip" data-container="#content" title="{{ help_geocode }}">{{ entry_geocode }}</span></label>
-            <div class="col-sm-10">
-              <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-              {% if error_telephone %}
-              <div class="text-danger">{{ error_telephone }}</div>
+                <div class="invalid-tooltip">{{ error_address }}</div>
               {% endif %}
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-telephone">{{ entry_fax }}</label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
             <div class="col-sm-10">
-              <input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control" />
-            </div>
-          </div>          
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
-            <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
-              <input type="hidden" name="image" value="{{ image }}" id="input-image" />
+              <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
+              <small class="form-text text-muted">{{ help_geocode }}</small>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-open"><span data-toggle="tooltip" data-container="#content" title="{{ help_open }}">{{ entry_open }}</span></label>
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+              {% if error_telephone %}
+                <div class="invalid-tooltip">{{ error_telephone }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_fax }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
+            <div class="col-sm-10">
+              <div class="card image">
+                <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                <div class="card-body">
+                  <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                  <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-open">{{ entry_open }}</label>
             <div class="col-sm-10">
               <textarea name="open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ open }}</textarea>
+              <small class="form-text text-muted">{{ help_open }}</small>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-comment"><span data-toggle="tooltip" data-container="#content" title="{{ help_comment }}">{{ entry_comment }}</span></label>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
             <div class="col-sm-10">
               <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+              <small class="form-text text-muted">{{ help_comment }}</small>
             </div>
           </div>
         </form>

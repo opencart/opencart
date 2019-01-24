@@ -19,9 +19,9 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 		$data['merchant_id'] = $this->config->get('payment_firstdata_merchant_id');
 		$data['timestamp'] = date('Y:m:d-H:i:s');
 		$data['order_id'] = 'CON-' . $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
-		$data['url_success'] = $this->url->link('checkout/success', '', true);
-		$data['url_fail'] = $this->url->link('extension/payment/firstdata/fail', '', true);
-		$data['url_notify'] = $this->url->link('extension/payment/firstdata/notify', '', true);
+		$data['url_success'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+		$data['url_fail'] = $this->url->link('extension/payment/firstdata/fail', 'language=' . $this->config->get('config_language'));
+		$data['url_notify'] = $this->url->link('extension/payment/firstdata/notify', 'language=' . $this->config->get('config_language'));
 
 		if (preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $this->request->server['HTTP_USER_AGENT'])) {
 			$data['mobile'] = true;
@@ -238,6 +238,6 @@ class ControllerExtensionPaymentFirstdata extends Controller {
 			$this->session->data['error'] = $this->language->get('error_failed');
 		}
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', true));
+		$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 	}
 }

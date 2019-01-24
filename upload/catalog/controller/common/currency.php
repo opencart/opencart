@@ -3,13 +3,24 @@ class ControllerCommonCurrency extends Controller {
 	public function index() {
 		$this->load->language('common/currency');
 
-		$data['action'] = $this->url->link('common/currency/currency', '', $this->request->server['HTTPS']);
+		$data['action'] = $this->url->link('common/currency/currency', 'language=' . $this->config->get('config_language'));
 
 		$data['code'] = $this->session->data['currency'];
 
-		$this->load->model('localisation/currency');
+		$url_data = $this->request->get;
+
+		if (isset($url_data['route'])) {
+			$route = $url_data['route'];
+		} else {
+			$route = $this->config->get('action_default');
+		}
+
+		unset($url_data['_route_']);
+		unset($url_data['route']);
 
 		$data['currencies'] = array();
+
+		$this->load->model('localisation/currency');
 
 		$results = $this->model_localisation_currency->getCurrencies();
 
@@ -24,25 +35,13 @@ class ControllerCommonCurrency extends Controller {
 			}
 		}
 
-		if (!isset($this->request->get['route'])) {
-			$data['redirect'] = $this->url->link('common/home');
-		} else {
-			$url_data = $this->request->get;
+		$url = '';
 
-			unset($url_data['_route_']);
-
-			$route = $url_data['route'];
-
-			unset($url_data['route']);
-
-			$url = '';
-
-			if ($url_data) {
-				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
-			}
-
-			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
+		if ($url_data) {
+			$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 		}
+
+		$data['redirect'] = $this->url->link($route, $url);
 
 		return $this->load->view('common/currency', $data);
 	}
@@ -55,10 +54,10 @@ class ControllerCommonCurrency extends Controller {
 			unset($this->session->data['shipping_methods']);
 		}
 		
-		if (isset($this->request->post['redirect'])) {
-			$this->response->redirect($this->request->post['redirect']);
+		if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
+			$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 		} else {
-			$this->response->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link($this->config->get('action_default')));
 		}
 	}
 }

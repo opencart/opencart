@@ -3,8 +3,8 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '5.4.0', '<') == true) {
-	exit('PHP5.4+ Required');
+if (version_compare(phpversion(), '7.0.0', '<')) {
+	exit('PHP7+ Required');
 }
 
 if (!ini_get('date.timezone')) {
@@ -37,7 +37,7 @@ if (!isset($_SERVER['HTTP_HOST'])) {
 }
 
 // Check if SSL
-if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) || (isset($_SERVER['HTTPS']) &&    $_SERVER['SERVER_PORT'] == 443)) {
+if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) || (isset($_SERVER['HTTPS']) && (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443))) {
 	$_SERVER['HTTPS'] = true;
 } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
 	$_SERVER['HTTPS'] = true;
@@ -68,7 +68,7 @@ function modification($filename) {
 
 // Autoloader
 if (is_file(DIR_STORAGE . 'vendor/autoload.php')) {
-	//require_once(DIR_STORAGE . 'vendor/autoload.php');
+	require_once(DIR_STORAGE . 'vendor/autoload.php');
 }
 
 function library($class) {

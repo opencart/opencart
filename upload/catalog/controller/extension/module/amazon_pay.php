@@ -1,10 +1,11 @@
 <?php
 class ControllerExtensionModuleAmazonPay extends Controller {
+	private $error = array();
 	public function index() {
 
 		$this->load->model('extension/payment/amazon_login_pay');
 
-		if ($this->config->get('payment_amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($this->request->server['HTTPS']) && !($this->config->get('payment_amazon_login_pay_minimum_total') > 0 && $this->config->get('payment_amazon_login_pay_minimum_total') > $this->cart->getSubTotal())) {
+		if ($this->config->get('payment_amazon_login_pay_status') && $this->config->get('module_amazon_pay_status') && !empty($this->request->server['HTTPS']) && !($this->config->get('payment_amazon_login_pay_minimum_total') > 0 && $this->config->get('payment_amazon_login_pay_minimum_total') > $this->cart->getSubTotal())) {
 			// capital L in Amazon cookie name is required, do not alter for coding standards
 			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_Login_state_cache'])) {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
@@ -14,29 +15,30 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 			$this->document->addScript($amazon_payment_js);
 
 			$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
+			$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 
 			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 				$data['payment_amazon_login_pay_test'] = true;
 			}
 
-			$data['amazon_pay_return_url'] = $this->url->link('extension/module/amazon_pay/login', '', true);
+			$data['module_amazon_pay_return_url'] = $this->url->link('extension/module/amazon_pay/login', '', true);
 
-			if ($this->config->get('amazon_pay_button_type')) {
-				$data['amazon_pay_button_type'] = $this->config->get('amazon_pay_button_type');
+			if ($this->config->get('module_amazon_pay_button_type')) {
+				$data['module_amazon_pay_button_type'] = $this->config->get('module_amazon_pay_button_type');
 			} else {
-				$data['amazon_pay_button_type'] = 'PwA';
+				$data['module_amazon_pay_button_type'] = 'PwA';
 			}
 
-			if ($this->config->get('amazon_pay_button_colour')) {
-				$data['amazon_pay_button_colour'] = $this->config->get('amazon_pay_button_colour');
+			if ($this->config->get('module_amazon_pay_button_colour')) {
+				$data['module_amazon_pay_button_colour'] = $this->config->get('module_amazon_pay_button_colour');
 			} else {
-				$data['amazon_pay_button_colour'] = 'Gold';
+				$data['module_amazon_pay_button_colour'] = 'Gold';
 			}
 
-			if ($this->config->get('amazon_pay_button_size')) {
-				$data['amazon_pay_button_size'] = $this->config->get('amazon_pay_button_size');
+			if ($this->config->get('module_amazon_pay_button_size')) {
+				$data['module_amazon_pay_button_size'] = $this->config->get('module_amazon_pay_button_size');
 			} else {
-				$data['amazon_pay_button_size'] = 'medium';
+				$data['module_amazon_pay_button_size'] = 'medium';
 			}
 
 			if ($this->config->get('payment_amazon_login_pay_language')) {
@@ -146,7 +148,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 					'zone_id' => (int)$zone_id,
 				);
 
-				$customer_id = $this->model_extension_payment_amazon_login_pay->addCustomer($data);
+				$customer_id = $this->model_account_customer->addCustomer($data);
 
 				$this->model_extension_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
 

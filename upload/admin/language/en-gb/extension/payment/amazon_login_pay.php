@@ -3,10 +3,10 @@
 $_['heading_title']                = 'Amazon Pay';
 
 // Text
-$_['text_success']                 = 'Amazon Pay module has been updated';
+$_['text_success']                 = 'Amazon Pay module has been updated.';
 $_['text_ipn_url']				   = 'Cron Job\'s URL';
 $_['text_ipn_token']			   = 'Secret Token';
-$_['text_us']					   = 'American';
+$_['text_us']					   = 'American English';
 $_['text_de']					   = 'German';
 $_['text_uk']                      = 'English';
 $_['text_fr']                      = 'French';
@@ -37,8 +37,6 @@ $_['text_large']                   = 'Large';
 $_['text_x_large']                 = 'Extra large';
 $_['text_background']              = 'Background';
 $_['text_edit']					   = 'Edit Amazon Pay';
-$_['text_amazon_login_pay']        = '<a href="https://pay.amazon.com/uk/sp/opencart" target="_blank" title="Sign-up to Amazon Pay"><img src="view/image/payment/amazonpay.png" alt="Amazon Pay" title="Amazon Pay" style="border: 1px solid #EEEEEE;" /></a>';
-$_['text_amazon_join']             = '<a href="https://pay.amazon.com/uk/sp/opencart" target="_blank" title="Sign-up to Amazon Pay"><u>Sign-up to Amazon Pay</u></a>';
 $_['text_payment_info']			   = 'Payment information';
 $_['text_capture_ok']			   = 'Capture was successful';
 $_['text_capture_ok_order']		   = 'Capture was successful, authorization has been fully captured';
@@ -100,7 +98,7 @@ $_['help_pay_mode']				   = 'Payment is only available for US marketplace';
 $_['help_checkout']				   = 'Should payment button also login customer';
 $_['help_capture_status']		   = 'Choose order staus that will trigger automatic capture of an authorized payment';
 $_['help_ipn_url']				   = 'Set this as you merhcant URL in Amazon Seller Central';
-$_['help_ipn_token']			   = 'Make this long and hard to guess';
+$_['help_ipn_token']			   = 'Make this long and hard to guess. The resulting IPN URL must not be longer than 150 characters.';
 $_['help_minimum_total']		   = 'This must be above zero';
 $_['help_debug']				   = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
 $_['help_declined_codes']		   = 'This is for testing purposes only';

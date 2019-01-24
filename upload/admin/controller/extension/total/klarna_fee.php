@@ -12,7 +12,7 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$status = false;
 
-			foreach ($this->request->post['klarna_fee'] as $klarna_account) {
+			foreach ($this->request->post['total_klarna_fee'] as $klarna_account) {
 				if ($klarna_account['status']) {
 					$status = true;
 
@@ -20,11 +20,11 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 				}
 			}
 
-			$this->model_setting_setting->editSetting('total_klarna_fee', array_merge($this->request->post, array('klarna_fee_status' => $status)));
+			$this->model_setting_setting->editSetting('total_klarna_fee', array_merge($this->request->post, array('total_klarna_fee_status' => $status)));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -37,22 +37,22 @@ class ControllerExtensionTotalKlarnaFee extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/total/klarna_fee', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/total/klarna_fee', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/total/klarna_fee', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/total/klarna_fee', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
 		$data['countries'] = array();
 

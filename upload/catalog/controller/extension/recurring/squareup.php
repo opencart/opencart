@@ -15,9 +15,9 @@ class ControllerExtensionRecurringSquareup extends Controller {
         $recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
         
         if ($recurring_info) {
-            $data['cancel_url'] = html_entity_decode($this->url->link('extension/recurring/squareup/cancel', 'order_recurring_id=' . $order_recurring_id, 'SSL'));
+            $data['cancel_url'] = html_entity_decode($this->url->link('extension/recurring/squareup/cancel', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $order_recurring_id));
 
-            $data['continue'] = $this->url->link('account/recurring', '', true);    
+            $data['continue'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
             
             if ($recurring_info['status'] == ModelExtensionPaymentSquareup::RECURRING_ACTIVE) {
                 $data['order_recurring_id'] = $order_recurring_id;

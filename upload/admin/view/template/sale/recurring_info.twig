@@ -2,23 +2,21 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
-      <ul class="breadcrumb">
+      <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
-      </ul>
+      </ol>
     </div>
   </div>
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_recurring_detail }}</h3>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header">{{ text_recurring_detail }}</div>
+          <div class="card-body">
             <table class="table table-bordered">
               <tr>
                 <td>{{ text_order_recurring_id }}</td>
@@ -31,9 +29,9 @@
               <tr>
                 <td>{{ text_recurring_name }}</td>
                 <td>{% if recurring %}
-                  <a href="{{ recurring }}">{{ recurring_name }}</a>
+                    <a href="{{ recurring }}">{{ recurring_name }}</a>
                   {% else %}
-                  {{ recurring_name }}
+                    {{ recurring_name }}
                   {% endif %}</td>
               </tr>
               <tr>
@@ -53,11 +51,9 @@
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_order_detail }}</h3>
-          </div>
-          <div class="panel-body">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_order_detail }}</div>
+          <div class="card-body">
             <table class="table table-bordered">
               <tr>
                 <td>{{ text_order_id }}</td>
@@ -66,9 +62,9 @@
               <tr>
                 <td>{{ text_customer }}</td>
                 <td>{% if customer %}
-                  <a href="{{ customer }}">{{ firstname }} {{ lastname }}</a>
+                    <a href="{{ customer }}">{{ firstname }} {{ lastname }}</a>
                   {% else %}
-                  {{ firstname }} {{ lastname }}
+                    {{ firstname }} {{ lastname }}
                   {% endif %}</td>
               </tr>
               <tr>
@@ -88,11 +84,9 @@
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_product_detail }}</h3>
-      </div>
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_product_detail }}</div>
+      <div class="card-body">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -109,11 +103,9 @@
         </table>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_transaction }}</h3>
-      </div>
-      <div class="panel-body"> {{ buttons }}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_transaction }}</div>
+      <div class="card-body"> {{ buttons }}
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -124,17 +116,17 @@
           </thead>
           <tbody>
             {% if transactions %}
-            {% for transaction in transactions %}
-            <tr>
-              <td class="text-left">{{ transaction.date_added }}</td>
-              <td class="text-right">{{ transaction.amount }}</td>
-              <td class="text-left">{{ transaction.type }}</td>
-            </tr>
-            {% endfor %}
+              {% for transaction in transactions %}
+                <tr>
+                  <td class="text-left">{{ transaction.date_added }}</td>
+                  <td class="text-right">{{ transaction.amount }}</td>
+                  <td class="text-left">{{ transaction.type }}</td>
+                </tr>
+              {% endfor %}
             {% else %}
-            <tr>
-              <td class="text-center" colspan="7">{{ text_no_results }}</td>
-            </tr>
+              <tr>
+                <td class="text-center" colspan="7">{{ text_no_results }}</td>
+              </tr>
             {% endif %}
           </tbody>
         </table>

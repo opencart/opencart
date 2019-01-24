@@ -1,15 +1,15 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> {{ heading_title }}</h3>
-  </div>
-  <ul class="list-group">
+<div class="card mb-3">
+  <div class="card-header"><i class="fas fa-calendar"></i> {{ heading_title }}</div>
+  <ul class="list-group list-group-flush">
     {% if activities %}
-    {% for activity in activities %}
-    <li class="list-group-item">{{ activity.comment }}<br />
-      <small class="text-muted"><i class="fa fa-clock-o"></i> {{ activity.date_added }}</small></li>
-    {% endfor %}
+      {% for activity in activities %}
+        <li class="list-group-item">{{ activity.comment }}
+          <br/>
+          <small class="text-muted"><i class="fas fa-clock"></i> {{ activity.date_added }}</small>
+        </li>
+      {% endfor %}
     {% else %}
-    <li class="list-group-item text-center">{{ text_no_results }}</li>
+      <li class="list-group-item text-center">{{ text_no_results }}</li>
     {% endif %}
   </ul>
 </div>

@@ -1,7 +1,7 @@
 <?php
 class ControllerInstallStep1 extends Controller {
 	public function index() {
-		$this->language->load('install/step_1');
+		$this->load->language('install/step_1');
 		
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->response->redirect($this->url->link('install/step_2'));

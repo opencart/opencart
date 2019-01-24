@@ -10,7 +10,7 @@ class ModelExtensionModulePPLogin extends Model {
 		$request  = '';
 		$request .= 'grant_type=authorization_code';
 		$request .= '&code=' . $code;
-		$request .= '&redirect_uri=' . urlencode($this->url->link('extension/module/pp_login/login', '', true));
+		$request .= '&redirect_uri=' . urlencode($this->url->link('extension/module/pp_login/login', 'language=' . $this->config->get('config_language')));
 
 		$additional_opts = array(
 			CURLOPT_USERPWD    => $this->config->get('module_pp_login_client_id') . ':' . $this->config->get('module_pp_login_secret'),

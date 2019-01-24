@@ -18,7 +18,7 @@ $_['text_status']        = 'Status:';
 $_['text_date_added']    = 'Date Added:';
 $_['text_comment']       = 'Return Comments';
 $_['text_history']       = 'Return History';
-$_['text_empty']         = 'You have not made any previous returns!';
+$_['text_no_results']    = 'You have not made any previous returns!';
 $_['text_agree']         = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
 
 // Column

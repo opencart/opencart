@@ -2,12 +2,15 @@
 namespace DB;
 final class MySQLi {
 	private $connection;
+	private $connected;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
+		try {
+			mysqli_report(MYSQLI_REPORT_STRICT);
 
-		if ($this->connection->connect_error) {
-			throw new \Exception('Error: ' . $this->connection->error . '<br />Error No: ' . $this->connection->errno);
+			$this->connection = @new \mysqli($hostname, $username, $password, $database, $port);
+		} catch (\mysqli_sql_exception $e) {
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
 
 		$this->connection->set_charset("utf8");
@@ -53,11 +56,13 @@ final class MySQLi {
 		return $this->connection->insert_id;
 	}
 	
-	public function connected() {
+	public function isConnected() {
 		return $this->connection->ping();
 	}
 	
 	public function __destruct() {
-		$this->connection->close();
+		if ($this->connection) {
+			$this->connection->close();
+		}
 	}
 }

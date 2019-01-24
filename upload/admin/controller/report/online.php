@@ -41,15 +41,15 @@ class ControllerReportOnline extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'])
 		);
 		
-		$data['refresh'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['refresh'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('report/online');
 		$this->load->model('customer/customer');		
@@ -83,7 +83,7 @@ class ControllerReportOnline extends Controller {
 				'url'         => $result['url'],
 				'referer'     => $result['referer'],
 				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
+				'edit'        => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			);
 		}
 
@@ -99,13 +99,12 @@ class ControllerReportOnline extends Controller {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $customer_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}', true);
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $customer_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($customer_total - $this->config->get('config_limit_admin'))) ? $customer_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $customer_total, ceil($customer_total / $this->config->get('config_limit_admin')));
 

@@ -58,7 +58,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function deleteCard($token) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "worldpay_card WHERE customer_id = '" . $this->customer->isLogged() . "' AND token = '" . $this->db->escape($token) . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "worldpay_card WHERE customer_id = '" . (int)$this->customer->isLogged() . "' AND token = '" . $this->db->escape($token) . "'");
 
 		if ($this->db->countAffected() > 0) {
 			return true;
@@ -121,8 +121,8 @@ class ModelExtensionPaymentWorldpay extends Model {
 			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 		}
 
-		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
-		
+		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item);
+
 		$this->model_checkout_recurring->editReference($order_recurring_id, $order_id_rand);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -356,7 +356,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function logger($data) {
-		if ($this->config->get('worldpay_debug')) {
+		if ($this->config->get('payment_worldpay_debug')) {
 			$log = new Log('worldpay_debug.log');
 			$backtrace = debug_backtrace();
 			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' Data:  ' . print_r($data, 1));

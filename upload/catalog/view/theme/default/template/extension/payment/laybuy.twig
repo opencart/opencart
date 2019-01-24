@@ -2,7 +2,7 @@
   <div>
     <h3>{{ heading_title }}</h3>
   </div>
-  <div class="form-group">
+  <div class="form-group row">
     <label for="down-payment" class="col-sm-2">{{ entry_initial }}</label>
     <div class="col-sm-3">
       <select name="INIT" id="input-down-payment" class="form-control">
@@ -12,7 +12,7 @@
       </select>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row">
     <label for="months" class="col-sm-2">{{ entry_months }}</label>
     <div class="col-sm-3">
       <select name="MONTHS" id="input-months" class="form-control">
@@ -46,9 +46,9 @@
 </div>
 <p style="font-size: 1.3em">{{ text_delivery_msg }}</p>
 <p style="font-size: 1.3em">{{ text_fee_msg }}</p>
-<div class="buttons">
-  <div class="pull-right">
-    <input type="submit" form="laybuy-form" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}">
+<div class="d-inline-block pt-2 pd-2 w-100">
+  <div class="float-right">
+    <button type="submit" form="laybuy-form" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
   </div>
 </div>
 <script type="text/javascript"><!--

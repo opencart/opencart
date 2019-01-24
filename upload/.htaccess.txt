@@ -2,9 +2,9 @@
 
 # 2. In your opencart directory rename htaccess.txt to .htaccess.
 
-# For any support issues please visit: http://www.opencart.com
+# For any support issues please visit: https://www.opencart.com
 
-Options +FollowSymlinks
+Options +SymLinksIfOwnerMatch
 
 # Prevent Directoy listing
 Options -Indexes
@@ -12,15 +12,15 @@ Options -Indexes
 # Prevent Direct Access to files
 <FilesMatch "(?i)((\.tpl|.twig|\.ini|\.log|(?<!robots)\.txt))">
  Require all denied
-## For apache 2.2 and older, replace "Require all denied" with these two lines :
+## For apache 2.2 and older, replace "Require all denied" with these two lines:
 # Order deny,allow
 # Deny from all
 </FilesMatch>
 
 # SEO URL Settings
 RewriteEngine On
-# If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 
+# If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 RewriteBase /
 RewriteRule ^sitemap.xml$ index.php?route=extension/feed/google_sitemap [L]
 RewriteRule ^googlebase.xml$ index.php?route=extension/feed/google_base [L]

@@ -6,7 +6,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $this->load->library('squareup');
 
-        $data['action'] = $this->url->link('extension/payment/squareup/checkout', '', true);
+        $data['action'] = $this->url->link('extension/payment/squareup/checkout', 'language=' . $this->config->get('config_language'));
         $data['squareup_js_api'] = Squareup::PAYMENT_FORM_URL;
         
         if (!empty($this->session->data['payment_address']['postcode'])) {
@@ -224,7 +224,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $order_status_id, $order_status_comment, true);
             }
 
-            $json['redirect'] = $this->url->link('checkout/success', '', true);
+            $json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
         } catch (\Squareup\Exception $e) {
             if ($e->isCurlError()) {
                 $json['error'] = $this->language->get('text_token_issue_customer_error');

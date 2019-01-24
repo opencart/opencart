@@ -54,13 +54,21 @@ class ModelExtensionPaymentPPExpress extends Model {
 
 		$defaults['payment_pp_express_incontext_disable'] = 0;
 		$defaults['payment_pp_express_status'] = 0;
+		$defaults['payment_pp_express_currency'] = "USD";
 
 		$this->model_setting_setting->editSetting('payment_pp_express', $defaults);
+
+		$this->load->model('setting/event');
+
+		$this->model_setting_event->addEvent('extension_pp_express_checkout_js', 'catalog/controller/checkout/checkout/before', 'extension/payment/pp_express/eventLoadCheckoutJs');
 	}
 
 	public function uninstall() {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "paypal_order_transaction`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "paypal_order`");
+
+		$this->load->model('setting/event');
+		$this->model_setting_event->deleteEventByCode('extension_pp_express_checkout_js');
 	}
 
 	public function getPayPalOrder($order_id) {
@@ -74,17 +82,29 @@ class ModelExtensionPaymentPPExpress extends Model {
 	}
 
 	public function addTransaction($transaction_data, $request_data = array()) {
-		if ($request_data) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET 
+		`paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', 
+		`transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', 
+		`parent_id` = '" . $this->db->escape($transaction_data['parent_id']) . "', 
+		`date_added` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', 
+		`msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', 
+		`receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', 
+		`payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', 
+		`payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', 
+		`pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', 
+		`transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', 
+		`amount` = '" . (float)$transaction_data['amount'] . "', 
+		`debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
+
+		$paypal_order_transaction_id = $this->db->getLastId();
+
+		if (!empty($request_data)) {
 			$serialized_data = json_encode($request_data);
 
-			$this->db->query("UPDATE " . DB_PREFIX . "paypal_order_transaction SET call_data = '" . $this->db->escape($serialized_data) . "' WHERE paypal_order_transaction_id = " . (int)$paypal_order_transaction_id . " LIMIT 1");
+			$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `call_data` = '" . $this->db->escape($serialized_data) . "' WHERE `paypal_order_transaction_id` = " . (int)$paypal_order_transaction_id . " LIMIT 1");
 		}
 
-
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET `paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', `transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', `parent_id` = '" . $this->db->escape($transaction_data['parent_id']) . "', `date_added` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', `msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', `receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', `payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', `payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', `pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', `transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', `amount` = '" . (float)$transaction_data['amount'] . "', `debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
-
-		return $this->db->getLastId();
+		return $paypal_order_transaction_id;
 	}
 
 	public function updateTransaction($transaction) {
@@ -148,6 +168,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 			'THB',
 			'TRY',
 			'USD',
+			'INR',
 		);
 	}
 
@@ -323,25 +344,25 @@ class ModelExtensionPaymentPPExpress extends Model {
 			CURLOPT_POSTFIELDS => http_build_query(array_merge($data, $settings), '', "&")
 		);
 
-		$ch = curl_init();
+		$curl = curl_init();
 
-		curl_setopt_array($ch, $defaults);
+		curl_setopt_array($curl, $defaults);
 
-		if (!$result = curl_exec($ch)) {
+		if (!$curl_response = curl_exec($curl)) {
 			$log_data = array(
-				'curl_error' => curl_error($ch),
-				'curl_errno' => curl_errno($ch)
+				'curl_error' => curl_error($curl),
+				'curl_errno' => curl_errno($curl)
 			);
 
 			$this->log($log_data, 'CURL failed');
 			return false;
 		}
 
-		$this->log($result, 'Result');
+		$this->log($curl_response, 'Result');
 
-		curl_close($ch);
+		curl_close($curl);
 
-		return $this->cleanReturn($result);
+		return $this->cleanReturn($curl_response);
 	}
 
 	private function curl($endpoint, $additional_opts = array()) {
@@ -355,15 +376,16 @@ class ModelExtensionPaymentPPExpress extends Model {
 			CURLOPT_URL => $endpoint,
 		);
 
-		$ch = curl_init($endpoint);
+		$curl = curl_init($endpoint);
 
 		$opts = $default_opts + $additional_opts;
 
-		curl_setopt_array($ch, $opts);
+		curl_setopt_array($curl, $opts);
 
-		$response = json_decode(curl_exec($ch));
+		$curl_response = curl_exec($curl);
+		$response = json_decode($curl_response);
 
-		curl_close($ch);
+		curl_close($curl);
 
 		return $response;
 	}

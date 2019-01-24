@@ -30,12 +30,22 @@ class ControllerExtensionPaymentEway extends Controller {
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
+		$data['text_testing'] = '';
+
 		if ($this->config->get('payment_eway_test')) {
 			$data['text_testing'] = $this->language->get('text_testing');
 			$data['Endpoint'] = 'Sandbox';
 		} else {
 			$data['Endpoint'] = 'Production';
 		}
+
+		$this->load->model('localisation/zone');
+
+		$payment_zone_info = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
+		$payment_zone_code = isset($payment_zone_info['code']) ? $payment_zone_info['code'] : '';
+
+		$shipping_zone_info = $this->model_localisation_zone->getZone($order_info['shipping_zone_id']);
+		$shipping_zone_code = isset($shipping_zone_info['code']) ? $shipping_zone_info['code'] : '';
 
 		$request = new stdClass();
 
@@ -47,7 +57,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->Customer->Street1 = (string)substr($order_info['payment_address_1'], 0, 50);
 		$request->Customer->Street2 = (string)substr($order_info['payment_address_2'], 0, 50);
 		$request->Customer->City = (string)substr($order_info['payment_city'], 0, 50);
-		$request->Customer->State = (string)substr($order_info['payment_zone'], 0, 50);
+		$request->Customer->State = (string)substr($payment_zone_code, 0, 50);
 		$request->Customer->PostalCode = (string)substr($order_info['payment_postcode'], 0, 30);
 		$request->Customer->Country = strtolower($order_info['payment_iso_code_2']);
 		$request->Customer->Email = $order_info['email'];
@@ -59,7 +69,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->ShippingAddress->Street1 = (string)substr($order_info['shipping_address_1'], 0, 50);
 		$request->ShippingAddress->Street2 = (string)substr($order_info['shipping_address_2'], 0, 50);
 		$request->ShippingAddress->City = (string)substr($order_info['shipping_city'], 0, 50);
-		$request->ShippingAddress->State = (string)substr($order_info['shipping_zone'], 0, 50);
+		$request->ShippingAddress->State = (string)substr($shipping_zone_code, 0, 50);
 		$request->ShippingAddress->PostalCode = (string)substr($order_info['shipping_postcode'], 0, 30);
 		$request->ShippingAddress->Country = strtolower($order_info['shipping_iso_code_2']);
 		$request->ShippingAddress->Email = $order_info['email'];
@@ -74,8 +84,8 @@ class ControllerExtensionPaymentEway extends Controller {
 			$item->SKU = (string)substr($product['product_id'], 0, 12);
 			$item->Description = (string)substr($product['name'], 0, 26);
 			$item->Quantity = strval($product['quantity']);
-			$item->UnitCost = strval($item_price * 100);
-			$item->Total = strval($item_total * 100);
+			$item->UnitCost = $this->lowestDenomination($item_price, $order_info['currency_code']);
+			$item->Total = $this->lowestDenomination($item_total, $order_info['currency_code']);
 			$request->Items[] = $item;
 			$invoice_desc .= $product['name'] . ', ';
 		}
@@ -91,8 +101,8 @@ class ControllerExtensionPaymentEway extends Controller {
 			$item->SKU = '';
 			$item->Description = (string)substr($this->language->get('text_shipping'), 0, 26);
 			$item->Quantity = 1;
-			$item->UnitCost = $shipping * 100;
-			$item->Total = $shipping * 100;
+			$item->UnitCost = $this->lowestDenomination($shipping, $order_info['currency_code']);
+			$item->Total = $this->lowestDenomination($shipping, $order_info['currency_code']);
 			$request->Items[] = $item;
 		}
 
@@ -101,13 +111,13 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->Options = array($opt1);
 
 		$request->Payment = new stdClass();
-		$request->Payment->TotalAmount = number_format($amount, 2, '.', '') * 100;
+		$request->Payment->TotalAmount = $this->lowestDenomination($amount, $order_info['currency_code']);
 		$request->Payment->InvoiceNumber = $this->session->data['order_id'];
 		$request->Payment->InvoiceDescription = $invoice_desc;
 		$request->Payment->InvoiceReference = (string)substr($this->config->get('config_name'), 0, 40) . ' - #' . $order_info['order_id'];
 		$request->Payment->CurrencyCode = $order_info['currency_code'];
 
-		$request->RedirectUrl = $this->url->link('extension/payment/eway/callback', '', true);
+		$request->RedirectUrl = str_replace('&amp;', '&', $this->url->link('extension/payment/eway/callback', 'language=' . $this->config->get('config_language')));
 		if ($this->config->get('payment_eway_transaction_method') == 'auth') {
 			$request->Method = 'Authorise';
 		} else {
@@ -116,6 +126,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->TransactionType = 'Purchase';
 		$request->DeviceID = 'opencart-' . VERSION . ' eway-trans-2.1.2';
 		$request->CustomerIP = $this->request->server['REMOTE_ADDR'];
+		$request->PartnerID = '0f1bec3642814f89a2ea06e7d2800b7f';		
 
 		$this->load->model('extension/payment/eway');
 		$template = 'eway';
@@ -144,7 +155,7 @@ class ControllerExtensionPaymentEway extends Controller {
 			$data['error'] = $lbl_error;
 		} else {
 			if ($this->config->get('payment_eway_paymode') == 'iframe') {
-				$data['callback'] = $this->url->link('extension/payment/eway/callback', 'AccessCode=' . $result->AccessCode, true);
+				$data['callback'] = $this->url->link('extension/payment/eway/callback', 'language=' . $this->config->get('config_language') . '&AccessCode=' . $result->AccessCode);
 				$data['SharedPaymentUrl'] = $result->SharedPaymentUrl;
 			}
 			$data['action'] = $result->FormActionURL;
@@ -207,10 +218,10 @@ class ControllerExtensionPaymentEway extends Controller {
 
 			if ($is_error) {
 				if ($fraud) {
-					$this->response->redirect($this->url->link('checkout/failure', '', true));
+					$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 				} else {
 					$this->session->data['error'] = $this->language->get('text_transaction_failed');
-					$this->response->redirect($this->url->link('checkout/checkout', '', true));
+					$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 				}
 			} else {
 				$order_id = $result->Options[0]->Value;
@@ -221,7 +232,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$eway_order_data = array(
 					'order_id' => $order_id,
 					'transaction_id' => $result->TransactionID,
-					'amount' => $result->TotalAmount / 100,
+					'amount' => $this->ValidateDenomination($result->TotalAmount, $order_info['currency_code']),
 					'currency_code' => $order_info['currency_code'],
 					'debug_data' => json_encode($result)
 				);
@@ -266,9 +277,24 @@ class ControllerExtensionPaymentEway extends Controller {
 					$this->model_extension_payment_eway->addFullCard($this->session->data['order_id'], $card_data);
 				}
 
-				$this->response->redirect($this->url->link('checkout/success', '', true));
+				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
 			}
 		}
 	}
+	
+	public function lowestDenomination($value, $currency) {
+        $power = $this->currency->getDecimalPlace($currency);
 
+        $value = (float)$value;
+
+        return (int)($value * pow(10, $power));
+    }
+	
+	public function validateDenomination($value, $currency) {
+        $power = $this->currency->getDecimalPlace($currency);
+
+        $value = (float)$value;
+
+        return (int)($value * pow(10, '-' . $power));
+    }
 }

@@ -107,7 +107,7 @@ class ControllerExtensionPaymentPPPro extends Controller {
 		$request .= '&ZIP=' . urlencode($order_info['payment_postcode']);
 		$request .= '&COUNTRYCODE=' . urlencode($order_info['payment_iso_code_2']);
 		$request .= '&CURRENCYCODE=' . urlencode($order_info['currency_code']);
-		$request .= '&BUTTONSOURCE=' . urlencode('OpenCart_2.0_WPP');
+		$request .= '&BUTTONSOURCE=' . urlencode('OpenCart_3.1_WPP');
 
 		if ($this->cart->hasShipping()) {
 			$request .= '&SHIPTONAME=' . urlencode($order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname']);
@@ -171,7 +171,7 @@ class ControllerExtensionPaymentPPPro extends Controller {
 
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_pp_pro_order_status_id'), $message, false);
 
-			$json['success'] = $this->url->link('checkout/success');
+			$json['success'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		} else {
 			$json['error'] = $response_info['L_LONGMESSAGE0'];
 		}

@@ -18,6 +18,12 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout', $data));
 	}
 
+	public function eventLoadCheckoutJs($route, &$data) {
+		if ($this->config->get('payment_klarna_account') || $this->config->get('payment_klarna_invoice')) {
+			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
+		}
+	}
+
 	public function main() {
 		$this->load->language('extension/payment/klarna_checkout');
 
@@ -29,7 +35,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$redirect = $this->url->link('checkout/cart');
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		// Validate minimum quantity requirements.
@@ -45,27 +51,27 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$redirect = $this->url->link('checkout/cart');
+				$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 			}
 		}
 
 		// Validate cart has recurring products
 		if ($this->cart->hasRecurringProducts()) {
-			$redirect = $this->url->link('checkout/cart');
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		list($totals, $taxes, $total) = $this->model_extension_payment_klarna_checkout->getTotals();
 
-		if ($this->config->get('klarna_checkout_total') > 0 && $this->config->get('klarna_checkout_total') > $total) {
-			$redirect = $this->url->link('checkout/cart');
+		if ($this->config->get('payment_klarna_checkout_total') > 0 && $this->config->get('payment_klarna_checkout_total') > $total) {
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
-		if (!$this->config->get('klarna_checkout_status')) {
-			$redirect = $this->url->link('checkout/cart');
+		if (!$this->config->get('payment_klarna_checkout_status')) {
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		if ($this->model_extension_payment_klarna_checkout->checkForPaymentTaxes($products)) {
-			$redirect = $this->url->link('checkout/cart');
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		$text_title = $this->language->get('text_title');
@@ -78,7 +84,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->session->data['payment_method'] = array(
 			'code'       => 'klarna_checkout',
 			'title'      => $text_title,
-			'terms'      => $this->url->link('information/information', 'information_id=' . $this->config->get('klarna_checkout_terms'), true),
+			'terms'      => $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('payment_klarna_checkout_terms')),
 			'sort_order' => '1'
 		);
 
@@ -106,10 +112,10 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		//Klarna Connector
-		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $this->session->data['currency']);
+		list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('payment_klarna_checkout_account'), $this->session->data['currency']);
 
 		if (!$klarna_account || !$connector) {
-			$redirect = $this->url->link('checkout/cart');
+			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		}
 
 		if (!$redirect) {
@@ -220,12 +226,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		}
 
 		if (isset($this->request->post['response']) && $this->request->post['response'] == 'template') {
+			$data = array();
+
 			$data['redirect'] = $redirect;
 
 			$data['klarna_checkout'] = $html_snippet;
 
 			$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_main', $data));
 		} elseif (isset($this->request->post['response']) && $this->request->post['response'] == 'json') {
+			$json = array();
+
 			$json['redirect'] = $redirect;
 
 			$this->response->addHeader('Content-Type: application/json');
@@ -239,7 +249,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$this->load->model('extension/payment/klarna_checkout');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -292,7 +302,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
-				$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 			} else {
 				$image = '';
 			}
@@ -343,7 +353,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			);
 		}
 
@@ -416,7 +426,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('localisation/zone');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -474,7 +484,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	public function cartTotal() {
 		$this->load->language('checkout/cart');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -536,7 +546,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('localisation/zone');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -584,7 +594,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			// Check credentials in request with ones stored in db
 			$valid_request = false;
-			foreach ($this->config->get('klarna_checkout_account') as $account) {
+			foreach ($this->config->get('payment_klarna_checkout_account') as $account) {
 				if (($account['merchant_id'] == $klarna_checkout_order_data['merchant_id']) && ($account['secret'] == $klarna_checkout_order_data['secret'])) {
 					$valid_request = true;
 					break;
@@ -608,7 +618,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);
 
 				if ($customer_info) {
-					$this->customer->login($customer_info['email'], '', true);
+					$this->customer->login($customer_info['email']);
 				}
 			}
 
@@ -622,7 +632,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			// Set more session data from the order
 			$this->session->data['currency'] = $order_info['currency_code'];
-			$this->session->data['language'] = $order_info['language_code'];
+			$this->config->set('config_language', $order_info['language_code']);
 
 			$country_info = $this->model_extension_payment_klarna_checkout->getCountryByIsoCode2($request->shipping_address->country);
 
@@ -715,7 +725,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 					$shipping_methods = $method_data;
 
 					if ($shipping_methods) {
-						list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $this->session->data['currency']);
+						list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('payment_klarna_checkout_account'), $this->session->data['currency']);
 
 						if ($klarna_account && $connector) {
 							list($klarna_order_data, $encrypted_order_data) = $this->klarnaOrderData($klarna_account);
@@ -824,7 +834,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('checkout/order');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -837,7 +847,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				$order_info = $this->model_checkout_order->getOrder($klarna_checkout_order['order_id']);
 
 				if ($order_info) {
-					list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['currency_code']);
+					list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('payment_klarna_checkout_account'), $order_info['currency_code']);
 
 					if (!$klarna_account || !$connector) {
 						$this->model_extension_payment_klarna_checkout->log('Could not getConnector');
@@ -849,10 +859,10 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 					if ($retrieve) {
 						switch ($request->event_type) {
 							case 'FRAUD_RISK_ACCEPTED':
-								$order_status_id = $this->config->get('klarna_checkout_order_status_fraud_accepted_id');
+								$order_status_id = $this->config->get('payment_klarna_checkout_order_status_fraud_accepted_id');
 								break;
 							case 'FRAUD_RISK_REJECTED':
-								$order_status_id = $this->config->get('klarna_checkout_order_status_fraud_rejected_id');
+								$order_status_id = $this->config->get('payment_klarna_checkout_order_status_fraud_rejected_id');
 								break;
 						}
 					}
@@ -874,7 +884,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/klarna_checkout');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -921,7 +931,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 			// Check credentials in request with ones stored in db
 			$valid_request = false;
-			foreach ($this->config->get('klarna_checkout_account') as $account) {
+			foreach ($this->config->get('payment_klarna_checkout_account') as $account) {
 				if (($account['merchant_id'] == $klarna_checkout_order_data['merchant_id']) && ($account['secret'] == $klarna_checkout_order_data['secret'])) {
 					$valid_request = true;
 					break;
@@ -945,7 +955,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				$customer_info = $this->model_account_customer->getCustomer($klarna_checkout_order_data['customer_id']);
 
 				if ($customer_info) {
-					$this->customer->login($customer_info['email'], '', true);
+					$this->customer->login($customer_info['email']);
 				}
 			}
 
@@ -1071,7 +1081,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			http_response_code(200);
 		} else {
 			http_response_code(303);
-			$this->response->addHeader('Location: ' . $this->url->link('checkout/failure', '', true));
+			$this->response->addHeader('Location: ' . $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1081,7 +1091,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 	public function confirmation() {
 		$this->load->language('extension/payment/klarna_checkout');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -1111,25 +1121,25 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_basket'),
-			'href' => $this->url->link('checkout/cart')
+			'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_checkout'),
-			'href' => $this->url->link('checkout/checkout', '', true)
+			'href' => $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_success'),
-			'href' => $this->url->link('checkout/success')
+			'href' => $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'))
 		);
 
-		$data['continue'] = $this->url->link('common/home');
+		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -1151,11 +1161,11 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				$order_info = $this->model_checkout_order->getOrder($klarna_checkout_order['order_id']);
 
 				if ($order_info) {
-					list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['currency_code']);
+					list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('payment_klarna_checkout_account'), $order_info['currency_code']);
 
 					if (!$klarna_account || !$connector) {
 						$this->model_extension_payment_klarna_checkout->log('Could not getConnector');
-						$this->response->redirect($this->url->link('checkout/failure', '', true));
+						$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 					}
 
 					$retrieve = $this->model_extension_payment_klarna_checkout->orderRetrieve($connector, $this->request->get['klarna_order_id']);
@@ -1167,16 +1177,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 							$html_snippet = $klarna_checkout['html_snippet'];
 						}
 					} else {
-						$this->response->redirect($this->url->link('checkout/cart', '', true));
+						$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 					}
 				}
 			} else {
 				$this->model_extension_payment_klarna_checkout->log('Could not find order id using ' . $this->request->get['klarna_order_id']);
-				$this->response->redirect($this->url->link('checkout/failure', '', true));
+				$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
 			$this->model_extension_payment_klarna_checkout->log('$this->request->get[\'klarna_order_id\'] is not set');
-			$this->response->redirect($this->url->link('checkout/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['klarna_checkout'] = $html_snippet;
@@ -1188,7 +1198,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('checkout/order');
 
-		if (!$this->config->get('klarna_checkout_status')) {
+		if (!$this->config->get('payment_klarna_checkout_status')) {
 			return false;
 		}
 
@@ -1199,7 +1209,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 				$order_info = $this->model_checkout_order->getOrder($klarna_checkout_order['order_id']);
 
 				if ($order_info) {
-					list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('klarna_checkout_account'), $order_info['currency_code']);
+					list($klarna_account, $connector) = $this->model_extension_payment_klarna_checkout->getConnector($this->config->get('payment_klarna_checkout_account'), $order_info['currency_code']);
 
 					if ($klarna_account && $connector) {
 						$order = $this->model_extension_payment_klarna_checkout->omOrderRetrieve($connector, $this->request->get['klarna_order_id']);
@@ -1257,22 +1267,22 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 								$order_status_id = false;
 								switch ($order['status']) {
 									case 'AUTHORIZED':
-										$order_status_id = $this->config->get('klarna_checkout_order_status_authorised_id');
+										$order_status_id = $this->config->get('payment_klarna_checkout_order_status_authorised_id');
 
 										if ($order['fraud_status'] == 'PENDING') {
-											$order_status_id = $this->config->get('klarna_checkout_order_status_fraud_pending_id');
+											$order_status_id = $this->config->get('payment_klarna_checkout_order_status_fraud_pending_id');
 										} elseif ($order['fraud_status'] == 'REJECTED') {
-											$order_status_id = $this->config->get('klarna_checkout_order_status_fraud_rejected_id');
+											$order_status_id = $this->config->get('payment_klarna_checkout_order_status_fraud_rejected_id');
 										}
 										break;
 									case 'PART_CAPTURED':
-										$order_status_id = $this->config->get('klarna_checkout_order_status_part_captured_id');
+										$order_status_id = $this->config->get('payment_klarna_checkout_order_status_part_captured_id');
 										break;
 									case 'CAPTURED':
-										$order_status_id = $this->config->get('klarna_checkout_order_status_captured_id');
+										$order_status_id = $this->config->get('payment_klarna_checkout_order_status_captured_id');
 										break;
 									case 'CANCELLED':
-										$order_status_id = $this->config->get('klarna_checkout_order_status_cancelled_id');
+										$order_status_id = $this->config->get('payment_klarna_checkout_order_status_cancelled_id');
 										break;
 								}
 
@@ -1593,9 +1603,9 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			$subtotal = $this->cart->getSubTotal();
 
 			// Affiliate
-			$this->load->model('affiliate/affiliate');
+			$this->load->model('account/affiliate');
 
-			$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
+			$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);
 
 			if ($affiliate_info) {
 				$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
@@ -1606,9 +1616,9 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 			}
 
 			// Marketing
-			$this->load->model('checkout/marketing');
+			$this->load->model('marketing/marketing');
 
-			$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);
+			$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->cookie['tracking']);
 
 			if ($marketing_info) {
 				$order_data['marketing_id'] = $marketing_info['marketing_id'];
@@ -1745,16 +1755,16 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		list($totals, $taxes, $total) = $this->model_extension_payment_klarna_checkout->getTotals();
 
 		$merchant_urls = array(
-			'checkout'	     => html_entity_decode($this->url->link('extension/payment/klarna_checkout', 'klarna_order_id={checkout.order.id}', true)),
-			'confirmation'   => html_entity_decode($this->url->link('extension/payment/klarna_checkout/confirmation', 'klarna_order_id={checkout.order.id}', true)),
-			'push'			 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/push', 'klarna_order_id={checkout.order.id}', true)),
-			'validation'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/validation', 'klarna_order_id={checkout.order.id}', true)),
-			'address_update' => html_entity_decode($this->url->link('extension/payment/klarna_checkout/addressUpdate', 'klarna_order_id={checkout.order.id}', true)),
-			'notification'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/notification', 'klarna_order_id={checkout.order.id}', true)),
+			'checkout'	     => html_entity_decode($this->url->link('extension/payment/klarna_checkout', 'language=' . $this->config->get('config_language') . '&klarna_order_id={checkout.order.id}')),
+			'confirmation'   => html_entity_decode($this->url->link('extension/payment/klarna_checkout/confirmation', 'language=' . $this->config->get('config_language') . '&klarna_order_id={checkout.order.id}')),
+			'push'			 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/push', 'language=' . $this->config->get('config_language') . '&klarna_order_id={checkout.order.id}')),
+			'validation'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/validation', 'language=' . $this->config->get('config_language') . '&klarna_order_id={checkout.order.id}')),
+			'address_update' => html_entity_decode($this->url->link('extension/payment/klarna_checkout/addressUpdate', 'language=' . $this->config->get('config_language') . '&klarna_order_id={checkout.order.id}')),
+			'notification'	 => html_entity_decode($this->url->link('extension/payment/klarna_checkout/notification', 'language=' . $this->config->get('config_language') . '&klarna_order_id={checkout.order.id}')),
 		);
 
-		if ($this->config->get('klarna_checkout_terms')) {
-			$merchant_urls['terms'] = html_entity_decode($this->url->link('information/information', 'information_id=' . $this->config->get('klarna_checkout_terms'), true));
+		if ($this->config->get('payment_klarna_checkout_terms')) {
+			$merchant_urls['terms'] = html_entity_decode($this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('payment_klarna_checkout_terms')));
 		}
 
 		$country_info = $this->model_localisation_country->getCountry($klarna_account['country']);
@@ -1787,46 +1797,46 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$klarna_order_data['options'] = array();
 
-		if ($this->config->get('klarna_checkout_colour_button')) {
-			$klarna_order_data['options']['color_button'] = $this->config->get('klarna_checkout_colour_button');
+		if ($this->config->get('payment_klarna_checkout_colour_button')) {
+			$klarna_order_data['options']['color_button'] = $this->config->get('payment_klarna_checkout_colour_button');
 		}
 
-		if ($this->config->get('klarna_checkout_colour_button_text')) {
-			$klarna_order_data['options']['color_button_text'] = $this->config->get('klarna_checkout_colour_button_text');
+		if ($this->config->get('payment_klarna_checkout_colour_button_text')) {
+			$klarna_order_data['options']['color_button_text'] = $this->config->get('payment_klarna_checkout_colour_button_text');
 		}
 
-		if ($this->config->get('klarna_checkout_colour_checkbox')) {
-			$klarna_order_data['options']['color_checkbox'] = $this->config->get('klarna_checkout_colour_checkbox');
+		if ($this->config->get('payment_klarna_checkout_colour_checkbox')) {
+			$klarna_order_data['options']['color_checkbox'] = $this->config->get('payment_klarna_checkout_colour_checkbox');
 		}
 
-		if ($this->config->get('klarna_checkout_colour_checkbox_checkmark')) {
-			$klarna_order_data['options']['color_checkbox_checkmark'] = $this->config->get('klarna_checkout_colour_checkbox_checkmark');
+		if ($this->config->get('payment_klarna_checkout_colour_checkbox_checkmark')) {
+			$klarna_order_data['options']['color_checkbox_checkmark'] = $this->config->get('payment_klarna_checkout_colour_checkbox_checkmark');
 		}
 
-		if ($this->config->get('klarna_checkout_colour_header')) {
-			$klarna_order_data['options']['color_header'] = $this->config->get('klarna_checkout_colour_header');
+		if ($this->config->get('payment_klarna_checkout_colour_header')) {
+			$klarna_order_data['options']['color_header'] = $this->config->get('payment_klarna_checkout_colour_header');
 		}
 
-		if ($this->config->get('klarna_checkout_colour_link')) {
-			$klarna_order_data['options']['color_link'] = $this->config->get('klarna_checkout_colour_link');
+		if ($this->config->get('payment_klarna_checkout_colour_link')) {
+			$klarna_order_data['options']['color_link'] = $this->config->get('payment_klarna_checkout_colour_link');
 		}
 
-		if ($this->config->get('klarna_checkout_separate_shipping_address')) {
+		if ($this->config->get('payment_klarna_checkout_separate_shipping_address')) {
 			$klarna_order_data['options']['allow_separate_shipping_address'] = true;
 		}
 
 		// Only pass DOB/title mandatory for UK stores
 		if ($country_info['iso_code_2'] == 'GB') {
-			if ($this->config->get('klarna_checkout_dob_mandatory')) {
+			if ($this->config->get('payment_klarna_checkout_dob_mandatory')) {
 				$klarna_order_data['options']['date_of_birth_mandatory'] = true;
 			}
 
-			if ($this->config->get('klarna_checkout_title_mandatory')) {
+			if ($this->config->get('payment_klarna_checkout_title_mandatory')) {
 				$klarna_order_data['options']['title_mandatory'] = true;
 			}
 		}
 
-		if ($this->config->get('klarna_checkout_additional_text_box') && $this->customer->isLogged() && !$this->customer->getNewsletter()) {
+		if ($this->config->get('payment_klarna_checkout_additional_text_box') && $this->customer->isLogged() && !$this->customer->getNewsletter()) {
 			$klarna_order_data['options']['additional_checkbox'] = array(
 				'text'	   => $this->language->get('text_newsletter'),
 				'checked'  => false,

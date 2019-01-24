@@ -14,7 +14,7 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
 		}
 
 		$this->load->model('localisation/order_status');
@@ -77,148 +77,148 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+			'href' => $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
 		);
 
-		$data['action'] = $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/payment/firstdata_remote', 'user_token=' . $this->session->data['user_token']);
 		
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
-		if (isset($this->request->post['firstdata_remote_merchant_id'])) {
-			$data['firstdata_remote_merchant_id'] = $this->request->post['firstdata_remote_merchant_id'];
+		if (isset($this->request->post['payment_firstdata_remote_merchant_id'])) {
+			$data['payment_firstdata_remote_merchant_id'] = $this->request->post['payment_firstdata_remote_merchant_id'];
 		} else {
-			$data['firstdata_remote_merchant_id'] = $this->config->get('firstdata_remote_merchant_id');
+			$data['payment_firstdata_remote_merchant_id'] = $this->config->get('payment_firstdata_remote_merchant_id');
 		}
 
-		if (isset($this->request->post['firstdata_remote_user_id'])) {
-			$data['firstdata_remote_user_id'] = $this->request->post['firstdata_remote_user_id'];
+		if (isset($this->request->post['payment_firstdata_remote_user_id'])) {
+			$data['payment_firstdata_remote_user_id'] = $this->request->post['payment_firstdata_remote_user_id'];
 		} else {
-			$data['firstdata_remote_user_id'] = $this->config->get('firstdata_remote_user_id');
+			$data['payment_firstdata_remote_user_id'] = $this->config->get('payment_firstdata_remote_user_id');
 		}
 
-		if (isset($this->request->post['firstdata_remote_password'])) {
-			$data['firstdata_remote_password'] = $this->request->post['firstdata_remote_password'];
+		if (isset($this->request->post['payment_firstdata_remote_password'])) {
+			$data['payment_firstdata_remote_password'] = $this->request->post['payment_firstdata_remote_password'];
 		} else {
-			$data['firstdata_remote_password'] = $this->config->get('firstdata_remote_password');
+			$data['payment_firstdata_remote_password'] = $this->config->get('payment_firstdata_remote_password');
 		}
 
-		if (isset($this->request->post['firstdata_remote_certificate'])) {
-			$data['firstdata_remote_certificate'] = $this->request->post['firstdata_remote_certificate'];
+		if (isset($this->request->post['payment_firstdata_remote_certificate'])) {
+			$data['payment_firstdata_remote_certificate'] = $this->request->post['payment_firstdata_remote_certificate'];
 		} else {
-			$data['firstdata_remote_certificate'] = $this->config->get('firstdata_remote_certificate');
+			$data['payment_firstdata_remote_certificate'] = $this->config->get('payment_firstdata_remote_certificate');
 		}
 
-		if (isset($this->request->post['firstdata_remote_key'])) {
-			$data['firstdata_remote_key'] = $this->request->post['firstdata_remote_key'];
+		if (isset($this->request->post['payment_firstdata_remote_key'])) {
+			$data['payment_firstdata_remote_key'] = $this->request->post['payment_firstdata_remote_key'];
 		} else {
-			$data['firstdata_remote_key'] = $this->config->get('firstdata_remote_key');
+			$data['payment_firstdata_remote_key'] = $this->config->get('payment_firstdata_remote_key');
 		}
 
-		if (isset($this->request->post['firstdata_remote_key_pw'])) {
-			$data['firstdata_remote_key_pw'] = $this->request->post['firstdata_remote_key_pw'];
+		if (isset($this->request->post['payment_firstdata_remote_key_pw'])) {
+			$data['payment_firstdata_remote_key_pw'] = $this->request->post['payment_firstdata_remote_key_pw'];
 		} else {
-			$data['firstdata_remote_key_pw'] = $this->config->get('firstdata_remote_key_pw');
+			$data['payment_firstdata_remote_key_pw'] = $this->config->get('payment_firstdata_remote_key_pw');
 		}
 
-		if (isset($this->request->post['firstdata_remote_ca'])) {
-			$data['firstdata_remote_ca'] = $this->request->post['firstdata_remote_ca'];
+		if (isset($this->request->post['payment_firstdata_remote_ca'])) {
+			$data['payment_firstdata_remote_ca'] = $this->request->post['payment_firstdata_remote_ca'];
 		} else {
-			$data['firstdata_remote_ca'] = $this->config->get('firstdata_remote_ca');
+			$data['payment_firstdata_remote_ca'] = $this->config->get('payment_firstdata_remote_ca');
 		}
 
-		if (isset($this->request->post['firstdata_remote_geo_zone_id'])) {
-			$data['firstdata_remote_geo_zone_id'] = $this->request->post['firstdata_remote_geo_zone_id'];
+		if (isset($this->request->post['payment_firstdata_remote_geo_zone_id'])) {
+			$data['payment_firstdata_remote_geo_zone_id'] = $this->request->post['payment_firstdata_remote_geo_zone_id'];
 		} else {
-			$data['firstdata_remote_geo_zone_id'] = $this->config->get('firstdata_remote_geo_zone_id');
+			$data['payment_firstdata_remote_geo_zone_id'] = $this->config->get('payment_firstdata_remote_geo_zone_id');
 		}
 
-		if (isset($this->request->post['firstdata_remote_total'])) {
-			$data['firstdata_remote_total'] = $this->request->post['firstdata_remote_total'];
+		if (isset($this->request->post['payment_firstdata_remote_total'])) {
+			$data['payment_firstdata_remote_total'] = $this->request->post['payment_firstdata_remote_total'];
 		} else {
-			$data['firstdata_remote_total'] = $this->config->get('firstdata_remote_total');
+			$data['payment_firstdata_remote_total'] = $this->config->get('payment_firstdata_remote_total');
 		}
 
-		if (isset($this->request->post['firstdata_remote_sort_order'])) {
-			$data['firstdata_remote_sort_order'] = $this->request->post['firstdata_remote_sort_order'];
+		if (isset($this->request->post['payment_firstdata_remote_sort_order'])) {
+			$data['payment_firstdata_remote_sort_order'] = $this->request->post['payment_firstdata_remote_sort_order'];
 		} else {
-			$data['firstdata_remote_sort_order'] = $this->config->get('firstdata_remote_sort_order');
+			$data['payment_firstdata_remote_sort_order'] = $this->config->get('payment_firstdata_remote_sort_order');
 		}
 
-		if (isset($this->request->post['firstdata_remote_status'])) {
-			$data['firstdata_remote_status'] = $this->request->post['firstdata_remote_status'];
+		if (isset($this->request->post['payment_firstdata_remote_status'])) {
+			$data['payment_firstdata_remote_status'] = $this->request->post['payment_firstdata_remote_status'];
 		} else {
-			$data['firstdata_remote_status'] = $this->config->get('firstdata_remote_status');
+			$data['payment_firstdata_remote_status'] = $this->config->get('payment_firstdata_remote_status');
 		}
 
-		if (isset($this->request->post['firstdata_remote_debug'])) {
-			$data['firstdata_remote_debug'] = $this->request->post['firstdata_remote_debug'];
+		if (isset($this->request->post['payment_firstdata_remote_debug'])) {
+			$data['payment_firstdata_remote_debug'] = $this->request->post['payment_firstdata_remote_debug'];
 		} else {
-			$data['firstdata_remote_debug'] = $this->config->get('firstdata_remote_debug');
+			$data['payment_firstdata_remote_debug'] = $this->config->get('payment_firstdata_remote_debug');
 		}
-		if (isset($this->request->post['firstdata_remote_auto_settle'])) {
-			$data['firstdata_remote_auto_settle'] = $this->request->post['firstdata_remote_auto_settle'];
-		} elseif (!isset($this->request->post['payment_firstdata_auto_settle']) && $this->config->get('firstdata_remote_auto_settle') != '') {
-			$data['firstdata_remote_auto_settle'] = $this->config->get('firstdata_remote_auto_settle');
+		if (isset($this->request->post['payment_firstdata_remote_auto_settle'])) {
+			$data['payment_firstdata_remote_auto_settle'] = $this->request->post['payment_firstdata_remote_auto_settle'];
+		} elseif (!isset($this->request->post['payment_firstdata_auto_settle']) && $this->config->get('payment_firstdata_remote_auto_settle') != '') {
+			$data['payment_firstdata_remote_auto_settle'] = $this->config->get('payment_firstdata_remote_auto_settle');
 		} else {
-			$data['firstdata_remote_auto_settle'] = 1;
-		}
-
-		if (isset($this->request->post['firstdata_remote_3d'])) {
-			$data['firstdata_remote_3d'] = $this->request->post['firstdata_remote_3d'];
-		} else {
-			$data['firstdata_remote_3d'] = $this->config->get('firstdata_remote_3d');
+			$data['payment_firstdata_remote_auto_settle'] = 1;
 		}
 
-		if (isset($this->request->post['firstdata_remote_liability'])) {
-			$data['firstdata_remote_liability'] = $this->request->post['firstdata_remote_liability'];
+		if (isset($this->request->post['payment_firstdata_remote_3d'])) {
+			$data['payment_firstdata_remote_3d'] = $this->request->post['payment_firstdata_remote_3d'];
 		} else {
-			$data['firstdata_remote_liability'] = $this->config->get('firstdata_remote_liability');
+			$data['payment_firstdata_remote_3d'] = $this->config->get('payment_firstdata_remote_3d');
 		}
 
-		if (isset($this->request->post['firstdata_remote_order_status_success_settled_id'])) {
-			$data['firstdata_remote_order_status_success_settled_id'] = $this->request->post['firstdata_remote_order_status_success_settled_id'];
+		if (isset($this->request->post['payment_firstdata_remote_liability'])) {
+			$data['payment_firstdata_remote_liability'] = $this->request->post['payment_firstdata_remote_liability'];
 		} else {
-			$data['firstdata_remote_order_status_success_settled_id'] = $this->config->get('firstdata_remote_order_status_success_settled_id');
+			$data['payment_firstdata_remote_liability'] = $this->config->get('payment_firstdata_remote_liability');
 		}
 
-		if (isset($this->request->post['firstdata_remote_order_status_success_unsettled_id'])) {
-			$data['firstdata_remote_order_status_success_unsettled_id'] = $this->request->post['firstdata_remote_order_status_success_unsettled_id'];
+		if (isset($this->request->post['payment_firstdata_remote_order_status_success_settled_id'])) {
+			$data['payment_firstdata_remote_order_status_success_settled_id'] = $this->request->post['payment_firstdata_remote_order_status_success_settled_id'];
 		} else {
-			$data['firstdata_remote_order_status_success_unsettled_id'] = $this->config->get('firstdata_remote_order_status_success_unsettled_id');
+			$data['payment_firstdata_remote_order_status_success_settled_id'] = $this->config->get('payment_firstdata_remote_order_status_success_settled_id');
 		}
 
-		if (isset($this->request->post['firstdata_remote_order_status_decline_id'])) {
-			$data['firstdata_remote_order_status_decline_id'] = $this->request->post['firstdata_remote_order_status_decline_id'];
+		if (isset($this->request->post['payment_firstdata_remote_order_status_success_unsettled_id'])) {
+			$data['payment_firstdata_remote_order_status_success_unsettled_id'] = $this->request->post['payment_firstdata_remote_order_status_success_unsettled_id'];
 		} else {
-			$data['firstdata_remote_order_status_decline_id'] = $this->config->get('firstdata_remote_order_status_decline_id');
+			$data['payment_firstdata_remote_order_status_success_unsettled_id'] = $this->config->get('payment_firstdata_remote_order_status_success_unsettled_id');
 		}
 
-		if (isset($this->request->post['firstdata_remote_order_status_void_id'])) {
-			$data['firstdata_remote_order_status_void_id'] = $this->request->post['firstdata_remote_order_status_void_id'];
+		if (isset($this->request->post['payment_firstdata_remote_order_status_decline_id'])) {
+			$data['payment_firstdata_remote_order_status_decline_id'] = $this->request->post['payment_firstdata_remote_order_status_decline_id'];
 		} else {
-			$data['firstdata_remote_order_status_void_id'] = $this->config->get('firstdata_remote_order_status_void_id');
+			$data['payment_firstdata_remote_order_status_decline_id'] = $this->config->get('payment_firstdata_remote_order_status_decline_id');
 		}
 
-		if (isset($this->request->post['firstdata_remote_order_status_refunded_id'])) {
-			$data['firstdata_remote_order_status_refunded_id'] = $this->request->post['firstdata_remote_order_status_refunded_id'];
+		if (isset($this->request->post['payment_firstdata_remote_order_status_void_id'])) {
+			$data['payment_firstdata_remote_order_status_void_id'] = $this->request->post['payment_firstdata_remote_order_status_void_id'];
 		} else {
-			$data['firstdata_remote_order_status_refunded_id'] = $this->config->get('firstdata_remote_order_status_refunded_id');
+			$data['payment_firstdata_remote_order_status_void_id'] = $this->config->get('payment_firstdata_remote_order_status_void_id');
 		}
 
-		if (isset($this->request->post['firstdata_remote_card_storage'])) {
-			$data['firstdata_remote_card_storage'] = $this->request->post['firstdata_remote_card_storage'];
+		if (isset($this->request->post['payment_firstdata_remote_order_status_refunded_id'])) {
+			$data['payment_firstdata_remote_order_status_refunded_id'] = $this->request->post['payment_firstdata_remote_order_status_refunded_id'];
 		} else {
-			$data['firstdata_remote_card_storage'] = $this->config->get('firstdata_remote_card_storage');
+			$data['payment_firstdata_remote_order_status_refunded_id'] = $this->config->get('payment_firstdata_remote_order_status_refunded_id');
+		}
+
+		if (isset($this->request->post['payment_firstdata_remote_card_storage'])) {
+			$data['payment_firstdata_remote_card_storage'] = $this->request->post['payment_firstdata_remote_card_storage'];
+		} else {
+			$data['payment_firstdata_remote_card_storage'] = $this->config->get('payment_firstdata_remote_card_storage');
 		}
 
 		$data['cards'] = array();
@@ -248,12 +248,12 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			'value' => 'maestro'
 		);
 
-		if (isset($this->request->post['firstdata_remote_cards_accepted'])) {
-			$data['firstdata_remote_cards_accepted'] = $this->request->post['firstdata_remote_cards_accepted'];
-		} elseif ($this->config->get('firstdata_remote_cards_accepted')) {
-			$data['firstdata_remote_cards_accepted'] = $this->config->get('firstdata_remote_cards_accepted');
+		if (isset($this->request->post['payment_firstdata_remote_cards_accepted'])) {
+			$data['payment_firstdata_remote_cards_accepted'] = $this->request->post['payment_firstdata_remote_cards_accepted'];
+		} elseif ($this->config->get('payment_firstdata_remote_cards_accepted')) {
+			$data['payment_firstdata_remote_cards_accepted'] = $this->config->get('payment_firstdata_remote_cards_accepted');
 		} else {
-			$data['firstdata_remote_cards_accepted'] = array();
+			$data['payment_firstdata_remote_cards_accepted'] = array();
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -265,16 +265,18 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 
 	public function install() {
 		$this->load->model('extension/payment/firstdata_remote');
+
 		$this->model_extension_payment_firstdata_remote->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('extension/payment/firstdata_remote');
+
 		$this->model_extension_payment_firstdata_remote->uninstall();
 	}
 
 	public function order() {
-		if ($this->config->get('firstdata_remote_status')) {
+		if ($this->config->get('payment_firstdata_remote_status')) {
 			$this->load->model('extension/payment/firstdata_remote');
 
 			$firstdata_order = $this->model_extension_payment_firstdata_remote->getOrder($this->request->get['order_id']);
@@ -310,8 +312,8 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 				$data['button_refund'] = $this->language->get('button_refund');
 				$data['button_void'] = $this->language->get('button_void');
 
-				$data['order_id'] = $this->request->get['order_id'];
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['user_token'] = $this->session->data['user_token'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 
 				return $this->load->view('extension/payment/firstdata_remote_order', $data);
 			}
@@ -449,31 +451,31 @@ class ControllerExtensionPaymentFirstdataRemote extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['firstdata_remote_merchant_id']) {
+		if (!$this->request->post['payment_firstdata_remote_merchant_id']) {
 			$this->error['error_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['firstdata_remote_user_id']) {
+		if (!$this->request->post['payment_firstdata_remote_user_id']) {
 			$this->error['error_user_id'] = $this->language->get('error_user_id');
 		}
 
-		if (!$this->request->post['firstdata_remote_password']) {
+		if (!$this->request->post['payment_firstdata_remote_password']) {
 			$this->error['error_password'] = $this->language->get('error_password');
 		}
 
-		if (!$this->request->post['firstdata_remote_certificate']) {
+		if (!$this->request->post['payment_firstdata_remote_certificate']) {
 			$this->error['error_certificate'] = $this->language->get('error_certificate');
 		}
 
-		if (!$this->request->post['firstdata_remote_key']) {
+		if (!$this->request->post['payment_firstdata_remote_key']) {
 			$this->error['error_key'] = $this->language->get('error_key');
 		}
 
-		if (!$this->request->post['firstdata_remote_key_pw']) {
+		if (!$this->request->post['payment_firstdata_remote_key_pw']) {
 			$this->error['error_key_pw'] = $this->language->get('error_key_pw');
 		}
 
-		if (!$this->request->post['firstdata_remote_ca']) {
+		if (!$this->request->post['payment_firstdata_remote_ca']) {
 			$this->error['error_ca'] = $this->language->get('error_ca');
 		}
 

@@ -14,7 +14,7 @@ class ControllerExtensionShippingFedex extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -63,22 +63,22 @@ class ControllerExtensionShippingFedex extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/shipping/fedex', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/shipping/fedex', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/shipping/fedex', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/shipping/fedex', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
 		if (isset($this->request->post['shipping_fedex_key'])) {
 			$data['shipping_fedex_key'] = $this->request->post['shipping_fedex_key'];
@@ -108,6 +108,12 @@ class ControllerExtensionShippingFedex extends Controller {
 			$data['shipping_fedex_postcode'] = $this->request->post['shipping_fedex_postcode'];
 		} else {
 			$data['shipping_fedex_postcode'] = $this->config->get('shipping_fedex_postcode');
+		}
+
+		if (isset($this->request->post['shipping_fedex_server'])) {
+			$data['shipping_fedex_server'] = $this->request->post['shipping_fedex_server'];
+		} else {
+			$data['shipping_fedex_server'] = $this->config->get('shipping_fedex_server');
 		}
 
 		if (isset($this->request->post['shipping_fedex_test'])) {

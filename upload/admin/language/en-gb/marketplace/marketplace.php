@@ -22,12 +22,14 @@ $_['text_other']         = 'Other';
 $_['text_free']          = 'Free';
 $_['text_paid']          = 'Paid';
 $_['text_purchased']     = 'Purchased';
+$_['text_recommended']   = 'Recommended';
 $_['text_date_modified'] = 'Date Modified';
 $_['text_date_added']    = 'Date Added';
 $_['text_rating']        = 'Rating';
 $_['text_reviews']       = 'reviews';
 $_['text_compatibility'] = 'Compatibility';
 $_['text_downloaded']    = 'Downloaded';
+$_['text_member_since']  = 'Member since:';
 $_['text_price']         = 'Price';
 $_['text_partner']       = 'Developed by OpenCart Partner';
 $_['text_support']       = '12 Months free support';
@@ -58,8 +60,11 @@ $_['tab_comment']        = 'Comment';
 // Button
 $_['button_opencart']    = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
+$_['button_view_all']    = 'View all extensions';
+$_['button_get_support'] = 'Get Support';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
+$_['button_forgot_pin']  = 'Forgot PIN?';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';

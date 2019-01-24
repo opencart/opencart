@@ -1,5 +1,5 @@
 <?php
-class ModelExtensionPaymentSagePayDirect extends Model {
+class ModelExtensionPaymentSagepayDirect extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/sagepay_direct');
 
@@ -95,13 +95,13 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	public function updateOrder($order_info, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "sagepay_direct_order` SET `SecurityKey` = '" . $this->db->escape($data['SecurityKey']) . "',  `VPSTxId` = '" . $this->db->escape($data['VPSTxId']) . "', `TxAuthNo` = '" . $this->db->escape($data['TxAuthNo']) . "' WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "sagepay_direct_order` SET `SecurityKey` = '" . $this->db->escape((string)$data['SecurityKey']) . "',  `VPSTxId` = '" . $this->db->escape((string)$data['VPSTxId']) . "', `TxAuthNo` = '" . $this->db->escape((string)$data['TxAuthNo']) . "' WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
 
 		return $this->db->getLastId();
 	}
 
 	public function deleteOrder($vendor_tx_code) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE order_id = '" . $vendor_tx_code . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE order_id = '" . (int)$vendor_tx_code . "'");
 	}
 
 	public function addTransaction($sagepay_direct_order_id, $type, $order_info) {
@@ -140,8 +140,8 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 		}
 
 		//create new recurring and set to pending status as no payment has been made yet.
-		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item['recurring']);
-		
+		$order_recurring_id = $this->model_checkout_recurring->addRecurring($this->session->data['order_id'], $recurring_description, $item);
+
 		$this->model_checkout_recurring->addReference($order_recurring_id, $vendor_tx_code);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);

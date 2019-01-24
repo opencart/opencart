@@ -1,5 +1,6 @@
 <?php
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
+	private $error = array();
 	public function address() {
 		$this->load->language('extension/payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -857,7 +858,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			if (empty($this->request->get['token'])) {
 				$this->model_extension_payment_amazon_login_pay->logger('GET variable "token" set, but is empty');
 			}
-			if (empty($this->config->get('payment_amazon_login_pay_ipn_token'))) {
+			if (!$this->config->get('payment_amazon_login_pay_ipn_token')) {
 				$this->model_extension_payment_amazon_login_pay->logger('CONFIG variable "payment_amazon_login_pay_ipn_token" is empty');
 			}
 		}

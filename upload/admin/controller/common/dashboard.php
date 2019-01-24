@@ -5,22 +5,22 @@ class ControllerCommonDashboard extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['user_token'] = $this->session->data['user_token'];
-		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
-		
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		// Check install directory exists
-		if (is_dir(DIR_APPLICATION . 'install')) {
+		if (is_dir(DIR_CATALOG . '../install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
@@ -81,17 +81,10 @@ class ControllerCommonDashboard extends Controller {
 		} else {
 			$data['security'] = '';
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-
-		// Run currency update
-		if ($this->config->get('config_currency_auto')) {
-			$this->load->model('localisation/currency');
-
-			$this->model_localisation_currency->refresh();
-		}
 
 		$this->response->setOutput($this->load->view('common/dashboard', $data));
 	}

@@ -5,9 +5,9 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_firstdata_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
-		if ($this->config->get('firstdata_remote_total') > 0 && $this->config->get('firstdata_remote_total') > $total) {
+		if ($this->config->get('payment_firstdata_remote_total') > 0 && $this->config->get('payment_firstdata_remote_total') > $total) {
 			$status = false;
-		} elseif (!$this->config->get('firstdata_remote_geo_zone_id')) {
+		} elseif (!$this->config->get('payment_firstdata_remote_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
 			$status = true;
@@ -22,7 +22,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 				'code'       => 'firstdata_remote',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('firstdata_remote_sort_order')
+				'sort_order' => $this->config->get('payment_firstdata_remote_sort_order')
 			);
 		}
 
@@ -38,7 +38,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
-		if ($this->config->get('firstdata_remote_auto_settle') == 1) {
+		if ($this->config->get('payment_firstdata_remote_auto_settle') == 1) {
 			$type = 'sale';
 		} else {
 			$type = 'preAuth';
@@ -48,7 +48,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 
 		$token = '';
 		$payment_token = '';
-		if ($this->config->get('firstdata_remote_card_storage') == 1) {
+		if ($this->config->get('payment_firstdata_remote_card_storage') == 1) {
 			if (isset($this->request->post['cc_choice']) && $this->request->post['cc_choice'] != 'new') {
 				$payment_token = $this->request->post['cc_choice'];
 			} elseif (isset($this->request->post['cc_store']) && $this->request->post['cc_store'] == 1) {
@@ -199,12 +199,12 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
 		curl_setopt($ch, CURLOPT_HTTPAUTH, 'CURLAUTH_BASIC');
-		curl_setopt($ch, CURLOPT_USERPWD, $this->config->get('firstdata_remote_user_id') . ':' . $this->config->get('firstdata_remote_password'));
+		curl_setopt($ch, CURLOPT_USERPWD, $this->config->get('payment_firstdata_remote_user_id') . ':' . $this->config->get('payment_firstdata_remote_password'));
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-		curl_setopt($ch, CURLOPT_CAINFO, $this->config->get('firstdata_remote_ca'));
-		curl_setopt($ch, CURLOPT_SSLCERT, $this->config->get('firstdata_remote_certificate'));
-		curl_setopt($ch, CURLOPT_SSLKEY, $this->config->get('firstdata_remote_key'));
-		curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $this->config->get('firstdata_remote_key_pw'));
+		curl_setopt($ch, CURLOPT_CAINFO, $this->config->get('payment_firstdata_remote_ca'));
+		curl_setopt($ch, CURLOPT_SSLCERT, $this->config->get('payment_firstdata_remote_certificate'));
+		curl_setopt($ch, CURLOPT_SSLKEY, $this->config->get('payment_firstdata_remote_key'));
+		curl_setopt($ch, CURLOPT_SSLKEYPASSWD, $this->config->get('payment_firstdata_remote_key_pw'));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//curl_setopt($ch, CURLOPT_STDERR, fopen(DIR_LOGS . "/headers.txt", "w+"));
@@ -224,7 +224,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 	}
 
 	public function addOrder($order_info, $capture_result) {
-		if ($this->config->get('firstdata_remote_auto_settle') == 1) {
+		if ($this->config->get('payment_firstdata_remote_auto_settle') == 1) {
 			$settle_status = 1;
 		} else {
 			$settle_status = 0;
@@ -246,7 +246,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('firstdata_remote_debug') == 1) {
+		if ($this->config->get('payment_firstdata_remote_debug') == 1) {
 			$log = new Log('firstdata_remote.log');
 			$log->write($message);
 		}

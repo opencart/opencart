@@ -29,6 +29,7 @@ $_['text_value']           = 'Custom Field Values';
 $_['column_name']          = 'Custom Field Name';
 $_['column_location']      = 'Location';
 $_['column_type']          = 'Type';
+$_['column_status']        = 'Status';
 $_['column_sort_order']    = 'Sort Order';
 $_['column_action']        = 'Action';
 
@@ -45,7 +46,7 @@ $_['entry_status']         = 'Status';
 $_['entry_sort_order']     = 'Sort Order';
 
 // Help
-$_['help_regex']           = 'Use regex. E.g: /[a-zA-Z0-9_-]/';
+$_['help_regex']           = 'Use regex. E.g: [^a-zA-Z0-9_-]';
 $_['help_sort_order']      = 'Use minus to count backwards from the last field in the set.';
 
 // Error

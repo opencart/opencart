@@ -90,9 +90,9 @@ a.button, input.button {
 }
 .buttons {
 	border: 1px solid #DBDBDB;
-	overflow: auto;
 	padding: 6px;
 	margin-bottom: 20px;
+	overflow: auto;
 }
 .btn {
 	padding: 10px 25px;

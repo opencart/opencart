@@ -4,7 +4,7 @@ $_['heading_title']        = 'Mail';
 
 // Text
 $_['text_success']         = 'Your message has been successfully sent!';
-$_['text_sent']            = 'Your message has been successfully sent to %s of %s recipients!';
+$_['text_sent']            = 'Your message has been successfully sent to %s - %s recipients!';
 $_['text_list']            = 'Mail List';
 $_['text_default']         = 'Default';
 $_['text_newsletter']      = 'All Newsletter Subscribers';
@@ -34,3 +34,4 @@ $_['help_product']         = 'Send only to customers who have ordered products i
 $_['error_permission']     = 'Warning: You do not have permission to send E-Mails!';
 $_['error_subject']        = 'E-Mail Subject required!';
 $_['error_message']        = 'E-Mail Message required!';
+$_['error_email']          = 'E-Mail required!';

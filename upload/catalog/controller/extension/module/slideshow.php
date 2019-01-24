@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionModuleSlideshow extends Controller {
 	public function index($setting) {
-		static $module = 0;		
+		static $module = 0;
 
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
@@ -19,7 +19,7 @@ class ControllerExtensionModuleSlideshow extends Controller {
 				$data['banners'][] = array(
 					'title' => $result['title'],
 					'link'  => $result['link'],
-					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
+					'image' => $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height'])
 				);
 			}
 		}

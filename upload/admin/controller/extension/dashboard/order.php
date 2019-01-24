@@ -14,7 +14,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -27,22 +27,22 @@ class ControllerExtensionDashboardOrder extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/dashboard/order', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/dashboard/order', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/dashboard/order', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/dashboard/order', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
 		if (isset($this->request->post['dashboard_order_width'])) {
 			$data['dashboard_order_width'] = $this->request->post['dashboard_order_width'];
@@ -117,7 +117,7 @@ class ControllerExtensionDashboardOrder extends Controller {
 			$data['total'] = $order_total;
 		}
 
-		$data['order'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'], true);
+		$data['order'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token']);
 
 		return $this->load->view('extension/dashboard/order_info', $data);
 	}

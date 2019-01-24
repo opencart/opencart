@@ -9,12 +9,18 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && (isset($this->request->post['purge']))) {
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "fraudlabspro`");
+
+			$this->session->data['success'] = $this->language->get('text_success_delete');
+
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud'));
+		} elseif (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('fraud_fraudlabspro', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -33,39 +39,27 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true)
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/fraud/fraudlabspro', 'user_token=' . $this->session->data['user_token'], true)
+			'href' => $this->url->link('extension/fraud/fraudlabspro', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['action'] = $this->url->link('extension/fraud/fraudlabspro', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/fraud/fraudlabspro', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud', true);
+		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud');
 
 		if (isset($this->request->post['fraud_fraudlabspro_key'])) {
 			$data['fraud_fraudlabspro_key'] = $this->request->post['fraud_fraudlabspro_key'];
 		} else {
 			$data['fraud_fraudlabspro_key'] = $this->config->get('fraud_fraudlabspro_key');
-		}
-
-		if (isset($this->request->post['fraud_fraudlabspro_score'])) {
-			$data['fraud_fraudlabspro_score'] = $this->request->post['fraud_fraudlabspro_score'];
-		} else {
-			$data['fraud_fraudlabspro_score'] = $this->config->get('fraud_fraudlabspro_score');
-		}
-
-		if (isset($this->request->post['fraud_fraudlabspro_order_status_id'])) {
-			$data['fraud_fraudlabspro_order_status_id'] = $this->request->post['fraud_fraudlabspro_order_status_id'];
-		} else {
-			$data['fraud_fraudlabspro_order_status_id'] = $this->config->get('fraud_fraudlabspro_order_status_id');
 		}
 
 		if (isset($this->request->post['fraud_fraudlabspro_review_status_id'])) {
@@ -138,22 +132,28 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 		$this->load->model('extension/fraud/fraudlabspro');
 
-		// Action of the Approve/Reject button click
+		// Action of the Approve/Reject/Blacklist button click
 		if (isset($_POST['flp_id'])){
 			$flp_status = $_POST['new_status'];
-			$data['flp_status'] = $flp_status;
+			$feedback_note = $_POST['feedback_note'];
+			$note = urlencode($feedback_note);
 
 			//Feedback FLP status to server
 			$fraud_fraudlabspro_key = $this->config->get('fraud_fraudlabspro_key');
 
 			for($i=0; $i<3; $i++){
-				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraud_fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status);
+				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraud_fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status . '&note=' . $note);
 
 				if($result) break;
 			}
 
+			if (strtolower($flp_status) == 'reject_blacklist'){
+				$flp_status = "REJECT";
+			}
+			$data['flp_status'] = $flp_status;
+
 			// Update fraud status into table
-			$this->db->query("UPDATE `" . DB_PREFIX . "fraudlabspro` SET fraudlabspro_status = '" . $this->db->escape($flp_status) . "' WHERE order_id = " . $this->db->escape($this->request->get['order_id']));
+			$this->db->query("UPDATE `" . DB_PREFIX . "fraudlabspro` SET fraudlabspro_status = '" . $this->db->escape((string)$flp_status) . "' WHERE order_id = " . (int)$this->request->get['order_id']);
 
 			//Update history record
 			if (strtolower($flp_status) == 'approve'){
@@ -325,7 +325,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 
 	private function fix_case($s) {
 		$s = ucwords(strtolower($s));
-		$s = preg_replace_callback("/( [ a-zA-Z]{1}')([a-zA-Z0-9]{1})/s", create_function('$matches', 'return $matches[1].strtoupper($matches[2]);'), $s);
+		$s = preg_replace_callback("/( [ a-zA-Z]{1}')([a-zA-Z0-9]{1})/s", function($matches){ return $matches[1].strtoupper($matches[2]); }, $s);
 		return $s;
 	}
 }

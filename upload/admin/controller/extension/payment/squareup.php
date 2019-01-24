@@ -11,11 +11,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $this->load->library('squareup');
 
-        if ($this->request->server['HTTPS']) {
-            $server = HTTPS_SERVER;
-        } else {
-            $server = HTTP_SERVER;
-        }
+		$server = HTTP_SERVER;
 
         $previous_setting = $this->model_setting_setting->getSetting('payment_squareup');
 
@@ -66,7 +62,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             if (isset($this->request->get['save_and_auth'])) {
                 $this->response->redirect($this->squareup->authLink($this->request->post['payment_squareup_client_id']));
             } else {
-                $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
+                $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
             }
         }
 
@@ -124,13 +120,13 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 $this->pushAlert(array(
                     'type' => 'danger',
                     'icon' => 'exclamation-circle',
-                    'text' => sprintf($this->language->get('text_token_expired'), $this->url->link('extension/payment/squareup/refresh_token', 'user_token=' . $this->session->data['user_token'], true))
+                    'text' => sprintf($this->language->get('text_token_expired'), $this->url->link('extension/payment/squareup/refresh_token', 'user_token=' . $this->session->data['user_token']))
                 ));
             } else if ($delta < (5 * 24 * 60 * 60)) { // token is valid, just about to expire
                 $this->pushAlert(array(
                     'type' => 'warning',
                     'icon' => 'exclamation-circle',
-                    'text' => sprintf($this->language->get('text_token_expiry_warning'), $expiration_date_formatted, $this->url->link('extension/payment/squareup/refresh_token', 'user_token=' . $this->session->data['user_token'], true))
+                    'text' => sprintf($this->language->get('text_token_expiry_warning'), $expiration_date_formatted, $this->url->link('extension/payment/squareup/refresh_token', 'user_token=' . $this->session->data['user_token']))
                 ));
             }
 
@@ -151,8 +147,8 @@ class ControllerExtensionPaymentSquareup extends Controller {
             $data['payment_squareup_auth_link'] = null;
         }
 
-        $data['payment_squareup_redirect_uri'] = str_replace('&amp;', '&', $this->url->link('extension/payment/squareup/oauth_callback', '', true));
-        $data['payment_squareup_refresh_link'] = $this->url->link('extension/payment/squareup/refresh_token', 'user_token=' . $this->session->data['user_token'], true);
+        $data['payment_squareup_redirect_uri'] = str_replace('&amp;', '&', $this->url->link('extension/payment/squareup/oauth_callback'));
+        $data['payment_squareup_refresh_link'] = $this->url->link('extension/payment/squareup/refresh_token', 'user_token=' . $this->session->data['user_token']);
 
         if ($this->config->get('payment_squareup_enable_sandbox')) {
             $this->pushAlert(array(
@@ -218,23 +214,23 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+            'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+            'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true)
+            'href' => $this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'])
         );
 
-        $data['action'] = html_entity_decode($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
-        $data['action_save_auth'] = html_entity_decode($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'] . '&save_and_auth=1', true));
-        $data['cancel'] = html_entity_decode($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
-        $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&page={PAGE}', true));
+        $data['action'] = html_entity_decode($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
+        $data['action_save_auth'] = html_entity_decode($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'] . '&save_and_auth=1'));
+        $data['cancel'] = html_entity_decode($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
+        $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&page={page}'));
 
         $this->load->model('localisation/language');
         $data['languages'] = array();
@@ -260,7 +256,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $data['payment_squareup_cron_url'] = 'https://' . parse_url($server, PHP_URL_HOST) . dirname(parse_url($server, PHP_URL_PATH)) . '/index.php?route=extension/recurring/squareup/recurring&cron_token={CRON_TOKEN}';
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');
@@ -310,7 +306,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $transaction_info = $this->model_extension_payment_squareup->getTransaction($squareup_transaction_id);
 
         if (empty($transaction_info)) {
-            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
         }
 
         $this->document->setTitle(sprintf($this->language->get('heading_title_transaction'), $transaction_info['transaction_id']));
@@ -346,12 +342,12 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $data['ip'] = $transaction_info['device_ip'];
         $data['date_created'] = date($this->language->get('datetime_format'), strtotime($transaction_info['created_at']));
         
-        $data['cancel'] = $this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'] . '&tab=tab-transaction', true);
+        $data['cancel'] = $this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'] . '&tab=tab-transaction');
 
-        $data['url_order'] = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $transaction_info['order_id'], true);
-        $data['url_void'] = $this->url->link('extension/payment/squareup' . '/void', 'user_token=' . $this->session->data['user_token'] . '&preserve_alert=true&squareup_transaction_id=' . $transaction_info['squareup_transaction_id'], true);
-        $data['url_capture'] = $this->url->link('extension/payment/squareup' . '/capture', 'user_token=' . $this->session->data['user_token'] . '&preserve_alert=true&squareup_transaction_id=' . $transaction_info['squareup_transaction_id'], true);
-        $data['url_refund'] = $this->url->link('extension/payment/squareup' . '/refund', 'user_token=' . $this->session->data['user_token'] . '&preserve_alert=true&squareup_transaction_id=' . $transaction_info['squareup_transaction_id'], true);
+        $data['url_order'] = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $transaction_info['order_id']);
+        $data['url_void'] = $this->url->link('extension/payment/squareup' . '/void', 'user_token=' . $this->session->data['user_token'] . '&preserve_alert=true&squareup_transaction_id=' . $transaction_info['squareup_transaction_id']);
+        $data['url_capture'] = $this->url->link('extension/payment/squareup' . '/capture', 'user_token=' . $this->session->data['user_token'] . '&preserve_alert=true&squareup_transaction_id=' . $transaction_info['squareup_transaction_id']);
+        $data['url_refund'] = $this->url->link('extension/payment/squareup' . '/refund', 'user_token=' . $this->session->data['user_token'] . '&preserve_alert=true&squareup_transaction_id=' . $transaction_info['squareup_transaction_id']);
         $data['url_transaction'] = sprintf(
             Squareup::VIEW_TRANSACTION_URL,
             $transaction_info['transaction_id'],
@@ -401,25 +397,25 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
+            'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
+            'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true)
+            'href' => $this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'])
         );
 
         $data['breadcrumbs'][] = array(
             'text' => sprintf($this->language->get('heading_title_transaction'), $transaction_info['squareup_transaction_id']),
-            'href' => $this->url->link('extension/payment/squareup/transaction_info', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $squareup_transaction_id, true)
+            'href' => $this->url->link('extension/payment/squareup/transaction_info', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $squareup_transaction_id)
         );
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');
@@ -487,10 +483,10 @@ class ControllerExtensionPaymentSquareup extends Controller {
             $result['transactions'][] = array(
                 'squareup_transaction_id' => $transaction['squareup_transaction_id'],
                 'transaction_id' => $transaction['transaction_id'],
-                'url_order' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $transaction['order_id'], true),
-                'url_void' => $this->url->link('extension/payment/squareup/void', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id'], true),
-                'url_capture' => $this->url->link('extension/payment/squareup/capture', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id'], true),
-                'url_refund' => $this->url->link('extension/payment/squareup/refund', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id'], true),
+                'url_order' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $transaction['order_id']),
+                'url_void' => $this->url->link('extension/payment/squareup/void', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id']),
+                'url_capture' => $this->url->link('extension/payment/squareup/capture', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id']),
+                'url_refund' => $this->url->link('extension/payment/squareup/refund', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id']),
                 'confirm_capture' => sprintf($this->language->get('text_confirm_capture'), $amount),
                 'confirm_void' => sprintf($this->language->get('text_confirm_void'), $amount),
                 'confirm_refund' => $this->language->get('text_confirm_refund'),
@@ -502,17 +498,16 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 'customer' => $order_info['firstname'] . ' ' . $order_info['lastname'],
                 'ip' => $transaction['device_ip'],
                 'date_created' => date($this->language->get('datetime_format'), strtotime($transaction['created_at'])),
-                'url_info' => $this->url->link('extension/payment/squareup/transaction_info', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id'], true)
+                'url_info' => $this->url->link('extension/payment/squareup/transaction_info', 'user_token=' . $this->session->data['user_token'] . '&squareup_transaction_id=' . $transaction['squareup_transaction_id'])
             );
         }
 
-        $pagination = new Pagination();
-        $pagination->total = $transactions_total;
-        $pagination->page = $page;
-        $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = '{page}';
-
-        $result['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $transactions_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => '{page}'
+		));
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($result));
@@ -528,7 +523,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 'text' => $this->language->get('error_permission')
             ));
 
-            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
         }
 
         $this->load->model('setting/setting');
@@ -567,7 +562,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             ));
         }
 
-        $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+        $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
     }
 
     public function oauth_callback() {
@@ -580,7 +575,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 'text' => $this->language->get('error_permission')
             ));
 
-            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
         }
 
         $this->load->model('setting/setting');
@@ -598,7 +593,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 ));
             }
 
-            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
         }
 
         // verify parameters for the redirect from Square (against random url crawling)
@@ -610,7 +605,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 'text' => $this->language->get('error_possible_xss')
             ));
 
-            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
         }
 
         // verify the state (against cross site requests)
@@ -622,7 +617,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 'text' => $this->language->get('error_possible_xss')
             ));
 
-            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
         }
 
         try {
@@ -675,7 +670,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             ));
         }
 
-        $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'], true));
+        $this->response->redirect($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
     }
 
     public function capture() {
@@ -783,11 +778,11 @@ class ControllerExtensionPaymentSquareup extends Controller {
     public function order() {
         $this->load->language('extension/payment/squareup');
 
-        $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $this->request->get['order_id'] . '&page={PAGE}', true));
+        $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $this->request->get['order_id'] . '&page={PAGE}'));
         $data['user_token'] = $this->session->data['user_token'];
-        $data['order_id'] = $this->request->get['order_id'];
+        $data['order_id'] = (int)$this->request->get['order_id'];
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');
@@ -860,7 +855,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $data['comment'] = $this->language->get('text_order_history_cancel');
         $data['notify'] = 1;
 
-        $data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['catalog'] = HTTP_CATALOG;
 
         // API login
         $this->load->model('user/api');
@@ -883,7 +878,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             $data['api_token'] = '';
         }
 
-        $data['cancel'] = html_entity_decode($this->url->link('extension/payment/squareup/recurringCancel', 'order_recurring_id=' . $order_recurring_id . '&user_token=' . $this->session->data['user_token'], true));
+        $data['cancel'] = html_entity_decode($this->url->link('extension/payment/squareup/recurringCancel', 'order_recurring_id=' . $order_recurring_id . '&user_token=' . $this->session->data['user_token']));
 
         return $this->load->view('extension/payment/squareup_recurring_buttons', $data);
     }

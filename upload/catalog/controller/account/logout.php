@@ -17,7 +17,7 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
 
-			$this->response->redirect($this->url->link('account/logout', '', true));
+			$this->response->redirect($this->url->link('account/logout', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->language('account/logout');
@@ -28,20 +28,20 @@ class ControllerAccountLogout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
+			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_logout'),
-			'href' => $this->url->link('account/logout', '', true)
+			'href' => $this->url->link('account/logout', 'language=' . $this->config->get('config_language'))
 		);
 
-		$data['continue'] = $this->url->link('common/home');
+		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

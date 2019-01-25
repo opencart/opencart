@@ -26,6 +26,9 @@ $_['column_points']         = 'Бонусные баллы';
 $_['column_ip']             = 'IP';
 $_['column_total']          = 'Общая сумма';
 $_['column_action']         = 'Действие';
+$_['text_option']           = 'Опции';
+$_['text_login']            = 'Войти в магазин';
+$_['text_unlock']           = 'Разблокировать аккаунт';
 
 // Entry
 $_['entry_customer_group']  = 'Группа покупателей';

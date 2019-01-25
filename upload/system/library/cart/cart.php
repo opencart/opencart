@@ -1,5 +1,4 @@
 <?php
-
 namespace Cart;
 class Cart {
 	private $data = array();
@@ -78,21 +77,21 @@ class Cart {
 									}
 
 									$option_data[] = array(
-										'product_option_id' => $product_option_id,
+										'product_option_id'       => $product_option_id,
 										'product_option_value_id' => $value,
-										'option_id' => $option_query->row['option_id'],
-										'option_value_id' => $option_value_query->row['option_value_id'],
-										'name' => $option_query->row['name'],
-										'value' => $option_value_query->row['name'],
-										'type' => $option_query->row['type'],
-										'quantity' => $option_value_query->row['quantity'],
-										'subtract' => $option_value_query->row['subtract'],
-										'price' => $option_value_query->row['price'],
-										'price_prefix' => $option_value_query->row['price_prefix'],
-										'points' => $option_value_query->row['points'],
-										'points_prefix' => $option_value_query->row['points_prefix'],
-										'weight' => $option_value_query->row['weight'],
-										'weight_prefix' => $option_value_query->row['weight_prefix']
+										'option_id'               => $option_query->row['option_id'],
+										'option_value_id'         => $option_value_query->row['option_value_id'],
+										'name'                    => $option_query->row['name'],
+										'value'                   => $option_value_query->row['name'],
+										'type'                    => $option_query->row['type'],
+										'quantity'                => $option_value_query->row['quantity'],
+										'subtract'                => $option_value_query->row['subtract'],
+										'price'                   => $option_value_query->row['price'],
+										'price_prefix'            => $option_value_query->row['price_prefix'],
+										'points'                  => $option_value_query->row['points'],
+										'points_prefix'           => $option_value_query->row['points_prefix'],
+										'weight'                  => $option_value_query->row['weight'],
+										'weight_prefix'           => $option_value_query->row['weight_prefix']
 									);
 								}
 							} elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
@@ -123,41 +122,41 @@ class Cart {
 										}
 
 										$option_data[] = array(
-											'product_option_id' => $product_option_id,
+											'product_option_id'       => $product_option_id,
 											'product_option_value_id' => $product_option_value_id,
-											'option_id' => $option_query->row['option_id'],
-											'option_value_id' => $option_value_query->row['option_value_id'],
-											'name' => $option_query->row['name'],
-											'value' => $option_value_query->row['name'],
-											'type' => $option_query->row['type'],
-											'quantity' => $option_value_query->row['quantity'],
-											'subtract' => $option_value_query->row['subtract'],
-											'price' => $option_value_query->row['price'],
-											'price_prefix' => $option_value_query->row['price_prefix'],
-											'points' => $option_value_query->row['points'],
-											'points_prefix' => $option_value_query->row['points_prefix'],
-											'weight' => $option_value_query->row['weight'],
-											'weight_prefix' => $option_value_query->row['weight_prefix']
+											'option_id'               => $option_query->row['option_id'],
+											'option_value_id'         => $option_value_query->row['option_value_id'],
+											'name'                    => $option_query->row['name'],
+											'value'                   => $option_value_query->row['name'],
+											'type'                    => $option_query->row['type'],
+											'quantity'                => $option_value_query->row['quantity'],
+											'subtract'                => $option_value_query->row['subtract'],
+											'price'                   => $option_value_query->row['price'],
+											'price_prefix'            => $option_value_query->row['price_prefix'],
+											'points'                  => $option_value_query->row['points'],
+											'points_prefix'           => $option_value_query->row['points_prefix'],
+											'weight'                  => $option_value_query->row['weight'],
+											'weight_prefix'           => $option_value_query->row['weight_prefix']
 										);
 									}
 								}
 							} elseif ($option_query->row['type'] == 'text' || $option_query->row['type'] == 'textarea' || $option_query->row['type'] == 'file' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
 								$option_data[] = array(
-									'product_option_id' => $product_option_id,
+									'product_option_id'       => $product_option_id,
 									'product_option_value_id' => '',
-									'option_id' => $option_query->row['option_id'],
-									'option_value_id' => '',
-									'name' => $option_query->row['name'],
-									'value' => $value,
-									'type' => $option_query->row['type'],
-									'quantity' => '',
-									'subtract' => '',
-									'price' => '',
-									'price_prefix' => '',
-									'points' => '',
-									'points_prefix' => '',
-									'weight' => '',
-									'weight_prefix' => ''
+									'option_id'               => $option_query->row['option_id'],
+									'option_value_id'         => '',
+									'name'                    => $option_query->row['name'],
+									'value'                   => $value,
+									'type'                    => $option_query->row['type'],
+									'quantity'                => '',
+									'subtract'                => '',
+									'price'                   => '',
+									'price_prefix'            => '',
+									'points'                  => '',
+									'points_prefix'           => '',
+									'weight'                  => '',
+									'weight_prefix'           => ''
 								);
 							}
 						}
@@ -204,9 +203,9 @@ class Cart {
 					foreach ($download_query->rows as $download) {
 						$download_data[] = array(
 							'download_id' => $download['download_id'],
-							'name' => $download['name'],
-							'filename' => $download['filename'],
-							'mask' => $download['mask']
+							'name'        => $download['name'],
+							'filename'    => $download['filename'],
+							'mask'        => $download['mask']
 						);
 					}
 
@@ -219,47 +218,47 @@ class Cart {
 
 					if ($recurring_query->num_rows) {
 						$recurring = array(
-							'recurring_id' => $cart['recurring_id'],
-							'name' => $recurring_query->row['name'],
-							'frequency' => $recurring_query->row['frequency'],
-							'price' => $recurring_query->row['price'],
-							'cycle' => $recurring_query->row['cycle'],
-							'duration' => $recurring_query->row['duration'],
-							'trial' => $recurring_query->row['trial_status'],
+							'recurring_id'    => $cart['recurring_id'],
+							'name'            => $recurring_query->row['name'],
+							'frequency'       => $recurring_query->row['frequency'],
+							'price'           => $recurring_query->row['price'],
+							'cycle'           => $recurring_query->row['cycle'],
+							'duration'        => $recurring_query->row['duration'],
+							'trial'           => $recurring_query->row['trial_status'],
 							'trial_frequency' => $recurring_query->row['trial_frequency'],
-							'trial_price' => $recurring_query->row['trial_price'],
-							'trial_cycle' => $recurring_query->row['trial_cycle'],
-							'trial_duration' => $recurring_query->row['trial_duration']
+							'trial_price'     => $recurring_query->row['trial_price'],
+							'trial_cycle'     => $recurring_query->row['trial_cycle'],
+							'trial_duration'  => $recurring_query->row['trial_duration']
 						);
 					} else {
 						$recurring = false;
 					}
 
 					$this->data[] = array(
-						'cart_id' => $cart['cart_id'],
-						'product_id' => $product_query->row['product_id'],
-						'name' => $product_query->row['name'],
-						'model' => $product_query->row['model'],
-						'shipping' => $product_query->row['shipping'],
-						'image' => $product_query->row['image'],
-						'option' => $option_data,
-						'download' => $download_data,
-						'quantity' => $cart['quantity'],
-						'minimum' => $product_query->row['minimum'],
-						'subtract' => $product_query->row['subtract'],
-						'stock' => $stock,
-						'price' => ($price + $option_price),
-						'total' => ($price + $option_price) * $cart['quantity'],
-						'reward' => $reward * $cart['quantity'],
-						'points' => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
-						'tax_class_id' => $product_query->row['tax_class_id'],
-						'weight' => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
+						'cart_id'         => $cart['cart_id'],
+						'product_id'      => $product_query->row['product_id'],
+						'name'            => $product_query->row['name'],
+						'model'           => $product_query->row['model'],
+						'shipping'        => $product_query->row['shipping'],
+						'image'           => $product_query->row['image'],
+						'option'          => $option_data,
+						'download'        => $download_data,
+						'quantity'        => $cart['quantity'],
+						'minimum'         => $product_query->row['minimum'],
+						'subtract'        => $product_query->row['subtract'],
+						'stock'           => $stock,
+						'price'           => ($price + $option_price),
+						'total'           => ($price + $option_price) * $cart['quantity'],
+						'reward'          => $reward * $cart['quantity'],
+						'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
+						'tax_class_id'    => $product_query->row['tax_class_id'],
+						'weight'          => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
 						'weight_class_id' => $product_query->row['weight_class_id'],
-						'length' => $product_query->row['length'],
-						'width' => $product_query->row['width'],
-						'height' => $product_query->row['height'],
+						'length'          => $product_query->row['length'],
+						'width'           => $product_query->row['width'],
+						'height'          => $product_query->row['height'],
 						'length_class_id' => $product_query->row['length_class_id'],
-						'recurring' => $recurring
+						'recurring'       => $recurring
 					);
 				} else {
 					$this->remove($cart['cart_id']);

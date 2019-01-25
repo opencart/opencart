@@ -608,12 +608,6 @@ class ControllerCatalogProduct extends Controller {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 		}
 
-		//if ($this->request->get['route'] == 'catalog/product/add' && isset($this->request->get['variant_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-		//	$product_info = $this->model_catalog_product->getProduct($product_id);
-
-		//	print_r($product_info);
-		//}
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/language');
@@ -1010,11 +1004,11 @@ class ControllerCatalogProduct extends Controller {
 							'name'                    => $option_value_info['name'],
 							'quantity'                => $product_option_value['quantity'],
 							'subtract'                => $product_option_value['subtract'],
-							'price'                   => $product_option_value['price'],
+							'price'                   => round($product_option_value['price']),
 							'price_prefix'            => $product_option_value['price_prefix'],
-							'points'                  => $product_option_value['points'],
+							'points'                  => round($product_option_value['points']),
 							'points_prefix'           => $product_option_value['points_prefix'],
-							'weight'                  => $product_option_value['weight'],
+							'weight'                  => round($product_option_value['weight']),
 							'weight_prefix'           => $product_option_value['weight_prefix']
 						);
 					}
@@ -1048,8 +1042,6 @@ class ControllerCatalogProduct extends Controller {
 			$product_options = $this->model_catalog_product->getProductOptions($this->request->get['variant_id']);
 
 			foreach ($product_options as $product_option) {
-				$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
-
 				$product_option_value_data = array();
 
 				foreach ($product_option['product_option_value'] as $product_option_value) {
@@ -1065,6 +1057,8 @@ class ControllerCatalogProduct extends Controller {
 						);
 					}
 				}
+
+				$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
 
 				$data['options'][] = array(
 					'product_option_id'    => $product_option['product_option_id'],

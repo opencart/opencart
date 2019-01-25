@@ -22,6 +22,8 @@ $_['text_file']              = 'File';
 $_['text_date']              = 'Date';
 $_['text_datetime']          = 'Date &amp; Time';
 $_['text_time']              = 'Time';
+$_['text_reward']            = 'Buy Points';
+$_['text_points']            = 'Reward Points';
 
 // Column
 $_['column_name']            = 'Product Name';

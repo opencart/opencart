@@ -132,7 +132,11 @@ $(document).on('click', '[data-toggle=\'clear\']', function() {
 
 			$.extend(this, option);
 
-			$(this).wrap('<div class="dropdown">');
+			if (!$(this).parent().hasClass('input-group')) {
+				$(this).wrap('<div class="dropdown">');
+			} else {
+				$(this).parent().wrap('<div class="dropdown">');
+			}
 
 			$this.attr('autocomplete', 'off');
 			$this.active = false;

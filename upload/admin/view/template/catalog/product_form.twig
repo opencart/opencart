@@ -437,7 +437,7 @@
                   {% for product_option in product_options %}
 
                     <fieldset id="collapse-option{{ option_row }}">
-                      <legend>{{ product_option.name }} <button type="button" class="float-right btn btn-danger" onclick="$('#collapse-option{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
+                      <legend>{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-right" onclick="$('#collapse-option{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
 
                       <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
                       <div class="form-group row">
@@ -1528,6 +1528,10 @@ function addOptionValue(option_row) {
 
 	option_value_row++;
 }
+
+
+
+
 
 //--></script>
 <script type="text/javascript"><!--

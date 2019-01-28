@@ -388,33 +388,27 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		if (isset($this->request->post['option_value'])) {
-			if ($this->request->get['option_id']) {
-				$option_id = $this->request->get['option_id'];
-			} else {
-				$option_id = '';
-			}
 
-			if ($option_id) {
-				$this->load->model('catalog/option');
-							
+			if (isset($this->request->get['option_id'])) {
 				$this->load->model('catalog/product');
-				
-				$option_info = $this->model_catalog_product->getProductsOptionValueByOptionId($option_id);
-	
-				foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
-					$option_value_list[] = array(
-						'option_value_id' => $option_value['option_value_id']
-					);
+
+				$option_value_data = array();
+
+				foreach ($this->request->post['option_value'] as $option_value) {
+					if ($option_value['option_value_id']) {
+						$option_value_data[] = $option_value['option_value_id'];
+					}
 				}
-				
-				foreach ($option_info as $option) {
-					if (!in_array($option, $option_value_list)) {
-						$product_total = $this->model_catalog_product_option->getTotalProductsByOptionId($option_id);
-	
-						$this->error['warning'] = sprintf($this->language->get('error_option'), $product_total);
+
+				$product_option_values = $this->model_catalog_product->getProductOptionValuesByOptionId($this->request->get['option_id']);
+
+				foreach ($product_option_values as $product_option_value) {
+					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
+						$this->error['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($this->request->get['option_id']));
 					}
 				}
 			}
+
 		}
 
 		if (isset($this->request->post['option_value'])) {

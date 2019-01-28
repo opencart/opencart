@@ -544,6 +544,12 @@ class ModelCatalogProduct extends Model {
 		return $query->rows;
 	}
 
+	public function getProductOptionValuesByOptionId($option_id) {
+		$query = $this->db->query("SELECT DISTINCT option_value_id FROM " . DB_PREFIX . "product_option_value WHERE option_id = '" . (int)$option_id . "'");
+
+		return $query->rows;
+	}
+
 	public function getProductImages($product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "' ORDER BY sort_order ASC");
 
@@ -712,18 +718,6 @@ class ModelCatalogProduct extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalProductsByOptionId($option_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option WHERE option_id = '" . (int)$option_id . "'");
-
-		return $query->row['total'];
-	}
-
-	public function getProductsOptionValueByOptionId($option_id) {
-		$query = $this->db->query("SELECT DISTINCT option_value_id FROM " . DB_PREFIX . "product_option_value WHERE option_id = '" . (int)$option_id . "'");
-
-		return $query->rows;
-	}
-
 	public function getTotalProductsByProfileId($recurring_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_recurring WHERE recurring_id = '" . (int)$recurring_id . "'");
 
@@ -732,6 +726,18 @@ class ModelCatalogProduct extends Model {
 
 	public function getTotalProductsByLayoutId($layout_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
+
+		return $query->row['total'];
+	}
+
+	public function getTotalProductsByOptionId($option_id) {
+		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS total FROM " . DB_PREFIX . "product_option WHERE option_id = '" . (int)$option_id . "'");
+
+		return $query->row['total'];
+	}
+
+	public function getTotalProductOptionsByOptionId($option_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option WHERE option_id = '" . (int)$option_id . "'");
 
 		return $query->row['total'];
 	}

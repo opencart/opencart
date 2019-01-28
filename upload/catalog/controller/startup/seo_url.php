@@ -13,11 +13,13 @@ class ControllerStartupSeoUrl extends Controller {
 	//seopro end
 	
 	public function index() {
+
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
-
+		
+	
 		// Decode URL
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);
@@ -64,7 +66,7 @@ class ControllerStartupSeoUrl extends Controller {
 					}
 				} else {
 					if(!$this->config->get('config_seo_pro')){		
-					$this->request->get['route'] = 'error/not_found';
+						$this->request->get['route'] = 'error/not_found';
 					}
 
 					break;
@@ -86,7 +88,7 @@ class ControllerStartupSeoUrl extends Controller {
 		
 		//seopro validate
 		if($this->config->get('config_seo_pro')){		
-		$this->seo_pro->validate();
+			$this->seo_pro->validate();
 		}
 	//seopro validate
 		
@@ -107,8 +109,12 @@ class ControllerStartupSeoUrl extends Controller {
 		
 		//seo_pro baseRewrite
 		if($this->config->get('config_seo_pro')){		
-		list($url, $data, $postfix) =  $this->seo_pro->baseRewrite($data, (int)$this->config->get('config_language_id'));	
+			list($url, $data, $postfix) =  $this->seo_pro->baseRewrite($data, (int)$this->config->get('config_language_id'));	
 		}
+		
+		
+
+		
 		//seo_pro baseRewrite
 
 		foreach ($data as $key => $value) {
@@ -142,20 +148,21 @@ class ControllerStartupSeoUrl extends Controller {
 		}
 
 		//seo_pro add blank url
-		if($this->config->get('config_seo_pro')){		
+		if($this->config->get('config_seo_pro')) {		
 			$condition = ($url !== null);
 		} else {
-			$condition = ($url);
+			$condition = $url;
 		}
-			
+
 		if ($condition) {
-		
-		if($this->config->get('config_seo_pro')){		
-			if($this->config->get('config_page_postfix') && $postfix) {
-				$url .= $this->config->get('config_page_postfix');
+			if($this->config->get('config_seo_pro')){		
+				if($this->config->get('config_page_postfix') && $postfix) {
+					$url .= $this->config->get('config_page_postfix');
+				} elseif($this->config->get('config_seopro_addslash')) {
+					$url .= '/';
+				} 
 			}
-		}
-		
+			
 		//seo_pro add blank url
 			unset($data['route']);
 

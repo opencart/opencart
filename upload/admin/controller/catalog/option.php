@@ -388,7 +388,6 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		if (isset($this->request->post['option_value'])) {
-
 			if (isset($this->request->get['option_id'])) {
 				$this->load->model('catalog/product');
 
@@ -404,11 +403,10 @@ class ControllerCatalogOption extends Controller {
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
-						$this->error['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($this->request->get['option_id']));
+						$this->error['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($product_option_value['option_value_id']));
 					}
 				}
 			}
-
 		}
 
 		if (isset($this->request->post['option_value'])) {

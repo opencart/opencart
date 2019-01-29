@@ -741,4 +741,10 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+
+	public function getTotalProductsByOptionValueId($option_value_id) {
+		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS total FROM " . DB_PREFIX . "product_option_value WHERE option_value_id = '" . (int)$option_value_id . "'");
+
+		return $query->row['total'];
+	}
 }

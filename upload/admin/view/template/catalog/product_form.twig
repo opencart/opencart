@@ -1415,7 +1415,7 @@ $('#button-option').on('click', function() {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			html = $('#option-values' + option_row).html();
+			//html = $('#option-values' + option_row).html();
 
 			html = '<div id="modal-option" class="modal fade">';
 			html += '  <div class="modal-dialog">';
@@ -1434,7 +1434,7 @@ $('#button-option').on('click', function() {
 			html += '      	  <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>';
           {% endif %}
 
-			html += '      	  </select>
+			html += '      	  </select>';
 
 			html += '        </div>';
 			html += '        <div class="form-group">';
@@ -1476,7 +1476,9 @@ $('#button-option').on('click', function() {
 			html += '    </div>';
 			html += '  </div>';
 			html += '</div>';
+
 			$('body').append(html);
+
 			$('#modal-image').modal('show');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

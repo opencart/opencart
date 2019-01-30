@@ -125,13 +125,21 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '       <Code>' . $this->config->get('shipping_ups_pickup') . '</Code>';
 			$xml .= '   </PickupType>';
 
-			if ($this->config->get('shipping_ups_country') == 'US' && $this->config->get('shipping_ups_pickup') == '11') {
-				$xml .= '   <CustomerClassification>';
-				$xml .= '       <Code>' . $this->config->get('shipping_ups_classification') . '</Code>';
-				$xml .= '   </CustomerClassification>';
-			}
+                        if ($this->config->get('shipping_ups_country') == 'US') {
+                                $xml .= '   <CustomerClassification>';
+                                $xml .= '       <Code>' . $this->config->get('shipping_ups_classification') . '</Code>';
+                                $xml .= '   </CustomerClassification>';
+                        }
 
 			$xml .= '	<Shipment>';
+
+
+                        if ($this->config->get('shipping_ups_shippernumber')) {
+                                $xml .= '               <RateInformation>';
+                                $xml .= '                       <NegotiatedRatesIndicator/>';
+                                $xml .= '               </RateInformation>';
+                        }
+
 			$xml .= '		<Shipper>';
 			$xml .= '			<Address>';
 			$xml .= '				<City>' . $this->config->get('shipping_ups_city') . '</City>';
@@ -139,6 +147,11 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '				<CountryCode>' . $this->config->get('shipping_ups_country') . '</CountryCode>';
 			$xml .= '				<PostalCode>' . $this->config->get('shipping_ups_postcode') . '</PostalCode>';
 			$xml .= '			</Address>';
+
+                        if ($this->config->get('shipping_ups_shippernumber')) {
+                                $xml .= '                       <ShipperNumber>' . $this->config->get('shipping_ups_shippernumber') . '</ShipperNumber>';
+                        }
+
 			$xml .= '		</Shipper>';
 			$xml .= '		<ShipTo>';
 			$xml .= '			<Address>';
@@ -226,11 +239,14 @@ class ModelExtensionShippingUps extends Model {
 					$this->log->write("UPS DATA SENT: " . $xml);
 					$this->log->write("UPS DATA RECV: " . $result);
 				}
+
+				$negotiated_rates_display = $this->config->get('shipping_ups_use_negotiated_rates');
 				
 				$previous_value = libxml_use_internal_errors(true);
 				
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->loadXml($result);
+				$xpath = new DOMXPath($dom);
 
 				libxml_use_internal_errors($previous_value);
 				
@@ -259,6 +275,12 @@ class ModelExtensionShippingUps extends Model {
 						$cost = $total_charges->getElementsByTagName('MonetaryValue')->item(0)->nodeValue;
 
 						$currency = $total_charges->getElementsByTagName('CurrencyCode')->item(0)->nodeValue;
+
+						if ($negotiated_rates_display) {
+							$negotiated_cost_tag = $xpath->query('./NegotiatedRates/NetSummaryCharges/GrandTotal/MonetaryValue', $rated_shipment);
+							if ($negotiated_cost_tag && $negotiated_cost_tag->item(0)) $cost = $negotiated_cost_tag->item(0)->nodeValue;
+							else $this->log->write("UPS shipping: negotiated rates selected, but no negotiated rates returned from API for service code " . $code);
+						}
 
 						if (!($code && $cost)) {
 							continue;

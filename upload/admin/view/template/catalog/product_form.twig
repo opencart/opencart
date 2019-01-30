@@ -435,11 +435,14 @@
                   {% set option_row = 0 %}
                   {% set option_value_row = 0 %}
                   {% for product_option in product_options %}
+                    <fieldset id="option-row{{ option_row }}">
+                      <legend>{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-right" onclick="$('#option-row{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
 
-                    <fieldset id="collapse-option{{ option_row }}">
-                      <legend>{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-right" onclick="$('#collapse-option{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
+                      <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/>
+                      <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
 
-                      <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
                       <div class="form-group row">
                         <label class="col-sm-2 col-form-label" for="input-required{{ option_row }}">{{ entry_required }}</label>
                         <div class="col-sm-10">
@@ -518,7 +521,6 @@
                         </div>
                       {% endif %}
                       {% if product_option.type == 'select' or product_option.type == 'radio' or product_option.type == 'checkbox' or product_option.type == 'image' %}
-
                         <h4>{{ text_option_value }}</h4>
                         <div class="table-responsive">
                           <table id="option-value{{ option_row }}" class="table table-bordered table-hover">
@@ -536,9 +538,7 @@
                             <tbody id="option-value-row{{ option_value_row }}">
                               {% for product_option_value in product_option.product_option_value %}
                                 <tr id="option-value-row{{ option_value_row }}">
-                                  <td class="text-left">
-                                    {{ product_option_value.name }}
-                                    <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
+                                  <td class="text-left">{{ product_option_value.name }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
                                   <td class="text-right">{{ product_option_value.quantity }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}"/></td>
                                   <td class="text-left">{% if product_option_value.subtract %}
                                       {{ text_yes }}
@@ -560,12 +560,20 @@
                             <tfoot>
                               <tr>
                                 <td colspan="6"></td>
-                                <td class="text-right"><button type="button" onclick="addOptionValue('{{ option_row }}');" data-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                <td class="text-right"><button type="button" onclick="addOptionValue('{{ option_row }}');" data-value="" data-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                               </tr>
                             </tfoot>
                           </table>
+                          <select name="product_option_values" class="d-none">
+                            {% if option_values[product_option.option_id] %}
+                              {% for option_value in option_values[product_option.option_id] %}
+                                <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>
+                              {% endfor %}
+                            {% endif %}
+                          </select>
                         </div>
                       {% endif %}
+
                     </fieldset>
 
                     {% set option_row = option_row + 1 %}
@@ -1277,18 +1285,16 @@ $('input[name=\'option\']').autocomplete({
 	},
 	'select': function(item) {
 
+		html  = '<fieldset id="option-row' + option_row + '">';
+		html += '  <legend>' + item['label'] + ' <button type="button" class="btn btn-danger btn-sm float-right" onclick="$(\'#option-row' + option_row + '\').remove();"><i class="fas fa-minus-circle"></i></button></legend>';
 
-		html = '<div class="tab-pane" id="tab-option' + option_row + '">';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
 		html += '	<input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
 
-
-
-
-		html += '	<div class="form-group">';
-		html += '	  <label class="col-sm-2 control-label" for="input-required' + option_row + '">{{ entry_required }}</label>';
+		html += '	<div class="form-group row">';
+		html += '	  <label class="col-sm-2 col-form-label" for="input-required' + option_row + '">{{ entry_required }}</label>';
 		html += '	  <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required' + option_row + '" class="form-control">';
 		html += '	    <option value="1">{{ text_yes }}</option>';
 		html += '	    <option value="0">{{ text_no }}</option>';
@@ -1296,44 +1302,44 @@ $('input[name=\'option\']').autocomplete({
 		html += '	</div>';
 
 		if (item['type'] == 'text') {
-			html += '	<div class="form-group">';
-			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
+			html += '	<div class="form-group row">';
+			html += '	  <label class="col-sm-2 col-form-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
 			html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-value' + option_row + '" class="form-control" /></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'textarea') {
-			html += '	<div class="form-group">';
-			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
+			html += '	<div class="form-group row">';
+			html += '	  <label class="col-sm-2 col-form-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
 			html += '	  <div class="col-sm-10"><textarea name="product_option[' + option_row + '][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-value' + option_row + '" class="form-control"></textarea></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'file') {
-			html += '	<div class="form-group" style="display: none;">';
-			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
+			html += '	<div class="form-group row" style="display: none;">';
+			html += '	  <label class="col-sm-2 col-form-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
 			html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-value' + option_row + '" class="form-control" /></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'date') {
-			html += '	<div class="form-group">';
-			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
-			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+			html += '	<div class="form-group row">';
+			html += '	  <label class="col-sm-2 col-form-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
+			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-value' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'time') {
-			html += '	<div class="form-group">';
-			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
-			html += '	  <div class="col-sm-10"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" data-date-format="HH:mm" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+			html += '	<div class="form-group row">';
+			html += '	  <label class="col-sm-2 col-form-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
+			html += '	  <div class="col-sm-3"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-value' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
 			html += '	</div>';
 		}
 
 		if (item['type'] == 'datetime') {
-			html += '	<div class="form-group">';
-			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
-			html += '	  <div class="col-sm-10"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+			html += '	<div class="form-group row">';
+			html += '	  <label class="col-sm-2 col-form-label" for="input-value' + option_row + '">{{ entry_option_value }}</label>';
+			html += '	  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-value' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
 			html += '	</div>';
 		}
 
@@ -1351,8 +1357,7 @@ $('input[name=\'option\']').autocomplete({
 			html += '        <td></td>';
 			html += '      </tr>';
 			html += '  	 </thead>';
-			html += '  	 <tbody>';
-			html += '    </tbody>';
+			html += '  	 <tbody></tbody>';
 			html += '    <tfoot>';
 			html += '      <tr>';
 			html += '        <td colspan="6"></td>';
@@ -1362,17 +1367,17 @@ $('input[name=\'option\']').autocomplete({
 			html += '  </table>';
 			html += '</div>';
 
-			html += '  <select id="option-values' + option_row + '" style="display: none;">';
+			html += '  <select id="option-values' + option_row + '" class="d-none">';
 
 			for (i = 0; i < item['option_value'].length; i++) {
 				html += '  <option value="' + item['option_value'][i]['option_value_id'] + '">' + item['option_value'][i]['name'] + '</option>';
 			}
 
 			html += '  </select>';
-			html += '</div>';
+			html += '</fieldset>';
 		}
 
-		$('#tab-option .tab-content').append(html);
+		$('#option').append(html);
 
 		$('[data-toggle=\'tooltip\']').tooltip({
 			container: 'body',
@@ -1380,21 +1385,23 @@ $('input[name=\'option\']').autocomplete({
 		});
 
 		$('.date').datetimepicker({
-			language: '{{ datepicker }}',
-			pickTime: false
+			'format': 'YYYY-MM-DD',
+			'locale': '{{ datepicker }}',
+			'allowInputToggle': true
 		});
 
 		$('.time').datetimepicker({
-			language: '{{ datepicker }}',
-			pickDate: false
+			'format': 'HH:mm',
+			'locale': '{{ datepicker }}',
+			'allowInputToggle': true
 		});
 
 		$('.datetime').datetimepicker({
-			language: '{{ datepicker }}',
-			pickDate: true,
-			pickTime: true
+			'format': 'YYYY-MM-DD HH:mm',
+			'locale': '{{ datepicker }}',
+			'allowInputToggle': true
 		});
-
+        
 		option_row++;
 	}
 });
@@ -1403,93 +1410,77 @@ $('input[name=\'option\']').autocomplete({
 $('#button-option').on('click', function() {
 	var element = this;
 
-	$('#modal-image').remove();
+	$(this).attr('data-value');
 
-	$.ajax({
-		url: 'index.php?route=catalog/option/autocomplete&user_token={{ user_token }}',
-		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			//html = $('#option-values' + option_row).html();
+	$('#modal-option').remove();
 
-			html = '<div id="modal-option" class="modal fade">';
-			html += '  <div class="modal-dialog">';
-			html += '    <div class="modal-content">';
-			html += '      <div class="modal-header">';
-			html += '	    <h5 class="modal-title"><i class="fas fa-cog"></i> {{ heading_title }}</h5> <button type="button" class="close" data-dismiss="modal">&times;</button>';
-			html += '      </div>';
-			html += '      <div class="modal-body">';
-			html += '        <div class="form-group">';
-			html += '      	  <label class="col-form-label" for="input-option-value">{{ entry_option_value }}</label>';
-			html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]" id="input-option-value" class="form-control">';
+    html = '<div id="modal-option" class="modal fade">';
+    html += '  <div class="modal-dialog">';
+    html += '    <div class="modal-content">';
+    html += '      <div class="modal-header">';
+    html += '	    <h5 class="modal-title"><i class="fas fa-cog"></i> {{ text_option_value }}</h5> <button type="button" class="close" data-dismiss="modal">&times;</button>';
+    html += '      </div>';
+    html += '      <div class="modal-body">';
+    html += '        <div class="form-group">';
+    html += '      	  <label class="col-form-label" for="input-option-value">{{ entry_option_value }}</label>';
+    html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]" id="input-option-value" class="form-control">';
+	html += $('select[name=\'product_option_values' + option_row + '\']').html();
+    html += '      	  </select>';
+    html += '        </div>';
 
-          {% if option_value.option_value_id == product_option_value.option_value_id %}
-			html += '      	  <option value="{{ option_value.option_value_id }}" selected="selected">{{ option_value.name }}</option>';
-          {% else %}
-			html += '      	  <option value="{{ option_value.option_value_id }}">{{ option_value.name }}</option>';
-          {% endif %}
 
-			html += '      	  </select>';
+    html += '        <div class="form-group">';
+    html += '      	  <label class="col-form-label" for="input-option-quantity">{{ entry_quantity }}</label>';
+    html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" id="input-option-quantity" class="form-control"/>';
+    html += '        </div>';
+    html += '        <div class="form-group">';
+    html += '      	  <label class="col-form-label" for="input-option-subtract">{{ entry_subtract }}</label>';
+    html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]" id="input-option-subtract" class="form-control">';
+    html += '      	    <option value="1" selected="selected">{{ text_yes }}</option>';
+    html += '      	    <option value="0">{{ text_no }}</option>';
+    html += '      	  </select>';
+    html += '        </div>';
+    html += '        <div class="form-group">';
+    html += '      	  <label class="col-form-label" for="input-option-price">{{ entry_price }}</label>';
+    html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" id="input-option-price" class="form-control">';
+    html += '      	    <option value="+">+</option>';
+    html += '      	    <option value="-">-</option>';
+    html += '      	  </select>';
+    html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control"/>';
+    html += '        </div>';
+    html += '        <div class="form-group">';
+    html += '      	  <label class="col-form-label" for="input-option-points">{{ entry_points }}</label>';
+    html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]" id="input-points" class="form-control">';
+    html += '      	  	<option value="+">+</option>';
+    html += '      	  	<option value="-">-</option>';
+    html += '      	  </select>';
+    html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points]" value="" placeholder="{{ entry_points }}" class="form-control"/>';
+    html += '        </div>';
+    html += '        <div class="form-group">';
+    html += '      	  <label class="col-form-label" for="input-option-weight">{{ entry_weight }}</label>';
+    html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]" class="form-control">';
+    html += '      	    <option value="+">+</option>';
+    html += '      	  	<option value="-">-</option>';
+    html += '      	  </select>';
+    html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" placeholder="{{ entry_weight }}" class="form-control" />';
+    html += '        </div>';
+    html += '      </div>';
+    html += '      <div class="modal-footer">';
+    html += '	     <button type="button" class="btn btn-primary">{{ button_save }}</button> <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>';
+    html += '      </div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
 
-			html += '        </div>';
-			html += '        <div class="form-group">';
-			html += '      	  <label class="col-form-label" for="input-option-quantity">{{ entry_quantity }}</label>';
-			html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" id="input-option-quantity" class="form-control"/>';
-			html += '        </div>';
-			html += '        <div class="form-group">';
-			html += '      	  <label class="col-form-label" for="input-option-subtract">{{ entry_subtract }}</label>';
-			html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]" id="input-option-subtract" class="form-control">';
-			html += '      	    <option value="1" selected="selected">{{ text_yes }}</option>';
-			html += '      	    <option value="0">{{ text_no }}</option>';
-			html += '      	  </select>';
-			html += '        </div>';
-			html += '        <div class="form-group">';
-			html += '      	  <label class="col-form-label" for="input-option-price">{{ entry_price }}</label>';
-			html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" id="input-option-price" class="form-control">';
-			html += '      	    <option value="+">+</option>';
-			html += '      	    <option value="-">-</option>';
-			html += '      	  </select>';
-			html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control"/>
-			html += '        </div>';
-			html += '        <div class="form-group">';
-			html += '      	  <label class="col-form-label" for="input-option-points">{{ entry_points }}</label>';
-			html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]" id="input-points" class="form-control">';
-			html += '      	  	<option value="+">+</option>';
-			html += '      	  	<option value="-">-</option>';
-			html += '      	  </select>';
-			html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points]" value="" placeholder="{{ entry_points }}" class="form-control"/>';
-			html += '        </div>';
-			html += '        <div class="form-group">';
-			html += '      	  <label class="col-form-label" for="input-option-weight">{{ entry_weight }}</label>';
-			html += '      	  <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]" class="form-control">';
-			html += '      	    <option value="+">+</option>';
-			html += '      	  	<option value="-">-</option>';
-			html += '      	  </select>';
-			html += '      	  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" placeholder="{{ entry_weight }}" class="form-control" />';
-			html += '        </div>';
-			html += '      </div>';
-			html += '    </div>';
-			html += '  </div>';
-			html += '</div>';
+    $('body').append(html);
 
-			$('body').append(html);
-
-			$('#modal-image').modal('show');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+    $('#modal-option').modal('show');
 });
 
 var option_value_row = {{ option_value_row }};
 
 function addOptionValue(option_row) {
+	/*
 	html  = '<tr id="option-value-row' + option_value_row + '">';
 	html += '  <td class="text-left">' + name;
 	html += '    <input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" />';
@@ -1529,10 +1520,8 @@ function addOptionValue(option_row) {
 	$('[rel=tooltip]').tooltip();
 
 	option_value_row++;
+	*/
 }
-
-
-
 
 
 //--></script>
@@ -1635,8 +1624,7 @@ function addRecurring() {
   {% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
-	html += '    <select>';
-	html += '  </td>';
+	html += '  <select></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 

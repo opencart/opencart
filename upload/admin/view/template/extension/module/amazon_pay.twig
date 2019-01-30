@@ -26,7 +26,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-button-type">{{ entry_button_type }}</label>
+            <label class="col-sm-2 col-form-label" for="input-button-type">{{ entry_button_type }}</label>
             <div class="col-sm-10">
               <select name="module_amazon_pay_button_type" id="input-button-type" class="form-control">
                 {% if module_amazon_pay_button_type == 'Pay' %}
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-button-colour">{{ entry_button_colour }}</label>
+            <label class="col-sm-2 col-form-label" for="input-button-colour">{{ entry_button_colour }}</label>
             <div class="col-sm-10">
               <select name="module_amazon_pay_button_colour" id="input-button-colour" class="form-control">
                 {% if module_amazon_pay_button_colour == 'DarkGray' %}
@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-button-size">{{ entry_button_size }}</label>
+            <label class="col-sm-2 col-form-label" for="input-button-size">{{ entry_button_size }}</label>
             <div class="col-sm-10">
               <select name="module_amazon_pay_button_size" id="input-button-size" class="form-control">
                 {% if module_amazon_pay_button_size == 'small' %}
@@ -94,7 +94,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="module_amazon_pay_status" id="input-status" class="form-control">
                 {% if module_amazon_pay_status %}

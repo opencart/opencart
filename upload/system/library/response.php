@@ -22,13 +22,7 @@ class Response {
 	 *
  	*/
 	public function addHeader($header) {
-		//remove duplicate header eg: 'Content type':
-		$data = explode(":", $header);
-		if (isset($data[0])) {
-			$this->headers[md5($data[0])] = $header;
-		} else {
-			$this->headers[] = $header;
-		}
+		$this->headers[] = $header;
 	}
 	
 	/**

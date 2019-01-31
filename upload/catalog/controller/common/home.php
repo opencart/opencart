@@ -6,7 +6,11 @@ class ControllerCommonHome extends Controller {
 		$this->document->setKeywords($this->config->get('config_meta_keyword'));
 
 		if (isset($this->request->get['route'])) {
-			$this->document->addLink($this->config->get('config_url'), 'canonical');
+			$canonical = $this->url->link('common/home');
+			if ($this->config->get('config_seo_pro') && !$this->config->get('config_seopro_addslash')) {
+				$canonical = rtrim($canonical, '/');
+			}
+			$this->document->addLink($canonical, 'canonical');
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

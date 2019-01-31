@@ -52,7 +52,7 @@ class ControllerCommonHeader extends Controller {
 		
 		$host = isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1')) ? HTTPS_SERVER : HTTP_SERVER;
 		if ($this->request->server['REQUEST_URI'] == '/') {
-			$data['og_url'] = rtrim($host, '/');
+			$data['og_url'] = $this->url->link('common/home');
 		} else {
 			$data['og_url'] = $host . substr($this->request->server['REQUEST_URI'], 1, (strlen($this->request->server['REQUEST_URI'])-1));
 		}

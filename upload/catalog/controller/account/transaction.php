@@ -43,7 +43,7 @@ class ControllerAccountTransaction extends Controller {
 		$filter_data = array(
 			'sort'  => 'date_added',
 			'order' => 'DESC',
-			'start' => ($page - 1) * 10,
+			'start' => max(($page - 1), 0) * 10,
 			'limit' => 10
 		);
 

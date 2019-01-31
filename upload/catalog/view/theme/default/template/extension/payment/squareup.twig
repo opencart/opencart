@@ -153,7 +153,7 @@ $(document).ready(function() {
 			type: $(form).attr('method'),
 			data: $(form).serialize(),
 			beforeSend: function() {
-				$('#button-confirm-order').button('loading');
+				$('#button-confirm').button('loading');
 			},
 			success: function(json) {
 				if (json.error) {
@@ -166,7 +166,7 @@ $(document).ready(function() {
 				squareupError(thrownError);
 			},
 			complete: function() {
-				$('#button-confirm-order').button('reset');
+				$('#button-confirm').button('reset');
 			}
 		});
 	}
@@ -185,7 +185,7 @@ $(document).ready(function() {
 	}
 
 	function squareupError(error) {
-		$('#button-confirm-order').button('reset');
+		$('#button-confirm').button('reset');
 
 		$('#squareup-notification').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fas fa-exclamation-circle"></i>&nbsp;' + error + '</div>');
 	}
@@ -208,12 +208,12 @@ $(document).ready(function() {
 		toggleAjaxSetup(init_ajax_setup);
 	}
 
-	$('#button-confirm-order').unbind().click(function(e) {
+	$('#button-confirm').unbind().click(function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 
 		$('#squareup-notification').empty();
-		$('#button-confirm-order').button('loading');
+		$('#button-confirm').button('loading');
 
 		onConfirmCheckout();
 	});

@@ -11,6 +11,7 @@ $_['text_filter']            = 'Filter';
 $_['text_default']           = 'Default';
 $_['text_variant_add']       = 'Add Variant';
 $_['text_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
+$_['text_option_add']        = 'Add Option';
 $_['text_option_value']      = 'Option Value';
 $_['text_select']        	 = 'Select';
 $_['text_radio']             = 'Radio';
@@ -105,6 +106,7 @@ $_['help_category']          = '(Autocomplete)';
 $_['help_filter']            = '(Autocomplete)';
 $_['help_download']          = '(Autocomplete)';
 $_['help_related']           = '(Autocomplete)';
+$_['help_option']            = '(Autocomplete)';
 $_['help_tag']               = 'Comma separated';
 
 // Error

@@ -119,7 +119,7 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '			<XpciVersion>1.0001</XpciVersion>';
 			$xml .= '		</TransactionReference>';
 			$xml .= '		<RequestAction>Rate</RequestAction>';
-			$xml .= '		<RequestOption>shop</RequestOption>';
+			$xml .= '		<RequestOption>ShopTimeInTransit</RequestOption>';
 			$xml .= '	</Request>';
 			$xml .= '   <PickupType>';
 			$xml .= '       <Code>' . $this->config->get('shipping_ups_pickup') . '</Code>';
@@ -139,6 +139,22 @@ class ModelExtensionShippingUps extends Model {
                                 $xml .= '                       <NegotiatedRatesIndicator/>';
                                 $xml .= '               </RateInformation>';
                         }
+
+			$xml .= '               <DeliveryTimeInformation>';
+			$xml .= '                       <PackageBillType>03</PackageBillType>';
+			$xml .= '               </DeliveryTimeInformation>';
+
+			$xml .= '               <ShipmentTotalWeight>';
+			$xml .= '                       <UnitOfMeasurement>';
+			$xml .= '                               <Code>' . $weight_code . '</Code>';
+			$xml .= '                       </UnitOfMeasurement>';
+			$xml .= '                       <Weight>' . $weight . '</Weight>';
+			$xml .= '               </ShipmentTotalWeight>';
+
+			$xml .= '               <InvoiceLineTotal>';
+			$xml .= '                       <CurrencyCode>' . $this->session->data['currency'] . '</CurrencyCode>';
+			$xml .= '                       <MonetaryValue>' . $this->currency->format($this->cart->getSubTotal(), $this->session->data['currency'], false, false) . '</MonetaryValue>';
+			$xml .= '               </InvoiceLineTotal>';
 
 			$xml .= '		<Shipper>';
 			$xml .= '			<Address>';
@@ -270,6 +286,21 @@ class ModelExtensionShippingUps extends Model {
 
 						$code = $service->getElementsByTagName('Code')->item(0)->nodeValue;
 
+						$service_commitment = '';
+						if ($this->config->get('shipping_ups_display_time')) {
+							$delivery_days = false;
+							$delivery_days_tag = $xpath->query('./TimeInTransit/ServiceSummary/EstimatedArrival/BusinessDaysInTransit', $rated_shipment);
+							if ($delivery_days_tag && $delivery_days_tag->item(0)) $delivery_days = $delivery_days_tag->item(0)->nodeValue;
+							if (!$delivery_days) $delivery_days = $rated_shipment->getElementsByTagName('GuaranteedDaysToDelivery')->item(0)->nodeValue;
+							$delivery_time = $rated_shipment->getElementsByTagName('ScheduledDeliveryTime')->item(0)->nodeValue;
+							if ($delivery_days) {
+								$service_commitment = ' (' . $this->language->get('text_eta') . ' ' . $delivery_days . ' day';
+								if ($delivery_days > 1) $service_commitment .= "s";
+								if ($delivery_time) $service_commitment .= ' by ' . $delivery_time;
+								$service_commitment .= ')';
+							}
+						}
+
 						$total_charges = $rated_shipment->getElementsByTagName('TotalCharges')->item(0);
 
 						$cost = $total_charges->getElementsByTagName('MonetaryValue')->item(0)->nodeValue;
@@ -289,7 +320,7 @@ class ModelExtensionShippingUps extends Model {
 						if ($this->config->get('shipping_ups_' . strtolower($this->config->get('shipping_ups_origin')) . '_' . $code)) {
 							$quote_data[$code] = array(
 								'code'         => 'ups.' . $code,
-								'title'        => $service_code[$this->config->get('shipping_ups_origin')][$code],
+								'title'        => $service_code[$this->config->get('shipping_ups_origin')][$code] . $service_commitment,
 								'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
 								'tax_class_id' => $this->config->get('shipping_ups_tax_class_id'),
 								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('shipping_ups_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)

@@ -88,6 +88,7 @@ $_['entry_geo_zone']               = 'Geo Zone';
 $_['entry_status']                 = 'Status';
 $_['entry_sort_order']             = 'Sort Order';
 $_['entry_debug']                  = 'Debug Mode';
+$_['entry_display_time']           = 'Display Delivery Time';
 
 // Help
 $_['help_key']                     = 'Enter the XML rates access key assigned to you by UPS.';
@@ -112,6 +113,7 @@ $_['help_dimension']               = 'This is assumed to be your average packing
 $_['help_debug']                   = 'Saves send/recv data to the system log';
 $_['help_ups_shippernumber']       = 'Your UPS shipper number (leave blank if you don\'t have one or don\'t want to show negotiated rates)';
 $_['help_use_negotiated_rates']    = 'Display and charge negotiated rates; if no, negotiated rates will be ignored';
+$_['help_display_time']            = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
 
 // Error
 $_['error_permission']             = 'Warning: You do not have permission to modify UPS (US) shipping!';

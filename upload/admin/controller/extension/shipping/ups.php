@@ -625,6 +625,12 @@ class ControllerExtensionShippingUPS extends Controller {
 			$data['shipping_ups_other_65'] = $this->config->get('shipping_ups_other_65');
 		}
 
+		if (isset($this->request->post['shipping_ups_display_time'])) {
+			$data['shipping_ups_display_time'] = $this->request->post['shipping_ups_display_time'];
+		} else {
+			$data['shipping_ups_display_time'] = $this->config->get('shipping_ups_display_time');
+		}
+
 		if (isset($this->request->post['shipping_ups_display_weight'])) {
 			$data['shipping_ups_display_weight'] = $this->request->post['shipping_ups_display_weight'];
 		} else {

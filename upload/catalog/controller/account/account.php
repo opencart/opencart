@@ -66,21 +66,27 @@ class ControllerAccountAccount extends Controller {
 		$data['transaction'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
 		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
 		$data['recurring'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
-		
-		$this->load->model('account/affiliate');
-		
-		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
-		if (!$affiliate_info) {	
-			$data['affiliate'] = $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'));
+		if ($this->config->get('config_affiliate_enabled')) {
+			$data['display_affiliate'] = true;
+
+			$this->load->model('account/affiliate');
+			
+			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
+
+			if (!$affiliate_info) {	
+				$data['affiliate'] = $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'));
+			} else {
+				$data['affiliate'] = $this->url->link('account/affiliate/edit', 'language=' . $this->config->get('config_language'));
+			}
+			
+			if ($affiliate_info) {		
+				$data['tracking'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
+			} else {
+				$data['tracking'] = '';
+			}
 		} else {
-			$data['affiliate'] = $this->url->link('account/affiliate/edit', 'language=' . $this->config->get('config_language'));
-		}
-		
-		if ($affiliate_info) {		
-			$data['tracking'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
-		} else {
-			$data['tracking'] = '';
+			$data['display_affiliate'] = false;
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

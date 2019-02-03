@@ -11,7 +11,7 @@ class ControllerAccountTracking extends Controller {
 
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 			
-		if ($affiliate_info) {
+		if ($affiliate_info && $this->config->get('config_affiliate_enabled')) {
 			$this->load->language('account/tracking');
 	
 			$this->document->setTitle($this->language->get('heading_title'));

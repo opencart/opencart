@@ -3,8 +3,13 @@ class ControllerAffiliateRegister extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->customer->isLogged()) {
+		$affiliate_enabled = $this->config->get('config_affiliate_enabled');
+		if (!$affiliate_enabled || $this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+		}
+
+		if (!$affiliate_enabled) {
+			return true;
 		}
 
 		$this->load->language('affiliate/register');

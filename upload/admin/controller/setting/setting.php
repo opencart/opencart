@@ -646,6 +646,14 @@ class ControllerSettingSetting extends Controller {
 			$data['config_affiliate_group_id'] = $this->config->get('config_affiliate_group_id');
 		}
 
+		if (isset($this->request->post['config_affiliate_enabled'])) {
+			$data['config_affiliate_enabled'] = $this->request->post['config_affiliate_enabled'];
+		} elseif ($this->config->has('config_affiliate_enabled')) {
+			$data['config_affiliate_enabled'] = $this->config->get('config_affiliate_enabled');
+		} else {
+			$data['config_affiliate_enabled'] = '';
+		}
+
 		if (isset($this->request->post['config_affiliate_approval'])) {
 			$data['config_affiliate_approval'] = $this->request->post['config_affiliate_approval'];
 		} elseif ($this->config->has('config_affiliate_approval')) {

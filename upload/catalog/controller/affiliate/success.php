@@ -1,6 +1,11 @@
 <?php
 class ControllerAffiliateSuccess extends Controller {
 	public function index() {
+		if (!$this->config->get('config_affiliate_enabled')) {
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+			return true;
+		}
+
 		$this->load->language('affiliate/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));

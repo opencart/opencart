@@ -3,6 +3,11 @@ class ControllerAccountAffiliate extends Controller {
 	private $error = array();
 
 	public function add() {
+		if (!$this->config->get('config_affiliate_enabled')) {
+			$this->response->redirect($this->url->link('account/account'), 'language=' . $this->config->get('config_language'));
+			return;
+		}
+
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
 
@@ -27,6 +32,11 @@ class ControllerAccountAffiliate extends Controller {
 	}
 	
 	public function edit() {
+		if (!$this->config->get('config_affiliate_enabled')) {
+			$this->response->redirect($this->url->link('account/account'), 'language=' . $this->config->get('config_language'));
+			return;
+		}
+
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
 
@@ -51,6 +61,11 @@ class ControllerAccountAffiliate extends Controller {
 	}
 		
 	public function getForm() {
+		if (!$this->config->get('config_affiliate_enabled')) {
+			$this->response->redirect($this->url->link('account/account'), 'language=' . $this->config->get('config_language'));
+			return;
+		}
+
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
@@ -264,6 +279,10 @@ class ControllerAccountAffiliate extends Controller {
 	}
 	
 	protected function validate() {
+		if (!$this->config->get('config_affiliate_enabled')) {
+			return false;
+		}
+
 		if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {
 			$this->error['cheque'] = $this->language->get('error_cheque');
 		} elseif (($this->request->post['payment'] == 'paypal') && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {

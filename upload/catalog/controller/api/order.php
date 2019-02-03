@@ -286,7 +286,7 @@ class ControllerApiOrder extends Controller {
 					$order_data['comment'] = '';
 				}
 
-				if (isset($this->request->post['affiliate_id'])) {
+				if (isset($this->request->post['affiliate_id']) && $this->config->get('config_affiliate_enabled')) {
 					$subtotal = $this->cart->getSubTotal();
 
 					// Affiliate
@@ -294,7 +294,7 @@ class ControllerApiOrder extends Controller {
 
 					$affiliate_info = $this->model_account_affiliate->getAffiliate($this->request->post['affiliate_id']);
 
-					if ($affiliate_info) {
+					if ($this->config->get('config_affiliate_enabled') && $affiliate_info) {
 						$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 					} else {

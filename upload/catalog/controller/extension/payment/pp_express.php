@@ -1021,7 +1021,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);
 
-				if ($affiliate_info) {
+				if ($this->config->get('config_affiliate_enabled') && $affiliate_info) {
 					$data['affiliate_id'] = $affiliate_info['affiliate_id'];
 					$data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 				} else {

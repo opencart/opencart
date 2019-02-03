@@ -77,6 +77,7 @@ $_['help_display_time']     = 'Do you want to display the shipping time? (e.g. S
 $_['help_display_weight']   = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
 $_['help_weight_class']     = 'Must be set to Pound.';
 $_['help_debug']            = 'Saves send/recv data to the system log';
+$_['help_user_id']          = 'USPS API username (see https://registration.shippingapis.com/)';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify United States Postal Service!';

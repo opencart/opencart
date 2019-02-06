@@ -1,0 +1,9 @@
+// * @source		See SOURCE.txt for source and other copyright.
+// * @license	GNU General Public License version 3; see LICENSE.txt
+
+ocStore был создан в соответствии с GNU GPLv3 и включает в себя или является производным работ 
+лицензируемых в соответствии GNU General Public License или других лицензии на бесплатное программное 
+обеспечение или Open Source. В ocStore использованы следующие источники:
+
+- OpenCart							(C) 2006-2015 Daniel Kerr, OpenCart Ltd.
+- Arastta							(С) 2015 Arastta Association.

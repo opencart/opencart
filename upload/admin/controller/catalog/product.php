@@ -1203,8 +1203,8 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['product_relateds'] = array();
 
-		foreach ($products as $product_id) {
-			$related_info = $this->model_catalog_product->getProduct($product_id);
+		foreach ($products as $related_id) {
+			$related_info = $this->model_catalog_product->getProduct($related_id);
 
 			if ($related_info) {
 				$data['product_relateds'][] = array(

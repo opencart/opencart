@@ -1,6 +1,6 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2017.
-// *	@forum	http://forum.opencart.pro
+// *	@copyright	OCSTORE.COM 2010 - 2019.
+// *	@forum	https://opencartforum.com
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
@@ -277,7 +277,7 @@ class ControllerBlogCategory extends Controller {
 				);
 			}
 			
-			//opencart.pro sort viewed
+			//OCSTORE.COM sort viewed
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_viewed_asc'),
 				'value' => 'p.viewed-ASC',
@@ -289,7 +289,7 @@ class ControllerBlogCategory extends Controller {
 				'value' => 'p.viewed-DESC',
 				'href'  => $this->url->link('blog/category', 'blog_category_id=' . $this->request->get['blog_category_id'] . '&sort=p.viewed&order=DESC' . $url)
 			); 
-			//opencart.pro sort viewed
+			//OCSTORE.COM sort viewed
 			
 			$url = '';
 

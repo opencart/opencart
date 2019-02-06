@@ -4,4 +4,4 @@
 
 // Text
 $_['text_footer'] 	= '<a target="_blank" href="https://ocstore.com/">ocStore</a> &copy; 2009-' . date('Y') . ' Все права защищены.';
-$_['text_version'] 	= 'Версия ocStore %s. Эта версия ocStore ознакомительная. НЕ ДЛЯ КОММЕРЧЕСКОГО ИСПОЛЬЗОВАНИЯ';
+$_['text_version'] 	= 'Версия ocStore %s';

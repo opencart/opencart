@@ -1,6 +1,6 @@
 <?php
-// *	@copyright	OPENCART.PRO 2011 - 2019.
-// *	@forum	http://forum.opencart.pro
+// *	@copyright	OCSTORE.COM 2010 - 2019.
+// *	@forum	https://opencartforum.com
 // *	@source		See SOURCE.txt for source and other copyright.
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
@@ -47,7 +47,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			$this->setShop('company', $this->config->get('feed_yandex_market_company'));
 			$this->setShop('url', HTTP_SERVER);
 			$this->setShop('phone', $this->config->get('config_telephone'));
-			$this->setShop('platform', 'OPENCART.PRO');
+			$this->setShop('platform', 'OCSTORE.COM');
 			$this->setShop('version', VERSION);
 
 			// Валюты

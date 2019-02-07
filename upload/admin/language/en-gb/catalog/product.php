@@ -71,7 +71,6 @@ $_['entry_height']           = 'Height';
 $_['entry_option']           = 'Option';
 $_['entry_option_value']     = 'Option Value';
 $_['entry_image']            = 'Image';
-$_['entry_additional_image'] = 'Additional Images';
 $_['entry_customer_group']   = 'Customer Group';
 $_['entry_date_start']       = 'Date Start';
 $_['entry_date_end']         = 'Date End';

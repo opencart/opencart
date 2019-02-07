@@ -376,7 +376,7 @@ class ControllerCatalogProduct extends Controller {
 				'quantity'   => $result['quantity'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['variant_id'] ? '&variant_id=' . $result['variant_id'] : ''). $url),
-				'variant'    => ($result['variant_id'] ? $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&variant_id=' . $result['product_id'] . $url) : '')
+				'variant'    => (!$result['variant_id'] ? $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&variant_id=' . $result['product_id'] . $url) : '')
 			);
 		}
 

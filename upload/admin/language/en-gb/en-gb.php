@@ -104,6 +104,7 @@ $_['button_restore']                = 'Restore';
 $_['button_run']                    = 'Run Cron Job';
 $_['button_backup']                 = 'Backup';
 $_['button_developer']              = 'Developer Setting';
+$_['button_variant']                = 'Save changes to variant products';
 
 // Tab
 $_['tab_affiliate']                 = 'Affiliate';

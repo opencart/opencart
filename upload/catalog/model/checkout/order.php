@@ -329,7 +329,18 @@ class ModelCheckoutOrder extends Model {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
 					}
 				}
-				
+
+				// Reduce the master product stock level if product is a variant
+				$this->load->model('catalog/product');
+
+				foreach ($order_products as $order_product) {
+					$product_info = $this->model_catalog_product->getProduct($order_product['product_id']);
+
+					if ($product_info && $product_info['variant_id']) {
+						$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$product_info['variant_id'] . "' AND subtract = '1'");
+					}
+				}
+
 				// Add commission if sale is linked to affiliate referral.
 				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
 					$this->load->model('account/customer');

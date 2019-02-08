@@ -93,7 +93,13 @@
                               <input type="checkbox" name="selected[]" value="{{ product.product_id }}"/>
                             {% endif %}</td>
                           <td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
-                          <td class="text-left">{{ product.name }}
+                          <td class="text-left">{% if product.variant %}
+                              {{ product.name }}
+                            {% else %}
+                              <span class="text-muted">{{ product.name }}</span>
+                            {% endif %}
+
+
                             <br/>
                             {% if product.status %}
                               <small class="text-success">{{ text_enabled }}</small>
@@ -117,11 +123,15 @@
                               <span class="badge badge-success">{{ product.quantity }}</span>
                             {% endif %}</td>
                           <td class="text-right">
-                            <div class="btn-group">
+                            {% if product.variant %}
+                              <div class="btn-group">
+                                <a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-caret-down"></i></button>
+                                <div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant_add }}</a></div>
+                              </div>
+                            {% else %}
                               <a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
-                              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-caret-down"></i></button>
-                              <div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant_add }}</a></div>
-                            </div>
+                            {% endif %}
                           </td>
                         </tr>
                       {% endfor %}

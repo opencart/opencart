@@ -13,6 +13,13 @@
   white-space: nowrap;
   vertical-align: baseline;
   @include border-radius($badge-border-radius);
+  
+  &[href] {
+  //@at-root a#{&} {
+    @include hover-focus {
+      text-decoration: none;
+    }
+  }
 
   // Empty badges collapse automatically
   &:empty {

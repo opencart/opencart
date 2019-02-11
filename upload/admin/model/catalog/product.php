@@ -321,7 +321,7 @@ class ModelCatalogProduct extends Model {
 			$data['product_download'] = $this->getProductDownloads($product_id);
 			$data['product_layout'] = $this->getProductLayouts($product_id);
 			$data['product_store'] = $this->getProductStores($product_id);
-			$data['product_recurrings'] = $this->getRecurrings($product_id);
+			$data['product_recurring'] = $this->getRecurrings($product_id);
 
 			$this->addProduct($data);
 		}
@@ -362,6 +362,10 @@ class ModelCatalogProduct extends Model {
 		$sql = "SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
+			$sql .= " AND pd.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+		}
+
+		if (!empty($data['filter_variant_id'])) {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 

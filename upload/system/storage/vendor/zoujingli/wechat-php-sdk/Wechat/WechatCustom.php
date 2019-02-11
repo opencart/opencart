@@ -34,6 +34,7 @@ class WechatCustom extends Common
     const CS_KF_ACCOUNT_UPDATE_URL = '/customservice/kfaccount/update?';
     const CS_KF_ACCOUNT_DEL_URL = '/customservice/kfaccount/del?';
     const CS_KF_ACCOUNT_UPLOAD_HEADIMG_URL = '/customservice/kfaccount/uploadheadimg?';
+    const CUSTOM_SERVICE_GET_MSG_LIST = '/customservice/msgrecord/getmsglist?';
 
     /**
      * 获取多客服会话记录
@@ -183,6 +184,29 @@ class WechatCustom extends Common
             return false;
         }
         $result = Tools::httpGet(self::API_BASE_URL_PREFIX . self::CUSTOM_SESSION_GET . "access_token={$this->access_token}" . '&openid=' . $openid);
+        if ($result) {
+            $json = json_decode($result, true);
+            if (empty($json) || !empty($json['errcode'])) {
+                $this->errCode = isset($json['errcode']) ? $json['errcode'] : '505';
+                $this->errMsg = isset($json['errmsg']) ? $json['errmsg'] : '无法解析接口返回内容！';
+                return $this->checkRetry(__FUNCTION__, func_get_args());
+            }
+            return $json;
+        }
+        return false;
+    }
+
+    /**
+     * 获取聊天记录
+     * @param array $data 数据结构 {"starttime" : 987654321,"endtime" : 987654321,"msgid" : 1,"number" : 10000}
+     * @return bool|array
+     */
+    public function getCustomMsgList($data)
+    {
+        if (!$this->access_token && !$this->getAccessToken()) {
+            return false;
+        }
+        $result = Tools::httpPost(self::API_BASE_URL_PREFIX . self::CUSTOM_SERVICE_GET_MSG_LIST . "access_token={$this->access_token}", Tools::json_encode($data));
         if ($result) {
             $json = json_decode($result, true);
             if (empty($json) || !empty($json['errcode'])) {

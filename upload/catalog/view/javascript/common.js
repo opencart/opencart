@@ -172,9 +172,19 @@ var cart = {
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div class="toast show" style="position: absolute; top: 0; right 0; min-height: 200px;">';
+					html += '  <div class="toast-header">';
+					html += '    <img src="" class="rounded mr-2" alt="">';
+					html += '	 <strong class="mr-auto">Bootstrap</strong>';
+					html += '    <small>11 mins ago</small>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">';
+					html += 	'Hello, world! This is a toast message.';
+					html += '  </div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('main').append(html);
 
 					// Need to set timeout otherwise it wont update the total
 					$('#cart').parent().load('index.php?route=common/cart/info');

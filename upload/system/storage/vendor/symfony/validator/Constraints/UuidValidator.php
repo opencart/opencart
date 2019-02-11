@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Validator\Constraints;
 
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Constraints\Deprecated\UuidValidator as Deprecated;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
@@ -83,15 +83,15 @@ class UuidValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (null === $value || '' === $value) {
-            return;
-        }
-
         if (!$constraint instanceof Uuid) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Uuid');
         }
 
-        if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
+        if (null === $value || '' === $value) {
+            return;
+        }
+
+        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
@@ -315,7 +315,7 @@ class UuidValidator extends ConstraintValidator
         }
 
         // Check version
-        if (!in_array($value[self::STRICT_VERSION_POSITION], $constraint->versions)) {
+        if (!\in_array($value[self::STRICT_VERSION_POSITION], $constraint->versions)) {
             if ($this->context instanceof ExecutionContextInterface) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ value }}', $this->formatValue($value))

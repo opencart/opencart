@@ -338,6 +338,12 @@ class ModelCheckoutOrder extends Model {
 
 					if ($product_info && $product_info['variant_id']) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$product_info['variant_id'] . "' AND subtract = '1'");
+
+						$order_options = $this->getOrderOptions($order_id, $order_product['order_product_id']);
+
+						foreach ($order_options as $order_option) {
+							$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
+						}
 					}
 				}
 

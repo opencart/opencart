@@ -2008,18 +2008,6 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .dropup, .dropright, .dropdown, .dropleft {
   position: relative; }
 
-.dropdown-toggle::after {
-  display: inline-block;
-  margin-left: 0.255em;
-  vertical-align: 0.255em;
-  content: "";
-  border-top: 0.3em solid;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent; }
-  .dropdown-toggle:empty::after {
-    margin-left: 0; }
-
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -2082,35 +2070,12 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   bottom: 100%;
   margin-top: 0;
   margin-bottom: 0.125rem; }
-  .dropup .dropdown-toggle::after {
-    display: inline-block;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    content: "";
-    border-top: 0;
-    border-right: 0.3em solid transparent;
-    border-bottom: 0.3em solid;
-    border-left: 0.3em solid transparent; }
-  .dropup .dropdown-toggle:empty::after {
-    margin-left: 0; }
-
-.dropright .dropdown-menu {
-  top: 0;
-  right: auto;
-  left: 100%;
-  margin-top: 0;
-  margin-left: 0.125rem; }
-  .dropright .dropdown-toggle::after {
-    display: inline-block;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    content: "";
-    border-top: 0.3em solid transparent;
-    border-right: 0;
-    border-bottom: 0.3em solid transparent;
-    border-left: 0.3em solid; }
-  .dropright .dropdown-toggle:empty::after {
-    margin-left: 0; }
+  .dropright .dropdown-menu {
+    top: 0;
+    right: auto;
+    left: 100%;
+    margin-top: 0;
+    margin-left: 0.125rem; }
   .dropright .dropdown-toggle::after {
     vertical-align: 0; }
 
@@ -2120,23 +2085,6 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   left: auto;
   margin-top: 0;
   margin-right: 0.125rem; }
-  .dropleft .dropdown-toggle::after {
-    display: inline-block;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    content: ""; }
-  .dropleft .dropdown-toggle::after {
-    display: none; }
-  .dropleft .dropdown-toggle::before {
-    display: inline-block;
-    margin-right: 0.255em;
-    vertical-align: 0.255em;
-    content: "";
-    border-top: 0.3em solid transparent;
-    border-right: 0.3em solid;
-    border-bottom: 0.3em solid transparent; }
-  .dropleft .dropdown-toggle:empty::after {
-    margin-left: 0; }
   .dropleft .dropdown-toggle::before {
     vertical-align: 0; }
 

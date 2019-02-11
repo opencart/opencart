@@ -5,12 +5,9 @@
 class ControllerCheckoutSuccess extends Controller {
 	public function index() {
 		$this->load->language('checkout/success');
-		
-		if ( isset($this->session->data['order_id']) && ( ! empty($this->session->data['order_id']))  ) {
-			$this->session->data['last_order_id'] = $this->session->data['order_id'];
-		}
 
 		if (isset($this->session->data['order_id'])) {
+			$this->session->data['last_order_id'] = $this->session->data['order_id'];
 			$this->cart->clear();
 
 			unset($this->session->data['shipping_method']);
@@ -27,7 +24,7 @@ class ControllerCheckoutSuccess extends Controller {
 			unset($this->session->data['totals']);
 		}
 
-		if (! empty($this->session->data['last_order_id']) ) {
+		if (!empty($this->session->data['last_order_id']) ) {
 			$this->document->setTitle(sprintf($this->language->get('heading_title_customer'), $this->session->data['last_order_id']));
 			$this->document->setRobots('noindex,follow');
 		} else {
@@ -56,17 +53,17 @@ class ControllerCheckoutSuccess extends Controller {
 			'text' => $this->language->get('text_success'),
 			'href' => $this->url->link('checkout/success')
 		);
-		
-		if (! empty($this->session->data['last_order_id']) ) {
+
+		if (!empty($this->session->data['last_order_id'])) {
 			$data['heading_title'] = sprintf($this->language->get('heading_title_customer'), $this->session->data['last_order_id']);
 		} else {
 			$data['heading_title'] = $this->language->get('heading_title');
 		}
 
-		if ($this->customer->isLogged()) {
+		if ($this->customer->isLogged() && !empty($this->session->data['last_order_id'])) {
 			$data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/order/info&order_id=' . $this->session->data['last_order_id'], '', true), $this->url->link('account/account', '', true), $this->url->link('account/order', '', true), $this->url->link('information/contact'), $this->url->link('product/special'), $this->session->data['last_order_id'], $this->url->link('account/download', '', true));
 		} else {
-			$data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact'), $this->session->data['last_order_id']);
+			$data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
 		}
 
 		$data['continue'] = $this->url->link('common/home');

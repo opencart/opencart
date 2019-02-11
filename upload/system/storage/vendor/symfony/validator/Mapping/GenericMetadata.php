@@ -127,11 +127,7 @@ class GenericMetadata implements MetadataInterface
     public function addConstraint(Constraint $constraint)
     {
         if ($constraint instanceof Traverse) {
-            throw new ConstraintDefinitionException(sprintf(
-                'The constraint "%s" can only be put on classes. Please use '.
-                '"Symfony\Component\Validator\Constraints\Valid" instead.',
-                get_class($constraint)
-            ));
+            throw new ConstraintDefinitionException(sprintf('The constraint "%s" can only be put on classes. Please use "Symfony\Component\Validator\Constraints\Valid" instead.', \get_class($constraint)));
         }
 
         if ($constraint instanceof Valid) {
@@ -191,7 +187,7 @@ class GenericMetadata implements MetadataInterface
      */
     public function hasConstraints()
     {
-        return count($this->constraints) > 0;
+        return \count($this->constraints) > 0;
     }
 
     /**

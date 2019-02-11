@@ -137,7 +137,10 @@ class Tools
      */
     static public function xml2arr($xml)
     {
-        return json_decode(Tools::json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        $disableEntities = libxml_disable_entity_loader(true);
+        $result = json_decode(Tools::json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        libxml_disable_entity_loader($disableEntities);
+        return $result;
     }
 
     /**

@@ -87,20 +87,16 @@
                     {% if products %}
                       {% for product in products %}
                         <tr>
+                          {% if not product.variant %}
+                            <td class="text-center"></td>
+                          {% endif %}
                           <td class="text-center">{% if product.product_id in selected %}
                               <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked"/>
                             {% else %}
                               <input type="checkbox" name="selected[]" value="{{ product.product_id }}"/>
                             {% endif %}</td>
                           <td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
-                          <td class="text-left">{% if product.variant %}
-                              {{ product.name }}
-                            {% else %}
-                              <span class="text-muted">{{ product.name }}</span>
-                            {% endif %}
-
-
-                            <br/>
+                          <td class="text-left">{{ product.name }}<br/>
                             {% if product.status %}
                               <small class="text-success">{{ text_enabled }}</small>
                             {% else %}
@@ -137,7 +133,7 @@
                       {% endfor %}
                     {% else %}
                       <tr>
-                        <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                        <td class="text-center" colspan="7">{{ text_no_results }}</td>
                       </tr>
                     {% endif %}
                   </tbody>

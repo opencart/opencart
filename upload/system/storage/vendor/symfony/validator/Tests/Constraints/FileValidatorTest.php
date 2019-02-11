@@ -36,7 +36,7 @@ abstract class FileValidatorTest extends AbstractConstraintValidatorTest
     {
         parent::setUp();
 
-        $this->path = sys_get_temp_dir().DIRECTORY_SEPARATOR.'FileValidatorTest';
+        $this->path = sys_get_temp_dir().\DIRECTORY_SEPARATOR.'FileValidatorTest';
         $this->file = fopen($this->path, 'w');
         fwrite($this->file, ' ', 1);
     }
@@ -45,7 +45,7 @@ abstract class FileValidatorTest extends AbstractConstraintValidatorTest
     {
         parent::tearDown();
 
-        if (is_resource($this->file)) {
+        if (\is_resource($this->file)) {
             fclose($this->file);
         }
 
@@ -455,11 +455,17 @@ abstract class FileValidatorTest extends AbstractConstraintValidatorTest
                 '{{ suffix }}' => 'bytes',
             ), '1');
 
+            // access FileValidator::factorizeSizes() private method to format max file size
+            $reflection = new \ReflectionClass(\get_class(new FileValidator()));
+            $method = $reflection->getMethod('factorizeSizes');
+            $method->setAccessible(true);
+            list($sizeAsString, $limit, $suffix) = $method->invokeArgs(new FileValidator(), array(0, UploadedFile::getMaxFilesize(), false));
+
             // it correctly parses the maxSize option and not only uses simple string comparison
             // 1000M should be bigger than the ini value
             $tests[] = array(UPLOAD_ERR_INI_SIZE, 'uploadIniSizeErrorMessage', array(
-                '{{ limit }}' => UploadedFile::getMaxFilesize() / 1048576,
-                '{{ suffix }}' => 'MiB',
+                '{{ limit }}' => $limit,
+                '{{ suffix }}' => $suffix,
             ), '1000M');
 
             // it correctly parses the maxSize option and not only uses simple string comparison

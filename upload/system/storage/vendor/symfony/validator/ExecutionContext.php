@@ -41,7 +41,7 @@ class ExecutionContext implements ExecutionContextInterface
      *
      * @param GlobalExecutionContextInterface $globalContext     The global context storing node-independent state
      * @param TranslatorInterface             $translator        The translator for translating violation messages
-     * @param null|string                     $translationDomain The domain of the validation messages
+     * @param string|null                     $translationDomain The domain of the validation messages
      * @param MetadataInterface               $metadata          The metadata of the validated node
      * @param mixed                           $value             The value of the validated node
      * @param string                          $group             The current validation group
@@ -84,7 +84,7 @@ class ExecutionContext implements ExecutionContextInterface
             $this->globalContext->getRoot(),
             $this->propertyPath,
             // check using func_num_args() to allow passing null values
-            func_num_args() >= 3 ? $invalidValue : $this->value,
+            \func_num_args() >= 3 ? $invalidValue : $this->value,
             $plural,
             $code
         ));
@@ -104,7 +104,7 @@ class ExecutionContext implements ExecutionContextInterface
             $this->globalContext->getRoot(),
             $this->getPropertyPath($subPath),
             // check using func_num_args() to allow passing null values
-            func_num_args() >= 4 ? $invalidValue : $this->value,
+            \func_num_args() >= 4 ? $invalidValue : $this->value,
             $plural,
             $code
         ));
@@ -208,7 +208,7 @@ class ExecutionContext implements ExecutionContextInterface
      */
     public function validateValue($value, $constraints, $subPath = '', $groups = null)
     {
-        $constraints = is_array($constraints) ? $constraints : array($constraints);
+        $constraints = \is_array($constraints) ? $constraints : array($constraints);
 
         if (null === $groups && '' === $subPath) {
             $context = clone $this;
@@ -255,7 +255,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * Returns an array of group names.
      *
-     * @param null|string|string[] $groups The groups to resolve. If a single string is
+     * @param string|string[]|null $groups The groups to resolve. If a single string is
      *                                     passed, it is converted to an array. If null
      *                                     is passed, an array containing the current
      *                                     group of the context is returned.

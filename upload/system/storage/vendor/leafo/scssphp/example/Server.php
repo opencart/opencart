@@ -207,7 +207,7 @@ class Server
         $elapsed = round((microtime(true) - $start), 4);
 
         $v    = Version::VERSION;
-        $t    = date('r');
+        $t    = gmdate('r');
         $css  = "/* compiled by scssphp $v on $t (${elapsed}s) */\n\n" . $css;
         $etag = md5($css);
 
@@ -329,7 +329,7 @@ class Server
                 try {
                     list($css, $etag) = $this->compile($input, $output);
 
-                    $lastModified = gmdate('D, d M Y H:i:s', filemtime($output)) . ' GMT';
+                    $lastModified = gmdate('r', filemtime($output));
 
                     header('Last-Modified: ' . $lastModified);
                     header('Content-type: text/css');
@@ -371,7 +371,7 @@ class Server
                 return;
             }
 
-            $lastModified  = gmdate('D, d M Y H:i:s', $mtime) . ' GMT';
+            $lastModified  = gmdate('r', $mtime);
             header('Last-Modified: ' . $lastModified);
 
             echo file_get_contents($output);
@@ -510,8 +510,6 @@ class Server
         $this->scss = $scss;
         $this->showErrorsAsCSS = false;
 
-        if (! ini_get('date.timezone')) {
-            throw new ServerException('Default date.timezone not set');
-        }
+        date_default_timezone_set('UTC');
     }
 }

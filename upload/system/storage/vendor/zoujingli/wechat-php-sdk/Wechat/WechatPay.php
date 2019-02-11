@@ -192,7 +192,7 @@ class WechatPay
             "out_trade_no"     => $out_trade_no,
             "total_fee"        => $total_fee,
             "auth_code"        => $auth_code,
-            "spbill_create_ip" => Tools::getAddress()
+            "spbill_create_ip" => Tools::getAddress(),
         );
         empty($goods_tag) || $data['goods_tag'] = $goods_tag;
         $json = Tools::xml2arr($this->postXml($data, self::MCH_BASE_URL . '/pay/micropay'));
@@ -208,7 +208,9 @@ class WechatPay
      */
     public function getNotify()
     {
+        $disableEntities = libxml_disable_entity_loader(true);
         $notifyInfo = (array)simplexml_load_string(file_get_contents("php://input"), 'SimpleXMLElement', LIBXML_NOCDATA);
+        libxml_disable_entity_loader($disableEntities);
         if (empty($notifyInfo)) {
             Tools::log('Payment notification forbidden access.', "ERR - {$this->appid}");
             $this->errCode = '404';
@@ -262,9 +264,10 @@ class WechatPay
      * @param string $trade_type 支付类型JSAPI|NATIVE|APP
      * @param string $goods_tag 商品标记，代金券或立减优惠功能的参数
      * @param string $fee_type 交易币种
+     * @param null $no_credit 是否禁止信用
      * @return bool|string
      */
-    public function getPrepayId($openid, $body, $out_trade_no, $total_fee, $notify_url, $trade_type = "JSAPI", $goods_tag = null, $fee_type = 'CNY')
+    public function getPrepayId($openid, $body, $out_trade_no, $total_fee, $notify_url, $trade_type = "JSAPI", $goods_tag = null, $fee_type = 'CNY', $no_credit = null)
     {
         $postdata = array(
             "body"             => $body,
@@ -273,10 +276,11 @@ class WechatPay
             "total_fee"        => $total_fee,
             "notify_url"       => $notify_url,
             "trade_type"       => $trade_type,
-            "spbill_create_ip" => Tools::getAddress()
+            "spbill_create_ip" => Tools::getAddress(),
         );
-        empty($goods_tag) || $postdata['goods_tag'] = $goods_tag;
         empty($openid) || $postdata['openid'] = $openid;
+        empty($goods_tag) || $postdata['goods_tag'] = $goods_tag;
+        is_null($no_credit) || $postdata['no_credit'] = $no_credit;
         $result = $this->getArrayResult($postdata, self::MCH_BASE_URL . '/pay/unifiedorder');
         if (false === $this->_parseResult($result)) {
             return false;
@@ -304,7 +308,7 @@ class WechatPay
             "total_fee"        => $total_fee,
             "notify_url"       => $notify_url,
             "trade_type"       => 'NATIVE',
-            "spbill_create_ip" => Tools::getAddress()
+            "spbill_create_ip" => Tools::getAddress(),
         );
         empty($goods_tag) || $postdata['goods_tag'] = $goods_tag;
         empty($openid) || $postdata['openid'] = $openid;

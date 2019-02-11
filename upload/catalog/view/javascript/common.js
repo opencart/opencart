@@ -165,23 +165,21 @@ var cart = {
 				$('#cart > button').button('reset');
 			},
 			success: function(json) {
-				$('.alert-dismissible, .text-danger').remove();
+				$('.alert-dismissible, .text-danger, .toast').remove();
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					html  = '<div class="toast show" style="position: absolute; top: 0; right 0; min-height: 200px;">';
+					html  = '<div id="" class="toast toast-success show" style="position: absolute; top: 10px; right 10px; min-height: 200px; z-index: 999;">';
 					html += '  <div class="toast-header">';
 					html += '    <img src="" class="rounded mr-2" alt="">';
-					html += '	 <strong class="mr-auto">Bootstrap</strong>';
+					html += '	 <strong class="mr-auto">Shopping Cart</strong>';
 					html += '    <small>11 mins ago</small>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
 					html += '  </div>';
-					html += '  <div class="toast-body">';
-					html += 	'Hello, world! This is a toast message.';
-					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
 					html += '</div>';
 
 					$('main').append(html);

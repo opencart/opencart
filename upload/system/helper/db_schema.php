@@ -3600,6 +3600,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'master_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -4039,7 +4044,7 @@ function db_schema() {
 				'auto_increment' => true
 			),
 			array(
-				'name' => 'variant_id',
+				'name' => 'master_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			),

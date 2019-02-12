@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        {% if not variant_id %}
+        {% if not master_id %}
           <button type="submit" form="form-product" formaction="{{ variant }}" data-toggle="tooltip" title="{{ button_variant }}" class="btn btn-warning"><i class="fas fa-save"></i></button>
         {% endif %}
         <button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
@@ -96,7 +96,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-data">
-              <input type="hidden" name="variant_id" value="{{ variant_id }}"/>
+              <input type="hidden" name="master_id" value="{{ master_id }}"/>
               <div class="form-group row required">
                 <label class="col-sm-2 col-form-label" for="input-model">{{ entry_model }}</label>
                 <div class="col-sm-10">
@@ -431,7 +431,7 @@
                 </table>
               </div>
             </div>
-            {% if not variant_id %}
+            {% if not master_id %}
               <div class="tab-pane" id="tab-option">
                 <div id="option">
                   {% set option_row = 0 %}
@@ -1278,7 +1278,7 @@ $('#attribute tbody tr').each(function(index, element) {
 	attributeautocomplete(index);
 });
 //--></script>
-{% if not variant_id %}
+{% if not master_id %}
   <script type="text/javascript"><!--
   var option_row = {{ option_row }};
 

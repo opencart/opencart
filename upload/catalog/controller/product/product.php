@@ -311,8 +311,8 @@ class ControllerProductProduct extends Controller {
 			$data['options'] = array();
 
 			// Check if product is variant
-			if ($product_info['variant_id']) {
-				$product_id = (int)$product_info['variant_id'];
+			if ($product_info['master_id']) {
+				$product_id = (int)$product_info['master_id'];
 			} else {
 				$product_id = (int)$this->request->get['product_id'];
 			}

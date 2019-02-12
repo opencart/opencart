@@ -26,8 +26,8 @@ class ControllerCatalogProduct extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['variant_id'])) {
-				$url .= '&variant_id=' . $this->request->get['variant_id'];
+			if (isset($this->request->get['master_id'])) {
+				$url .= '&master_id=' . $this->request->get['master_id'];
 			}
 
 			if (isset($this->request->get['filter_name'])) {
@@ -518,8 +518,8 @@ class ControllerCatalogProduct extends Controller {
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['variant_id'] ? '&variant_id=' . $result['variant_id'] : ''). $url),
-				'variant'    => (!$result['variant_id'] ? $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&variant_id=' . $result['product_id'] . $url) : '')
+				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['master_id'] ? '&master_id=' . $result['master_id'] : ''). $url),
+				'variant'    => (!$result['master_id'] ? $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&master_id=' . $result['master_id'] . $url) : '')
 			);
 		}
 
@@ -682,8 +682,8 @@ class ControllerCatalogProduct extends Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['variant_id'])) {
-			$url .= '&variant_id=' . $this->request->get['variant_id'];
+		if (isset($this->request->get['master_id'])) {
+			$url .= '&master_id=' . $this->request->get['master_id'];
 		}
 
 		if (isset($this->request->get['filter_name'])) {
@@ -744,11 +744,11 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['cancel'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// If variant_id then we need to get the variant info
+		// If master_id then we need to get the variant info
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
-		} elseif (isset($this->request->get['variant_id'])) {
-			$product_id = (int)$this->request->get['variant_id'];
+		} elseif (isset($this->request->get['master_id'])) {
+			$product_id = (int)$this->request->get['master_id'];
 		} else {
 			$product_id = 0;
 		}
@@ -771,12 +771,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_description'] = array();
 		}
 
-		if (isset($this->request->get['variant_id'])) {
-			$data['variant_id'] = (int)$this->request->get['variant_id'];
+		if (isset($this->request->get['master_id'])) {
+			$data['master_id'] = (int)$this->request->get['master_id'];
 		} elseif (!empty($product_info)) {
-			$data['variant_id'] = $product_info['variant_id'];
+			$data['master_id'] = $product_info['master_id'];
 		} else {
-			$data['variant_id'] = 0;
+			$data['master_id'] = 0;
 		}
 
 		if (isset($this->request->post['model'])) {
@@ -1196,8 +1196,8 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['options'] = array();
 
-		if (isset($this->request->get['variant_id'])) {
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->get['variant_id']);
+		if (isset($this->request->get['master_id'])) {
+			$product_options = $this->model_catalog_product->getProductOptions($this->request->get['master_id']);
 
 			foreach ($product_options as $product_option) {
 				$product_option_value_data = array();
@@ -1424,10 +1424,10 @@ class ControllerCatalogProduct extends Controller {
 			$this->error['model'] = $this->language->get('error_model');
 		}
 
-		if ($this->request->post['variant_id']) {
+		if ($this->request->post['master_id']) {
 			$this->load->model('catalog/product');
 
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['variant_id']);
+			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['master_id']);
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($this->request->post['product_variant'][$product_option['product_option_id']])) {

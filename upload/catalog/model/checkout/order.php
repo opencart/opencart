@@ -328,23 +328,9 @@ class ModelCheckoutOrder extends Model {
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
 					}
-				}
 
-				// Reduce the master product stock level if product is a variant
-				$this->load->model('catalog/product');
-
-				foreach ($order_products as $order_product) {
-					$product_info = $this->model_catalog_product->getProduct($order_product['product_id']);
-
-					if ($product_info && $product_info['variant_id']) {
-						$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$product_info['variant_id'] . "' AND subtract = '1'");
-
-						$order_options = $this->getOrderOptions($order_id, $order_product['order_product_id']);
-
-						foreach ($order_options as $order_option) {
-							$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
-						}
-					}
+					// Reduce the master product stock level if product is a variant
+					$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['master_id'] . "' AND subtract = '1'");
 				}
 
 				// Add commission if sale is linked to affiliate referral.
@@ -377,6 +363,9 @@ class ModelCheckoutOrder extends Model {
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
 					}
+
+					// Restock the master product stock level if product is a variant
+					$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['master_id'] . "' AND subtract = '1'");
 				}
 
 				// Remove coupon, vouchers and reward points history

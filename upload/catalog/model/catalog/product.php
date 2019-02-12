@@ -10,7 +10,7 @@ class ModelCatalogProduct extends Model {
 		if ($query->num_rows) {
 			return array(
 				'product_id'       => $query->row['product_id'],
-				'variant_id'       => $query->row['variant_id'],
+				'master_id'        => $query->row['master_id'],
 				'name'             => $query->row['name'],
 				'description'      => $query->row['description'],
 				'meta_title'       => $query->row['meta_title'],

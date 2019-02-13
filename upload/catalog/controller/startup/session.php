@@ -14,9 +14,9 @@ class ControllerStartupSession extends Controller {
 			//$query = $this->db->query("SELECT @@system_time_zone");
 			//$query = $this->db->query("SELECT @@session.time_zone");
 
-			$query->row;
+			//$query->row;
 
-			echo date('P');
+			//echo date('P');
 
 			// Make sure the IP is allowed
 			$api_info = $this->model_setting_api->getApiByToken($this->request->get['api_token']);

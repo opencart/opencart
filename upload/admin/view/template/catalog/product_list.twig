@@ -86,17 +86,15 @@
                   <tbody>
                     {% if products %}
                       {% for product in products %}
-                        <tr>
-                          {% if not product.variant %}
-                            <td class="text-center"></td>
-                          {% endif %}
+                        <tr{% if not product.variant %} class="table-warning"{% endif %}>
                           <td class="text-center">{% if product.product_id in selected %}
                               <input type="checkbox" name="selected[]" value="{{ product.product_id }}" checked="checked"/>
                             {% else %}
                               <input type="checkbox" name="selected[]" value="{{ product.product_id }}"/>
                             {% endif %}</td>
                           <td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
-                          <td class="text-left">{{ product.name }}<br/>
+                          <td class="text-left">{{ product.name }}
+                            <br/>
                             {% if product.status %}
                               <small class="text-success">{{ text_enabled }}</small>
                             {% else %}
@@ -126,7 +124,7 @@
                                 <div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant_add }}</a></div>
                               </div>
                             {% else %}
-                              <a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                             {% endif %}
                           </td>
                         </tr>

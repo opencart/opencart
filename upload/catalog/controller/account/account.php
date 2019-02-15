@@ -53,6 +53,7 @@ class ControllerAccountAccount extends Controller {
 		}
 		
 		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+		$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
 		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 		$data['download'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 		

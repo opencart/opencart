@@ -125,13 +125,35 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/product');
-
 		// Get the original data
 		$product_data = array();
 
-		$product_data = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		$this->load->model('catalog/product');
 
+		$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+
+		foreach ($product_info as $key => $value) {
+			if (isset($this->request->post[$key]) && $this->request->post[$key] != $product_data[$key]) {
+				$product_data[$key] = $this->request->post[$key];
+			} else {
+				$product_data[$key] = $this->request->post[$key];
+			}
+		}
+
+		print_r($product_data);
+
+		$product_data = array();
+
+		$test = array_intersect_key(array_keys($product_info), $product_data);
+
+		print_r($test);
+
+
+
+
+
+		//$product_info
+		/*
 		unset($product_data['name']);
 		unset($product_data['description']);
 		unset($product_data['meta_title']);
@@ -141,23 +163,197 @@ class ControllerCatalogProduct extends Controller {
 		unset($product_data['tag']);
 		unset($product_data['option']);
 
-		$product_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
+		$original_data['product_attribute'][] = array_intersect_key($keys, $product_attribute);
 
-		$product_data['product_description'] = $this->model_catalog_product->getProductDescriptions($this->request->get['product_id']);
+		//echo 'Attribute' . "\n";
+		echo 'ORIGINAL' . "\n";
+		print_r($product_attribute_data);
+		print_r($this->request->post);
+		//echo 'POST' . "\n";
+		//print_r($this->request->post['product_attribute']);
 
-		$product_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
+		echo 'COMBINED' . "\n";
+		print_r($product_data['product_attribute']);
 
-		$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
+		$description_keys = array(
+			'name',
+			'description',
+			'meta_title',
+			'meta_description',
+			'meta_keyword',
+			'tag'
+		);
 
-		$product_data['product_image'] = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
+		// Description
+		$product_description_data = array();
 
-		$product_data['product_option'] = $this->model_catalog_product->getProductOptions($this->request->get['product_id']);
+		$results = $this->model_catalog_product->getProductDescriptions($this->request->get['product_id']);
+
+		foreach ($results as $result) {
+			//if () {
+
+
+			//}
+		}
+
+		// Attribute
+		$attribute_keys = array(
+			'attribute_id',
+			'quantity',
+			'priority',
+			'price',
+			'date_start',
+			'date_end'
+		);
+
+		$product_attribute_data = array();
+
+		$results = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
+
+		foreach ($results as $result) {
+			$product_attribute_data[] = array_intersect($keys, $result);
+		}
+
+		if (isset($this->request->post['product_attribute'])) {
+			foreach ($this->request->post['product_attribute'] as $product_attribute) {
+				$original_data['product_attribute'][] = array_intersect_key($keys, $product_attribute);
+			}
+		}
+
+		// Discount
+		$keys = array(
+			'customer_group_id',
+			'quantity',
+			'priority',
+			'price',
+			'date_start',
+			'date_end'
+		);
+
+		$product_discount_data = array();
+
+		$results = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
+
+		foreach ($results as $result) {
+			$product_discount_data[] = $result;
+		}
+
+		if (isset($this->request->post['product_discount'])) {
+			$product_data['product_discount'][] = array_combine($keys, $this->request->post['product_discount']);
+		}
+		/*
+		echo 'Discount' . "\n";
+		echo 'ORIGINAL' . "\n";
+		print_r($product_discount_data);
+
+		echo 'POST' . "\n";
+		print_r($this->request->post['product_discount']);
+
+		echo 'COMBINED' . "\n";
+		print_r($product_data['product_discount']);
+		*/
+
+		// Filter
+		if (isset($this->request->post['product_filter'])) {
+			$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
+
+			//echo 'Filter' . "\n";
+			//echo 'ORIGINAL' . "\n";
+			//print_r($product_data['product_filter']);
+
+			//echo 'POST' . "\n";
+			//print_r($this->request->post['product_filter']);
+		}
+
+		// Image
+		$product_image_data = array();
+
+		$results = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
+
+		foreach ($results as $result) {
+			$product_image_data[] = $result;
+		}
+
+		$keys = array(
+			'image',
+			'sort_order'
+		);
+
+		if (isset($this->request->post['product_image'])) {
+			foreach ($this->request->post['product_image'] as $product_image) {
+				$product_data['product_image'][] = array_combine($keys, $product_image);
+			}
+		}
+
+		//echo 'product_image' . "\n";
+		//echo 'ORIGINAL' . "\n";
+		//print_r($product_image_data);
+
+		//echo 'POST' . "\n";
+		//print_r($this->request->post['product_image']);
+
+		//echo 'COMBINED' . "\n";
+		///print_r($product_data['product_image']);
+
+		$option_keys = array(
+			'product_option_id',
+			'name',
+			'option_id',
+			'option_id',
+			'date_start',
+			'date_end'
+		);
+
+		$product_data['product_option'] = array();
+
+		$results = $this->model_catalog_product->getProductOptions($this->request->get['product_id']);
+
 
 		$product_data['product_related'] = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+		
+		$product_reward_data = array();
 
-		$product_data['product_reward'] = $this->model_catalog_product->getProductRewards($this->request->get['product_id']);
+		$results = $this->model_catalog_product->getProductRewards($this->request->get['product_id']);
 
-		$product_data['product_special'] = $this->model_catalog_product->getProductSpecials($this->request->get['product_id']);
+		foreach ($results as $result) {
+			$product_reward_data[] = $result;
+		}
+
+		$keys = array(
+			'attribute_id',
+			'quantity',
+			'priority',
+			'price',
+			'date_start',
+			'date_end'
+		);
+
+		//echo 'product_reward' . "\n";
+		//echo 'ORIGINAL' . "\n";
+		//print_r($product_reward_data);
+
+		//echo 'POST' . "\n";
+		//print_r($this->request->post['product_reward']);
+
+		//echo 'COMBINED' . "\n";
+		//print_r($product_data['product_reward']);
+
+		// Special
+		$product_data['product_special'] = array();
+
+		$results = $this->model_catalog_product->getProductSpecials($this->request->get['product_id']);
+
+		foreach ($results as $result) {
+			$product_data['product_special'][] = $result;
+		}
+
+		//echo 'Reward' . "\n";
+		//echo 'ORIGINAL' . "\n";
+		//print_r($product_data['product_special']);
+
+		//echo 'POST' . "\n";
+		//print_r($this->request->post['product_special']);
+
 
 		$product_data['product_category'] = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
 
@@ -169,34 +365,16 @@ class ControllerCatalogProduct extends Controller {
 
 		$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($this->request->get['product_id']);
 
-		echo 'ORIGINAL' . "\n";
-		print_r($product_data['product_attribute']);
 
-		echo 'POST' . "\n";
-		print_r($this->request->post['product_attribute']);
 
-		echo 'ORIGINAL' . "\n";
-		print_r($product_data['product_discount']);
+		//echo 'CHANGED' . "\n";
+		//print_r($changed_data);
 
-		echo 'POST' . "\n";
-		print_r($this->request->post['product_discount']);
+		//echo 'ORIGINAL' . "\n";
+		//print_r($product_data);
 
-		$changed_data = array();
-
-		foreach ($product_data as $key => $value) {
-			if (isset($this->request->post[$key]) && $this->request->post[$key] != $product_data[$key]) {
-				$changed_data[$key] = $this->request->post[$key];
-			}
-		}
-
-		echo 'CHANGED' . "\n";
-		print_r($changed_data);
-
-		echo 'ORIGINAL' . "\n";
-		print_r($product_data);
-
-		echo 'POST' . "\n";
-		print_r($this->request->post);
+		//echo 'POST' . "\n";
+		//print_r($this->request->post);
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
@@ -207,17 +385,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['keyword'] = '';
 			$data['status'] = '0';
 
-
-
-
 			$products = $this->model_catalog_product->getProducts($this->request->get['product_id'], $this->request->post);
 
 			foreach ($products as $product) {
 
 
 			}
-
-
 
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
@@ -736,7 +909,7 @@ class ControllerCatalogProduct extends Controller {
 			$data['action'] = $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id'] . $url);
 		}
 
-		if (isset($this->request->get['product_id']) && isset($this->request->get['product_id'])) {
+		if (isset($this->request->get['product_id']) && !isset($this->request->get['master_id'])) {
 			$data['variant'] = $this->url->link('catalog/product/variant', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id'] . $url);
 		} else {
 			$data['variant'] = '';

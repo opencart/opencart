@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        {% if not master_id %}
+        {% if variant %}
           <button type="submit" form="form-product" formaction="{{ variant }}" data-toggle="tooltip" title="{{ button_variant }}" class="btn btn-warning"><i class="fas fa-save"></i></button>
         {% endif %}
         <button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
@@ -588,13 +588,11 @@
             {% else %}
               <div class="tab-pane" id="tab-option">
                 {% for option in options %}
-
                   <fieldset>
                     <legend>{{ option.name }}</legend>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">Override</label>
                       <div class="col-sm-10">
-
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                           {% if product_variant[option.product_option_id] %}
                             <label class="btn btn-outline-secondary active"><input type="radio" value="1" checked="checked"/> {{ text_yes }}</label>
@@ -604,11 +602,8 @@
                             <label class="btn btn-outline-secondary active"><input type="radio" value="0" checked="checked"/> {{ text_no }}</label>
                           {% endif %}
                         </div>
-
                       </div>
                     </div>
-
-
                     {% if option.type == 'select' %}
                       <div class="form-group row {% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -945,41 +940,59 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-image">
-              <div id="images" class="row">
-                <div class="col-sm-4 col-md-3 mb-3">
-                  <div class="card">
-                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
-                    <div class="card-body">
-                      <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
-                    </div>
-                  </div>
-                </div>
-                {% set image_row = 0 %}
-                {% for product_image in product_images %}
-                  <div id="image-row{{ image_row }}" class="col-sm-4 col-md-3 mb-3">
+              <fieldset>
+                <legend>{{ text_image }}</legend>
+                <div class="row">
+                  <div class="col-sm-4 col-md-3 mb-3">
                     <div class="card">
-                      <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+                      <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                       <div class="card-body">
-                        <div class="form-group">
-                          <label class="col-form-label col-form-label-sm">{{ entry_sort_order }}</label> <input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>
-                        </div>
-                        <button type="button" data-toggle="image" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                        <button type="button" data-toggle="clear" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
-                        <button type="button" onclick="$('#image-row{{ image_row }}').remove();" class="btn btn-danger btn-sm btn-block"><i class="fas fa-minus-circle"></i> {{ button_remove }}</button>
+                        <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                        <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                       </div>
                     </div>
                   </div>
-                  {% set image_row = image_row + 1 %}
-                {% endfor %}
-                <div class="col-sm-4 col-md-3 mb-3 align-self-center">
-                  <div class="card">
-                    <div class="card-body">
-                      <button type="button" id="button-image" class="btn btn-default btn-lg"><i class="fas fa-plus-circle"></i></button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_image_additional }}</legend>
+                <div class="table-responsive">
+                  <table id="images" class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <td class="text-left">{{ entry_image }}</td>
+                        <td class="text-left">{{ entry_sort_order }}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% set image_row = 0 %}
+                      {% for product_image in product_images %}
+                        <tr id="image-row{{ image_row }}">
+                          <td>
+                            <div class="card">
+                              <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+                              <div class="card-body">
+                                <button type="button" data-toggle="image" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                                <button type="button" data-toggle="clear" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="text-left"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+                          <td class="text-right"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        </tr>
+                        {% set image_row = image_row + 1 %}
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="2"></td>
+                        <td class="text-right"><button type="button" id="button-image" data-toggle="tooltip" title="{{ button_image_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </fieldset>
             </div>
             <div class="tab-pane" id="tab-reward">
               <fieldset>
@@ -1371,8 +1384,8 @@ $('#attribute tbody tr').each(function(index, element) {
 			  html += '        <td class="text-right">{{ entry_weight }}</td>';
 			  html += '        <td></td>';
 			  html += '      </tr>';
-			  html += '  	 </thead>';
-			  html += '  	 <tbody></tbody>';
+			  html += '    </thead>';
+			  html += '    <tbody></tbody>';
 			  html += '    <tfoot>';
 			  html += '      <tr>';
 			  html += '        <td colspan="6"></td>';
@@ -1462,7 +1475,7 @@ $('#attribute tbody tr').each(function(index, element) {
 
 	  html += '        <div class="form-group">';
 	  html += '      	   <label class="col-form-label" for="input-modal-quantity">{{ entry_quantity }}</label>';
-	  html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '') + '" placeholder="{{ entry_quantity }}" id="input-modal-quantity" class="form-control"/>';
+	  html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="{{ entry_quantity }}" id="input-modal-quantity" class="form-control"/>';
 	  html += '        </div>';
 
 	  html += '        <div class="form-group">';
@@ -1498,7 +1511,7 @@ $('#attribute tbody tr').each(function(index, element) {
 	  }
 
 	  html += '      	     </select>';
-	  html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '') + '" placeholder="{{ entry_price }}" id="input-modal-price" class="form-control"/>';
+	  html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '0') + '" placeholder="{{ entry_price }}" id="input-modal-price" class="form-control"/>';
 	  html += '          </div>';
 	  html += '        </div>';
 
@@ -1520,7 +1533,7 @@ $('#attribute tbody tr').each(function(index, element) {
 	  }
 
 	  html += '      	     </select>';
-	  html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '') + '" placeholder="{{ entry_points }}" id="input-modal-points" class="form-control"/>';
+	  html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '0') + '" placeholder="{{ entry_points }}" id="input-modal-points" class="form-control"/>';
 	  html += '          </div>';
 	  html += '        </div>';
 
@@ -1542,7 +1555,7 @@ $('#attribute tbody tr').each(function(index, element) {
 	  }
 
 	  html += '      	     </select>';
-	  html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '') + '" placeholder="{{ entry_weight }}" id="input-modal-weight" class="form-control" />';
+	  html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '0') + '" placeholder="{{ entry_weight }}" id="input-modal-weight" class="form-control" />';
 	  html += '          </div>';
 	  html += '        </div>';
 
@@ -1560,7 +1573,7 @@ $('#attribute tbody tr').each(function(index, element) {
 	  $('#modal-option').modal('show');
 
 	  $('#modal-option #button-save').on('click', function() {
-		  html  = '<tr id="option-value-row' + element.option_value_row + '">';
+		  html = '<tr id="option-value-row' + element.option_value_row + '">';
 		  html += '  <td class="text-left">' + $('#modal-option select[name=\'option_value_id\'] option:selected').text() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]" value="' + $('#modal-option select[name=\'option_value_id\']').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]" value="' + $('#modal-option input[name=\'product_option_value_id\']').val() + '"/></td>';
 		  html += '  <td class="text-right">' + $('#modal-option input[name=\'quantity\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]" value="' + $('#modal-option input[name=\'quantity\']').val() + '"/></td>';
 		  html += '  <td class="text-left">' + ($('#modal-option select[name=\'subtract\'] option:selected').val() == '1' ? '{{ text_yes }}' : '{{ text_no }}') + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]" value="' + $('#modal-option select[name=\'subtract\'] option:selected').val() + '"/></td>';
@@ -1594,7 +1607,7 @@ $('#button-discount').on('click', function() {
   {% for customer_group in customer_groups %}
 	html += '    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
-	html += '  </select></td>';
+	html += '  </select><input type="hidden" name="product_discount[' + discount_row + '][product_discount_id]" value=""/></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
@@ -1623,7 +1636,7 @@ $('#button-special').on('click', function() {
   {% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
-	html += '  </select></td>';
+	html += '  </select><input type="hidden" name="product_special[' + special_row + '][product_special_id]" value=""/></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div></td>';
@@ -1647,23 +1660,19 @@ $('#button-special').on('click', function() {
 var image_row = {{ image_row }};
 
 $('#button-image').on('click', function() {
-	html  = '<div id="image-row' + image_row + '" class="col-sm-4 col-md-3 mb-3">';
-	html += '  <div class="card">';
-	html += '  	 <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + image_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
-	html += '  	 <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '"/>';
-	html += '  	 <div class="card-body">';
-	html += '  	   <div class="form-group">';
-	html += '  	     <label class="col-form-label col-form-label-sm">{{ entry_sort_order }}</label>';
-	html += '  	     <input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control form-control-sm"/>';
-	html += '      </div>';
+	html  = '<tr id="image-row' + image_row + '">';
+	html += '  <td><div class="card">';
+	html += '    <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + image_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '"/>';
+	html += '    <div class="card-body">';
 	html += '      <button type="button" data-toggle="image" data-target="#input-image' + image_row + '" data-thumb="#thumb-image' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
-	html += '  	   <button type="button" data-toggle="clear" data-target="#input-image' + image_row + '" data-thumb="#thumb-image' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
-	html += '  	   <button type="button" onclick="$(\'#image-row' + image_row + '\').remove();" class="btn btn-danger btn-sm btn-block"><i class="fas fa-minus-circle"></i> {{ button_remove }}</button>';
+	html += '      <button type="button" data-toggle="clear" data-target="#input-image' + image_row + '" data-thumb="#thumb-image' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
 	html += '    </div>';
-	html += '  </div>';
-	html += '</div>';
+	html += '  </div></td>';
+	html += '  <td class="text-left"><input type="text" name="product_image[' + image_row + '][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control"/></td>';
+	html += '  <td class="text-right"><button type="button" onclick="$(\'#image-row' + image_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+	html += '</tr>';
 
-	$('#button-image').parent().parent().parent().before(html);
+	$('#images tbody').append(html);
 
 	image_row++;
 });
@@ -1672,7 +1681,7 @@ $('#button-image').on('click', function() {
 var recurring_row = {{ recurring_row }};
 
 $('#button-recurring').on('click', function() {
-	html = '<tr id="recurring-row' + recurring_row + '">';
+	html  = '<tr id="recurring-row' + recurring_row + '">';
 	html += '  <td class="text-left"><select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">';
   {% for recurring in recurrings %}
 	html += '      <option value="{{ recurring.recurring_id }}">{{ recurring.name|escape('js') }}</option>';

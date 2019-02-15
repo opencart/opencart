@@ -8,6 +8,7 @@ class ControllerAccountAccount extends Controller {
 		}
 
 		$this->load->language('account/account');
+		$this->load->model('account/wishlist');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

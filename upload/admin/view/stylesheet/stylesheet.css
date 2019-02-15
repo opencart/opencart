@@ -363,8 +363,14 @@ legend {
     }
 }
 
-.image {
-    width: 12rem;
+.form-group.row {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.form-group.row + .form-group.row {
+    padding-top: 1rem;
+    border-top: 1px solid #ededed;
 }
 
 .form-control:hover {
@@ -378,6 +384,10 @@ div.required .col-form-label:not(span):before, td.required:before {
     content: '* ';
     color: #F00;
     font-weight: bold;
+}
+
+.image {
+    width: 12rem;
 }
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
@@ -473,13 +483,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .pagination {
     margin: 0;
-}
-
-.form-group.row + .form-group.row {
-    padding-top: 1rem;
-    border-top: 1px solid #ededed;
-    margin-left: -20px;
-    margin-right: -20px;
 }
 
 /* Cards */

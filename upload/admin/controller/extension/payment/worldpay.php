@@ -68,128 +68,120 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 			$data['payment_worldpay_total'] = $this->config->get('payment_worldpay_total');
 		}
 
-		if (isset($this->request->post['worldpay_card'])) {
-			$data['worldpay_card'] = $this->request->post['worldpay_card'];
+		if (isset($this->request->post['payment_worldpay_card'])) {
+			$data['payment_worldpay_card'] = $this->request->post['payment_worldpay_card'];
 		} else {
-			$data['worldpay_card'] = $this->config->get('worldpay_card');
+			$data['payment_worldpay_card'] = $this->config->get('payment_worldpay_card');
 		}
 
-		if (isset($this->request->post['worldpay_order_status_id'])) {
-			$data['worldpay_order_status_id'] = $this->request->post['worldpay_order_status_id'];
+		if (isset($this->request->post['payment_worldpay_order_status_id'])) {
+			$data['payment_worldpay_order_status_id'] = $this->request->post['payment_worldpay_order_status_id'];
 		} else {
-			$data['worldpay_order_status_id'] = $this->config->get('worldpay_order_status_id');
+			$data['payment_worldpay_order_status_id'] = $this->config->get('payment_worldpay_order_status_id');
 		}
 
+		if (isset($this->request->post['payment_worldpay_geo_zone_id'])) {
+			$data['payment_worldpay_geo_zone_id'] = $this->request->post['payment_worldpay_geo_zone_id'];
+		} else {
+			$data['payment_worldpay_geo_zone_id'] = $this->config->get('payment_worldpay_geo_zone_id');
+		}
+
+		if (isset($this->request->post['payment_worldpay_status'])) {
+			$data['payment_worldpay_status'] = $this->request->post['payment_worldpay_status'];
+		} else {
+			$data['payment_worldpay_status'] = $this->config->get('payment_worldpay_status');
+		}
+
+		if (isset($this->request->post['payment_worldpay_debug'])) {
+			$data['payment_worldpay_debug'] = $this->request->post['payment_worldpay_debug'];
+		} else {
+			$data['payment_worldpay_debug'] = $this->config->get('payment_worldpay_debug');
+		}
+
+		if (isset($this->request->post['payment_worldpay_sort_order'])) {
+			$data['payment_worldpay_sort_order'] = $this->request->post['payment_worldpay_sort_order'];
+		} else {
+			$data['payment_worldpay_sort_order'] = $this->config->get('payment_worldpay_sort_order');
+		}
+
+		if (isset($this->request->post['payment_worldpay_secret_token'])) {
+			$data['payment_worldpay_secret_token'] = $this->request->post['payment_worldpay_secret_token'];
+		} elseif ($this->config->get('payment_worldpay_secret_token')) {
+			$data['payment_worldpay_secret_token'] = $this->config->get('payment_worldpay_secret_token');
+		} else {
+			$data['payment_worldpay_secret_token'] = sha1(uniqid(mt_rand(), 1));
+		}
+
+		$data['payment_worldpay_webhook_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/webhook&token=' . $data['payment_worldpay_secret_token'];
+
+		$data['payment_worldpay_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/cron&token=' . $data['payment_worldpay_secret_token'];
+
+		if ($this->config->get('payment_worldpay_last_cron_job_run')) {
+			$data['payment_worldpay_last_cron_job_run'] = $this->config->get('payment_worldpay_last_cron_job_run');
+		} else {
+			$data['payment_worldpay_last_cron_job_run'] = '';
+		}
+		
+		$this->load->model('localisation/geo_zone');
+
+		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['worldpay_geo_zone_id'])) {
-			$data['worldpay_geo_zone_id'] = $this->request->post['worldpay_geo_zone_id'];
+		if (isset($this->request->post['payment_worldpay_success_status_id'])) {
+			$data['payment_worldpay_success_status_id'] = $this->request->post['payment_worldpay_success_status_id'];
 		} else {
-			$data['worldpay_geo_zone_id'] = $this->config->get('worldpay_geo_zone_id');
+			$data['payment_worldpay_success_status_id'] = $this->config->get('payment_worldpay_success_status_id');
 		}
 
-		$this->load->model('localisation/geo_zone');
-
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
-		if (isset($this->request->post['worldpay_status'])) {
-			$data['worldpay_status'] = $this->request->post['worldpay_status'];
+		if (isset($this->request->post['payment_worldpay_failed_status_id'])) {
+			$data['payment_worldpay_failed_status_id'] = $this->request->post['payment_worldpay_failed_status_id'];
 		} else {
-			$data['worldpay_status'] = $this->config->get('worldpay_status');
+			$data['payment_worldpay_failed_status_id'] = $this->config->get('payment_worldpay_failed_status_id');
 		}
 
-		if (isset($this->request->post['worldpay_debug'])) {
-			$data['worldpay_debug'] = $this->request->post['worldpay_debug'];
+		if (isset($this->request->post['payment_worldpay_settled_status_id'])) {
+			$data['payment_worldpay_settled_status_id'] = $this->request->post['payment_worldpay_settled_status_id'];
 		} else {
-			$data['worldpay_debug'] = $this->config->get('worldpay_debug');
+			$data['payment_worldpay_settled_status_id'] = $this->config->get('payment_worldpay_settled_status_id');
 		}
 
-		if (isset($this->request->post['worldpay_sort_order'])) {
-			$data['worldpay_sort_order'] = $this->request->post['worldpay_sort_order'];
+		if (isset($this->request->post['payment_worldpay_refunded_status_id'])) {
+			$data['payment_worldpay_refunded_status_id'] = $this->request->post['payment_worldpay_refunded_status_id'];
 		} else {
-			$data['worldpay_sort_order'] = $this->config->get('worldpay_sort_order');
+			$data['payment_worldpay_refunded_status_id'] = $this->config->get('payment_worldpay_refunded_status_id');
 		}
 
-		if (isset($this->request->post['worldpay_secret_token'])) {
-			$data['worldpay_secret_token'] = $this->request->post['worldpay_secret_token'];
-		} elseif ($this->config->get('worldpay_secret_token')) {
-			$data['worldpay_secret_token'] = $this->config->get('worldpay_secret_token');
+		if (isset($this->request->post['payment_worldpay_partially_refunded_status_id'])) {
+			$data['payment_worldpay_partially_refunded_status_id'] = $this->request->post['payment_worldpay_partially_refunded_status_id'];
 		} else {
-			$data['worldpay_secret_token'] = sha1(uniqid(mt_rand(), 1));
+			$data['payment_worldpay_partially_refunded_status_id'] = $this->config->get('payment_worldpay_partially_refunded_status_id');
 		}
 
-		$data['worldpay_webhook_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/webhook&token=' . $data['worldpay_secret_token'];
-
-		$data['worldpay_cron_job_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/worldpay/cron&token=' . $data['worldpay_secret_token'];
-
-		if ($this->config->get('worldpay_last_cron_job_run')) {
-			$data['worldpay_last_cron_job_run'] = $this->config->get('worldpay_last_cron_job_run');
+		if (isset($this->request->post['payment_worldpay_charged_back_status_id'])) {
+			$data['payment_worldpay_charged_back_status_id'] = $this->request->post['payment_worldpay_charged_back_status_id'];
 		} else {
-			$data['worldpay_last_cron_job_run'] = '';
+			$data['payment_worldpay_charged_back_status_id'] = $this->config->get('payment_worldpay_charged_back_status_id');
 		}
 
-		$this->load->model('localisation/geo_zone');
-
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		if (isset($this->request->post['worldpay_entry_success_status_id'])) {
-			$data['worldpay_entry_success_status_id'] = $this->request->post['worldpay_entry_success_status_id'];
+		if (isset($this->request->post['payment_worldpay_information_requested_status_id'])) {
+			$data['payment_worldpay_information_requested_status_id'] = $this->request->post['payment_worldpay_information_requested_status_id'];
 		} else {
-			$data['worldpay_entry_success_status_id'] = $this->config->get('worldpay_entry_success_status_id');
+			$data['payment_worldpay_information_requested_status_id'] = $this->config->get('payment_worldpay_information_requested_status_id');
 		}
 
-		if (isset($this->request->post['worldpay_entry_failed_status_id'])) {
-			$data['worldpay_entry_failed_status_id'] = $this->request->post['worldpay_entry_failed_status_id'];
+		if (isset($this->request->post['payment_worldpay_information_supplied_status_id'])) {
+			$data['payment_worldpay_information_supplied_status_id'] = $this->request->post['payment_worldpay_information_supplied_status_id'];
 		} else {
-			$data['worldpay_entry_failed_status_id'] = $this->config->get('worldpay_entry_failed_status_id');
+			$data['payment_worldpay_information_supplied_status_id'] = $this->config->get('payment_worldpay_information_supplied_status_id');
 		}
 
-		if (isset($this->request->post['worldpay_entry_settled_status_id'])) {
-			$data['worldpay_entry_settled_status_id'] = $this->request->post['worldpay_entry_settled_status_id'];
+		if (isset($this->request->post['payment_worldpay_chargeback_reversed_status_id'])) {
+			$data['payment_worldpay_chargeback_reversed_status_id'] = $this->request->post['payment_worldpay_chargeback_reversed_status_id'];
 		} else {
-			$data['worldpay_entry_settled_status_id'] = $this->config->get('worldpay_entry_settled_status_id');
-		}
-
-		if (isset($this->request->post['worldpay_refunded_status_id'])) {
-			$data['worldpay_refunded_status_id'] = $this->request->post['worldpay_refunded_status_id'];
-		} else {
-			$data['worldpay_refunded_status_id'] = $this->config->get('worldpay_refunded_status_id');
-		}
-
-		if (isset($this->request->post['worldpay_entry_partially_refunded_status_id'])) {
-			$data['worldpay_entry_partially_refunded_status_id'] = $this->request->post['worldpay_entry_partially_refunded_status_id'];
-		} else {
-			$data['worldpay_entry_partially_refunded_status_id'] = $this->config->get('worldpay_entry_partially_refunded_status_id');
-		}
-
-		if (isset($this->request->post['worldpay_entry_charged_back_status_id'])) {
-			$data['worldpay_entry_charged_back_status_id'] = $this->request->post['worldpay_entry_charged_back_status_id'];
-		} else {
-			$data['worldpay_entry_charged_back_status_id'] = $this->config->get('worldpay_entry_charged_back_status_id');
-		}
-
-		if (isset($this->request->post['worldpay_entry_information_requested_status_id'])) {
-			$data['worldpay_entry_information_requested_status_id'] = $this->request->post['worldpay_entry_information_requested_status_id'];
-		} else {
-			$data['worldpay_entry_information_requested_status_id'] = $this->config->get('worldpay_entry_information_requested_status_id');
-		}
-
-		if (isset($this->request->post['worldpay_entry_information_supplied_status_id'])) {
-			$data['worldpay_entry_information_supplied_status_id'] = $this->request->post['worldpay_entry_information_supplied_status_id'];
-		} else {
-			$data['worldpay_entry_information_supplied_status_id'] = $this->config->get('worldpay_entry_information_supplied_status_id');
-		}
-
-		if (isset($this->request->post['worldpay_entry_chargeback_reversed_status_id'])) {
-			$data['worldpay_entry_chargeback_reversed_status_id'] = $this->request->post['worldpay_entry_chargeback_reversed_status_id'];
-		} else {
-			$data['worldpay_entry_chargeback_reversed_status_id'] = $this->config->get('worldpay_entry_chargeback_reversed_status_id');
+			$data['payment_worldpay_chargeback_reversed_status_id'] = $this->config->get('payment_worldpay_chargeback_reversed_status_id');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -211,7 +203,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 	public function order() {
 
-		if ($this->config->get('worldpay_status')) {
+		if ($this->config->get('payment_worldpay_status')) {
 
 			$this->load->model('extension/payment/worldpay');
 

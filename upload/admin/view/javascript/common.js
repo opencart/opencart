@@ -120,6 +120,36 @@ $(document).on('click', '[data-toggle=\'clear\']', function() {
 	$($(this).attr('data-target')).val('');
 });
 
+// Chain ajax calls.
+class Chain {
+	constructor() {
+		this.start = false;
+		this.data = [];
+	}
+
+	attach(call) {
+		this.data.push(call);
+
+		if (!this.start) {
+			this.execute();
+		}
+	}
+
+	execute() {
+		if (this.data.length) {
+			this.start = true;
+
+			(this.data.shift())().done(function() {
+				chain.execute();
+			});
+		} else {
+			this.start = false;
+		}
+	}
+}
+
+var chain = new Chain();
+
 // Autocomplete
 (function($) {
 	$.fn.autocomplete = function(option) {

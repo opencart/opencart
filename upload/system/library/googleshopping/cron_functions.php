@@ -7,7 +7,7 @@ function advertise_google_validate() {
 }
 
 function advertise_google_chdir($current_dir) {
-    $root_dir = dirname(dirname(dirname(dirname(dirname($current_dir)))));
+    $root_dir = dirname(dirname(dirname($current_dir)));
 
     chdir($root_dir);
 

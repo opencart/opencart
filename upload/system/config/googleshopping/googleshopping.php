@@ -135,7 +135,6 @@ $_['advertise_google_google_product_categories'] = array(
 $_['advertise_google_size_systems'] = array('AU','BR','CN','DE','EU','FR','IT','JP','MEX','UK','US');
 
 $_['advertise_google_reporting_intervals'] = array(
-    'ALL_TIME',
     'TODAY',
     'YESTERDAY',
     'LAST_7_DAYS',
@@ -144,7 +143,6 @@ $_['advertise_google_reporting_intervals'] = array(
     'LAST_BUSINESS_WEEK',
     'LAST_14_DAYS',
     'LAST_30_DAYS',
-    'LAST_MONTH',
     'THIS_WEEK_MON_TODAY',
     'THIS_WEEK_SUN_TODAY',
     'THIS_MONTH'

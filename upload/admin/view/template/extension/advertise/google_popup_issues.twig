@@ -21,12 +21,12 @@
                         <td class="text-left">
                             {% for status in issue.destination_statuses %}
                                 {% if status.approvalPending %}
-                                    {{ status.destination }}: <span class="label label-warning">{{ text_label_pending }}</span><br />
+                                    {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="label label-warning">{{ text_label_pending }}</span><br />
                                 {% else %}
                                     {% if status.approvalStatus == 'approved' %}
-                                        {{ status.destination }}: <span class="label label-success">{{ text_label_approved }}</span><br />
+                                        {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="label label-success">{{ text_label_approved }}</span><br />
                                     {% elseif status.approvalStatus == 'disapproved' %}
-                                        {{ status.destination }}: <span class="label label-danger">{{ text_label_disapproved }}</span><br />
+                                        {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="label label-danger">{{ text_label_disapproved }}</span><br />
                                     {% endif %}
                                 {% endif %}
                             {% else %}
@@ -36,11 +36,11 @@
                         <td class="text-left">
                             {% for quality_issue in issue.data_quality_issues %}
                                 {% if quality_issue.severity == 'critical' %}
-                                    {{ quality_issue.destination }}: <span class="label label-danger">{{ text_label_critical }}</span>
+                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="label label-danger">{{ text_label_critical }}</span>
                                 {% elseif quality_issue.severity == 'error' %}
-                                    {{ quality_issue.destination }}: <span class="label label-danger">{{ text_label_error }}</span>
+                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="label label-danger">{{ text_label_error }}</span>
                                 {% elseif quality_issue.severity == 'suggestion' %}
-                                    {{ quality_issue.destination }}: <span class="label label-info">{{ text_label_suggestion }}</span>
+                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="label label-info">{{ text_label_suggestion }}</span>
                                 {% endif %}
                                 {{ quality_issue.detail }}
                                 {% if not loop.last %}

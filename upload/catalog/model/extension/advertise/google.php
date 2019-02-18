@@ -4,7 +4,7 @@ class ModelExtensionAdvertiseGoogle extends Model {
     public function getHumanReadableCategory($product_id, $store_id) {
         $this->load->config('googleshopping/googleshopping');
 
-        $google_category_result = $this->db->query("SELECT google_product_category FROM `" . DB_PREFIX . "product_advertise_google` pag WHERE pag.product_id = " . (int)$product_id . " AND pag.store_id = " . (int)$store_id);
+        $google_category_result = $this->db->query("SELECT google_product_category FROM `" . DB_PREFIX . "googleshopping_product` pag WHERE pag.product_id = " . (int)$product_id . " AND pag.store_id = " . (int)$store_id);
 
         if ($google_category_result->num_rows > 0) {
             $google_category_id = $google_category_result->row['google_product_category'];
@@ -55,7 +55,7 @@ class ModelExtensionAdvertiseGoogle extends Model {
     }
 
     protected function getOptionId($product_id, $store_id, $type) {
-        $sql = "SELECT pag." . $type . " FROM `" . DB_PREFIX . "product_advertise_google` pag WHERE product_id=" . (int)$product_id . " AND store_id=" . (int)$store_id;
+        $sql = "SELECT pag." . $type . " FROM `" . DB_PREFIX . "googleshopping_product` pag WHERE product_id=" . (int)$product_id . " AND store_id=" . (int)$store_id;
 
         $result = $this->db->query($sql);
 

@@ -29,8 +29,14 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
 
         $this->load->config('googleshopping/googleshopping');
 
+        // Fix clashes with third-party extension table names
+        $this->model_extension_advertise_google->renameTables();
+
         // Even though this should be ran during install, there are known cases of webstores which do not trigger the install method. This is why we run createTables here explicitly.
         $this->model_extension_advertise_google->createTables();
+
+        // Fix a missing AUTO_INCREMENT
+        $this->model_extension_advertise_google->fixColumns();
         
         // Redirect to the preliminary check-list
         if (!$this->setting->get('advertise_google_checklist_confirmed')) {
@@ -170,7 +176,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
 
         $server = $this->googleshopping->getStoreUrl();
 
-        $data['advertise_google_cron_command'] = 'export CUSTOM_SERVER_NAME=' . parse_url($server, PHP_URL_HOST) . '; export CUSTOM_SERVER_PORT=443; export ADVERTISE_GOOGLE_CRON=1; export ADVERTISE_GOOGLE_STORE_ID=' . $this->store_id . '; ' . PHP_BINDIR . '/php -d session.save_path=' . session_save_path() . ' ' . DIR_SYSTEM . 'library/googleshopping/cron.php > /dev/null 2> /dev/null';
+        $data['advertise_google_cron_command'] = 'export CUSTOM_SERVER_NAME=' . parse_url($server, PHP_URL_HOST) . '; export CUSTOM_SERVER_PORT=443; export ADVERTISE_GOOGLE_CRON=1; export ADVERTISE_GOOGLE_STORE_ID=' . $this->store_id . '; ' . PHP_BINDIR . '/php -d session.save_path=' . session_save_path() . ' -d memory_limit=256M ' . DIR_SYSTEM . 'library/googleshopping/cron.php > /dev/null 2> /dev/null';
         
         if (!$this->setting->get('advertise_google_cron_token')) {
             $data['advertise_google_cron_token'] = md5(mt_rand());
@@ -1207,7 +1213,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
 
         $server = $this->googleshopping->getStoreUrl();
 
-        $data['advertise_google_cron_command'] = 'export CUSTOM_SERVER_NAME=' . parse_url($server, PHP_URL_HOST) . '; export CUSTOM_SERVER_PORT=443; export ADVERTISE_GOOGLE_CRON=1; export ADVERTISE_GOOGLE_STORE_ID=' . $this->store_id . '; ' . PHP_BINDIR . '/php -d session.save_path=' . session_save_path() . ' ' . DIR_SYSTEM . 'library/googleshopping/cron.php > /dev/null 2> /dev/null';
+        $data['advertise_google_cron_command'] = 'export CUSTOM_SERVER_NAME=' . parse_url($server, PHP_URL_HOST) . '; export CUSTOM_SERVER_PORT=443; export ADVERTISE_GOOGLE_CRON=1; export ADVERTISE_GOOGLE_STORE_ID=' . $this->store_id . '; ' . PHP_BINDIR . '/php -d session.save_path=' . session_save_path() . ' -d memory_limit=256M ' . DIR_SYSTEM . 'library/googleshopping/cron.php > /dev/null 2> /dev/null';
         
         if (!$this->setting->get('advertise_google_cron_token')) {
             $data['advertise_google_cron_token'] = md5(mt_rand());

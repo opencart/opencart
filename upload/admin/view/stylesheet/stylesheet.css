@@ -387,8 +387,8 @@ div.required .col-form-label:not(span):before, td.required:before {
 }
 
 .image {
-    width: 12rem;
-}
+    width: 18rem;
+ }
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
     font-family: 'Font Awesome 5 Free';

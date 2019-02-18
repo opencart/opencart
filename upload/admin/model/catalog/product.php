@@ -321,7 +321,7 @@ class ModelCatalogProduct extends Model {
 			$data['product_download'] = $this->getProductDownloads($product_id);
 			$data['product_layout'] = $this->getProductLayouts($product_id);
 			$data['product_store'] = $this->getProductStores($product_id);
-			$data['product_recurring'] = $this->getRecurrings($product_id);
+			$data['product_recurring'] = $this->getProductRecurrings($product_id);
 
 			$this->addProduct($data);
 		}
@@ -366,7 +366,7 @@ class ModelCatalogProduct extends Model {
 		}
 
 		if (!empty($data['filter_master_id'])) {
-			$sql .= " AND p.master_id = '" . (int)$data['filter_master_id'] . "%'";
+			$sql .= " AND p.master_id = '" . (int)$data['filter_master_id'] . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
@@ -644,23 +644,21 @@ class ModelCatalogProduct extends Model {
 		return $product_related_data;
 	}
 
-	public function getRecurrings($product_id) {
+	public function getProductRecurrings($product_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = '" . (int)$product_id . "'");
 
 		return $query->rows;
 	}
 
 	public function getTotalProducts($data = array()) {
-		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
+		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		if (!empty($data['filter_master_id'])) {
+			$sql .= " AND p.master_id = '" . (int)$data['filter_master_id'] . "'";
+		}
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
-		}
-
-		if (!empty($data['filter_master_id'])) {
-			$sql .= " AND p.master_id = '" . (int)$data['filter_master_id'] . "%'";
 		}
 
 		if (!empty($data['filter_model'])) {
@@ -744,14 +742,14 @@ class ModelCatalogProduct extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalProductOptionsByOptionId($option_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option WHERE option_id = '" . (int)$option_id . "'");
+	public function getTotalProductsByOptionValueId($option_value_id) {
+		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS total FROM " . DB_PREFIX . "product_option_value WHERE option_value_id = '" . (int)$option_value_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalProductsByOptionValueId($option_value_id) {
-		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS total FROM " . DB_PREFIX . "product_option_value WHERE option_value_id = '" . (int)$option_value_id . "'");
+	public function getTotalProductOptionsByOptionId($option_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option WHERE option_id = '" . (int)$option_id . "'");
 
 		return $query->row['total'];
 	}

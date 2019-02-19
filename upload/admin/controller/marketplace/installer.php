@@ -76,61 +76,65 @@ class ControllerMarketplaceInstaller extends Controller {
 		// Check if there is a install zip already there
 		$files = glob(DIR_STORAGE . 'marketplace/*.tmp');
 
-		foreach ($files as $file) {
-			if (is_file($file) && (filectime($file) < (time() - 5))) {
-				unlink($file);
-			}
-			
-			if (is_file($file)) {
-				$json['error'] = $this->language->get('error_install');
+		if ($files) {
+			foreach ($files as $file) {
+				if (is_file($file) && (filectime($file) < (time() - 5))) {
+					unlink($file);
+				}
 				
-				break;
+				if (is_file($file)) {
+					$json['error'] = $this->language->get('error_install');
+					
+					break;
+				}
 			}
 		}
 
 		// Check for any install directories
 		$directories = glob(DIR_STORAGE . 'marketplace/tmp-*');
 		
-		foreach ($directories as $directory) {
-			if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
-				// Get a list of files ready to upload
-				$files = array();
-	
-				$path = array($directory);
-	
-				while (count($path) != 0) {
-					$next = array_shift($path);
-	
-					// We have to use scandir function because glob will not pick up dot files.
-					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-						$file = $next . '/' . $file;
-	
-						if (is_dir($file)) {
-							$path[] = $file;
+		if ($directories) {
+			foreach ($directories as $directory) {
+				if (is_dir($directory) && (filectime($directory) < (time() - 5))) {
+					// Get a list of files ready to upload
+					$files = array();
+		
+					$path = array($directory);
+		
+					while (count($path) != 0) {
+						$next = array_shift($path);
+		
+						// We have to use scandir function because glob will not pick up dot files.
+						foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+							$file = $next . '/' . $file;
+		
+							if (is_dir($file)) {
+								$path[] = $file;
+							}
+		
+							$files[] = $file;
 						}
-	
-						$files[] = $file;
 					}
-				}
-	
-				rsort($files);
-	
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
+		
+					rsort($files);
+		
+					foreach ($files as $file) {
+						if (is_file($file)) {
+							unlink($file);
+						} elseif (is_dir($file)) {
+							rmdir($file);
+						}
 					}
+		
+					rmdir($directory);
 				}
-	
-				rmdir($directory);
-			}
-			
-			if (is_dir($directory)) {
-				$json['error'] = $this->language->get('error_install');
 				
-				break;
-			}		
+				if (is_dir($directory)) {
+					$json['error'] = $this->language->get('error_install');
+					
+					break;
+				}		
+			}
 		}
 		
 		if (isset($this->request->files['file']['name'])) {

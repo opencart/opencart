@@ -352,7 +352,7 @@
                   <div class="form-group row required">
                     <label class="col-sm-2 col-form-label" for="input-country{{ address_row }}">{{ entry_country }}</label>
                     <div class="col-sm-10">
-                      <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" onchange="country(this, '{{ address_row }}', '{{ address.zone_id }}');" class="form-control">
+                      <select name="address[{{ address_row }}][country_id]" id="input-country{{ address_row }}" class="form-control" data-address-row="{{ address_row }}" data-zone-id="{{ address.zone_id }}">
                         <option value="">{{ text_select }}</option>
                         {% for country in countries %}
                           {% if country.country_id == address.country_id %}
@@ -698,7 +698,7 @@ $('#button-address').on('click', function(e) {
 
 	html += '  <div class="form-group row required">';
 	html += '    <label class="col-sm-2 col-form-label" for="input-country' + address_row + '">{{ entry_country }}</label>';
-	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');" class="form-control">';
+	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" data-address-row="' + address_row + '" data-zone-id="0" class="form-control">';
 	html += '         <option value="">{{ text_select }}</option>';
   {% for country in countries %}
 	html += '         <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
@@ -869,21 +869,23 @@ $('#button-address').on('click', function(e) {
 
 //--></script>
 <script type="text/javascript"><!--
-function country(element, index, zone_id) {
+$('select[name$=\'[country_id]\']').on('change', function country(element, index, zone_id) {
+	var element = this;
+
 	$.ajax({
-		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
+		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + $(element).val(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'address[' + index + '][country_id]\']').prop('disabled', true);
+			$('select[name=\'address[' + $(element).attr('data-address-row') + '][country_id]\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('select[name=\'address[' + index + '][country_id]\']').prop('disabled', false);
+			$('select[name=\'address[' + $(element).attr('data-address-row') + '][country_id]\']').prop('disabled', false);
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('input[name=\'address[' + index + '][postcode]\']').parent().parent().addClass('required');
+				$('input[name=\'address[' + $(element).attr('data-address-row') + '][postcode]\']').parent().parent().addClass('required');
 			} else {
-				$('input[name=\'address[' + index + '][postcode]\']').parent().parent().removeClass('required');
+				$('input[name=\'address[' + $(element).attr('data-address-row') + '][postcode]\']').parent().parent().removeClass('required');
 			}
 
 			html = '<option value="">{{ text_select }}</option>';
@@ -892,7 +894,7 @@ function country(element, index, zone_id) {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					if (json['zone'][i]['zone_id'] == zone_id) {
+					if (json['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
 						html += ' selected="selected"';
 					}
 
@@ -902,13 +904,13 @@ function country(element, index, zone_id) {
 				html += '<option value="0">{{ text_none }}</option>';
 			}
 
-			$('select[name=\'address[' + index + '][zone_id]\']').html(html);
+			$('select[name=\'address[' + $(element).attr('data-address-row') + '][zone_id]\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-}
+});
 
 $('select[name$=\'[country_id]\']').trigger('change');
 //--></script>

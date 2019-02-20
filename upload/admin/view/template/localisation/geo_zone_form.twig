@@ -43,7 +43,7 @@
           </div>
           <fieldset>
             <legend>{{ text_geo_zone }}</legend>
-            <table id="zone-to-geo-zone" class="table table-striped table-bordered table-hover">
+            <table id="zone-to-geo-zone" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <td class="text-left">{{ entry_country }}</td>
@@ -109,61 +109,71 @@ var zone = [];
 $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function() {
 	var element = this;
 
-	var request = function() {
-		return $.ajax({
-			url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + element.value,
+	$(element).prop('disabled', true);
+
+    $('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
+
+    $('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
+
+	if (!zone[$(element).val()]) {
+		$.ajax({
+			url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + $(element).val(),
 			dataType: 'json',
 			beforeSend: function() {
-				$(element).prop('disabled', true);
-				$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', true);
 				$('button[form=\'form-geo-zone\']').prop('disabled', true);
 			},
 			complete: function() {
-
+				$('button[form=\'form-geo-zone\']').prop('disabled', false);
 			},
 			success: function(json) {
-				zone[element.value] = json;
+				zone[$(element).val()] = json;
 
-				console.log('live');
+				html = '<option value="0">{{ text_all_zones }}</option>';
+
+				for (i = 0; i < json['zone'].length; i++) {
+					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+					if (json['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
+						html += ' selected="selected"';
+					}
+
+					html += '>' + json['zone'][i]['name'] + '</option>';
+				}
+
+				$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
+
+				$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
+
+				$(element).prop('disabled', false);
+
+				$('select[name$=\'[country_id]\']:disabled:first').trigger('change');
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
-	}
-
-	var done = function() {
+	} else {
 		html = '<option value="0">{{ text_all_zones }}</option>';
 
-        for (i = 0; i < zone[element.value]['zone'].length; i++) {
-            html += '<option value="' + zone[element.value]['zone'][i]['zone_id'] + '"';
+		for (i = 0; i < zone[$(element).val()]['zone'].length; i++) {
+			html += '<option value="' + zone[element.value]['zone'][i]['zone_id'] + '"';
 
-            if (zone[element.value]['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
-                html += ' selected="selected"';
-            }
+			if (zone[$(element).val()]['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
+				html += ' selected="selected"';
+			}
 
-            html += '>' + zone[element.value]['zone'][i]['name'] + '</option>';
-        }
+			html += '>' + zone[$(element).val()]['zone'][i]['name'] + '</option>';
+		}
 
-        $('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
+		$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
 
 		$(element).prop('disabled', false);
-		$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
-		$('button[form=\'form-geo-zone\']').prop('disabled', false);
 
-
+		// We want to check the next one
 		$('select[name$=\'[country_id]\']:disabled:first').trigger('change');
-
-		console.log('cached');
 	}
-
-    if (!zone[element.value]) {
-        request().done(done);
-    } else {
-        done();
-    }
 });
 
-$('select[name$=\'[country_id]\']:disabled:first').trigger('change');
+$('select[name$=\'[country_id]\']:first').trigger('change');
 //--></script>
 {{ footer }}

@@ -113,8 +113,6 @@ $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function()
 
     $('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
 
-    $('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
-
 	if (!zone[$(element).val()]) {
 		$.ajax({
 			url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + $(element).val(),
@@ -140,13 +138,13 @@ $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function()
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 
-				$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
+				$('#zone-to-geo-zone select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
 
-				$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
+				$('#zone-to-geo-zone select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').prop('disabled', false);
 
 				$(element).prop('disabled', false);
 
-				$('select[name$=\'[country_id]\']:disabled:first').trigger('change');
+				$('#zone-to-geo-zone select[name$=\'[country_id]\']:disabled:first').trigger('change');
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -165,15 +163,14 @@ $('#zone-to-geo-zone').on('change', 'select[name$=\'[country_id]\']', function()
 			html += '>' + zone[$(element).val()]['zone'][i]['name'] + '</option>';
 		}
 
-		$('select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
+		$('#zone-to-geo-zone select[name=\'zone_to_geo_zone[' + $(element).attr('data-zone-to-geo-zone-row') + '][zone_id]\']').html(html);
 
 		$(element).prop('disabled', false);
 
-		// We want to check the next one
-		$('select[name$=\'[country_id]\']:disabled:first').trigger('change');
+		$('#zone-to-geo-zone select[name$=\'[country_id]\']:disabled:first').trigger('change');
 	}
 });
 
-$('select[name$=\'[country_id]\']:first').trigger('change');
+$('#zone-to-geo-zone select[name$=\'[country_id]\']:first').trigger('change');
 //--></script>
 {{ footer }}

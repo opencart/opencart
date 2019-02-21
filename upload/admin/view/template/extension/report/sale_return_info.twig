@@ -33,7 +33,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_return_status_id" id="input-status" class="form-control">
+          <label class="col-form-label" for="input-status">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-status" class="form-control">
             <option value="0">{{ text_all_status }}</option>
             {% for return_status in return_statuses %}
               {% if return_status.return_status_id == filter_return_status_id %}

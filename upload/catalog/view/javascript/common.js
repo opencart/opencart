@@ -172,20 +172,20 @@ var cart = {
 				}
 
 				if (json['success']) {
-					html  = '<div id="" class="toast toast-success show" style="position: absolute; top: 10px; right 10px; min-height: 200px; z-index: 999;">';
-					html += '  <div class="toast-header">';
-					html += '    <img src="" class="rounded mr-2" alt="">';
-					html += '	 <strong class="mr-auto">Shopping Cart</strong>';
-					html += '    <small>11 mins ago</small>';
-					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+					html  = '<div id="toast-cart">';
+					html += '  <div class="toast show">';
+					html += '    <div class="toast-header">';
+					html += '	   <strong class="mr-auto">Shopping Cart</strong>';
+					html += '      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast-cart">&times;</button>';
+					html += '    </div>';
+					html += '    <div class="toast-body">' + json['success'] + '</div>';
 					html += '  </div>';
-					html += '  <div class="toast-body">' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('main').append(html);
+					$('body').prepend(html);
 
 					// Need to set timeout otherwise it wont update the total
-					$('#cart').parent().load('index.php?route=common/cart/info');
+					$('main').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

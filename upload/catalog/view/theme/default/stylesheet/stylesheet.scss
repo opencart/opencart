@@ -435,22 +435,13 @@ footer {
   padding: 8px 14px 8px 14px;
 }
 
-#alert-box {
-  position: fixed;
-  top: 15px;
-  right: 0;
-  transition: all 0.5s;
-  z-index: 99;
-  &.open {
-    right: 15px;
-  }
-
-  > .alert {
-    padding-right: 28px;
-  }
-  .close {
-    padding: 5px 8px;
-  }
+/* toast */
+#toast-cart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-height: 200px;
+  z-index: 999;
 }
 
 /* breadcrumb */
@@ -496,19 +487,6 @@ footer {
 }
 
 /* buttons */
-/*
-.btn {
-  padding: 7.5px 12px;
-  font-size: 12px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
-
-  &.active {
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-  }
-}
- */
 .btn-light {
   color: #777;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -641,10 +619,6 @@ footer {
     background-image: linear-gradient(to bottom, #333333, #111111);
   }
 }
-
-
-
-
 
 /* list group */
 .list-group {

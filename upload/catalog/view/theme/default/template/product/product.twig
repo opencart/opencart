@@ -395,9 +395,8 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
-
 			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.form-control').removeClass('is-invalid');
 
 			if (json['error']) {
 				if (json['error']['option']) {
@@ -429,19 +428,11 @@ $('#button-cart').on('click', function() {
 					}
 				});
 
-
-				// Highlight any found errors
-				$('.invalid-tooltip').each(function() {
-					var element = $(this).parent().find(':input');
-
-					if (element.hasClass('form-control')) {
-						element.addClass('is-invalid');
-					}
-				});
+				$('.invalid-tooltip').show();
 			}
 
 			if (json['success']) {
-            	html  = '<div id="toast-cart" class="toast">';
+				html = '<div id="toast" class="toast">';
 				html += '  <div class="toast-header">';
 				html += '	 <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
 				html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
@@ -449,11 +440,10 @@ $('#button-cart').on('click', function() {
 				html += '  <div class="toast-body">' + json['success'] + '</div>';
 				html += '</div>';
 
-				$('main').append(html);
+				$('body').append(html);
 
-				$('#toast-cart').toast({'autohide': false});
-
-				$('#toast-cart').toast('show');
+				$('#toast').toast({'delay': 3000});
+				$('#toast').toast('show');
 
 				$('#cart').parent().load('index.php?route=common/cart/info');
 			}

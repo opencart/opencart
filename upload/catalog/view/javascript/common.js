@@ -158,14 +158,15 @@ var cart = {
 				$('#cart > button').button('reset');
 			},
 			success: function(json) {
-				$('.alert-dismissible, .text-danger, .toast').remove();
+				$('.text-danger, .toast').remove();
+				$('.form-control').removeClass('is-invalid');
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					html  = '<div id="toast-cart" class="toast">';
+					html  = '<div id="toast" class="toast">';
 					html += '  <div class="toast-header">';
 					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
@@ -175,9 +176,9 @@ var cart = {
 
 					$('body').append(html);
 
-					$('#toast-cart').toast({'autohide': false});
+					$('#toast').toast({'delay': 3000});
 
-					$('#toast-cart').toast('show');
+					$('#toast').toast('show');
 
 					// Need to set timeout otherwise it wont update the total
 					$('#cart').parent().load('index.php?route=common/cart/info');
@@ -276,16 +277,26 @@ var wishlist = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('.alert-dismissible').remove();
+				$('#toast').remove();
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -309,12 +320,22 @@ var compare = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('.alert-dismissible').remove();
+				$('#toast').remove();
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 
 					$('#compare-total').html(json['total']);
 				}

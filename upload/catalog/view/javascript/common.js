@@ -23,10 +23,6 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
-	$('#alert-box').on('click', '.close', function() {
-		$('#alert-box').removeClass('open');
-	});
-
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().find(':input');
@@ -177,7 +173,9 @@ var cart = {
 					html += '  <div class="toast-body">' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('main').append(html);
+					$('body').append(html);
+
+					$('#toast-cart').toast({'autohide': false});
 
 					$('#toast-cart').toast('show');
 
@@ -349,7 +347,7 @@ $(document).delegate('.agree', 'click', function(e) {
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">';
 			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
-			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+			html += '        <button type="button" class="close" data-dismiss="toast">&times;</button>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
 			html += '    </div>';

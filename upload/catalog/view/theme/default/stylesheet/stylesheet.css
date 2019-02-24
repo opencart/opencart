@@ -279,14 +279,14 @@ footer {
     margin-top: 10px;
     margin-bottom: 10px; }
 /* default font size */
-.fa {
+.fas, .far, .fab {
   font-size: 14px; }
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px; }
 /* toast */
-#toast-cart {
-  position: absolute;
+#toast {
+  position: fixed;
   top: 10px;
   right: 10px;
   z-index: 999; }

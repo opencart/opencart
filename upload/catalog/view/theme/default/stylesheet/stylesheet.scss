@@ -426,7 +426,7 @@ footer {
 }
 
 /* default font size */
-.fa {
+.fas, .far, .fab {
   font-size: 14px;
 }
 
@@ -436,8 +436,8 @@ footer {
 }
 
 /* toast */
-#toast-cart {
-  position: absolute;
+#toast {
+  position: fixed;
   top: 10px;
   right: 10px;
   z-index: 999;

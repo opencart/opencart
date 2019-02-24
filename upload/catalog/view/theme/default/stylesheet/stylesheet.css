@@ -4,7 +4,8 @@ body {
   color: #666;
   font-size: 12px;
   line-height: 20px;
-  width: 100%; }
+  width: 100%;
+  position: relative; }
 
 h1, h2, h3, h4, h5, h6 {
   color: #444; }
@@ -284,19 +285,13 @@ footer {
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px; }
-
-#alert-box {
-  position: fixed;
-  top: 15px;
-  right: 0;
-  transition: all 0.5s;
-  z-index: 99; }
-  #alert-box.open {
-    right: 15px; }
-  #alert-box > .alert {
-    padding-right: 28px; }
-  #alert-box .close {
-    padding: 5px 8px; }
+/* toast */
+#toast-cart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-height: 200px;
+  z-index: 999; }
 /* breadcrumb */
 .breadcrumb {
   margin: 0 0 20px 0;
@@ -331,18 +326,6 @@ footer {
 .pagination {
   margin: 0; }
 /* buttons */
-/*
- .btn {
- padding: 7.5px 12px;
- font-size: 12px;
- border: 1px solid #cccccc;
- border-radius: 4px;
- box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
- &.active {
- box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
- }
- }
- */
 .btn-light {
   color: #777;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);

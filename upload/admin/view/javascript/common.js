@@ -66,6 +66,15 @@ $(document).ready(function() {
 		}
 	}
 
+	// Fix for overflow in responsive tables
+	$('.table-responsive').on('show.bs.dropdown', function() {
+		$('.table-responsive').css('overflow', 'inherit');
+	});
+
+	$('.table-responsive').on('hide.bs.dropdown', function() {
+		$('.table-responsive').css('overflow', 'auto');
+	});
+
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
 

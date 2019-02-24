@@ -23,9 +23,6 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
-	// Add new div on each page
-	$('#container > .container').append('<div id="alert-box"></div>');
-
 	$('#alert-box').on('click', '.close', function() {
 		$('#alert-box').removeClass('open');
 	});
@@ -172,20 +169,20 @@ var cart = {
 				}
 
 				if (json['success']) {
-					html  = '<div id="toast-cart">';
-					html += '  <div class="toast show">';
-					html += '    <div class="toast-header">';
-					html += '	   <strong class="mr-auto">Shopping Cart</strong>';
-					html += '      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast-cart">&times;</button>';
-					html += '    </div>';
-					html += '    <div class="toast-body">' + json['success'] + '</div>';
+					html  = '<div id="toast-cart" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
 					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('body').prepend(html);
+					$('main').append(html);
+
+					$('#toast-cart').toast('show');
 
 					// Need to set timeout otherwise it wont update the total
-					$('main').parent().load('index.php?route=common/cart/info');
+					$('#cart').parent().load('index.php?route=common/cart/info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

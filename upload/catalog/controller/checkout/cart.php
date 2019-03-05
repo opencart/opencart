@@ -217,8 +217,6 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
-			$this->load->model('setting/extension');
-
 			$data['modules'] = array();
 
 			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');

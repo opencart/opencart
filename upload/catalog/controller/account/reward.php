@@ -31,7 +31,7 @@ class ControllerAccountReward extends Controller {
 		$this->load->model('account/reward');
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}

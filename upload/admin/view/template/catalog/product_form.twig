@@ -3,10 +3,10 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         {% if variant %}
-          <button type="button" id="form-variant" data-toggle="tooltip" title="{{ button_variant }}" class="btn btn-warning"><i class="fas fa-save"></i></button>
+          <button type="button" id="button-variant" data-toggle="tooltip" title="{{ button_variant }}" class="btn btn-warning"><i class="fas fa-save"></i></button>
         {% endif %}
+        <button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -1094,140 +1094,55 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var change = '';
+var changed = [];
 
 $('#form-product').on('change', ':input', function(e) {
-	console.log($(this).attr('id'));
+	//console.log($(this).attr('name'));
 
-	if (change) {
-		changed[0] = this;
-	}
+	key = $(this).attr('name');
+
+    if (changed[key] != this) {
+        changed[key] = this;
+    }
 });
 
-$('#button-variant').on('change', ':input', function(e) {
-	$('#modal-option').remove();
+
+$('#button-variant').on('click', function(e) {
+	$('.modal').remove();
 
 	html = '<div id="modal-variant" class="modal fade">';
 	html += '  <div class="modal-dialog">';
 	html += '    <div class="modal-content">';
 	html += '      <div class="modal-header">';
-	html += '	     <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> {{ text_option_value }}</h5> <button type="button" class="close" data-dismiss="modal">&times;</button>';
+	html += '	     <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> {{ text_variant }}</h5> <button type="button" class="close" data-dismiss="modal">&times;</button>';
 	html += '      </div>';
 	html += '      <div class="modal-body">';
-	html += '        <div class="form-group">';
-	html += '      	   <label class="col-form-label" for="input-modal-value">{{ entry_option_value }}</label>';
-	html += '      	   <select name="option_value_id" id="input-option-value" class="form-control">';
 
-	option_value = $('#product-option-values' + $(element).attr('data-option-row') + ' option');
+	i = 0;
 
-	for (i = 0; i < option_value.length; i++) {
-		if ($(element).attr('data-option-value-row') && $(option_value[i]).val() == $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]\']').val()) {
-			html += '<option value="' + $(option_value[i]).val() + '" selected>' + $(option_value[i]).text() + '</option>';
-		} else {
-			html += '<option value="' + $(option_value[i]).val() + '">' + $(option_value[i]).text() + '</option>';
-		}
+	for (key in changed) {
+		console.log(i);
+
+		html += '<div class="form-group">';
+		html += '  <label class="col-form-label" for="input-modal' + i + '">' + $(changed[key]).attr('placeholder') + '</label>';
+		html += '  <input type="text" name="' + $(changed[key]).attr('name') + '" value="' + $(changed[key]).val() + '" placeholder="' + $(changed[key]).attr('placeholder') + '" class="form-control"/>';
+		html += '</div>';
+
+		i++;
 	}
-
-	html += '      	   </select>';
-	html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
-	html += '        </div>';
-
-	html += '        <div class="form-group">';
-	html += '      	   <label class="col-form-label" for="input-modal-quantity">{{ entry_quantity }}</label>';
-	html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="{{ entry_quantity }}" id="input-modal-quantity" class="form-control"/>';
-	html += '        </div>';
-
-	html += '        <div class="form-group">';
-	html += '      	   <label class="col-form-label" for="input-modal-subtract">{{ entry_subtract }}</label>';
-	html += '      	   <select name="subtract" id="input-modal-subtract" class="form-control">';
-
-	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
-		html += '      	     <option value="1" selected>{{ text_yes }}</option>';
-		html += '      	     <option value="0">{{ text_no }}</option>';
-	} else {
-		html += '      	     <option value="1">{{ text_yes }}</option>';
-		html += '      	     <option value="0" selected="selected">{{ text_no }}</option>';
-	}
-
-	html += '      	   </select>';
-	html += '        </div>';
-
-	html += '        <div class="form-group">';
-	html += '      	 <label class="col-form-label" for="input-modal-price">{{ entry_price }}</label>';
-	html += '          <div class="input-group">';
-	html += '            <select name="price_prefix" class="form-control col-2">';
-
-	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
-		html += '      	       <option value="+" selected>+</option>';
-	} else {
-		html += '      	       <option value="+">+</option>';
-	}
-
-	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
-		html += '      	       <option value="-" selected>-</option>';
-	} else {
-		html += '      	       <option value="-">-</option>';
-	}
-
-	html += '      	     </select>';
-	html += '      	     <input type="text" name="price" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '0') + '" placeholder="{{ entry_price }}" id="input-modal-price" class="form-control"/>';
-	html += '          </div>';
-	html += '        </div>';
-
-	html += '        <div class="form-group">';
-	html += '      	   <label class="col-form-label" for="input-modal-points">{{ entry_points }}</label>';
-	html += '          <div class="input-group">';
-	html += '      	     <select name="points_prefix" class="form-control col-2">';
-
-	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '+') {
-		html += '      	       <option value="+" selected>+</option>';
-	} else {
-		html += '      	       <option value="+">+</option>';
-	}
-
-	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '-') {
-		html += '      	       <option value="-" selected>-</option>';
-	} else {
-		html += '      	       <option value="-">-</option>';
-	}
-
-	html += '      	     </select>';
-	html += '      	     <input type="text" name="points" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '0') + '" placeholder="{{ entry_points }}" id="input-modal-points" class="form-control"/>';
-	html += '          </div>';
-	html += '        </div>';
-
-	html += '        <div class="form-group">';
-	html += '      	   <label class="col-form-label" for="input-modal-weight">{{ entry_weight }}</label>';
-	html += '          <div class="input-group">';
-	html += '      	     <select name="weight_prefix" class="form-control col-2">';
-
-	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '+') {
-		html += '      	       <option value="+" selected>+</option>';
-	} else {
-		html += '      	       <option value="+">+</option>';
-	}
-
-	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '-') {
-		html += '      	       <option value="-" selected>-</option>';
-	} else {
-		html += '      	       <option value="-">-</option>';
-	}
-
-	html += '      	     </select>';
-	html += '      	     <input type="text" name="weight" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '0') + '" placeholder="{{ entry_weight }}" id="input-modal-weight" class="form-control" />';
-	html += '          </div>';
-	html += '        </div>';
 
 	html += '      </div>';
-
 	html += '      <div class="modal-footer">';
-	html += '	     <button type="button" id="button-save" data-option-row="' + $(element).attr('data-option-row') + '" data-option-value-row="' + element.option_value_row + '" class="btn btn-primary">{{ button_save }}</button> <button type="button" class="btn btn-light" data-dismiss="modal">{{ button_cancel }}</button>';
+	html += '	     <button type="button" id="button-save" class="btn btn-primary">{{ button_save }}</button> <button type="button" class="btn btn-light" data-dismiss="modal">{{ button_cancel }}</button>';
 	html += '      </div>';
 	html += '    </div>';
 	html += '  </div>';
 	html += '</div>';
-});
 
+	$('body').append(html);
+
+	$('#modal-variant').modal('show');
+});
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
@@ -1456,13 +1371,13 @@ $('input[name=\'option\']').autocomplete({
 		html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
 		html += '  <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
 
-		html += '	<div class="form-group row">';
-		html += '	  <label class="col-sm-2 col-form-label" for="input-required' + option_row + '">{{ entry_required }}</label>';
-		html += '	  <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required' + option_row + '" class="form-control">';
-		html += '	    <option value="1">{{ text_yes }}</option>';
-		html += '	    <option value="0">{{ text_no }}</option>';
-		html += '	  </select></div>';
-		html += '	</div>';
+		html += '  <div class="form-group row">';
+		html += '    <label class="col-sm-2 col-form-label" for="input-required' + option_row + '">{{ entry_required }}</label>';
+		html += '	 <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required' + option_row + '" class="form-control">';
+		html += '	   <option value="1">{{ text_yes }}</option>';
+		html += '	   <option value="0">{{ text_no }}</option>';
+		html += '	 </select></div>';
+		html += '  </div>';
 
 		if (item['type'] == 'text') {
 			html += '	<div class="form-group row">';
@@ -1533,7 +1448,7 @@ $('input[name=\'option\']').autocomplete({
 			html += '  <select id="product-option-values' + option_row + '" class="d-none">';
 
 			for (i = 0; i < item['option_value'].length; i++) {
-				html += '  <option value="' + item['option_value'][i]['option_value_id'] + '">' + item['option_value'][i]['name'] + '</option>';
+				html += '<option value="' + item['option_value'][i]['option_value_id'] + '">' + item['option_value'][i]['name'] + '</option>';
 			}
 
 			html += '  </select>';
@@ -1581,13 +1496,13 @@ $('#option').on('click', '.btn-primary', function() {
 		element.option_value_row = option_value_row;
 	}
 
-	$('#modal-option').remove();
+	$('.modal').remove();
 
 	html = '<div id="modal-option" class="modal fade">';
 	html += '  <div class="modal-dialog">';
 	html += '    <div class="modal-content">';
 	html += '      <div class="modal-header">';
-	html += '	     <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> {{ text_option_value }}</h5> <button type="button" class="close" data-dismiss="modal">&times;</button>';
+	html += '        <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> {{ text_option_value }}</h5> <button type="button" class="close" data-dismiss="modal">&times;</button>';
 	html += '      </div>';
 	html += '      <div class="modal-body">';
 	html += '        <div class="form-group">';
@@ -1618,11 +1533,11 @@ $('#option').on('click', '.btn-primary', function() {
 	html += '      	   <select name="subtract" id="input-modal-subtract" class="form-control">';
 
 	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
-		html += '      	     <option value="1" selected>{{ text_yes }}</option>';
-		html += '      	     <option value="0">{{ text_no }}</option>';
+		html += '        <option value="1" selected>{{ text_yes }}</option>';
+		html += '      	 <option value="0">{{ text_no }}</option>';
 	} else {
-		html += '      	     <option value="1">{{ text_yes }}</option>';
-		html += '      	     <option value="0" selected="selected">{{ text_no }}</option>';
+		html += '      	 <option value="1">{{ text_yes }}</option>';
+		html += '      	 <option value="0" selected="selected">{{ text_no }}</option>';
 	}
 
 	html += '      	   </select>';
@@ -1634,9 +1549,9 @@ $('#option').on('click', '.btn-primary', function() {
 	html += '            <select name="price_prefix" class="form-control col-2">';
 
 	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
-		html += '      	       <option value="+" selected>+</option>';
+		html += '      	   <option value="+" selected>+</option>';
 	} else {
-		html += '      	       <option value="+">+</option>';
+		html += '      	   <option value="+">+</option>';
 	}
 
 	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {

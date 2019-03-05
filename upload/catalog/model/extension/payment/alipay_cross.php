@@ -67,22 +67,25 @@ class ModelExtensionPaymentAlipayCross extends Model {
 	function verifyNotify($alipay_config){
 		$this->alipay_config = $alipay_config;
 
-		if(empty($_POST)) {
+		if (empty($this->request->post)) {
 			return false;
 		}
+
 		else {
-			$isSign = $this->getSignVeryfy($_POST, $_POST["sign"]);
+			$isSign = $this->getSignVeryfy($this->request->post, $this->request->post['sign']);
 
 			$responseTxt = 'false';
-			if (! empty($_POST["notify_id"])) {
-				$responseTxt = $this->getResponse($_POST["notify_id"]);
+
+			if (!empty($this->request->post["notify_id"])) {
+				$responseTxt = $this->getResponse($this->request->post['notify_id']);
 			}
 
 			//Veryfy
-			if (preg_match("/true$/i",$responseTxt) && $isSign) {
+			if (preg_match("/true$/i", $responseTxt) && $isSign) {
 				return true;
 			} else {
 				$this->log->write($responseTxt);
+
 				return false;
 			}
 		}

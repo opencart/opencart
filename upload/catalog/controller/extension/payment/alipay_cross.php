@@ -70,8 +70,8 @@ class ControllerExtensionPaymentAlipayCross extends Controller {
 
 		if($verify_result) {//check successed
 			$this->log->write('Alipay cross check successed');
-			$order_id = $_POST['out_trade_no'];
-			if($_POST['trade_status'] == 'TRADE_FINISHED') {
+			$order_id = $this->request->post['out_trade_no'];
+			if($this->request->post['trade_status'] == 'TRADE_FINISHED') {
 				$this->load->model('checkout/order');
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_alipay_cross_order_status_id'));
 			} else if ($_POST['trade_status'] == 'TRADE_SUCCESS') {

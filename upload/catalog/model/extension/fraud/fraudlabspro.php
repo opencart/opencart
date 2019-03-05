@@ -16,13 +16,13 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		$ip = $data['ip'];
 
 		// Detect client IP is store is behind CloudFlare protection.
-		if(isset($_SERVER['HTTP_CF_CONNECTING_IP']) && filter_var($_SERVER['HTTP_CF_CONNECTING_IP'], FILTER_VALIDATE_IP)){
-			$ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
+		if(isset($this->request->server['HTTP_CF_CONNECTING_IP']) && filter_var($this->request->server['HTTP_CF_CONNECTING_IP'], FILTER_VALIDATE_IP)){
+			$ip = $this->request->server['HTTP_CF_CONNECTING_IP'];
 		}
 
 		// Get real client IP is they are behind proxy server.
-		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$xip = trim(current(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])));
+		if (isset($this->request->server['HTTP_X_FORWARDED_FOR'])) {
+			$xip = trim(current(explode(',', $this->request->server['HTTP_X_FORWARDED_FOR'])));
 			
 			if (filter_var($xip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
 				$ip = $xip;
@@ -63,9 +63,9 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		$request['currency'] = $data['currency_code'];
 		$request['payment_mode'] = $data['payment_code'];
 		$request['user_order_id'] = $data['order_id'];
-		$request['flp_checksum'] = (isset($_COOKIE['flp_checksum'])) ? $_COOKIE['flp_checksum'] : '';
-		$request['bin_no'] = (isset($_SESSION['flp_cc_bin'])) ? $_SESSION['flp_cc_bin'] : '';
-		$request['card_hash'] = (isset($_SESSION['flp_cc_hash'])) ? $_SESSION['flp_cc_hash'] : '';
+		$request['flp_checksum'] = (isset($this->request->cookie['flp_checksum'])) ? $this->request->cookie['flp_checksum'] : '';
+		$request['bin_no'] = (isset($this->session->data['flp_cc_bin'])) ? $this->session->data['flp_cc_bin'] : '';
+		$request['card_hash'] = (isset($this->session->data['flp_cc_hash'])) ? $this->session->data['flp_cc_hash'] : '';
 		$request['format'] = 'json';
 		$request['source'] = 'opencart';
 		$request['source_version'] = '3.0.2.0';
@@ -151,15 +151,16 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 			return $this->config->get('fraudlabspro_reject_status_id');
 		}
 
-		unset($_SESSION['flp_cc_bin']);
-		unset($_SESSION['flp_cc_hash']);
+		unset($this->session->data['flp_cc_bin']);
+		unset($this->session->data['flp_cc_hash']);
 	}
 
 	private function hashIt($s) {
 		$hash = 'fraudlabspro_' . $s;
 
-		for ($i = 0; $i < 65536; $i++)
+		for ($i = 0; $i < 65536; $i++) {
 			$hash = sha1('fraudlabspro_' . $hash);
+		}
 
 		return $hash;
 	}

@@ -38,7 +38,7 @@ class ControllerExtensionCurrencyFixer extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha')
+			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency')
 		);
 
 		$data['breadcrumbs'][] = array(

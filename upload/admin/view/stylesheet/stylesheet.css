@@ -387,7 +387,7 @@ div.required .col-form-label:not(span):before, td.required:before {
 }
 
 .image {
-    width: 18rem;
+    width: 12rem;
  }
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
@@ -805,7 +805,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 .list-check li::before {
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
     content: '\f00c';
     margin-left: -30px;
     width: 29px;

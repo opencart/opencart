@@ -217,8 +217,6 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
-			$this->load->model('setting/extension');
-
 			$data['modules'] = array();
 
 			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
@@ -287,7 +285,17 @@ class ControllerCheckoutCart extends Controller {
 				$option = array();
 			}
 
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+			// If variant get master product
+			if ($product_info['master_id']) {
+				$product_id = $product_info['master_id'];
+			}
+
+			// Merge variant code with options
+			foreach ($product_info['variant'] as $key => $value) {
+				$option[$key] = $value;
+			}
+
+			$product_options = $this->model_catalog_product->getProductOptions($product_id);
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {

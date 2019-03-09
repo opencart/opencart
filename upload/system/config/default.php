@@ -42,6 +42,7 @@ $_['cache_expire']         = 3600;
 $_['session_engine']       = 'file';
 $_['session_autostart']    = true;
 $_['session_name']         = 'OCSESSID';
+$_['session_expire']       = 3600;
 
 // Template
 $_['template_engine']      = 'twig';

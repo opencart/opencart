@@ -16,13 +16,14 @@
  *
  * @author Fabien Potencier <fabien@symfony.com>
  *
- * @see http://twig.sensiolabs.org/doc/templates.html#test-operator
+ * @see https://twig.symfony.com/doc/templates.html#test-operator
  */
 class Twig_Test
 {
     private $name;
     private $callable;
     private $options;
+    private $arguments = [];
 
     /**
      * Creates a template test.
@@ -31,7 +32,7 @@ class Twig_Test
      * @param callable|null $callable A callable implementing the test. If null, you need to overwrite the "node_class" option to customize compilation.
      * @param array         $options  Options array
      */
-    public function __construct(string $name, $callable = null, array $options = array())
+    public function __construct(string $name, $callable = null, array $options = [])
     {
         if (__CLASS__ !== get_class($this)) {
             @trigger_error('Overriding '.__CLASS__.' is deprecated since version 2.4.0 and the class will be final in 3.0.', E_USER_DEPRECATED);
@@ -39,12 +40,12 @@ class Twig_Test
 
         $this->name = $name;
         $this->callable = $callable;
-        $this->options = array_merge(array(
+        $this->options = array_merge([
             'is_variadic' => false,
             'node_class' => 'Twig_Node_Expression_Test',
             'deprecated' => false,
             'alternative' => null,
-        ), $options);
+        ], $options);
     }
 
     public function getName()
@@ -65,6 +66,16 @@ class Twig_Test
     public function getNodeClass()
     {
         return $this->options['node_class'];
+    }
+
+    public function setArguments($arguments)
+    {
+        $this->arguments = $arguments;
+    }
+
+    public function getArguments()
+    {
+        return $this->arguments;
     }
 
     public function isVariadic()

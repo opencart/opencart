@@ -11,10 +11,10 @@
 
 final class Twig_Extension_Core extends Twig_Extension
 {
-    private $dateFormats = array('F j, Y H:i', '%d days');
-    private $numberFormat = array(0, '.', ',');
+    private $dateFormats = ['F j, Y H:i', '%d days'];
+    private $numberFormat = [0, '.', ','];
     private $timezone = null;
-    private $escapers = array();
+    private $escapers = [];
 
     /**
      * Defines a new escaper to be used via the escape filter.
@@ -97,7 +97,7 @@ final class Twig_Extension_Core extends Twig_Extension
      */
     public function setNumberFormat($decimal, $decimalPoint, $thousandSep)
     {
-        $this->numberFormat = array($decimal, $decimalPoint, $thousandSep);
+        $this->numberFormat = [$decimal, $decimalPoint, $thousandSep];
     }
 
     /**
@@ -112,7 +112,7 @@ final class Twig_Extension_Core extends Twig_Extension
 
     public function getTokenParsers()
     {
-        return array(
+        return [
             new Twig_TokenParser_For(),
             new Twig_TokenParser_If(),
             new Twig_TokenParser_Extends(),
@@ -129,18 +129,19 @@ final class Twig_Extension_Core extends Twig_Extension
             new Twig_TokenParser_Do(),
             new Twig_TokenParser_Embed(),
             new Twig_TokenParser_With(),
-        );
+            new Twig_TokenParser_Deprecated(),
+        ];
     }
 
     public function getFilters()
     {
-        return array(
+        return [
             // formatting filters
-            new Twig_Filter('date', 'twig_date_format_filter', array('needs_environment' => true)),
-            new Twig_Filter('date_modify', 'twig_date_modify_filter', array('needs_environment' => true)),
+            new Twig_Filter('date', 'twig_date_format_filter', ['needs_environment' => true]),
+            new Twig_Filter('date_modify', 'twig_date_modify_filter', ['needs_environment' => true]),
             new Twig_Filter('format', 'sprintf'),
             new Twig_Filter('replace', 'twig_replace_filter'),
-            new Twig_Filter('number_format', 'twig_number_format_filter', array('needs_environment' => true)),
+            new Twig_Filter('number_format', 'twig_number_format_filter', ['needs_environment' => true]),
             new Twig_Filter('abs', 'abs'),
             new Twig_Filter('round', 'twig_round'),
 
@@ -150,108 +151,108 @@ final class Twig_Extension_Core extends Twig_Extension
             new Twig_Filter('convert_encoding', 'twig_convert_encoding'),
 
             // string filters
-            new Twig_Filter('title', 'twig_title_string_filter', array('needs_environment' => true)),
-            new Twig_Filter('capitalize', 'twig_capitalize_string_filter', array('needs_environment' => true)),
-            new Twig_Filter('upper', 'twig_upper_filter', array('needs_environment' => true)),
-            new Twig_Filter('lower', 'twig_lower_filter', array('needs_environment' => true)),
+            new Twig_Filter('title', 'twig_title_string_filter', ['needs_environment' => true]),
+            new Twig_Filter('capitalize', 'twig_capitalize_string_filter', ['needs_environment' => true]),
+            new Twig_Filter('upper', 'twig_upper_filter', ['needs_environment' => true]),
+            new Twig_Filter('lower', 'twig_lower_filter', ['needs_environment' => true]),
             new Twig_Filter('striptags', 'strip_tags'),
             new Twig_Filter('trim', 'twig_trim_filter'),
-            new Twig_Filter('nl2br', 'nl2br', array('pre_escape' => 'html', 'is_safe' => array('html'))),
+            new Twig_Filter('nl2br', 'nl2br', ['pre_escape' => 'html', 'is_safe' => ['html']]),
 
             // array helpers
             new Twig_Filter('join', 'twig_join_filter'),
-            new Twig_Filter('split', 'twig_split_filter', array('needs_environment' => true)),
+            new Twig_Filter('split', 'twig_split_filter', ['needs_environment' => true]),
             new Twig_Filter('sort', 'twig_sort_filter'),
             new Twig_Filter('merge', 'twig_array_merge'),
             new Twig_Filter('batch', 'twig_array_batch'),
 
             // string/array filters
-            new Twig_Filter('reverse', 'twig_reverse_filter', array('needs_environment' => true)),
-            new Twig_Filter('length', 'twig_length_filter', array('needs_environment' => true)),
-            new Twig_Filter('slice', 'twig_slice', array('needs_environment' => true)),
-            new Twig_Filter('first', 'twig_first', array('needs_environment' => true)),
-            new Twig_Filter('last', 'twig_last', array('needs_environment' => true)),
+            new Twig_Filter('reverse', 'twig_reverse_filter', ['needs_environment' => true]),
+            new Twig_Filter('length', 'twig_length_filter', ['needs_environment' => true]),
+            new Twig_Filter('slice', 'twig_slice', ['needs_environment' => true]),
+            new Twig_Filter('first', 'twig_first', ['needs_environment' => true]),
+            new Twig_Filter('last', 'twig_last', ['needs_environment' => true]),
 
             // iteration and runtime
-            new Twig_Filter('default', '_twig_default_filter', array('node_class' => 'Twig_Node_Expression_Filter_Default')),
+            new Twig_Filter('default', '_twig_default_filter', ['node_class' => 'Twig_Node_Expression_Filter_Default']),
             new Twig_Filter('keys', 'twig_get_array_keys_filter'),
 
             // escaping
-            new Twig_Filter('escape', 'twig_escape_filter', array('needs_environment' => true, 'is_safe_callback' => 'twig_escape_filter_is_safe')),
-            new Twig_Filter('e', 'twig_escape_filter', array('needs_environment' => true, 'is_safe_callback' => 'twig_escape_filter_is_safe')),
-        );
+            new Twig_Filter('escape', 'twig_escape_filter', ['needs_environment' => true, 'is_safe_callback' => 'twig_escape_filter_is_safe']),
+            new Twig_Filter('e', 'twig_escape_filter', ['needs_environment' => true, 'is_safe_callback' => 'twig_escape_filter_is_safe']),
+        ];
     }
 
     public function getFunctions()
     {
-        return array(
+        return [
             new Twig_Function('max', 'max'),
             new Twig_Function('min', 'min'),
             new Twig_Function('range', 'range'),
             new Twig_Function('constant', 'twig_constant'),
             new Twig_Function('cycle', 'twig_cycle'),
-            new Twig_Function('random', 'twig_random', array('needs_environment' => true)),
-            new Twig_Function('date', 'twig_date_converter', array('needs_environment' => true)),
-            new Twig_Function('include', 'twig_include', array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('all'))),
-            new Twig_Function('source', 'twig_source', array('needs_environment' => true, 'is_safe' => array('all'))),
-        );
+            new Twig_Function('random', 'twig_random', ['needs_environment' => true]),
+            new Twig_Function('date', 'twig_date_converter', ['needs_environment' => true]),
+            new Twig_Function('include', 'twig_include', ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['all']]),
+            new Twig_Function('source', 'twig_source', ['needs_environment' => true, 'is_safe' => ['all']]),
+        ];
     }
 
     public function getTests()
     {
-        return array(
-            new Twig_Test('even', null, array('node_class' => 'Twig_Node_Expression_Test_Even')),
-            new Twig_Test('odd', null, array('node_class' => 'Twig_Node_Expression_Test_Odd')),
-            new Twig_Test('defined', null, array('node_class' => 'Twig_Node_Expression_Test_Defined')),
-            new Twig_Test('same as', null, array('node_class' => 'Twig_Node_Expression_Test_Sameas')),
-            new Twig_Test('none', null, array('node_class' => 'Twig_Node_Expression_Test_Null')),
-            new Twig_Test('null', null, array('node_class' => 'Twig_Node_Expression_Test_Null')),
-            new Twig_Test('divisible by', null, array('node_class' => 'Twig_Node_Expression_Test_Divisibleby')),
-            new Twig_Test('constant', null, array('node_class' => 'Twig_Node_Expression_Test_Constant')),
+        return [
+            new Twig_Test('even', null, ['node_class' => 'Twig_Node_Expression_Test_Even']),
+            new Twig_Test('odd', null, ['node_class' => 'Twig_Node_Expression_Test_Odd']),
+            new Twig_Test('defined', null, ['node_class' => 'Twig_Node_Expression_Test_Defined']),
+            new Twig_Test('same as', null, ['node_class' => 'Twig_Node_Expression_Test_Sameas']),
+            new Twig_Test('none', null, ['node_class' => 'Twig_Node_Expression_Test_Null']),
+            new Twig_Test('null', null, ['node_class' => 'Twig_Node_Expression_Test_Null']),
+            new Twig_Test('divisible by', null, ['node_class' => 'Twig_Node_Expression_Test_Divisibleby']),
+            new Twig_Test('constant', null, ['node_class' => 'Twig_Node_Expression_Test_Constant']),
             new Twig_Test('empty', 'twig_test_empty'),
             new Twig_Test('iterable', 'twig_test_iterable'),
-        );
+        ];
     }
 
     public function getOperators()
     {
-        return array(
-            array(
-                'not' => array('precedence' => 50, 'class' => 'Twig_Node_Expression_Unary_Not'),
-                '-' => array('precedence' => 500, 'class' => 'Twig_Node_Expression_Unary_Neg'),
-                '+' => array('precedence' => 500, 'class' => 'Twig_Node_Expression_Unary_Pos'),
-            ),
-            array(
-                'or' => array('precedence' => 10, 'class' => 'Twig_Node_Expression_Binary_Or', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'and' => array('precedence' => 15, 'class' => 'Twig_Node_Expression_Binary_And', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'b-or' => array('precedence' => 16, 'class' => 'Twig_Node_Expression_Binary_BitwiseOr', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'b-xor' => array('precedence' => 17, 'class' => 'Twig_Node_Expression_Binary_BitwiseXor', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'b-and' => array('precedence' => 18, 'class' => 'Twig_Node_Expression_Binary_BitwiseAnd', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '==' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Equal', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '!=' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_NotEqual', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '<' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Less', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '>' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Greater', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '>=' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_GreaterEqual', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '<=' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_LessEqual', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'not in' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_NotIn', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'in' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_In', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'matches' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Matches', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'starts with' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_StartsWith', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'ends with' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_EndsWith', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '..' => array('precedence' => 25, 'class' => 'Twig_Node_Expression_Binary_Range', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '+' => array('precedence' => 30, 'class' => 'Twig_Node_Expression_Binary_Add', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '-' => array('precedence' => 30, 'class' => 'Twig_Node_Expression_Binary_Sub', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '~' => array('precedence' => 40, 'class' => 'Twig_Node_Expression_Binary_Concat', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '*' => array('precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_Mul', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '/' => array('precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_Div', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '//' => array('precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_FloorDiv', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '%' => array('precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_Mod', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'is' => array('precedence' => 100, 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                'is not' => array('precedence' => 100, 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '**' => array('precedence' => 200, 'class' => 'Twig_Node_Expression_Binary_Power', 'associativity' => Twig_ExpressionParser::OPERATOR_RIGHT),
-                '??' => array('precedence' => 300, 'class' => 'Twig_Node_Expression_NullCoalesce', 'associativity' => Twig_ExpressionParser::OPERATOR_RIGHT),
-            ),
-        );
+        return [
+            [
+                'not' => ['precedence' => 50, 'class' => 'Twig_Node_Expression_Unary_Not'],
+                '-' => ['precedence' => 500, 'class' => 'Twig_Node_Expression_Unary_Neg'],
+                '+' => ['precedence' => 500, 'class' => 'Twig_Node_Expression_Unary_Pos'],
+            ],
+            [
+                'or' => ['precedence' => 10, 'class' => 'Twig_Node_Expression_Binary_Or', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'and' => ['precedence' => 15, 'class' => 'Twig_Node_Expression_Binary_And', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'b-or' => ['precedence' => 16, 'class' => 'Twig_Node_Expression_Binary_BitwiseOr', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'b-xor' => ['precedence' => 17, 'class' => 'Twig_Node_Expression_Binary_BitwiseXor', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'b-and' => ['precedence' => 18, 'class' => 'Twig_Node_Expression_Binary_BitwiseAnd', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '==' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Equal', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '!=' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_NotEqual', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '<' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Less', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '>' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Greater', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '>=' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_GreaterEqual', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '<=' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_LessEqual', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'not in' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_NotIn', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'in' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_In', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'matches' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_Matches', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'starts with' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_StartsWith', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'ends with' => ['precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_EndsWith', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '..' => ['precedence' => 25, 'class' => 'Twig_Node_Expression_Binary_Range', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '+' => ['precedence' => 30, 'class' => 'Twig_Node_Expression_Binary_Add', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '-' => ['precedence' => 30, 'class' => 'Twig_Node_Expression_Binary_Sub', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '~' => ['precedence' => 40, 'class' => 'Twig_Node_Expression_Binary_Concat', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '*' => ['precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_Mul', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '/' => ['precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_Div', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '//' => ['precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_FloorDiv', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '%' => ['precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_Mod', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'is' => ['precedence' => 100, 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                'is not' => ['precedence' => 100, 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT],
+                '**' => ['precedence' => 200, 'class' => 'Twig_Node_Expression_Binary_Power', 'associativity' => Twig_ExpressionParser::OPERATOR_RIGHT],
+                '??' => ['precedence' => 300, 'class' => 'Twig_Node_Expression_NullCoalesce', 'associativity' => Twig_ExpressionParser::OPERATOR_RIGHT],
+            ],
+        ];
     }
 }
 
@@ -340,7 +341,7 @@ function twig_random(Twig_Environment $env, $values = null)
  * @param Twig_Environment                      $env
  * @param DateTimeInterface|DateInterval|string $date     A date
  * @param string|null                           $format   The target format, null to use the default
- * @param DateTimeZone|string|null|false        $timezone The target timezone, null to use the default, false to leave unchanged
+ * @param DateTimeZone|string|false|null        $timezone The target timezone, null to use the default, false to leave unchanged
  *
  * @return string The formatted date
  */
@@ -389,7 +390,7 @@ function twig_date_modify_filter(Twig_Environment $env, $date, $modifier)
  *
  * @param Twig_Environment               $env
  * @param DateTimeInterface|string|null  $date     A date or null to use the current time
- * @param DateTimeZone|string|null|false $timezone The target timezone, null to use the default, false to leave unchanged
+ * @param DateTimeZone|string|false|null $timezone The target timezone, null to use the default, false to leave unchanged
  *
  * @return DateTime A DateTime instance
  */
@@ -581,7 +582,7 @@ function twig_slice(Twig_Environment $env, $item, $start, $length = null, $prese
             try {
                 return iterator_to_array(new LimitIterator($item, $start, null === $length ? -1 : $length), $preserveKeys);
             } catch (OutOfBoundsException $exception) {
-                return array();
+                return [];
             }
         }
 
@@ -630,9 +631,12 @@ function twig_last(Twig_Environment $env, $item)
 /**
  * Joins the values to a string.
  *
- * The separator between elements is an empty string per default, you can define it with the optional parameter.
+ * The separators between elements are empty strings per default, you can define them with the optional parameters.
  *
  * <pre>
+ *  {{ [1, 2, 3]|join(', ', ' and ') }}
+ *  {# returns 1, 2 and 3 #}
+ *
  *  {{ [1, 2, 3]|join('|') }}
  *  {# returns 1|2|3 #}
  *
@@ -640,18 +644,34 @@ function twig_last(Twig_Environment $env, $item)
  *  {# returns 123 #}
  * </pre>
  *
- * @param array  $value An array
- * @param string $glue  The separator
+ * @param array       $value An array
+ * @param string      $glue  The separator
+ * @param string|null $and   The separator for the last pair
  *
  * @return string The concatenated string
  */
-function twig_join_filter($value, $glue = '')
+function twig_join_filter($value, $glue = '', $and = null)
 {
     if ($value instanceof Traversable) {
         $value = iterator_to_array($value, false);
+    } else {
+        $value = (array) $value;
     }
 
-    return implode($glue, (array) $value);
+    if (0 === count($value)) {
+        return '';
+    }
+
+    if (null === $and || $and === $glue) {
+        return implode($glue, $value);
+    }
+
+    $v = array_values($value);
+    if (1 === count($v)) {
+        return $v[0];
+    }
+
+    return implode($glue, array_slice($value, 0, -1)).$and.$v[count($v) - 1];
 }
 
 /**
@@ -690,10 +710,10 @@ function twig_split_filter(Twig_Environment $env, $value, $delimiter, $limit = n
 
     $length = mb_strlen($value, $env->getCharset());
     if ($length < $limit) {
-        return array($value);
+        return [$value];
     }
 
-    $r = array();
+    $r = [];
     for ($i = 0; $i < $length; $i += $limit) {
         $r[] = mb_substr($value, $i, $limit, $env->getCharset());
     }
@@ -739,7 +759,7 @@ function twig_get_array_keys_filter($array)
         }
 
         if ($array instanceof Iterator) {
-            $keys = array();
+            $keys = [];
             $array->rewind();
             while ($array->valid()) {
                 $keys[] = $array->key();
@@ -749,7 +769,7 @@ function twig_get_array_keys_filter($array)
             return $keys;
         }
 
-        $keys = array();
+        $keys = [];
         foreach ($array as $key => $item) {
             $keys[] = $key;
         }
@@ -758,7 +778,7 @@ function twig_get_array_keys_filter($array)
     }
 
     if (!is_array($array)) {
-        return array();
+        return [];
     }
 
     return array_keys($array);
@@ -897,9 +917,13 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
     if (!is_string($string)) {
         if (is_object($string) && method_exists($string, '__toString')) {
             $string = (string) $string;
-        } elseif (in_array($strategy, array('html', 'js', 'css', 'html_attr', 'url'))) {
+        } elseif (in_array($strategy, ['html', 'js', 'css', 'html_attr', 'url'])) {
             return $string;
         }
+    }
+
+    if ('' === $string) {
+        return '';
     }
 
     if (null === $charset) {
@@ -908,12 +932,12 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
 
     switch ($strategy) {
         case 'html':
-            // see http://php.net/htmlspecialchars
+            // see https://secure.php.net/htmlspecialchars
 
             // Using a static variable to avoid initializing the array
             // each time the function is called. Moving the declaration on the
             // top of the function slow downs other escaping strategies.
-            static $htmlspecialcharsCharsets = array(
+            static $htmlspecialcharsCharsets = [
                 'ISO-8859-1' => true, 'ISO8859-1' => true,
                 'ISO-8859-15' => true, 'ISO8859-15' => true,
                 'utf-8' => true, 'UTF-8' => true,
@@ -928,7 +952,7 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
                 'SHIFT_JIS' => true, 'SJIS' => true, '932' => true,
                 'EUC-JP' => true, 'EUCJP' => true,
                 'ISO8859-5' => true, 'ISO-8859-5' => true, 'MACROMAN' => true,
-            );
+            ];
 
             if (isset($htmlspecialcharsCharsets[$charset])) {
                 return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
@@ -948,21 +972,35 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
 
         case 'js':
             // escape all non-alphanumeric characters
-            // into their \xHH or \uHHHH representations
+            // into their \x or \uHHHH representations
             if ('UTF-8' !== $charset) {
                 $string = iconv($charset, 'UTF-8', $string);
             }
 
-            if (0 == strlen($string) ? false : 1 !== preg_match('/^./su', $string)) {
+            if (!preg_match('//u', $string)) {
                 throw new Twig_Error_Runtime('The string to escape is not a valid UTF-8 string.');
             }
 
             $string = preg_replace_callback('#[^a-zA-Z0-9,\._]#Su', function ($matches) {
                 $char = $matches[0];
 
-                // \xHH
-                if (!isset($char[1])) {
-                    return '\\x'.strtoupper(substr('00'.bin2hex($char), -2));
+                /*
+                 * A few characters have short escape sequences in JSON and JavaScript.
+                 * Escape sequences supported only by JavaScript, not JSON, are ommitted.
+                 * \" is also supported but omitted, because the resulting string is not HTML safe.
+                 */
+                static $shortMap = [
+                    '\\' => '\\\\',
+                    '/' => '\\/',
+                    "\x08" => '\b',
+                    "\x0C" => '\f',
+                    "\x0A" => '\n',
+                    "\x0D" => '\r',
+                    "\x09" => '\t',
+                ];
+
+                if (isset($shortMap[$char])) {
+                    return $shortMap[$char];
                 }
 
                 // \uHHHH
@@ -987,27 +1025,14 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
                 $string = iconv($charset, 'UTF-8', $string);
             }
 
-            if (0 == strlen($string) ? false : 1 !== preg_match('/^./su', $string)) {
+            if (!preg_match('//u', $string)) {
                 throw new Twig_Error_Runtime('The string to escape is not a valid UTF-8 string.');
             }
 
             $string = preg_replace_callback('#[^a-zA-Z0-9]#Su', function ($matches) {
                 $char = $matches[0];
 
-                // \xHH
-                if (!isset($char[1])) {
-                    $hex = ltrim(strtoupper(bin2hex($char)), '0');
-                    if (0 === strlen($hex)) {
-                        $hex = '0';
-                    }
-
-                    return '\\'.$hex.' ';
-                }
-
-                // \uHHHH
-                $char = twig_convert_encoding($char, 'UTF-16BE', 'UTF-8');
-
-                return '\\'.ltrim(strtoupper(bin2hex($char)), '0').' ';
+                return sprintf('\\%X ', 1 === strlen($char) ? ord($char) : mb_ord($char, 'UTF-8'));
             }, $string);
 
             if ('UTF-8' !== $charset) {
@@ -1021,7 +1046,7 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
                 $string = iconv($charset, 'UTF-8', $string);
             }
 
-            if (0 == strlen($string) ? false : 1 !== preg_match('/^./su', $string)) {
+            if (!preg_match('//u', $string)) {
                 throw new Twig_Error_Runtime('The string to escape is not a valid UTF-8 string.');
             }
 
@@ -1029,22 +1054,9 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
                 /**
                  * This function is adapted from code coming from Zend Framework.
                  *
-                 * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
-                 * @license   http://framework.zend.com/license/new-bsd New BSD License
+                 * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (https://www.zend.com)
+                 * @license   https://framework.zend.com/license/new-bsd New BSD License
                  */
-                /*
-                 * While HTML supports far more named entities, the lowest common denominator
-                 * has become HTML5's XML Serialisation which is restricted to the those named
-                 * entities that XML supports. Using HTML entities would result in this error:
-                 *     XML Parsing Error: undefined entity
-                 */
-                static $entityMap = array(
-                    34 => 'quot', /* quotation mark */
-                    38 => 'amp',  /* ampersand */
-                    60 => 'lt',   /* less-than sign */
-                    62 => 'gt',   /* greater-than sign */
-                );
-
                 $chr = $matches[0];
                 $ord = ord($chr);
 
@@ -1060,23 +1072,32 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
                  * Check if the current character to escape has a name entity we should
                  * replace it with while grabbing the hex value of the character.
                  */
-                if (1 == strlen($chr)) {
-                    $hex = strtoupper(substr('00'.bin2hex($chr), -2));
-                } else {
-                    $chr = twig_convert_encoding($chr, 'UTF-16BE', 'UTF-8');
-                    $hex = strtoupper(substr('0000'.bin2hex($chr), -4));
-                }
+                if (1 === strlen($chr)) {
+                    /*
+                     * While HTML supports far more named entities, the lowest common denominator
+                     * has become HTML5's XML Serialisation which is restricted to the those named
+                     * entities that XML supports. Using HTML entities would result in this error:
+                     *     XML Parsing Error: undefined entity
+                     */
+                    static $entityMap = [
+                        34 => '&quot;', /* quotation mark */
+                        38 => '&amp;',  /* ampersand */
+                        60 => '&lt;',   /* less-than sign */
+                        62 => '&gt;',   /* greater-than sign */
+                    ];
 
-                $int = hexdec($hex);
-                if (array_key_exists($int, $entityMap)) {
-                    return sprintf('&%s;', $entityMap[$int]);
+                    if (isset($entityMap[$ord])) {
+                        return $entityMap[$ord];
+                    }
+
+                    return sprintf('&#x%02X;', $ord);
                 }
 
                 /*
                  * Per OWASP recommendations, we'll use hex entities for any other
                  * characters where a named entity does not exist.
                  */
-                return sprintf('&#x%s;', $hex);
+                return sprintf('&#x%04X;', mb_ord($chr, 'UTF-8'));
             }, $string);
 
             if ('UTF-8' !== $charset) {
@@ -1099,7 +1120,7 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
                 return $escapers[$strategy]($env, $string, $charset);
             }
 
-            $validStrategies = implode(', ', array_merge(array('html', 'js', 'url', 'css', 'html_attr'), array_keys($escapers)));
+            $validStrategies = implode(', ', array_merge(['html', 'js', 'url', 'css', 'html_attr'], array_keys($escapers)));
 
             throw new Twig_Error_Runtime(sprintf('Invalid escaping strategy "%s" (valid ones: %s).', $strategy, $validStrategies));
     }
@@ -1112,13 +1133,13 @@ function twig_escape_filter_is_safe(Twig_Node $filterArgs)
 {
     foreach ($filterArgs as $arg) {
         if ($arg instanceof Twig_Node_Expression_Constant) {
-            return array($arg->getAttribute('value'));
+            return [$arg->getAttribute('value')];
         }
 
-        return array();
+        return [];
     }
 
-    return array('html');
+    return ['html'];
 }
 
 function twig_convert_encoding($string, $to, $from)
@@ -1230,7 +1251,7 @@ function twig_ensure_traversable($seq)
         return $seq;
     }
 
-    return array();
+    return [];
 }
 
 /**
@@ -1257,7 +1278,7 @@ function twig_test_empty($value)
         return '' === (string) $value;
     }
 
-    return '' === $value || false === $value || null === $value || array() === $value;
+    return '' === $value || false === $value || null === $value || [] === $value;
 }
 
 /**
@@ -1292,7 +1313,7 @@ function twig_test_iterable($value)
  *
  * @return string The rendered template
  */
-function twig_include(Twig_Environment $env, $context, $template, $variables = array(), $withContext = true, $ignoreMissing = false, $sandboxed = false)
+function twig_include(Twig_Environment $env, $context, $template, $variables = [], $withContext = true, $ignoreMissing = false, $sandboxed = false)
 {
     $alreadySandboxed = false;
     $sandbox = null;
@@ -1307,7 +1328,7 @@ function twig_include(Twig_Environment $env, $context, $template, $variables = a
         }
     }
 
-    $result = null;
+    $result = '';
     try {
         $result = $env->resolveTemplate($template)->render($variables);
     } catch (Twig_Error_Loader $e) {
@@ -1358,7 +1379,7 @@ function twig_source(Twig_Environment $env, $name, $ignoreMissing = false)
  * Provides the ability to get constants from instances as well as class/global constants.
  *
  * @param string      $constant The name of the constant
- * @param null|object $object   The object to get the constant from
+ * @param object|null $object   The object to get the constant from
  *
  * @return string
  */
@@ -1375,7 +1396,7 @@ function twig_constant($constant, $object = null)
  * Checks if a constant exists.
  *
  * @param string      $constant The name of the constant
- * @param null|object $object   The object to get the constant from
+ * @param object|null $object   The object to get the constant from
  *
  * @return bool
  */
@@ -1436,13 +1457,13 @@ function twig_array_batch($items, $size, $fill = null)
  *
  * @internal
  */
-function twig_get_attribute(Twig_Environment $env, Twig_Source $source, $object, $item, array $arguments = array(), $type = /* Twig_Template::ANY_CALL */ 'any', $isDefinedTest = false, $ignoreStrictCheck = false, $sandboxed = false)
+function twig_get_attribute(Twig_Environment $env, Twig_Source $source, $object, $item, array $arguments = [], $type = /* Twig_Template::ANY_CALL */ 'any', $isDefinedTest = false, $ignoreStrictCheck = false, $sandboxed = false)
 {
     // array
     if (/* Twig_Template::METHOD_CALL */ 'method' !== $type) {
         $arrayItem = is_bool($item) || is_float($item) ? (int) $item : $item;
 
-        if ((is_array($object) && (isset($object[$arrayItem]) || array_key_exists($arrayItem, $object)))
+        if (((is_array($object) || $object instanceof ArrayObject) && (isset($object[$arrayItem]) || array_key_exists($arrayItem, $object)))
             || ($object instanceof ArrayAccess && isset($object[$arrayItem]))
         ) {
             if ($isDefinedTest) {
@@ -1526,7 +1547,7 @@ function twig_get_attribute(Twig_Environment $env, Twig_Source $source, $object,
         }
     }
 
-    static $cache = array();
+    static $cache = [];
 
     $class = get_class($object);
 
@@ -1536,7 +1557,7 @@ function twig_get_attribute(Twig_Environment $env, Twig_Source $source, $object,
         $methods = get_class_methods($object);
         sort($methods);
         $lcMethods = array_map('strtolower', $methods);
-        $classCache = array();
+        $classCache = [];
         foreach ($methods as $i => $method) {
             $classCache[$method] = $method;
             $classCache[$lcName = $lcMethods[$i]] = $method;

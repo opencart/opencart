@@ -31,18 +31,20 @@ class ControllerMarketplaceExtension extends Controller {
 		
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
-			
-			// Compatibility code for old extension folders
-			$this->load->language('extension/extension/' . $extension, 'extension');
-		
-			if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
-				$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
-		
-				$data['categories'][] = array(
-					'code' => $extension,
-					'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) .')'
-				);
-			}			
+
+			if ($extension != 'promotion') {
+				// Compatibility code for old extension folders
+				$this->load->language('extension/extension/' . $extension, 'extension');
+
+				if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
+					$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
+
+					$data['categories'][] = array(
+						'code' => $extension,
+						'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) . ')'
+					);
+				}
+			}
 		}
 
 		$data['user_token'] = $this->request->get['user_token'];

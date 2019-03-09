@@ -363,8 +363,14 @@ legend {
     }
 }
 
-.image {
-    width: 12rem;
+.form-group.row {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.form-group.row + .form-group.row {
+    padding-top: 1rem;
+    border-top: 1px solid #ededed;
 }
 
 .form-control:hover {
@@ -379,6 +385,10 @@ div.required .col-form-label:not(span):before, td.required:before {
     color: #F00;
     font-weight: bold;
 }
+
+.image {
+    width: 12rem;
+ }
 
 .table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
     font-family: 'Font Awesome 5 Free';
@@ -475,19 +485,12 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     margin: 0;
 }
 
-.form-group.row + .form-group.row {
-    padding-top: 1rem;
-    border-top: 1px solid #ededed;
-    margin-left: -20px;
-    margin-right: -20px;
-}
-
 /* Cards */
 .card {
     border-radius: 0px;
 }
 
-.card-header i {
+.card-header > i {
     margin-right: 5px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -802,7 +805,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 .list-check li::before {
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
     content: '\f00c';
     margin-left: -30px;
     width: 29px;

@@ -279,24 +279,17 @@ footer {
     margin-top: 10px;
     margin-bottom: 10px; }
 /* default font size */
-.fa {
+.fas, .far, .fab {
   font-size: 14px; }
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px; }
-
-#alert-box {
+/* toast */
+#toast {
   position: fixed;
-  top: 15px;
-  right: 0;
-  transition: all 0.5s;
-  z-index: 99; }
-  #alert-box.open {
-    right: 15px; }
-  #alert-box > .alert {
-    padding-right: 28px; }
-  #alert-box .close {
-    padding: 5px 8px; }
+  top: 10px;
+  right: 10px;
+  z-index: 999; }
 /* breadcrumb */
 .breadcrumb {
   margin: 0 0 20px 0;
@@ -331,18 +324,6 @@ footer {
 .pagination {
   margin: 0; }
 /* buttons */
-/*
- .btn {
- padding: 7.5px 12px;
- font-size: 12px;
- border: 1px solid #cccccc;
- border-radius: 4px;
- box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
- &.active {
- box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
- }
- }
- */
 .btn-light {
   color: #777;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -437,10 +418,10 @@ footer {
   text-shadow: 0 1px 0 #000; }
   .carousel-caption .icon-prev:before {
     content: '\f053';
-    font-family: FontAwesome; }
+    font-family: 'Font Awesome 5 Free'; }
   .carousel-caption .icon-next:before {
     content: '\f054';
-    font-family: FontAwesome; }
+    font-family: 'Font Awesome 5 Free'; }
 /* product list */
 .product-thumb {
   border: 1px solid #ddd;
@@ -630,13 +611,13 @@ footer {
   cursor: pointer; }
 
 #checkout-cart #accordion h4:before {
-  font-family: FontAwesome;
+  font-family: 'Font Awesome 5 Free';
   font-size: 14px;
   content: "\f0d7  ";
   margin-right: 10px; }
 
 #checkout-cart #accordion h4.collapsed:before {
-  font-family: FontAwesome;
+  font-family: 'Font Awesome 5 Free';
   font-size: 14px;
   content: "\f0da";
   margin-right: 10px; }
@@ -645,13 +626,13 @@ footer {
   cursor: pointer; }
 
 #checkout-checkout #accordion h4:before {
-  font-family: FontAwesome;
+  font-family: 'Font Awesome 5 Free';
   font-size: 14px;
   content: "\f0d7  ";
   margin-right: 10px; }
 
 #checkout-checkout #accordion h4.collapsed:before {
-  font-family: FontAwesome;
+  font-family: 'Font Awesome 5 Free';
   font-size: 14px;
   content: "\f0da";
   margin-right: 10px; }

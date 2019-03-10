@@ -72,17 +72,11 @@ class ControllerCommonProfile extends Controller {
 			$data['error_email'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$breadcrumbs = $this->load->controller('common/breadcrumbs');
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		$breadcrumbs->setDefaults();
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'])
-		);
+		$data['breadcrumbs'] = $breadcrumbs->render();
 
 		$data['action'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
 

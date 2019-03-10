@@ -67,8 +67,6 @@ class ControllerCommonBreadcrumbs extends Controller {
 	{
 		$data['breadcrumbs'] = $this->breadcrumbs;
 
-		$this->log->write($this->breadcrumbs);
-
 		return $this->load->view('common/breadcrumbs', $data);
 	}
 

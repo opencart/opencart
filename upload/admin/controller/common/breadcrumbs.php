@@ -23,6 +23,8 @@ class ControllerCommonBreadcrumbs extends Controller {
 
 	public function setDefaults()
 	{
+		$count_routes = count($this->routes);
+		
 		$this->load->language($this->route);
 
 		$heading_title = $this->language->get('heading_title');
@@ -36,14 +38,21 @@ class ControllerCommonBreadcrumbs extends Controller {
 			];
 		}
 
-		$end_route = array_pop($this->routes);
+		if ($this->routes[0] === 'setting') {				
+			$this->load->language('setting/store');
 
-		unset($this->routes[$end_route]);
+			$this->breadcrumbs[] = [
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
+			];
+		}
 
-		$this->breadcrumbs[] = [
-			'text' => $heading_title,
-			'href' => $this->url->link(implode('/', $this->routes), 'user_token=' . $this->session->data['user_token'])
-		];
+		if ($count_routes === 2) {
+			$this->breadcrumbs[] = [
+				'text' => $heading_title,
+				'href' => $this->url->link($this->route, 'user_token=' . $this->session->data['user_token'])
+			];
+		}
 	}
 
 	public function set(array $args)
@@ -57,6 +66,8 @@ class ControllerCommonBreadcrumbs extends Controller {
 	public function render()
 	{
 		$data['breadcrumbs'] = $this->breadcrumbs;
+
+		$this->log->write($this->breadcrumbs);
 
 		return $this->load->view('common/breadcrumbs', $data);
 	}

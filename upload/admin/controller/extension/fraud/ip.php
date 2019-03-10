@@ -120,7 +120,7 @@ class ControllerExtensionFraudIp extends Controller {
 			'total' => $ip_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('extension/fraud/ip/ip', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('extension/fraud/ip/ip', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));

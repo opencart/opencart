@@ -1,17 +1,30 @@
 <?php
 class ControllerStartupSession extends Controller {
 	public function index() {
+
+		//print_r($this->request->post);
+		//print_r($this->request->cookie);
+
 		if (isset($this->request->get['route']) && substr((string)$this->request->get['route'], 0, 4) == 'api/') {
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
-					
+			$this->load->model('setting/api');
+
+			$this->model_setting_api->cleanApiSessions();
+
+			$query = $this->db->query("SELECT NOW()");
+			//$query = $this->db->query("SELECT @@system_time_zone");
+			//$query = $this->db->query("SELECT @@session.time_zone");
+
+			//$query->row;
+
+			//echo date('P');
+
 			// Make sure the IP is allowed
-			$api_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` `a` LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.api_id = as.api_id) LEFT JOIN " . DB_PREFIX . "api_ip `ai` ON (a.api_id = ai.api_id) WHERE a.status = '1' AND `as`.`session_id` = '" . $this->db->escape((string)$this->request->get['api_token']) . "' AND ai.ip = '" . $this->db->escape((string)$this->request->server['REMOTE_ADDR']) . "'");
-		 
-			if ($api_query->num_rows) {
+			$api_info = $this->model_setting_api->getApiByToken($this->request->get['api_token']);
+
+			if ($api_info) {
 				$this->session->start($this->request->get['api_token']);
-				
-				// keep the session alive
-				$this->db->query("UPDATE `" . DB_PREFIX . "api_session` SET `date_modified` = NOW() WHERE `api_session_id` = '" . (int)$api_query->row['api_session_id'] . "'");
+
+				$this->model_setting_api->updateApiSession($api_info['api_session_id']);
 			}
 		} else {
 			if (isset($this->request->cookie[$this->config->get('session_name')])) {

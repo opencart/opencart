@@ -53,7 +53,11 @@ class WechatReceive extends WechatMessage
             return $this;
         }
         $postStr = !empty($this->postxml) ? $this->postxml : file_get_contents("php://input");
-        !empty($postStr) && $this->_receive = (array)simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if (!empty($postStr)) {
+            $disableEntities = libxml_disable_entity_loader(true);
+            $this->_receive = (array)simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            libxml_disable_entity_loader($disableEntities);
+        }
         return $this;
     }
 
@@ -184,7 +188,7 @@ class WechatReceive extends WechatMessage
     {
         if (isset($this->_receive['Content'])) {
             return $this->_receive['Content'];
-        } else if (isset($this->_receive['Recognition'])) {
+        } elseif (isset($this->_receive['Recognition'])) {
             return $this->_receive['Recognition'];
         }
         return false;
@@ -215,7 +219,7 @@ class WechatReceive extends WechatMessage
             return array(
                 'url'         => $this->_receive['Url'],
                 'title'       => $this->_receive['Title'],
-                'description' => $this->_receive['Description']
+                'description' => $this->_receive['Description'],
             );
         }
         return false;
@@ -232,7 +236,7 @@ class WechatReceive extends WechatMessage
                 'x'     => $this->_receive['Location_X'],
                 'y'     => $this->_receive['Location_Y'],
                 'scale' => $this->_receive['Scale'],
-                'label' => $this->_receive['Label']
+                'label' => $this->_receive['Label'],
             );
         }
         return false;
@@ -390,7 +394,7 @@ class WechatReceive extends WechatMessage
         if (isset($this->_receive['MediaId'])) {
             return array(
                 'mediaid'      => $this->_receive['MediaId'],
-                'thumbmediaid' => $this->_receive['ThumbMediaId']
+                'thumbmediaid' => $this->_receive['ThumbMediaId'],
             );
         }
         return false;
@@ -654,7 +658,7 @@ class WechatReceive extends WechatMessage
             'Video'        => array(
                 'MediaId'     => $mediaid,
                 'Title'       => $title,
-                'Description' => $description
+                'Description' => $description,
             ),
             'CreateTime'   => time(),
         );
@@ -682,7 +686,7 @@ class WechatReceive extends WechatMessage
                 'Title'       => $title,
                 'Description' => $desc,
                 'MusicUrl'    => $musicurl,
-                'HQMusicUrl'  => $hgmusicurl
+                'HQMusicUrl'  => $hgmusicurl,
             ),
         );
         if ($thumbmediaid) {

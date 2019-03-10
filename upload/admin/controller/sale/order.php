@@ -518,13 +518,13 @@ class ControllerSaleOrder extends Controller {
 			foreach ($products as $product) {
 				$data['order_products'][] = array(
 					'product_id' => $product['product_id'],
-					'name' => $product['name'],
-					'model' => $product['model'],
-					'option' => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']),
-					'quantity' => $product['quantity'],
-					'price' => $product['price'],
-					'total' => $product['total'],
-					'reward' => $product['reward']
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']),
+					'quantity'   => $product['quantity'],
+					'price'      => $product['price'],
+					'total'      => $product['total'],
+					'reward'     => $product['reward']
 				);
 			}
 
@@ -1686,7 +1686,6 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/order');
 
 		$this->load->model('catalog/product');
-		$this->load->model('catalog/product_option');
 
 		$this->load->model('setting/setting');
 
@@ -1791,7 +1790,7 @@ class ControllerSaleOrder extends Controller {
 								'value' => $value
 							);
 
-							$product_option_value_info = $this->model_catalog_product_option->getProductOptionValue($product['product_id'], $option['product_option_value_id']);
+							$product_option_value_info = $this->model_catalog_product->getProductOptionValue($product['product_id'], $option['product_option_value_id']);
 
 							if (!empty($product_option_value_info['weight'])) {
 								if ($product_option_value_info['weight_prefix'] == '+') {

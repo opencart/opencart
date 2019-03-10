@@ -10,11 +10,11 @@ class ControllerExtensionModuleGoogleCalendar extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('module_google_calendar', $_POST);
+			$this->model_setting_setting->editSetting('module_google_calendar', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-                        
-                        $this->response->redirect($this->url->link('extension/module/google_calendar', 'user_token=' . $this->session->data['user_token']));
+
+			$this->response->redirect($this->url->link('extension/module/google_calendar', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		if (isset($this->error['warning'])) {

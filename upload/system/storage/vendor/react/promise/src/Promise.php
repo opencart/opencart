@@ -201,9 +201,9 @@ class Promise implements ExtendedPromiseInterface, CancellablePromiseInterface
         // function arguments is actually faster than blindly passing them.
         // Also, this helps avoiding unnecessary function arguments in the call stack
         // if the callback creates an Exception (creating garbage cycles).
-        if (is_array($callback)) {
+        if (\is_array($callback)) {
             $ref = new \ReflectionMethod($callback[0], $callback[1]);
-        } elseif (is_object($callback) && !$callback instanceof \Closure) {
+        } elseif (\is_object($callback) && !$callback instanceof \Closure) {
             $ref = new \ReflectionMethod($callback, '__invoke');
         } else {
             $ref = new \ReflectionFunction($callback);

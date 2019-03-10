@@ -310,43 +310,54 @@ class ControllerProductProduct extends Controller {
 
 			$data['options'] = array();
 
-			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
-				$product_option_value_data = array();
+			// Check if product is variant
+			if ($product_info['master_id']) {
+				$product_id = (int)$product_info['master_id'];
+			} else {
+				$product_id = (int)$this->request->get['product_id'];
+			}
 
-				foreach ($option['product_option_value'] as $option_value) {
-					if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
-						if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
-							$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
-						} else {
-							$price = false;
+			$product_options = $this->model_catalog_product->getProductOptions($product_id);
+
+			foreach ($product_options as $option) {
+				if ((int)$this->request->get['product_id'] && !isset($product_info['variant'][$option['product_option_id']])) {
+					$product_option_value_data = array();
+
+					foreach ($option['product_option_value'] as $option_value) {
+						if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+							if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
+								$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+							} else {
+								$price = false;
+							}
+
+							if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
+								$image = $this->model_tool_image->resize(html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'), 50, 50);
+							} else {
+								$image = '';
+							}
+
+							$product_option_value_data[] = array(
+								'product_option_value_id' => $option_value['product_option_value_id'],
+								'option_value_id'         => $option_value['option_value_id'],
+								'name'                    => $option_value['name'],
+								'image'                   => $image,
+								'price'                   => $price,
+								'price_prefix'            => $option_value['price_prefix']
+							);
 						}
-
-						if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
-							$image = $this->model_tool_image->resize(html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'), 50, 50);
-						} else {
-							$image = '';
-						}
-
-						$product_option_value_data[] = array(
-							'product_option_value_id' => $option_value['product_option_value_id'],
-							'option_value_id'         => $option_value['option_value_id'],
-							'name'                    => $option_value['name'],
-							'image'                   => $image,
-							'price'                   => $price,
-							'price_prefix'            => $option_value['price_prefix']
-						);
 					}
-				}
 
-				$data['options'][] = array(
-					'product_option_id'    => $option['product_option_id'],
-					'product_option_value' => $product_option_value_data,
-					'option_id'            => $option['option_id'],
-					'name'                 => $option['name'],
-					'type'                 => $option['type'],
-					'value'                => $option['value'],
-					'required'             => $option['required']
-				);
+					$data['options'][] = array(
+						'product_option_id'    => $option['product_option_id'],
+						'product_option_value' => $product_option_value_data,
+						'option_id'            => $option['option_id'],
+						'name'                 => $option['name'],
+						'type'                 => $option['type'],
+						'value'                => $option['value'],
+						'required'             => $option['required']
+					);
+				}
 			}
 
 			if ($product_info['minimum']) {
@@ -538,7 +549,7 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/review');
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}

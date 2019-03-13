@@ -54,8 +54,8 @@ class Smtp {
 
 			$message .= '--' . $boundary . '_alt' . PHP_EOL;
 			$message .= 'Content-Type: text/html; charset="utf-8"' . PHP_EOL;
-			$message .= 'Content-Transfer-Encoding: 8bit' . PHP_EOL . PHP_EOL;
-			$message .= $this->html . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
+			$message .= base64_encode($this->html) . PHP_EOL;
 			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
 		}
 

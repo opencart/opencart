@@ -122,14 +122,24 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$vaulted_payment_count = $vaulted_card_count + $vaulted_paypal_count;
 		}
 
+		$data['googlepay_enabled'] = 0;
+
+		// Check that Google Pay and Braintree Modules enable the feature
+
+		$braintree_googlepay_status = 1;
+		//$braintree_googlepay_status = $this->config->get('payment_pp_braintree_googlepay_option'); //@todo
+
+		$google_pay_status = $this->config->get('payment_google_pay_status');
+
+		if ($braintree_googlepay_status == 1 && $google_pay_status == 1) {
+			$data['google_pay_output'] = $this->load->controller('extension/payment/google_pay');
+			$data['googlepay_enabled'] = 1;
+		} else {
+			$data['google_pay_output'] = '';
+		}
+
 		$data['vaulted_payment_methods'] = $vaulted_payment_methods;
 		$data['vaulted_payment_count'] = $vaulted_payment_count;
-
-		$data['form_styles'] = json_encode("{
-		  'input': { 'font-size': '12px', 'font-family': 'Source Sans Pro, sans-serif', 'color': '#7A8494' },
-		  'input.invalid': { 'color': 'red' },
-		  'input.valid': { 'color': 'green' }
-	  	}");
 
 		if ($this->customer->isLogged()) {
 			$data['guest'] = false;

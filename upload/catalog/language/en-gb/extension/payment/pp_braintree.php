@@ -18,6 +18,7 @@ $_['text_method_not_removed']			= 'Unable to remove payment method';
 $_['text_authentication']				= 'Authentication';
 $_['text_cart']               			= 'Shopping Cart';
 $_['text_shipping_updated']   			= 'Shipping service updated';
+$_['text_google_pay']					= 'Google Pay';
 
 // Entry
 $_['entry_new']							= 'New payment method';
@@ -41,6 +42,11 @@ $_['error_alert_failed_network']		= 'A network error occurred, please try again'
 $_['error_alert_unknown']				= 'An unknown error occurred, if the issue continued please contact support';
 $_['error_unavailable'] 	  			= 'Please use the full checkout with this order';
 $_['error_no_shipping']    				= 'Warning: No Shipping options are available.';
+$_['error_alert_google_pay_account']    = 'Unable to obtain payment information from account';
+$_['error_alert_google_pay_input']    	= 'There is an error with the request';
+$_['error_alert_google_pay_response']   = 'There is an error with the response from Google Pay, please contact support';
+$_['error_alert_google_pay_merchant']   = 'The merchant account is unable to process this request, please contact the merchant';
+$_['error_alert_google_pay_network']    = 'An unknown error occurred, please try again';
 
 // Button
 $_['button_confirm']					= 'Pay Now';

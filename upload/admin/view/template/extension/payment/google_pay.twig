@@ -1,0 +1,301 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+          <ul class="nav nav-tabs" id="tabs">
+            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            <li><a href="#tab-gateway" data-toggle="tab">{{ tab_gateway }}</a></li>
+            <li><a href="#tab-advanced" data-toggle="tab">{{ tab_advanced }}</a></li>
+            <li><a href="#tab-button" data-toggle="tab">{{ tab_button }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-merchant-name"><span data-toggle="tooltip" title="{{ help_merchant_name }}">{{ entry_merchant_name }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_google_pay_merchant_name" value="{{ payment_google_pay_merchant_name }}" placeholder="{{ entry_merchant_name }}" id="input-merchant-name" class="form-control"/>
+                  {% if error_merchant_name %}
+                    <div class="text-danger">{{ error_merchant_name }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-environment">{{ entry_environment }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_environment" id="input-environment" class="form-control">
+                    {% if payment_google_pay_environment == "PRODUCTION" %}
+                      <option value="PRODUCTION" selected="selected">{{ text_production }}</option>
+                      <option value="TEST">{{ text_test }}</option>
+                    {% else %}
+                      <option value="PRODUCTION">{{ text_production }}</option>
+                      <option value="TEST" selected="selected">{{ text_test }}</option>
+                    {% endif %}
+                  </select>
+                  {% if error_environment %}
+                    <div class="text-danger">{{ error_environment }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_debug" id="input-debug" class="form-control">
+                    {% if payment_google_pay_debug %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_google_pay_total" value="{{ payment_google_pay_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_geo_zone_id" id="input-geo-zone" class="form-control">
+                    <option value="0">{{ text_all_zones }}</option>
+                    {% for geo_zone in geo_zones %}
+                      {% if geo_zone.geo_zone_id == payment_google_pay_geo_zone_id %}
+                        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                      {% else %}
+                        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_status" id="input-status" class="form-control">
+                    {% if payment_google_pay_status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                  {% if error_status_no_gateway %}
+                    <div class="text-danger">{{ error_status_no_gateway }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="payment_google_pay_sort_order" value="{{ payment_google_pay_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-gateway">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-merchant-gateway">{{ entry_merchant_gateway }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_merchant_gateway" id="input-merchant-gateway" class="form-control">
+                    {% set enabled_gateway = 0 %}
+                    {% for gateway_key, gateway in supported_gateways %}
+                      {% if gateway.status == 1 %}{% set enabled_gateway = 1 %}{% endif %}
+
+                      {% if gateway.status == 1 %}
+                        <option value="{{ gateway_key }}">{{ gateway.title }}</option>
+                      {% else %}
+                        <option value="{{ gateway_key }}" disabled>{{ gateway.title }} ({{ text_not_enabled }})</option>
+                      {% endif %}
+                    {% endfor %}
+
+                    {% if enabled_gateway == 0 %}
+                      <option value="" selected>{{ text_no_gateways_enabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+
+              {% for gateway_key, gateway in supported_gateways %}
+                {% if gateway.status == 1 %}
+                  <div class="gateway-config" id="gateway-config-{{ gateway_key }}">
+
+                    {% for gateway_parameter in gateway.parameters %}
+                      <div class="form-group required">
+                        <label class="col-sm-2 control-label">{{ gateway_parameter.label }}</label>
+                        <div class="col-sm-10">
+                          {% if payment_google_pay_merchant_param[gateway_key][gateway_parameter.key] is empty %}
+                            {% set gateway_param_value = gateway_parameter.default %}
+                          {% else %}
+                            {% set gateway_param_value = payment_google_pay_merchant_param[gateway_key][gateway_parameter.key] %}
+                          {% endif %}
+                          <input type="text" name="payment_google_pay_merchant_param[{{ gateway_key }}][{{ gateway_parameter.key }}]" value="{{ gateway_param_value }}" class="form-control" {% if gateway_parameter.hide == 1 %} disabled{% endif %} />
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="tab-pane" id="tab-advanced">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-card-networks">{{ entry_card_networks }}</label>
+                <div class="col-sm-10">
+                  <div class="well well-sm" style="height: 160px; overflow: auto;">
+                    {% for card_key, card_text in supported_card_networks %}
+                      <div class="checkbox">
+                        <label>
+                          {% if card_key in payment_google_pay_allow_card_networks %}
+                            <input type="checkbox" name="payment_google_pay_allow_card_networks[]" value="{{ card_key }}" checked="checked" /> {{ card_text }}
+                          {% else %}
+                            <input type="checkbox" name="payment_google_pay_allow_card_networks[]" value="{{ card_key }}" /> {{ card_text }}
+                          {% endif %}
+                        </label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-auth-method"><span data-toggle="tooltip" title="{{ help_auth_methods }}">{{ entry_auth_methods }}</span></label>
+                <div class="col-sm-10">
+                  <div class="well well-sm" style="height: 80px; overflow: auto;">
+                    {% for auth_key, auth_text in supported_auth_methods %}
+                      <div class="checkbox">
+                        <label>
+                          {% if auth_key in payment_google_pay_allow_auth_methods %}
+                            <input type="checkbox" name="payment_google_pay_allow_auth_methods[]" value="{{ auth_key }}" checked="checked" /> {{ auth_text }}
+                          {% else %}
+                            <input type="checkbox" name="payment_google_pay_allow_auth_methods[]" value="{{ auth_key }}" /> {{ auth_text }}
+                          {% endif %}
+                        </label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  {% if error_auth_method %}
+                    <div class="text-danger">{{ error_auth_method }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-accept-prepay-cards">{{ entry_accept_prepay_cards }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_accept_prepay_cards" id="input-accept-prepay-cards" class="form-control">
+                    {% if payment_google_pay_accept_prepay_cards %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
+                    {% else %}
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-shipping-require-phone">{{ entry_shipping_require_phone }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_ship_require_phone" id="input-shipping-require-phone" class="form-control">
+                    {% if payment_google_pay_ship_require_phone %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
+                    {% else %}
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-billing-require-phone">{{ entry_billing_require_phone }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_bill_require_phone" id="input-billing-require-phone" class="form-control">
+                    {% if payment_google_pay_bill_require_phone %}
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
+                    {% else %}
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-button">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-button-color">{{ entry_button_color }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_button_color" id="input-button-color" class="form-control">
+                    {% if payment_google_pay_button_color == "black" %}
+                      <option value="default">{{ text_default }}</option>
+                      <option value="black" selected="selected">{{ text_black }}</option>
+                      <option value="white">{{ text_white }}</option>
+                    {% elseif payment_google_pay_button_color == "white" %}
+                      <option value="default">{{ text_default }}</option>
+                      <option value="black">{{ text_black }}</option>
+                      <option value="white" selected="selected">{{ text_white }}</option>
+                    {% else %}
+                      <option value="default" selected="selected">{{ text_default }}</option>
+                      <option value="black">{{ text_black }}</option>
+                      <option value="white">{{ text_white }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-button-type">{{ entry_button_type }}</label>
+                <div class="col-sm-10">
+                  <select name="payment_google_pay_button_type" id="input-button-type" class="form-control">
+                    {% if payment_google_pay_button_type == "short" %}
+                      <option value="short" selected="selected">{{ text_short }}</option>
+                      <option value="long">{{ text_long }}</option>
+                    {% else %}
+                      <option value="short">{{ text_short }}</option>
+                      <option value="long" selected="selected">{{ text_long }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+  $('#tabs a:first').tab('show');
+
+  $('select[name="payment_google_pay_merchant_gateway"]').on('change', function() {
+    var gateway = $('select[name="payment_google_pay_merchant_gateway"]').val();
+
+    $('.gateway-config').hide();
+    $('#gateway-config-' + gateway).show();
+  });
+//--></script>
+{{ footer }}

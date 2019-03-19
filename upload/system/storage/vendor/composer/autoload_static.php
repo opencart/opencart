@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4356ab4fdc794d105db4fa48b241456c
+class ComposerStaticInit0c1e84f94f5ab4d6c321c91e2cbe1df4
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -43,6 +43,10 @@ class ComposerStaticInit4356ab4fdc794d105db4fa48b241456c
         'C' => 
         array (
             'Cardinity\\' => 10,
+        ),
+        'B' => 
+        array (
+            'Braintree\\' => 10,
         ),
     );
 
@@ -99,6 +103,10 @@ class ComposerStaticInit4356ab4fdc794d105db4fa48b241456c
         array (
             0 => __DIR__ . '/..' . '/cardinity/cardinity-sdk-php/src',
         ),
+        'Braintree\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
+        ),
     );
 
     public static $fallbackDirsPsr4 = array (
@@ -134,11 +142,11 @@ class ComposerStaticInit4356ab4fdc794d105db4fa48b241456c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4356ab4fdc794d105db4fa48b241456c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4356ab4fdc794d105db4fa48b241456c::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit4356ab4fdc794d105db4fa48b241456c::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit4356ab4fdc794d105db4fa48b241456c::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit4356ab4fdc794d105db4fa48b241456c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0c1e84f94f5ab4d6c321c91e2cbe1df4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0c1e84f94f5ab4d6c321c91e2cbe1df4::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit0c1e84f94f5ab4d6c321c91e2cbe1df4::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit0c1e84f94f5ab4d6c321c91e2cbe1df4::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0c1e84f94f5ab4d6c321c91e2cbe1df4::$classMap;
 
         }, null, ClassLoader::class);
     }

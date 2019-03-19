@@ -19,5 +19,6 @@ return array(
     'GuzzleHttp\\Ring\\' => array($vendorDir . '/guzzlehttp/ringphp/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Cardinity\\' => array($vendorDir . '/cardinity/cardinity-sdk-php/src'),
+    'Braintree\\' => array($vendorDir . '/braintree/braintree_php/lib/Braintree'),
     '' => array($vendorDir . '/klarna/kco_rest/src'),
 );

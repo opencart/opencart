@@ -59,7 +59,8 @@ $_['text_merchant_connected']		 = 'Connected Merchant ID: ';
 $_['text_enable_button']			 = 'We recommend offering PayPal Express Shortcut to maximise checkout conversion, this allows customers to use their PayPal address book and <strong>checkout is as little as three taps</strong> from the basket page. Click enable to install the extension and access the layout manager, you will ned to add "PayPal (Powered by Braintree) Button" to the checkout layout';
 $_['text_3ds_ssl']		 			 = '3D Secure requires the store to be using an SSL certificate';
 $_['text_unlink']		 			 = 'Delete link';
-
+$_['text_google_pay']				 = 'Google Pay';
+$_['text_googlepay_notice']			 = 'Google Pay is not enabled on your account by default, you need to login to Braintree and enable the feature after it is activated on your account.';
 // Column
 $_['column_void']					 = 'Void';
 $_['column_settle']					 = 'Settle';
@@ -132,6 +133,7 @@ $_['entry_paypal_button_shape']		 = 'Button Shape';
 $_['entry_paypal_button_size']		 = 'Button Size';
 $_['entry_paypal_billing_agreement'] = 'Billing agreement description';
 $_['entry_3ds_status']				 = 'Enable 3-D Secure';
+$_['entry_googlepay_status']		 = 'Display Google Pay option';
 
 $_['entry_3ds_unsupported_card'] 		= 'Unsupported Card<br />Default: Accept';
 $_['entry_3ds_lookup_error'] 			= 'Lookup Error<br />Default: Accept';
@@ -180,6 +182,10 @@ $_['error_braintree_account_3ds'] 	 	= '3DS is not enabled in your Braintree acc
 $_['error_braintree_account_paypal'] 	= 'PayPal is not enabled in your Braintree account yet. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
 $_['error_braintree_account_billing']	= 'Billing agreements are not enabled in your Braintree account yet. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
 $_['error_environment']					= 'You cannot set your environment to %s when your credentials are for the %s environment in Braintree';
+$_['error_googlepay_disabled']			= 'The main Google Pay module is not installed/enabled, additional options are available in the module';
+$_['error_google_pay_install']		 	= 'The Google Pay extension is not installed, please install first from the <a href="%s">payment extensions page</a>';
+$_['error_google_pay_status']		 	= 'The <a href="%s" target="_blank">Google Pay extension</a> is installed but not enabled, please update the module status to active ';
+$_['error_google_pay_environment']	 	= 'The <a href="%s" target="_blank">Google Pay extension</a> is in test/demo mode, if you are testing then check both extensions are set to the same';
 
 // Tab
 $_['tab_setting']					 	= 'Settings';
@@ -189,3 +195,4 @@ $_['tab_3ds']						 	= '3-D Secure';
 $_['tab_transaction']				 	= 'Transaction Search';
 $_['tab_vault']				 	 	 	= 'Vault';
 $_['tab_paypal']				 	 	= 'PayPal';
+$_['tab_googlepay']				 	 	= 'Google Pay';

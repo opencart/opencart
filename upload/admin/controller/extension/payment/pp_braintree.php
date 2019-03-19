@@ -357,6 +357,15 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['payment_pp_braintree_billing_agreement'] = $this->config->get('payment_pp_braintree_billing_agreement');
 		}
 
+		if (isset($this->request->post['payment_pp_braintree_googlepay_status'])) {
+			$data['payment_pp_braintree_googlepay_status'] = $this->request->post['payment_pp_braintree_googlepay_status'];
+		} else {
+			$data['payment_pp_braintree_googlepay_status'] = $this->config->get('payment_pp_braintree_googlepay_status');
+		}
+
+        $data['google_pay_extension_status'] = $this->config->get('payment_google_pay_status');
+        $data['google_pay_environment'] = $this->config->get('payment_google_pay_environment'); //PRODUCTION - TEST
+
 		$data['transaction_statuses'] = array(
 			'authorization_expired',
 			'authorized',

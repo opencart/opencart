@@ -1,5 +1,13 @@
 <?php
 class ModelExtensionPaymentGlobalpayRemote extends Model {
+	private function getApiEndpoint() {
+		if ($this->config->get('payment_globalpay_remote_environment') == 1) {
+			return "https://api.sandbox.realexpayments.com/epage-remote.cgi";
+		} else {
+			return "https://api.realexpayments.com/epage-remote.cgi";
+		}
+	}
+	
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "globalpay_remote_order` (
@@ -61,7 +69,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 			$this->logger('Void XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
+			curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -125,7 +133,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 			$this->logger('Settle XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
+			curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -193,7 +201,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 			$this->logger('Rebate XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
+			curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

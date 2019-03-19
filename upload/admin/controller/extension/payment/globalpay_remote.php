@@ -180,6 +180,33 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			$data['payment_globalpay_remote_order_status_decline_bank_id'] = $this->config->get('payment_globalpay_remote_order_status_decline_bank_id');
 		}
 
+		if (isset($this->request->post['payment_globalpay_remote_googlepay_status'])) {
+			$data['payment_globalpay_remote_googlepay_status'] = $this->request->post['payment_globalpay_remote_googlepay_status'];
+		} else {
+			$data['payment_globalpay_remote_googlepay_status'] = $this->config->get('payment_globalpay_remote_googlepay_status');
+		}
+
+		if (isset($this->request->post['payment_globalpay_remote_environment'])) {
+			$data['payment_globalpay_remote_environment'] = $this->request->post['payment_globalpay_remote_environment'];
+		} else {
+			$data['payment_globalpay_remote_environment'] = $this->config->get('payment_globalpay_remote_environment');
+		}
+
+		if ($this->config->has('payment_google_pay_status')) {
+			$data['google_pay_installed'] = 1;
+			$data['google_pay_extension_status'] = $this->config->get('payment_google_pay_status');
+			$data['google_pay_environment'] = $this->config->get('payment_google_pay_environment'); //PRODUCTION - TEST
+
+		} else {
+			$data['google_pay_installed'] = 0;
+		}
+
+		$data['error_google_pay_install'] = sprintf($this->language->get('error_google_pay_install'), $this->url->link('market/extension', 'type=payment&user_token=' . $this->session->data['user_token'], true));
+		$data['error_google_pay_status'] = sprintf($this->language->get('error_google_pay_status'), $this->url->link('extension/payment/google_pay', 'user_token=' . $this->session->data['user_token'], true));
+		$data['error_google_pay_environment'] = sprintf($this->language->get('error_google_pay_environment'), $this->url->link('extension/payment/google_pay', 'user_token=' . $this->session->data['user_token'], true));
+
+
+
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -258,7 +285,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('extension/payment/globalpay');
+		$this->load->language('extension/payment/globalpay_remote');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {

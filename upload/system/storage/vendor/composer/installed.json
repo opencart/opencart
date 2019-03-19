@@ -1,17 +1,17 @@
 [
     {
         "name": "braintree/braintree_php",
-        "version": "3.2.0",
-        "version_normalized": "3.2.0.0",
+        "version": "3.40.0",
+        "version_normalized": "3.40.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/braintree/braintree_php.git",
-            "reference": "c7e0e2d1ae21d659cddb5507fb0bf181813b5733"
+            "reference": "840fc6ebf8d96756fed475cce94565fef178187d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/braintree/braintree_php/zipball/c7e0e2d1ae21d659cddb5507fb0bf181813b5733",
-            "reference": "c7e0e2d1ae21d659cddb5507fb0bf181813b5733",
+            "url": "https://api.github.com/repos/braintree/braintree_php/zipball/840fc6ebf8d96756fed475cce94565fef178187d",
+            "reference": "840fc6ebf8d96756fed475cce94565fef178187d",
             "shasum": ""
         },
         "require": {
@@ -25,12 +25,15 @@
         "require-dev": {
             "phpunit/phpunit": "3.7.*"
         },
-        "time": "2015-07-15T15:07:13+00:00",
+        "time": "2019-03-28T23:16:53+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
             "psr-0": {
-                "Braintree": "lib"
+                "Braintree": "lib/"
+            },
+            "psr-4": {
+                "Braintree\\": "lib/Braintree"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -40,7 +43,7 @@
         "authors": [
             {
                 "name": "Braintree",
-                "homepage": "http://www.braintreepayments.com"
+                "homepage": "https://www.braintreepayments.com"
             }
         ],
         "description": "Braintree PHP Client Library"
@@ -551,17 +554,17 @@
     },
     {
         "name": "react/promise",
-        "version": "v2.7.0",
-        "version_normalized": "2.7.0.0",
+        "version": "v2.7.1",
+        "version_normalized": "2.7.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/reactphp/promise.git",
-            "reference": "f4edc2581617431aea50430749db55cc3fc031b3"
+            "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/reactphp/promise/zipball/f4edc2581617431aea50430749db55cc3fc031b3",
-            "reference": "f4edc2581617431aea50430749db55cc3fc031b3",
+            "url": "https://api.github.com/repos/reactphp/promise/zipball/31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
+            "reference": "31ffa96f8d2ed0341a57848cbb84d88b89dd664d",
             "shasum": ""
         },
         "require": {
@@ -570,7 +573,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8"
         },
-        "time": "2018-06-13T15:59:06+00:00",
+        "time": "2019-01-07T21:25:54+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -599,17 +602,17 @@
     },
     {
         "name": "symfony/polyfill-ctype",
-        "version": "v1.10.0",
-        "version_normalized": "1.10.0.0",
+        "version": "v1.11.0",
+        "version_normalized": "1.11.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
-            "reference": "e3d826245268269cd66f8326bd8bc066687b4a19"
+            "reference": "82ebae02209c21113908c229e9883c419720738a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/e3d826245268269cd66f8326bd8bc066687b4a19",
-            "reference": "e3d826245268269cd66f8326bd8bc066687b4a19",
+            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
+            "reference": "82ebae02209c21113908c229e9883c419720738a",
             "shasum": ""
         },
         "require": {
@@ -618,11 +621,11 @@
         "suggest": {
             "ext-ctype": "For best performance"
         },
-        "time": "2018-08-06T14:22:27+00:00",
+        "time": "2019-02-06T07:57:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.9-dev"
+                "dev-master": "1.11-dev"
             }
         },
         "installation-source": "dist",
@@ -659,17 +662,17 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.10.0",
-        "version_normalized": "1.10.0.0",
+        "version": "v1.11.0",
+        "version_normalized": "1.11.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
+            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
-            "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
+            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
             "shasum": ""
         },
         "require": {
@@ -678,11 +681,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2018-09-21T13:07:52+00:00",
+        "time": "2019-02-06T07:57:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.9-dev"
+                "dev-master": "1.11-dev"
             }
         },
         "installation-source": "dist",
@@ -786,8 +789,8 @@
     },
     {
         "name": "symfony/validator",
-        "version": "v2.8.49",
-        "version_normalized": "2.8.49.0",
+        "version": "v2.8.50",
+        "version_normalized": "2.8.50.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/validator.git",

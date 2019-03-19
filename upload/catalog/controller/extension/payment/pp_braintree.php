@@ -122,14 +122,17 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$vaulted_payment_count = $vaulted_card_count + $vaulted_paypal_count;
 		}
 
+		$data['googlepay_enabled'] = 0;
+		$data['googlepay_output'] = '';
+
+		// Check that Google Pay and Braintree Modules enable the feature
+		if ($this->config->get('payment_pp_braintree_googlepay_status') == 1 && $this->config->get('payment_google_pay_status') == 1 && $this->config->get('payment_google_pay_merchant_gateway') == 'braintree') {
+			$data['googlepay_output'] = $this->load->controller('extension/payment/google_pay');
+			$data['googlepay_enabled'] = 1;
+		}
+
 		$data['vaulted_payment_methods'] = $vaulted_payment_methods;
 		$data['vaulted_payment_count'] = $vaulted_payment_count;
-
-		$data['form_styles'] = json_encode("{
-		  'input': { 'font-size': '12px', 'font-family': 'Source Sans Pro, sans-serif', 'color': '#7A8494' },
-		  'input.invalid': { 'color': 'red' },
-		  'input.valid': { 'color': 'green' }
-	  	}");
 
 		if ($this->customer->isLogged()) {
 			$data['guest'] = false;
@@ -283,7 +286,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$this->model_extension_payment_pp_braintree->log($nonce_info);
 
-			if ($nonce_info->type == 'CreditCard' && $this->config->get('payment_pp_braintree_3ds_status') == 1) {
+			//   || $nonce_info->type == 'AndroidPayCard'
+
+			if (($nonce_info->type == 'CreditCard') && $this->config->get('payment_pp_braintree_3ds_status') == 1) {
 				$create_sale['options']['three_d_secure'] = array(
 					'required' => true
 				);
@@ -346,6 +351,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				}
 			}
 		}
+
 		$this->model_extension_payment_pp_braintree->log("Success:" . (int)$success);
 
 		//Create transaction

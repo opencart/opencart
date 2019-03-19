@@ -1,4 +1,15 @@
 <form class="form-horizontal">
+  {% if googlepay_enabled %}
+  <fieldset id="google-pay">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{ text_google_pay }}</label>
+      <div class="col-sm-10">
+        <div id="googlepay-container" class="pull-left"></div>
+      </div>
+    </div>
+    <hr />
+  </fieldset>
+  {% endif %}
   <fieldset id="payment">
     <legend>{{ text_credit_card }}</legend>
     <div class="form-group required">
@@ -71,6 +82,9 @@
     <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
+
+{% if googlepay_enabled %}{{ googlepay_output }}{% endif %}
+
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
   $.ajax({
@@ -113,4 +127,66 @@ $('#button-confirm').bind('click', function() {
     }
   });
 });
+  function processGooglePayPayment(paymentData) {
+    console.log(paymentData);
+
+    paymenttoken = paymentData.paymentMethodData.tokenizationData.token;
+
+    $.ajax({
+      url: 'index.php?route=extension/payment/globalpay_remote/google',
+      type: 'post',
+      data: {"google_token" : paymenttoken},
+      dataType: 'json',
+      beforeSend: function() {
+        $('#google-message-error').remove();
+        $('#button-confirm').attr('disabled', true);
+      },
+      success: function(json) {
+        // if error
+        if (json['error']) {
+          console.error(json['error']);
+
+          $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> '+json['error']+'</div>');
+          $('#button-confirm').attr('disabled', false);
+        }
+
+        // if success
+        if (json['success']) {
+          location = json['success'];
+        }
+      }
+    });
+  }
+
+  function handleGooglePayPaymentError(paymentError) {
+    if (paymentError.statusCode) {
+      $('#google-message-error').remove();
+
+      // show error in developer console for debugging
+      console.error(paymentError.statusCode);
+      console.error(paymentError);
+
+      switch (paymentError.statusCode) {
+        case 'BUYER_ACCOUNT_ERROR':
+          $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> {{ error_alert_google_pay_account }}</div>');
+          break;
+        case 'DEVELOPER_ERROR':
+          $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> {{ error_alert_google_pay_input }}</div>');
+          break;
+        case 'MERCHANT_ACCOUNT_ERROR':
+          $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> {{ error_alert_google_pay_merchant }}</div>');
+          break;
+        case 'INTERNAL_ERROR':
+          $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> {{ error_alert_google_pay_network }}</div>');
+          break;
+        default:
+          $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> {{ error_alert_unknown }}</div>');
+      }
+
+      return;
+    } else {
+        console.error("Payment error but no error passed");
+    }
+  }
+
 //--></script>

@@ -152,10 +152,10 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['payment_globalpay_tss_check'] = $this->config->get('payment_globalpay_tss_check');
 		}
 
-		if (isset($this->request->post['globalpay_order_status_success_settled_id'])) {
-			$data['globalpay_order_status_success_settled_id'] = $this->request->post['globalpay_order_status_success_settled_id'];
+		if (isset($this->request->post['payment_globalpay_order_status_success_settled_id'])) {
+			$data['payment_globalpay_order_status_success_settled_id'] = $this->request->post['payment_globalpay_order_status_success_settled_id'];
 		} else {
-			$data['globalpay_order_status_success_settled_id'] = $this->config->get('globalpay_order_status_success_settled_id');
+			$data['payment_globalpay_order_status_success_settled_id'] = $this->config->get('payment_globalpay_order_status_success_settled_id');
 		}
 
 		if (isset($this->request->post['payment_globalpay_order_status_success_unsettled_id'])) {
@@ -199,7 +199,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 		}
 
 		if (empty($data['payment_globalpay_live_url'])) {
-			$data['payment_globalpay_live_url'] = 'https://hpp.globaliris.com/pay';
+			$data['payment_globalpay_live_url'] = 'https://pay.realexpayments.com/pay';
 		}
 
 		if (isset($this->request->post['payment_globalpay_demo_url'])) {
@@ -209,7 +209,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 		}
 
 		if (empty($data['payment_globalpay_demo_url'])) {
-			$data['payment_globalpay_demo_url'] = 'https://hpp.sandbox.globaliris.com/pay';
+			$data['payment_globalpay_demo_url'] = 'https://pay.sandbox.realexpayments.com/pay';
 		}
 
 		$data['header'] = $this->load->controller('common/header');

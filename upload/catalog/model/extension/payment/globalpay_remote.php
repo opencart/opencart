@@ -1,9 +1,17 @@
 <?php
 class ModelExtensionPaymentGlobalpayRemote extends Model {
+	private function getApiEndpoint() {
+		if ($this->config->get('payment_globalpay_remote_environment') == 1) {
+			return "https://api.sandbox.realexpayments.com/epage-remote.cgi";
+		} else {
+			return "https://api.realexpayments.com/epage-remote.cgi";
+		}
+	}
+
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/globalpay_remote');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_globalpay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_globalpay_remote_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
 		if ($this->config->get('payment_globalpay_remote_total') > 0 && $this->config->get('payment_globalpay_remote_total') > $total) {
 			$status = false;
@@ -59,7 +67,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realmpi");
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -107,7 +115,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realmpi");
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -221,7 +229,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realauth");
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -349,5 +357,134 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 
 	public function addHistory($order_id, $order_status_id, $comment) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '0', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
+	}
+
+	public function processGooglePay($google_token, $amount, $currency, $order_id, $order_ref) {
+		$this->load->language('extension/payment/globalpay_remote');
+
+		$timestamp = strftime("%Y%m%d%H%M%S");
+		$merchant_id = $this->config->get('payment_globalpay_remote_merchant_id');
+
+		// @todo
+		$account = $merchant_id;
+
+		$secret = $this->config->get('payment_globalpay_remote_secret');
+
+		$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . $amount . '.' . $currency . '.' . $google_token;
+		$hash1 = sha1($tmp);
+		$hash2 = sha1($hash1 . '.' . $secret);
+
+		$xml = '<?xml version="1.0" encoding="UTF-8"?>';
+		$xml .= '<request type="auth-mobile" timestamp="' . $timestamp . '">';
+			$xml .= '<merchantid>'.$merchant_id.'</merchantid>';
+			$xml .= '<account>'.$account.'</account>';
+			$xml .= '<orderid>'.$order_ref.'</orderid>';
+			$xml .= '<amount currency="' . $currency . '">' . $amount . '</amount>';
+			$xml .= '<mobile>pay-with-google</mobile>';
+			$xml .= '<token>'.$google_token.'</token>';
+
+			if ($this->config->get('payment_globalpay_remote_auto_settle') == 0) {
+				$xml .= '<autosettle flag="0" />';
+			} elseif ($this->config->get('payment_globalpay_remote_auto_settle') == 1) {
+				$xml .= '<autosettle flag="1" />';
+			} elseif ($this->config->get('payment_globalpay_remote_auto_settle') == 2) {
+				$xml .= '<autosettle flag="MULTI" />';
+			}
+
+			$xml .= '<sha1hash>'.$hash2.'</sha1hash>';
+		$xml .= '</request>';
+
+		$this->logger('auth-mobile Google Pay call');
+		$this->logger(simplexml_load_string($xml));
+		$this->logger($xml);
+
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		$xml_response = curl_exec ($ch);
+		curl_close ($ch);
+
+		$this->logger('auth-mobile Google Pay xml response');
+		$this->logger($xml_response);
+
+		$response = simplexml_load_string($xml_response);
+
+		$message = '<strong>' . $this->language->get('text_result') . ':</strong> ' . (int)$response->result;
+		$message .= '<br /><strong>Google Pay</strong> ';
+		$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> ' . (string)$response->message;
+		$message .= '<br /><strong>' . $this->language->get('text_order_ref') . ':</strong> ' . (string)$order_ref;
+
+		// compare token against the token sent back to ensure they match
+		if (!isset($response->sha1hash) || ($response->sha1hash != $hash2)) {
+			// FAIL
+			$message .= '<br /><strong>' . $this->language->get('text_hash_nomatch') . ':</strong>';
+		}
+
+		if (isset($response->cvnresult) && !empty($response->cvnresult)) {
+			$message .= '<br /><strong>' . $this->language->get('text_cvn_result') . ':</strong> ' . (string)$response->cvnresult;
+		}
+
+		if (isset($response->avspostcoderesponse) && !empty($response->avspostcoderesponse)) {
+			$message .= '<br /><strong>' . $this->language->get('text_avs_postcode') . ':</strong> ' . (string)$response->avspostcoderesponse;
+		}
+
+		if (isset($response->avsaddressresponse) && !empty($response->avsaddressresponse)) {
+			$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> ' . (string)$response->avsaddressresponse;
+		}
+
+		if (isset($response->authcode) && !empty($response->authcode)) {
+			$message .= '<br /><strong>' . $this->language->get('text_auth_code') . ':</strong> ' . (string)$response->authcode;
+		}
+
+		$message .= '<br /><strong>' . $this->language->get('text_timestamp') . ':</strong> ' . (string)$timestamp;
+
+		if ($this->config->get('payment_globalpay_remote_card_data_status') == 1) {
+			if (isset($response->cardissuer->bank) && !empty($response->cardissuer->bank)) {
+				$message .= '<br /><strong>' . $this->language->get('text_card_bank') . ':</strong> ' . (string)$response->cardissuer->bank;
+			}
+
+			if (isset($response->cardissuer->country) && !empty($response->cardissuer->country)) {
+				$message .= '<br /><strong>' . $this->language->get('text_card_country') . ':</strong> ' . (string)$response->cardissuer->country;
+			}
+
+			if (isset($response->cardissuer->region) && !empty($response->cardissuer->region)) {
+				$message .= '<br /><strong>' . $this->language->get('text_card_region') . ':</strong> ' . (string)$response->cardissuer->region;
+			}
+		}
+
+		if ($response->result == '00') {
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
+
+			$globalpay_order_id = $this->addOrder($order_info, $response, $account, $order_ref);
+
+			$this->addTransaction($globalpay_order_id, 'payment', $order_info);
+
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_success_settled_id'), $message);
+		} elseif ($response->result == "101") {
+			// Decline
+			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_id'), $message);
+		} elseif ($response->result == "102") {
+			// Referal B
+			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_pending_id'), $message);
+		} elseif ($response->result == "103") {
+			// Referal A
+			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_stolen_id'), $message);
+		} elseif ($response->result == "200") {
+			// Error Connecting to Bank
+			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_bank_id'), $message);
+		} else {
+			// Other
+			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_id'), $message);
+		}
+
+		return $response;
 	}
 }

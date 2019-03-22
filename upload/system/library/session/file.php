@@ -21,6 +21,8 @@ class File {
 				fclose($handle);
 
 				return json_decode($data, true);
+			} else {
+				return array();
 			}
 		}
 

@@ -19,6 +19,10 @@ class ControllerCustomerGdpr extends Controller {
 
 		$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
 
+		$data['approve'] = $this->url->link('customer/gdpr/approve', 'user_token=' . $this->session->data['user_token']);
+		$data['deny'] = $this->url->link('customer/gdpr/deny', 'user_token=' . $this->session->data['user_token']);
+		$data['delete'] = $this->url->link('customer/gdpr/delete', 'user_token=' . $this->session->data['user_token']);
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -139,26 +143,30 @@ class ControllerCustomerGdpr extends Controller {
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
+			$gdprs = array();
+
+			if (isset($this->request->post['selected'])) {
+				$gdprs = $this->request->post['selected'];
+			}
+
+			if (isset($this->request->get['gdpr_id'])) {
+				$gdprs[] = $this->request->get['gdpr_id'];
+			}
+
 			$this->load->model('customer/gdpr');
 
+			foreach ($gdprs as $gdpr_id) {
+				$gdpr_info = $this->model_customer_gdpr->getGdpr($gdpr_id);
 
-
-
-			$gdpr_info = $this->model_customer_gdpr->getGdpr($this->request->get['gdpr_id']);
-
-			if ($gdpr_info) {
-				if ($gdpr_info['action'] == 'remove') {
-					$status = 1;
-
-					$this->model_customer_gdpr->editStatus($this->request->get['gdpr_id'], $status);
-				} else {
-					$status = 2;
+				if ($gdpr_info) {
+					// If we remove we want to change the status to processing
+					// to give time for store owners to process orders and refunds.
+					if ($gdpr_info['action'] == 'remove') {
+						$this->model_customer_gdpr->processingGdpr($gdpr_id);
+					} else {
+						$this->model_customer_gdpr->exportGdpr($gdpr_id);
+					}
 				}
-
-
-
-
-
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -180,14 +188,16 @@ class ControllerCustomerGdpr extends Controller {
 
 			if (isset($this->request->post['selected'])) {
 				$gdprs = $this->request->post['selected'];
-			} elseif (isset($this->request->get['gdpr_id'])) {
+			}
+
+			if (isset($this->request->get['gdpr_id'])) {
 				$gdprs[] = $this->request->get['gdpr_id'];
 			}
 
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {
-				$this->model_customer_gdpr->editStatus($gdpr_id, -1);
+				$this->model_customer_gdpr->denyGdpr($gdpr_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -209,7 +219,9 @@ class ControllerCustomerGdpr extends Controller {
 
 			if (isset($this->request->post['selected'])) {
 				$gdprs = $this->request->post['selected'];
-			} elseif (isset($this->request->get['gdpr_id'])) {
+			}
+
+			if (isset($this->request->get['gdpr_id'])) {
 				$gdprs[] = $this->request->get['gdpr_id'];
 			}
 

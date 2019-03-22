@@ -46,23 +46,27 @@ class ControllerInformationGdpr extends Controller {
 	}
 
 	/*
-	*	EXPORT
-	*
-	*	pending    = 0
-	*	processing = 1
-	*	complete   = 2
-	*
-	*	REMOVE
-	*
-	*	pending    = 0
-	*	processing = 1
-	*	delete     = 2
-	*
-	*	DENY
-	*
-	*	pending    = 0
-	*	processing = 1
-	*	denied     = -1
+	 *  Action Statuses
+	 *
+	 *	EXPORT
+	 *
+	 *  unverified = 0
+	 *	pending    = 1
+	 *	complete   = 3
+	 *
+	 *	REMOVE
+	 *
+	 *  unverified = 0
+	 *	pending    = 1
+	 *	processing = 2
+	 *	delete     = 3
+	 *
+	 *	DENY
+	 *
+	 *  unverified = 0
+	 *	pending    = 1
+	 *	processing = 2
+	 *	denied     = -1
 	*/
 	public function action() {
 		$this->load->language('information/gdpr');
@@ -106,7 +110,7 @@ class ControllerInformationGdpr extends Controller {
 
 			foreach ($results as $result) {
 				if ($result['action'] == $action) {
-					//$status = false;
+					$status = false;
 
 					break;
 				}
@@ -156,7 +160,7 @@ class ControllerInformationGdpr extends Controller {
 				'href' => $this->url->link('information/gdpr/success', 'language=' . $this->config->get('config_language'))
 			);
 
-			if (!$gdpr_info['status']) {
+			if ($gdpr_info['status'] === 0) {
 				$this->model_account_gdpr->editStatus($code, 1);
 			}
 

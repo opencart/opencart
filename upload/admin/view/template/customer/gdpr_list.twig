@@ -31,10 +31,12 @@
               {% if gdpr.status == '-1' %}
                 <span class="badge badge-danger">{{ text_denied }}</span>
               {% elseif gdpr.status == '0' %}
-                <span class="badge badge-warning">{{ text_pending }}</span>
+                <span class="badge badge-secondary">{{ text_unverified }}</span>
               {% elseif gdpr.status == '1' %}
-                <span class="badge badge-info">{{ text_processing }}</span>
+                <span class="badge badge-warning">{{ text_pending }}</span>
               {% elseif gdpr.status == '2' %}
+                <span class="badge badge-info">{{ text_processing }}</span>
+              {% elseif gdpr.status == '3' %}
                 <span class="badge badge-success">{{ text_complete }}</span>
               {% endif %}</td>
             <td class="text-left">{{ gdpr.date_added }}</td>

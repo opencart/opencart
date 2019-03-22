@@ -9,6 +9,7 @@ $_['text_info']         = '<strong>GDPR</strong> account deletion requests will 
 $_['text_approve']      = 'Approve';
 $_['text_deny']         = 'Deny';
 $_['text_delete']       = 'Delete';
+$_['text_unverified']   = 'Unverified';
 $_['text_pending']      = 'Pending';
 $_['text_processing']   = 'Processing';
 $_['text_complete']     = 'Complete';

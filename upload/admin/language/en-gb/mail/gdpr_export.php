@@ -6,7 +6,6 @@ $_['text_account']    = 'Account';
 $_['text_customer']   = 'Personal Information';
 $_['text_firstname']  = 'First Name';
 $_['text_lastname']   = 'Last Name';
-
 $_['text_telephone']  = 'Telephone';
 $_['text_company']    = 'Company';
 $_['text_address_1']  = 'Address 1';
@@ -22,4 +21,4 @@ $_['text_ip']         = 'IP';
 $_['text_date_added'] = 'Date Added';
 
 // Entry
-$_['entry_email']      = 'E-Mail';
+$_['entry_email']     = 'E-Mail';

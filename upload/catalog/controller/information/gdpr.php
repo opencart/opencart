@@ -160,7 +160,7 @@ class ControllerInformationGdpr extends Controller {
 				'href' => $this->url->link('information/gdpr/success', 'language=' . $this->config->get('config_language'))
 			);
 
-			if ($gdpr_info['status'] === 0) {
+			if ($gdpr_info['status'] == 0) {
 				$this->model_account_gdpr->editStatus($code, 1);
 			}
 

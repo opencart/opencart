@@ -804,11 +804,7 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (38, 'admin_setting', 'admin/model/setting/setting/editSetting/after', 'event/currency', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(39, 'admin_mail_gdpr_approve', 'admin/model/customer/gdpr/approveGdpr/after', 'mail/gdpr/approve', 1);
-INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(40, 'admin_mail_gdpr_deny', 'admin/model/customer/gdpr/denyGdpr/after', 'mail/gdpr/deny', 1);
-INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(41, 'admin_mail_gdpr_delete', 'admin/model/customer/gdpr/deleteGdpr/after', 'mail/gdpr/delete', 1);
+(39, 'admin_mail_gdpr_approve', 'admin/model/customer/gdpr/editStatus/after', 'mail/gdpr', 1);
 
 -----------------------------------------------------------
 

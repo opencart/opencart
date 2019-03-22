@@ -55,8 +55,5 @@ $_['action_event'] = array(
 	),
 	'language/*/after' => array(
 		'event/translation'
-	),
-	'model/account/gdpr/addGdpr/after' => array(
-		'mail/gdpr'
 	)
 );

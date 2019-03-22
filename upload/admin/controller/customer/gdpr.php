@@ -135,6 +135,29 @@ class ControllerCustomerGdpr extends Controller {
 		$this->response->setOutput($this->load->view('customer/gdpr_list', $data));
 	}
 
+	/*
+	 *  Action Statuses
+	 *
+	 *	EXPORT
+	 *
+	 *  unverified = 0
+	 *	pending    = 1
+	 *	complete   = 3
+	 *
+	 *	REMOVE
+	 *
+	 *  unverified = 0
+	 *	pending    = 1
+	 *	processing = 2
+	 *	delete     = 3
+	 *
+	 *	DENY
+	 *
+	 *  unverified = 0
+	 *	pending    = 1
+	 *	processing = 2
+	 *	denied     = -1
+	*/
 	public function approve() {
 		$this->load->language('customer/gdpr');
 
@@ -161,10 +184,10 @@ class ControllerCustomerGdpr extends Controller {
 				if ($gdpr_info) {
 					// If we remove we want to change the status to processing
 					// to give time for store owners to process orders and refunds.
-					if ($gdpr_info['action'] == 'remove') {
-						$this->model_customer_gdpr->processingGdpr($gdpr_id);
+					if ($gdpr_info['action'] == 'export') {
+						$this->model_customer_gdpr->editStatus($gdpr_id, 3);
 					} else {
-						$this->model_customer_gdpr->exportGdpr($gdpr_id);
+						$this->model_customer_gdpr->editStatus($gdpr_id, 2);
 					}
 				}
 			}
@@ -197,7 +220,7 @@ class ControllerCustomerGdpr extends Controller {
 			$this->load->model('customer/gdpr');
 
 			foreach ($gdprs as $gdpr_id) {
-				$this->model_customer_gdpr->denyGdpr($gdpr_id);
+				$this->model_customer_gdpr->editStatus($gdpr_id, -1);
 			}
 
 			$json['success'] = $this->language->get('text_success');

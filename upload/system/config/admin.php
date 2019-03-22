@@ -52,19 +52,4 @@ $_['action_event'] = array(
 	//'model/*/after'  => array(
 	//	'event/debug/after'
 	//)
-	'model/customer/gdpr/processingGdpr/after'  => array(
-		'mail/gdpr/processing'
-	),
-	'model/customer/gdpr/completeGdpr/after'  => array(
-		'mail/gdpr/complete'
-	),
-	'model/customer/gdpr/exportGdpr/after'  => array(
-		'mail/gdpr/export'
-	),
-	'model/customer/gdpr/denyGdpr/after'  => array(
-		'mail/gdpr/deny'
-	),
-	'model/customer/customer/deleteCustomer/after' => array(
-		'mail/gdpr/delete'
-	)
 );

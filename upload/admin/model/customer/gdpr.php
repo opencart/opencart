@@ -1,5 +1,9 @@
 <?php
 class ModelCustomerGdpr extends Model {
+	public function deleteGdpr($gdpr_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+	}
+
 	public function getGdprs($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "gdpr`";
 
@@ -81,32 +85,12 @@ class ModelCustomerGdpr extends Model {
 	}
 
 	public function getExpires() {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `status` = '1' AND DATE(`date_added`) <= DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "') ORDER BY `date_added` DESC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `status` = '2' AND DATE(`date_added`) <= DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "') ORDER BY `date_added` DESC");
 
 		return $query->rows;
 	}
 
-	public function pendingGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '0' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
-	}
-
-	public function processingGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '1' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
-	}
-
-	public function completeGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '2' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
-	}
-
-	public function exportGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '2' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
-	}
-
-	public function denyGdpr($gdpr_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '-1' WHERE gdpr_id = '-1'");
-	}
-
-	public function deleteGdpr($gdpr_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+	public function editStatus($gdpr_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}
 }

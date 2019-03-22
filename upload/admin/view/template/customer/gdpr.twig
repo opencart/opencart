@@ -46,9 +46,10 @@
             <div class="form-group">
               <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
-                <option value="0">{{ text_pending }}</option>
-                <option value="1">{{ text_processing }}</option>
-                <option value="2">{{ text_complete }}</option>
+					<option value="0">{{ text_unverified }}</option>
+					<option value="1">{{ text_pending }}</option>
+                <option value="2">{{ text_processing }}</option>
+                <option value="3">{{ text_complete }}</option>
                 <option value="-1">{{ text_denied }}</option>
               </select>
             </div>

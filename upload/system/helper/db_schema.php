@@ -2312,6 +2312,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true

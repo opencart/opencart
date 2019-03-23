@@ -123,19 +123,12 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		}
 
 		$data['googlepay_enabled'] = 0;
+		$data['google_pay_output'] = '';
 
 		// Check that Google Pay and Braintree Modules enable the feature
-
-		$braintree_googlepay_status = 1;
-		//$braintree_googlepay_status = $this->config->get('payment_pp_braintree_googlepay_option'); //@todo
-
-		$google_pay_status = $this->config->get('payment_google_pay_status');
-
-		if ($braintree_googlepay_status == 1 && $google_pay_status == 1) {
+		if ($this->config->get('payment_pp_braintree_googlepay_status') == 1 && $this->config->get('payment_google_pay_status') == 1) {
 			$data['google_pay_output'] = $this->load->controller('extension/payment/google_pay');
 			$data['googlepay_enabled'] = 1;
-		} else {
-			$data['google_pay_output'] = '';
 		}
 
 		$data['vaulted_payment_methods'] = $vaulted_payment_methods;

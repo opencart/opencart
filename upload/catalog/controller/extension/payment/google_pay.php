@@ -28,18 +28,12 @@ class ControllerExtensionPaymentGooglePay extends Controller {
 		$data['allowed_auth'] = $this->config->get("payment_google_pay_allow_auth_methods");
 		$data['environment'] = $this->config->get("payment_google_pay_environment");
 
-//			$data['tokenization_params'] = array(
-//				'gateway' => 'example',
-//				'gatewayMerchantId' => 'exampleGatewayMerchantId',
-//			);
-
 		$gateway = $this->config->get("payment_google_pay_merchant_gateway");
 		$gateway_params = $this->config->get("payment_google_pay_merchant_param");
 
 		$tokenization_params = array('gateway' => $gateway);
 
 		$data['tokenization_params'] = array_merge($tokenization_params, $gateway_params[$gateway]);
-
 
 		return $this->load->view('extension/payment/google_pay', $data);
 	}

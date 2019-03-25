@@ -17,20 +17,21 @@
       </tr>
       <tr>
         <td style="line-height: 1.8;">
+
           <p>{{ text_hello }}</p>
 
           {% if customer_id %}
             <h4>{{ text_account }}</h4>
-            <table class="table table-bordered">
+            <table style="width: 100%;" class="table table-bordered">
               <thead>
-                <tr class="table-light">
+                <tr>
                   <th colspan="2">{{ text_customer }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="w-25">{{ text_name }}</td>
-                  <td>{{ customer }}</td>
+                  <td>{{ firstname }} {{ lastname }}</td>
                 </tr>
                 <tr>
                   <td>{{ text_email }}</td>
@@ -48,12 +49,8 @@
             <h4>{{ text_addresses }}</h4>
             {% set address_row = 1 %}
             {% for address in addresses %}
+              <p>{{ text_address }} {{ address_row }}</p>
               <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th colspan="2">{{ text_address }} {{ address_row }}</th>
-                  </tr>
-                </thead>
                 <tbody>
                   <tr>
                     <td class="w-25">{{ text_firstname }}</td>
@@ -108,11 +105,6 @@
           {% if ips %}
             <h4>{{ text_ip }}</h4>
             <table class="table table-bordered">
-              <thead>
-                <tr class="table-light">
-                  <th colspan="3">{{ text_history }}</th>
-                </tr>
-              </thead>
               <thead>
                 <tr>
                   <th class="w-25">{{ text_ip }}</th>

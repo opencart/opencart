@@ -3,7 +3,7 @@ class ControllerMailGdpr extends Controller {
 	// admin/model/customer/gdpr/editStatus
 	//public function index(&$route, &$args, &$output) {
 	public function index() {
-		$args[0] = 8664;
+		$args[0] = 8666;
 
 		$this->load->model('customer/gdpr');
 
@@ -58,7 +58,7 @@ class ControllerMailGdpr extends Controller {
 			$data['logo'] = '';
 		}
 
-		$data['text_gdpr'] = $language->get('text_gdpr');
+		$data['text_request'] = $language->get('text_request');
 
 		$this->load->model('customer/customer');
 
@@ -76,9 +76,15 @@ class ControllerMailGdpr extends Controller {
 		$data['text_telephone'] = $language->get('text_telephone');
 		$data['text_addresses'] = $language->get('text_addresses');
 		$data['text_address'] = $language->get('text_address');
+		$data['text_firstname'] = $language->get('text_firstname');
+		$data['text_lastname'] = $language->get('text_lastname');
+		$data['text_address_1'] = $language->get('text_address_1');
+		$data['text_address_2'] = $language->get('text_address_2');
+		$data['text_city'] = $language->get('text_city');
+		$data['text_zone'] = $language->get('text_zone');
+		$data['text_ips'] = $language->get('text_ips');
 		$data['text_ip'] = $language->get('text_ip');
 		$data['text_date_added'] = $language->get('text_date_added');
-
 		$data['text_thanks'] = $language->get('text_thanks');
 
 		$data['button_contact'] = $language->get('button_contact');

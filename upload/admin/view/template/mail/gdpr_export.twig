@@ -4,56 +4,52 @@
       <tr>
         <td style="text-align: center; border-bottom: 1px solid #ddd; padding-top: 15px; padding-bottom: 15px;">
           {% if logo %}
-            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;"/></a>
+            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store_name }}" title="{{ store_name }}" style="margin-left: auto; margin-right: auto;"/></a>
           {% else %}
-            <a href="{{ store_url }}">{{ store }}</a>
+            <a href="{{ store_url }}">{{ store_name }}</a>
           {% endif %}
         </td>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_gdpr }}</h1></td>
+        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_request }}</h1></td>
       </tr>
       <tr>
         <td style="line-height: 1.8;">
           <p>{{ text_hello }}</p>
-          <h4>{{ text_account }}</h4>
-          <table class="table table-bordered">
-            <thead>
-              <tr class="table-light">
-                <th colspan="2">{{ text_customer }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="w-25">{{ text_firstname }}</td>
-                <td>{{ firstname }}</td>
-              </tr>
-              <tr>
-                <td>{{ text_lastname }}</td>
-                <td>{{ lastname }}</td>
-              </tr>
-              <tr>
-                <td>{{ text_email }}</td>
-                <td>{{ email }}</td>
-              </tr>
-              <tr>
-                <td>{{ text_telephone }}</td>
-                <td>{{ telephone }}</td>
-              </tr>
-            </tbody>
-          </table>
+
+          {% if customer_id %}
+            <h4>{{ text_account }}</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr class="table-light">
+                  <th colspan="2">{{ text_customer }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="w-25">{{ text_name }}</td>
+                  <td>{{ customer }}</td>
+                </tr>
+                <tr>
+                  <td>{{ text_email }}</td>
+                  <td>{{ email }}</td>
+                </tr>
+                <tr>
+                  <td>{{ text_telephone }}</td>
+                  <td>{{ telephone }}</td>
+                </tr>
+              </tbody>
+            </table>
+          {% endif %}
 
           {% if addresses %}
+            <h4>{{ text_addresses }}</h4>
             {% set address_row = 1 %}
             {% for address in addresses %}
-
               <table class="table table-bordered">
                 <thead>
-                  <tr class="table-light">
-                    <th colspan="2">{{ text_addresses }}</th>
-                  </tr>
                   <tr>
                     <th colspan="2">{{ text_address }} {{ address_row }}</th>
                   </tr>
@@ -110,6 +106,7 @@
           {% endif %}
 
           {% if ips %}
+            <h4>{{ text_ip }}</h4>
             <table class="table table-bordered">
               <thead>
                 <tr class="table-light">
@@ -119,7 +116,6 @@
               <thead>
                 <tr>
                   <th class="w-25">{{ text_ip }}</th>
-                  <th class="w-25">{{ text_country }}</th>
                   <th class="w-25">{{ text_date_added }}</th>
                 </tr>
               </thead>
@@ -127,7 +123,6 @@
                 {% for ip in ips %}
                   <tr>
                     <td>{{ ip.ip }}</td>
-                    <td>{{ ip.country }}</td>
                     <td>{{ ip.date_added }}</td>
                   </tr>
                 {% endfor %}
@@ -135,11 +130,7 @@
             </table>
           {% endif %}
 
-          <p>{{ text_ip }}</p>
-          <p>{{ ip }}</p>
-
           <p>{{ text_contact }}</p>
-
           <p>
             <br/>
           </p>

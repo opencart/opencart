@@ -55,7 +55,7 @@ class ControllerMailAffiliate extends Controller {
 
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+		$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
 		$mail->setHtml($this->load->view('mail/affiliate', $data));
 		$mail->send();
  	}
@@ -125,7 +125,7 @@ class ControllerMailAffiliate extends Controller {
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject($this->language->get('text_new_affiliate'));
 			$mail->setHtml($this->load->view('mail/affiliate_alert', $data));
 			$mail->send();
 

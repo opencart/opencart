@@ -201,7 +201,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 				if ($auto_settle == 1) {
 					$this->model_extension_payment_globalpay->addTransaction($globalpay_order_id, 'payment', $order_info);
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('globalpay_order_status_success_settled_id'), $message, false);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_globalpay_order_status_success_settled_id'), $message, false);
 				} else {
 					$this->model_extension_payment_globalpay->addTransaction($globalpay_order_id, 'auth', 0.00);
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_globalpay_order_status_success_unsettled_id'), $message, false);

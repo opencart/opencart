@@ -33,6 +33,7 @@ $_['text_3d_s7']				= 'Incorrect Password Entered, no liability shift';
 $_['text_3d_s8']				= 'Authentication Unavailable, no liability shift';
 $_['text_3d_s9']				= 'Invalid Response From ACS, no liability shift';
 $_['text_3d_s10']				= 'RealMPI Fatal Error, no liability shift';
+$_['text_google_pay']			= 'Google Pay';
 
 // Entry
 $_['entry_cc_type']				= 'Card type';
@@ -51,5 +52,10 @@ $_['error_card_number']			= 'Please check your card number is valid';
 $_['error_card_name']			= 'Please check the card holder name is valid';
 $_['error_card_cvv']			= 'Please check the CVV2 is valid';
 $_['error_3d_unable']			= 'Merchant requires 3D secure but unable to verify with your bank, please try later';
-$_['error_3d_500_response_no_payment'] = 'An invalid response was received from the card processor, no payment has been taken';
-$_['error_3d_unsuccessful']		= '3D secure authorisation failed';
+$_['error_3d_500_response_no_payment'] 	= 'An invalid response was received from the card processor, no payment has been taken';
+$_['error_3d_unsuccessful']				= '3D secure authorisation failed';
+$_['error_alert_google_pay_account']    = 'Unable to obtain payment information from account';
+$_['error_alert_google_pay_input']    	= 'There is an error with the request';
+$_['error_alert_google_pay_response']   = 'There is an error with the response from Google Pay, please contact support';
+$_['error_alert_google_pay_merchant']   = 'The merchant account is unable to process this request, please contact the merchant';
+$_['error_alert_google_pay_network']    = 'An unknown error occurred, please try again';

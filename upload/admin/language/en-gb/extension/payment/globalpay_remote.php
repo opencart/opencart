@@ -1,11 +1,11 @@
 <?php
 // Heading
-$_['heading_title']					 = 'Globalpay Remote';
+$_['heading_title']					 = 'Global Payments Remote';
 
 // Text
 $_['text_extension']				 = 'Extensions';
-$_['text_success']					 = 'Success: You have modified Globalpay account details!';
-$_['text_edit']                      = 'Edit Globalpay Remote';
+$_['text_success']					 = 'Success: You have modified Global Payments Remote account details!';
+$_['text_edit']                      = 'Edit Global Payments Remote';
 $_['text_card_type']				 = 'Card type';
 $_['text_enabled']					 = 'Enabled';
 $_['text_use_default']				 = 'Use default';
@@ -26,7 +26,7 @@ $_['text_void_ok']					 = 'Void was successful, order status updated to voided';
 $_['text_settle_auto']				 = 'Auto';
 $_['text_settle_delayed']			 = 'Delayed';
 $_['text_settle_multi']				 = 'Multi';
-$_['text_ip_message']				 = 'You must supply your server IP address to your Globalpay account manager before going live';
+$_['text_ip_message']				 = 'You must supply your server IP address to your Global Payments account manager before going live';
 $_['text_payment_info']				 = 'Payment information';
 $_['text_capture_status']			 = 'Payment captured';
 $_['text_void_status']				 = 'Payment voided';
@@ -38,7 +38,8 @@ $_['text_transactions']				 = 'Transactions';
 $_['text_confirm_void']				 = 'Are you sure you want to void the payment?';
 $_['text_confirm_capture']			 = 'Are you sure you want to capture the payment?';
 $_['text_confirm_rebate']			 = 'Are you sure you want to rebate the payment?';
-$_['text_globalpay_remote']			 = '<a target="_blank" href="https://resourcecentre.globaliris.com/getting-started.php?id=OpenCart"><img src="view/image/payment/globalpay.png" alt="Globalpay" title="Globalpay" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_hash_nomatch']			 	 = 'WARNING! The security check against the hash values did not match, verify the payment manually';
+$_['text_globalpay_remote']			 = '<a target="_blank" href="https://www.globalpaymentsinc.com/en-ie/accept-payments/ecommerce/partners/opencart"><img src="view/image/payment/globalpay.png" alt="Global Payments" title="Global Payments" style="border: 0px solid #EEEEEE;" /></a>';
 
 // Column
 $_['text_column_amount']			 = 'Amount';

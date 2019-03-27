@@ -45,6 +45,15 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			);
 		}
 
+		$data['googlepay_enabled'] = 0;
+		$data['google_pay_output'] = '';
+
+		// Check that Google Pay and Braintree Modules enable the feature
+		if ($this->config->get('payment_globalpay_remote_googlepay_status') == 1 && $this->config->get('payment_google_pay_status') == 1) {
+			$data['google_pay_output'] = $this->load->controller('extension/payment/google_pay');
+			$data['googlepay_enabled'] = 1;
+		}
+
 		return $this->load->view('extension/payment/globalpay_remote', $data);
 	}
 
@@ -331,5 +340,35 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		} else {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
+	}
+
+	public function google() {
+		$this->load->library('googlepay');
+
+		$this->load->model('checkout/order');
+		$this->load->model('extension/payment/globalpay_remote');
+
+		$google_token = $this->request->post['token'];
+
+		$order_id = $this->session->data['order_id'];
+
+		$order_ref = $order_id . 'T' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		$currency = $order_info['currency_code'];
+
+		$amount = round($this->currency->format($order_info['total'], $currency, $order_info['currency_value'], false) * 100);
+
+		$capture_result = $this->model_extension_payment_globalpay_remote->processGooglePay($google_token, $amount, $currency, $order_id, $order_ref);
+
+		if ($capture_result->result != '00') {
+			$json['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';
+		} else {
+			$json['success'] = $this->url->link('checkout/success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -85,10 +85,10 @@ class ControllerExtensionPaymentGooglePay extends Controller {
 		if (isset($this->request->post['payment_google_pay_merchant_name'])) {
 			$data['payment_google_pay_merchant_name'] = $this->request->post['payment_google_pay_merchant_name'];
 		} else {
-			if (empty($this->config->get('payment_google_pay_merchant_name'))) {
-				$data['payment_google_pay_merchant_name'] = $this->config->get('config_name');
-			} else {
+			if ($this->config->get('payment_google_pay_merchant_name')) {
 				$data['payment_google_pay_merchant_name'] = $this->config->get('payment_google_pay_merchant_name');
+			} else {
+				$data['payment_google_pay_merchant_name'] = $this->config->get('config_name');
 			}
 		}
 
@@ -112,9 +112,9 @@ class ControllerExtensionPaymentGooglePay extends Controller {
 			),
 			'globalpayments' => array(
 				'title' => $this->language->get('text_globalpayments'),
-				'status' => $this->config->get('payment_globalpay_status'),
+				'status' => $this->config->get('payment_globalpay_remote_status'),
 				'parameters' => array(
-					array('key' => 'gatewayMerchantId', 'label' => $this->language->get('text_globalpayments_merchant_id'), 'hide' => 0, 'default' => $this->config->get('payment_globalpay_merchant_id')),
+					array('key' => 'gatewayMerchantId', 'label' => $this->language->get('text_globalpayments_merchant_id'), 'hide' => 0, 'default' => $this->config->get('payment_globalpay_remote_merchant_id')),
 				)
 			),
 			'worldpay' => array(

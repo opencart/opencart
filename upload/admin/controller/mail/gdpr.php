@@ -1,11 +1,7 @@
 <?php
 class ControllerMailGdpr extends Controller {
 	// admin/model/customer/gdpr/editStatus
-	//public function index(&$route, &$args, &$output) {
-	public function index() {
-		$args[0] = 8666;
-		$args[1] = 3;
-
+	public function index(&$route, &$args, &$output) {
 		$this->load->model('customer/gdpr');
 
 		$gdpr_info = $this->model_customer_gdpr->getGdpr($args[0]);
@@ -185,9 +181,6 @@ class ControllerMailGdpr extends Controller {
 			$data['store_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 			$data['store_url'] = HTTPS_CATALOG;
 		}
-
-		echo $this->load->view('mail/gdpr_export', $data);
-		//exit();
 
 		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');

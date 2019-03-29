@@ -4,12 +4,11 @@ class ControllerMailGdpr extends Controller {
 	//public function index(&$route, &$args, &$output) {
 	public function index() {
 		$args[0] = 8666;
+		$args[1] = 3;
 
 		$this->load->model('customer/gdpr');
 
 		$gdpr_info = $this->model_customer_gdpr->getGdpr($args[0]);
-
-		$this->export($gdpr_info);
 
 		if ($gdpr_info) {
 			// Choose which mail to send
@@ -70,7 +69,9 @@ class ControllerMailGdpr extends Controller {
 			$data['text_hello'] = sprintf($language->get('text_hello'), $language->get('text_user'));
 		}
 
-		$data['text_account'] = $language->get('text_account');
+		$data['text_gdpr'] = $language->get('text_gdpr');
+		$data['text_customer'] = $language->get('text_customer');
+		$data['text_recipient'] = $language->get('text_recipient');
 		$data['text_name'] = $language->get('text_name');
 		$data['text_email'] = $language->get('text_email');
 		$data['text_telephone'] = $language->get('text_telephone');
@@ -81,23 +82,21 @@ class ControllerMailGdpr extends Controller {
 		$data['text_address_1'] = $language->get('text_address_1');
 		$data['text_address_2'] = $language->get('text_address_2');
 		$data['text_city'] = $language->get('text_city');
+		$data['text_postcode'] = $language->get('text_postcode');
 		$data['text_zone'] = $language->get('text_zone');
-		$data['text_ips'] = $language->get('text_ips');
+		$data['text_country'] = $language->get('text_country');
+		$data['text_history'] = $language->get('text_history');
 		$data['text_ip'] = $language->get('text_ip');
 		$data['text_date_added'] = $language->get('text_date_added');
 		$data['text_thanks'] = $language->get('text_thanks');
 
-		$data['button_contact'] = $language->get('button_contact');
-
 		// Addresses
 		$data['addresses'] = array();
 
-		// Ip's
-		$data['ips'] = array();
-
 		if ($customer_info) {
 			$data['customer_id'] = $customer_info['customer_id'];
-			$data['customer'] = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
+			$data['firstname'] = $customer_info['firstname'];
+			$data['lastname'] = $customer_info['lastname'];
 			$data['email'] = $customer_info['email'];
 			$data['telephone'] = $customer_info['telephone'];
 
@@ -119,15 +118,6 @@ class ControllerMailGdpr extends Controller {
 				if (!in_array($address, $data['addresses'])) {
 					$data['addresses'][] = $address;
 				}
-			}
-
-			$results = $this->model_customer_customer->getIps($customer_info['customer_id']);
-
-			foreach ($results as $result) {
-				$data['ips'][] = array(
-					'ip'         => $result['ip'],
-					'date_added' => date($language->get('datetime_format'), strtotime($result['date_added']))
-				);
 			}
 		}
 
@@ -170,6 +160,20 @@ class ControllerMailGdpr extends Controller {
 			}
 		}
 
+		// Ip's
+		$data['ips'] = array();
+
+		if ($customer_info) {
+			$results = $this->model_customer_customer->getIps($customer_info['customer_id']);
+
+			foreach ($results as $result) {
+				$data['ips'][] = array(
+					'ip'         => $result['ip'],
+					'date_added' => date($language->get('datetime_format'), strtotime($result['date_added']))
+				);
+			}
+		}
+
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -183,7 +187,7 @@ class ControllerMailGdpr extends Controller {
 		}
 
 		echo $this->load->view('mail/gdpr_export', $data);
-		exit();
+		//exit();
 
 		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');

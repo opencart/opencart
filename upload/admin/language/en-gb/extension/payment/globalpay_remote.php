@@ -38,7 +38,7 @@ $_['text_transactions']				 = 'Transactions';
 $_['text_confirm_void']				 = 'Are you sure you want to void the payment?';
 $_['text_confirm_capture']			 = 'Are you sure you want to capture the payment?';
 $_['text_confirm_rebate']			 = 'Are you sure you want to rebate the payment?';
-$_['text_globalpay_remote']			 = '<a target="_blank" href="https://resourcecentre.globaliris.com/getting-started.php?id=OpenCart"><img src="view/image/payment/globalpay.png" alt="Globalpay" title="Globalpay" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_globalpay_remote']			 = '<a target="_blank" href="https://www.globalpaymentsinc.com/en-ie/accept-payments/ecommerce/partners/opencart"><img src="view/image/payment/globalpay.png" alt="Globalpay" title="Globalpay" style="border: 1px solid #EEEEEE;" /></a>';
 
 // Column
 $_['text_column_amount']			 = 'Amount';

@@ -128,13 +128,10 @@ if ($config->get('session_autostart')) {
 $registry->set('cache', new Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Url
-if ($config->get('url_autostart')) {
-	$registry->set('url', new Url($config->get('site_url')));
-}
+$registry->set('url', new Url($config->get('site_url')));
 
 // Language
-$language = new Language($config->get('language_directory'));
-$registry->set('language', $language);
+$registry->set('language', new Language($config->get('language_directory')));
 
 // Document
 $registry->set('document', new Document());

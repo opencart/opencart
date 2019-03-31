@@ -20,6 +20,17 @@ class ControllerStartupStartup extends Controller {
 			$this->db->query("SET time_zone = '" . $this->db->escape(date('P')) . "'");
 		}
 
+		// Session
+		if (isset($this->request->cookie[$this->config->get('session_name')])) {
+			$session_id = $this->request->cookie[$this->config->get('session_name')];
+		} else {
+			$session_id = '';
+		}
+
+		$this->session->start($session_id);
+
+		setcookie($this->config->get('session_name'), $this->session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+
 		// Response output compression level
 		if ($this->config->get('config_compression')) {
 			$this->response->setCompression($this->config->get('config_compression'));

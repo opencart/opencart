@@ -8,8 +8,8 @@ $_['language_default']  = 'en-gb';
 $_['language_autoload'] = array('en-gb');
 
 // Session
-$_['session_engine']    = 'file';
 $_['session_autostart'] = true;
+$_['session_engine']    = 'file';
 $_['session_name']      = 'OCSESSID';
 
 // Template

@@ -2,9 +2,6 @@
 // Site
 $_['site_url']             = '';
 
-// Url
-$_['url_autostart']        = true;
-
 // Language
 $_['language_directory']   = 'en-gb';
 $_['language_autoload']    = array('en-gb');
@@ -13,13 +10,13 @@ $_['language_autoload']    = array('en-gb');
 $_['date_timezone']        = 'UTC';
 
 // Database
+$_['db_autostart']         = false;
 $_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
 $_['db_hostname']          = 'localhost';
 $_['db_username']          = 'root';
 $_['db_password']          = '';
 $_['db_database']          = '';
 $_['db_port']              = 3306;
-$_['db_autostart']         = false;
 
 // Mail
 $_['mail_engine']          = 'mail'; // mail or smtp
@@ -39,8 +36,8 @@ $_['cache_engine']         = 'file'; // apc, file, mem or memcached
 $_['cache_expire']         = 3600;
 
 // Session
-$_['session_engine']       = 'file';
 $_['session_autostart']    = true;
+$_['session_engine']       = 'file';
 $_['session_name']         = 'OCSESSID';
 $_['session_expire']       = 3600;
 
@@ -55,7 +52,7 @@ $_['error_display']        = true;
 $_['error_log']            = true;
 $_['error_filename']       = 'error.log';
 
-// Reponse
+// Response
 $_['response_header']      = array('Content-Type: text/html; charset=utf-8');
 $_['response_compression'] = 0;
 
@@ -74,4 +71,3 @@ $_['action_router']        = 'startup/router';
 $_['action_error']         = 'error/not_found';
 $_['action_pre_action']    = array();
 $_['action_event']         = array();
-$_['action_cron']          = array();

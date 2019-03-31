@@ -35,6 +35,32 @@ class ControllerStartupStartup extends Controller {
 			$this->db->query("SET time_zone = '" . $this->db->escape(date('P')) . "'");
 		}
 
+		// Session
+		if (isset($this->request->get['route']) && substr((string)$this->request->get['route'], 0, 4) == 'api/') {
+			$this->load->model('setting/api');
+
+			$this->model_setting_api->cleanApiSessions();
+
+			// Make sure the IP is allowed
+			$api_info = $this->model_setting_api->getApiByToken($this->request->get['api_token']);
+
+			if ($api_info) {
+				$this->session->start($this->request->get['api_token']);
+
+				$this->model_setting_api->updateApiSession($api_info['api_session_id']);
+			}
+		} else {
+			if (isset($this->request->cookie[$this->config->get('session_name')])) {
+				$session_id = $this->request->cookie[$this->config->get('session_name')];
+			} else {
+				$session_id = '';
+			}
+
+			$this->session->start($session_id);
+
+			setcookie($this->config->get('session_name'), $this->session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+		}
+
 		// Response output compression level
 		if ($this->config->get('config_compression')) {
 			$this->response->setCompression($this->config->get('config_compression'));
@@ -224,42 +250,5 @@ class ControllerStartupStartup extends Controller {
 
 		// Encryption
 		$this->registry->set('encryption', new Encryption());
-
-		/*
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE ORDER BY store_id ASC");
-
-		// Config Autoload
-		foreach ($query->rows as $result) {
-			$this->loader->config($result['catalog/']);
-		}
-
-		// Language Autoload
-		if ($config->has('language_autoload')) {
-			foreach ($config->get('language_autoload') as $value) {
-				$this->loader->language($value);
-			}
-		}
-
-		// Library Autoload
-		if ($config->has('library_autoload')) {
-			foreach ($config->get('library_autoload') as $value) {
-				$this->loader->library($value);
-			}
-		}
-
-		// Model Autoload
-		if ($config->has('model_autoload')) {
-			foreach ($config->get('model_autoload') as $value) {
-				$loader->model($value);
-			}
-		}
-
-		// Pre Actions
-		if ($config->has('action_pre_action')) {
-			foreach ($config->get('action_pre_action') as $value) {
-				$route->addPreAction(new Action($value));
-			}
-		}
-		*/
 	}
 }

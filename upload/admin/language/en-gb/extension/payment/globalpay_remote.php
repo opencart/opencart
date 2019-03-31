@@ -42,7 +42,7 @@ $_['text_confirm_capture']			 = 'Are you sure you want to capture the payment?';
 $_['text_confirm_rebate']			 = 'Are you sure you want to rebate the payment?';
 $_['text_hash_nomatch']			 	 = 'WARNING! The security check against the hash values did not match, verify the payment manually';
 $_['text_globalpay_remote']			 = '<a target="_blank" href="https://www.globalpaymentsinc.com/en-ie/accept-payments/ecommerce/partners/opencart"><img src="view/image/payment/globalpay.png" alt="Global Payments" title="Global Payments" style="border: 0px solid #EEEEEE;" /></a>';
-$_['text_googlepay_notice']			 = 'Google Pay is not enabled on your account by default, you need to contact Global Payments to activate the feature on your account';
+$_['text_googlepay_notice']			 = 'Google Pay is not enabled on your account by default, you need to contact Global Payments to activate the feature on your account (applies to Live and Demo accounts)';
 
 // Column
 $_['text_column_amount']			 = 'Amount';
@@ -77,8 +77,8 @@ $_['entry_live_demo']		 		 = 'Live / Demo';
 
 // Help
 $_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active';
-$_['help_card_select']				 = 'Ask the user to choose thier card type before they are redirected';
-$_['help_notification']				 = 'You need to supply this URL to Globalpay to get payment notifications';
+$_['help_card_select']				 = 'Ask the user to choose their card type before they are redirected';
+$_['help_notification']				 = 'You need to supply this URL to Global Payments to get payment notifications';
 $_['help_debug']					 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise.';
 $_['help_liability']				 = 'Accepting liability means you will still accept payments when a user fails 3D secure.';
 $_['help_card_data_status']			 = 'Logs last 4 cards digits, expire, name, type and issuing bank information';
@@ -98,6 +98,6 @@ $_['button_void']					 = 'Void';
 // Error
 $_['error_merchant_id']				 = 'Merchant ID is required';
 $_['error_secret']					 = 'Shared secret is required';
-$_['error_google_pay_install']		 = 'The Google Pay extension is not installed, please install first from the <a href="%s">payment extensions page</a>';
+$_['error_google_pay_install']		 = 'The Google Pay extension is not installed, please install first from the <a href="%s" target="_blank">payment extensions page</a>';
 $_['error_google_pay_status']		 = 'The <a href="%s" target="_blank">Google Pay extension</a> is installed but not enabled, please update the module status to active ';
-$_['error_google_pay_environment']	 = 'The <a href="%s" target="_blank">Google Pay extension</a> in test/demo mode, if you are just testing then check both extensions are set to the same ';
+$_['error_google_pay_environment']	 = 'The <a href="%s" target="_blank">Google Pay extension</a> is in test/demo mode, if you are testing then check both extensions are set to the same';

@@ -61,8 +61,8 @@
                 <input type="hidden" name="payment_pp_braintree_access_token" value="" />
                 <input type="hidden" name="payment_pp_braintree_refresh_token" value="" />
                 <div class="form-group">
-                  <label class="col-sm-2">{{ text_braintree_learn }}</label>
-                  <div class="col-sm-10" id="bt-connect"></div>
+                  <label class="col-sm-4">{{ text_braintree_learn }}</label>
+                  <div class="col-sm-8" id="bt-connect"></div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
@@ -727,6 +727,7 @@
                       <option value="0" selected="selected">{{ text_disabled }}</option>
                     {% endif %}
                   </select>
+                  <p>{{ text_googlepay_notice }}</p>
                 </div>
               </div>
 

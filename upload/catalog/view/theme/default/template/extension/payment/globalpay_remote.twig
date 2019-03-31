@@ -126,11 +126,11 @@ $('#button-confirm').bind('click', function() {
       }
     }
   });
+});
+  function processGooglePayPayment(paymentData) {
+    console.log(paymentData);
 
-  function processGooglePayPayment(paymentdata) {
-    consoleDebug('log', paymentdata);
-
-    paymenttoken = paymentdata.paymentMethodData.tokenizationData.token;
+    paymenttoken = paymentData.paymentMethodData.tokenizationData.token;
 
     $.ajax({
       url: 'index.php?route=extension/payment/globalpay_remote/google',
@@ -144,7 +144,7 @@ $('#button-confirm').bind('click', function() {
       success: function(json) {
         // if error
         if (json['error']) {
-          consoleDebug('error', json['error']);
+          console.error(json['error']);
 
           $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> '+json['error']+'</div>');
           $('#button-confirm').attr('disabled', false);
@@ -158,14 +158,15 @@ $('#button-confirm').bind('click', function() {
     });
   }
 
-  function handleGooglePayPaymentError(paymenterror) {
-    $('#google-message-error').remove();
+  function handleGooglePayPaymentError(paymentError) {
+    if (paymentError.statusCode) {
+      $('#google-message-error').remove();
 
-    if (paymenterror.statusCode) {
       // show error in developer console for debugging
-      consoleDebug('error', paymenterror.statusCode);
+      console.error(paymentError.statusCode);
+      console.error(paymentError);
 
-      switch (paymenterror.statusCode) {
+      switch (paymentError.statusCode) {
         case 'BUYER_ACCOUNT_ERROR':
           $('#google-pay').before('<div id="google-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> {{ error_alert_google_pay_account }}</div>');
           break;
@@ -183,7 +184,9 @@ $('#button-confirm').bind('click', function() {
       }
 
       return;
+    } else {
+        console.error("Payment error but no error passed");
     }
   }
-});
+
 //--></script>

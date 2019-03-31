@@ -147,17 +147,23 @@
                   <div class="gateway-config" id="gateway-config-{{ gateway_key }}">
 
                     {% for gateway_parameter in gateway.parameters %}
-                      <div class="form-group required">
-                        <label class="col-sm-2 control-label">{{ gateway_parameter.label }}</label>
-                        <div class="col-sm-10">
-                          {% if payment_google_pay_merchant_param[gateway_key][gateway_parameter.key] is empty %}
-                            {% set gateway_param_value = gateway_parameter.default %}
-                          {% else %}
-                            {% set gateway_param_value = payment_google_pay_merchant_param[gateway_key][gateway_parameter.key] %}
-                          {% endif %}
-                          <input type="text" name="payment_google_pay_merchant_param[{{ gateway_key }}][{{ gateway_parameter.key }}]" value="{{ gateway_param_value }}" class="form-control" {% if gateway_parameter.hide == 1 %} disabled{% endif %} />
+                      {% if payment_google_pay_merchant_param[gateway_key][gateway_parameter.key] is empty %}
+                        {% set gateway_param_value = gateway_parameter.default %}
+                      {% else %}
+                        {% set gateway_param_value = payment_google_pay_merchant_param[gateway_key][gateway_parameter.key] %}
+                      {% endif %}
+
+                      {% if gateway_parameter.hide == 1 %}
+                        <input type="hidden" name="payment_google_pay_merchant_param[{{ gateway_key }}][{{ gateway_parameter.key }}]" value="{{ gateway_param_value }}" />
+                      {% else %}
+                        <div class="form-group required">
+                          <label class="col-sm-2 control-label">{{ gateway_parameter.label }}</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="payment_google_pay_merchant_param[{{ gateway_key }}][{{ gateway_parameter.key }}]" value="{{ gateway_param_value }}" class="form-control" />
+                          </div>
                         </div>
-                      </div>
+                      {% endif %}
+
                     {% endfor %}
                   </div>
                 {% endif %}

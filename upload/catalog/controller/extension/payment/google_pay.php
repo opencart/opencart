@@ -22,7 +22,7 @@ class ControllerExtensionPaymentGooglePay extends Controller {
 		$data['button_color'] = $this->config->get("payment_google_pay_button_color");
 		$data['button_type'] = $this->config->get("payment_google_pay_button_type");
 		$data['debug_log'] = $this->config->get("payment_google_pay_debug");
-
+		$data['accept_prepay_cards'] = (int)$this->config->get("payment_google_pay_accept_prepay_cards");
 
 		$data['allowed_card_networks'] = $this->config->get("payment_google_pay_allow_card_networks");
 		$data['allowed_auth'] = $this->config->get("payment_google_pay_allow_auth_methods");

@@ -60,7 +60,7 @@ $_['text_enable_button']			 = 'We recommend offering PayPal Express Shortcut to 
 $_['text_3ds_ssl']		 			 = '3D Secure requires the store to be using an SSL certificate';
 $_['text_unlink']		 			 = 'Delete link';
 $_['text_google_pay']				 = 'Google Pay';
-
+$_['text_googlepay_notice']			 = 'Google Pay is not enabled on your account by default, you need to login to Braintree and enable the feature after it is activated on your account.';
 // Column
 $_['column_void']					 = 'Void';
 $_['column_settle']					 = 'Settle';
@@ -185,7 +185,7 @@ $_['error_environment']					= 'You cannot set your environment to %s when your c
 $_['error_googlepay_disabled']			= 'The main Google Pay module is not installed/enabled, additional options are available in the module';
 $_['error_google_pay_install']		 	= 'The Google Pay extension is not installed, please install first from the <a href="%s">payment extensions page</a>';
 $_['error_google_pay_status']		 	= 'The <a href="%s" target="_blank">Google Pay extension</a> is installed but not enabled, please update the module status to active ';
-$_['error_google_pay_environment']	 	= 'The <a href="%s" target="_blank">Google Pay extension</a> in test/demo mode, if you are just testing then check both extensions are set to the same ';
+$_['error_google_pay_environment']	 	= 'The <a href="%s" target="_blank">Google Pay extension</a> is in test/demo mode, if you are testing then check both extensions are set to the same';
 
 // Tab
 $_['tab_setting']					 	= 'Settings';

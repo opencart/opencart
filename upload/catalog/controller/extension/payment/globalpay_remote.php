@@ -362,6 +362,8 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 		$capture_result = $this->model_extension_payment_globalpay_remote->processGooglePay($google_token, $amount, $currency, $order_id, $order_ref);
 
+		$json = array();
+
 		if ($capture_result->result != '00') {
 			$json['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';
 		} else {

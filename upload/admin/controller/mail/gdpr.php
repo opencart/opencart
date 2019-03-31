@@ -86,17 +86,19 @@ class ControllerMailGdpr extends Controller {
 		$data['text_date_added'] = $language->get('text_date_added');
 		$data['text_thanks'] = $language->get('text_thanks');
 
-		// Addresses
-		$data['addresses'] = array();
-
+		// Personal info
 		if ($customer_info) {
 			$data['customer_id'] = $customer_info['customer_id'];
 			$data['firstname'] = $customer_info['firstname'];
 			$data['lastname'] = $customer_info['lastname'];
 			$data['email'] = $customer_info['email'];
 			$data['telephone'] = $customer_info['telephone'];
+		}
 
-			// Addresses
+		// Addresses
+		$data['addresses'] = array();
+
+		if ($customer_info) {
 			$results = $this->model_customer_customer->getAddresses($customer_info['customer_id']);
 
 			foreach ($results as $result) {

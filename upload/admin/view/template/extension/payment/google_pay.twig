@@ -129,7 +129,7 @@
                       {% if gateway.status == 1 %}{% set enabled_gateway = 1 %}{% endif %}
 
                       {% if gateway.status == 1 %}
-                        <option value="{{ gateway_key }}">{{ gateway.title }}</option>
+                        <option value="{{ gateway_key }}" {% if payment_google_pay_merchant_gateway == gateway_key %} selected{% endif %}>{{ gateway.title }}</option>
                       {% else %}
                         <option value="{{ gateway_key }}" disabled>{{ gateway.title }} ({{ text_not_enabled }})</option>
                       {% endif %}
@@ -291,11 +291,19 @@
 <script type="text/javascript"><!--
   $('#tabs a:first').tab('show');
 
-  $('select[name="payment_google_pay_merchant_gateway"]').on('change', function() {
-    var gateway = $('select[name="payment_google_pay_merchant_gateway"]').val();
-
-    $('.gateway-config').hide();
-    $('#gateway-config-' + gateway).show();
+  $('select[name="payment_google_pay_merchant_gateway"]').on('change', function () {
+      hideConfigs();
   });
+
+  $(document).ready(function () {
+      hideConfigs();
+  });
+
+  function hideConfigs() {
+      var gateway = $('select[name="payment_google_pay_merchant_gateway"]').val();
+
+      $('.gateway-config').hide();
+      $('#gateway-config-' + gateway).show();
+  }
 //--></script>
 {{ footer }}

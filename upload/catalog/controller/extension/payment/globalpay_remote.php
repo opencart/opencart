@@ -46,11 +46,11 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 		}
 
 		$data['googlepay_enabled'] = 0;
-		$data['google_pay_output'] = '';
+		$data['googlepay_output'] = '';
 
 		// Check that Google Pay and Braintree Modules enable the feature
-		if ($this->config->get('payment_globalpay_remote_googlepay_status') == 1 && $this->config->get('payment_google_pay_status') == 1) {
-			$data['google_pay_output'] = $this->load->controller('extension/payment/google_pay');
+		if ($this->config->get('payment_globalpay_remote_googlepay_status') == 1 && $this->config->get('payment_google_pay_status') == 1 && $this->config->get('payment_google_pay_merchant_gateway') == 'globalpayments') {
+			$data['googlepay_output'] = $this->load->controller('extension/payment/google_pay');
 			$data['googlepay_enabled'] = 1;
 		}
 

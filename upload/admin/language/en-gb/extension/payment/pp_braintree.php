@@ -183,6 +183,9 @@ $_['error_braintree_account_paypal'] 	= 'PayPal is not enabled in your Braintree
 $_['error_braintree_account_billing']	= 'Billing agreements are not enabled in your Braintree account yet. Please check your <a href="https://www.braintreegateway.com/login" title="Braintree login" target="_blank">Braintree Control Panel</a> or contact Braintree support';
 $_['error_environment']					= 'You cannot set your environment to %s when your credentials are for the %s environment in Braintree';
 $_['error_googlepay_disabled']			= 'The main Google Pay module is not installed/enabled, additional options are available in the module';
+$_['error_google_pay_install']		 	= 'The Google Pay extension is not installed, please install first from the <a href="%s">payment extensions page</a>';
+$_['error_google_pay_status']		 	= 'The <a href="%s" target="_blank">Google Pay extension</a> is installed but not enabled, please update the module status to active ';
+$_['error_google_pay_environment']	 	= 'The <a href="%s" target="_blank">Google Pay extension</a> in test/demo mode, if you are just testing then check both extensions are set to the same ';
 
 // Tab
 $_['tab_setting']					 	= 'Settings';

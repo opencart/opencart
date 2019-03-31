@@ -364,6 +364,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		}
 
         $data['google_pay_extension_status'] = $this->config->get('payment_google_pay_status');
+        $data['google_pay_environment'] = $this->config->get('payment_google_pay_environment'); //PRODUCTION - TEST
 
 		$data['transaction_statuses'] = array(
 			'authorization_expired',

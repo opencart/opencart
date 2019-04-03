@@ -18,7 +18,6 @@ class Squareup {
     const ENDPOINT_DELETE_CARD = 'customers/%s/cards/%s';
     const ENDPOINT_GET_TRANSACTION = 'locations/%s/transactions/%s';
     const ENDPOINT_LOCATIONS = 'locations';
-    const ENDPOINT_REFRESH_TOKEN = 'oauth2/clients/%s/access-token/renew';
     const ENDPOINT_REFUND_TRANSACTION = 'locations/%s/transactions/%s/refund';
     const ENDPOINT_TOKEN = 'oauth2/token';
     const ENDPOINT_TRANSACTIONS = 'locations/%s/transactions';
@@ -224,6 +223,7 @@ class Squareup {
             'parameters' => array(
                 'client_id' => $this->config->get('payment_squareup_client_id'),
                 'client_secret' => $this->config->get('payment_squareup_client_secret'),
+		'grant_type' => 'authorization_code',
                 'redirect_uri' => $this->session->data['payment_squareup_oauth_redirect'],
                 'code' => $code
             )
@@ -241,12 +241,13 @@ class Squareup {
     public function refreshToken() {
         $request_data = array(
             'method' => 'POST',
-            'endpoint' => sprintf(self::ENDPOINT_REFRESH_TOKEN, $this->config->get('payment_squareup_client_id')),
+            'endpoint' => self::ENDPOINT_TOKEN,
             'no_version' => true,
-            'auth_type' => 'Client',
-            'token' => $this->config->get('payment_squareup_client_secret'),
             'parameters' => array(
-                'access_token' => $this->config->get('payment_squareup_access_token')
+                'client_id' => $this->config->get('payment_squareup_client_id'),
+                'client_secret' => $this->config->get('payment_squareup_client_secret'),
+		'grant_type' => 'refresh_token',
+                'refresh_token' => $this->config->get('payment_squareup_refresh_token')
             )
         );
 

@@ -462,7 +462,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         );
 
         $filter_data = array(
-            'start' => ($page - 1) * (int)$this->config->get('config_limit_admin'),
+            'start' => max(($page - 1), 0) * (int)$this->config->get('config_limit_admin'),
             'limit' => $this->config->get('config_limit_admin')
         );
 
@@ -651,6 +651,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             $previous_setting['payment_squareup_merchant_name'] = ''; // only available in v1 of the API, not populated for now
             $previous_setting['payment_squareup_access_token'] = $token['access_token'];
             $previous_setting['payment_squareup_access_token_expires'] = $token['expires_at'];
+	    $previous_setting['payment_squareup_refresh_token'] = $token['refresh_token'];
 
             $this->model_setting_setting->editSetting('payment_squareup', $previous_setting);
 

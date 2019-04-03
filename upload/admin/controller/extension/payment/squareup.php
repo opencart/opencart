@@ -935,7 +935,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
                 $this->error['sandbox_client_id'] = $this->language->get('error_sandbox_client_id');
             }
 
-            if (empty($this->request->post['payment_squareup_sandbox_token']) || strlen($this->request->post['payment_squareup_sandbox_token']) > 42) {
+            if (empty($this->request->post['payment_squareup_sandbox_token']) || strlen($this->request->post['payment_squareup_sandbox_token']) > 64) {
                 $this->error['sandbox_token'] = $this->language->get('error_sandbox_token');
             }
 

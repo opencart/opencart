@@ -60,8 +60,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-live-demo">{{ entry_live_demo }}</label>
                 <div class="col-sm-10">
-                  <select name="payment_globalpay_remote_live_demo" id="input-live-demo" class="form-control">
-                    {% if payment_globalpay_remote_live_demo %}
+                  <select name="payment_globalpay_remote_environment" id="input-live-demo" class="form-control">
+                    {% if payment_globalpay_remote_environment %}
                       <option value="1" selected="selected">{{ text_live }}</option>
                       <option value="0">{{ text_demo }}</option>
                     {% else %}

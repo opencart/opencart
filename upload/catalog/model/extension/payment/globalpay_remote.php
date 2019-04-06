@@ -1,9 +1,17 @@
 <?php
 class ModelExtensionPaymentGlobalpayRemote extends Model {
+	private function getApiEndpoint() {
+		if ($this->config->get('payment_globalpay_remote_environment') == 1) {
+			return "https://api.sandbox.realexpayments.com/epage-remote.cgi";
+		} else {
+			return "https://api.realexpayments.com/epage-remote.cgi";
+		}
+	}
+
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/globalpay_remote');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_globalpay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_globalpay_remote_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
 		if ($this->config->get('payment_globalpay_remote_total') > 0 && $this->config->get('payment_globalpay_remote_total') > $total) {
 			$status = false;
@@ -58,15 +66,8 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger(simplexml_load_string($xml));
 		$this->logger($xml);
 
-
-
-
-		$url = "https://api.sandbox.realexpayments.com/epage-remote.cgi";
-		//$url = "https://api.realexpayments.com/epage-remote.cgi";
-
-
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -114,7 +115,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realmpi");
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -228,7 +229,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realauth");
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -381,7 +382,15 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 			$xml .= '<amount currency="' . $currency . '">' . $amount . '</amount>';
 			$xml .= '<mobile>pay-with-google</mobile>';
 			$xml .= '<token>'.$google_token.'</token>';
-			$xml .= '<autosettle flag="1"/>';
+
+			if ($this->config->get('payment_globalpay_remote_auto_settle') == 0) {
+				$xml .= '<autosettle flag="0" />';
+			} elseif ($this->config->get('payment_globalpay_remote_auto_settle') == 1) {
+				$xml .= '<autosettle flag="1" />';
+			} elseif ($this->config->get('payment_globalpay_remote_auto_settle') == 2) {
+				$xml .= '<autosettle flag="MULTI" />';
+			}
+
 			$xml .= '<sha1hash>'.$hash2.'</sha1hash>';
 		$xml .= '</request>';
 
@@ -393,13 +402,8 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		// @todo
-		$url = "https://api.sandbox.realexpayments.com/epage-remote.cgi";
-		//$url = "https://api.realexpayments.com/epage-remote.cgi";
-
-
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_URL, $this->getApiEndpoint());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -475,12 +479,6 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_stolen_id'), $message);
 		} elseif ($response->result == "200") {
 			// Error Connecting to Bank
-			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_bank_id'), $message);
-		} elseif ($response->result == "204") {
-			// Error Connecting to Bank
-			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_bank_id'), $message);
-		} elseif ($response->result == "205") {
-			// Comms Error
 			$this->addHistory($order_id, $this->config->get('payment_globalpay_remote_order_status_decline_bank_id'), $message);
 		} else {
 			// Other

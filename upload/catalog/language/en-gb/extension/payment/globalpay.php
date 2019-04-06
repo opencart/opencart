@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['text_title']				= 'Credit / Debit card (Globalpay)';
+$_['text_title']				= 'Credit/Debit Card (by Global Payments)';
 
 // Button
 $_['button_confirm']			= 'Confirm';

@@ -1,18 +1,42 @@
 <form action="{{ action }}" method="POST" class="form-horizontal" id="globalpay_form_redirect">
+  <input type=hidden name="TIMESTAMP" value="{{ timestamp }}" />
   <input type=hidden name="MERCHANT_ID" value="{{ merchant_id }}" />
   <input type=hidden name="ORDER_ID" value="{{ order_id }}" />
-  <input type=hidden name="CURRENCY" value="{{ currency }}" >
   <input type=hidden name="AMOUNT" value="{{ amount }}" >
-  <input type=hidden name="TIMESTAMP" value="{{ timestamp }}" />
-  <input type=hidden name="SHA1HASH" value="{{ hash }}">
+  <input type=hidden name="CURRENCY" value="{{ currency }}" >
   <input type=hidden name="AUTO_SETTLE_FLAG" value="{{ settle }}">
+  <input type=hidden name="COMMENT1" value="OpenCart">
+
+  <!-- Begin 3D Secure 2 Mandatory and Recommended Fields -->
+  <input type="hidden" name="HPP_VERSION" value="2">
+  <input type="hidden" name="HPP_CUSTOMER_EMAIL" value="{{ hpp_email }}">
+  <input type="hidden" name="HPP_CUSTOMER_PHONENUMBER_HOME" value="44|789456123">
+  <input type="hidden" name="HPP_BILLING_STREET1" value="Flat 123">
+  <input type="hidden" name="HPP_BILLING_STREET2" value="House 456">
+  <input type="hidden" name="HPP_BILLING_STREET3" value="Unit 4">
+  <input type="hidden" name="HPP_BILLING_CITY" value="Halifax">
+  <input type="hidden" name="HPP_BILLING_POSTALCODE" value="W5 9HR">
+  <input type="hidden" name="HPP_BILLING_COUNTRY" value="826">
+  <input type="hidden" name="HPP_SHIPPING_STREET1" value="Apartment 852">
+  <input type="hidden" name="HPP_SHIPPING_STREET2" value="Complex 741">
+  <input type="hidden" name="HPP_SHIPPING_STREET3" value="House 963">
+  <input type="hidden" name="HPP_SHIPPING_CITY" value="Chicago">
+  <input type="hidden" name="HPP_SHIPPING_STATE" value="Illinois">
+  <input type="hidden" name="HPP_SHIPPING_POSTALCODE" value="50001">
+  <input type="hidden" name="HPP_SHIPPING_COUNTRY" value="840">
+  <input type="hidden" name="HPP_ADDRESS_MATCH_INDICATOR" value="FALSE">
+  <input type="hidden" name="HPP_CHALLENGE_REQUEST_INDICATOR" value="NO_PREFERENCE">
+  <!-- End 3D Secure 2 Mandatory and Recommended Fields -->
+
+
+
   <input type=hidden name="RETURN_TSS" value="{{ tss }}">
   <input type=hidden name="BILLING_CODE" value="{{ billing_code }}">
   <input type=hidden name="BILLING_CO" value="{{ payment_country }}">
   <input type=hidden name="SHIPPING_CODE" value="{{ shipping_code }}">
   <input type=hidden name="SHIPPING_CO" value="{{ shipping_country }}">
   <input type=hidden name="MERCHANT_RESPONSE_URL" value="{{ response_url }}">
-  <input type=hidden name="COMMENT1" value="OpenCart">
+  <input type=hidden name="SHA1HASH" value="{{ hash }}">
   {% if card_select == true %}
   <fieldset id="payment">
     <div class="form-group required">

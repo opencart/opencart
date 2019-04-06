@@ -1,11 +1,11 @@
 <?php
 // Heading
-$_['heading_title']					 = 'Global Payments Redirect';
+$_['heading_title']					 = 'Global Payments HPP';
 
 // Text
 $_['text_extension']				 = 'Extensions';
-$_['text_success']					 = 'Success: You have modified Global Payments Redirect account details!';
-$_['text_edit']                      = 'Edit Global Payments Redirect';
+$_['text_success']					 = 'Success: You have modified Global Payments HPP Redirect account details!';
+$_['text_edit']                      = 'Edit Global Payments HPP';
 $_['text_live']						 = 'Live';
 $_['text_demo']						 = 'Demo';
 $_['text_card_type']				 = 'Card type';
@@ -73,7 +73,7 @@ $_['entry_notification_url']		 = 'Notification URL';
 // Help
 $_['help_total']					 = 'The checkout total the order must reach before this payment method becomes active';
 $_['help_card_select']				 = 'Ask the user to choose their card type before they are redirected';
-$_['help_notification']				 = 'You need to supply this URL to Globalpay to get payment notifications';
+$_['help_notification']				 = 'You need to supply this URL to Global Payments to get payment notifications';
 $_['help_debug']					 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
 $_['help_dcc_settle']				 = 'If your subaccount is DCC enabled you must use Autosettle';
 

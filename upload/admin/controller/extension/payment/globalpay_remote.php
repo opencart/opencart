@@ -186,10 +186,10 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 			$data['payment_globalpay_remote_googlepay_status'] = $this->config->get('payment_globalpay_remote_googlepay_status');
 		}
 
-		if (isset($this->request->post['payment_globalpay_remote_live_demo'])) {
-			$data['payment_globalpay_remote_live_demo'] = $this->request->post['payment_globalpay_remote_live_demo'];
+		if (isset($this->request->post['payment_globalpay_remote_environment'])) {
+			$data['payment_globalpay_remote_environment'] = $this->request->post['payment_globalpay_remote_environment'];
 		} else {
-			$data['payment_globalpay_remote_live_demo'] = $this->config->get('payment_globalpay_remote_live_demo');
+			$data['payment_globalpay_remote_environment'] = $this->config->get('payment_globalpay_remote_environment');
 		}
 
 		if ($this->config->has('payment_google_pay_status')) {

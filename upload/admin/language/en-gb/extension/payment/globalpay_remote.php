@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']					 = 'Global Payments Remote';
+$_['heading_title']					 = 'Global Payments API';
 
 // Text
 $_['text_extension']				 = 'Extensions';
-$_['text_success']					 = 'Success: You have modified Global Payments Remote account details!';
+$_['text_success']					 = 'Success: You have modified Global Payments API account details!';
 $_['text_edit']                      = 'Edit Global Payments Remote';
 $_['text_live']						 = 'Live';
 $_['text_demo']						 = 'Demo';

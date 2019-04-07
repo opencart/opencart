@@ -157,7 +157,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					$this->session->data['payment_address'] = $this->model_account_address->getAddress($address_id);
 
 					// If no default address ID set we use the last address
-					if (!$this->customer->getAddressId()) {
+					if ($this->customer->isLogged() && !$this->customer->getAddressId()) {
 						$this->load->model('account/customer');
 						
 						$this->model_account_customer->editAddressId($this->customer->getId(), $address_id);

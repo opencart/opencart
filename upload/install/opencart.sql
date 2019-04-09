@@ -33,11 +33,11 @@ CREATE TABLE `oc_address` (
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_advertise_google_target`
+-- Table structure for table `oc_googleshopping_target`
 --
 
-DROP TABLE IF EXISTS `oc_advertise_google_target`;
-CREATE TABLE `oc_advertise_google_target` (
+DROP TABLE IF EXISTS `oc_googleshopping_target`;
+CREATE TABLE `oc_googleshopping_target` (
   `advertise_google_target_id` int(11) UNSIGNED NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `campaign_name` varchar(255) NOT NULL DEFAULT '',
@@ -45,6 +45,8 @@ CREATE TABLE `oc_advertise_google_target` (
   `budget` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `feeds` text NOT NULL,
   `status` enum('paused','active') NOT NULL DEFAULT 'paused',
+  `date_added` DATE,
+  `roas` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`advertise_google_target_id`),
   KEY `store_id` (`store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -523,11 +525,11 @@ INSERT INTO `oc_category_path` (`category_id`, `path_id`, `level`) VALUES
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_category_to_google_product_category`
+-- Table structure for table `oc_googleshopping_category`
 --
 
-DROP TABLE IF EXISTS `oc_category_to_google_product_category`;
-CREATE TABLE `oc_category_to_google_product_category` (
+DROP TABLE IF EXISTS `oc_googleshopping_category`;
+CREATE TABLE `oc_googleshopping_category` (
   `google_product_category` varchar(10) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `category_id` int(11) NOT NULL,
@@ -2543,12 +2545,12 @@ INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `is
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_product_advertise_google`
+-- Table structure for table `oc_googleshopping_product`
 --
 
-DROP TABLE IF EXISTS `oc_product_advertise_google`;
-CREATE TABLE `oc_product_advertise_google` (
-  `product_advertise_google_id` int(11) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `oc_googleshopping_product`;
+CREATE TABLE `oc_googleshopping_product` (
+  `product_advertise_google_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `has_issues` tinyint(1) DEFAULT NULL,
@@ -2577,11 +2579,11 @@ CREATE TABLE `oc_product_advertise_google` (
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_product_advertise_google_status`
+-- Table structure for table `oc_googleshopping_product_status`
 --
 
-DROP TABLE IF EXISTS `oc_product_advertise_google_status`;
-CREATE TABLE `oc_product_advertise_google_status` (
+DROP TABLE IF EXISTS `oc_googleshopping_product_status`;
+CREATE TABLE `oc_googleshopping_product_status` (
   `product_id` int(11) NOT NULL DEFAULT '0',
   `store_id` int(11) NOT NULL DEFAULT '0',
   `product_variation_id` varchar(64) NOT NULL DEFAULT '',
@@ -2595,11 +2597,11 @@ CREATE TABLE `oc_product_advertise_google_status` (
 -----------------------------------------------------------
 
 --
--- Table structure for table `oc_product_advertise_google_target`
+-- Table structure for table `oc_googleshopping_product_target`
 --
 
-DROP TABLE IF EXISTS `oc_product_advertise_google_target`;
-CREATE TABLE `oc_product_advertise_google_target` (
+DROP TABLE IF EXISTS `oc_googleshopping_product_target`;
+CREATE TABLE `oc_googleshopping_product_target` (
   `product_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `advertise_google_target_id` int(11) UNSIGNED NOT NULL,

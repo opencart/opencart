@@ -81,6 +81,8 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
             $this->applyNewSettings($this->request->post);
 
             try {
+                // Profilactic target push, as sometimes targets are not initialized properly
+                $this->googleshopping->pushTargets();
                 $this->googleshopping->pushCampaignStatus();
 
                 $this->session->data['success'] = $this->language->get('success_index');

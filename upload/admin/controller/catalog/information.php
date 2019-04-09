@@ -225,13 +225,12 @@ class ControllerCatalogInformation extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $information_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => $information_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_limit_admin'),
+			'url'   => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($information_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($information_total - $this->config->get('config_limit_admin'))) ? $information_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $information_total, ceil($information_total / $this->config->get('config_limit_admin')));
 
@@ -327,7 +326,7 @@ class ControllerCatalogInformation extends Controller {
 
 		if (isset($this->request->post['information_description'])) {
 			$data['information_description'] = $this->request->post['information_description'];
-		} elseif (isset($this->request->get['information_id'])) {
+		} elseif (!empty($information_info)) {
 			$data['information_description'] = $this->model_catalog_information->getInformationDescriptions($this->request->get['information_id']);
 		} else {
 			$data['information_description'] = array();
@@ -353,7 +352,7 @@ class ControllerCatalogInformation extends Controller {
 
 		if (isset($this->request->post['information_store'])) {
 			$data['information_store'] = $this->request->post['information_store'];
-		} elseif (isset($this->request->get['information_id'])) {
+		} elseif (!empty($information_info)) {
 			$data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->get['information_id']);
 		} else {
 			$data['information_store'] = array(0);
@@ -385,7 +384,7 @@ class ControllerCatalogInformation extends Controller {
 		
 		if (isset($this->request->post['information_seo_url'])) {
 			$data['information_seo_url'] = $this->request->post['information_seo_url'];
-		} elseif (isset($this->request->get['information_id'])) {
+		} elseif (!empty($information_info)) {
 			$data['information_seo_url'] = $this->model_catalog_information->getInformationSeoUrls($this->request->get['information_id']);
 		} else {
 			$data['information_seo_url'] = array();
@@ -393,7 +392,7 @@ class ControllerCatalogInformation extends Controller {
 		
 		if (isset($this->request->post['information_layout'])) {
 			$data['information_layout'] = $this->request->post['information_layout'];
-		} elseif (isset($this->request->get['information_id'])) {
+		} elseif (!empty($information_info)) {
 			$data['information_layout'] = $this->model_catalog_information->getInformationLayouts($this->request->get['information_id']);
 		} else {
 			$data['information_layout'] = array();

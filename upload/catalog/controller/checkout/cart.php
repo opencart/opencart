@@ -79,7 +79,7 @@ class ControllerCheckoutCart extends Controller {
 				}
 
 				if ($product['image']) {
-					$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+					$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 				} else {
 					$image = '';
 				}
@@ -217,8 +217,6 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
-			$this->load->model('setting/extension');
-
 			$data['modules'] = array();
 
 			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
@@ -276,18 +274,7 @@ class ControllerCheckoutCart extends Controller {
 
 		if ($product_info) {
 			if (isset($this->request->post['quantity'])) {
-				if(is_numeric($this->request->post['quantity'])){
-					$quantity = round($this->request->post['quantity']);
-
-					if($quantity < 1){
-						// Post Error Message when it is not bigger than 1
-						$json['error']['quantity'] = $this->language->get('error_quantity_required_zero');
-					}
-				} else {
-					// Post Error Message when it is not text
-					$json['error']['quantity'] = $this->language->get('error_quantity_required');
-				}
-
+				$quantity = (int)$this->request->post['quantity'];
 			} else {
 				$quantity = 1;
 			}
@@ -298,7 +285,17 @@ class ControllerCheckoutCart extends Controller {
 				$option = array();
 			}
 
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+			// If variant get master product
+			if ($product_info['master_id']) {
+				$product_id = $product_info['master_id'];
+			}
+
+			// Merge variant code with options
+			foreach ($product_info['variant'] as $key => $value) {
+				$option[$key] = $value;
+			}
+
+			$product_options = $this->model_catalog_product->getProductOptions($product_id);
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {

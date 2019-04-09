@@ -1,57 +1,34 @@
 <?php
 class ControllerStartupSass extends Controller {
 	public function index() {
-		$file = DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/bootstrap.css';
+		$files = glob(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/*.scss');
 
-		if (!is_file($file) || (is_file(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/scss/bootstrap.scss') && !$this->config->get('developer_sass'))) {
-			$scss = new Leafo\ScssPhp\Compiler();
-			$scss->setImportPaths(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/scss/');
+		if ($files) {
+			foreach ($files as $file) {
+				// Get the filename
+				$filename = basename($file, '.scss');
 
-			$output = $scss->compile('@import "bootstrap.scss"');
+				$stylesheet = DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/' . $filename . '.css';
 
-			// Drop the closing bracket to newline
-			$handle = fopen($file, 'w');
+				if (!is_file($stylesheet) || !$this->config->get('developer_sass')) {
+					$scss = new \Leafo\ScssPhp\Compiler();
+					$scss->setImportPaths(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/');
 
-			flock($handle, LOCK_EX);
+					$output = $scss->compile('@import "' . $filename . '.scss"');
 
-			fwrite($handle, $output);
+					$handle = fopen($stylesheet, 'w');
 
-			fflush($handle);
+					flock($handle, LOCK_EX);
 
-			flock($handle, LOCK_UN);
+					fwrite($handle, $output);
 
-			fclose($handle);
-		}
+					fflush($handle);
 
-		$file = DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/stylesheet.css';
+					flock($handle, LOCK_UN);
 
-		if (!is_file($file) || (is_file(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/_stylesheet.scss') && !$this->config->get('developer_sass'))) {
-			include_once(DIR_STORAGE . 'vendor/leafo/scssphp/scss.inc.php');
-
-			$scss = new Leafo\ScssPhp\Compiler();
-			$scss->setImportPaths(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/');
-
-			$output = $scss->compile('@import "_stylesheet.scss"');
-
-			$output = preg_replace('/\s*{\s*/', ' {' . "\n" . '    ', $output);
-			$output = preg_replace('/;\s*/', ';' . "\n" . '    ', $output);
-			$output = preg_replace('/,\s*/', ', ', $output);
-			$output = preg_replace('/[ ]*}\s*/', '}' . "\n", $output);
-			$output = preg_replace('/\}\s*(.+)/', '}' . "\n" . '$1', $output);
-			$output = preg_replace('/\n    ([^:]+):\s*/', "\n" . '    $1: ', $output);
-			$output = preg_replace('/([A-z0-9\)])}/', '$1;' . "\n" . '}', $output);
-
-			$handle = fopen($file, 'w');
-
-			flock($handle, LOCK_EX);
-
-			fwrite($handle, $output);
-
-			fflush($handle);
-
-			flock($handle, LOCK_UN);
-
-			fclose($handle);
+					fclose($handle);
+				}
+			}
 		}
 	}
 }

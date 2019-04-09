@@ -20,7 +20,9 @@ class File {
 
 				fclose($handle);
 
-				return unserialize($data);
+				return json_decode($data, true);
+			} else {
+				return array();
 			}
 		}
 
@@ -30,12 +32,12 @@ class File {
 	public function write($session_id, $data) {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);
 
-		$handle = fopen($file, 'w');
+		$handle = fopen($file, 'c');
 
 		flock($handle, LOCK_EX);
 
-		fwrite($handle, serialize($data));
-
+		fwrite($handle, json_encode($data));
+		ftruncate($handle, ftell($handle));
 		fflush($handle);
 
 		flock($handle, LOCK_UN);

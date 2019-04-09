@@ -22,34 +22,7 @@ function getURLVar(key) {
 	}
 }
 
-function getCookie(cname) {
-	var name = cname + '=';
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var ca = decodedCookie.split(';');
-
-	for(var i = 0; i < ca.length; i++) {
-		var c = ca[i];
-
-		while (c.charAt(0) == ' ') {
-			c = c.substring(1);
-		}
-
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-
-	return '';
-}
-
 $(document).ready(function() {
-	// Add new div on each page
-	$('body').append('<div id="alert-box"></div>');
-
-	$('#alert-box').on('click', '.close', function(){
-		$('#alert-box').removeClass('open');
-	});
-
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().find(':input');
@@ -125,11 +98,11 @@ $(document).ready(function() {
 		var cols = $('#column-right, #column-left').length;
 
 		if (cols == 2) {
-			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
+			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-sm-12');
 		} else if (cols == 1) {
-			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12');
+			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-12');
 		} else {
-			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12');
+			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-12');
 		}
 
 		$('#list-view').removeClass('active');
@@ -145,6 +118,29 @@ $(document).ready(function() {
 		$('#grid-view').trigger('click');
 		$('#grid-view').addClass('active');
 	}
+
+	// Cookie Policy
+	$('#button-cookie').on('click', function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			url: 'index.php?route=common/cookie/agree',
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-cookie').button('loading');
+			},
+			complete: function() {
+				$('#button-cookie').button('reset');
+			},
+			success: function(json) {
+				if (json['success']) {
+					$('#cookie').slideUp(400, function() {
+						$('#cookie').remove();
+					});
+				}
+			}
+		});
+	});
 });
 
 // Cart add remove functions
@@ -162,16 +158,27 @@ var cart = {
 				$('#cart > button').button('reset');
 			},
 			success: function(json) {
-				$('.alert-dismissible, .text-danger').remove();
+				$('.text-danger, .toast').remove();
+				$('.form-control').removeClass('is-invalid');
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 
 					// Need to set timeout otherwise it wont update the total
 					$('#cart').parent().load('index.php?route=common/cart/info');
@@ -270,16 +277,26 @@ var wishlist = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('.alert-dismissible').remove();
+				$('#toast').remove();
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -303,12 +320,22 @@ var compare = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('.alert-dismissible').remove();
+				$('#toast').remove();
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 
 					$('#compare-total').html(json['total']);
 				}
@@ -336,12 +363,12 @@ $(document).delegate('.agree', 'click', function(e) {
 		type: 'get',
 		dataType: 'html',
 		success: function(data) {
-			html  = '<div id="modal-agree" class="modal fade">';
+			html = '<div id="modal-agree" class="modal fade">';
 			html += '  <div class="modal-dialog">';
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">';
 			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
-			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+			html += '        <button type="button" class="close" data-dismiss="toast">&times;</button>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
 			html += '    </div>';
@@ -355,6 +382,7 @@ $(document).delegate('.agree', 'click', function(e) {
 	});
 });
 
+// Chain ajax calls.
 class Chain {
 	constructor() {
 		this.start = false;
@@ -409,7 +437,7 @@ var chain = new Chain();
 
 			// Keydown
 			$(this).on('keydown', function(event) {
-				switch(event.keyCode) {
+				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
 						break;
@@ -510,28 +538,28 @@ var chain = new Chain();
 	};
 })(window.jQuery);
 
-+function ($) {
++function($) {
 	'use strict';
 
 	// BUTTON PUBLIC CLASS DEFINITION
 	// ==============================
 
-	var Button = function (element, options) {
-		this.$element  = $(element)
-		this.options   = $.extend({}, Button.DEFAULTS, options)
+	var Button = function(element, options) {
+		this.$element = $(element)
+		this.options = $.extend({}, Button.DEFAULTS, options)
 		this.isLoading = false
 	}
 
-	Button.VERSION  = '3.3.5'
+	Button.VERSION = '3.3.5'
 
 	Button.DEFAULTS = {
 		loadingText: 'loading...'
 	}
 
-	Button.prototype.setState = function (state) {
-		var d    = 'disabled'
-		var $el  = this.$element
-		var val  = $el.is('input') ? 'val' : 'html'
+	Button.prototype.setState = function(state) {
+		var d = 'disabled'
+		var $el = this.$element
+		var val = $el.is('input') ? 'val' : 'html'
 		var data = $el.data()
 
 		state += 'Text'
@@ -539,7 +567,7 @@ var chain = new Chain();
 		if (data.resetText == null) $el.data('resetText', $el[val]())
 
 		// push to event loop to allow forms to submit
-		setTimeout($.proxy(function () {
+		setTimeout($.proxy(function() {
 			$el[val](data[state] == null ? this.options[state] : data[state])
 
 			if (state == 'loadingText') {
@@ -552,7 +580,7 @@ var chain = new Chain();
 		}, this), 0)
 	}
 
-	Button.prototype.toggle = function () {
+	Button.prototype.toggle = function() {
 		var changed = true
 		var $parent = this.$element.closest('[data-toggle="buttons"]')
 
@@ -579,9 +607,9 @@ var chain = new Chain();
 	// ========================
 
 	function Plugin(option) {
-		return this.each(function () {
-			var $this   = $(this)
-			var data    = $this.data('bs.button')
+		return this.each(function() {
+			var $this = $(this)
+			var data = $this.data('bs.button')
 			var options = typeof option == 'object' && option
 
 			if (!data) $this.data('bs.button', (data = new Button(this, options)))
@@ -593,14 +621,14 @@ var chain = new Chain();
 
 	var old = $.fn.button
 
-	$.fn.button             = Plugin
+	$.fn.button = Plugin
 	$.fn.button.Constructor = Button
 
 
 	// BUTTON NO CONFLICT
 	// ==================
 
-	$.fn.button.noConflict = function () {
+	$.fn.button.noConflict = function() {
 		$.fn.button = old
 		return this
 	}
@@ -609,15 +637,15 @@ var chain = new Chain();
 	// BUTTON DATA-API
 	// ===============
 
-	$(document)
-		.on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
-			var $btn = $(e.target)
-			if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-			Plugin.call($btn, 'toggle')
-			if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
-		})
-		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
-			$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
-		})
+	$(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+		var $btn = $(e.target);
 
+		if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn');
+
+		Plugin.call($btn, 'toggle');
+
+		if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault();
+	}).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+		$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type));
+	});
 }(jQuery);

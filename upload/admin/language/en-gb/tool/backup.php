@@ -10,7 +10,7 @@ $_['text_restore']      = 'Restoring %s of %s';
 $_['text_option']       = 'Backup Options';
 $_['text_history']      = 'Backup History';
 $_['text_progress']     = 'Progress';
-$_['text_import']       = 'For large backup files its better to upload the sql file via ftp to the <strong>system/storage/backup/</strong> directory.';
+$_['text_import']       = 'For large backup files it is better to upload the SQL file via FTP to the <strong>~/storage/backup/</strong> directory.';
 
 // Column
 $_['column_filename']   = 'Filename';

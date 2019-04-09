@@ -2,9 +2,6 @@
 // Site
 $_['site_url']           = HTTP_SERVER;
 
-// Url
-$_['url_autostart']      = false;
-
 // Database
 $_['db_autostart']       = true;
 $_['db_engine']          = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
@@ -15,7 +12,7 @@ $_['db_database']        = DB_DATABASE;
 $_['db_port']            = DB_PORT;
 
 // Session
-$_['session_autostart']  = true;
+$_['session_autostart']  = false;
 $_['session_engine']     = 'db';
 $_['session_name']       = 'OCSESSID';
 
@@ -29,7 +26,6 @@ $_['library_autoload']   = array();
 
 // Actions
 $_['action_pre_action']  = array(
-	'startup/session',
 	'startup/startup',
 	'startup/marketing',
 	'startup/error',
@@ -40,10 +36,10 @@ $_['action_pre_action']  = array(
 );
 
 // Action Events
-$_['action_event'] = array(
+$_['action_event']      = array(
 	'controller/*/before' => array(
-		//'event/debug/before',
-		'event/language/before'
+		'event/language/before',
+		//'event/debug/before'
 	),
 	'controller/*/after' => array(
 		'event/language/after',

@@ -66,6 +66,15 @@ $(document).ready(function() {
 		}
 	}
 
+	// Fix for overflow in responsive tables
+	$('.table-responsive').on('show.bs.dropdown', function() {
+		$('.table-responsive').css('overflow', 'inherit');
+	});
+
+	$('.table-responsive').on('hide.bs.dropdown', function() {
+		$('.table-responsive').css('overflow', 'auto');
+	});
+
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
 
@@ -98,7 +107,7 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 	$('#modal-image').remove();
 
 	$.ajax({
-		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $(this).attr('data-target') + '&thumb=' + $(this).attr('data-thumb'),
+		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-thumb')),
 		dataType: 'html',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -115,14 +124,42 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 });
 
 $(document).on('click', '[data-toggle=\'clear\']', function() {
-	var element = this;
-
 	$($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
 
 	$($(this).attr('data-target')).val('');
 });
 
-// Autocomplete */
+// Chain ajax calls.
+class Chain {
+	constructor() {
+		this.start = false;
+		this.data = [];
+	}
+
+	attach(call) {
+		this.data.push(call);
+
+		if (!this.start) {
+			this.execute();
+		}
+	}
+
+	execute() {
+		if (this.data.length) {
+			this.start = true;
+
+			(this.data.shift())().done(function() {
+				chain.execute();
+			});
+		} else {
+			this.start = false;
+		}
+	}
+}
+
+var chain = new Chain();
+
+// Autocomplete
 (function($) {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
@@ -134,7 +171,11 @@ $(document).on('click', '[data-toggle=\'clear\']', function() {
 
 			$.extend(this, option);
 
-			$(this).wrap('<div class="dropdown">');
+			if (!$(this).parent().hasClass('input-group')) {
+				$(this).wrap('<div class="dropdown">');
+			} else {
+				$(this).parent().wrap('<div class="dropdown">');
+			}
 
 			$this.attr('autocomplete', 'off');
 			$this.active = false;

@@ -134,7 +134,6 @@ class ControllerInstallStep2 extends Controller {
 		}
 
 		$db = array(
-			'mysql',
 			'mysqli',
 			'pdo',
 			'pgsql'

@@ -1,7 +1,5 @@
 <?php
 class ControllerMarketingContact extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('marketing/contact');
 
@@ -229,8 +227,6 @@ class ControllerMarketingContact extends Controller {
 							$mail->send();
 						}
 					}
-				} else {
-					$json['error']['email'] = $this->language->get('error_email');
 				}
 			}
 		}

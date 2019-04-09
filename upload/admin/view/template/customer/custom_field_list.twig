@@ -48,6 +48,11 @@
                     {% else %}
                       <a href="{{ sort_type }}">{{ column_type }}</a>
                     {% endif %}</td>
+                  <td class="text-left">{% if sort == 'cf.status' %}
+                      <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                    {% else %}
+                      <a href="{{ sort_status }}">{{ column_status }}</a>
+                    {% endif %}</td>
                   <td class="text-right">{% if sort == 'cf.sort_order' %}
                       <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
@@ -60,21 +65,23 @@
                 {% if custom_fields %}
                   {% for custom_field in custom_fields %}
                     <tr>
-                      <td class="text-center">{% if custom_field.custom_field_id in selected %}
-                          <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" checked="checked"/>
-                        {% else %}
-                          <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}"/>
-                        {% endif %}</td>
-                      <td class="text-left">{{ custom_field.name }}</td>
-                      <td class="text-left">{{ custom_field.location }}</td>
-                      <td class="text-left">{{ custom_field.type }}</td>
-                      <td class="text-right">{{ custom_field.sort_order }}</td>
-                      <td class="text-right"><a href="{{ custom_field.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+                    <td class="text-center">{% if custom_field.custom_field_id in selected %}
+                        <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" checked="checked"/>
+                      {% else %}
+                        <input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}"/>
+                      {% endif %}</td>
+                    <td class="text-left">{{ custom_field.name }}</td>
+                    <td class="text-left">{{ custom_field.location }}</td>
+                    <td class="text-left">{{ custom_field.type }}</td>
+                    <td class="text-left">{% if custom_field.status %}
+                    <span class="badge badge-success">{{ text_enabled }}</span>{% else %}<span class="badge badge-danger">{{ text_disabled }}</span>{% endif %}</td>
+                    <td class="text-right">{{ custom_field.sort_order }}</td>
+                    <td class="text-right"><a href="{{ custom_field.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                     </tr>
                   {% endfor %}
                 {% else %}
                   <tr>
-                    <td class="text-center" colspan="6">{{ text_no_results }}</td>
+                    <td class="text-center" colspan="7">{{ text_no_results }}</td>
                   </tr>
                 {% endif %}
               </tbody>

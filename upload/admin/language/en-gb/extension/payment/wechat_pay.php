@@ -32,7 +32,7 @@ $_['entry_sort_order']               = 'Sort Order';
 // Help
 $_['help_total']                     = 'The checkout total the order must reach before this payment method becomes active';
 $_['help_currency']                  = 'The currency customer paid merchant!';
-$_['help_wechat_pay_setup']          = '<a target="_blank" href="http://www.opencart.cn/docs/wechat-pay">Click here</a> to learn how to set up Wechat Pay account.';
+$_['help_wechat_pay_setup']          = '<a target="_blank" href="https://www.opencart.cn/docs/wechat-pay">Click here</a> to learn how to set up Wechat Pay account.';
 
 // Error
 $_['error_permission']               = 'Warning: You do not have permission to modify payment Wechat!';

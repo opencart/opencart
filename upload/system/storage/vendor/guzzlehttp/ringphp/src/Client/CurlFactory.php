@@ -360,7 +360,7 @@ class CurlFactory
                     unset($options[CURLOPT_CAINFO]);
                     $options[CURLOPT_SSL_VERIFYHOST] = 0;
                     $options[CURLOPT_SSL_VERIFYPEER] = false;
-                    continue;
+                    continue 2;
                 }
 
                 $options[CURLOPT_SSL_VERIFYHOST] = 2;
@@ -379,7 +379,7 @@ class CurlFactory
             case 'decode_content':
 
                 if ($value === false) {
-                    continue;
+                    continue 2;
                 }
 
                 $accept = Core::firstHeader($request, 'Accept-Encoding');

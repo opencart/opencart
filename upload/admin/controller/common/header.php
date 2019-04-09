@@ -44,8 +44,8 @@ class ControllerCommonHeader extends Controller {
 				$data['username']  = $user_info['username'];
 				$data['user_group'] = $user_info['user_group'];
 	
-				if (is_file(DIR_IMAGE . $user_info['image'])) {
-					$data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
+				if (is_file(DIR_IMAGE . html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'))) {
+					$data['image'] = $this->model_tool_image->resize(html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'), 45, 45);
 				}
 			} 		
 			

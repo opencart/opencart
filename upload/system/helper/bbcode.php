@@ -1,5 +1,5 @@
 <?php
-/* BBCode Converter that converts BBCode writen in ckeditor */
+/* BBCode Converter that converts BBCode written for OpenCart */
 function bbcode_decode($string) {
 	$pattern = array();
 	$replace = array();
@@ -42,7 +42,7 @@ function bbcode_decode($string) {
 
 	// Image
 	$pattern[8] = '/\[img\](.*?)\[\/img\]/is';
-	$replace[8] = '<img src="$1" alt="" class="img-responsive" />';
+	$replace[8] = '<img src="$1" alt="" class="img-fluid" />';
 
 	// URL
 	$pattern[9] = '/\[url\](.*?)\[\/url\]/is';

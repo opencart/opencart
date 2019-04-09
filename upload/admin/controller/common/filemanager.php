@@ -75,9 +75,9 @@ class ControllerCommonFileManager extends Controller {
 
 					$data['images'][] = array(
 						'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 136, 136),
-						'name' => $name,
-						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-						'href' => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
+						'name'  => $name,
+						'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
+						'href'  => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 					);
 				}
 			}
@@ -194,13 +194,12 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Get total number of files and directories
-		$pagination = new Pagination();
-		$pagination->total = count(array_merge((array)$directories, (array)$files));
-		$pagination->page = $page;
-		$pagination->limit = 16;
-		$pagination->url = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}');
-
-		$data['pagination'] = $pagination->render();
+		$data['pagination'] = $this->load->controller('common/pagination', array(
+			'total' => count(array_merge((array)$directories, (array)$files)),
+			'page'  => $page,
+			'limit' => 16,
+			'url'   => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		));
 
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
@@ -246,10 +245,10 @@ class ControllerCommonFileManager extends Controller {
 			foreach ($files as $file) {
 				if (is_file($file['tmp_name'])) {
 					// Sanitize the filename
-					$filename = basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8'));
+					$filename = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
 
 					// Validate the filename length
-					if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
+					if ((utf8_strlen($filename) < 4) || (utf8_strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
@@ -324,7 +323,7 @@ class ControllerCommonFileManager extends Controller {
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			// Sanitize the folder name
-			$folder = basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8'));
+			$folder = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
 			if ((utf8_strlen($folder) < 3) || (utf8_strlen($folder) > 128)) {
@@ -368,8 +367,11 @@ class ControllerCommonFileManager extends Controller {
 
 		// Loop through each path to run validations
 		foreach ($paths as $path) {
-			// Check path exsists
-			if ($path == DIR_IMAGE . 'catalog' || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path) . '/'), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+			// Convert any html encoded characters.
+			$path = html_entity_decode($path, ENT_QUOTES, 'UTF-8');
+
+			// Check path exists
+			if (($path == DIR_IMAGE . 'catalog') || (substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog')) {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;
@@ -379,13 +381,13 @@ class ControllerCommonFileManager extends Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				$path = rtrim(DIR_IMAGE . $path, '/');
+				$path = rtrim(DIR_IMAGE . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/');
 
 				// If path is just a file delete it
 				if (is_file($path)) {
 					unlink($path);
 
-				// If path is a directory beging deleting each file and sub folder
+				// If path is a directory begin deleting each file and sub folder
 				} elseif (is_dir($path)) {
 					$files = array();
 

@@ -34,23 +34,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()
 				);
 			}
-
-			if ($this->user->hasPermission('access', 'catalog/product_option')) {
-				$catalog[] = array(
-					'name'	   => $this->language->get('text_product_option'),
-					'href'     => $this->url->link('catalog/product_option', 'user_token=' . $this->session->data['user_token']) ,
-					'children' => array()
-				);
-			}
-
-			if ($this->user->hasPermission('access', 'catalog/product_variant')) {
-				$catalog[] = array(
-					'name'	   => $this->language->get('text_product_variant'),
-					'href'     => $this->url->link('catalog/product_variant', 'user_token=' . $this->session->data['user_token']) ,
-					'children' => array()
-				);
-			}
-
+			
 			if ($this->user->hasPermission('access', 'catalog/recurring')) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_recurring'),
@@ -363,6 +347,14 @@ class ControllerCommonColumnLeft extends Controller {
 				$customer[] = array(
 					'name'	   => $this->language->get('text_customer_approval'),
 					'href'     => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token']),
+					'children' => array()
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'customer/gdpr')) {
+				$customer[] = array(
+					'name'	   => $this->language->get('text_gdpr'),
+					'href'     => $this->url->link('customer/gdpr', 'user_token=' . $this->session->data['user_token']),
 					'children' => array()
 				);
 			}

@@ -9,8 +9,6 @@ class ControllerMailReview extends Controller {
 			$product_info = $this->model_catalog_product->getProduct((int)$args[0]);
 
 			if ($product_info) {
-				$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-
 				$data['text_waiting'] = $this->language->get('text_waiting');
 
 				$data['text_product'] = $this->language->get('text_product');
@@ -34,7 +32,7 @@ class ControllerMailReview extends Controller {
 				$mail->setTo($this->config->get('config_email'));
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject($subject);
+				$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
 				$mail->setText($this->load->view('mail/review', $data));
 				$mail->send();
 

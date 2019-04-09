@@ -2,7 +2,7 @@
 class ControllerStartupStartup extends Controller {
 	public function index() {
 		// Store
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/') . "'");
 
 		if (isset($this->request->get['store_id'])) {
 			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
@@ -30,46 +30,41 @@ class ControllerStartupStartup extends Controller {
 		// Set time zone
 		if ($this->config->get('config_timezone')) {
 			date_default_timezone_set($this->config->get('config_timezone'));
+
+			// Sync PHP and DB time zones.
+			$this->db->query("SET time_zone = '" . $this->db->escape(date('P')) . "'");
 		}
 
+		// Session
+		if (isset($this->request->get['route']) && substr((string)$this->request->get['route'], 0, 4) == 'api/') {
+			$this->load->model('setting/api');
 
+			$this->model_setting_api->cleanApiSessions();
 
-		/*
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE ORDER BY store_id ASC");
+			// Make sure the IP is allowed
+			$api_info = $this->model_setting_api->getApiByToken($this->request->get['api_token']);
 
-		// Config Autoload
-		foreach ($query->rows as $result) {
-			$loader->config($result['catalog/']);
-		}
+			if ($api_info) {
+				$this->session->start($this->request->get['api_token']);
 
-		// Language Autoload
-		if ($config->has('language_autoload')) {
-			foreach ($config->get('language_autoload') as $value) {
-				$loader->language($value);
+				$this->model_setting_api->updateApiSession($api_info['api_session_id']);
 			}
+		} else {
+			if (isset($this->request->cookie[$this->config->get('session_name')])) {
+				$session_id = $this->request->cookie[$this->config->get('session_name')];
+			} else {
+				$session_id = '';
+			}
+
+			$this->session->start($session_id);
+
+			setcookie($this->config->get('session_name'), $this->session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 		}
 
-		// Library Autoload
-		if ($config->has('library_autoload')) {
-			foreach ($config->get('library_autoload') as $value) {
-				$loader->library($value);
-			}
+		// Response output compression level
+		if ($this->config->get('config_compression')) {
+			$this->response->setCompression($this->config->get('config_compression'));
 		}
-
-		// Model Autoload
-		if ($config->has('model_autoload')) {
-			foreach ($config->get('model_autoload') as $value) {
-				$loader->model($value);
-			}
-		}
-
-		// Pre Actions
-		if ($config->has('action_pre_action')) {
-			foreach ($config->get('action_pre_action') as $value) {
-				$route->addPreAction(new Action($value));
-			}
-		}
-		*/
 
 		// Theme
 		$this->config->set('template_cache', $this->config->get('developer_theme'));

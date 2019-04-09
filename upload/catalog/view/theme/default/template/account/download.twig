@@ -2,18 +2,11 @@
 <div id="account-download" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    {% if column_left and column_right %}
-      {% set class = 'col-sm-6' %}
-    {% elseif column_left or column_right %}
-      {% set class = 'col-sm-9' %}
-    {% else %}
-      {% set class = 'col-sm-12' %}
-    {% endif %}
-    <div id="content" class="{{ class }}">{{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       {% if downloads %}
         <div class="table-responsive">
@@ -34,7 +27,7 @@
                   <td class="text-left">{{ download.name }}</td>
                   <td class="text-left">{{ download.size }}</td>
                   <td class="text-left">{{ download.date_added }}</td>
-                  <td><a href="{{ download.href }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fa fa-cloud-download"></i></a></td>
+                  <td><a href="{{ download.href }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fas fa-cloud-download"></i></a></td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -47,7 +40,7 @@
       {% else %}
         <p>{{ text_no_results }}</p>
       {% endif %}
-      <div class="buttons clearfix">
+      <div class="d-inline-block pt-2 pd-2 w-100">
         <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>

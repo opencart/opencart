@@ -1,6 +1,13 @@
 CHANGELOG for 2.x
 =================
 
+* 2.7.1 (2018-01-07)
+
+    *   Fix: file_exists warning when resolving with long strings.
+        (#130 by @sbesselsen)
+    *   Improve performance by prefixing all global functions calls with \ to skip the look up and resolve process and go straight to the global function.
+        (#133 by @WyriHaximus)
+
 * 2.7.0 (2018-06-13)
 
     *   Feature: Improve memory consumption for pending promises by using static internal callbacks without binding to self.

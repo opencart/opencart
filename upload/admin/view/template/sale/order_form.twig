@@ -49,7 +49,8 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                  <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+                  <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                 </div>
               </div>
               <div class="form-group row">
@@ -251,10 +252,10 @@
                           <small>{{ option.name }}: {{ option.value }}</small>
                           <br/>
                           {% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
-                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/>
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
                           {% endif %}
                           {% if option.type == 'checkbox' %}
-                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}"/>
+                            <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
                           {% endif %}
                           {% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
                             <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
@@ -265,7 +266,7 @@
                         <input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
                       <td class="text-right"></td>
                       <td class="text-right"></td>
-                      <td class="text-center"></td>
+                      <td class="text-right"></td>
                     </tr>
                     {% set product_row = product_row + 1 %}
                   {% endfor %}
@@ -279,7 +280,7 @@
                       <td class="text-right">1</td>
                       <td class="text-right"></td>
                       <td class="text-right"></td>
-                      <td class="text-center"></td>
+                      <td class="text-right"></td>
                     </tr>
                     {% set voucher_row = voucher_row + 1 %}
                   {% endfor %}
@@ -1905,7 +1906,7 @@ $('#button-shipping-address').on('click', function() {
 											}
 										}
 									} else {
-										html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
+										html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
 									}
 
 									html += '</optgroup>';
@@ -2376,7 +2377,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><div class="input-group-append"><button type="button" data-toggle="tooltip" title="{{ button_refresh }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-sync"></i></button></div></div></td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-right" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 
 					if (product['shipping'] != 0) {
@@ -2414,7 +2415,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['price'] + '</td>';
 					html += '  <td class="text-right">' + voucher['price'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-right" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 				}
 			}

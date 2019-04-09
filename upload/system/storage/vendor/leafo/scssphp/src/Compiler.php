@@ -316,9 +316,16 @@ class Compiler
         $out->parent       = $this->scope;
         $out->selectors    = $selectors;
         $out->depth        = $this->env->depth;
-        $out->sourceName   = $this->env->block->sourceName;
-        $out->sourceLine   = $this->env->block->sourceLine;
-        $out->sourceColumn = $this->env->block->sourceColumn;
+
+        if ($this->env->block instanceof Block) {
+            $out->sourceName   = $this->env->block->sourceName;
+            $out->sourceLine   = $this->env->block->sourceLine;
+            $out->sourceColumn = $this->env->block->sourceColumn;
+        } else {
+            $out->sourceName   = null;
+            $out->sourceLine   = null;
+            $out->sourceColumn = null;
+        }
 
         return $out;
     }
@@ -2694,7 +2701,9 @@ class Compiler
                 $b = round($b);
 
                 if (count($value) === 5 && $value[4] !== 1) { // rgba
-                    return 'rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . $value[4] . ')';
+                    $a = new Node\Number($value[4], '');
+
+                    return 'rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . $a . ')';
                 }
 
                 $h = sprintf('#%02x%02x%02x', $r, $g, $b);
@@ -3646,7 +3655,7 @@ class Compiler
             return false;
         }
 
-        list($sorted, $kwargs) = $this->sortArgs($prototype, $args);
+        @list($sorted, $kwargs) = $this->sortArgs($prototype, $args);
 
         if ($name !== 'if' && $name !== 'call') {
             foreach ($sorted as &$val) {
@@ -3705,7 +3714,7 @@ class Compiler
             $key = $key[1];
 
             if (empty($key)) {
-                $posArgs[] = $value;
+                $posArgs[] = empty($arg[2]) ? $value : $arg;
             } else {
                 $keyArgs[$key] = $value;
             }
@@ -4257,20 +4266,38 @@ class Compiler
     {
         $name = $this->compileStringContent($this->coerceString($this->reduce(array_shift($args), true)));
 
-        $args = array_map(
-            function ($a) {
-                return [null, $a, false];
-            },
-            $args
-        );
+        $posArgs = [];
+
+        foreach ($args as $arg) {
+            if (empty($arg[0])) {
+                if ($arg[2] === true) {
+                    $tmp = $this->reduce($arg[1]);
+
+                    if ($tmp[0] === Type::T_LIST) {
+                        foreach ($tmp[2] as $item) {
+                            $posArgs[] = [null, $item, false];
+                        }
+                    } else {
+                        $posArgs[] = [null, $tmp, true];
+                    }
+
+                    continue;
+                }
+
+                $posArgs[] = [null, $this->reduce($arg), false];
+                continue;
+            }
+
+            $posArgs[] = [null, $arg, false];
+        }
 
         if (count($kwargs)) {
             foreach ($kwargs as $key => $value) {
-                $args[] = [[Type::T_VARIABLE, $key], $value, false];
+                $posArgs[] = [[Type::T_VARIABLE, $key], $value, false];
             }
         }
 
-        return $this->reduce([Type::T_FUNCTION_CALL, $name, $args]);
+        return $this->reduce([Type::T_FUNCTION_CALL, $name, $posArgs]);
     }
 
     protected static $libIf = ['condition', 'if-true', 'if-false'];
@@ -4331,7 +4358,7 @@ class Compiler
     protected function libRgba($args)
     {
         if ($color = $this->coerceColor($args[0])) {
-            $num = ! isset($args[1]) ? $args[3] : $args[1];
+            $num = isset($args[3]) ? $args[3] : $args[1];
             $alpha = $this->assertNumber($num);
             $color[4] = $alpha;
 
@@ -4526,7 +4553,7 @@ class Compiler
         ];
 
         if ($firstAlpha != 1.0 || $secondAlpha != 1.0) {
-            $new[] = $firstAlpha * $weight + $secondAlpha * ($weight - 1);
+            $new[] = $firstAlpha * $weight + $secondAlpha * (1 - $weight);
         }
 
         return $this->fixColor($new);
@@ -4829,7 +4856,7 @@ class Compiler
             if (null === $unit) {
                 $unit = $number[2];
                 $originalUnit = $item->unitStr();
-            } elseif ($unit !== $number[2]) {
+            } elseif ($number[1] && $unit !== $number[2]) {
                 $this->throwError('Incompatible units: "%s" and "%s".', $originalUnit, $item->unitStr());
                 break;
             }
@@ -4976,7 +5003,21 @@ class Compiler
         $map1 = $this->assertMap($args[0]);
         $map2 = $this->assertMap($args[1]);
 
-        return [Type::T_MAP, array_merge($map1[1], $map2[1]), array_merge($map1[2], $map2[2])];
+        foreach ($map2[1] as $i2 => $key2) {
+            $key = $this->compileStringContent($this->coerceString($key2));
+
+            foreach ($map1[1] as $i1 => $key1) {
+                if ($key === $this->compileStringContent($this->coerceString($key1))) {
+                    $map1[2][$i1] = $map2[2][$i2];
+                    continue 2;
+                }
+            }
+
+            $map1[1][] = $map2[1][$i2];
+            $map1[2][] = $map2[2][$i2];
+        }
+
+        return $map1;
     }
 
     protected static $libKeywords = ['args'];

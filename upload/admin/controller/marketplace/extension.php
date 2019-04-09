@@ -1,7 +1,5 @@
 <?php
 class ControllerMarketplaceExtension extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('marketplace/extension');
 
@@ -33,21 +31,24 @@ class ControllerMarketplaceExtension extends Controller {
 		
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
-			
-			// Compatibility code for old extension folders
-			$this->load->language('extension/extension/' . $extension, 'extension');
-		
-			if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
-				$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
-		
-				$data['categories'][] = array(
-					'code' => $extension,
-					'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) .')',
-					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
-				);
-			}			
+
+			if ($extension != 'promotion') {
+				// Compatibility code for old extension folders
+				$this->load->language('extension/extension/' . $extension, 'extension');
+
+				if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
+					$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
+
+					$data['categories'][] = array(
+						'code' => $extension,
+						'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) . ')'
+					);
+				}
+			}
 		}
-		
+
+		$data['user_token'] = $this->request->get['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

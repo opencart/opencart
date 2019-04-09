@@ -75,10 +75,12 @@ class ControllerExtensionPaymentAlipayCross extends Controller {
 			$data['payment_alipay_cross_currency'] = $this->config->get('payment_alipay_cross_currency');
 		}
 
+		$data['currencies'] = array();
+
 		$this->load->model('localisation/currency');
 
 		$currencies = $this->model_localisation_currency->getCurrencies();
-		$data['currencies'] = array();
+
 		foreach ($currencies as $currency) {
 			if (in_array($currency['code'], $this->currencies)) {
 				$data['currencies'][] = array(

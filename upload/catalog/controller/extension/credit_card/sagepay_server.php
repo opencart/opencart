@@ -45,20 +45,19 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 			$data['delete'] = $this->url->link('extension/credit_card/sagepay_server/delete', 'language=' . $this->config->get('config_language') . '&card_id=');
 
 			if (isset($this->request->get['page'])) {
-				$page = $this->request->get['page'];
+				$page = (int)$this->request->get['page'];
 			} else {
 				$page = 1;
 			}
 
 			$cards_total = count($data['cards']);
 
-			$pagination = new Pagination();
-			$pagination->total = $cards_total;
-			$pagination->page = $page;
-			$pagination->limit = 10;
-			$pagination->url = $this->url->link('extension/credit_card/sagepay_server', 'language=' . $this->config->get('config_language') . '&page={page}');
-
-			$data['pagination'] = $pagination->render();
+			$data['pagination'] = $this->load->controller('common/pagination', array(
+				'total' => $cards_total,
+				'page'  => $page,
+				'limit' => 10,
+				'url'   => $this->url->link('extension/credit_card/sagepay_server', 'language=' . $this->config->get('config_language') . '&page={page}')
+			));
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($cards_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($cards_total - 10)) ? $cards_total : ((($page - 1) * 10) + 10), $cards_total, ceil($cards_total / 10));
 		} else {

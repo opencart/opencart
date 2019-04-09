@@ -5,11 +5,18 @@
     var submitGtag = function(ecomm_prodid) {
         console.log("[GTAG] Submit product view: " + ecomm_prodid);
 
-        gtag('event', 'item_view', {
-            'ecomm_prodid': ecomm_prodid,
-            'ecomm_pagetype': "product",
-            'ecomm_totalvalue': {{ ecomm_totalvalue }},
-            'ecomm_category': "{{ ecomm_category }}"
+        gtag('event', 'view_item', {
+            'send_to': '{{ send_to }}',
+            'ecomm_prodid': [ecomm_prodid],
+            'items': [
+                {
+                    'brand': '{{ brand }}',
+                    'category': '{{ category }}',
+                    'id': ecomm_prodid,
+                    'name': '{{ name }}',
+                    'quantity': 1
+                }
+            ]
         });
     };
 

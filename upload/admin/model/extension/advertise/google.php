@@ -142,6 +142,12 @@ class ModelExtensionAdvertiseGoogle extends Model {
         return $this->db->query($sql)->num_rows > 0;
     }
 
+    public function getAdvertisedCount($store_id) {
+        $result = $this->db->query("SELECT COUNT(product_id) as total FROM `" . DB_PREFIX . "googleshopping_product_target` WHERE store_id=" . (int)$store_id . " GROUP BY `product_id`");
+
+        return $result->num_rows > 0 ? (int)$result->row['total'] : 0;
+    }
+
     public function getMapping($store_id) {
         $sql = "SELECT * FROM `" . DB_PREFIX . "googleshopping_category` WHERE store_id=" . (int)$store_id;
 
@@ -261,7 +267,7 @@ class ModelExtensionAdvertiseGoogle extends Model {
     }
 
     public function addTarget($target, $store_id) {
-        $sql = "INSERT INTO `" . DB_PREFIX . "googleshopping_target` SET `store_id`=" . (int)$store_id . ", `campaign_name`='" . $this->db->escape($target['campaign_name']) . "', `country`='" . $this->db->escape($target['country']) . "', `budget`='" . (float)$target['budget'] . "', `feeds`='" . $this->db->escape(json_encode($target['feeds'])) . "', `status`='" . $this->db->escape($target['status']) . "'";
+        $sql = "INSERT INTO `" . DB_PREFIX . "googleshopping_target` SET `store_id`=" . (int)$store_id . ", `campaign_name`='" . $this->db->escape($target['campaign_name']) . "', `country`='" . $this->db->escape($target['country']) . "', `budget`='" . (float)$target['budget'] . "', `feeds`='" . $this->db->escape(json_encode($target['feeds'])) . "', `date_added`=NOW(), `roas`=" . (int)$target['roas'] . " , `status`='" . $this->db->escape($target['status']) . "'";
 
         $this->db->query($sql);
 
@@ -600,6 +606,8 @@ class ModelExtensionAdvertiseGoogle extends Model {
             `country` varchar(2) NOT NULL DEFAULT '',
             `budget` decimal(15,4) NOT NULL DEFAULT '0.0000',
             `feeds` text NOT NULL,
+            `date_added` DATE,
+            `roas` INT(11) NOT NULL DEFAULT '0',
             `status` ENUM('paused','active') NOT NULL DEFAULT 'paused',
             INDEX `store_id` (`store_id`),
             PRIMARY KEY (`advertise_google_target_id`)
@@ -623,6 +631,20 @@ class ModelExtensionAdvertiseGoogle extends Model {
             }
 
             $this->db->query("CREATE UNIQUE INDEX product_id_store_id ON `" . DB_PREFIX . "googleshopping_product` (product_id, store_id)");
+        }
+
+        $has_date_added_column = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "googleshopping_target` WHERE Field='date_added'")->num_rows > 0;
+
+        if (!$has_date_added_column) {
+            $this->db->query("ALTER TABLE " . DB_PREFIX . "googleshopping_target ADD COLUMN date_added DATE");
+
+            $this->db->query("UPDATE " . DB_PREFIX . "googleshopping_target SET date_added = NOW() WHERE date_added IS NULL");
+        }
+
+        $has_roas_column = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "googleshopping_target` WHERE Field='roas'")->num_rows > 0;
+
+        if (!$has_roas_column) {
+            $this->db->query("ALTER TABLE " . DB_PREFIX . "googleshopping_target ADD COLUMN roas INT(11) NOT NULL DEFAULT '0'");
         }
     }
 

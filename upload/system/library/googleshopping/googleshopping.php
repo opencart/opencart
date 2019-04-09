@@ -12,6 +12,7 @@ class Googleshopping extends Library {
     const API_URL = 'https://campaigns.opencart.com/';
     const CACHE_CAMPAIGN_REPORT = 21600; // In seconds
     const CACHE_PRODUCT_REPORT = 21600; // In seconds
+    const ROAS_WAIT_INTERVAL = 1209600; // In seconds
     const MICROAMOUNT = 1000000;
     const DEBUG_LOG_FILENAME = 'googleshopping.%s.log';
     const ENDPOINT_ACCESS_TOKEN = 'api/access_token';
@@ -37,7 +38,7 @@ class Googleshopping extends Library {
     const SCOPES = 'OC_FEED REPORT ADVERTISE';
 
     private $event_snippet;
-    private $purchase_total;
+    private $purchase_data;
     private $store_url;
     private $store_name;
     private $endpoint_url;
@@ -49,12 +50,12 @@ class Googleshopping extends Library {
 
         $this->store_id = $store_id;
 
+        $this->load->model('setting/setting');
+
         if ($this->store_id === 0) {
             $this->store_url = basename(DIR_TEMPLATE) == 'template' ? HTTPS_CATALOG : HTTPS_SERVER;
             $this->store_name = $this->config->get('config_name');
         } else {
-            $this->load->model('setting/setting');
-
             $this->store_url = $this->model_setting_setting->getSettingValue('config_ssl', $store_id);
             $this->store_name = $this->model_setting_setting->getSettingValue('config_name', $store_id);
         }
@@ -63,7 +64,7 @@ class Googleshopping extends Library {
 
         $this->loadStore($this->store_id);
 
-        $this->debug_log = new \Log(sprintf(self::DEBUG_LOG_FILENAME, $this->store_id));
+        $this->debug_log = new Log(sprintf(self::DEBUG_LOG_FILENAME, $this->store_id));
     }
 
     public function getStoreUrl() {
@@ -138,7 +139,7 @@ class Googleshopping extends Library {
     }
 
     public function editTarget($target_id, $target) {
-        $sql = "UPDATE `" . DB_PREFIX . "googleshopping_target` SET `campaign_name`='" . $this->db->escape($target['campaign_name']) . "', `country`='" . $this->db->escape($target['country']) . "', `budget`='" . (float)$target['budget'] . "', `feeds`='" . $this->db->escape(json_encode($target['feeds'])) . "', `status`='" . $this->db->escape($target['status']) . "' WHERE `advertise_google_target_id`='" . (int)$target_id . "'";
+        $sql = "UPDATE `" . DB_PREFIX . "googleshopping_target` SET `campaign_name`='" . $this->db->escape($target['campaign_name']) . "', `country`='" . $this->db->escape($target['country']) . "', `budget`='" . (float)$target['budget'] . "', `feeds`='" . $this->db->escape(json_encode($target['feeds'])) . "', `roas`='" . (int)$target['roas'] . "', `status`='" . $this->db->escape($target['status']) . "' WHERE `advertise_google_target_id`='" . (int)$target_id . "'";
 
         $this->db->query($sql);
 
@@ -241,6 +242,71 @@ class Googleshopping extends Library {
         return !empty($result) ? $result : null;
     }
 
+    // A copy of the OpenCart SEO URL rewrite method.
+    public function rewrite($link) {
+        $url_info = parse_url(str_replace('&amp;', '&', $link));
+
+        $url = '';
+
+        $data = array();
+
+        parse_str($url_info['query'], $data);
+
+        foreach ($data as $key => $value) {
+            if (isset($data['route'])) {
+                if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
+                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+                    if ($query->num_rows && $query->row['keyword']) {
+                        $url .= '/' . $query->row['keyword'];
+
+                        unset($data[$key]);
+                    }
+                } elseif ($key == 'path') {
+                    $categories = explode('_', $value);
+
+                    foreach ($categories as $category) {
+                        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'category_id=" . (int)$category . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+                        if ($query->num_rows && $query->row['keyword']) {
+                            $url .= '/' . $query->row['keyword'];
+                        } else {
+                            $url = '';
+
+                            break;
+                        }
+                    }
+
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        if ($url) {
+            unset($data['route']);
+
+            $query = '';
+
+            if ($data) {
+                foreach ($data as $key => $value) {
+                    $query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode((is_array($value) ? http_build_query($value) : (string)$value));
+                }
+
+                if ($query) {
+                    $query = '?' . str_replace('&', '&amp;', trim($query, '&'));
+                }
+            }
+
+            return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
+        } else {
+            return $link;
+        }
+    }
+
+    protected function convertedTaxedPrice($value, $tax_class_id, $currency) {
+        return number_format($this->currency->convert($this->tax->calculate($value, $tax_class_id, $this->config->get('config_tax')), $this->config->get('config_currency'), $currency), 2, '.', '');
+    }
+
     protected function getFeedProducts($page, $language_id, $currency) {
         $sql = $this->getFeedProductsQuery($page, $language_id);
 
@@ -253,15 +319,40 @@ class Googleshopping extends Library {
                 if (!empty($row['image']) && is_file(DIR_IMAGE . $row['image']) && is_readable(DIR_IMAGE . $row['image'])) {
                     $image = $this->resize($row['image'], 250, 250);
                 } else {
-                    throw new \RuntimeException("Invalid image, or error in resizing.");
+                    throw new \RuntimeException("Image does not exist or cannot be read.");
                 }
             } catch (\RuntimeException $e) {
+                $this->output(sprintf("Error for product %s: %s", $row['model'], $e->getMessage()));
+
                 $image = $this->resize('no_image.png', 250, 250);
             }
 
             $url = new \Url($this->store_url, $this->store_url);
 
-            $price = number_format($this->currency->convert($row['price'], $this->config->get('config_currency'), $currency), 2, '.', '');
+            if ($this->config->get('config_seo_url')) {
+                $url->addRewrite($this);
+            }
+
+            $price = $this->convertedTaxedPrice($row['price'], $row['tax_class_id'], $currency);
+
+            $special_price = null;
+
+            if ($row['special_price'] !== null) {
+                $parts = explode('<[S]>', $row['special_price']);
+
+                $special_price = array(
+                    'value' => $this->convertedTaxedPrice($parts[0], $row['tax_class_id'], $currency),
+                    'currency' => $currency
+                );
+
+                if ($parts[1] >= '1970-01-01') {
+                    $special_price['start'] = $parts[1];
+                }
+
+                if ($parts[2] >= '1970-01-01') {
+                    $special_price['end'] = $parts[2];
+                }
+            }
 
             $campaigns = array();
             $custom_label_0 = '';
@@ -279,29 +370,43 @@ class Googleshopping extends Library {
                 } while (!empty($campaigns));
             }
 
-            // Reference: https://support.google.com/merchants/answer/7052112?hl=en-GB
+            $mpn = !empty($row['mpn']) ? $row['mpn'] : '';
+
+            if (!empty($row['upc'])) {
+                $gtin = $row['upc'];
+            } else if (!empty($row['ean'])) {
+                $gtin = $row['ean'];
+            } else if (!empty($row['jan'])) {
+                $gtin = $row['jan'];
+            } else if (!empty($row['isbn'])) {
+                $gtin = $row['isbn'];
+            } else {
+                $gtin = '';
+            }
+
             $base_row = array(
                 'adult' => !empty($row['adult']) ? 'yes' : 'no',
                 'age_group' => !empty($row['age_group']) ? $row['age_group'] : '',
                 'availability' => (int)$row['quantity'] > 0 && !$this->config->get('config_maintenance') ? 'in stock' : 'out of stock',
-                'brand' => $row['brand'],
+                'brand' => $this->sanitizeText($row['brand'], 70),
                 'color' => '',
                 'condition' => !empty($row['condition']) ? $row['condition'] : '',
-                'custom_label_0' => $custom_label_0,
-                'custom_label_1' => $custom_label_1,
-                'custom_label_2' => $custom_label_2,
-                'custom_label_3' => $custom_label_3,
-                'custom_label_4' => $custom_label_4,
+                'custom_label_0' => $this->sanitizeText($custom_label_0, 100),
+                'custom_label_1' => $this->sanitizeText($custom_label_1, 100),
+                'custom_label_2' => $this->sanitizeText($custom_label_2, 100),
+                'custom_label_3' => $this->sanitizeText($custom_label_3, 100),
+                'custom_label_4' => $this->sanitizeText($custom_label_4, 100),
                 'description' => $this->sanitizeText($row['description'], 5000),
                 'gender' => !empty($row['gender']) ? $row['gender'] : '',
                 'google_product_category' => !empty($row['google_product_category']) ? $row['google_product_category'] : '',
-                'id' => $row['product_id'],
-                'identifier_exists' => !empty($row['brand']) && !empty($row['mpn']) ? 'yes' : 'no',
-                'image_link' => $image,
+                'id' => $this->sanitizeText($row['product_id'], 50),
+                'identifier_exists' => !empty($row['brand']) && !empty($mpn) ? 'yes' : 'no',
+                'image_link' => $this->sanitizeText($image, 2000),
                 'is_bundle' => !empty($row['is_bundle']) ? 'yes' : 'no',
-                'item_group_id' => $row['product_id'],
-                'link' => html_entity_decode($url->link('product/product', 'product_id=' . $row['product_id'], true), ENT_QUOTES, 'UTF-8'),
-                'mpn' => $row['mpn'],
+                'item_group_id' => $this->sanitizeText($row['product_id'], 50),
+                'link' => $this->sanitizeText(html_entity_decode($url->link('product/product', 'product_id=' . $row['product_id'], true), ENT_QUOTES, 'UTF-8'), 2000),
+                'mpn' => $this->sanitizeText($mpn, 70),
+                'gtin' => $this->sanitizeText($gtin, 14),
                 'multipack' => !empty($row['multipack']) && (int)$row['multipack'] >= 2 ? (int)$row['multipack'] : '', // Cannot be 1!!!
                 'price' => array(
                     'value' => $price,
@@ -313,12 +418,17 @@ class Googleshopping extends Library {
                 'title' => $this->sanitizeText($row['name'], 150)
             );
 
+            // Provide optional special price
+            if ($special_price !== null) {
+                $base_row['special_price'] = $special_price;
+            }
+
             $groups = $this->getGroups($row['product_id'], $language_id, $row['color'], $row['size']);
 
             foreach ($groups as $id => $group) {
                 $base_row['id'] = $id;
-                $base_row['color'] = $group['color'];
-                $base_row['size'] = $group['size'];
+                $base_row['color'] = $this->sanitizeText($group['color'], 40);
+                $base_row['size'] = $this->sanitizeText($group['size'], 100);
 
                 $result[] = $base_row;
             }
@@ -482,24 +592,63 @@ class Googleshopping extends Library {
     }
 
     public function cron() {
+        $this->enableErrorReporting();
+
         $this->load->config('googleshopping/googleshopping');
-        
+
         $report = array();
 
         $report[] = $this->output("Starting CRON task for " . $this->getStoreUrl());
+
+        try {
+            $report[] = $this->output("Refreshing access token.");
+
+            $this->isConnected();
+        } catch (\RuntimeException $e) {
+            $report[] = $this->output($e->getMessage());
+        }
+
+        $default_config_tax = $this->config->get("config_tax");
+        $default_config_store_id = $this->config->get("config_store_id");
+        $default_config_language_id = $this->config->get("config_language_id");
+        $default_config_seo_url = $this->config->get("config_seo_url");
 
         // Do product feed uploads
         foreach ($this->getJobs() as $job) {
             try {
                 $report[] = $this->output("Uploading product feed. Work ID: " . $job['work_id']);
-                
+
+                // Set the tax context for the job
+                if (in_array("US", $job['countries'])) {
+                    // In case the feed is for the US, disable taxes because they are already configured on the merchant level by the extension
+                    $this->config->set("config_tax", 0);
+                }
+
+                // Set the store and language context for the job
+                $this->config->set("config_store_id", $this->store_id);
+                $this->config->set("config_language_id", $job['language_id']);
+                $this->config->set("config_seo_url", $this->model_setting_setting->getSettingValue("config_seo_url", $this->store_id));
+
+                // Do the CRON job
                 $count = $this->doJob($job);
+
+                // Reset the taxes, store, and language to their original state
+                $this->config->set("config_tax", $default_config_tax);
+                $this->config->set("config_store_id", $default_config_store_id);
+                $this->config->set("config_language_id", $default_config_language_id);
+                $this->config->set("config_seo_url", $default_config_seo_url);
 
                 $report[] = $this->output("Uploaded count: " . $count);
             } catch (\RuntimeException $e) {
                 $report[] = $this->output($e->getMessage());
             }
         }
+
+        // Reset the taxes, store, and language to their original state
+        $this->config->set("config_tax", $default_config_tax);
+        $this->config->set("config_store_id", $default_config_store_id);
+        $this->config->set("config_language_id", $default_config_language_id);
+        $this->config->set("config_seo_url", $default_config_seo_url);
 
         // Pull product reports
         $report[] = $this->output("Fetching product reports.");
@@ -567,6 +716,8 @@ class Googleshopping extends Library {
         $report[] = $this->output("Fetched status count: " . $status_count);
 
         $report[] = $this->output("CRON finished!");
+
+        $this->applyNewSetting('advertise_google_cron_last_executed', time());
 
         $this->sendEmailReport($report);
     }
@@ -717,6 +868,28 @@ class Googleshopping extends Library {
         $this->db->query($sql);
     }
 
+    protected function memoryLimitInBytes() {
+        $memory_limit = ini_get('memory_limit');
+
+        if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
+            if ($matches[2] == 'G') {
+                $memory_limit = (int)$matches[1] * 1024 * 1024 * 1024; // nnnG -> nnn GB
+            } else if ($matches[2] == 'M') {
+                $memory_limit = (int)$matches[1] * 1024 * 1024; // nnnM -> nnn MB
+            } else if ($matches[2] == 'K') {
+                $memory_limit = (int)$matches[1] * 1024; // nnnK -> nnn KB
+            }
+        }
+
+        return (int)$memory_limit;
+    }
+
+    protected function enableErrorReporting() {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    }
+
     protected function getProductIdFromTargetSpecificId($target_specific_id) {
         return (int)preg_replace('/^online:[a-z]{2}:[A-Z]{2}:(\d+)-[a-f0-9]{32}$/', '$1', $target_specific_id);
     }
@@ -750,6 +923,7 @@ class Googleshopping extends Library {
 
                     $jobs[] = array(
                         'work_id' => $work['work_id'],
+                        'countries' => isset($work['countries']) && is_array($work['countries']) ? $work['countries'] : array(),
                         'language_id' => $supported_language_id,
                         'currency' => $currency_info['code']
                     );
@@ -828,7 +1002,7 @@ class Googleshopping extends Library {
 
     protected function resize($filename, $width, $height) {
         if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
-            return;
+            throw new \RuntimeException("Invalid image filename: " . DIR_IMAGE . $filename);
         }
 
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
@@ -838,9 +1012,13 @@ class Googleshopping extends Library {
 
         if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
             list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-                 
-            if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
-                return DIR_IMAGE . $image_old;
+            
+            if ($width_orig * $height_orig * 4 > $this->memoryLimitInBytes() * 0.4) {
+                throw new \RuntimeException("Image too large, skipping: " . $image_old);
+            }
+
+            if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
+                throw new \RuntimeException("Unexpected image type, skipping: " . $image_old);
             }
                         
             $path = '';
@@ -870,18 +1048,18 @@ class Googleshopping extends Library {
     }
 
     protected function sanitizeText($text, $limit) {
-        return trim(
-            preg_replace(
-                '~\s+~', 
-                ' ', 
-                substr(
+        return utf8_substr(
+            trim(
+                preg_replace(
+                    '~\s+~', 
+                    ' ', 
                     strip_tags(
                         html_entity_decode(htmlspecialchars_decode($text, ENT_QUOTES), ENT_QUOTES, 'UTF-8')
-                    ),
-                    0,
-                    $limit
+                    )
                 )
-            )
+            ),
+            0,
+            $limit
         );
     }
 
@@ -922,7 +1100,7 @@ class Googleshopping extends Library {
     protected function getFeedProductsQuery($page, $language_id) {
         $this->load->config('googleshopping/googleshopping');
 
-        $sql = "SELECT p.product_id, pd.name, pd.description, p.image, p.quantity, p.price, p.mpn, p.model, IFNULL((SELECT m.name FROM `" . DB_PREFIX . "manufacturer` m WHERE m.manufacturer_id = p.manufacturer_id), '') as brand, (SELECT GROUP_CONCAT(agt.campaign_name SEPARATOR '<[S]>') FROM `" . DB_PREFIX . "googleshopping_product_target` pagt LEFT JOIN `" . DB_PREFIX . "googleshopping_target` agt ON (agt.advertise_google_target_id = pagt.advertise_google_target_id) WHERE pagt.product_id = p.product_id AND pagt.store_id = p2s.store_id GROUP BY pagt.product_id) as campaign_names, pag.google_product_category, pag.condition, pag.adult, pag.multipack, pag.is_bundle, pag.age_group, pag.color, pag.gender, pag.size_type, pag.size_system, pag.size FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p2s.product_id = p.product_id AND p2s.store_id=" . (int)$this->store_id . ") LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (pd.product_id = p.product_id) LEFT JOIN `" . DB_PREFIX . "googleshopping_product` pag ON (pag.product_id = p.product_id AND pag.store_id = p2s.store_id) WHERE p2s.store_id IS NOT NULL AND pd.language_id=" . (int)$language_id . " AND pd.name != '' AND pd.description != '' AND pd.name IS NOT NULL AND pd.description IS NOT NULL AND p.image != '' AND p.status = 1 AND p.date_available <= NOW() AND p.price > 0 ORDER BY p.product_id ASC LIMIT " . (int)(($page - 1) * $this->config->get('advertise_google_push_limit')) . ', ' . (int)$this->config->get('advertise_google_push_limit');
+        $sql = "SELECT p.product_id, pd.name, pd.description, p.image, p.quantity, p.price, p.mpn, p.ean, p.jan, p.isbn, p.upc, p.model, p.tax_class_id, IFNULL((SELECT m.name FROM `" . DB_PREFIX . "manufacturer` m WHERE m.manufacturer_id = p.manufacturer_id), '') as brand, (SELECT GROUP_CONCAT(agt.campaign_name SEPARATOR '<[S]>') FROM `" . DB_PREFIX . "googleshopping_product_target` pagt LEFT JOIN `" . DB_PREFIX . "googleshopping_target` agt ON (agt.advertise_google_target_id = pagt.advertise_google_target_id) WHERE pagt.product_id = p.product_id AND pagt.store_id = p2s.store_id GROUP BY pagt.product_id) as campaign_names, (SELECT CONCAT_WS('<[S]>', ps.price, ps.date_start, ps.date_end) FROM `" . DB_PREFIX . "product_special` ps WHERE ps.product_id=p.product_id AND ps.customer_group_id=" . (int)$this->config->get('config_customer_group_id') . " AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) as special_price, pag.google_product_category, pag.condition, pag.adult, pag.multipack, pag.is_bundle, pag.age_group, pag.color, pag.gender, pag.size_type, pag.size_system, pag.size FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p2s.product_id = p.product_id AND p2s.store_id=" . (int)$this->store_id . ") LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (pd.product_id = p.product_id) LEFT JOIN `" . DB_PREFIX . "googleshopping_product` pag ON (pag.product_id = p.product_id AND pag.store_id = p2s.store_id) WHERE p2s.store_id IS NOT NULL AND pd.language_id=" . (int)$language_id . " AND pd.name != '' AND pd.description != '' AND pd.name IS NOT NULL AND pd.description IS NOT NULL AND p.image != '' AND p.status = 1 AND p.date_available <= NOW() AND p.price > 0 ORDER BY p.product_id ASC LIMIT " . (int)(($page - 1) * $this->config->get('advertise_google_push_limit')) . ', ' . (int)$this->config->get('advertise_google_push_limit');
 
         return $sql;
     }
@@ -935,12 +1113,32 @@ class Googleshopping extends Library {
         return $this->event_snippet;
     }
 
-    public function setPurchaseTotal($total) {
-        $this->purchase_total = $total;
+    public function getEventSnippetSendTo() {
+        $tracker = $this->setting->get('advertise_google_conversion_tracker');
+
+        if (!empty($tracker['google_event_snippet'])) {
+            $matches = array();
+
+            preg_match('~send_to\': \'([a-zA-Z0-9-]*).*\'~', $tracker['google_event_snippet'], $matches);
+
+            return $matches[1];
+        }
+
+        return null;
     }
 
-    public function getPurchaseTotal() {
-        return $this->purchase_total;
+    public function setPurchaseData($total) {
+        $this->purchase_data = $total;
+    }
+
+    public function getPurchaseData() {
+        return $this->purchase_data;
+    }
+
+    public function convertAndFormat($price, $currency) {
+        $currency_converter = new \Cart\Currency($this->registry);
+        $converted_price = $currency_converter->convert((float)$price, $this->config->get('config_currency'), $currency);
+        return (float)number_format($converted_price, 2, '.', '');
     }
 
     public function getMerchantAuthUrl($data) {
@@ -1385,6 +1583,7 @@ class Googleshopping extends Library {
                 'country' => $target['country']['code'],
                 'status' => $this->setting->get('advertise_google_status') ? $target['status'] : 'paused',
                 'budget' => (float)$target['budget']['value'],
+                'roas' => ((int)$target['roas']) / 100,
                 'feeds' => $target['feeds_raw']
             );
         }
@@ -1579,11 +1778,14 @@ class Googleshopping extends Library {
                 'name' => $this->getCountryName($target['country'])
             ),
             'budget' => array(
-                'formatted' => number_format((float)$target['budget'], 2) . ' USD',
+                'formatted' => sprintf($this->language->get('text_per_day'), number_format((float)$target['budget'], 2)),
                 'value' => (float)$target['budget']
             ),
             'feeds' => $feeds,
             'status' => $target['status'],
+            'roas' => $target['roas'],
+            'roas_status' => $target['date_added'] <= date('Y-m-d', time() - self::ROAS_WAIT_INTERVAL),
+            'roas_available_on' => strtotime($target['date_added']) + self::ROAS_WAIT_INTERVAL,
             'feeds_raw' => $feeds_raw
         );
     }
@@ -1607,7 +1809,7 @@ class Googleshopping extends Library {
         }
 
         if (!file_put_contents($dir . '/' . $token, 'google-site-verification: ' . $token)) {
-            throw new \RuntimeException("Could write to: " . $dir . '/' . $token);
+            throw new \RuntimeException("Could not write to: " . $dir . '/' . $token);
         }
     }
 
@@ -1693,13 +1895,25 @@ class Googleshopping extends Library {
                 return $return['result'];
             }
         } else if (in_array($info['http_code'], array(400, 401, 403))) {
-            throw new ConnectionException("Access unavailable. Please re-connect.");
-        } else if ($info['http_code'] == 402) {
-            $url = self::API_URL;
+            $return = json_decode($result, true);
 
-            throw new AccessForbiddenException(sprintf('Your Google Shopping user account has been suspended. Please <a href="%s" target="_blank">access your account</a> and make sure you have set up a non-zero balance.', $url));
+            if ($info['http_code'] != 401 && $return['error']) {
+                throw new \RuntimeException($return['message']);
+            } else {
+                throw new ConnectionException("Access unavailable. Please re-connect.");
+            }
+        } else if ($info['http_code'] == 402) {
+            $return = json_decode($result, true);
+
+            if ($return['error']) {
+                throw new AccessForbiddenException($return['message']);
+            } else {
+                throw new ConnectionException("Access unavailable. Please re-connect.");
+            }
         } else {
-            throw new \RuntimeException("CURL ERROR. INFO: " . print_r($info, true));
+            $this->debugLog("CURL ERROR! CURL INFO: " . print_r($info, true));
+
+            throw new \RuntimeException("A temporary error was encountered. Please try again later.");
         }
     }
 }

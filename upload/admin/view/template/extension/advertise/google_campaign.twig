@@ -69,6 +69,7 @@
                                                             <th class="text-center">{{ entry_country }}</th>
                                                             <th class="text-center">{{ entry_budget }}</th>
                                                             <th class="text-left">{{ entry_feed }}</th>
+                                                            <th class="text-center">{{ entry_roas }}</th>
                                                             <th class="text-center">{{ entry_status }}</th>
                                                             <th class="text-right">{{ entry_action }}</th>
                                                         </tr>
@@ -85,6 +86,13 @@
                                                                             <li>{{ feed.text }}</li>
                                                                         {% endfor %}
                                                                     </ul>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {% if target.roas_status %}
+                                                                        {{ target.roas }}&#37;
+                                                                    {% else %}
+                                                                        <span class="label label-default" data-toggle="tooltip" data-original-title="{{ target.roas_warning }}">{{ text_label_unavailable }}</span>
+                                                                    {% endif %}
                                                                 </td>
                                                                 <td class="text-center">
                                                                     {% if target.status == 'paused' %}
@@ -125,6 +133,7 @@
                                 </div>
                             </div-->
                             <hr />
+                            {% if not from_dashboard %}
                             <div class="alert alert-info text-left">
                                 <div class="checkbox">
                                     <label><input type="checkbox" class="acknowledge" /> {{ text_acknowledge_add_campaign_1 }}</label>
@@ -133,8 +142,9 @@
                                     <label><input type="checkbox" class="acknowledge" /> {{ text_acknowledge_add_campaign_2 }}</label>
                                 </div>
                             </div>
+                            {% endif %}
                             <div class="pull-right">
-                                <button type="submit" disabled class="btn btn-primary" id="proceed">{{ button_proceed }}</button>
+                                <button type="submit" {{ not from_dashboard ? 'disabled' }} class="btn btn-primary" id="proceed">{{ button_proceed }}</button>
                             </div>
                         </form>
                     </div>
@@ -192,6 +202,7 @@
                     <th class="text-center">{{ entry_country }}</th>
                     <th class="text-center">{{ entry_budget }}</th>
                     <th class="text-left">{{ entry_feed }}</th>
+                    <th class="text-center">{{ entry_roas }}</th>
                     <th class="text-center">{{ entry_status }}</th>
                     <th class="text-right">{{ entry_action }}</th>
                 </tr>
@@ -208,6 +219,7 @@
         <td class="text-center">{country}</td>
         <td class="text-center">{budget}</td>
         <td class="text-left">{feeds}</td>
+        <td class="text-center">{roas}</td>
         <td class="text-center">{status}</td>
         <td class="text-right">
             <button class="btn btn-primary button-target-edit" data-toggle="tooltip" title="{{ button_edit }}" data-target-id="{target_id}"><i class="fa fa-pencil"></i></button>
@@ -248,6 +260,17 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group" data-error-type="error_roas">
+                        <label for="input-roas" class="col-sm-3 control-label">{{ entry_roas }}</label>
+                        <div class="col-sm-9">
+                            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ help_roas }}</div>
+                            <div id="warning-roas" class="alert alert-warning" style="display: none;"><i class="fa fa-exclamation-triangle"></i> {roas_warning}</div>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="input-roas" name="roas" value="{roas}" min="0" />
+                                <div class="input-group-addon"><i class="fa fa-percent"></i></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group required" data-error-type="error_budget">
                         <label for="input-budget" class="col-sm-3 control-label">{{ entry_budget }}</label>
                         <div class="col-sm-9">
@@ -256,7 +279,7 @@
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="number" class="form-control" id="input-budget" name="budget" value="{budget}" min="5" />
-                                <div class="input-group-addon">{{ text_usd }}</div>
+                                <div class="input-group-addon">{{ text_usd_day }}</div>
                             </div>
                         </div>
                     </div>
@@ -329,7 +352,9 @@
             status : '#select-status',
             save: '#button-target-save',
             budget: '#input-budget',
-            warning_budget: '#warning-budget'
+            warning_budget: '#warning-budget',
+            roas: '#input-roas',
+            warning_roas: '#warning-roas'
         },
         feed: {
             container: '#feeds',
@@ -405,6 +430,14 @@
         return template(html, data);
     }
 
+    var makeListElementRoasHtml = function(roas_status, roas_warning, roas) {
+        if (!roas_status) {
+            return '<span class="label label-default" data-toggle="tooltip" data-original-title="' + roas_warning + '">{{ text_label_unavailable }}</span>';
+        } else {
+            return roas.toString() + '&#37;';
+        }
+    }
+
     var makeListElementStatusHtml = function(status) {
         if (status == 'paused') {
             return '<span class="label label-warning">{{ text_label_paused }}</span>';
@@ -460,6 +493,7 @@
                                 campaign_name: target.campaign_name,
                                 country: target.country.name,
                                 budget: target.budget.formatted,
+                                roas: makeListElementRoasHtml(target.roas_status, target.roas_warning, target.roas),
                                 status: makeListElementStatusHtml(target.status),
                                 feeds: makeListElementFeedsHtml(target.feeds)
                             }));
@@ -492,6 +526,11 @@
             $(selector.target.status).val($(selector.target.status).attr('data-value')).trigger('change');
 
             $(selector.target.budget).trigger('change');
+
+            $(selector.target.roas).attr('disabled', !modalData.roas_status);
+            $(selector.target.roas).attr('data-original-disabled', !modalData.roas_status ? '1' : '0');
+
+            $(selector.target.warning_roas).toggle(!modalData.roas_status);
         });
         
         $(html).on('hidden.bs.modal', function() {
@@ -532,6 +571,9 @@
             url: '{{ target_add }}',
             campaign_name : '',
             budget: '25.00',
+            roas: 0,
+            roas_status: false,
+            roas_warning: '{{ text_roas_warning }}',
             country: '',
             status: 'active',
             feeds: makeFeedsHtml({
@@ -572,6 +614,9 @@
             url: '{{ target_edit }}'.replace(/{target_id}/, target_id),
             campaign_name : data.campaign_name,
             budget: data.budget.value,
+            roas: data.roas,
+            roas_status: data.roas_status,
+            roas_warning: data.roas_warning,
             country: data.country.code,
             status: data.status,
             feeds: feeds
@@ -662,6 +707,9 @@
                         .attr('disabled', false);
 
                     $(selector.target.modal).find('input,select').attr('disabled', false);
+                    $(selector.target.modal).find('[data-original-disabled]').each(function(index, element) {
+                        $(element).attr('disabled', $(element).attr('data-original-disabled') == '1');
+                    });
                     $(selector.target.modal).find(selector.feed.add).attr('disabled', false);
                     $(selector.target.modal).find(selector.feed.delete).attr('disabled', false);
                 },

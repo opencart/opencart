@@ -33,7 +33,7 @@ class ControllerAccountTransaction extends Controller {
 		$data['column_amount'] = sprintf($this->language->get('column_amount'), $this->config->get('config_currency'));
 
 		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
+			$page = max((int)$this->request->get['page'], 1);
 		} else {
 			$page = 1;
 		}
@@ -43,7 +43,7 @@ class ControllerAccountTransaction extends Controller {
 		$filter_data = array(
 			'sort'  => 'date_added',
 			'order' => 'DESC',
-			'start' => max(($page - 1), 0) * 10,
+			'start' => ($page - 1) * 10,
 			'limit' => 10
 		);
 

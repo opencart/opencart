@@ -451,7 +451,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $this->load->model('extension/payment/squareup');
 
         if (isset($this->request->get['page'])) {
-            $page = (int)$this->request->get['page'];
+            $page = max((int)$this->request->get['page'], 1);
         } else {
             $page = 1;
         }
@@ -462,7 +462,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         );
 
         $filter_data = array(
-            'start' => max(($page - 1), 0) * (int)$this->config->get('config_limit_admin'),
+            'start' => ($page - 1) * (int)$this->config->get('config_limit_admin'),
             'limit' => $this->config->get('config_limit_admin')
         );
 

@@ -98,11 +98,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		 */
 		if (!isset($result['TOKEN'])) {
 			$this->session->data['error'] = $result['L_LONGMESSAGE0'];
-			/**
-			 * Unable to add error message to user as the session errors/success are not
-			 * used on the cart or checkout pages - need to be added?
-			 * If PayPal debug log is off then still log error to normal error log.
-			 */
 
 			$this->log->write('Unable to create PayPal call: ' . json_encode($result));
 
@@ -613,13 +608,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
-		// Because __call can not keep var references so we put them into an array.
-		$total_data = array(
-			'totals' => &$totals,
-			'taxes'  => &$taxes,
-			'total'  => &$total
-		);
-
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
@@ -636,8 +624,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
-					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+					($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 				}
 			}
 
@@ -809,13 +797,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			// Because __call can not keep var references so we put them into an array.
-			$total_data = array(
-				'totals' => &$totals,
-				'taxes'  => &$taxes,
-				'total'  => &$total
-			);
-
 			$this->load->model('setting/extension');
 
 			$sort_order = array();
@@ -832,8 +813,8 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				if ($this->config->get('total_' . $result['code'] . '_status')) {
 					$this->load->model('extension/total/' . $result['code']);
 
-					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+					($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 				}
 			}
 

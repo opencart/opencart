@@ -2,12 +2,7 @@
 namespace Template;
 final class Template {
 	protected $code;
-	protected $filters = array();
 	protected $data = array();
-
-	public function addFilter($key, $value) {
-		$this->filters[$key] = $value;
-	}
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;
@@ -18,11 +13,7 @@ final class Template {
 
 		if (is_file($file)) {
 			$this->code = file_get_contents($file);
-
-			foreach ($this->filters as $filter) {
-				$filter->callback($this->code);
-			}
-
+			
 			ob_start();
 
 			if (!$cache && function_exists('eval')) {

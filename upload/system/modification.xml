@@ -4,7 +4,7 @@
     <code>default</code>
     <version>1.0</version>
     <author>OpenCart Ltd</author>
-    <link>http://www.opencart.com</link>
+    <link>https://www.opencart.com</link>
     <file path="system/{engine,library}/{action,loader,config,language}*.php|system/library/template/template.php">
         <operation>
             <search regex="true">

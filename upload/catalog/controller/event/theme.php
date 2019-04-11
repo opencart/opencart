@@ -21,7 +21,7 @@ class ControllerEventTheme extends Controller {
 		}
 
 		// Attach to the template
-		$template->addFilter('theme-override-' . $this->config->get('config_store_id'), $this);
+		//$template->addFilter('theme-override-' . $this->config->get('config_store_id'), $this);
 
 		// If you want to modify the output of the template we add a
 		$this->lambda = function (&$code) use (&$route, &$args, &$directory) {
@@ -34,13 +34,5 @@ class ControllerEventTheme extends Controller {
 				$code = html_entity_decode($theme_info['code'], ENT_QUOTES, 'UTF-8');
 			}
 		};
-	}
-
-	// Ridiculous we have to use these work around's because magic methods can not pass by reference!
-	public function callback(&$code) {
-		// Genius
-		$lambda = $this->lambda;
-
-		$lambda($code);
 	}
 }

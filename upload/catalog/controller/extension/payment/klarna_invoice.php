@@ -36,7 +36,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 			}
 
 			// Store Taxes to send to Klarna
-			$total_data = array();
+			$totals = array();
 			$total = 0;
 
 			$this->load->model('setting/extension');
@@ -58,9 +58,9 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 					$this->load->model('extension/total/' . $result['code']);
 
 					$taxes = array();
-					
-					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_extension_total_' . $result['code']}->getTotal(array("totals"=>$total_data, "total"=>$total, "taxes"=>$taxes));
+
+					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+					($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 
 					$amount = 0;
 
@@ -72,7 +72,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 				}
 			}
 
-			foreach ($total_data as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 
 				if (isset($klarna_tax[$value['code']])) {

@@ -1042,7 +1042,7 @@ class Googleshopping extends Library {
             }
         }
         
-        $image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
+        $image_new = str_replace(array(' ', ','), array('%20', '%2C'), $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
         
         return $this->store_url . 'image/' . $image_new;
     }

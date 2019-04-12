@@ -23,14 +23,19 @@ final class Loader {
 	}
 
 	/**
+	 * Controller
 	 *
+	 * https://wiki.php.net/rfc/variadics
 	 *
 	 * @param    string $route
 	 * @param    array $data
 	 *
 	 * @return    mixed
 	 */
-	public function controller($route, &...$args) {
+	//public function controller($route, &...$args) {
+	public function controller($route, ...$args) {
+		//$args = func_get_args();
+
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -61,7 +66,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Model
 	 *
 	 * @param    string $route
 	 */
@@ -94,7 +99,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * View
 	 *
 	 * @param    string $route
 	 * @param    array $data
@@ -138,7 +143,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Library
 	 *
 	 * @param    string $route
 	 */
@@ -159,7 +164,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Helper
 	 *
 	 * @param    string $route
 	 */
@@ -174,7 +179,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Config
 	 *
 	 * @param    string $route
 	 */
@@ -187,7 +192,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Language
 	 *
 	 * @param    string $route
 	 * @param    string $key
@@ -196,7 +201,7 @@ final class Loader {
 	 */
 	public function language($route, $key = '') {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_-\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
@@ -218,10 +223,18 @@ final class Loader {
 		return $output;
 	}
 
+	/**
+	 * Callback
+	 *
+	 * @param	string $route
+	 *
+	 * @return	closure
+	 */
 	protected function callback($route) {
 		return function (&...$args) use ($route) {
 			// Grab args using function because we don't know the number of args being passed.
 			// https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+			// https://wiki.php.net/rfc/variadics
 			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 			// Keep the original trigger

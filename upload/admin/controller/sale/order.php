@@ -958,8 +958,8 @@ class ControllerSaleOrder extends Controller {
 			foreach ($vouchers as $voucher) {
 				$data['vouchers'][] = array(
 					'description' => $voucher['description'],
-					'amount' => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-					'href' => $this->url->link('sale/voucher/edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+					'href'        => $this->url->link('sale/voucher/edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
 				);
 			}
 
@@ -970,7 +970,7 @@ class ControllerSaleOrder extends Controller {
 			foreach ($totals as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
-					'text' => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
 				);
 			}
 
@@ -1032,7 +1032,7 @@ class ControllerSaleOrder extends Controller {
 
 						if ($custom_field_value_info) {
 							$data['account_custom_fields'][] = array(
-								'name' => $custom_field['name'],
+								'name'  => $custom_field['name'],
 								'value' => $custom_field_value_info['name']
 							);
 						}
@@ -1044,7 +1044,7 @@ class ControllerSaleOrder extends Controller {
 
 							if ($custom_field_value_info) {
 								$data['account_custom_fields'][] = array(
-									'name' => $custom_field['name'],
+									'name'  => $custom_field['name'],
 									'value' => $custom_field_value_info['name']
 								);
 							}
@@ -1053,7 +1053,7 @@ class ControllerSaleOrder extends Controller {
 
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['account_custom_fields'][] = array(
-							'name' => $custom_field['name'],
+							'name'  => $custom_field['name'],
 							'value' => $order_info['custom_field'][$custom_field['custom_field_id']]
 						);
 					}
@@ -1063,7 +1063,7 @@ class ControllerSaleOrder extends Controller {
 
 						if ($upload_info) {
 							$data['account_custom_fields'][] = array(
-								'name' => $custom_field['name'],
+								'name'  => $custom_field['name'],
 								'value' => $upload_info['name']
 							);
 						}
@@ -1081,8 +1081,8 @@ class ControllerSaleOrder extends Controller {
 
 						if ($custom_field_value_info) {
 							$data['payment_custom_fields'][] = array(
-								'name' => $custom_field['name'],
-								'value' => $custom_field_value_info['name'],
+								'name'       => $custom_field['name'],
+								'value'      => $custom_field_value_info['name'],
 								'sort_order' => $custom_field['sort_order']
 							);
 						}
@@ -1537,7 +1537,7 @@ class ControllerSaleOrder extends Controller {
 				);
 
 				$replace = array(
-					'firstname' => $order_info['paymenst_firstname'],
+					'firstname' => $order_info['payment_firstname'],
 					'lastname'  => $order_info['payment_lastname'],
 					'company'   => $order_info['payment_company'],
 					'address_1' => $order_info['payment_address_1'],

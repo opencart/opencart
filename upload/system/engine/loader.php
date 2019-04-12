@@ -201,7 +201,7 @@ final class Loader {
 	 */
 	public function language($route, $key = '') {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_-\/]/', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;

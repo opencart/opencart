@@ -108,6 +108,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 		$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
+
 		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 			$data['payment_amazon_login_pay_test'] = true;
 		}

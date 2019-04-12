@@ -1,6 +1,13 @@
 <?php
 class ControllerCommonHeader extends Controller {
 	public function index() {
+		$test = 200;
+
+		$this->load->controller('common/language', $test);
+
+		echo $test;
+
+
 		// Analytics
 		$this->load->model('setting/extension');
 

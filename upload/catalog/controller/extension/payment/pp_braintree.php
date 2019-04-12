@@ -892,18 +892,18 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			}
 
 			$data['products'][] = array(
-				'cart_id'               => $product['cart_id'],
-				'thumb'                 => $image,
-				'name'                  => $product['name'],
-				'model'                 => $product['model'],
-				'option'                => $option_data,
-				'quantity'              => $product['quantity'],
-				'stock'                 => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
-				'price'                 => $price,
-				'total'                 => $total,
-				'href'                  => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
-				'remove'                => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $product['cart_id']),
+				'cart_id'  => $product['cart_id'],
+				'thumb'    => $image,
+				'name'     => $product['name'],
+				'model'    => $product['model'],
+				'option'   => $option_data,
+				'quantity' => $product['quantity'],
+				'stock'    => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'reward'   => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'price'    => $price,
+				'total'    => $total,
+				'href'     => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
+				'remove'   => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $product['cart_id']),
 			);
 		}
 
@@ -963,6 +963,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 							//default the shipping to the very first option.
 							$key1 = key($quote_data);
 							$key2 = key($quote_data[$key1]['quote']);
+
 							$this->session->data['shipping_method'] = $quote_data[$key1]['quote'][$key2];
 						}
 
@@ -971,11 +972,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 					} else {
 						unset($this->session->data['shipping_methods']);
 						unset($this->session->data['shipping_method']);
+
 						$data['error_no_shipping'] = $this->language->get('error_no_shipping');
 					}
 				} else {
 					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['shipping_method']);
+
 					$data['error_no_shipping'] = $this->language->get('error_no_shipping');
 				}
 			}
@@ -1271,11 +1274,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['payment_address_format'] = isset($payment_address['address_format']) ? $payment_address['address_format'] : '';
 
 			$data['payment_method'] = '';
+
 			if (isset($this->session->data['payment_method']['title'])) {
 				$data['payment_method'] = $this->session->data['payment_method']['title'];
 			}
 
 			$data['payment_code'] = '';
+
 			if (isset($this->session->data['payment_method']['code'])) {
 				$data['payment_code'] = $this->session->data['payment_method']['code'];
 			}
@@ -1303,11 +1308,13 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				$data['shipping_address_format'] = $shipping_address['address_format'];
 
 				$data['shipping_method'] = '';
+
 				if (isset($this->session->data['shipping_method']['title'])) {
 					$data['shipping_method'] = $this->session->data['shipping_method']['title'];
 				}
 
 				$data['shipping_code'] = '';
+
 				if (isset($this->session->data['shipping_method']['code'])) {
 					$data['shipping_code'] = $this->session->data['shipping_method']['code'];
 				}

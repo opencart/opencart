@@ -581,6 +581,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 							//default the shipping to the very first option.
 							$key1 = key($quote_data);
 							$key2 = key($quote_data[$key1]['quote']);
+
 							$this->session->data['shipping_method'] = $quote_data[$key1]['quote'][$key2];
 						}
 
@@ -594,6 +595,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 				} else {
 					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['shipping_method']);
+
 					$data['error_no_shipping'] = $this->language->get('error_no_shipping');
 				}
 			}
@@ -652,6 +654,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		 */
 		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
 			$this->load->model('account/address');
+
 			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
 		} elseif (isset($this->session->data['guest'])) {
 			$payment_address = $this->session->data['guest']['payment'];
@@ -685,6 +688,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 		if (!isset($method_data['pp_express'])) {
 			$this->session->data['error_warning'] = $this->language->get('error_unavailable');
+
 			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 

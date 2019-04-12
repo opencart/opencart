@@ -412,16 +412,6 @@ footer {
     background: #eee;
     border: 1px solid #ddd;
     text-shadow: 0 1px 0 #fff; }
-/* carousel */
-.carousel-caption {
-  color: #fff;
-  text-shadow: 0 1px 0 #000; }
-  .carousel-caption .icon-prev:before {
-    content: '\f053';
-    font-family: 'Font Awesome 5 Free'; }
-  .carousel-caption .icon-next:before {
-    content: '\f054';
-    font-family: 'Font Awesome 5 Free'; }
 /* product list */
 .product-thumb {
   border: 1px solid #ddd;
@@ -613,13 +603,15 @@ footer {
 #checkout-cart #accordion h4:before {
   font-family: 'Font Awesome 5 Free';
   font-size: 14px;
-  content: "\f0d7  ";
+  font-weight: 900;
+  content: '\f0d7  ';
   margin-right: 10px; }
 
 #checkout-cart #accordion h4.collapsed:before {
   font-family: 'Font Awesome 5 Free';
   font-size: 14px;
-  content: "\f0da";
+  font-weight: 900;
+  content: '\f0da';
   margin-right: 10px; }
 
 #checkout-checkout #accordion h4 {
@@ -628,13 +620,15 @@ footer {
 #checkout-checkout #accordion h4:before {
   font-family: 'Font Awesome 5 Free';
   font-size: 14px;
-  content: "\f0d7  ";
+  font-weight: 900;
+  content: '\f0d7  ';
   margin-right: 10px; }
 
 #checkout-checkout #accordion h4.collapsed:before {
   font-family: 'Font Awesome 5 Free';
   font-size: 14px;
-  content: "\f0da";
+  font-weight: 900;
+  content: '\f0da';
   margin-right: 10px; }
 
 #product-product h1 {

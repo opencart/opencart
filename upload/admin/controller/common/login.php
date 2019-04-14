@@ -67,7 +67,7 @@ class ControllerCommonLogin extends Controller {
 				$url .= http_build_query($this->request->get);
 			}
 
-			$data['redirect'] = $this->url->link($route, $url);
+			$data['redirect'] = str_replace(array("\r", "\n"), "", $this->url->link($route, $url));
 		} else {
 			$data['redirect'] = '';
 		}

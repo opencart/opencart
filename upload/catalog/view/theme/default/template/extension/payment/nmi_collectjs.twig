@@ -1,0 +1,127 @@
+<form id="payment">
+  <fieldset>
+    <legend>{{ text_credit_card }}</legend>
+    <div id="nmi-collectjs-loading">
+      <div class="text-center alert alert-info"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</div>
+    </div>
+    <div id="nmi-collectjs-timeout" class="text-center alert alert-warning d-none"><i class="fas fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_timeout }}</div>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="ccnumber">{{ entry_cc_number }}</label>
+      <div class="col-sm-10">
+        <div class="form-control" id="ccnumber" />
+        <div class="alert alert-danger d-none" id="error-ccnumber"></div>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="ccexp">{{ entry_cc_expire_date }}</label>
+      <div class="col-sm-10">
+        <div class="form-control" id="ccexp" />
+        <div class="alert alert-danger d-none" id="error-ccexp"></div>
+      </div>
+    </div>
+    <div class="form-group row required">
+      <label class="col-sm-2 col-form-label" for="cvv">{{ entry_cc_cvv2 }}</label>
+      <div class="col-sm-10">
+        <div class="form-control" id="cvv" />
+        <div class="alert alert-danger d-none" id="error-cvv"></div>
+      </div>
+    </div>
+  </fieldset>
+  <input type="hidden" name="cc_number" id="token" />
+  <div class="d-inline-block pt-2 pd-2 w-100">
+    <div class="float-right">
+      <button type="button" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
+    </div>
+  </div>
+</form>
+<script type="text/javascript"><!--
+  function fieldsAvailableCollectJS() {
+    document.getElementById('nmi-collectjs-loading').remove();
+  };
+
+  function tokenCallbackCollectJS(resp) {
+    document.getElementById('token').value = resp.token;
+    $.ajax({
+      url: 'index.php?route=extension/payment/nmi_collectjs/send',
+      type: 'post',
+      data: $('#payment :input'),
+      dataType: 'json',
+      cache: false,
+      beforeSend: function() {
+        $('#button-confirm').button('loading');
+      },
+      complete: function() {
+        $('#button-confirm').button('reset');
+      },
+      success: function(json) {
+        if (json['error']) {
+          alert(json['error']);
+        }
+
+        if (json['redirect']) {
+          location = json['redirect'];
+        }
+      }
+    });
+  };
+
+  var CollectJSErrFd = {
+    "ccnumber": document.getElementById("error-ccnumber"),
+    "ccexp": document.getElementById("error-ccexp"),
+    "cvv": document.getElementById("error-cvv")
+  };
+
+  var CollectJSTimeoutFd = document.getElementById("nmi-collectjs-timeout");
+  var ConfirmButton = document.getElementById("button-confirm");
+
+  function validationCallbackCollectJS(field, status, message) {
+    var fd = CollectJSErrFd[field];
+    if (status) {
+      fd.classList.add("d-none");
+    }
+    else {
+      fd.innerText = message;
+      fd.classList.remove("d-none");
+    }
+  }
+
+  function timeoutCallbackCollectJS() {
+    CollectJSTimeoutFd.classList.remove("d-none");
+  }
+
+  function configureCollectJS() {
+    CollectJS.configure({
+      "variant": "inline",
+      "styleSniffer": "false",
+      "customCss": {
+        "border": "none",
+        "border-color": "transparent",
+        "outline": "none",
+        "outline-color": "transparent"
+      },
+      "fieldsAvailableCallback": fieldsAvailableCollectJS,
+      "fields": {
+        "ccnumber": {
+          "placeholder": "{{ entry_cc_number }}"
+        },
+        "ccexp": {
+          "placeholder": "{{ entry_cc_expire_date }}"
+        },
+        "cvv": {
+          "placeholder": "{{ entry_cc_cvv2 }}"
+        }
+      },
+      "callback": tokenCallbackCollectJS,
+      "validationCallback": validationCallbackCollectJS,
+      "timeoutDuration": 2000,
+      "timeoutCallback": CollectJSTimeoutFd
+    });
+    ConfirmButton.addEventListener("click", CollectJS.startPaymentRequest);
+  };
+
+  var sc = document.createElement("SCRIPT");
+  sc.src = "https://secure.nmi.com/token/Collect.js";
+  sc.setAttribute("data-tokenization-key", "{{ payment_nmi_collectjs_tokenization_key }}");
+  sc.onload = configureCollectJS;
+  document.getElementsByTagName("HEAD")[0].appendChild(sc);
+//--></script>

@@ -1125,6 +1125,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		}
 
 		$this->load->language('extension/payment/pp_braintree');
+
 		$redirect = '';
 
 		if ($this->cart->hasShipping()) {

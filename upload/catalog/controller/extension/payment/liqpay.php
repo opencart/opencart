@@ -7,7 +7,7 @@ class ControllerExtensionPaymentLiqPay extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data['action'] = 'https://liqpay.com/?do=clickNbuy';
+		$data['action'] = 'https://liqpay.ua/?do=clickNbuy';
 
 		$xml  = '<request>';
 		$xml .= '	<version>1.2</version>';

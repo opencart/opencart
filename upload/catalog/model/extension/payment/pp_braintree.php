@@ -156,12 +156,30 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			$status = false;
 		}
 
+		// Add PayPal and Google Pay options to title if they will be offered
+		$gateway_addon_options = array();
+
+		if ($this->config->get('payment_pp_braintree_paypal_option') == 1) {
+			$gateway_addon_options[] = $this->language->get('text_paypal');
+		}
+		if ($this->config->get('payment_pp_braintree_googlepay_status') == 1 && $this->config->get('payment_google_pay_status') == 1 && $this->config->get('payment_google_pay_merchant_gateway') == 'braintree') {
+			$gateway_addon_options[] = $this->language->get('text_google_pay');
+		}
+
+		$gateway_addon_text = '';
+
+		if (count($gateway_addon_options) > 0) {
+			$gateway_addon_text = ', ' . implode($gateway_addon_options, ", ");
+		}
+
+		$gateway_text = sprintf($this->language->get('text_title'), $gateway_addon_text);
+
 		$method_data = array();
 
 		if ($status) {
 			$method_data = array(
 				'code'		 => 'pp_braintree',
-				'title'		 => $this->language->get('text_title'),
+				'title'		 => $gateway_text,
 				'terms'		 => '',
 				'sort_order' => $this->config->get('payment_pp_braintree_sort_order')
 			);

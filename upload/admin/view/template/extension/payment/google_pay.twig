@@ -214,11 +214,11 @@
                 <div class="col-sm-10">
                   <select name="payment_google_pay_accept_prepay_cards" id="input-accept-prepay-cards" class="form-control">
                     {% if payment_google_pay_accept_prepay_cards %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <option value="true" selected="selected">{{ text_yes }}</option>
+                      <option value="false">{{ text_no }}</option>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="true">{{ text_yes }}</option>
+                      <option value="false" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -228,11 +228,11 @@
                 <div class="col-sm-10">
                   <select name="payment_google_pay_ship_require_phone" id="input-shipping-require-phone" class="form-control">
                     {% if payment_google_pay_ship_require_phone %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="true" selected="selected">{{ text_yes }}</option>
                       <option value="0">{{ text_no }}</option>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="true">{{ text_yes }}</option>
+                      <option value="false" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>
@@ -242,11 +242,11 @@
                 <div class="col-sm-10">
                   <select name="payment_google_pay_bill_require_phone" id="input-billing-require-phone" class="form-control">
                     {% if payment_google_pay_bill_require_phone %}
-                      <option value="1" selected="selected">{{ text_yes }}</option>
-                      <option value="0">{{ text_no }}</option>
+                      <option value="true" selected="selected">{{ text_yes }}</option>
+                      <option value="false">{{ text_no }}</option>
                     {% else %}
-                      <option value="1">{{ text_yes }}</option>
-                      <option value="0" selected="selected">{{ text_no }}</option>
+                      <option value="true">{{ text_yes }}</option>
+                      <option value="false" selected="selected">{{ text_no }}</option>
                     {% endif %}
                   </select>
                 </div>

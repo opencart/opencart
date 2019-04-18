@@ -286,7 +286,9 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			$this->model_extension_payment_pp_braintree->log($nonce_info);
 
-			if (($nonce_info->type == 'CreditCard' || $nonce_info->type == 'AndroidPayCard') && $this->config->get('payment_pp_braintree_3ds_status') == 1) {
+			//   || $nonce_info->type == 'AndroidPayCard'
+
+			if (($nonce_info->type == 'CreditCard') && $this->config->get('payment_pp_braintree_3ds_status') == 1) {
 				$create_sale['options']['three_d_secure'] = array(
 					'required' => true
 				);
@@ -349,6 +351,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 				}
 			}
 		}
+
 		$this->model_extension_payment_pp_braintree->log("Success:" . (int)$success);
 
 		//Create transaction

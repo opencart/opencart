@@ -330,7 +330,15 @@
       removeFrame: removeFrame
     }, function(error, payload) {
       if (error) {
+        console.error(error);
+
+        $('#braintree-loading').hide();
+        $('#braintree-choose').show();
+        $('#braintree-new').show();
+        {% if googlepay_enabled %}$('#braintree-google-pay').show();{% endif %}
+
         $('#submit-new').prop('disabled', false).button('reset');
+
         return;
       } else {
         submitOrder(payload.nonce, vault_card_payment);
@@ -351,15 +359,16 @@
       removeFrame: removeFrame
     }, function(error, payload) {
       if (error) {
-        console.log('3ds error: ' + error.code);
+        console.error(error);
+
         $('#submit-vaulted').prop('disabled', false).button('reset');
+
         return;
       } else {
         submitVaultOrder(false, payload.nonce);
       }
     });
   }
-
   {% endif %}
 
   function dataCollectorCallback(error, instance) {
@@ -522,27 +531,21 @@
   {% endif %}
 
   function processGooglePayPayment(paymentData) {
-      googlepay_instance.parseResponse(paymentData, function (err, parsedResponse) {
-          if (err) {
-              console.error(err);
+      googlepay_instance.parseResponse(paymentData, function (error, parsedResponse) {
+          if (error) {
+              console.error(error);
               return;
           } else {
-              console.log("parsed response!");
-              console.log(parsedResponse);
-
               if (parsedResponse.nonce) {
-                console.log("Actual nonce recieved");
-                console.log(parsedResponse.nonce);
-
-                // Send nonce for 3DS if enabled, default card vaults to null
+                // default card vaults to null
                 vault_paypal_payment = 0;
                 vault_card_payment = 0;
 
-                {% if payment_pp_braintree_3ds_status %}
-                  verifyNew3DSecure(parsedResponse.nonce);
-                {% else %}
-                  submitOrder(parsedResponse.nonce, 0);
-                {% endif %}
+                submitOrder(parsedResponse.nonce, 0);
+              } else {
+                  // Should never happen but handle in case of network issue
+                  $('#braintree-alert').text('{{ error_alert_unknown }}').show();
+                  return;
               }
           }
       });
@@ -566,6 +569,9 @@
                   break;
               case 'INTERNAL_ERROR':
                   $('#braintree-alert').text('{{ error_alert_google_pay_network }}').show();
+                  break;
+              case 'CANCELED':
+                  $('#braintree-alert').text('{{ error_alert_google_pay_cancel }}').show();
                   break;
               default:
                   $('#braintree-alert').text('{{ error_alert_unknown }}').show();

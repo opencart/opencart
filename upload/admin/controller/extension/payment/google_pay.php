@@ -1,14 +1,11 @@
 <?php
 class ControllerExtensionPaymentGooglePay extends Controller {
 	private $error = array();
-	private $supported_gateways = array('braintree', 'firstdata', 'globalpayments', 'worldpay');
 
 	public function index() {
 		$this->load->language('extension/payment/google_pay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->library('googlepay');
 
 		$this->load->model('setting/setting');
 
@@ -97,19 +94,19 @@ class ControllerExtensionPaymentGooglePay extends Controller {
 				'title' => $this->language->get('text_braintree'),
 				'status' => $this->config->get('payment_pp_braintree_status'),
 				'parameters' => array(
-					array('key' => 'braintree:apiVersion', 'label' => $this->language->get('text_braintree_api_version'), 'hide' => 1, 'default' => 'v2'),
+					array('key' => 'braintree:apiVersion', 'label' => $this->language->get('text_braintree_api_version'), 'hide' => 1, 'default' => 'v1'),
 					array('key' => 'braintree:sdkVersion', 'label' => $this->language->get('text_braintree_sdk_version'), 'hide' => 1, 'default' => '3.42.0'),
 					array('key' => 'braintree:merchantId', 'label' => $this->language->get('text_braintree_merchant_id'), 'hide' => 0, 'default' => $this->config->get('payment_pp_braintree_merchant_id')),
 					array('key' => 'braintree:clientKey', 'label' => $this->language->get('text_braintree_tokenization_key'), 'hide' => 0, 'default' => ''),
 				)
 			),
-			'firstdata' => array(
-				'title' => $this->language->get('text_firstdata'),
-				'status' => $this->config->get('payment_firstdata_status'),
-				'parameters' => array(
-					array('key' => 'gatewayMerchantId', 'label' => $this->language->get('text_firstdata_merchant_id'), 'hide' => 0, 'default' => $this->config->get('payment_firstdata_merchant_id')),
-				)
-			),
+//			'firstdata' => array(
+//				'title' => $this->language->get('text_firstdata'),
+//				'status' => $this->config->get('payment_firstdata_status'),
+//				'parameters' => array(
+//					array('key' => 'gatewayMerchantId', 'label' => $this->language->get('text_firstdata_merchant_id'), 'hide' => 0, 'default' => $this->config->get('payment_firstdata_merchant_id')),
+//				)
+//			),
 			'globalpayments' => array(
 				'title' => $this->language->get('text_globalpayments'),
 				'status' => $this->config->get('payment_globalpay_remote_status'),
@@ -117,13 +114,13 @@ class ControllerExtensionPaymentGooglePay extends Controller {
 					array('key' => 'gatewayMerchantId', 'label' => $this->language->get('text_globalpayments_merchant_id'), 'hide' => 0, 'default' => $this->config->get('payment_globalpay_remote_merchant_id')),
 				)
 			),
-			'worldpay' => array(
-				'title' => $this->language->get('text_worldpay'),
-				'status' => $this->config->get('payment_worldpay_status'),
-				'parameters' => array(
-					array('key' => 'gatewayMerchantId', 'label' => $this->language->get('text_worldpay_merchant_id'), 'hide' => 0, 'default' => ''),
-				)
-			),
+//			'worldpay' => array(
+//				'title' => $this->language->get('text_worldpay'),
+//				'status' => $this->config->get('payment_worldpay_status'),
+//				'parameters' => array(
+//					array('key' => 'gatewayMerchantId', 'label' => $this->language->get('text_worldpay_merchant_id'), 'hide' => 0, 'default' => ''),
+//				)
+//			),
 		);
 
 		if (isset($this->request->post['payment_google_pay_merchant_gateway'])) {

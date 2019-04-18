@@ -343,8 +343,6 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function google() {
-		$this->load->library('googlepay');
-
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/globalpay_remote');
 

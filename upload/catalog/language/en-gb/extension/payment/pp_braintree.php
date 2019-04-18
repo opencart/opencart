@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_title']						= 'Cards or PayPal';
+$_['text_title']						= 'Credit/Debit Card%s';
 $_['text_express_title']      			= 'Confirm order';
 $_['text_vaulted_payment_method_name']	= '%s ending in %s, expires %s';
 $_['text_remember']						= 'Save for next time?';
@@ -47,6 +47,7 @@ $_['error_alert_google_pay_input']    	= 'There is an error with the request';
 $_['error_alert_google_pay_response']   = 'There is an error with the response from Google Pay, please contact support';
 $_['error_alert_google_pay_merchant']   = 'The merchant account is unable to process this request, please contact the merchant';
 $_['error_alert_google_pay_network']    = 'An unknown error occurred, please try again';
+$_['error_alert_google_pay_cancel']     = 'You cancelled the payment flow, please try again';
 
 // Button
 $_['button_confirm']					= 'Pay Now';

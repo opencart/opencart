@@ -1,17 +1,17 @@
 [
     {
         "name": "braintree/braintree_php",
-        "version": "3.39.0",
-        "version_normalized": "3.39.0.0",
+        "version": "3.40.0",
+        "version_normalized": "3.40.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/braintree/braintree_php.git",
-            "reference": "19c6f50fa9fee1388ea5e7f556457243dc35a145"
+            "reference": "840fc6ebf8d96756fed475cce94565fef178187d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/braintree/braintree_php/zipball/19c6f50fa9fee1388ea5e7f556457243dc35a145",
-            "reference": "19c6f50fa9fee1388ea5e7f556457243dc35a145",
+            "url": "https://api.github.com/repos/braintree/braintree_php/zipball/840fc6ebf8d96756fed475cce94565fef178187d",
+            "reference": "840fc6ebf8d96756fed475cce94565fef178187d",
             "shasum": ""
         },
         "require": {
@@ -25,7 +25,7 @@
         "require-dev": {
             "phpunit/phpunit": "3.7.*"
         },
-        "time": "2019-01-24T20:25:28+00:00",
+        "time": "2019-03-28T23:16:53+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -789,8 +789,8 @@
     },
     {
         "name": "symfony/validator",
-        "version": "v2.8.49",
-        "version_normalized": "2.8.49.0",
+        "version": "v2.8.50",
+        "version_normalized": "2.8.50.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/validator.git",

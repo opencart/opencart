@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca1c3ff26cefcd617601c7e78bf4d4e8",
+    "content-hash": "6dc991abfd9b8f6dd857000fa8f3432f",
     "packages": [
         {
             "name": "braintree/braintree_php",
-            "version": "3.39.0",
+            "version": "3.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "19c6f50fa9fee1388ea5e7f556457243dc35a145"
+                "reference": "840fc6ebf8d96756fed475cce94565fef178187d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/19c6f50fa9fee1388ea5e7f556457243dc35a145",
-                "reference": "19c6f50fa9fee1388ea5e7f556457243dc35a145",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/840fc6ebf8d96756fed475cce94565fef178187d",
+                "reference": "840fc6ebf8d96756fed475cce94565fef178187d",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 }
             ],
             "description": "Braintree PHP Client Library",
-            "time": "2019-01-24T20:25:28+00:00"
+            "time": "2019-03-28T23:16:53+00:00"
         },
         {
             "name": "cardinity/cardinity-sdk-php",
@@ -766,7 +766,7 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v2.8.49",
+            "version": "v2.8.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",

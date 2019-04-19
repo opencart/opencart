@@ -166,7 +166,7 @@ class ModelCatalogCms extends Model {
 		$this->load->model('catalog/product');
 		
 		if ($this->customer->isLogged()) {
-			$customer_group_id = $this->customer->getCustomerGroupId();
+			$customer_group_id = $this->customer->getGroupId();
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}	

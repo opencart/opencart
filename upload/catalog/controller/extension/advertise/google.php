@@ -54,16 +54,19 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
             return;
         }
 
-        $currency_converter = new Cart\Currency($this->registry);
+        if (!$this->registry->has('googleshopping')) {
+            $this->loadLibrary($this->store_id);
+        }
 
         $this->load->model('checkout/order');
+        $this->load->model('extension/advertise/google');
 
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
         $tracker = $this->setting->get('advertise_google_conversion_tracker');
         $currency = $order_info['currency_code'];
-        $converted_total = $currency_converter->convert((float)$order_info['total'], $this->config->get('config_currency'), $currency);
-        $total = number_format($converted_total, 2, '.', '');
+        
+        $total = $this->googleshopping->convertAndFormat($order_info['total'], $currency);
 
         $search = array(
             '{VALUE}',
@@ -78,12 +81,42 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
         $snippet = str_replace($search, $replace, $tracker['google_event_snippet']);
 
         // Store the snippet to display it in the order success view
-        if (!$this->registry->has('googleshopping')) {
-            $this->loadLibrary($this->store_id);
+        $tax = 0;
+        $shipping = 0;
+        $coupon = $this->model_extension_advertise_google->getCoupon($order_info['order_id']);
+
+        foreach ($this->model_checkout_order->getOrderTotals($order_info['order_id']) as $order_total) {
+            if ($order_total['code'] == 'shipping') {
+                $shipping += $this->googleshopping->convertAndFormat($order_total['value'], $currency);
+            }
+
+            if ($order_total['code'] == 'tax') {
+                $tax += $this->googleshopping->convertAndFormat($order_total['value'], $currency);
+            }
+        }
+
+        $order_products = $this->model_checkout_order->getOrderProducts($order_info['order_id']);
+
+        foreach ($order_products as &$order_product) {
+            $order_product['option'] = $this->model_checkout_order->getOrderOptions($order_info['order_id'], $order_product['order_product_id']);
+        }
+
+        $purchase_data = array(
+            'transaction_id' => $order_info['order_id'],
+            'value' => $total,
+            'currency' => $currency,
+            'tax' => $tax,
+            'shipping' => $shipping,
+            'items' => $this->model_extension_advertise_google->getRemarketingItems($order_products, $order_info['store_id']),
+            'ecomm_prodid' => $this->model_extension_advertise_google->getRemarketingProductIds($order_products, $order_info['store_id'])
+        );
+
+        if ($coupon !== null) {
+            $purchase_data['coupon'] = $coupon;
         }
 
         $this->googleshopping->setEventSnippet($snippet);
-        $this->googleshopping->setPurchaseTotal($total);
+        $this->googleshopping->setPurchaseData($purchase_data);
     }
 
     public function google_dynamic_remarketing_purchase(&$route, &$data, &$output) {
@@ -93,16 +126,27 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
         }
 
         // If the library has not been loaded, or if there is no snippet, do nothing
-        if (!$this->registry->has('googleshopping') || $this->googleshopping->getEventSnippet() === null || $this->googleshopping->getPurchaseTotal() === null) {
+        if (!$this->registry->has('googleshopping') || $this->googleshopping->getEventSnippet() === null || $this->googleshopping->getPurchaseData() === null) {
             return;
         }
 
-        $data['ecomm_totalvalue'] = $this->googleshopping->getPurchaseTotal();
+        $data['send_to'] = $this->googleshopping->getEventSnippetSendTo();
+
+        $purchase_data = $this->googleshopping->getPurchaseData();
+
+        $data['transaction_id'] = $purchase_data['transaction_id'];
+        $data['value'] = $purchase_data['value'];
+        $data['currency'] = $purchase_data['currency'];
+        $data['tax'] = $purchase_data['tax'];
+        $data['shipping'] = $purchase_data['shipping'];
+        $data['items'] = json_encode($purchase_data['items']);
+        $data['ecomm_prodid'] = json_encode($purchase_data['ecomm_prodid']);
+        $data['ecomm_totalvalue'] = $purchase_data['value'];
 
         $purchase_snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_purchase', $data);
 
         // Insert the snippet after the output
-        $output = str_replace('</body>', $purchase_snippet . $this->googleshopping->getEventSnippet() . '</body>', $output);
+        $output = str_replace('</body>', $this->googleshopping->getEventSnippet() . $purchase_snippet . '</body>', $output);
     }
 
     public function google_dynamic_remarketing_home(&$route, &$data, &$output) {
@@ -116,7 +160,18 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
             return;
         }
 
-        $snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_home', array());
+        if (!$this->registry->has('googleshopping')) {
+            $this->loadLibrary($this->store_id);
+        }
+
+        if (null === $this->googleshopping->getEventSnippetSendTo()) {
+            return;
+        }
+
+        $data = array();
+        $data['send_to'] = $this->googleshopping->getEventSnippetSendTo();
+
+        $snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_home', $data);
 
         // Insert the snippet after the output
         $output = str_replace('</body>', $snippet . '</body>', $output);
@@ -129,11 +184,23 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
         }
 
         // If we are not on the search page, do nothing
-        if (!isset($this->request->get['route']) || $this->request->get['route'] != 'product/search') {
+        if (!isset($this->request->get['route']) || $this->request->get['route'] != 'product/search' || !isset($this->request->get['search'])) {
             return;
         }
 
-        $snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_searchresults', array());
+        if (!$this->registry->has('googleshopping')) {
+            $this->loadLibrary($this->store_id);
+        }
+
+        if (null === $this->googleshopping->getEventSnippetSendTo()) {
+            return;
+        }
+
+        $data = array();
+        $data['send_to'] = $this->googleshopping->getEventSnippetSendTo();
+        $data['search_term'] = $this->request->get['search'];
+
+        $snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_searchresults', $data);
 
         // Insert the snippet after the output
         $output = str_replace('</body>', $snippet . '</body>', $output);
@@ -150,6 +217,14 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
             return;
         }
 
+        if (!$this->registry->has('googleshopping')) {
+            $this->loadLibrary($this->store_id);
+        }
+
+        if (null === $this->googleshopping->getEventSnippetSendTo()) {
+            return;
+        }
+
         if (isset($this->request->get['path'])) {
             $parts = explode('_', $this->request->get['path']);
             $category_id = (int)end($parts);
@@ -161,7 +236,9 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
 
         $this->load->model('extension/advertise/google');
 
-        $data['ecomm_category'] = str_replace('"', '\\"', $this->model_extension_advertise_google->getHumanReadableOpenCartCategory($category_id));
+        $data = array();
+        $data['send_to'] = $this->googleshopping->getEventSnippetSendTo();
+        $data['description'] = str_replace('"', '\\"', $this->model_extension_advertise_google->getHumanReadableOpenCartCategory($category_id));
 
         $snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_category', $data);
 
@@ -189,29 +266,26 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
             return;
         }
 
-        $this->loadLibrary($this->store_id);
+        if (!$this->registry->has('googleshopping')) {
+            $this->loadLibrary($this->store_id);
+        }
+
+        if (null === $this->googleshopping->getEventSnippetSendTo()) {
+            return;
+        }
 
         $this->load->model('extension/advertise/google');
 
         $category_name = $this->model_extension_advertise_google->getHumanReadableCategory($product_info['product_id'], $this->store_id);
 
-        $price = (float)$product_info['price'];
-        $special = (float)$product_info['special'];
-
-        if (!is_null($product_info['special']) && $special < $price) {
-            $price = $special;
-        }
-
-        if ($this->config->get('config_tax')) {
-            $price = $this->tax->calculate($price, $product_info['tax_class_id']);
-        }
-
         $option_map = $this->model_extension_advertise_google->getSizeAndColorOptionMap($product_info['product_id'], $this->store_id);
 
         $data = array();
+        $data['send_to'] = $this->googleshopping->getEventSnippetSendTo();
         $data['option_map'] = json_encode($option_map);
-        $data['ecomm_totalvalue'] = (float)$price;
-        $data['ecomm_category'] = str_replace('"', '\\"', $category_name);
+        $data['brand'] = $product_info['manufacturer'];
+        $data['name'] = $product_info['name'];
+        $data['category'] = str_replace('"', '\\"', $category_name);
 
         $snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_product', $data);
 
@@ -230,46 +304,22 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
             return;
         }
 
-        $this->loadLibrary($this->store_id);
+        if (!$this->registry->has('googleshopping')) {
+            $this->loadLibrary($this->store_id);
+        }
+
+        if (null === $this->googleshopping->getEventSnippetSendTo()) {
+            return;
+        }
 
         $this->load->model('catalog/product');
         $this->load->model('extension/advertise/google');
 
+        $data = array();
+        $data['send_to'] = $this->googleshopping->getEventSnippetSendTo();
         $data['ecomm_totalvalue'] = $this->cart->getTotal();
-
-        $ecomm_prodid = array();
-
-        foreach ($this->cart->getProducts() as $product) {
-            $option_map = $this->model_extension_advertise_google->getSizeAndColorOptionMap($product['product_id'], $this->store_id);
-            $found_color = "";
-            $found_size = "";
-
-            foreach ($product['option'] as $option) {
-                if (is_array($option_map['colors'])) {
-                    foreach ($option_map['colors'] as $product_option_value_id => $color) {
-                        if ($option['product_option_value_id'] == $product_option_value_id) {
-                            $found_color = $color;
-                        }
-                    }
-                }
-
-                if (is_array($option_map['sizes'])) {
-                    foreach ($option_map['sizes'] as $product_option_value_id => $size) {
-                        if ($option['product_option_value_id'] == $product_option_value_id) {
-                            $found_size = $size;
-                        }
-                    }
-                }
-            }
-
-            foreach ($option_map['groups'] as $id => $group) {
-                if ($group['color'] === $found_color && $group['size'] === $found_size) {
-                    $ecomm_prodid[] = $id;
-                }
-            }
-        }
-
-        $data['ecomm_prodid'] = json_encode($ecomm_prodid);
+        $data['ecomm_prodid'] = json_encode($this->model_extension_advertise_google->getRemarketingProductIds($this->cart->getProducts(), $this->store_id));
+        $data['items'] = json_encode($this->model_extension_advertise_google->getRemarketingItems($this->cart->getProducts(), $this->store_id));
 
         $snippet = $this->load->view('extension/advertise/google_dynamic_remarketing_cart', $data);
 
@@ -286,6 +336,11 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
         }
 
         $this->load->language('extension/advertise/google');
+
+        // Reset taxes to use the store address and zone
+        $this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+        $this->tax->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+        $this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 
         $this->googleshopping->cron();
     }
@@ -305,10 +360,6 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
         }
 
         try {
-            if (!$this->googleshopping->isConnected()) {
-                return false;
-            }
-
             if (count($this->googleshopping->getTargets($this->store_id)) === 0) {
                 return false;
             }

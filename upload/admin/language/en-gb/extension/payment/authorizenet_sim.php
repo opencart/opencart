@@ -12,7 +12,7 @@ $_['text_authorizenet_sim']	= '<a href="https://account.authorize.net/signUpNow?
 $_['entry_merchant']		= 'Merchant ID';
 $_['entry_key']				= 'Transaction Key';
 $_['entry_callback']		= 'Relay Response URL';
-$_['entry_md5']				= 'MD5 Hash Value';
+$_['entry_md5']				= 'Signature Key/Hash';
 $_['entry_test']			= 'Test Mode';
 $_['entry_total']			= 'Total';
 $_['entry_order_status']	= 'Order Status';
@@ -22,7 +22,7 @@ $_['entry_sort_order']		= 'Sort Order';
 
 // Help
 $_['help_callback']			= 'Please login and set this at <a href="https://secure.authorize.net" target="_blank" class="txtLink">https://secure.authorize.net</a>.';
-$_['help_md5']				= 'The MD5 Hash feature enables you to authenticate that a transaction response is securely received from Authorize.Net.Please login and set this at <a href="https://secure.authorize.net" target="_blank" class="txtLink">https://secure.authorize.net</a>.(Optional)';
+$_['help_md5']				= 'The Hash feature enables you to authenticate that a transaction response is securely received from Authorize.Net. Please login and set this at <a href="https://secure.authorize.net" target="_blank" class="txtLink">https://secure.authorize.net</a>.(Optional)';
 $_['help_total']			= 'The checkout total the order must reach before this payment method becomes active.';
 
 // Error

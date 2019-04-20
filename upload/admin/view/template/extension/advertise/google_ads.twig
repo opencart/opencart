@@ -1,5 +1,5 @@
 <!-- The filters -->
-<div id="filter-ads" class="col-md-3 col-md-push-9 col-sm-12">
+<div id="filter-ads" class="col-lg-3 col-lg-push-9 col-md-12">
     <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
@@ -37,13 +37,13 @@
 </div>
 
 <!-- The ads -->
-<div class="col-md-9 col-md-pull-3 col-sm-12">
+<div class="col-lg-9 col-lg-pull-3 col-md-12">
     <div class="alert alert-info">
         {{ text_ads_intro }}
     </div>
     <hr />
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-md-12">
             <div class="pull-right form-control-static">
                 <button type="button" class="btn btn-default button-popup-bulk-edit form-control-static"><i class="fa fa-cog"></i> {{ button_bulk_edit_google_fields }}</button>
                 <div class="btn-group form-control-static">
@@ -52,11 +52,11 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right campaign-dropdown">
                         {% for campaign in campaigns %}
-                            <li><a><input type="checkbox" name="target_ids[]" value="{{ campaign.target_id }}" />&nbsp;&nbsp;<span class="form-control-static">{{ campaign.campaign_name }}</span></a></li>
+                            <li class="text-pre-line"><a><input type="checkbox" name="target_ids[]" value="{{ campaign.target_id }}" />&nbsp;&nbsp;<span class="form-control-static">{{ campaign.campaign_name }}</span></a></li>
                         {% endfor %}
                         <li role="separator" class="divider"></li>
                         <li class="text-center padding-lr-5">
-                            <p class="text-left text-sm"><em>{{ text_maximum_five }}</em></p>
+                            <p class="text-left text-sm text-pre-line"><em>{{ text_maximum_five }}</em></p>
                             <button class="btn btn-success btn-xs button-apply-advertising"><i class="fa fa-check"></i> {{ button_apply }}</button>
                         </li>
                     </ul>
@@ -72,13 +72,13 @@
                 <tr>
                     <th class="text-center"><input type="checkbox" name="select_all" /></th>
                     <th class="text-center">{{ text_image }}</th>
-                    <th class="text-left"><a href="javascript:void(0)" data-sort="name">{{ text_product_name }}</a></th>
+                    <th class="text-left visible-lg"><a href="javascript:void(0)" data-sort="name">{{ text_product_name }}</a></th>
                     <th class="text-left"><a href="javascript:void(0)" data-sort="model">{{ text_product_model }}</a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="impressions">{{ text_impressions }}</a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="clicks">{{ text_clicks }}</a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="cost">{{ text_cost }}</a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversions">{{ text_conversions }}</a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversion_value">{{ text_conversion_value }}</a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="impressions"><i data-toggle="tooltip" data-original-title="{{ text_impressions }}" class="fa fa-eye"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="clicks"><i data-toggle="tooltip" data-original-title="{{ text_clicks }}" class="fa fa-hand-pointer-o"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="cost"><i data-toggle="tooltip" data-original-title="{{ text_cost }}" class="fa fa-dollar"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversions"><i data-toggle="tooltip" data-original-title="{{ text_conversions }}" class="fa fa-handshake-o"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversion_value"><i data-toggle="tooltip" data-original-title="{{ text_conversion_value }}" class="fa fa-line-chart"></i></a></th>
                     </a></th>
                     <th class="text-left">{{ text_campaigns }}</th>
                     <th class="text-center"><a href="javascript:void(0)" data-sort="destination_status">{{ text_destination_status }}</a></th>
@@ -101,11 +101,11 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right campaign-dropdown">
                         {% for campaign in campaigns %}
-                            <li><a><input type="checkbox" name="campaign" value="{{ campaign.target_id }}" />&nbsp;&nbsp;<span class="form-control-static">{{ campaign.campaign_name }}</span></a></li>
+                            <li class="text-pre-line"><a><input type="checkbox" name="target_ids[]" value="{{ campaign.target_id }}" />&nbsp;&nbsp;<span class="form-control-static">{{ campaign.campaign_name }}</span></a></li>
                         {% endfor %}
                         <li role="separator" class="divider"></li>
                         <li class="text-center padding-lr-5">
-                            <p class="text-left text-sm"><em>{{ text_maximum_five }}</em></p>
+                            <p class="text-left text-sm text-pre-line"><em>{{ text_maximum_five }}</em></p>
                             <button class="btn btn-success btn-sm button-apply-advertising"><i class="fa fa-check"></i> {{ button_apply }}</button>
                         </li>
                     </ul>
@@ -150,6 +150,10 @@
         right: 5px;
         top: 0px;
     }
+
+    .text-pre-line {
+        white-space: pre-line;
+    }
 </style>
 <script id="template-success" type="text/template">
     <div class="alert alert-success alert-dismissible" role="alert">
@@ -161,6 +165,12 @@
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{message}
+    </div>
+</script>
+<script id="template-warning" type="text/template">
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{message}
     </div>
 </script>
 <script id="template-popup-product" type="text/template">
@@ -203,6 +213,7 @@
 <script type="text/javascript">
 (function($) {
     var selector = {
+        ad_wrap: '#wrapTest',
         campaign_dropdown: {
             container: '.campaign-dropdown',
             element: '.campaign-dropdown li',
@@ -223,7 +234,9 @@
         },
         template_success: '#template-success',
         template_error: '#template-error',
+        template_warning: '#template-warning',
         alert_container: '#alert-container',
+        warning_container: '#warning-container',
         selection_container: '#selection-container',
         button_advertise: '.button-advertise',
         button_bulk_edit: '.button-popup-bulk-edit',
@@ -284,7 +297,7 @@
             html = result.join('<br />');
         }
 
-        return html != '' ? html : '{{ text_na }}';
+        return html != '' ? html : '<span class="label label-default">{{ text_label_unassigned }}</span>';
     }
 
     var getFilterPostData = function() {
@@ -327,7 +340,11 @@
                 $(selector.deselect_all_pages).trigger('click');
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">' + textStatus + ': ' + errorThrown + '</div></td></tr>');
+                if ($(selector.ad_wrap).height() == 0) {
+                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">{{ error_adblock }}</div></td></tr>');
+                } else {
+                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">' + textStatus + ': ' + errorThrown + '</div></td></tr>');
+                }
             },
             success: function(data) {
                 $(selector.list).empty();
@@ -344,7 +361,7 @@
 
                             html += '<td class="highlightable text-center"><input type="checkbox" name="select[]" value="' + product.product_id + '"></td>';
                             html += '<td class="highlightable text-center"><img class="img-thumbnail" src="' + product.image + '" alt="' + product.name + '" /></td>';
-                            html += '<td class="highlightable text-left">' + product.name + '</td>';
+                            html += '<td class="highlightable text-left visible-lg">' + product.name + '</td>';
                             html += '<td class="highlightable text-left">' + product.model + '</td>';
                             html += '<td class="highlightable text-center">' + product.impressions + '</td>';
                             html += '<td class="highlightable text-center">' + product.clicks + '</td>';
@@ -375,6 +392,10 @@
                 updateSelected();
             }
         });
+    }
+
+    var displayWarning = function(message) {
+        $(selector.warning_container).html($(selector.template_warning).html().replace(/{message}/g, message));
     }
 
     var displayError = function(message) {
@@ -416,6 +437,7 @@
                 $(selector.campaign_dropdown.container).closest('.btn-group').removeClass('open');
 
                 $(selector.alert_container).empty();
+                $(selector.warning_container).empty();
 
                 $(selector.button_advertise).attr('disabled', true).toggleClass('btn-info', false).toggleClass('btn-default', true);
 
@@ -431,6 +453,10 @@
                 displayError(textStatus + ': ' + errorThrown);
             },
             success: function(data) {
+                if (data.warning) {
+                    displayWarning(data.warning);
+                }
+
                 if (data.error) {
                     displayError(data.error);
                 } else if (data.success) {

@@ -16,7 +16,7 @@ $_['db_database']        = DB_DATABASE;
 $_['db_port']            = DB_PORT;
 
 // Session
-$_['session_autostart']  = true;
+$_['session_autostart']  = false;
 $_['session_engine']     = 'db';
 $_['session_name']       = 'OCSESSID';
 
@@ -59,7 +59,7 @@ $_['action_event'] = array(
 	//'view/*/before' => array(
 	//	1000  => 'event/debug/before'
 	//),
-	'controller/*/after'  => array(
-		'event/debug/after'
-	)
+	//'controller/*/after'  => array(
+	//	'event/debug/after'
+//	)
 );

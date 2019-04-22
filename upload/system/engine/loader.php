@@ -129,7 +129,14 @@ final class Loader {
 				$template->set($key, $value);
 			}
 
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'), $code);
+			if ($code) {
+				echo $template->compile($route, $code);
+			} else {
+
+			}
+
+			//, $this->registry->get('config')->get('template_cache')
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 		}
 
 		// Trigger the post events

@@ -8,50 +8,59 @@ final class Template {
 		$this->data[$key] = $value;
 	}
 
-	public function render($filename, $cache = true) {
+	public function load($filename) {
 		$file = DIR_TEMPLATE . $filename . '.tpl';
 
 		if (is_file($file)) {
 			$this->code = file_get_contents($file);
-			
+		}
+	}
+
+	public function render($filename, $code = '') {
+		if ($code) {
+			$this->code = $code;
+		}
+
+		$file = DIR_TEMPLATE . $filename . '.tpl';
+
+		if (is_file($file)) {
+			$this->code = file_get_contents($file);
+
 			ob_start();
 
-			if (!$cache && function_exists('eval')) {
-				extract($this->data);
+			extract($this->data);
 
-				echo eval('?>' . $this->code);
-			} else {
-				extract($this->data);
-
-				include($this->compile($file, $this->code));
-			}
+			include($this->compile($file, $this->code));
 
 			return ob_get_clean();
 		} else {
 			throw new \Exception('Error: Could not load template ' . $file . '!');
 			exit();
 		}
+
 	}
 
 	public function compile($file, $code) {
-		$hash = hash('sha256', $file . __CLASS__ . preg_replace('/[^0-9a-zA-Z_]/', '_', implode('_', array_keys($this->filters))));
-
-		$file = DIR_CACHE . substr($hash, 0, 2) . '/' . $hash . '.php';
+		$file = DIR_CACHE . 'template/' . hash('md5', $file . $code) . '.php';
 
 		if (!is_file($file)) {
-			$directory = dirname($file);
+			// Build the directories if they don't exist
+			$directory = '';
 
-			if (!is_dir($directory)) {
-				if (!mkdir($directory, 0777, true)) {
-					clearstatcache(true, $directory);
+			$parts = explode('/', substr(dirname($file), 1));
+
+			foreach ($parts as $part) {
+				$directory .= '/' . $part;
+
+				if (!is_dir($directory)) {
+					if (!mkdir($directory, 0777, true)) {
+						clearstatcache(true, $directory);
+					}
 				}
 			}
 
-			$handle = fopen($file, 'w+');
 
-			fwrite($handle, $code);
-
-			fclose($handle);
+			file_put_content($file, $code, LOCK_EX);
 		}
 
 		return $file;

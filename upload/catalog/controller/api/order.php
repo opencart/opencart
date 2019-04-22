@@ -273,9 +273,9 @@ class ControllerApiOrder extends Controller {
 				array_multisort($sort_order, SORT_ASC, $totals);
 
 				$total_data = array(
-					'totals' => &$totals,
-					'taxes'  => &$taxes,
-					'total'  => &$total
+					'totals' => $totals,
+					'taxes'  => $taxes,
+					'total'  => $total
 				);
 
 				$order_data = array_merge($order_data, $total_data);
@@ -642,9 +642,9 @@ class ControllerApiOrder extends Controller {
 					array_multisort($sort_order, SORT_ASC, $totals);
 
 					$total_data = array(
-						'totals' => &$totals,
-						'taxes'  => &$taxes,
-						'total'  => &$total
+						'totals' => $totals,
+						'taxes'  => $taxes,
+						'total'  => $total
 					);
 
 					$order_data = array_merge($order_data, $total_data);

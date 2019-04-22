@@ -9,7 +9,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 		$data['form_submit'] = $this->url->link('extension/payment/worldpay/send', 'language=' . $this->config->get('config_language'));
 
-		if ($this->config->get('worldpay_card') == '1' && $this->customer->isLogged()) {
+		if ($this->config->get('payment_worldpay_card') == '1' && $this->customer->isLogged()) {
 			$data['worldpay_card'] = true;
 		} else {
 			$data['worldpay_card'] = false;
@@ -136,7 +136,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	}
 
 	public function webhook() {
-		if (isset($this->request->get['token']) && hash_equals($this->config->get('worldpay_secret_token'), $this->request->get['token'])) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_worldpay_secret_token'), $this->request->get['token'])) {
 			$this->load->model('extension/payment/worldpay');
 			$message = json_decode(file_get_contents('php://input'), true);
 
@@ -187,7 +187,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 	}
 
 	public function cron() {
-		if ($this->request->get['token'] == $this->config->get('worldpay_cron_job_token')) {
+		if (isset($this->request->get['token']) && hash_equals($this->config->get('payment_worldpay_secret_token'), $this->request->get['token'])) {
 			$this->load->model('extension/payment/worldpay');
 
 			$orders = $this->model_extension_payment_worldpay->cronPayment();

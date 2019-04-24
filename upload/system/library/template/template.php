@@ -13,31 +13,26 @@ final class Template {
 
 		if (is_file($file)) {
 			$this->code = file_get_contents($file);
-		}
-	}
-
-	public function render($filename, $code = '') {
-		if ($code) {
-			$this->code = $code;
-		}
-
-		$file = DIR_TEMPLATE . $filename . '.tpl';
-
-		if (is_file($file)) {
-			$this->code = file_get_contents($file);
-
-			ob_start();
-
-			extract($this->data);
-
-			include($this->compile($file, $this->code));
-
-			return ob_get_clean();
 		} else {
 			throw new \Exception('Error: Could not load template ' . $file . '!');
 			exit();
 		}
+	}
 
+	public function render($filename, $code = '') {
+		if (!$code) {
+			$this->load($filename);
+		} else {
+			$this->code = $code;
+		}
+
+		ob_start();
+
+		extract($this->data);
+
+		include($this->compile(DIR_TEMPLATE . $filename . '.tpl', $this->code));
+
+		return ob_get_clean();
 	}
 
 	public function compile($file, $code) {

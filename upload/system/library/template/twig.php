@@ -7,6 +7,11 @@ final class Twig {
 		$this->data[$key] = $value;
 	}
 
+
+	public function load($filename) {
+		$loader = new \Twig_Loader_Array(array($filename . '.twig' => $code));
+	}
+
 	public function render($filename, $code = '') {
 		// Initialize Twig environment
 		$config = array(
@@ -15,6 +20,12 @@ final class Twig {
 			'auto_reload' => true,
 			'cache'       => DIR_CACHE . 'template/'
 		);
+
+
+		if (!$code) {
+			//load
+
+		}
 
 		/*
 		 * FYI all the Twig lovers out there!

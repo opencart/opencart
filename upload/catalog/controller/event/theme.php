@@ -18,8 +18,8 @@ class ControllerEventTheme extends Controller {
 			$this->config->set('template_directory', 'default/template/');
 		}
 
-		echo $route . "\n";
-		$code = 'hi';
+		//echo $route . "\n";
+		//$code = 'hi';
 
 		// Attach to the template
 		// If there is a theme override we should get it

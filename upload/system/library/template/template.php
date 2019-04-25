@@ -35,7 +35,7 @@ final class Template {
 		return ob_get_clean();
 	}
 
-	public function compile($file, $code) {
+	protected function compile($file, $code) {
 		$file = DIR_CACHE . 'template/' . hash('md5', $file . $code) . '.php';
 
 		if (!is_file($file)) {

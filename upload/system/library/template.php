@@ -47,8 +47,8 @@ class Template {
 	 *
 	 * @return    string
 	 */
-	public function render($filename, $code = '', $data = array()) {
-		return $this->adaptor->render($filename, $code, $data);
+	public function render($filename, $code = '') {
+		return $this->adaptor->render($filename, $code);
 	}
 
 	/**

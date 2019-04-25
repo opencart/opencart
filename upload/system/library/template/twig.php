@@ -1,15 +1,22 @@
 <?php
 namespace Template;
 final class Twig {
+	protected $code;
 	private $data = array();
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
 
-
 	public function load($filename) {
-		$loader = new \Twig_Loader_Array(array($filename . '.twig' => $code));
+		$file = DIR_TEMPLATE . $filename . '.twig';
+
+		if (is_file($file)) {
+			$this->code = file_get_contents($file);
+		} else {
+			throw new \Exception('Error: Could not load template ' . $file . '!');
+			exit();
+		}
 	}
 
 	public function render($filename, $code = '') {
@@ -20,6 +27,15 @@ final class Twig {
 			'auto_reload' => true,
 			'cache'       => DIR_CACHE . 'template/'
 		);
+
+
+		if (!$code) {
+			$this->load($filename);
+		} else {
+			$this->code = $code;
+		}
+
+
 
 
 		if (!$code) {
@@ -39,17 +55,20 @@ final class Twig {
 
 		if ($code) {
 			// render from modified template code
-			$loader = new \Twig_Loader_Array(array($filename . '.twig' => $code));
+			$loader = new \Twig_Loader_Array(array($filename . '.twig' => $this->code));
 		} else {
 			// render from template file
 			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 		}
 
 		// 2. Initiate Twig Environment
-		$twig = new \Twig_Environment($loader, $config);
+		//$twig = new \Twig_Environment($loader, $config);
+
 
 		try {
 			$twig = new \Twig_Environment($loader, $config);
+
+			$twig->parse($twig->tokenize(new \Twig\Source($template)));
 
 			return $twig->render($filename . '.twig', $this->data);
 		} catch (Twig_Error_Syntax $e) {

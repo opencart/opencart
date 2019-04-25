@@ -129,12 +129,6 @@ final class Loader {
 				$template->set($key, $value);
 			}
 
-			if ($code) {
-				echo $template->compile($route, $code);
-			} else {
-
-			}
-
 			//, $this->registry->get('config')->get('template_cache')
 			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 		}

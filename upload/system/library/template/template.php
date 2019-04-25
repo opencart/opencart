@@ -55,7 +55,7 @@ final class Template {
 			}
 
 
-			file_put_content($file, $code, LOCK_EX);
+			file_put_contents($file, $code, LOCK_EX);
 		}
 
 		return $file;

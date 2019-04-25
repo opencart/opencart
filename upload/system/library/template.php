@@ -40,17 +40,6 @@ class Template {
 	}
 
 	/**
-	 * Load
-	 *
-	 * @param    string $filename
-	 *
-	 * @return    void
-	 */
-	public function load($filename) {
-		$this->adaptor->load($filename);
-	}
-
-	/**
 	 * Render
 	 *
 	 * @param    string $filename

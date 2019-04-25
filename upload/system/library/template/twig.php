@@ -1,38 +1,23 @@
 <?php
 namespace Template;
 final class Twig {
-	protected $code;
 	protected $data = array();
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
 
-	public function load($filename) {
-		$file = DIR_TEMPLATE . $filename . '.twig';
-
-		if (is_file($file)) {
-			$this->code = file_get_contents($file);
-		} else {
-			throw new \Exception('Error: Could not load template ' . $file . '!');
-			exit();
-		}
-	}
-
 	public function render($filename, $code = '') {
-		if ($code) {
-			$this->code = $code;
-		} elseif (!$this->code) {
-			$this->load($filename);
-		}
+		if (!$code) {
+			$file = DIR_TEMPLATE . $filename . '.twig';
 
-		// Initialize Twig environment
-		$config = array(
-			'autoescape'  => false,
-			'debug'       => false,
-			'auto_reload' => true,
-			'cache'       => DIR_CACHE . 'template/'
-		);
+			if (is_file($file)) {
+				$code = file_get_contents($file);
+			} else {
+				throw new \Exception('Error: Could not load template ' . $file . '!');
+				exit();
+			}
+		}
 
 		/*
 		 * FYI all the Twig lovers out there!
@@ -45,15 +30,25 @@ final class Twig {
 		 */
 
 		// render from modified template code
-		$loader = new \Twig_Loader_Array(array($filename . '.twig' => $this->code));
+		if ($code) {
+			// Initialize Twig environment
+			$config = array(
+				'autoescape'  => false,
+				'debug'       => false,
+				'auto_reload' => true,
+				'cache'       => DIR_CACHE . 'template/'
+			);
 
-		try {
-			$twig = new \Twig_Environment($loader, $config);
+			$loader = new \Twig_Loader_Array(array($filename . '.twig' => $code));
 
-			return $twig->render($filename . '.twig', $this->data);
-		} catch (Twig_Error_Syntax $e) {
-			trigger_error('Error: Could not load template ' . $filename . '!');
-			exit();
+			try {
+				$twig = new \Twig_Environment($loader, $config);
+
+				return $twig->render($filename . '.twig', $this->data);
+			} catch (Twig_Error_Syntax $e) {
+				trigger_error('Error: Could not load template ' . $filename . '!');
+				exit();
+			}
 		}
 	}
 }

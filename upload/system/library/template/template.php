@@ -20,10 +20,10 @@ final class Template {
 	}
 
 	public function render($filename, $code = '') {
-		if (!$code) {
-			$this->load($filename);
-		} else {
+		if ($code) {
 			$this->code = $code;
+		} elseif (!$this->code) {
+			$this->load($filename);
 		}
 
 		ob_start();

@@ -40,10 +40,21 @@ class Template {
 	}
 
 	/**
+	 * Load
+	 *
+	 * @param    string $filename
+	 *
+	 * @return    void
+	 */
+	public function load($filename) {
+		$this->adaptor->load($filename);
+	}
+
+	/**
 	 * Render
 	 *
-	 * @param    string $template
-	 * @param    bool $cache
+	 * @param    string $filename
+	 * @param    string $code
 	 *
 	 * @return    string
 	 */

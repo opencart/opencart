@@ -34,8 +34,6 @@ final class Loader {
 	 */
 	//public function controller($route, &...$args) {
 	public function controller($route, ...$args) {
-		//$args = func_get_args();
-
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -129,7 +127,6 @@ final class Loader {
 				$template->set($key, $value);
 			}
 
-			//, $this->registry->get('config')->get('template_cache')
 			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 		}
 

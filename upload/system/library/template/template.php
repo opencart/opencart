@@ -26,35 +26,21 @@ final class Template {
 			$this->load($filename);
 		}
 
-		ob_start();
+		if ($this->code) {
+			ob_start();
 
-		extract($this->data);
+			extract($this->data);
 
-		include($this->compile(DIR_TEMPLATE . $filename . '.tpl', $this->code));
+			include($this->compile(DIR_TEMPLATE . $filename . '.tpl', $this->code));
 
-		return ob_get_clean();
+			return ob_get_clean();
+		}
 	}
 
 	protected function compile($file, $code) {
 		$file = DIR_CACHE . 'template/' . hash('md5', $file . $code) . '.php';
 
 		if (!is_file($file)) {
-			// Build the directories if they don't exist
-			$directory = '';
-
-			$parts = explode('/', substr(dirname($file), 1));
-
-			foreach ($parts as $part) {
-				$directory .= '/' . $part;
-
-				if (!is_dir($directory)) {
-					if (!mkdir($directory, 0777, true)) {
-						clearstatcache(true, $directory);
-					}
-				}
-			}
-
-
 			file_put_contents($file, $code, LOCK_EX);
 		}
 

@@ -2,7 +2,7 @@
 namespace Template;
 final class Twig {
 	protected $code;
-	private $data = array();
+	protected $data = array();
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;
@@ -20,6 +20,12 @@ final class Twig {
 	}
 
 	public function render($filename, $code = '') {
+		if ($code) {
+			$this->code = $code;
+		} elseif (!$this->code) {
+			$this->load($filename);
+		}
+
 		// Initialize Twig environment
 		$config = array(
 			'autoescape'  => false,
@@ -27,21 +33,6 @@ final class Twig {
 			'auto_reload' => true,
 			'cache'       => DIR_CACHE . 'template/'
 		);
-
-
-		if (!$code) {
-			$this->load($filename);
-		} else {
-			$this->code = $code;
-		}
-
-
-
-
-		if (!$code) {
-			//load
-
-		}
 
 		/*
 		 * FYI all the Twig lovers out there!
@@ -53,31 +44,16 @@ final class Twig {
 		 * The fact that this system cache is just compiling php into more php code instead of html is a disgrace!
 		 */
 
-		if ($code) {
-			// render from modified template code
-			$loader = new \Twig_Loader_Array(array($filename . '.twig' => $this->code));
-		} else {
-			// render from template file
-			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
-		}
-
-		// 2. Initiate Twig Environment
-		//$twig = new \Twig_Environment($loader, $config);
-
+		// render from modified template code
+		$loader = new \Twig_Loader_Array(array($filename . '.twig' => $this->code));
 
 		try {
 			$twig = new \Twig_Environment($loader, $config);
-
-			$twig->parse($twig->tokenize(new \Twig\Source($template)));
 
 			return $twig->render($filename . '.twig', $this->data);
 		} catch (Twig_Error_Syntax $e) {
 			trigger_error('Error: Could not load template ' . $filename . '!');
 			exit();
 		}
-	}
-
-	public function compile($filename, $code) {
-
 	}
 }

@@ -1,44 +1,37 @@
 <?php
 namespace Template;
 final class Template {
-	protected $code;
 	protected $data = array();
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
 
-	public function load($filename) {
-		$file = DIR_TEMPLATE . $filename . '.tpl';
-
-		if (is_file($file)) {
-			$this->code = file_get_contents($file);
-		} else {
-			throw new \Exception('Error: Could not load template ' . $file . '!');
-			exit();
-		}
-	}
-
 	public function render($filename, $code = '') {
-		if ($code) {
-			$this->code = $code;
-		} elseif (!$this->code) {
-			$this->load($filename);
+		if (!$code) {
+			$file = DIR_TEMPLATE . $filename . '.tpl';
+
+			if (is_file($file)) {
+				$code = file_get_contents($file);
+			} else {
+				throw new \Exception('Error: Could not load template ' . $file . '!');
+				exit();
+			}
 		}
 
-		if ($this->code) {
+		if ($code) {
 			ob_start();
 
 			extract($this->data);
 
-			include($this->compile(DIR_TEMPLATE . $filename . '.tpl', $this->code));
+			include($this->compile($filename . '.tpl', $code));
 
 			return ob_get_clean();
 		}
 	}
 
-	protected function compile($file, $code) {
-		$file = DIR_CACHE . 'template/' . hash('md5', $file . $code) . '.php';
+	protected function compile($filename, $code) {
+		$file = DIR_CACHE . 'template/' . hash('md5', $filename . $code) . '.php';
 
 		if (!is_file($file)) {
 			file_put_contents($file, $code, LOCK_EX);

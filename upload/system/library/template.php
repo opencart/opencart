@@ -50,16 +50,4 @@ class Template {
 	public function render($filename, $code = '') {
 		return $this->adaptor->render($filename, $code);
 	}
-
-	/**
-	 * Compile
-	 *
-	 * @param    string $file
-	 * @param    bool $code
-	 *
-	 * @return    string
-	 */
-	public function compile($file, $code) {
-		return $this->adaptor->compile($file, $code);
-	}
 }

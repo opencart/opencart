@@ -18,7 +18,7 @@
     <file path="system/library/template/twig.php">
         <operation>
             <search>
-                <![CDATA[$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);]]>
+                <![CDATA[$loader = new \Twig_Loader_Array(array($filename . '.twig' => $code));]]>
             </search>
             <add position="replace">
                 <![CDATA[

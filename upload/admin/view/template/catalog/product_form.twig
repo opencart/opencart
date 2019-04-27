@@ -3,9 +3,6 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        {% if variant %}
-          <button type="button" id="button-variant" data-toggle="tooltip" title="{{ button_variant }}" class="btn btn-warning"><i class="fas fa-save"></i></button>
-        {% endif %}
         <button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -1097,7 +1094,7 @@
 var changed = [];
 
 $('#form-product').on('change', ':input', function(e) {
-	//console.log($(this).attr('name'));
+	console.log($(this).attr('name'));
 
 	key = $(this).attr('name');
 

@@ -4,48 +4,10 @@ class ControllerCommonDeveloper extends Controller {
 		$this->load->language('common/developer');
 		
 		$data['user_token'] = $this->session->data['user_token'];
-		
-		$data['developer_theme'] = $this->config->get('developer_theme');
-		$data['developer_sass'] = $this->config->get('developer_sass');	
-				
-		$eval = false;
-		
-		$eval = '$eval = true;';
 
-		eval($eval);		
-		
-		if ($eval === true) {
-			$data['eval'] = true;
-		} else {
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->editSetting('developer', array('developer_theme' => 1), 0);
-		
-			$data['eval'] = false;			
-		}
-	
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
-	
-	public function edit() {
-		$this->load->language('common/developer');
 
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->editSetting('developer', $this->request->post, 0);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
-	}
-		
 	public function theme() {
 		$this->load->language('common/developer');
 		

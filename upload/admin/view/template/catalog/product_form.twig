@@ -1091,56 +1091,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var changed = [];
-
-$('#form-product').on('change', ':input', function(e) {
-	console.log($(this).attr('name'));
-
-	key = $(this).attr('name');
-
-    if (changed[key] != this) {
-        changed[key] = this;
-    }
-});
-
-
-$('#button-variant').on('click', function(e) {
-	$('.modal').remove();
-
-	html = '<div id="modal-variant" class="modal fade">';
-	html += '  <div class="modal-dialog">';
-	html += '    <div class="modal-content">';
-	html += '      <div class="modal-header">';
-	html += '	     <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> {{ text_variant }}</h5> <button type="button" class="close" data-dismiss="modal">&times;</button>';
-	html += '      </div>';
-	html += '      <div class="modal-body">';
-
-	i = 0;
-
-	for (key in changed) {
-		console.log(i);
-
-		html += '<div class="form-group">';
-		html += '  <label class="col-form-label" for="input-modal' + i + '">' + $(changed[key]).attr('placeholder') + '</label>';
-		html += '  <input type="text" name="' + $(changed[key]).attr('name') + '" value="' + $(changed[key]).val() + '" placeholder="' + $(changed[key]).attr('placeholder') + '" class="form-control"/>';
-		html += '</div>';
-
-		i++;
-	}
-
-	html += '      </div>';
-	html += '      <div class="modal-footer">';
-	html += '	     <button type="button" id="button-save" class="btn btn-primary">{{ button_save }}</button> <button type="button" class="btn btn-light" data-dismiss="modal">{{ button_cancel }}</button>';
-	html += '      </div>';
-	html += '    </div>';
-	html += '  </div>';
-	html += '</div>';
-
-	$('body').append(html);
-
-	$('#modal-variant').modal('show');
-});
-
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
 // Manufacturer

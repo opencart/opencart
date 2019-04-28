@@ -234,5 +234,25 @@ $('input[name=\'filter_model\']').autocomplete({
 		$('input[name=\'filter_model\']').val(item['label']);
 	}
 });
+
+$('.btn-warning + .dropdown-menu > a.dropdown-item').on('click', function(e) {
+	e.preventDefault();
+
+	var element = this;
+
+	$('#modal-compare').remove();
+
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		success: function(html) {
+			console.log(html);
+
+			$('body').append(html);
+
+			$('#modal-compare').modal('show');
+		}
+	});
+});
 //--></script>
 {{ footer }}

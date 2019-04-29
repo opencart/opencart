@@ -18,9 +18,6 @@ $_['session_engine']    = 'db';
 // Error
 $_['error_display']     = true;
 
-// Template
-$_['template_cache']    = true;
-
 // Actions
 $_['action_pre_action'] = array(
 	'startup/startup',

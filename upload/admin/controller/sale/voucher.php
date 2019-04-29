@@ -581,8 +581,6 @@ class ControllerSaleVoucher extends Controller {
 			
 						// If voucher belongs to an order
 						if ($order_info) {
-							$this->load->model('localisation/language');
-			
 							$language = new Language($order_info['language_code']);
 							$language->load($order_info['language_code']);
 							$language->load('mail/voucher');

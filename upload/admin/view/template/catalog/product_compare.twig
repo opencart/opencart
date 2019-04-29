@@ -1,0 +1,66 @@
+<div id="modal-compare" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-cog"></i> {{ heading_title }}</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td style="width: 1px;"></td>
+              <td>{{ column_entry }}</td>
+              <td>{{ column_master }}</td>
+              <td>{{ column_variant }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in compare %}
+              <tr>
+                <td><input type="checkbox" name="selected[]" value="{{ product.key }}"/></td>
+                <td>{{ product.text }}</td>
+                <td>{{ product.master }}</td>
+                <td>{{ product.variant }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">{{ button_cancel }}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-exchange-alt"></i> {{ button_move }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#modal-compare .modal-footer .btn-primary').on('click', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=common/developer/' + $(element).attr('value') + '&user_token={{ user_token }}',
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#modal-compare .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#modal-compare .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>

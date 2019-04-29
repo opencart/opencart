@@ -1089,8 +1089,18 @@
       </div>
     </div>
   </div>
+  <div id="test"></div>
 </div>
+
 <script type="text/javascript"><!--
+$('#content :input').on('change', function() {
+	console.log($(this).val());
+
+	$('#test').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
+
+    $('#test').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
+});
+
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
 // Manufacturer

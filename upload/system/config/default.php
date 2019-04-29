@@ -61,7 +61,7 @@ $_['config_autoload']      = array();
 // Autoload Libraries
 $_['library_autoload']     = array();
 
-// Autoload Libraries
+// Autoload Models
 $_['model_autoload']       = array();
 
 // Actions

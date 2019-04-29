@@ -71,16 +71,17 @@ class ControllerCatalogProductCompare extends Controller {
 		}
 
 		// Attribute
-		$product_attribute_data = array();
+		$master_attribute_data = array();
 
 		$results = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
 		foreach ($results as $result) {
-			$product_attribute_data[] = $result;
+			$master_attribute_data[] = $result;
 		}
 
-		//print_r($master_info);
-		//print_r($data['compare']);
+
+
+
 
 
 		/*

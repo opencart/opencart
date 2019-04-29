@@ -44,7 +44,6 @@ $_['session_expire']       = 3600;
 // Template
 $_['template_engine']      = 'twig';
 $_['template_directory']   = '';
-$_['template_cache']       = false;
 $_['template_extension']   = '.twig';
 
 // Error

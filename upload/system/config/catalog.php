@@ -19,7 +19,6 @@ $_['session_name']       = 'OCSESSID';
 // Template
 $_['template_engine']    = 'twig';
 $_['template_directory'] = '';
-$_['template_cache']     = true;
 
 // Autoload Libraries
 $_['library_autoload']   = array();

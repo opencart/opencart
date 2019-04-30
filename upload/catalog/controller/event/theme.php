@@ -12,7 +12,7 @@ class ControllerEventTheme extends Controller {
 			$directory = $this->config->get('config_theme');
 		}
 
-		if (is_file(DIR_TEMPLATE . $directory . '/template/' . $route . '.twig')) {
+		if ($directory != 'default' && is_file(DIR_TEMPLATE . $directory . '/template/' . $route . '.twig')) {
 			$this->config->set('template_directory', $directory . '/template/');
 		} elseif (is_file(DIR_TEMPLATE . 'default/template/' . $route . '.twig')) {
 			$this->config->set('template_directory', 'default/template/');

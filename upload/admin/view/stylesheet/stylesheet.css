@@ -816,3 +816,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .list-check.list-color-blue li::before {
     color: #02afe9;
 }
+
+.table-responsive {
+    overflow: visible;
+}

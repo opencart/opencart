@@ -25,6 +25,6 @@ class ControllerEventStatistics extends Controller {
 	public function deleteReturn(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->minusValue('return', 1);
+		$this->model_report_statistics->removeValue('return', 1);
 	}
 }

@@ -64,6 +64,9 @@ $_['library_autoload']     = array();
 // Autoload Models
 $_['model_autoload']       = array();
 
+// Autoload Helpers
+$_['helper_autoload']      = array();
+
 // Actions
 $_['action_default']       = 'common/home';
 $_['action_router']        = 'startup/router';

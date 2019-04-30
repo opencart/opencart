@@ -145,7 +145,7 @@ final class Loader {
 	 *
 	 * @param    string $route
 	 */
-	public function library($route) {
+	public function library($route, $config = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 

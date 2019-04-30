@@ -164,6 +164,13 @@ if ($config->has('model_autoload')) {
 	}
 }
 
+// Helper Autoload
+if ($config->has('helper_autoload')) {
+	foreach ($config->get('helper_autoload') as $value) {
+		$loader->model($value);
+	}
+}
+
 // Route
 $route = new Router($registry);
 

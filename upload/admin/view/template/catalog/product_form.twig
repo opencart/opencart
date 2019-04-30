@@ -1091,14 +1091,13 @@
   </div>
   <div id="test"></div>
 </div>
-
 <script type="text/javascript"><!--
 $('#content :input').on('change', function() {
 	console.log($(this).val());
 
-	$('#test').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
+	$('#test textarea[name=\'' + $(this).attr('name') + '\']').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
 
-    $('#test').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
+	$('#test').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
 });
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
@@ -1661,7 +1660,6 @@ $('#button-special').on('click', function() {
 
 	special_row++;
 });
-
 //--></script>
 <script type="text/javascript"><!--
 var image_row = {{ image_row }};

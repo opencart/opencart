@@ -63,11 +63,6 @@ class ControllerCommonBreadcrumbs extends Controller {
 		];
 	}
 
-	public function detach($key)
-	{
-		$this->provider->detach($key);
-	}
-
 	public function render()
 	{
 		$data['breadcrumbs'] = $this->breadcrumbs;

@@ -62,6 +62,7 @@ class ControllerCommonProvider extends Controller {
 	{
 		$route = empty($route) ? $this->route : $route;
 
+		//remove duplicate keys and prioritize keys from args
 		$params = array_merge($this->request->get, $this->detached, $this->attached, $args);
 		
 		if ($this->hasRequest('route')) {

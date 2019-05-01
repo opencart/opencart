@@ -23,13 +23,6 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
-	// Add new div on each page
-	$('#container > .container').append('<div id="alert-box"></div>');
-
-	$('#alert-box').on('click', '.close', function() {
-		$('#alert-box').removeClass('open');
-	});
-
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().find(':input');
@@ -165,16 +158,27 @@ var cart = {
 				$('#cart > button').button('reset');
 			},
 			success: function(json) {
-				$('.alert-dismissible, .text-danger').remove();
+				$('.text-danger, .toast').remove();
+				$('.form-control').removeClass('is-invalid');
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 
 					// Need to set timeout otherwise it wont update the total
 					$('#cart').parent().load('index.php?route=common/cart/info');
@@ -273,16 +277,26 @@ var wishlist = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('.alert-dismissible').remove();
+				$('#toast').remove();
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -306,12 +320,22 @@ var compare = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('.alert-dismissible').remove();
+				$('#toast').remove();
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					html  = '<div id="toast" class="toast">';
+					html += '  <div class="toast-header">';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+					html += '  </div>';
+					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '</div>';
 
-					$('#alert-box').addClass('open');
+					$('body').append(html);
+
+					$('#toast').toast({'delay': 3000});
+
+					$('#toast').toast('show');
 
 					$('#compare-total').html(json['total']);
 				}
@@ -344,7 +368,7 @@ $(document).delegate('.agree', 'click', function(e) {
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">';
 			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
-			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+			html += '        <button type="button" class="close" data-dismiss="toast">&times;</button>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
 			html += '    </div>';
@@ -613,15 +637,15 @@ var chain = new Chain();
 	// BUTTON DATA-API
 	// ===============
 
-	$(document)
-		.on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
-			var $btn = $(e.target)
-			if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-			Plugin.call($btn, 'toggle')
-			if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
-		})
-		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
-			$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
-		})
+	$(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+		var $btn = $(e.target);
 
+		if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn');
+
+		Plugin.call($btn, 'toggle');
+
+		if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault();
+	}).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+		$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type));
+	});
 }(jQuery);

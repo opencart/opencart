@@ -23,13 +23,6 @@ class ControllerExtensionPaymentG2apay extends Controller {
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
-		// Because __call can not keep var references so we put them into an array.
-		$total_data = array(
-			'totals' => &$totals,
-			'taxes'  => &$taxes,
-			'total'  => &$total
-		);
-
 		$i = 0;
 
 		$results = $this->model_setting_extension->getExtensions('total');
@@ -38,8 +31,8 @@ class ControllerExtensionPaymentG2apay extends Controller {
 			if ($this->config->get('total_' . $result['code'] . '_status')) {
 				$this->load->model('extension/total/' . $result['code']);
 
-				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+				($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {

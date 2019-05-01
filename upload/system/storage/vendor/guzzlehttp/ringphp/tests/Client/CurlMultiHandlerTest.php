@@ -162,4 +162,20 @@ class CurlMultiHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GuzzleHttp\Ring\Future\FutureArray', $response);
         $this->assertEquals(202, $response['status']);
     }
+
+    public function testExtractsErrors()
+    {
+        $request = [
+            'http_method' => 'GET',
+            'headers'     => ['host' => ['127.0.0.1:123']],
+            'future'      => true,
+        ];
+        Server::flush();
+        Server::enqueue([['status' => 202]]);
+        $a = new CurlMultiHandler();
+        $response = $a($request);
+        $this->assertInstanceOf('GuzzleHttp\Ring\Future\FutureArray', $response);
+        $this->assertEquals(CURLE_COULDNT_CONNECT, $response['curl']['errno']);
+        $this->assertNotEmpty($response['curl']['error']);
+    }
 }

@@ -21,7 +21,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 				$data['payment_amazon_login_pay_test'] = true;
 			}
 
-			$data['module_amazon_pay_return_url'] = $this->url->link('extension/module/amazon_pay/login', '', true);
+			$data['module_amazon_pay_return_url'] = $this->url->link('extension/module/amazon_pay/login');
 
 			if ($this->config->get('module_amazon_pay_button_type')) {
 				$data['module_amazon_pay_button_type'] = $this->config->get('module_amazon_pay_button_type');

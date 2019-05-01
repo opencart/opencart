@@ -78,7 +78,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 			$page = 1;
 		}
 		
-		$data['reset'] = $this->url->link('extension/report/product_viewed/reset', 'user_token=' . $this->session->data['user_token'] . '&page={page}');
+		$data['reset'] = $this->url->link('extension/report/product_viewed/reset', 'user_token=' . $this->session->data['user_token']);
 
 		$this->load->model('extension/report/product');
 

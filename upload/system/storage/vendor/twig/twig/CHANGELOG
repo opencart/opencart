@@ -1,4 +1,38 @@
-* 2.4.8 (2018-XX-XX)
+* 2.6.2 (2019-01-14)
+
+ * fixed regression (key exists check for non ArrayObject objects)
+
+* 2.6.1 (2019-01-14)
+
+ * fixed ArrayObject access with a null value
+ * fixed embedded templates starting with a BOM
+ * fixed using a Twig_TemplateWrapper instance as an argument to extends
+ * fixed error location when calling an undefined block
+ * deprecated passing a string as a source on Twig_Error
+ * switched generated code to use the PHP short array notation
+ * fixed float representation in compiled templates
+ * added a second argument to the join filter (last separator configuration)
+
+* 2.6.0 (2018-12-16)
+
+ * made sure twig_include returns a string
+ * fixed multi-byte UFT-8 in escape('html_attr')
+ * added the "deprecated" tag
+ * added support for dynamically named tests
+ * fixed GlobalsInterface extended class
+ * fixed filesystem loader throwing an exception instead of returning false
+
+* 2.5.0 (2018-07-13)
+
+ * deprecated using the spaceless tag at the root level of a child template (noop anyway)
+ * deprecated the possibility to define a block in a non-capturing block in a child template
+ * added the Symfony ctype polyfill as a dependency
+ * fixed reporting the proper location for errors compiled in templates
+ * fixed the error handling for the optimized extension-based function calls
+ * ensured that syntax errors are triggered with the right line
+ * "js" filter now produces valid JSON
+
+* 2.4.8 (2018-04-02)
 
  * fixed a regression when using the "default" filter or the "defined" test on non-existing arrays
 
@@ -106,9 +140,35 @@
  * improved the performance of the filesystem loader
  * removed features that were deprecated in 1.x
 
-* 1.35.4 (2018-XX-XX)
+* 1.37.1 (2019-XX-XX)
 
- * n/a
+ * fixed regression (key exists check for non ArrayObject objects)
+ * fixed logic in TemplateWrapper
+
+* 1.37.0 (2019-01-14)
+
+ * fixed ArrayObject access with a null value
+ * fixed embedded templates starting with a BOM
+ * fixed using a Twig_TemplateWrapper instance as an argument to extends
+ * switched generated code to use the PHP short array notation
+ * dropped PHP 5.3 support
+ * fixed float representation in compiled templates
+ * added a second argument to the join filter (last separator configuration)
+
+* 1.36.0 (2018-12-16)
+
+ * made sure twig_include returns a string
+ * fixed multi-byte UFT-8 in escape('html_attr')
+ * added the "deprecated" tag
+ * added support for dynamically named tests
+ * fixed GlobalsInterface extended class
+ * fixed filesystem loader throwing an exception instead of returning false
+
+* 1.35.4 (2018-07-13)
+
+ * ensured that syntax errors are triggered with the right line
+ * added the Symfony ctype polyfill as a dependency
+ * "js" filter now produces valid JSON
 
 * 1.35.3 (2018-03-20)
 

@@ -109,7 +109,7 @@
           </fieldset>
           <fieldset>
             <legend>{{ text_value }}</legend>
-            <table id="option-value" class="table table-striped table-bordered table-hover">
+            <table id="option-value" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <td class="text-left required">{{ entry_option_value }}</td>
@@ -135,7 +135,7 @@
                         {% endif %}
                       {% endfor %}</td>
                     <td class="text-left">
-                      <div class="card">
+                      <div class="card image">
                         <img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image{{ option_value_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/>
                         <div class="card-body">
                           <button type="button" data-toggle="image" data-target="#input-image{{ option_value_row }}" data-thumb="#thumb-image{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
@@ -186,7 +186,7 @@ function addOptionValue() {
   {% endfor %}
 	html += '  </td>';
 	html += '  <td class="text-center">';
-	html += '    <div class="card">';
+	html += '    <div class="card image">';
 	html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + option_value_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
 	html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '"/>';
 	html += '      <div class="card-body">';
@@ -203,6 +203,5 @@ function addOptionValue() {
 
 	option_value_row++;
 }
-
 //--></script>
 {{ footer }} 

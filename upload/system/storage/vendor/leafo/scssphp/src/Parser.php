@@ -1302,6 +1302,21 @@ class Parser
     {
         $s = $this->seek();
 
+        if ($this->literal('url(') && $this->match('data:([a-z]+)\/([a-z0-9.+-]+);base64,', $m, false)) {
+            $len = strspn($this->buffer, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwyxz0123456789+/=', $this->count);
+
+            $this->count += $len;
+
+            if ($this->literal(')')) {
+                $content = substr($this->buffer, $s, $this->count - $s);
+                $out = [Type::T_KEYWORD, $content];
+
+                return true;
+            }
+        }
+
+        $this->seek($s);
+
         if ($this->literal('not', false) && $this->whitespace() && $this->value($inner)) {
             $out = [Type::T_UNARY, 'not', $inner, $this->inParens];
 

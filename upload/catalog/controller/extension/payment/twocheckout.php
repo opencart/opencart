@@ -78,7 +78,7 @@ class ControllerExtensionPaymentTwoCheckout extends Controller {
 
 		$data['lang'] = $this->session->data['language'];
 
-		$data['return_url'] = $this->url->link('extension/payment/twocheckout/callback', '', true);
+		$data['return_url'] = $this->url->link('extension/payment/twocheckout/callback');
 
 		return $this->load->view('extension/payment/twocheckout', $data);
 	}

@@ -307,7 +307,7 @@
               {% if error_account_warning %}
                 <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_account_warning }}</div>
               {% endif %}
-              <table id="account" class="table table-striped table-bordered table-hover">
+              <table id="account" class="table table-bordered table-hover">
                 <thead>
                   <tr>
                     <td class="text-left required">{{ entry_merchant_id }}</td>
@@ -404,7 +404,7 @@
                           {% endfor %}
                         </select>
                       </td>
-                      <td class="text-left"><button type="button" onclick="$('#account-row{{ account_row }}').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                      <td class="text-right"><button type="button" onclick="$('#account-row{{ account_row }}').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                     </tr>
                     {% set account_row = account_row + 1 %}
                   {% endfor %}
@@ -412,7 +412,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="8"></td>
-                    <td class="text-left"><button type="button" onclick="addAccount();" data-toggle="tooltip" title="{{ button_account_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                    <td class="text-right"><button type="button" onclick="addAccount();" data-toggle="tooltip" title="{{ button_account_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -584,13 +584,12 @@ function addAccount() {
 	html += '    <option value="{{ api_location.code }}">{{ api_location.name }}</option>';
   {% endfor %}
 	html += '  </select></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-right"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="{{ button_account_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#account tbody').append(html);
 
 	account_row++;
 }
-
 //--></script>
 {{ footer }}

@@ -9,8 +9,11 @@ $_['text_add']               = 'Add Product';
 $_['text_edit']              = 'Edit Product';
 $_['text_filter']            = 'Filter';
 $_['text_default']           = 'Default';
-$_['text_variant_add']       = 'Add Variant';
+$_['text_variant']           = 'Add Variant';
+$_['text_compare']           = 'Compare to master';
 $_['text_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
+$_['text_option_add']        = 'Add Option';
+$_['text_option_value']      = 'Option Value';
 $_['text_select']        	 = 'Select';
 $_['text_radio']             = 'Radio';
 $_['text_checkbox']          = 'Checkbox';
@@ -21,6 +24,10 @@ $_['text_file']              = 'File';
 $_['text_date']              = 'Date';
 $_['text_datetime']          = 'Date &amp; Time';
 $_['text_time']              = 'Time';
+$_['text_image']             = 'Image';
+$_['text_image_additional']  = 'Additional Images';
+$_['text_reward']            = 'Buy Points';
+$_['text_points']            = 'Reward Points';
 
 // Column
 $_['column_name']            = 'Product Name';
@@ -29,6 +36,9 @@ $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
+$_['column_entry']           = 'Entry Name';
+$_['column_master']          = 'Master';
+$_['column_variant']         = 'Variant';
 $_['column_action']          = 'Action';
 
 // Entry
@@ -66,14 +76,13 @@ $_['entry_width']            = 'Width';
 $_['entry_height']           = 'Height';
 $_['entry_option']           = 'Option';
 $_['entry_option_value']     = 'Option Value';
-$_['entry_image']            = 'Image';
-$_['entry_additional_image'] = 'Additional Images';
 $_['entry_customer_group']   = 'Customer Group';
 $_['entry_date_start']       = 'Date Start';
 $_['entry_date_end']         = 'Date End';
 $_['entry_priority']         = 'Priority';
 $_['entry_attribute']        = 'Attribute';
 $_['entry_attribute_group']  = 'Attribute Group';
+$_['entry_image']            = 'Image';
 $_['entry_text']             = 'Text';
 $_['entry_required']         = 'Required';
 $_['entry_status']           = 'Status';
@@ -102,6 +111,7 @@ $_['help_category']          = '(Autocomplete)';
 $_['help_filter']            = '(Autocomplete)';
 $_['help_download']          = '(Autocomplete)';
 $_['help_related']           = '(Autocomplete)';
+$_['help_option']            = '(Autocomplete)';
 $_['help_tag']               = 'Comma separated';
 
 // Error

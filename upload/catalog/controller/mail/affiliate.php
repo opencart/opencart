@@ -55,7 +55,7 @@ class ControllerMailAffiliate extends Controller {
 
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+		$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
 		$mail->setHtml($this->load->view('mail/affiliate', $data));
 		$mail->send();
  	}
@@ -125,12 +125,12 @@ class ControllerMailAffiliate extends Controller {
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject($this->language->get('text_new_affiliate'));
 			$mail->setHtml($this->load->view('mail/affiliate_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails if new affiliate email is enabled
-			$emails = explode(',', (array)$this->config->get('config_mail_alert_email'));
+			$emails = explode(',', $this->config->get('config_mail_alert_email'));
 
 			foreach ($emails as $email) {
 				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {

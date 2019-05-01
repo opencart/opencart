@@ -19,7 +19,7 @@ class UnhandledRejectionException extends \RuntimeException
     {
         $this->reason = $reason;
 
-        $message = sprintf('Unhandled Rejection: %s', json_encode($reason));
+        $message = \sprintf('Unhandled Rejection: %s', \json_encode($reason));
 
         parent::__construct($message, 0);
     }

@@ -69,7 +69,6 @@
             {% endif %}
             {% if review_status %}
               <div class="tab-pane fade" id="tab-review" role="tabpanel" aria-labelledby="review-tab">
-
                 <form id="form-review">
                   <div id="review"></div>
                   <h2>{{ text_write }}</h2>
@@ -396,9 +395,8 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
-
 			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.form-control').removeClass('is-invalid');
 
 			if (json['error']) {
 				if (json['error']['option']) {
@@ -422,13 +420,30 @@ $('#button-cart').on('click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').parent().addClass('has-error');
+				$('.text-danger').each(function() {
+					var element = $(this).parent().find(':input');
+
+					if (element.hasClass('form-control')) {
+						element.addClass('is-invalid');
+					}
+				});
+
+				$('.invalid-tooltip').show();
 			}
 
 			if (json['success']) {
-				$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				html = '<div id="toast" class="toast">';
+				html += '  <div class="toast-header">';
+				html += '	 <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+				html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
+				html += '  </div>';
+				html += '  <div class="toast-body">' + json['success'] + '</div>';
+				html += '</div>';
 
-				$('#alert-box').addClass('open');
+				$('body').append(html);
+
+				$('#toast').toast({'delay': 3000});
+				$('#toast').toast('show');
 
 				$('#cart').parent().load('index.php?route=common/cart/info');
 			}

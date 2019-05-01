@@ -78,5 +78,11 @@ class ControllerStartupStartup extends Controller {
 		
 		// Encryption
 		$this->registry->set('encryption', new Encryption());
+
+		// Provider
+		$this->registry->set('provider', $this->load->controller('common/provider'));
+
+		// Breadcrumbs
+		$this->registry->set('breadcrumbs', $this->load->controller('common/breadcrumbs'));
 	}
 }

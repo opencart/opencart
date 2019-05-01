@@ -5,7 +5,7 @@ class ControllerCommonBreadcrumbs extends Controller {
 	private $breadcrumbs = array();
 
 	public function index() {
-		$this->route = isset($this->request->get['route']) ? $this->request->get['route'] : false;
+		$this->route = $this->provider->hasRequest('route') ? $this->request->get['route'] : '';
 
 		$this->routes = explode('/', $this->route);
 		
@@ -16,25 +16,19 @@ class ControllerCommonBreadcrumbs extends Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$this->config->set('breadcrumbs', $this);
-
 		return $this;
 	}
 
 	public function setDefaults()
 	{
 		$count_routes = count($this->routes);
-		
-		$this->load->language($this->route);
-
-		$heading_title = $this->language->get('heading_title');
 
 		if ($this->routes[0] === 'extension') {				
 			$this->load->language('marketplace/extension');
 
 			$this->breadcrumbs[] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->provider->link('marketplace/extension')
 			];
 		}
 
@@ -43,24 +37,35 @@ class ControllerCommonBreadcrumbs extends Controller {
 
 			$this->breadcrumbs[] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->provider->link('setting/store')
 			];
 		}
 
-		if ($count_routes === 2) {
+		if ($count_routes >= 2) {
+			$routes = array_slice($this->routes, 0, 2);
+
+			$route = implode('/', $routes);
+
+			$this->load->language($route);
+
 			$this->breadcrumbs[] = [
-				'text' => $heading_title,
-				'href' => $this->url->link($this->route, 'user_token=' . $this->session->data['user_token'])
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->provider->link($route)
 			];
 		}
 	}
 
-	public function set(array $args)
+	public function set(string $text, string $route = '')
 	{
 		$this->breadcrumbs[] = [
-			'text' => $this->language->get($args['text']),
-			'href' => $this->url->link($args['route'], 'user_token=' . $this->session->data['user_token'])
+			'text' => $this->language->get($text),
+			'href' => $this->provider->link($route)
 		];
+	}
+
+	public function detach($key)
+	{
+		$this->provider->detach($key);
 	}
 
 	public function render()
@@ -69,5 +74,4 @@ class ControllerCommonBreadcrumbs extends Controller {
 
 		return $this->load->view('common/breadcrumbs', $data);
 	}
-
 }

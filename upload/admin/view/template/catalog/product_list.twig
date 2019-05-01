@@ -88,8 +88,10 @@
                           <td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
                           <td class="text-left">{{ product.name }}
                             <br/>
-                            {% if product.status %}
+                            {% if product.status == 1 %}
                               <small class="text-success">{{ text_enabled }}</small>
+                            {% elseif product.status == -1 %}
+                              <small class="text-warning">{{ text_archived }}</small>
                             {% else %}
                               <small class="text-danger">{{ text_disabled }}</small>
                             {% endif %}</td>

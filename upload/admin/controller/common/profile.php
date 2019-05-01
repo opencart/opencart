@@ -72,11 +72,9 @@ class ControllerCommonProfile extends Controller {
 			$data['error_email'] = '';
 		}
 
-		$breadcrumbs = $this->load->controller('common/breadcrumbs');
+		$this->breadcrumbs->setDefaults();
 
-		$breadcrumbs->setDefaults();
-
-		$data['breadcrumbs'] = $breadcrumbs->render();
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 
 		$data['action'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
 

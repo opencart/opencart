@@ -4,7 +4,7 @@
     <code>default</code>
     <version>1.0</version>
     <author>OpenCart Ltd</author>
-    <link>http://www.opencart.com</link>
+    <link>https://www.opencart.com</link>
     <file path="system/{engine,library}/{action,loader,config,language}*.php|system/library/template/template.php">
         <operation>
             <search regex="true">
@@ -18,19 +18,10 @@
     <file path="system/library/template/twig.php">
         <operation>
             <search>
-                <![CDATA[$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);]]>
+                <![CDATA[$code = file_get_contents($file);]]>
             </search>
             <add position="replace">
-                <![CDATA[
-		$loader = new \Twig_Loader_Filesystem();
-		
-		if (defined('DIR_CATALOG') && is_dir(DIR_MODIFICATION . 'admin/view/template/')) {	
-			$loader->addPath(DIR_MODIFICATION . 'admin/view/template/');
-		} elseif (is_dir(DIR_MODIFICATION . 'catalog/view/theme/')) {
-			$loader->addPath(DIR_MODIFICATION . 'catalog/view/theme/');
-		}
-		
-		$loader->addPath(DIR_TEMPLATE);]]>
+                <![CDATA[$code = file_get_contents(modification($file));]]>
             </add>
         </operation>
     </file>

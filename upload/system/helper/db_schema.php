@@ -2076,12 +2076,14 @@ function db_schema() {
 			array(
 				'name' => 'status',
 				'type' => 'tinyint(1)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => '0'
 			),
 			array(
 				'name' => 'sort_order',
 				'type' => 'int(3)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => '1'
 			)
 		),
 		'primary' => array(
@@ -2308,6 +2310,16 @@ function db_schema() {
 		'field' => array(
 			array(
 				'name' => 'gdpr_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			),

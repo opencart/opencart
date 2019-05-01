@@ -174,6 +174,7 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 	public function log($data, $step = 6) {
 		if ($this->config->get('payment_klarna_checkout_debug')) {
 			$backtrace = debug_backtrace();
+
 			$log = new Log('klarna_checkout.log');
 			$log->write('(' . $backtrace[$step]['class'] . '::' . $backtrace[$step]['function'] . ') - ' . print_r($data, true));
 		}
@@ -187,13 +188,6 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
-
-		// Because __call can not keep var references so we put them into an array.
-		$total_data = array(
-			'totals' => &$totals,
-			'taxes'  => &$taxes,
-			'total'  => &$total
-		);
 
 		$this->load->model('setting/extension');
 
@@ -211,8 +205,8 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 			if ($this->config->get('total_' . $result['code'] . '_status')) {
 				$this->load->model('extension/total/' . $result['code']);
 
-				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+				($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 			}
 		}
 

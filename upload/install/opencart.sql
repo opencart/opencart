@@ -772,7 +772,7 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (22, 'mail_order_alert', 'catalog/model/checkout/order/addOrderHistory/before', 'mail/order/alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(23, 'mail_gdpr_add', 'catalog/model/account/gdpr/addGdpr/after', 'mail/gdpr', 1);
+(23, 'mail_gdpr', 'catalog/model/account/gdpr/addGdpr/after', 'mail/gdpr', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (24, 'mail_review', 'catalog/model/catalog/review/addReview/after', 'mail/review', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
@@ -804,11 +804,7 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (38, 'admin_setting', 'admin/model/setting/setting/editSetting/after', 'event/currency', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(39, 'admin_mail_gdpr_approve', 'admin/model/customer/gdpr/approveGdpr/after', 'mail/gdpr/approve', 1);
-INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(40, 'admin_mail_gdpr_deny', 'admin/model/customer/gdpr/denyGdpr/after', 'mail/gdpr/deny', 1);
-INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(41, 'admin_mail_gdpr_delete', 'admin/model/customer/gdpr/deleteGdpr/after', 'mail/gdpr/delete', 1);
+(39, 'admin_mail_gdpr', 'admin/model/customer/gdpr/editStatus/after', 'mail/gdpr', 1);
 
 -----------------------------------------------------------
 
@@ -1545,7 +1541,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_length_class_id', '1', 0),
 (0, 'config', 'config_weight_class_id', '1', 0),
 (0, 'config', 'config_product_count', '1', 0),
-(0, 'config', 'config_limit_admin', '20', 0),
+(0, 'config', 'config_limit_admin', '10', 0),
 (0, 'config', 'config_review_status', '1', 0),
 (0, 'config', 'config_review_guest', '1', 0),
 (0, 'config', 'config_voucher_min', '1', 0),
@@ -1724,9 +1720,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'report_product_purchased', 'report_product_purchased_status', '1', 0),
 (0, 'report_product_purchased', 'report_product_purchased_sort_order', '11', 0),
 (0, 'report_marketing', 'report_marketing_status', '1', 0),
-(0, 'report_marketing', 'report_marketing_sort_order', '12', 0),
-(0, 'developer', 'developer_theme', '1', 0),
-(0, 'developer', 'developer_sass', '1', 0);
+(0, 'report_marketing', 'report_marketing_sort_order', '12', 0);
 
 -----------------------------------------------------------
 

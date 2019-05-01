@@ -18,8 +18,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		}
 
 		$data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
-		$data['shipping_quotes'] = $this->url->link('extension/payment/amazon_login_pay/shippingquotes', '', true);
-		$data['payment_method'] = $this->url->link('extension/payment/amazon_login_pay/paymentmethod', '', true);
+		$data['shipping_quotes'] = $this->url->link('extension/payment/amazon_login_pay/shippingquotes');
+		$data['payment_method'] = $this->url->link('extension/payment/amazon_login_pay/paymentmethod');
 
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['text_cart'] = $this->language->get('text_cart');
@@ -66,7 +66,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 			$data['payment_amazon_login_pay_test'] = true;
 		}
-		$data['confirm_order'] = $this->url->link('extension/payment/amazon_login_pay/confirm', '', true);
+		$data['confirm_order'] = $this->url->link('extension/payment/amazon_login_pay/confirm');
 
 		$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
 		$this->document->addScript($amazon_payment_js);
@@ -75,8 +75,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$this->model_extension_payment_amazon_login_pay->addAddress($this->session->data['lpa']['address']);
 		}
 
-		$data['continue'] = $this->url->link('extension/payment/amazon_login_pay/confirm', '', true);
-		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/address', '', true);
+		$data['continue'] = $this->url->link('extension/payment/amazon_login_pay/confirm');
+		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/address');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -108,6 +108,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
 		$data['payment_amazon_login_pay_client_id'] = $this->config->get('payment_amazon_login_pay_client_id');
+
 		if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
 			$data['payment_amazon_login_pay_test'] = true;
 		}
@@ -126,11 +127,13 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		}
 
 		$data['heading_confirm'] = $this->language->get('heading_confirm');
+
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
+
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$products = $this->cart->getProducts();
@@ -157,13 +160,6 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
-
-		// Because __call can not keep var references so we put them into an array.
-		$total_data = array(
-			'totals' => &$totals,
-			'taxes' => &$taxes,
-			'total' => &$total
-		);
 
 		$old_taxes = $taxes;
 		$lpa_tax = array();
@@ -194,8 +190,8 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			if ($this->config->get('total_' . $code . '_status')) {
 				$this->load->model('extension/total/' . $code);
 
-				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_extension_total_' . $code}->getTotal($total_data);
+				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+				($this->{'model_extension_total_' . $code}->getTotal)($totals, $taxes, $total);
 
 				if (!empty($totals[count($totals) - 1]) && !isset($totals[count($totals) - 1]['code'])) {
 					$totals[count($totals) - 1]['code'] = $code;
@@ -225,9 +221,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$sort_order[$key] = $value['sort_order'];
 
 			if (isset($lpa_tax[$value['code']])) {
-				$total_data['totals'][$key]['lpa_tax'] = $lpa_tax[$value['code']];
+				$totals[$key]['lpa_tax'] = $lpa_tax[$value['code']];
 			} else {
-				$total_data['totals'][$key]['lpa_tax'] = '';
+				$totals[$key]['lpa_tax'] = '';
 			}
 		}
 
@@ -363,7 +359,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$order_data['products'] = $product_data;
 		$order_data['vouchers'] = array();
-		$order_data['totals'] = $total_data['totals'];
+		$order_data['totals'] = $totals;
 
 		$order_data['comment'] = '';
 		$order_data['total'] = $total;
@@ -433,12 +429,12 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 
 		$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 
-		$this->model_extension_payment_amazon_login_pay->addTaxesForTotals($this->session->data['order_id'], $total_data['totals']);
+		$this->model_extension_payment_amazon_login_pay->addTaxesForTotals($this->session->data['order_id'], $totals);
 
 		$this->session->data['lpa']['amazon_login_pay_order_id'] = $this->model_extension_payment_amazon_login_pay->setOrderShipping($this->session->data['order_id'], $order_data['lpa_free_shipping']);
 
 		$data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
-		$data['process_order'] = $this->url->link('extension/payment/amazon_login_pay/processorder', '', true);
+		$data['process_order'] = $this->url->link('extension/payment/amazon_login_pay/processorder');
 
 		foreach ($this->cart->getProducts() as $product) {
 			$option_data = array();
@@ -480,7 +476,7 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			);
 		}
 
-		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/paymentMethod', '', true);
+		$data['back'] = $this->url->link('extension/payment/amazon_login_pay/paymentMethod');
 		$data['text_back'] = $this->language->get('text_back');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -774,9 +770,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$this->session->data['shipping_country_id'] = $this->session->data['lpa']['address']['country_id'];
 			$this->session->data['shipping_zone_id'] = $this->session->data['lpa']['address']['zone_id'];
 
-			$json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/paymentMethod', '', true);
+			$json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/paymentMethod');
 		} else {
-			$json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/paymentMethod', '', true);
+			$json['redirect'] = $this->url->link('extension/payment/amazon_login_pay/paymentMethod');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

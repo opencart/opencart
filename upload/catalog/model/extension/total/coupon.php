@@ -95,7 +95,7 @@ class ModelExtensionTotalCoupon extends Model {
 		}
 	}
 
-	public function getTotal($total) {
+	public function getTotal(&$totals, &$taxes, &$total) {
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('extension/total/coupon', 'coupon');
 
@@ -141,7 +141,7 @@ class ModelExtensionTotalCoupon extends Model {
 
 							foreach ($tax_rates as $tax_rate) {
 								if ($tax_rate['type'] == 'P') {
-									$total['taxes'][$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
+									$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 								}
 							}
 						}
@@ -156,7 +156,7 @@ class ModelExtensionTotalCoupon extends Model {
 
 						foreach ($tax_rates as $tax_rate) {
 							if ($tax_rate['type'] == 'P') {
-								$total['taxes'][$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
+								$taxes[$tax_rate['tax_rate_id']] -= $tax_rate['amount'];
 							}
 						}
 					}
@@ -165,19 +165,19 @@ class ModelExtensionTotalCoupon extends Model {
 				}
 
 				// If discount greater than total
-				if ($discount_total > $total['total']) {
-					$discount_total = $total['total'];
+				if ($discount_total > $total) {
+					$discount_total = $total;
 				}
 
 				if ($discount_total > 0) {
-					$total['totals'][] = array(
+					$totals[] = array(
 						'code'       => 'coupon',
 						'title'      => sprintf($this->language->get('coupon')->get('text_coupon'), $this->session->data['coupon']),
 						'value'      => -$discount_total,
 						'sort_order' => $this->config->get('total_coupon_sort_order')
 					);
 
-					$total['total'] -= $discount_total;
+					$total -= $discount_total;
 				}
 			}
 		}

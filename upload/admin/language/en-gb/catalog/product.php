@@ -9,7 +9,8 @@ $_['text_add']               = 'Add Product';
 $_['text_edit']              = 'Edit Product';
 $_['text_filter']            = 'Filter';
 $_['text_default']           = 'Default';
-$_['text_variant_add']       = 'Add Variant';
+$_['text_variant']           = 'Add Variant';
+$_['text_compare']           = 'Compare to master';
 $_['text_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 $_['text_option_add']        = 'Add Option';
 $_['text_option_value']      = 'Option Value';
@@ -35,6 +36,9 @@ $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
+$_['column_entry']           = 'Entry Name';
+$_['column_master']          = 'Master';
+$_['column_variant']         = 'Variant';
 $_['column_action']          = 'Action';
 
 // Entry

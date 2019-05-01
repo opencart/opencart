@@ -339,7 +339,7 @@ class ControllerMailOrder extends Controller {
 		$mail->send();
 	}
 
-	// Admin Alert Mail
+	// catalog/model/checkout/order/addOrderHistory/before
 	public function alert(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];

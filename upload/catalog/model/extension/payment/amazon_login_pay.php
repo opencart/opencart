@@ -16,8 +16,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 	public function getAddress() {
 		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];
+
 		$address = $this->model_extension_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
+
 		$xml = simplexml_load_string($address['ResponseBody']);
+
 		if (isset($xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination)) {
 			return $xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination;
 		}
@@ -25,8 +28,10 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 	public function addAddress($address) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `firstname` = '" . $this->db->escape($address['firstname']) . "' AND `lastname` = '" . $this->db->escape($address['lastname']) . "' AND `address_1` = '" . $this->db->escape($address['address_1']) . "' AND `address_2` = '" . $this->db->escape($address['address_2']) . "' AND `postcode` = '" . $this->db->escape($address['postcode']) . "' AND `city` = '" . $this->db->escape($address['city']) . "' AND `zone_id` = '" . $this->db->escape($address['zone_id']) . "' AND `country_id` = '" . $this->db->escape($address['country_id']) . "'");
+
 		if (!$query->num_rows) {
 			$this->load->model('account/address');
+
 			$this->model_account_address->addAddress($this->customer->getId(), $this->session->data['lpa']['address']);
 		}
 	}
@@ -42,6 +47,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
 	public function getShippingPrice($order_id) {
 		$query = $this->db->query("SELECT `value` + IF(`tax` IS NULL, 0, `tax`) AS 'price' FROM `" . DB_PREFIX . "order_total` `ot` LEFT JOIN `" . DB_PREFIX . "amazon_login_pay_order_total_tax` `ott` USING(`order_total_id`) WHERE `ot`.`code` = 'shipping' AND `order_id` = " . (int)$order_id);
+
 		if ($query->num_rows) {
 			return $query->row['price'];
 		}
@@ -475,5 +481,4 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 			$log->write($class . $backtrace[6]['function'] . ' Data:  ' . print_r($data, 1));
 		}
 	}
-
 }

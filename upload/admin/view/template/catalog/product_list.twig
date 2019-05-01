@@ -121,10 +121,14 @@
                               <div class="btn-group">
                                 <a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-caret-down"></i></button>
-                                <div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant_add }}</a></div>
+                                <div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant }}</a></div>
                               </div>
                             {% else %}
-                              <a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                              <div class="btn-group">
+                                <a href="{{ product.edit }}" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                                <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-caret-down"></i></button>
+                                <div class="dropdown-menu dropdown-menu-right"><a href="{{ product.compare }}" class="dropdown-item"><i class="fas fa-exchange-alt"></i> {{ text_compare }}</a></div>
+                              </div>
                             {% endif %}
                           </td>
                         </tr>
@@ -229,6 +233,26 @@ $('input[name=\'filter_model\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
 	}
+});
+
+$('.btn-warning + .dropdown-menu > a.dropdown-item').on('click', function(e) {
+	e.preventDefault();
+
+	var element = this;
+
+	$('#modal-compare').remove();
+
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		success: function(html) {
+			console.log(html);
+
+			$('body').append(html);
+
+			$('#modal-compare').modal('show');
+		}
+	});
 });
 //--></script>
 {{ footer }}

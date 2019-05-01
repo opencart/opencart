@@ -245,13 +245,6 @@ class ControllerApiOrder extends Controller {
 				$taxes = $this->cart->getTaxes();
 				$total = 0;
 
-				// Because __call can not keep var references so we put them into an array.
-				$total_data = array(
-					'totals' => &$totals,
-					'taxes'  => &$taxes,
-					'total'  => &$total
-				);
-			
 				$sort_order = array();
 
 				$results = $this->model_setting_extension->getExtensions('total');
@@ -265,19 +258,25 @@ class ControllerApiOrder extends Controller {
 				foreach ($results as $result) {
 					if ($this->config->get('total_' . $result['code'] . '_status')) {
 						$this->load->model('extension/total/' . $result['code']);
-						
-						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+
+						// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+						($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 					}
 				}
 
 				$sort_order = array();
 
-				foreach ($total_data['totals'] as $key => $value) {
+				foreach ($totals as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+				array_multisort($sort_order, SORT_ASC, $totals);
+
+				$total_data = array(
+					'totals' => $totals,
+					'taxes'  => $taxes,
+					'total'  => $total
+				);
 
 				$order_data = array_merge($order_data, $total_data);
 
@@ -615,13 +614,6 @@ class ControllerApiOrder extends Controller {
 					$taxes = $this->cart->getTaxes();
 					$total = 0;
 					
-					// Because __call can not keep var references so we put them into an array. 
-					$total_data = array(
-						'totals' => &$totals,
-						'taxes'  => &$taxes,
-						'total'  => &$total
-					);
-			
 					$sort_order = array();
 
 					$results = $this->model_setting_extension->getExtensions('total');
@@ -635,19 +627,25 @@ class ControllerApiOrder extends Controller {
 					foreach ($results as $result) {
 						if ($this->config->get('total_' . $result['code'] . '_status')) {
 							$this->load->model('extension/total/' . $result['code']);
-							
-							// We have to put the totals in an array so that they pass by reference.
-							$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+
+							// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+							($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 						}
 					}
 
 					$sort_order = array();
 
-					foreach ($total_data['totals'] as $key => $value) {
+					foreach ($totals as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
 					}
 
-					array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+					array_multisort($sort_order, SORT_ASC, $totals);
+
+					$total_data = array(
+						'totals' => $totals,
+						'taxes'  => $taxes,
+						'total'  => $total
+					);
 
 					$order_data = array_merge($order_data, $total_data);
 

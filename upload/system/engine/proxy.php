@@ -11,14 +11,20 @@
 * Proxy class
 */
 class Proxy {
+	private $data = array();
+
     /**
      * 
      *
      * @param	string	$key
      */	
 	public function &__get($key) {
-		return $this->{$key};
-	}	
+		return $this->data[$key];
+	}
+
+	public function attach($key, &$value) {
+		$this->data[$key] = $value;
+	}
 
     /**
      * 
@@ -27,12 +33,15 @@ class Proxy {
 	 * @param	string	$value
      */	
 	public function __set($key, $value) {
-		 $this->{$key} = $value;
+		$this->data[$key] = $value;
 	}
 	
-	public function __call($key, $args) {
-		if (isset($this->{$key})) {
-			return call_user_func_array($this->{$key}, $args);
+	public function __call($method, $args) {
+		// Hack for pass-by-reference
+		foreach ($args as $key => &$value);
+
+		if (isset($this->data[$method])) {
+			return call_user_func_array($this->data[$method], $args);
 		} else {
 			$trace = debug_backtrace();
 

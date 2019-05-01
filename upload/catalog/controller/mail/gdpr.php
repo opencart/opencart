@@ -6,7 +6,7 @@ class ControllerMailGdpr extends Controller {
 		// $args[1] $email
 		// $args[2] $action
 
-		$this->load->language('mail/gdpr_' . $args[2]);
+		$this->load->language('mail/gdpr');
 
 		if ($this->config->get('config_logo')) {
 			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
@@ -14,11 +14,16 @@ class ControllerMailGdpr extends Controller {
 			$data['logo'] = '';
 		}
 
+		$data['text_request'] = $this->language->get('text_' . $args[2]);
+
+		$data['button_confirm'] = $this->language->get('button_' . $args[2]);
+
 		$data['confirm'] = $this->url->link('information/gdpr/success', 'language=' . $this->config->get('config_language') . '&code=' . $args[0]);
 
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
-		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$data['store_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$data['store_url'] = $this->config->get('config_url');
 
 		$mail = new Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
@@ -31,7 +36,7 @@ class ControllerMailGdpr extends Controller {
 		$mail->setTo($args[1]);
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSubject(sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+		$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
 		$mail->setHtml($this->load->view('mail/gdpr', $data));
 		$mail->send();
 	}

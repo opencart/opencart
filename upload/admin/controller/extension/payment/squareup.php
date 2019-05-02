@@ -230,7 +230,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $data['action'] = html_entity_decode($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token']));
         $data['action_save_auth'] = html_entity_decode($this->url->link('extension/payment/squareup', 'user_token=' . $this->session->data['user_token'] . '&save_and_auth=1'));
         $data['cancel'] = html_entity_decode($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
-        $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&page={page}'));
+        $data['url_list_transactions'] = html_entity_decode($this->url->link('extension/payment/squareup/transactions', 'user_token=' . $this->session->data['user_token'] . '&page={PAGE}'));
 
         $this->load->model('localisation/language');
         $data['languages'] = array();
@@ -456,7 +456,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             $page = 1;
         }
 
-        $result = array(
+        $data = array(
             'transactions' => array(),
             'pagination' => ''
         );
@@ -480,7 +480,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
             $order_info = $this->model_sale_order->getOrder($transaction['order_id']);
             
-            $result['transactions'][] = array(
+            $data['transactions'][] = array(
                 'squareup_transaction_id' => $transaction['squareup_transaction_id'],
                 'transaction_id' => $transaction['transaction_id'],
                 'url_order' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $transaction['order_id']),
@@ -510,7 +510,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 		));
 
         $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($result));
+        $this->response->setOutput(json_encode($data));
     }
 
     public function refresh_token() {

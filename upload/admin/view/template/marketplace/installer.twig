@@ -180,7 +180,7 @@ $('#history').on('click', '.btn-danger', function(e) {
 			if (json['success']) {
 				$('#progress-bar').css('width', '100%');
 				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 
 				$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
 			}

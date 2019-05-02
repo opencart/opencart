@@ -494,7 +494,7 @@
                             <label class="form-check">
                             {% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %}
                               <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/>
-                              {{ custom_field_value.name }}</label>
+                              {{ custom_field_value.name }}
                             {% else %}
                               <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
                               {{ custom_field_value.name }}

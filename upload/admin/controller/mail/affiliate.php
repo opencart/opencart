@@ -1,5 +1,6 @@
 <?php
 class ControllerMailAffiliate extends Controller {
+	// admin/model/customer/customer_approval/approveAffiliate/after
 	public function approve(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');
 		
@@ -55,7 +56,8 @@ class ControllerMailAffiliate extends Controller {
 			$mail->send();
 		}
 	}
-	
+
+	// admin/model/customer/customer_approval/denyAffiliate/after
 	public function deny(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');
 		

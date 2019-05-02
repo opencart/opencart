@@ -1,5 +1,6 @@
 <?php
 class ControllerMailReward extends Controller {
+	// admin/model/customer/customer/addReward/after
 	public function index($route, $args, $output) {
 		if (isset($args[0])) {
 			$customer_id = $args[0];

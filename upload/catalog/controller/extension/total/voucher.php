@@ -45,6 +45,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	// catalog/model/checkout/order/addOrderHistory/after
 	public function send($route, $args, $output) {
 		$this->load->model('checkout/order');
 

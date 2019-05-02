@@ -1,5 +1,6 @@
 <?php
 class ControllerMailAffiliate extends Controller {
+	// catalog/model/account/affiliate/addAffiliate/after
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');
 
@@ -60,6 +61,7 @@ class ControllerMailAffiliate extends Controller {
 		$mail->send();
  	}
 
+	// catalog/model/account/affiliate/addAffiliate/after
 	public function alert(&$route, &$args, &$output) {
 		// Send to main admin email if new affiliate email is enabled
 		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {

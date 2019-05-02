@@ -1,5 +1,6 @@
 <?php
 class ControllerMailReturn extends Controller {
+	// admin/model/sale/return/addReturnHistory/after
 	public function index($route, $args, $output) {
 		if (isset($args[0])) {
 			$return_id = $args[0];

@@ -133,11 +133,11 @@
                           <div>
                             {% for custom_field_value in custom_field.custom_field_value %}
                               <label class="form-check">
-                              {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
-                                <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/> {{ custom_field_value.name }}</label>
-                              {% else %}
-                                <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}
-                              {% endif %}
+                                {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
+                                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/> {{ custom_field_value.name }}
+                                {% else %}
+                                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}
+                                {% endif %}
                               </label>
                             {% endfor %}
                           </div>
@@ -657,7 +657,7 @@ var address_row = {{ address_row }};
 $('#button-address').on('click', function(e) {
 	e.preventDefault();
 
-	html  = '<fieldset id="address-row' + address_row + '">';
+	html = '<fieldset id="address-row' + address_row + '">';
 	html += '  <legend>{{ text_address }} ' + address_row + ' <button type="button" onclick="$(\'#address-row' + address_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-right"><i class="fas fa-minus-circle"></i></button></legend></legend>';
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
@@ -930,7 +930,7 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
-    } else {
+	} else {
 		html = '<option value="">{{ text_select }}</option>';
 
 		if (zone[$(element).val()]['zone'] && zone[$(element).val()]['zone'] != '') {

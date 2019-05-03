@@ -248,7 +248,7 @@ class ControllerCatalogProduct extends Controller {
 		
 		$data['breadcrumbs'] = $this->breadcrumbs->render();
 
-		if (!$this->provider->hasRequest('product_id')) {
+		if ($this->provider->hasRequest('product_id')) {
 			$data['action'] = $this->provider->link('catalog/product/edit', ['product_id' => $this->request->get['product_id']]);
 		} else {
 			$data['action'] = $this->provider->link('catalog/product/add');

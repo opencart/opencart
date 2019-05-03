@@ -76,7 +76,12 @@ class ControllerCommonProvider extends Controller {
 				continue;
 			}
 
-			$url .= "&{$key}={$param}";
+			$url .= '&' . (string)$key . '=' . (string)$param;
+		}
+
+		// add replace special character
+		if (!empty($url)) {
+			$url = str_replace('&amp;', '&', $url);
 		}
 
 		return $this->url->link($route, $url);

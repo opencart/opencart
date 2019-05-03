@@ -5,8 +5,6 @@ class ControllerCatalogProduct extends Controller {
 	public function __construct(Registry $registry) {
 		parent::__construct($registry);
 
-		$this->provider->parser(array('filter_name' => '', 'filter_model' => '', 'filter_price' => '', 'filter_quantity' => '', 'filter_status' => '', 'sort' => 'pd.name', 'order' => 'ASC', 'page' => ''));
-
 		$this->provider->detach('product_id');
 
 		$this->breadcrumbs->setDefaults();
@@ -102,6 +100,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['add'] = $this->provider->link('catalog/product/add');
 		$data['copy'] = $this->provider->link('catalog/product/copy');
 		$data['delete'] = $this->provider->link('catalog/product/delete');
+
+		$this->provider->parser(array('filter_name' => '', 'filter_model' => '', 'filter_price' => '', 'filter_quantity' => '', 'filter_status' => '', 'sort' => 'pd.name', 'order' => 'ASC', 'page' => ''));
 
 		$page = $this->provider->hasRequest('page') ? $this->provider->getParser('page') : 1;
 

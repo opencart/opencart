@@ -6,6 +6,14 @@ class ControllerMailCustomer extends Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			} else {
+				$data['logo'] = '';
+			}
+
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
@@ -45,14 +53,6 @@ class ControllerMailCustomer extends Controller {
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
-
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -76,6 +76,14 @@ class ControllerMailCustomer extends Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			} else {
+				$data['logo'] = '';
+			}
+
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
@@ -113,14 +121,6 @@ class ControllerMailCustomer extends Controller {
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
-
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
 
 			$mail = new Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');

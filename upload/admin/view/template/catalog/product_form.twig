@@ -767,8 +767,9 @@
 
                   <script type="text/javascript"><!--
 				  //$('#input-option{{ option.product_option_id }}, #input-option{{ option.product_option_id }} input').prop('disabled', true);
-
 				  --></script>
+
+
                 {% endfor %}
               </div>
             {% endif %}
@@ -1098,6 +1099,8 @@ $('#content :input').on('change', function() {
 	$('#test textarea[name=\'' + $(this).attr('name') + '\']').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
 
 	$('#test').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
+
+
 });
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();

@@ -42,7 +42,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'developer_theme\'], input[name=\'developer_sass\']').on('change', function() {
+$('input[name=\'developer_sass\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=common/developer/edit&user_token={{ user_token }}',
 		type: 'post',

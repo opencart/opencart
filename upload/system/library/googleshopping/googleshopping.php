@@ -351,6 +351,8 @@ class Googleshopping extends Library {
 
                 if ($parts[2] >= '1970-01-01') {
                     $special_price['end'] = $parts[2];
+                } else {
+                    unset($special_price['start']);
                 }
             }
 

@@ -70,9 +70,7 @@ set_error_handler(function ($code, $message, $file, $line, array $errcontext) {
 class ControllerCliInstall extends Controller {
 	public function index() {
 		$argv = $this->request->server['argv'];
-
-		print_r($argv);
-
+		
 		$script = array_shift($argv);
 
 		$command = array_shift($argv);

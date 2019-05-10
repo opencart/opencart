@@ -3,6 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
+        {% if master_id %}
+          <button type="button" id="button-master" class="btn btn-warning" title="{{ button_master }}" data-toggle="tooltip" data-loading-text="{{ text_loading }}"><i class="fas fa-crown fa-fw"></i></button>
+        {% endif %}
         <button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -52,8 +55,9 @@
                       <div class="col-sm-10">
                         <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control"/>
                         {% if error_name[language.language_id] %}
-                          <div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
-                        {% endif %}</div>
+                          <div class="invalid-feedback">{{ error_name[language.language_id] }}</div>
+                        {% endif %}
+                      </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
@@ -94,200 +98,212 @@
             </div>
             <div class="tab-pane" id="tab-data">
               <input type="hidden" name="master_id" value="{{ master_id }}"/>
-              <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-model">{{ entry_model }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
-                  {% if error_model %}
-                    <div class="invalid-tooltip">{{ error_model }}</div>
-                  {% endif %}</div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-sku">{{ entry_sku }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="input-sku" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_sku }}</small>
+              <fieldset>
+                <legend>{{ text_model }}</legend>
+                <div class="form-group row required">
+                  <label class="col-sm-2 col-form-label" for="input-model">{{ entry_model }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+                    {% if error_model %}
+                      <div class="invalid-tooltip">{{ error_model }}</div>
+                    {% endif %}</div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-upc">{{ entry_upc }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_upc }}</small>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-ean">{{ entry_ean }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_ean }}</small>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-jan">{{ entry_jan }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_jan }}</small>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-isbn">{{ entry_isbn }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_isbn }}</small>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-mpn">{{ entry_mpn }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_mpn }}</small>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-location">{{ entry_location }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-price">{{ entry_price }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
-                <div class="col-sm-10">
-                  <select name="tax_class_id" id="input-tax-class" class="form-control">
-                    <option value="0">{{ text_none }}</option>
-                    {% for tax_class in tax_classes %}
-                      {% if tax_class.tax_class_id == tax_class_id %}
-                        <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
-                      {% else %}
-                        <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                      {% endif %}
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-quantity">{{ entry_quantity }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-minimum">{{ entry_minimum }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_minimum }}</small>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
-                <div class="col-sm-10">
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    {% if subtract %}
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
-                    {% else %}
-                      <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="1"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="0" checked="checked"/> {{ text_no }}</label>
-                    {% endif %}
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-sku">{{ entry_sku }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="input-sku" class="form-control"/>
+                    <small class="form-text text-muted">{{ help_sku }}</small>
                   </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-stock-status">{{ entry_stock_status }}</label>
-                <div class="col-sm-10">
-                  <select name="stock_status_id" id="input-stock-status" class="form-control">
-                    {% for stock_status in stock_statuses %}
-                      {% if stock_status.stock_status_id == stock_status_id %}
-                        <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
-                      {% else %}
-                        <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
-                      {% endif %}
-                    {% endfor %}
-                  </select>
-                  <small class="form-text text-muted">{{ help_stock_status }}</small>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
-                <div class="col-sm-10">
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    {% if shipping %}
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
-                    {% else %}
-                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
-                    {% endif %}
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-upc">{{ entry_upc }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
+                    <small class="form-text text-muted">{{ help_upc }}</small>
                   </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-date-available">{{ entry_date_available }}</label>
-                <div class="col-sm-3">
-                  <div class="input-group date">
-                    <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" id="input-date-available" class="form-control"/>
-                    <div class="input-group-append">
-                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-ean">{{ entry_ean }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
+                    <small class="form-text text-muted">{{ help_ean }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-jan">{{ entry_jan }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
+                    <small class="form-text text-muted">{{ help_jan }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-isbn">{{ entry_isbn }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
+                    <small class="form-text text-muted">{{ help_isbn }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-mpn">{{ entry_mpn }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
+                    <small class="form-text text-muted">{{ help_mpn }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-location">{{ entry_location }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_price }}</legend>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-price">{{ entry_price }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
+                  <div class="col-sm-10">
+                    <select name="tax_class_id" id="input-tax-class" class="form-control">
+                      <option value="0">{{ text_none }}</option>
+                      {% for tax_class in tax_classes %}
+                        {% if tax_class.tax_class_id == tax_class_id %}
+                          <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                        {% else %}
+                          <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_stock }}</legend>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-quantity">{{ entry_quantity }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-minimum">{{ entry_minimum }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control"/>
+                    <small class="form-text text-muted">{{ help_minimum }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if subtract %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
+                      {% else %}
+                        <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="0" checked="checked"/> {{ text_no }}</label>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-length">{{ entry_dimension }}</label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <input type="text" name="length" value="{{ length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control"/>
-                    </div>
-                    <div class="col-sm-4">
-                      <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
-                    </div>
-                    <div class="col-sm-4">
-                      <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-stock-status">{{ entry_stock_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="stock_status_id" id="input-stock-status" class="form-control">
+                      {% for stock_status in stock_statuses %}
+                        {% if stock_status.stock_status_id == stock_status_id %}
+                          <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                        {% else %}
+                          <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                    <small class="form-text text-muted">{{ help_stock_status }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-date-available">{{ entry_date_available }}</label>
+                  <div class="col-sm-3">
+                    <div class="input-group date">
+                      <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" id="input-date-available" class="form-control"/>
+                      <div class="input-group-append">
+                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-length-class">{{ entry_length_class }}</label>
-                <div class="col-sm-10">
-                  <select name="length_class_id" id="input-length-class" class="form-control">
-                    {% for length_class in length_classes %}
-                      {% if length_class.length_class_id == length_class_id %}
-                        <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_specification }}</legend>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      {% if shipping %}
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
                       {% else %}
-                        <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
+                        <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
+                        <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
-                    {% endfor %}
-                  </select>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-weight">{{ entry_weight }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="weight" value="{{ weight }}" placeholder="{{ entry_weight }}" id="input-weight" class="form-control"/>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-length">{{ entry_dimension }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <input type="text" name="length" value="{{ length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control"/>
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
-                <div class="col-sm-10">
-                  <select name="weight_class_id" id="input-weight-class" class="form-control">
-                    {% for weight_class in weight_classes %}
-                      {% if weight_class.weight_class_id == weight_class_id %}
-                        <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
-                      {% else %}
-                        <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                      {% endif %}
-                    {% endfor %}
-                  </select>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-length-class">{{ entry_length_class }}</label>
+                  <div class="col-sm-10">
+                    <select name="length_class_id" id="input-length-class" class="form-control">
+                      {% for length_class in length_classes %}
+                        {% if length_class.length_class_id == length_class_id %}
+                          <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
+                        {% else %}
+                          <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
                 </div>
-              </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-weight">{{ entry_weight }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="weight" value="{{ weight }}" placeholder="{{ entry_weight }}" id="input-weight" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
+                  <div class="col-sm-10">
+                    <select name="weight_class_id" id="input-weight-class" class="form-control">
+                      {% for weight_class in weight_classes %}
+                        {% if weight_class.weight_class_id == weight_class_id %}
+                          <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                        {% else %}
+                          <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
@@ -764,12 +780,6 @@
                       </div>
                     {% endif %}
                   </fieldset>
-
-                  <script type="text/javascript"><!--
-				  //$('#input-option{{ option.product_option_id }}, #input-option{{ option.product_option_id }} input').prop('disabled', true);
-				  --></script>
-
-
                 {% endfor %}
               </div>
             {% endif %}
@@ -1093,14 +1103,35 @@
   <div id="test"></div>
 </div>
 <script type="text/javascript"><!--
-$('#content :input').on('change', function() {
-	console.log($(this).val());
+$('#button-master').on('click', function(e) {
+	e.preventDefault();
 
-	$('#test textarea[name=\'' + $(this).attr('name') + '\']').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
+	var element = this;
 
-	$('#test').append('<textarea name="' + $(this).attr('name') + '">' + $(this).val() + '</textarea>');
+	$('#modal-master').remove();
 
+	$.ajax({
+		url: 'index.php?route=catalog/product/master&user_token={{ user_token }}&product_id={{ master_id }}',
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			console.log(html);
 
+			$('body').append(html);
+
+			$('#modal-master').modal('show');
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(xhr.responseText);
+
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();

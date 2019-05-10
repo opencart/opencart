@@ -96,6 +96,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		// Relate
 		if (isset($data['product_related'])) {
 			foreach ($data['product_related'] as $related_id) {
 				$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "' AND related_id = '" . (int)$related_id . "'");
@@ -105,6 +106,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		// Reward
 		if (isset($data['product_reward'])) {
 			foreach ($data['product_reward'] as $customer_group_id => $product_reward) {
 				if ((int)$product_reward['points'] > 0) {
@@ -123,7 +125,8 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
-		
+
+		// Layout
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_layout SET product_id = '" . (int)$product_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");

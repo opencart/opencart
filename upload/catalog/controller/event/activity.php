@@ -1,6 +1,6 @@
 <?php
 class ControllerEventActivity extends Controller {
-	// model/account/customer/addCustomer/after
+	// catalog/model/account/customer/addCustomer/after
 	public function addCustomer(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -14,7 +14,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}
 	
-	// model/account/customer/editCustomer/after
+	// catalog/model/account/customer/editCustomer/after
 	public function editCustomer(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -28,7 +28,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}
 	
-	// model/account/customer/editPassword/after
+	// catalog/model/account/customer/editPassword/after
 	public function editPassword(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -56,7 +56,7 @@ class ControllerEventActivity extends Controller {
 	}
 
 		
-	// model/account/customer/deleteLoginAttempts/after
+	// catalog/model/account/customer/deleteLoginAttempts/after
 	public function login(&$route, &$args, &$output) {
 		if (isset($this->request->get['route']) && ($this->request->get['route'] == 'account/login' || $this->request->get['route'] == 'checkout/login/save') && $this->config->get('config_customer_activity')) {
 			$customer_info = $this->model_account_customer->getCustomerByEmail($args[0]);
@@ -74,7 +74,7 @@ class ControllerEventActivity extends Controller {
 		}	
 	}
 	
-	// model/account/customer/editCode/after
+	// catalog/model/account/customer/editCode/after
 	public function forgotten(&$route, &$args, &$output) {
 		if (isset($this->request->get['route']) && $this->request->get['route'] == 'account/forgotten' && $this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
@@ -94,7 +94,7 @@ class ControllerEventActivity extends Controller {
 		}	
 	}
 	
-	// model/account/customer/addTransaction/after
+	// catalog/model/account/customer/addTransaction/after
 	public function addTransaction(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/customer');
@@ -115,7 +115,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}	
 	
-	// model/account/affiliate/addAffiliate/after
+	// catalog/model/account/affiliate/addAffiliate/after
 	public function addAffiliate(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -129,7 +129,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}	
 	
-	// model/account/affiliate/editAffiliate/after
+	// catalog/model/account/affiliate/editAffiliate/after
 	public function editAffiliate(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity') && $output) {
 			$this->load->model('account/activity');
@@ -143,7 +143,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}
 	
-	// model/account/address/addAddress/after
+	// catalog/model/account/address/addAddress/after
 	public function addAddress(&$route, &$args, &$output) { 
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -157,7 +157,7 @@ class ControllerEventActivity extends Controller {
 		}	
 	}
 	
-	// model/account/address/editAddress/after
+	// catalog/model/account/address/editAddress/after
 	public function editAddress(&$route, &$args, &$output) { 
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -171,7 +171,7 @@ class ControllerEventActivity extends Controller {
 		}	
 	}
 	
-	// model/account/address/deleteAddress/after
+	// catalog/model/account/address/deleteAddress/after
 	public function deleteAddress(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
@@ -185,7 +185,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}
 	
-	// model/account/return/addReturn/after
+	// catalog/model/account/return/addReturn/after
 	public function addReturn(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity') && $output) {
 			$this->load->model('account/activity');
@@ -209,7 +209,7 @@ class ControllerEventActivity extends Controller {
 		}
 	}	
 	
-	// model/checkout/order/addOrderHistory/before
+	// catalog/model/checkout/order/addOrderHistory/before
 	public function addOrderHistory(&$route, &$args) {	
 		if ($this->config->get('config_customer_activity')) {
 			// If last order status id is 0 and new order status is not then record as new order

@@ -337,22 +337,22 @@ class ControllerDesignBanner extends Controller {
 
 		$data['banner_images'] = array();
 
-		foreach ($banner_images as $key => $value) {
-			foreach ($value as $banner_image) {
-				if (is_file(DIR_IMAGE . html_entity_decode($banner_image['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $banner_image['image'];
-					$thumb = $banner_image['image'];
+		foreach ($banner_images as $language_id => $banner_image) {
+			foreach ($banner_image as $value) {
+				if (is_file(DIR_IMAGE . html_entity_decode($value['image'], ENT_QUOTES, 'UTF-8'))) {
+					$image = $value['image'];
+					$thumb = $value['image'];
 				} else {
 					$image = '';
 					$thumb = 'no_image.png';
 				}
 				
-				$data['banner_images'][$key][] = array(
-					'title'      => $banner_image['title'],
-					'link'       => $banner_image['link'],
+				$data['banner_images'][$language_id][] = array(
+					'title'      => $value['title'],
+					'link'       => $value['link'],
 					'image'      => $image,
 					'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
-					'sort_order' => $banner_image['sort_order']
+					'sort_order' => $value['sort_order']
 				);
 			}
 		}
@@ -376,10 +376,10 @@ class ControllerDesignBanner extends Controller {
 		}
 
 		if (isset($this->request->post['banner_image'])) {
-			foreach ($this->request->post['banner_image'] as $language_id => $value) {
-				foreach ($value as $banner_image_id => $banner_image) {
-					if ((utf8_strlen($banner_image['title']) < 2) || (utf8_strlen($banner_image['title']) > 64)) {
-						$this->error['banner_image'][$language_id][$banner_image_id] = $this->language->get('error_title');
+			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
+				foreach ($banner_image as $key => $value) {
+					if ((utf8_strlen($value['title']) < 2) || (utf8_strlen($value['title']) > 64)) {
+						$this->error['banner_image'][$language_id][$key] = $this->language->get('error_title');
 					}
 				}
 			}

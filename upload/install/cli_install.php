@@ -19,7 +19,7 @@
 //                               --email youremail@example.com
 //                               --http_server http://localhost/opencart/
 //
-
+//echo 'hifgfgfg';
 ini_set('display_errors', 1);
 
 error_reporting(E_ALL);
@@ -70,7 +70,7 @@ set_error_handler(function ($code, $message, $file, $line, array $errcontext) {
 class ControllerCliInstall extends Controller {
 	public function index() {
 		$argv = $this->request->server['argv'];
-
+		
 		$script = array_shift($argv);
 
 		$command = array_shift($argv);
@@ -94,6 +94,7 @@ class ControllerCliInstall extends Controller {
 			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_database' => 'opencart',
+			'db_password' => '',
 			'db_prefix'   => 'oc_',
 			'db_port'     => '3306',
 			'username'    => 'admin'

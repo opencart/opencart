@@ -19,12 +19,12 @@ class ModelReportStatistics extends Model {
 	public function addValue($code, $value) {
 		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` + '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
-	
+
+	public function removeValue($code, $value) {
+		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` - '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
+	}
+
 	public function editValue($code, $value) {
 		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = '" . (float)$value . "' WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
-		
-	public function removeValue($code, $value) {
-		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` - '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
-	}	
 }

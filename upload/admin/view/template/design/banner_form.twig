@@ -59,7 +59,7 @@
                 <table id="image{{ language.language_id }}" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-left">{{ entry_title }}</td>
+                      <td class="text-left required">{{ entry_title }}</td>
                       <td class="text-left">{{ entry_link }}</td>
                       <td class="text-center">{{ entry_image }}</td>
                       <td class="text-right">{{ entry_sort_order }}</td>
@@ -112,7 +112,7 @@ var image_row = {{ image_row }};
 $('#button-banner').on('click', function() {
 	var element = this;
 
-	html  = '<tr id="image-row' + image_row + '">';
+	html = '<tr id="image-row' + image_row + '">';
 	html += '  <td class="text-left"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control" /></td>';
 	html += '  <td class="text-center">';

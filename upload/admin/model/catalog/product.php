@@ -96,6 +96,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		// Relate
 		if (isset($data['product_related'])) {
 			foreach ($data['product_related'] as $related_id) {
 				$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "' AND related_id = '" . (int)$related_id . "'");
@@ -105,6 +106,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		// Reward
 		if (isset($data['product_reward'])) {
 			foreach ($data['product_reward'] as $customer_group_id => $product_reward) {
 				if ((int)$product_reward['points'] > 0) {
@@ -123,7 +125,8 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
-		
+
+		// Layout
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_layout SET product_id = '" . (int)$product_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
@@ -752,103 +755,5 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_option WHERE option_id = '" . (int)$option_id . "'");
 
 		return $query->row['total'];
-	}
-
-	public function compare($product_1_id, $product_2_id) {
-		$product_1_data = array();
-
-		// Product 1
-		$product_1_data = $this->getProduct($product_1_id);
-
-		// Description
-		$product_1_data['product_description'] = $this->getProductDescriptions($product_1_id);
-
-		// Attributes
-		$product_1_data['product_attribute'] = $this->getProductAttributes($product_1_id);
-
-		// Category
-		$product_1_data['product_category'] = $this->getProductCategories($product_1_id);
-
-		// Download
-		$product_1_data['product_download'] = $this->getProductDownloads($product_1_id);
-
-		// Discount
-		$product_1_data['product_discount'] = $this->getProductDiscounts($product_1_id);
-
-		// Filter
-		$product_1_data['product_filter'] = $this->getProductFilters($product_1_id);
-
-		// Image
-		$product_1_data['product_image'] = $this->getProductImages($product_1_id);
-
-		// Layout
-		$product_1_data['product_layout'] = $this->getProductLayouts($product_1_id);
-
-		// Option
-		$product_1_data['product_option'] = $this->getProductOptions($product_1_id);
-
-		// Recurring
-		$product_1_data['product_recurring'] = $this->getProductRecurrings($product_1_id);
-
-		// Related
-		$product_1_data['product_related'] = $this->getProductRelated($product_1_id);
-
-		// Reward
-		$product_1_data['product_reward'] = $this->getProductRewards($product_1_id);
-
-		// Special
-		$product_1_data['product_special'] = $this->getProductSpecials($product_1_id);
-
-		// Store
-		$product_1_data['product_store'] = $this->getProductStores($product_1_id);
-
-		// Product 2
-		$product_2_data = $this->getProduct($product_2_id);
-
-		// Description
-		$product_2_data['product_description'] = $this->getProductDescriptions($product_2_id);
-
-		// Attributes
-		$product_2_data['product_attribute'] = $this->getProductAttributes($product_2_id);
-
-		// Category
-		$product_2_data['product_category'] = $this->getProductCategories($product_2_id);
-
-		// Download
-		$product_2_data['product_download'] = $this->getProductDownloads($product_2_id);
-
-		// Discount
-		$product_2_data['product_discount'] = $this->getProductDiscounts($product_2_id);
-
-		// Filter
-		$product_2_data['product_filter'] = $this->getProductFilters($product_2_id);
-
-		// Image
-		$product_2_data['product_image'] = $this->getProductImages($product_2_id);
-
-		// Layout
-		$product_2_data['product_layout'] = $this->getProductLayouts($product_2_id);
-
-		// Option
-		$product_2_data['product_option'] = $this->getProductOptions($product_2_id);
-
-		// Recurring
-		$product_2_data['product_recurring'] = $this->getProductRecurrings($product_2_id);
-
-		// Related
-		$product_2_data['product_related'] = $this->getProductRelated($product_2_id);
-
-		// Reward
-		$product_2_data['product_reward'] = $this->getProductRewards($product_2_id);
-
-		// Special
-		$product_2_data['product_special'] = $this->getProductSpecials($product_2_id);
-
-		// Store
-		$product_2_data['product_store'] = $this->getProductStores($product_2_id);
-
-		print_r(array_diff_assoc($product_1_data, $product_2_data));
-
-		//return $compare_data;
 	}
 }

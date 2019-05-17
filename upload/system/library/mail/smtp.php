@@ -20,16 +20,36 @@ class Smtp {
 
 		$header = 'MIME-Version: 1.0' . PHP_EOL;
 		$header .= 'To: <' . $to . '>' . PHP_EOL;
-		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
-		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
-
-		if (!$this->reply_to) {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
+		
+		if (mb_check_encoding($this->subject, 'ASCII')) {
+			$header .= 'Subject: ' . $this->subject . PHP_EOL;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
+			$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
 		}
 
+		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
+
+		if (mb_check_encoding($this->sender, 'ASCII')) {
+			$header .= 'From: ' . $this->sender . ' <' . $this->from . '>' . PHP_EOL;
+		} else {
+			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
+		}
+
+		if (!$this->reply_to) {
+			if (mb_check_encoding($this->sender, 'ASCII')) {
+				$header .= 'Reply-To: ' . $this->sender . ' <' . $this->from . '>' . PHP_EOL;
+			} else {
+				$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
+			}
+		} else {
+			if (mb_check_encoding($this->reply_to, 'ASCII')) {
+				$header .= 'Reply-To: ' . $this-reply_to . ' <' . $this-reply_to . '>' . PHP_EOL;
+			} else {
+				$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
+			}
+		}
+
+    $header .= 'Message-ID: <' . base_convert(microtime(), 10, 36) . '.' . base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36) . substr($this->from, strrpos($this->from, '@')) . '>' . PHP_EOL;
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;

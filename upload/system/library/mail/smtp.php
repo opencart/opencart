@@ -20,7 +20,7 @@ class Smtp {
 
 		$header = 'MIME-Version: 1.0' . PHP_EOL;
 		$header .= 'To: <' . $to . '>' . PHP_EOL;
-		
+
 		if (mb_check_encoding($this->subject, 'ASCII')) {
 			$header .= 'Subject: ' . $this->subject . PHP_EOL;
 		} else {
@@ -49,7 +49,7 @@ class Smtp {
 			}
 		}
 
-    $header .= 'Message-ID: <' . base_convert(microtime(), 10, 36) . '.' . base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36) . substr($this->from, strrpos($this->from, '@')) . '>' . PHP_EOL;
+		$header .= 'Message-ID: <' . base_convert(microtime(), 10, 36) . '.' . base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36) . substr($this->from, strrpos($this->from, '@')) . '>' . PHP_EOL;
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;

@@ -11,9 +11,9 @@ class Mail {
 		$boundary = '----=_NextPart_' . md5(time());
 
 		$header  = 'MIME-Version: 1.0' . PHP_EOL;
-    $header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
-    
-    if (mb_check_encoding($this->sender, 'ASCII')) {
+		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
+
+		if (mb_check_encoding($this->sender, 'ASCII')) {
 			$header .= 'From: ' . $this->sender . ' <' . $this->from . '>' . PHP_EOL;
 		} else {
 			$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
@@ -32,8 +32,8 @@ class Mail {
 				$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
 			}
 		}
-		
-    $header .= 'Message-ID: <' . base_convert(microtime(), 10, 36) . '.' . base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36) . substr($this->from, strrpos($this->from, '@')) . '>' . PHP_EOL;
+
+		$header .= 'Message-ID: <' . base_convert(microtime(), 10, 36) . '.' . base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36) . substr($this->from, strrpos($this->from, '@')) . '>' . PHP_EOL;
 		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
@@ -85,18 +85,18 @@ class Mail {
 
 		ini_set('sendmail_from', $this->from);
 
-    if ($this->parameter) {
-      if (mb_check_encoding($this->subject)) {
-        mail($to, $this->subject , $message, $header, $this->parameter);
-      } else {
-        mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header, $this->parameter);
-      }
-    } else {
-      if (mb_check_encoding($this->subject)) {
-        mail($to, $this->subject , $message, $header);
-      } else {
-        mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
-      }
+		if ($this->parameter) {
+			if (mb_check_encoding($this->subject)) {
+				mail($to, $this->subject , $message, $header, $this->parameter);
+			} else {
+				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header, $this->parameter);
+			}
+		} else {
+			if (mb_check_encoding($this->subject)) {
+				mail($to, $this->subject , $message, $header);
+			} else {
+				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
+			}
 		}
 	}
 }

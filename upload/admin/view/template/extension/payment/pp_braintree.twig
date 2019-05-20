@@ -61,7 +61,7 @@
                 <input type="hidden" name="payment_pp_braintree_refresh_token" value=""/>
                 <div class="form-group row">
                   <label class="col-sm-2">{{ text_braintree_learn }}</label>
-                  <div class="col-sm-10" id="bt-connect"></div>
+                  <div id="bt-connect" class="col-sm-10"></div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-merchant-id">{{ entry_merchant_id }}</label>
@@ -176,7 +176,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-currency">
+            <div id="tab-currency" class="tab-pane">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
@@ -209,7 +209,7 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-order-status">
+            <div id="tab-order-status" class="tab-pane">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-order-status-authorization-expired">{{ entry_authorization_expired }}</label>
                 <div class="col-sm-10">
@@ -365,7 +365,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-3ds">
+            <div id="tab-3ds" class="tab-pane">
               {% if braintree_config.three_d_secure_enabled == 0 %}
                 <div class="alert alert-info">{{ error_braintree_account_3ds }}</div>
                 <input type="hidden" name="payment_pp_braintree_3ds_status" value="0"/>
@@ -555,7 +555,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="tab-pane" id="tab-vault">
+            <div id="tab-vault" class="tab-pane">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-card-vault">{{ entry_card_vault }}</label>
                 <div class="col-sm-10">
@@ -643,7 +643,7 @@
                 <input type="hidden" name="payment_pp_braintree_paypal_check_vault" value="0"/>
               {% endif %}
             </div>
-            <div class="tab-pane" id="tab-paypal">
+            <div id="tab-paypal" class="tab-pane">
               {% if braintree_config.paypal_enabled == 0 %}
                 <div class="alert alert-info">{{ error_braintree_account_paypal }}</div>
                 <input type="hidden" name="payment_pp_braintree_paypal_option" value="0"/>
@@ -706,7 +706,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="tab-pane" id="tab-transaction">
+            <div id="tab-transaction" class="tab-pane">
               {% if braintree_config.paypal_enabled == 1 %}
               <div class="alert alert-info">{{ error_braintree_account_paypal }}</div>
               {% else %}

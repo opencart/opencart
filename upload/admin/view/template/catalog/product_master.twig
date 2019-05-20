@@ -1,5 +1,5 @@
 <div id="modal-master" class="modal fade">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"><i class="fas fa-crown"></i> {{ name }}</h5>
@@ -31,56 +31,56 @@
               {% for language in languages %}
                 <div class="tab-pane" id="modal-language{{ language.language_id }}">
                   <div class="form-group required">
-                    <label class="col-form-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
+                    <label class="col-form-label" for="input-modal-name{{ language.language_id }}">{{ entry_name }}</label>
                     <div class="input-group">
-                      <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" readonly class="form-control"/>
+                      <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-modal-name{{ language.language_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
+                    <label class="col-form-label" for="input-modal-description{{ language.language_id }}">{{ entry_description }}</label>
                     <div class="input-group">
-                      <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
+                      <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-modal-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
                       <div class="input-group-append">
-                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                       </div>
                     </div>
                   </div>
                   <div class="form-group required">
-                    <label class="col-form-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
+                    <label class="col-form-label" for="input-modal-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
                     <div class="input-group">
-                      <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control"/>
+                      <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-modal-meta-title{{ language.language_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-form-label" for="input-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
+                    <label class="col-form-label" for="input-modal-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
                     <div class="input-group">
-                      <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
+                      <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-modal-meta-description{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
                       <div class="input-group-append">
-                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-form-label" for="input-modal-meta-keyword{{ language.language_id }}">{{ entry_meta_keyword }}</label>
+                    <label class="col-form-label" for="input-modal-modal-meta-keyword{{ language.language_id }}">{{ entry_meta_keyword }}</label>
                     <div class="input-group">
                       <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-modal-meta-keyword{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
                       <div class="input-group-append">
-                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-form-label" for="input-tag{{ language.language_id }}">{{ entry_tag }}</label>
+                    <label class="col-form-label" for="input-modal-tag{{ language.language_id }}">{{ entry_tag }}</label>
                     <div class="input-group">
-                      <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag{{ language.language_id }}" class="form-control"/>
+                      <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-modal-tag{{ language.language_id }}" class="form-control"/>
                       <div class="input-group-append">
-                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                        <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                       </div>
                     </div>
                   </div>
@@ -88,17 +88,15 @@
               {% endfor %}
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-data">
+          <div id="tab-modal-data" class="tab-pane">
             <fieldset>
               <legend>{{ text_model }}</legend>
               <div class="form-group required">
                 <label class="col-form-label" for="input-modal-model">{{ entry_model }}</label>
                 <div class="input-group">
-
                   <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-modal-model" class="form-control"/>
-
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
               </div>
@@ -107,73 +105,67 @@
                 <div class="input-group">
                   <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="input-modal-sku" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
                 <small class="form-text text-muted">{{ help_sku }}</small>
-
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="input-modal-upc">{{ entry_upc }}</label>
                 <div class="input-group">
                   <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-modal-upc" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
                 <small class="form-text text-muted">{{ help_upc }}</small>
-
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="input-modal-ean">{{ entry_ean }}</label>
                 <div class="input-group">
                   <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-modal-ean" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
                 <small class="form-text text-muted">{{ help_ean }}</small>
-
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="input-modal-jan">{{ entry_jan }}</label>
                 <div class="input-group">
                   <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-modal-jan" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
                 <small class="form-text text-muted">{{ help_jan }}</small>
-
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="input-isbn">{{ entry_isbn }}</label>
                 <div class="input-group">
-                  <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
+                  <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-modal-isbn" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
                 <small class="form-text text-muted">{{ help_isbn }}</small>
-
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="input-mpn">{{ entry_mpn }}</label>
                 <div class="input-group">
-                  <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
+                  <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-modal-mpn" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
                 <small class="form-text text-muted">{{ help_mpn }}</small>
-
               </div>
               <div class="form-group">
                 <label class="col-form-label" for="input-location">{{ entry_location }}</label>
                 <div class="input-group">
-                  <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
+                  <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-modal-location" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
               </div>
@@ -181,70 +173,59 @@
             <fieldset>
               <legend>{{ text_price }}</legend>
               <div class="form-group">
-
-                <label class="col-form-label" for="input-price">{{ entry_price }}</label>
+                <label class="col-form-label" for="input-modal-price">{{ entry_price }}</label>
                 <div class="input-group">
-                  <input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+                  <input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-modal-price" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-form-label" for="input-tax-class">{{ entry_tax_class }}</label> <select name="tax_class_id" id="input-tax-class" class="form-control">
-                  <option value="0">{{ text_none }}</option>
-                  {% for tax_class in tax_classes %}
-                    {% if tax_class.tax_class_id == tax_class_id %}
-                      <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
-                    {% else %}
-                      <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
               </div>
             </fieldset>
             <fieldset>
               <legend>{{ text_stock }}</legend>
               <div class="form-group">
-                <label class="col-form-label" for="input-quantity">{{ entry_quantity }}</label>
+                <label class="col-form-label" for="input-modal-quantity">{{ entry_quantity }}</label>
                 <div class="input-group">
-                  <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+                  <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-modal-quantity" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-form-label" for="input-minimum">{{ entry_minimum }}</label>
+                <label class="col-form-label" for="input-modal-minimum">{{ entry_minimum }}</label>
                 <div class="input-group">
-                  <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control"/>
+                  <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-modal-minimum" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
                 <small class="form-text text-muted">{{ help_minimum }}</small>
               </div>
               <div class="form-group">
                 <label class="col-form-label">{{ entry_subtract }}</label>
-                <div>
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <div class="input-group">
+                  <select name="subtract" id="input-modal-subtract" class="form-control">
                     {% if subtract %}
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                      <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="1"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="0" checked="checked"/> {{ text_no }}</label>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
+                  </select>
+                  <div class="input-group-append">
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-form-label" for="input-date-available">{{ entry_date_available }}</label>
-
+                <label class="col-form-label" for="input-modal-date-available">{{ entry_date_available }}</label>
                 <div class="input-group">
-                  <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" id="input-date-available" class="form-control"/>
+                  <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" id="input-modal-date-available" class="form-control"/>
                   <div class="input-group-append">
-                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-warning"><i class="fas fa-copy"></i></button>
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
               </div>
@@ -253,58 +234,81 @@
               <legend>{{ text_specification }}</legend>
               <div class="form-group">
                 <label class="col-form-label">{{ entry_shipping }}</label>
-                <div>
-                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <div class="input-group">
+                  <select name="subtract" id="input-modal-shipping" class="form-control">
                     {% if shipping %}
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
+                      <option value="1" selected="selected">{{ text_yes }}</option>
+                      <option value="0">{{ text_no }}</option>
                     {% else %}
-                      <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
-                      <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
+                      <option value="1">{{ text_yes }}</option>
+                      <option value="0" selected="selected">{{ text_no }}</option>
                     {% endif %}
+                  </select>
+                  <div class="input-group-append">
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-form-label" for="input-length">{{ entry_dimension }}</label>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <input type="text" name="length" value="{{ length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control"/>
-                  </div>
-                  <div class="col-sm-4">
-                    <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
-                  </div>
-                  <div class="col-sm-4">
-                    <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+                <label class="col-form-label" for="input-modal-length">{{ entry_dimension }}</label>
+                <div class="input-group">
+                  <input type="text" name="length" value="{{ length }}" placeholder="{{ entry_length }}" id="input-modal-length" class="form-control"/> <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-modal-width" class="form-control"/> <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-modal-height" class="form-control"/>
+                  <div class="input-group-append">
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-form-label" for="input-weight">{{ entry_weight }}</label> <input type="text" name="weight" value="{{ weight }}" placeholder="{{ entry_weight }}" id="input-weight" class="form-control"/>
+                <label class="col-form-label" for="input-modal-weight">{{ entry_weight }}</label>
+                <div class="input-group">
+                  <input type="text" name="weight" value="{{ weight }}" placeholder="{{ entry_weight }}" id="input-modal-weight" class="form-control"/>
+                  <div class="input-group-append">
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                  </div>
+                </div>
               </div>
             </fieldset>
             <div class="form-group">
-              <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="status" id="input-status" class="form-control">
-                {% if status %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <option value="0">{{ text_disabled }}</option>
-                {% else %}
-                  <option value="1">{{ text_enabled }}</option>
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
+              <label class="col-form-label" for="input-modal-status">{{ entry_status }}</label>
+              <div class="input-group">
+                <select name="status" id="input-modal-status" class="form-control">
+                  {% if status %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                  {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>
+                <div class="input-group-append">
+                  <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-sort-order">{{ entry_sort_order }}</label> <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <label class="col-form-label" for="input-modal-sort-order">{{ entry_sort_order }}</label>
+              <div class="input-group">
+                <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-modal-sort-order" class="form-control"/>
+                <div class="input-group-append">
+                  <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-links">
+          <div id="tab-modal-links" class="tab-pane">
             <div class="form-group">
-              <label class="col-form-label" for="input-manufacturer">{{ entry_manufacturer }}</label> <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control"/> <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}"/>
+              <label class="col-form-label" for="input-modal-manufacturer">{{ entry_manufacturer }}</label>
+              <div class="input-group">
+                <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-modal-manufacturer" class="form-control"/> <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}"/>
+                <div class="input-group-append">
+                  <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-category">{{ entry_category }}</label>
-              <div id="product-category" class="form-control" style="height: 150px; overflow: auto;">{% for product_category in product_categories %}
+              <label class="col-form-label" for="input-modal-category">{{ entry_category }}</label>
+              <div id="product-category" class="form-control" style="height: 150px; overflow: auto;">
+                {% for product_category in product_categories %}
                   <div id="product-category{{ product_category.category_id }}"><i class="fas fa-minus-circle"></i> {{ product_category.name }}
                     <input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/>
                   </div>
@@ -312,7 +316,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-filter">{{ entry_filter }}</label>
+              <label class="col-form-label" for="input-modal-filter">{{ entry_filter }}</label>
               <div id="product-filter" class="form-control" style="height: 150px; overflow: auto;">
                 {% for product_filter in product_filters %}
                   <div id="product-filter{{ product_filter.filter_id }}"><i class="fas fa-minus-circle"></i> {{ product_filter.name }}
@@ -323,7 +327,6 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">{{ entry_store }}</label>
-
               <div class="form-control" style="height: 150px; overflow: auto;">
                 {% for store in stores %}
                   <label class="form-check">
@@ -336,11 +339,9 @@
                     {% endif %}
                   </label>
                 {% endfor %}</div>
-
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-download">{{ entry_download }}</label>
-
+              <label class="col-form-label" for="input-modal-download">{{ entry_download }}</label>
               <div id="product-download" class="form-control" style="height: 150px; overflow: auto;">
                 {% for product_download in product_downloads %}
                   <div id="product-download{{ product_download.download_id }}"><i class="fas fa-minus-circle"></i> {{ product_download.name }}
@@ -350,7 +351,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-related">{{ entry_related }}</label>
+              <label class="col-form-label" for="input-modal-related">{{ entry_related }}</label>
               <div id="product-related" class="form-control" style="height: 150px; overflow: auto;">
                 {% for product_related in product_relateds %}
                   <div id="product-related{{ product_related.product_id }}"><i class="fas fa-minus-circle"></i> {{ product_related.name }}
@@ -360,7 +361,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-attribute">
+          <div id="tab-modal-attribute" class="tab-pane">
             <div class="table-responsive">
               <table id="attribute" class="table table-bordered table-hover">
                 <thead>
@@ -372,27 +373,33 @@
                 </thead>
                 <tbody>
                   {% set attribute_row = 0 %}
-                  {% for product_attribute in product_attributes %}
-                    <tr id="attribute-row{{ attribute_row }}">
-                      <td class="text-left"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/></td>
-                      <td class="text-left">
-                        {% for language in languages %}
-                          <div class="input-group mb-12">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                  {% if product_attributes %}
+                    {% for product_attribute in product_attributes %}
+                      <tr id="attribute-row{{ attribute_row }}">
+                        <td class="text-left"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/></td>
+                        <td class="text-left">
+                          {% for language in languages %}
+                            <div class="input-group mb-12">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                              </div>
+                              <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
                             </div>
-                            <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
-                          </div>
-                        {% endfor %}</td>
-                      <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-danger"><i class="fas fa-copy"></i></button></td>
+                          {% endfor %}</td>
+                        <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button></td>
+                      </tr>
+                      {% set attribute_row = attribute_row + 1 %}
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td colspan="3" class="text-center">{{ text_no_results }}</td>
                     </tr>
-                    {% set attribute_row = attribute_row + 1 %}
-                  {% endfor %}
+                  {% endif %}
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-recurring">
+          <div id="tab-modal-recurring" class="tab-pane">
             <div class="table-responsive">
               <table id="recurring" class="table table-bordered table-hover">
                 <thead>
@@ -404,35 +411,41 @@
                 </thead>
                 <tbody>
                   {% set recurring_row = 0 %}
-                  {% for product_recurring in product_recurrings %}
-                    <tr id="recurring-row{{ recurring_row }}">
-                      <td class="text-left"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-control">
-                          {% for recurring in recurrings %}
-                            {% if recurring.recurring_id == product_recurring.recurring_id %}
-                              <option value="{{ recurring.recurring_id }}" selected="selected">{{ recurring.name }}</option>
-                            {% else %}
-                              <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
-                            {% endif %}
-                          {% endfor %}
-                        </select></td>
-                      <td class="text-left"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-control">
-                          {% for customer_group in customer_groups %}
-                            {% if customer_group.customer_group_id == product_recurring.customer_group_id %}
-                              <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-                            {% else %}
-                              <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                            {% endif %}
-                          {% endfor %}
-                        </select></td>
-                      <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                  {% if product_recurrings %}
+                    {% for product_recurring in product_recurrings %}
+                      <tr id="recurring-row{{ recurring_row }}">
+                        <td class="text-left"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-control">
+                            {% for recurring in recurrings %}
+                              {% if recurring.recurring_id == product_recurring.recurring_id %}
+                                <option value="{{ recurring.recurring_id }}" selected="selected">{{ recurring.name }}</option>
+                              {% else %}
+                                <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select></td>
+                        <td class="text-left"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-control">
+                            {% for customer_group in customer_groups %}
+                              {% if customer_group.customer_group_id == product_recurring.customer_group_id %}
+                                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                              {% else %}
+                                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select></td>
+                        <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button></td>
+                      </tr>
+                      {% set recurring_row = recurring_row + 1 %}
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td colspan="3" class="text-center">{{ text_no_results }}</td>
                     </tr>
-                    {% set recurring_row = recurring_row + 1 %}
-                  {% endfor %}
+                  {% endif %}
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-discount">
+          <div id="tab-modal-discount" class="tab-pane">
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
@@ -448,45 +461,51 @@
                 </thead>
                 <tbody>
                   {% set discount_row = 0 %}
-                  {% for product_discount in product_discounts %}
-                    <tr id="discount-row{{ discount_row }}">
-                      <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
-                          {% for customer_group in customer_groups %}
-                            {% if customer_group.customer_group_id == product_discount.customer_group_id %}
-                              <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-                            {% else %}
-                              <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                            {% endif %}
-                          {% endfor %}
-                        </select></td>
-                      <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
-                      <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
-                      <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
-                      <td class="text-left">
-                        <div class="input-group date">
-                          <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                  {% if product_discounts %}
+                    {% for product_discount in product_discounts %}
+                      <tr id="discount-row{{ discount_row }}">
+                        <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
+                            {% for customer_group in customer_groups %}
+                              {% if customer_group.customer_group_id == product_discount.customer_group_id %}
+                                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                              {% else %}
+                                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select></td>
+                        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
+                        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
+                        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
+                        <td class="text-left">
+                          <div class="input-group date">
+                            <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td class="text-left">
-                        <div class="input-group date">
-                          <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                        </td>
+                        <td class="text-left">
+                          <div class="input-group date">
+                            <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td class="text-right"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        </td>
+                        <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button></td>
+                      </tr>
+                      {% set discount_row = discount_row + 1 %}
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td colspan="7" class="text-center">{{ text_no_results }}</td>
                     </tr>
-                    {% set discount_row = discount_row + 1 %}
-                  {% endfor %}
+                  {% endif %}
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-special">
+          <div id="tab-modal-special" class="tab-pane">
             <div class="table-responsive">
               <table id="special" class="table table-bordered table-hover">
                 <thead>
@@ -500,54 +519,58 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% set special_row = 0 %}
-                  {% for product_special in product_specials %}
-                    <tr id="special-row{{ special_row }}">
-                      <td class="text-left"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-control">
-                          {% for customer_group in customer_groups %}
-                            {% if customer_group.customer_group_id == product_special.customer_group_id %}
-                              <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-                            {% else %}
-                              <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                            {% endif %}
-                          {% endfor %}
-                        </select></td>
-                      <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
-                      <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
-                      <td class="text-left">
-                        <div class="input-group date">
-                          <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                  {% if product_specials %}
+                    {% for product_special in product_specials %}
+                      <tr id="special-row{{ special_row }}">
+                        <td class="text-left"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-control">
+                            {% for customer_group in customer_groups %}
+                              {% if customer_group.customer_group_id == product_special.customer_group_id %}
+                                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+                              {% else %}
+                                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select></td>
+                        <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
+                        <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
+                        <td class="text-left">
+                          <div class="input-group date">
+                            <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td class="text-left">
-                        <div class="input-group date">
-                          <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
-                          <div class="input-group-append">
-                            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                        </td>
+                        <td class="text-left">
+                          <div class="input-group date">
+                            <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td class="text-right"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        </td>
+                        <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button></td>
+                      </tr>
+                      {% set special_row = special_row + 1 %}
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td colspan="6" class="text-center">{{ text_no_results }}</td>
                     </tr>
-                    {% set special_row = special_row + 1 %}
-                  {% endfor %}
+                  {% endif %}
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-image">
+          <div id="tab-modal-image" class="tab-pane">
             <fieldset>
               <legend>{{ text_image }}</legend>
               <div class="row">
                 <div class="col-sm-4 col-md-3 mb-3">
                   <div class="card image">
-                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-modal-image"/>
                     <div class="card-body">
-                      <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                      <button type="button" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-light btn-sm btn-block"><i class="fas fa-copy"></i> {{ button_copy }}</button>
                     </div>
                   </div>
                 </div>
@@ -570,15 +593,14 @@
                       <tr id="image-row{{ image_row }}">
                         <td>
                           <div class="card image">
-                            <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+                            <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-modal-image{{ image_row }}"/>
                             <div class="card-body">
-                              <button type="button" data-toggle="image" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                              <button type="button" data-toggle="clear" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                              <button type="button" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-copy"></i> {{ button_copy }}</button>
                             </div>
                           </div>
                         </td>
                         <td class="text-left"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                        <td class="text-right"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button></td>
                       </tr>
                       {% set image_row = image_row + 1 %}
                     {% endfor %}
@@ -587,15 +609,18 @@
               </div>
             </fieldset>
           </div>
-          <div class="tab-pane" id="tab-modal-reward">
+          <div id="tab-modal-reward" class="tab-pane">
             <fieldset>
               <legend>{{ text_reward }}</legend>
               <div class="form-group">
-                <label class="col-form-label" for="input-points">{{ entry_points }}</label>
-                <div class="col-sm-10">
-                  <input type="text" name="points" value="{{ points }}" placeholder="{{ entry_points }}" id="input-points" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_points }}</small>
+                <label class="col-form-label" for="input-modal-points">{{ entry_points }}</label>
+                <div class="input-group">
+                  <input type="text" name="points" value="{{ points }}" placeholder="{{ entry_points }}" id="input-modal-points" class="form-control"/>
+                  <div class="input-group-append">
+                    <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                  </div>
                 </div>
+                <small class="form-text text-muted">{{ help_points }}</small>
               </div>
             </fieldset>
             <fieldset>
@@ -612,7 +637,14 @@
                     {% for customer_group in customer_groups %}
                       <tr>
                         <td class="text-left">{{ customer_group.name }}</td>
-                        <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/></td>
+                        <td class="text-right">
+                          <div class="input-group">
+                            <input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                            </div>
+                          </div>
+                        </td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -620,7 +652,7 @@
               </div>
             </fieldset>
           </div>
-          <div class="tab-pane" id="tab-modal-seo">
+          <div id="tab-modal-seo" class="tab-pane">
             <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
@@ -631,27 +663,36 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for store in stores %}
-                    <tr>
-                      <td class="text-left">{{ store.name }}</td>
-                      <td class="text-left">{% for language in languages %}
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                  {% if stores %}
+                    {% for store in stores %}
+                      <tr>
+                        <td class="text-left">{{ store.name }}</td>
+                        <td class="text-left">{% for language in languages %}
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+                              </div>
+                              <input type="text" name="product_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if product_seo_url[store.store_id][language.language_id] %}{{ product_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
+                              <div class="input-group-append">
+                                <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                              </div>
                             </div>
-                            <input type="text" name="product_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if product_seo_url[store.store_id][language.language_id] %}{{ product_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
-                          </div>
-                          {% if error_keyword[store.store_id][language.language_id] %}
-                            <div class="invalid-tooltip">{{ error_keyword[store.store_id][language.language_id] }}</div>
-                          {% endif %}
-                        {% endfor %}</td>
+                            {% if error_keyword[store.store_id][language.language_id] %}
+                              <div class="invalid-tooltip">{{ error_keyword[store.store_id][language.language_id] }}</div>
+                            {% endif %}
+                          {% endfor %}</td>
+                      </tr>
+                    {% endfor %}
+                  {% else %}
+                    <tr>
+                      <td colspan="2" class="text-center">{{ text_no_results }}</td>
                     </tr>
-                  {% endfor %}
+                  {% endif %}
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="tab-pane" id="tab-modal-design">
+          <div id="tab-modal-design" class="tab-pane">
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
@@ -664,16 +705,23 @@
                   {% for store in stores %}
                     <tr>
                       <td class="text-left">{{ store.name }}</td>
-                      <td class="text-left"><select name="product_layout[{{ store.store_id }}]" class="form-control">
-                          <option value=""></option>
-                          {% for layout in layouts %}
-                            {% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %}
-                              <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                            {% else %}
-                              <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                            {% endif %}
-                          {% endfor %}
-                        </select></td>
+                      <td class="text-left">
+                        <div class="input-group">
+                          <select name="product_layout[{{ store.store_id }}]" class="form-control">
+                            <option value=""></option>
+                            {% for layout in layouts %}
+                              {% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %}
+                                <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                              {% else %}
+                                <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                          <div class="input-group-append">
+                            <button type="button" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   {% endfor %}
                 </tbody>
@@ -687,4 +735,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#modal-language li:first-child a').tab('show');
+//--></script>
+<script type="text/javascript"><!--
+
 //--></script>

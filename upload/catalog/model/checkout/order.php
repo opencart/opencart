@@ -360,14 +360,16 @@ class ModelCheckoutOrder extends Model {
 				foreach($order_products as $order_product) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
 
+					// Restock the master product stock level if product is a variant
+					if ($order_product['master_id']) {
+						$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['master_id'] . "' AND subtract = '1'");
+					}
+
 					$order_options = $this->getOrderOptions($order_id, $order_product['order_product_id']);
 
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "' AND subtract = '1'");
 					}
-
-					// Restock the master product stock level if product is a variant
-					$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['master_id'] . "' AND subtract = '1'");
 				}
 
 				// Remove coupon, vouchers and reward points history

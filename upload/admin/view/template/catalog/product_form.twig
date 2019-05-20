@@ -3,9 +3,6 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        {% if master_id %}
-          <button type="button" id="button-master" class="btn btn-warning" title="{{ button_master }}" data-toggle="tooltip" data-loading-text="{{ text_loading }}"><i class="fas fa-crown fa-fw"></i></button>
-        {% endif %}
         <button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -53,7 +50,18 @@
                     <div class="form-group row required">
                       <label class="col-sm-2 col-form-label" for="input-name{{ language.language_id }}">{{ entry_name }}</label>
                       <div class="col-sm-10">
-                        <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control"/>
+                        <div class="input-group">
+                          <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control"/>
+                          {% if master_id %}
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <div class="custom-control custom-switch">
+                                  <input type="checkbox" name="" value="" id="input-variant-name{{ language.language_id }}" class="custom-control-input"><label class="custom-control-label" for="input-variant-name{{ language.language_id }}"></label>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
                         {% if error_name[language.language_id] %}
                           <div class="invalid-feedback">{{ error_name[language.language_id] }}</div>
                         {% endif %}
@@ -62,13 +70,35 @@
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                       <div class="col-sm-10">
-                        <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
+                        <div class="input-group">
+                          <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
+                          {% if master_id %}
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <div class="custom-control custom-switch">
+                                  <input type="checkbox" name="" value="" id="input-variant-description{{ language.language_id }}" class="custom-control-input"><label class="custom-control-label" for="input-variant-description{{ language.language_id }}"></label>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
                       </div>
                     </div>
                     <div class="form-group row required">
                       <label class="col-sm-2 col-form-label" for="input-meta-title{{ language.language_id }}">{{ entry_meta_title }}</label>
                       <div class="col-sm-10">
-                        <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control"/>
+                        <div class="input-group">
+                          <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control"/>
+                          {% if master_id %}
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <div class="custom-control custom-switch">
+                                  <input type="checkbox" name="" value="" id="input-variant-meta-title{{ language.language_id }}" class="custom-control-input"><label class="custom-control-label" for="input-variant-meta-title{{ language.language_id }}"></label>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
                         {% if error_meta_title[language.language_id] %}
                           <div class="invalid-tooltip">{{ error_meta_title[language.language_id] }}</div>
                         {% endif %}</div>
@@ -76,19 +106,52 @@
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
                       <div class="col-sm-10">
-                        <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
+                        <div class="input-group">
+                          <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
+                          {% if master_id %}
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <div class="custom-control custom-switch">
+                                  <input type="checkbox" name="" value="" id="input-variant-meta-description{{ language.language_id }}" class="custom-control-input"><label class="custom-control-label" for="input-variant-meta-description{{ language.language_id }}"></label>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-meta-keyword{{ language.language_id }}">{{ entry_meta_keyword }}</label>
                       <div class="col-sm-10">
-                        <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
+                        <div class="input-group">
+                          <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
+                          {% if master_id %}
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <div class="custom-control custom-switch">
+                                  <input type="checkbox" name="" value="" id="input-variant-meta-keyword{{ language.language_id }}" class="custom-control-input"><label class="custom-control-label" for="input-variant-meta-keyword{{ language.language_id }}"></label>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label" for="input-tag{{ language.language_id }}">{{ entry_tag }}</label>
                       <div class="col-sm-10">
-                        <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag{{ language.language_id }}" class="form-control"/>
+                        <div class="input-group">
+                          <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag{{ language.language_id }}" class="form-control"/>
+                          {% if master_id %}
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <div class="custom-control custom-switch">
+                                  <input type="checkbox" name="" value="" id="input-variant-meta-tag{{ language.language_id }}" class="custom-control-input"><label class="custom-control-label" for="input-variant-meta-tag{{ language.language_id }}"></label>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
                         <small class="form-text text-muted">{{ help_tag }}</small>
                       </div>
                     </div>
@@ -96,64 +159,153 @@
                 {% endfor %}
               </div>
             </div>
-            <div class="tab-pane" id="tab-data">
+            <div id="tab-data" class="tab-pane">
               <input type="hidden" name="master_id" value="{{ master_id }}"/>
               <fieldset>
                 <legend>{{ text_model }}</legend>
                 <div class="form-group row required">
                   <label class="col-sm-2 col-form-label" for="input-model">{{ entry_model }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-model" class="custom-control-input"><label class="custom-control-label" for="input-variant-model{{ language.language_id }}"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     {% if error_model %}
                       <div class="invalid-tooltip">{{ error_model }}</div>
-                    {% endif %}</div>
+                    {% endif %}
+                  </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-sku">{{ entry_sku }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="input-sku" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="input-sku" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-sku" class="custom-control-input"><label for="input-variant-sku{{ language.language_id }}" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_sku }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-upc">{{ entry_upc }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-upc{{ language.language_id }}" class="custom-control-input"><label for="input-variant-upc{{ language.language_id }}" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_upc }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-ean">{{ entry_ean }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-ean" class="custom-control-input"><label for="input-variant-ean" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_ean }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-jan">{{ entry_jan }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-jan" class="custom-control-input"><label for="input-variant-jan" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_jan }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-isbn">{{ entry_isbn }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="isbn" value="{{ isbn }}" placeholder="{{ entry_isbn }}" id="input-isbn" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-isbn" class="custom-control-input"><label for="input-variant-isbn" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_isbn }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-mpn">{{ entry_mpn }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="mpn" value="{{ mpn }}" placeholder="{{ entry_mpn }}" id="input-mpn" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-mpn" class="custom-control-input"><label for="input-variant-mpn" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_mpn }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-location">{{ entry_location }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="location" value="{{ location }}" placeholder="{{ entry_location }}" id="input-location" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-location" class="custom-control-input"><label for="input-variant-location" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
               </fieldset>
@@ -162,22 +314,44 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-price">{{ entry_price }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-price" class="custom-control-input"><label for="input-variant-price" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax_class }}</label>
                   <div class="col-sm-10">
-                    <select name="tax_class_id" id="input-tax-class" class="form-control">
-                      <option value="0">{{ text_none }}</option>
-                      {% for tax_class in tax_classes %}
-                        {% if tax_class.tax_class_id == tax_class_id %}
-                          <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
-                        {% else %}
-                          <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
+                    <div class="input-group">
+                      <select name="tax_class_id" id="input-tax-class" class="form-control">
+                        <option value="0">{{ text_none }}</option>
+                        {% for tax_class in tax_classes %}
+                          {% if tax_class.tax_class_id == tax_class_id %}
+                            <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
+                          {% else %}
+                            <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
               </fieldset>
@@ -186,26 +360,59 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-quantity">{{ entry_quantity }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-minimum">{{ entry_minimum }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_minimum }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                   <div class="col-sm-10">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                      {% if subtract %}
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
-                      {% else %}
-                        <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="1"/> {{ text_yes }}</label>
-                        <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="0" checked="checked"/> {{ text_no }}</label>
+                    <div class="input-group">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if subtract %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
+                        {% else %}
+                          <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="0" checked="checked"/> {{ text_no }}</label>
+                        {% endif %}
+                      </div>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label class="custom-control-label" for="input-variant-"></label>
+                            </div>
+                          </div>
+                        </div>
                       {% endif %}
                     </div>
                   </div>
@@ -213,26 +420,46 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-stock-status">{{ entry_stock_status }}</label>
                   <div class="col-sm-10">
-                    <select name="stock_status_id" id="input-stock-status" class="form-control">
-                      {% for stock_status in stock_statuses %}
-                        {% if stock_status.stock_status_id == stock_status_id %}
-                          <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
-                        {% else %}
-                          <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
+                    <div class="input-group">
+                      <select name="stock_status_id" id="input-stock-status" class="form-control">
+                        {% for stock_status in stock_statuses %}
+                          {% if stock_status.stock_status_id == stock_status_id %}
+                            <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                          {% else %}
+                            <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_stock_status }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-date-available">{{ entry_date_available }}</label>
-                  <div class="col-sm-3">
+                  <div class="col-sm-6">
                     <div class="input-group date">
                       <input type="text" name="date_available" value="{{ date_available }}" placeholder="{{ entry_date_available }}" id="input-date-available" class="form-control"/>
                       <div class="input-group-append">
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -251,85 +478,156 @@
                         <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
                       {% endif %}
                     </div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label class="custom-control-label" for="input-variant-"></label>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-length">{{ entry_dimension }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <input type="text" name="length" value="{{ length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control"/>
-                      </div>
-                      <div class="col-sm-4">
-                        <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
-                      </div>
-                      <div class="col-sm-4">
-                        <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
-                      </div>
+                    <div class="input-group">
+                      <input type="text" name="length" value="{{ length }}" placeholder="{{ entry_length }}" id="input-length" class="form-control"/> <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/> <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-length-class">{{ entry_length_class }}</label>
                   <div class="col-sm-10">
-                    <select name="length_class_id" id="input-length-class" class="form-control">
-                      {% for length_class in length_classes %}
-                        {% if length_class.length_class_id == length_class_id %}
-                          <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
-                        {% else %}
-                          <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
+                    <div class="input-group">
+                      <select name="length_class_id" id="input-length-class" class="form-control">
+                        {% for length_class in length_classes %}
+                          {% if length_class.length_class_id == length_class_id %}
+                            <option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
+                          {% else %}
+                            <option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-weight">{{ entry_weight }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="weight" value="{{ weight }}" placeholder="{{ entry_weight }}" id="input-weight" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="weight" value="{{ weight }}" placeholder="{{ entry_weight }}" id="input-weight" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label for="input-variant-" class="custom-control-label"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
                   <div class="col-sm-10">
-                    <select name="weight_class_id" id="input-weight-class" class="form-control">
-                      {% for weight_class in weight_classes %}
-                        {% if weight_class.weight_class_id == weight_class_id %}
-                          <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
-                        {% else %}
-                          <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
+                    <div class="input-group">
+                      <select name="weight_class_id" id="input-weight-class" class="form-control">
+                        {% for weight_class in weight_classes %}
+                          {% if weight_class.weight_class_id == weight_class_id %}
+                            <option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
+                          {% else %}
+                            <option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"><label class="custom-control-label" for="input-variant-"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
               </fieldset>
+
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="status" id="input-status" class="form-control">
-                    {% if status %}
-                      <option value="1" selected="selected">{{ text_enabled }}</option>
-                      <option value="0">{{ text_disabled }}</option>
-                    {% else %}
-                      <option value="1">{{ text_enabled }}</option>
-                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                  <div class="input-group">
+                    <select name="status" id="input-status" class="form-control">
+                      {% if status %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
+                      </div>
                     {% endif %}
-                  </select>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                  <div class="input-group">
+                    <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-links">
+            <div id="tab-links" class="tab-pane">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-manufacturer">{{ entry_manufacturer }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control"/> <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}"/>
+                  <div class="input-group">
+                    <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control"/> <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}"/>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
                   <small class="form-text text-muted">{{ help_manufacturer }}</small>
                 </div>
               </div>
@@ -337,11 +635,23 @@
                 <label class="col-sm-2 col-form-label" for="input-category">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
-                  <div id="product-category" class="form-control" style="height: 150px; overflow: auto;">{% for product_category in product_categories %}
-                      <div id="product-category{{ product_category.category_id }}"><i class="fas fa-minus-circle"></i> {{ product_category.name }}
-                        <input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/>
+                  <div class="input-group">
+                    <div id="product-category" class="form-control" style="height: 150px; overflow: auto;">
+                      {% for product_category in product_categories %}
+                        <div id="product-category{{ product_category.category_id }}"><i class="fas fa-minus-circle"></i> {{ product_category.name }}
+                          <input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
                       </div>
-                    {% endfor %}
+                    {% endif %}
                   </div>
                   <small class="form-text text-muted">{{ help_category }}</small>
                 </div>
@@ -350,12 +660,23 @@
                 <label class="col-sm-2 col-form-label" for="input-filter">{{ entry_filter }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
-                  <div id="product-filter" class="form-control" style="height: 150px; overflow: auto;">
-                    {% for product_filter in product_filters %}
-                      <div id="product-filter{{ product_filter.filter_id }}"><i class="fas fa-minus-circle"></i> {{ product_filter.name }}
-                        <input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/>
+                  <div class="input-group">
+                    <div id="product-filter" class="form-control" style="height: 150px; overflow: auto;">
+                      {% for product_filter in product_filters %}
+                        <div id="product-filter{{ product_filter.filter_id }}"><i class="fas fa-minus-circle"></i> {{ product_filter.name }}
+                          <input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
                       </div>
-                    {% endfor %}
+                    {% endif %}
                   </div>
                   <small class="form-text text-muted">{{ help_filter }}</small>
                 </div>
@@ -363,30 +684,53 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="form-control" style="height: 150px; overflow: auto;">
-                    {% for store in stores %}
-                      <label class="form-check">
-                        {% if store.store_id in product_store %}
-                          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
-                          {{ store.name }}
-                        {% else %}
-                          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"/>
-                          {{ store.name }}
-                        {% endif %}
-                      </label>
-                    {% endfor %}</div>
+                  <div class="input-group">
+                    <div class="form-control" style="height: 150px; overflow: auto;">
+                      {% for store in stores %}
+                        <label class="form-check">
+                          {% if store.store_id in product_store %}
+                            <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+                            {{ store.name }}
+                          {% else %}
+                            <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"/>
+                            {{ store.name }}
+                          {% endif %}
+                        </label>
+                      {% endfor %}
+                    </div>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label" for="input-download">{{ entry_download }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" class="form-control"/>
-                  <div id="product-download" class="form-control" style="height: 150px; overflow: auto;">
-                    {% for product_download in product_downloads %}
-                      <div id="product-download{{ product_download.download_id }}"><i class="fas fa-minus-circle"></i> {{ product_download.name }}
-                        <input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/>
+                  <div class="input-group">
+                    <div id="product-download" class="form-control" style="height: 150px; overflow: auto;">
+                      {% for product_download in product_downloads %}
+                        <div id="product-download{{ product_download.download_id }}"><i class="fas fa-minus-circle"></i> {{ product_download.name }}
+                          <input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
                       </div>
-                    {% endfor %}
+                    {% endif %}
                   </div>
                   <small class="form-text text-muted">{{ help_download }}</small>
                 </div>
@@ -395,18 +739,29 @@
                 <label class="col-sm-2 col-form-label" for="input-related">{{ entry_related }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" class="form-control"/>
-                  <div id="product-related" class="form-control" style="height: 150px; overflow: auto;">
-                    {% for product_related in product_relateds %}
-                      <div id="product-related{{ product_related.product_id }}"><i class="fas fa-minus-circle"></i> {{ product_related.name }}
-                        <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/>
+                  <div class="input-group">
+                    <div id="product-related" class="form-control" style="height: 150px; overflow: auto;">
+                      {% for product_related in product_relateds %}
+                        <div id="product-related{{ product_related.product_id }}"><i class="fas fa-minus-circle"></i> {{ product_related.name }}
+                          <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    {% if master_id %}
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                          </div>
+                        </div>
                       </div>
-                    {% endfor %}
+                    {% endif %}
                   </div>
                   <small class="form-text text-muted">{{ help_related }}</small>
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-attribute">
+            <div id="tab-attribute" class="tab-pane">
               <div class="table-responsive">
                 <table id="attribute" class="table table-bordered table-hover">
                   <thead>
@@ -430,7 +785,15 @@
                               <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
                             </div>
                           {% endfor %}</td>
-                        <td class="text-right"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        <td class="text-right">
+                          {% if not master_id %}
+                            <button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                          {% else %}
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                            </div>
+                          {% endif %}
+                        </td>
                       </tr>
                       {% set attribute_row = attribute_row + 1 %}
                     {% endfor %}
@@ -438,14 +801,18 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-right"><button type="button" id="button-attribute" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                      <td class="text-right">
+
+                        <button type="button" id="button-attribute" data-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button>
+
+                      </td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
             </div>
             {% if not master_id %}
-              <div class="tab-pane" id="tab-option">
+              <div id="tab-option" class="tab-pane">
                 <div id="option">
                   {% set option_row = 0 %}
                   {% set option_value_row = 0 %}
@@ -470,9 +837,7 @@
                       {% if product_option.type == 'text' %}
                         <div class="form-group row">
                           <label class="col-sm-2 col-form-label" for="input-option{{ option_row }}">{{ entry_option_value }}</label>
-                          <div class="col-sm-10">
-                            <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option{{ option_row }}" class="form-control"/>
-                          </div>
+                          <div class="col-sm-10"><input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option{{ option_row }}" class="form-control"/></div>
                         </div>
                       {% endif %}
                       {% if product_option.type == 'textarea' %}
@@ -486,9 +851,7 @@
                       {% if product_option.type == 'file' %}
                         <div class="form-group row d-none">
                           <label class="col-sm-2 col-form-label" for="input-option{{ option_row }}">{{ entry_option_value }}</label>
-                          <div class="col-sm-10">
-                            <input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option{{ option_row }}" class="form-control"/>
-                          </div>
+                          <div class="col-sm-10"><input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option{{ option_row }}" class="form-control"/></div>
                         </div>
                       {% endif %}
                       {% if product_option.type == 'date' %}
@@ -599,43 +962,41 @@
                 </fieldset>
               </div>
             {% else %}
-              <div class="tab-pane" id="tab-option">
+              <div id="tab-option" class="tab-pane">
                 {% for option in options %}
                   <fieldset>
                     <legend>{{ option.name }}</legend>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">Override</label>
-                      <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                          {% if product_variant[option.product_option_id] %}
-                            <label class="btn btn-outline-secondary active"><input type="radio" value="1" checked="checked"/> {{ text_yes }}</label>
-                            <label class="btn btn-outline-secondary"><input type="radio" value="0"/> {{ text_no }}</label>
-                          {% else %}
-                            <label class="btn btn-outline-secondary"><input type="radio" value="1"/> {{ text_yes }}</label>
-                            <label class="btn btn-outline-secondary active"><input type="radio" value="0" checked="checked"/> {{ text_no }}</label>
-                          {% endif %}
-                        </div>
-                      </div>
-                    </div>
                     {% if option.type == 'select' %}
                       <div class="form-group row {% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
-                        <div class="col-sm-10"><select name="product_variant[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
-                            <option value="">{{ text_select }}</option>
-                            {% for option_value in option.product_option_value %}
-                              {% if product_variant[option.product_option_id] and option_value.product_option_value_id == product_variant[option.product_option_id] %}
-                                <option value="{{ option_value.product_option_value_id }}" selected>{{ option_value.name }}
-                                  {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}{{ option_value.price }})
-                                  {% endif %}</option>
-                              {% else %}
-                                <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
-                                  {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}{{ option_value.price }})
-                                  {% endif %}</option>
-                              {% endif %}
-                            {% endfor %}
-                          </select>
+                        <div class="col-sm-10">
+                          <div class="input-group">
+                            <select name="product_variant[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
+                              <option value="">{{ text_select }}</option>
+                              {% for option_value in option.product_option_value %}
+                                {% if product_variant[option.product_option_id] and option_value.product_option_value_id == product_variant[option.product_option_id] %}
+                                  <option value="{{ option_value.product_option_value_id }}" selected>{{ option_value.name }}
+                                    {% if option_value.price %}
+                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                    {% endif %}</option>
+                                {% else %}
+                                  <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
+                                    {% if option_value.price %}
+                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                    {% endif %}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
                           {% endif %}
@@ -646,23 +1007,34 @@
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10">
-                          <div id="input-option{{ option.product_option_id }}">
-                            {% for option_value in option.product_option_value %}
-                              <div class="form-check">
-                                <label>
-                                  {% if product_variant[option.product_option_id] and option_value.product_option_value_id == product_variant[option.product_option_id] %}
-                                    <input type="radio" name="product_variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input" checked/>
-                                  {% else %}
-                                    <input type="radio" name="product_variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
-                                  {% endif %}
-                                  {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
-                                  {{ option_value.name }}
-                                  {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}{{ option_value.price }})
-                                  {% endif %}
-                                </label>
+                          <div class="input-group">
+                            <div id="input-option{{ option.product_option_id }}" class="form-control" style="height: 150px; overflow: auto;">
+                              {% for option_value in option.product_option_value %}
+                                <div class="form-check">
+                                  <label>
+                                    {% if product_variant[option.product_option_id] and option_value.product_option_value_id == product_variant[option.product_option_id] %}
+                                      <input type="radio" name="product_variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input" checked/>
+                                    {% else %}
+                                      <input type="radio" name="product_variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
+                                    {% endif %}
+                                    {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                    {{ option_value.name }}
+                                    {% if option_value.price %}
+                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                    {% endif %}
+                                  </label>
+                                </div>
+                              {% endfor %}
+                            </div>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
                               </div>
-                            {% endfor %}
+                            {% endif %}
                           </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
@@ -674,22 +1046,34 @@
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10">
-                          <div id="input-option{{ option.product_option_id }}">
-                            {% for option_value in option.product_option_value %}
-                              <div class="form-check">
-                                <label>
-                                  {% if product_variant[option.product_option_id] and option_value.product_option_value_id in product_variant[option.product_option_id] %}
-                                    <input type="checkbox" name="product_variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input" checked/>
-                                  {% else %}
-                                    <input type="checkbox" name="product_variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
-                                  {% endif %}
-                                  {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
-                                  {{ option_value.name }}
-                                  {% if option_value.price %}
-                                    ({{ option_value.price_prefix }}{{ option_value.price }})
-                                  {% endif %}</label>
+                          <div class="input-group">
+                            <div id="input-option{{ option.product_option_id }}" class="form-control" style="height: 150px; overflow: auto;">
+                              {% for option_value in option.product_option_value %}
+                                <div class="form-check">
+                                  <label>
+                                    {% if product_variant[option.product_option_id] and option_value.product_option_value_id in product_variant[option.product_option_id] %}
+                                      <input type="checkbox" name="product_variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input" checked/>
+                                    {% else %}
+                                      <input type="checkbox" name="product_variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
+                                    {% endif %}
+                                    {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                    {{ option_value.name }}
+                                    {% if option_value.price %}
+                                      ({{ option_value.price_prefix }}{{ option_value.price }})
+                                    {% endif %}
+                                  </label>
+                                </div>
+                              {% endfor %}
+                            </div>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
                               </div>
-                            {% endfor %}
+                            {% endif %}
                           </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
@@ -701,7 +1085,18 @@
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                         <div class="col-sm-10">
-                          <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                          <div class="input-group">
+                            <input type="text" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
                           {% endif %}
@@ -712,7 +1107,18 @@
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
                         <div class="col-sm-10">
-                          <textarea name="product_variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}</textarea>
+                          <div class="input-group">
+                            <textarea name="product_variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}</textarea>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
                           {% endif %}
@@ -724,6 +1130,9 @@
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10">
                           <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                          </div>
                           <input type="hidden" name="product_variant[{{ option.product_option_id }}]" value="{{ product_variant[option.product_option_id] ? product_variant[option.product_option_id] : option.value }}" id="input-option{{ option.product_option_id }}"/>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
@@ -740,6 +1149,15 @@
                             <div class="input-group-append">
                               <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
+                              </div>
+                            {% endif %}
                           </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
@@ -756,6 +1174,15 @@
                             <div class="input-group-append">
                               <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
+                              </div>
+                            {% endif %}
                           </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
@@ -772,6 +1199,15 @@
                             <div class="input-group-append">
                               <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                             </div>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-option{{ option.product_option_id }}"> <label class="custom-control-label" for="input-variant-option{{ option.product_option_id }}"></label>
+                                  </div>
+                                </div>
+                              </div>
+                            {% endif %}
                           </div>
                           {% if error_variant[option.product_option_id] %}
                             <div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
@@ -783,7 +1219,7 @@
                 {% endfor %}
               </div>
             {% endif %}
-            <div class="tab-pane" id="tab-recurring">
+            <div id="tab-recurring" class="tab-pane">
               <div class="table-responsive">
                 <table id="recurring" class="table table-bordered table-hover">
                   <thead>
@@ -815,7 +1251,19 @@
                               {% endif %}
                             {% endfor %}
                           </select></td>
-                        <td class="text-right"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        <td class="text-right">
+
+
+                          {% if not master_id %}
+                            <button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                          {% else %}
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" class="custom-control-input" id="input-variant-recurring-row{{ recurring_row }}"> <label class="custom-control-label" for="input-variant-recurring-row{{ recurring_row }}"></label>
+                            </div>
+                          {% endif %}
+
+
+                        </td>
                       </tr>
                       {% set recurring_row = recurring_row + 1 %}
                     {% endfor %}
@@ -829,7 +1277,7 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-discount">
+            <div id="tab-discount" class="tab-pane">
               <div class="table-responsive">
                 <table id="discount" class="table table-bordered table-hover">
                   <thead>
@@ -889,7 +1337,7 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-special">
+            <div id="tab-special" class="tab-pane">
               <div class="table-responsive">
                 <table id="special" class="table table-bordered table-hover">
                   <thead>
@@ -933,7 +1381,13 @@
                             </div>
                           </div>
                         </td>
-                        <td class="text-right"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        <td class="text-right">
+
+
+                          <button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+
+
+                        </td>
                       </tr>
                       {% set special_row = special_row + 1 %}
                     {% endfor %}
@@ -947,7 +1401,7 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-image">
+            <div id="tab-image" class="tab-pane">
               <fieldset>
                 <legend>{{ text_image }}</legend>
                 <div class="row">
@@ -1002,13 +1456,24 @@
                 </div>
               </fieldset>
             </div>
-            <div class="tab-pane" id="tab-reward">
+            <div id="tab-reward" class="tab-pane">
               <fieldset>
                 <legend>{{ text_reward }}</legend>
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="input-points">{{ entry_points }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="points" value="{{ points }}" placeholder="{{ entry_points }}" id="input-points" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="points" value="{{ points }}" placeholder="{{ entry_points }}" id="input-points" class="form-control"/>
+                      {% if master_id %}
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                              <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
                     <small class="form-text text-muted">{{ help_points }}</small>
                   </div>
                 </div>
@@ -1027,7 +1492,20 @@
                       {% for customer_group in customer_groups %}
                         <tr>
                           <td class="text-left">{{ customer_group.name }}</td>
-                          <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/></td>
+                          <td class="text-right">
+                            <div class="input-group">
+                              <input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/>
+                              {% if master_id %}
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <div class="custom-control custom-switch">
+                                      <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endif %}
+                            </div>
+                          </td>
                         </tr>
                       {% endfor %}
                     </tbody>
@@ -1035,7 +1513,7 @@
                 </div>
               </fieldset>
             </div>
-            <div class="tab-pane" id="tab-seo">
+            <div id="tab-seo" class="tab-pane">
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -1049,12 +1527,22 @@
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
-                        <td class="text-left">{% for language in languages %}
+                        <td class="text-left">
+                          {% for language in languages %}
                             <div class="input-group">
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
                               </div>
                               <input type="text" name="product_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if product_seo_url[store.store_id][language.language_id] %}{{ product_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
+                              {% if master_id %}
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <div class="custom-control custom-switch">
+                                      <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endif %}
                             </div>
                             {% if error_keyword[store.store_id][language.language_id] %}
                               <div class="invalid-tooltip">{{ error_keyword[store.store_id][language.language_id] }}</div>
@@ -1066,7 +1554,7 @@
                 </table>
               </div>
             </div>
-            <div class="tab-pane" id="tab-design">
+            <div id="tab-design" class="tab-pane">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
@@ -1079,16 +1567,29 @@
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
-                        <td class="text-left"><select name="product_layout[{{ store.store_id }}]" class="form-control">
-                            <option value=""></option>
-                            {% for layout in layouts %}
-                              {% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %}
-                                <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                              {% else %}
-                                <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                              {% endif %}
-                            {% endfor %}
-                          </select></td>
+                        <td class="text-left">
+                          <div class="input-group">
+                            <select name="product_layout[{{ store.store_id }}]" class="form-control">
+                              <option value=""></option>
+                              {% for layout in layouts %}
+                                {% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %}
+                                  <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+                                {% else %}
+                                  <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                            {% if master_id %}
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="custom-control custom-switch">
+                                    <input type="checkbox" name="" value="" id="input-variant-" class="custom-control-input"> <label class="custom-control-label" for="input-variant-"></label>
+                                  </div>
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
+                        </td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -1100,7 +1601,6 @@
       </div>
     </div>
   </div>
-  <div id="test"></div>
 </div>
 <script type="text/javascript"><!--
 $('#button-master').on('click', function(e) {
@@ -1120,8 +1620,6 @@ $('#button-master').on('click', function(e) {
 			$(element).button('reset');
 		},
 		success: function(html) {
-			console.log(html);
-
 			$('body').append(html);
 
 			$('#modal-master').modal('show');
@@ -1133,6 +1631,33 @@ $('#button-master').on('click', function(e) {
 		}
 	});
 });
+
+//$(':input').not('.custom-control-input').prop('disabled', true);
+
+$('.custom-control-input').on('change', function(e) {
+	//$(this).parentsUntil('.col-sm-10').find('input').prop('disabled', false);
+
+	//.css('background-color', '#f11');
+});
+/*
+$('#modal-master :input').each(function(index, element) {
+	var id = $(element).attr('id');
+
+	if (id) {
+		target = id.replace('input-modal-', 'input-');
+
+		if ($('#' + target).val() != $(element).val()) {
+			console.log(id);
+
+			$(element).parent().find('.input-group-append .btn').removeClass('.btn-warning').addClass('btn-danger');
+
+			$(element).addClass('is-invalid');
+		}
+
+		//console.log($('#form-product input[name=\'' + $(this).attr('name') + '\'').attr('val'));
+	}
+});
+*/
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 

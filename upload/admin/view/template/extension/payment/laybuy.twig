@@ -29,8 +29,8 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment">
           <ul class="nav nav-tabs">
-            <li class="nav-item" id="li-tab-settings"><a href="#tab-settings" data-toggle="tab" class="nav-link active">{{ tab_settings }}</a></li>
-            <li class="nav-item" id="li-tab-reports"><a href="#tab-reports" data-toggle="tab" class="nav-link">{{ tab_reports }}</a></li>
+            <li id="li-tab-settings" class="nav-item"><a href="#tab-settings" data-toggle="tab" class="nav-link active">{{ tab_settings }}</a></li>
+            <li id="li-tab-reports" class="nav-item"><a href="#tab-reports" data-toggle="tab" class="nav-link">{{ tab_reports }}</a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-settings">
@@ -261,7 +261,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-reports">
+            <div id="tab-reports" class="tab-pane">
               <div class="card bg-light mb-3">
                 <div class="card-body">
                   <div class="row">

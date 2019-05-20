@@ -124,7 +124,7 @@
                                 <div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant }}</a></div>
                               </div>
                             {% else %}
-                              <a href="{{ product.edit }}" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                             {% endif %}
                           </td>
                         </tr>

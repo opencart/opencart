@@ -222,11 +222,6 @@ class ControllerProductProduct extends Controller {
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
-
 			$data['heading_title'] = $product_info['name'];
 
 			$data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
@@ -309,6 +304,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			$data['options'] = array();
+			$data['moment'] = false;
 
 			// Check if product is variant
 			if ($product_info['master_id']) {
@@ -357,7 +353,16 @@ class ControllerProductProduct extends Controller {
 						'value'                => $option['value'],
 						'required'             => $option['required']
 					);
+
+					$data['moment'] = ($option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') ? true : $data['moment'];
 				}
+			}
+
+			if ($data['moment']) {
+				$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+				$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
+				$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+				$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 			}
 
 			if ($product_info['minimum']) {

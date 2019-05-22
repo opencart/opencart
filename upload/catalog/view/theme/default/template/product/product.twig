@@ -454,6 +454,7 @@ $('#button-cart').on('click', function() {
 	});
 });
 //--></script>
+{% if moment %}
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	'format': 'YYYY-MM-DD',
@@ -473,6 +474,7 @@ $('.datetime').datetimepicker({
 	'allowInputToggle': true
 });
 //--></script>
+{% endif %}
 <script type="text/javascript"><!--
 $('button[id^=\'button-upload\']').on('click', function() {
 	var element = this;

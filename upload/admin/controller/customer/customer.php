@@ -864,7 +864,7 @@ class ControllerCustomerCustomer extends Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id']));
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account' && $custom_field['status']) {
+			if (isset($this->request->post['custom_field'][$custom_field['custom_field_id']]) && $custom_field['status']) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
@@ -884,7 +884,7 @@ class ControllerCustomerCustomer extends Controller {
 		}
 
 		if (isset($this->request->post['address'])) {
-			foreach ($this->request->post['address'] as $key => $value) {
+			foreach (array_values($this->request->post['address']) as $key => $value) {
 				if ((utf8_strlen($value['firstname']) < 1) || (utf8_strlen($value['firstname']) > 32)) {
 					$this->error['address'][$key]['firstname'] = $this->language->get('error_firstname');
 				}
@@ -918,7 +918,7 @@ class ControllerCustomerCustomer extends Controller {
 				}
 
 				foreach ($custom_fields as $custom_field) {
-					if ($custom_field['location'] == 'address' && $custom_field['status']) {
+					if (isset($value['custom_field'][$custom_field['custom_field_id']]) && $custom_field['status']) {
 						if ($custom_field['required'] && empty($value['custom_field'][$custom_field['custom_field_id']])) {
 							$this->error['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($value['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
@@ -1352,10 +1352,12 @@ class ControllerCustomerCustomer extends Controller {
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
 
 		foreach ($custom_fields as $custom_field) {
-			$json[] = array(
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
-			);
+			if ($custom_field['status']) {
+				$json[] = array(
+					'custom_field_id' => $custom_field['custom_field_id'],
+					'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
+				);
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

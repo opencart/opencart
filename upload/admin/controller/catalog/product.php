@@ -1394,7 +1394,7 @@ class ControllerCatalogProduct extends Controller {
 			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['master_id']);
 
 			foreach ($product_options as $product_option) {
-				if ($product_option['required'] && empty($this->request->post['variant'][$product_option['product_option_id']])) {
+				if ($product_option['required'] && !isset($this->request->post['override']['option'][$product_option['product_option_id']])) {
 					$this->error['variant'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
@@ -1535,8 +1535,6 @@ class ControllerCatalogProduct extends Controller {
 			}
 
 			$this->load->model('tool/image');
-
-			$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 			if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
 				$json['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);

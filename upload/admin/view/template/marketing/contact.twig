@@ -19,7 +19,7 @@
       <div class="card-body">
         <form>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
+            <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 <option value="0">{{ text_default }}</option>
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-to">{{ entry_to }}</label>
+            <label for="input-to" class="col-sm-2 col-form-label">{{ entry_to }}</label>
             <div class="col-sm-10">
               <select name="to" id="input-to" class="form-control">
                 <option value="newsletter">{{ text_newsletter }}</option>
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="form-group row to" id="to-customer-group">
-            <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
+            <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <select name="customer_group_id" id="input-customer-group" class="form-control">
                 {% for customer_group in customer_groups %}
@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="form-group row to" id="to-customer">
-            <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
+            <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
             <div class="col-sm-10">
               <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
               <div id="mail-customer" class="form-control" style="height: 150px; overflow: auto;"></div>
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="form-group row to" id="to-affiliate">
-            <label class="col-sm-2 col-form-label" for="input-affiliate">{{ entry_affiliate }}</label>
+            <label for="input-affiliate" class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
             <div class="col-sm-10">
               <input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
               <div id="mail-affiliate" class="form-control" style="height: 150px; overflow: auto;"></div>
@@ -70,7 +70,7 @@
             </div>
           </div>
           <div class="form-group row to" id="to-product">
-            <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
+            <label for="input-product" class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
               <input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
               <div id="mail-product" class="form-control" style="height: 150px; overflow: auto;"></div>
@@ -78,13 +78,13 @@
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-subject">{{ entry_subject }}</label>
+            <label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
             <div class="col-sm-10">
               <input type="text" name="subject" value="" placeholder="{{ entry_subject }}" id="input-subject" class="form-control"/>
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-message">{{ entry_message }}</label>
+            <label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
             <div class="col-sm-10">
               <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
             </div>

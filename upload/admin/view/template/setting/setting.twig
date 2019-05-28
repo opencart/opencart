@@ -39,7 +39,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-meta-title">{{ entry_meta_title }}</label>
+                <label for="input-meta-title" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
                   {% if error_meta_title %}
@@ -47,19 +47,19 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-meta-description">{{ entry_meta_description }}</label>
+                <label for="input-meta-description" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description" class="form-control">{{ config_meta_description }}</textarea>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-meta-keyword">{{ entry_meta_keyword }}</label>
+                <label for="input-meta-keyword" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-theme">{{ entry_theme }}</label>
+                <label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-control">
                     {% for theme in themes %}
@@ -74,7 +74,7 @@
                   <img src="" alt="" id="theme" class="img-thumbnail"/></div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-layout">{{ entry_layout }}</label>
+                <label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
                 <div class="col-sm-10">
                   <select name="config_layout_id" id="input-layout" class="form-control">
                     {% for layout in layouts %}
@@ -90,7 +90,7 @@
             </div>
             <div id="tab-store" class="tab-pane">
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+                <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
                   {% if error_name %}
@@ -98,7 +98,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-owner">{{ entry_owner }}</label>
+                <label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
                   {% if error_owner %}
@@ -106,7 +106,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-address">{{ entry_address }}</label>
+                <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ config_address }}</textarea>
                   {% if error_address %}
@@ -114,14 +114,14 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
+                <label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
                   <small class="form-text text-muted">{{ help_geocode }}</small>
                 </div>
               </div>
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-email">{{ entry_email }}</label>
+                <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                   {% if error_email %}
@@ -129,7 +129,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
+                <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
                   {% if error_telephone %}
@@ -137,13 +137,13 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-fax">{{ entry_fax }}</label>
+                <label for="input-fax" class="col-sm-2 col-form-label">{{ entry_fax }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_fax" value="{{ config_fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
+                <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
                 <div class="col-sm-10">
                   <div class="card image">
                     <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
@@ -155,14 +155,14 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-open">{{ entry_open }}</label>
+                <label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
                   <small class="form-text text-muted">{{ help_open }}</small>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
+                <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
                   <small class="form-text text-muted">{{ help_comment }}</small>
@@ -192,7 +192,7 @@
             </div>
             <div id="tab-local" class="tab-pane">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-country">{{ entry_country }}</label>
+                <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
                 <div class="col-sm-10">
                   <select name="config_country_id" id="input-country" class="form-control">
                     {% for country in countries %}
@@ -206,13 +206,13 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-zone">{{ entry_zone }}</label>
+                <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                 <div class="col-sm-10">
                   <select name="config_zone_id" id="input-zone" class="form-control"> </select>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-timezone">{{ entry_timezone }}</label>
+                <label for="input-timezone" class="col-sm-2 col-form-label">{{ entry_timezone }}</label>
                 <div class="col-sm-10">
                   <select name="config_timezone" id="input-timezone" class="form-control">
                     {% for timezone in timezones %}
@@ -226,7 +226,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
+                <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-control">
                     {% for language in languages %}
@@ -240,7 +240,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-admin-language">{{ entry_admin_language }}</label>
+                <label for="input-admin-language" class="col-sm-2 col-form-label">{{ entry_admin_language }}</label>
                 <div class="col-sm-10">
                   <select name="config_admin_language" id="input-admin-language" class="form-control">
                     {% for language in languages %}
@@ -254,7 +254,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-currency">{{ entry_currency }}</label>
+                <label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
                 <div class="col-sm-10">
                   <select name="config_currency" id="input-currency" class="form-control">
                     {% for currency in currencies %}
@@ -269,7 +269,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-currency-engine">{{ entry_currency_engine }}</label>
+                <label for="input-currency-engine" class="col-sm-2 col-form-label">{{ entry_currency_engine }}</label>
                 <div class="col-sm-10">
                   <select name="config_currency_engine" id="input-currency-engine" class="form-control">
                     {% for currency_engine in currency_engines %}
@@ -298,7 +298,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-length-class">{{ entry_length_class }}</label>
+                <label for="input-length-class" class="col-sm-2 col-form-label">{{ entry_length_class }}</label>
                 <div class="col-sm-10">
                   <select name="config_length_class_id" id="input-length-class" class="form-control">
                     {% for length_class in length_classes %}
@@ -312,7 +312,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
+                <label for="input-weight-class" class="col-sm-2 col-form-label">{{ entry_weight_class }}</label>
                 <div class="col-sm-10">
                   <select name="config_weight_class_id" id="input-weight-class" class="form-control">
                     {% for weight_class in weight_classes %}
@@ -358,7 +358,7 @@
                     </div>
                   </div>
                   <div class="form-group row required">
-                    <label class="col-sm-2 col-form-label" for="input-admin-limit">{{ entry_limit_admin }}</label>
+                    <label for="input-admin-limit" class="col-sm-2 col-form-label">{{ entry_limit_admin }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="config_limit_admin" value="{{ config_limit_admin }}" placeholder="{{ entry_limit_admin }}" id="input-admin-limit" class="form-control"/>
                       <small class="form-text text-muted">{{ help_limit_admin }}</small>
@@ -401,7 +401,7 @@
                 </div>
                 <div id="tab-voucher" class="tab-pane">
                   <div class="form-group row required">
-                    <label class="col-sm-2 col-form-label" for="input-voucher-min">{{ entry_voucher_min }}</label>
+                    <label for="input-voucher-min" class="col-sm-2 col-form-label">{{ entry_voucher_min }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>
                       <small class="form-text text-muted">{{ help_voucher_min }}</small>
@@ -410,7 +410,7 @@
                       {% endif %}</div>
                   </div>
                   <div class="form-group row required">
-                    <label class="col-sm-2 col-form-label" for="input-voucher-max">{{ entry_voucher_max }}</label>
+                    <label for="input-voucher-max" class="col-sm-2 col-form-label">{{ entry_voucher_max }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="config_voucher_max" value="{{ config_voucher_max }}" placeholder="{{ entry_voucher_max }}" id="input-voucher-max" class="form-control"/>
                       <small class="form-text text-muted">{{ help_voucher_max }}</small>
@@ -421,7 +421,7 @@
                 </div>
                 <div id="tab-legal" class="tab-pane">
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-cookie">{{ entry_cookie }}</label>
+                    <label for="input-cookie" class="col-sm-2 col-form-label">{{ entry_cookie }}</label>
                     <div class="col-sm-10">
                       <select name="config_cookie_id" id="input-cookie" class="form-control">
                         <option value="0">{{ text_none }}</option>
@@ -437,7 +437,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-gdpr">{{ entry_gdpr }}</label>
+                    <label for="input-gdpr" class="col-sm-2 col-form-label">{{ entry_gdpr }}</label>
                     <div class="col-sm-10">
                       <select name="config_gdpr_id" id="input-gdpr" class="form-control">
                         <option value="0">{{ text_none }}</option>
@@ -453,7 +453,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-gdpr-limit">{{ entry_gdpr_limit }}</label>
+                    <label for="input-gdpr-limit" class="col-sm-2 col-form-label">{{ entry_gdpr_limit }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="config_gdpr_limit" value="{{ config_gdpr_limit }}" placeholder="{{ entry_gdpr_limit }}" id="input-gdpr-limit" class="form-control"/>
                       <small class="form-text text-muted">{{ help_gdpr_limit }}</small>
@@ -476,7 +476,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-tax-default">{{ entry_tax_default }}</label>
+                    <label for="input-tax-default" class="col-sm-2 col-form-label">{{ entry_tax_default }}</label>
                     <div class="col-sm-10">
                       <select name="config_tax_default" id="input-tax-default" class="form-control">
                         <option value="">{{ text_none }}</option>
@@ -495,7 +495,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-tax-customer">{{ entry_tax_customer }}</label>
+                    <label for="input-tax-customer" class="col-sm-2 col-form-label">{{ entry_tax_customer }}</label>
                     <div class="col-sm-10">
                       <select name="config_tax_customer" id="input-tax-customer" class="form-control">
                         <option value="">{{ text_none }}</option>
@@ -560,7 +560,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
+                    <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
                     <div class="col-sm-10">
                       <select name="config_customer_group_id" id="input-customer-group" class="form-control">
                         {% for customer_group in customer_groups %}
@@ -609,7 +609,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-login-attempts">{{ entry_login_attempts }}</label>
+                    <label for="input-login-attempts" class="col-sm-2 col-form-label">{{ entry_login_attempts }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control"/>
                       <small class="form-text text-muted">{{ help_login_attempts }}</small>
@@ -618,7 +618,7 @@
                       {% endif %}</div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-account">{{ entry_account }}</label>
+                    <label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
                     <div class="col-sm-10">
                       <select name="config_account_id" id="input-account" class="form-control">
                         <option value="0">{{ text_none }}</option>
@@ -636,7 +636,7 @@
                 </div>
                 <div id="tab-checkout" class="tab-pane">
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-invoice-prefix">{{ entry_invoice_prefix }}</label>
+                    <label for="input-invoice-prefix" class="col-sm-2 col-form-label">{{ entry_invoice_prefix }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="config_invoice_prefix" value="{{ config_invoice_prefix }}" placeholder="{{ entry_invoice_prefix }}" id="input-invoice-prefix" class="form-control"/>
                       <small class="form-text text-muted">{{ help_invoice_prefix }}</small>
@@ -673,7 +673,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-checkout">{{ entry_checkout }}</label>
+                    <label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
                     <div class="col-sm-10">
                       <select name="config_checkout_id" id="input-checkout" class="form-control">
                         <option value="0">{{ text_none }}</option>
@@ -689,7 +689,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
+                    <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
                     <div class="col-sm-10">
                       <select name="config_order_status_id" id="input-order-status" class="form-control">
                         {% for order_status in order_statuses %}
@@ -704,7 +704,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-process-status">{{ entry_processing_status }}</label>
+                    <label for="input-process-status" class="col-sm-2 col-form-label">{{ entry_processing_status }}</label>
                     <div class="col-sm-10">
                       <div class="form-control" style="height: 150px; overflow: auto;">
                         {% for order_status in order_statuses %}
@@ -725,7 +725,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-complete-status">{{ entry_complete_status }}</label>
+                    <label for="input-complete-status" class="col-sm-2 col-form-label">{{ entry_complete_status }}</label>
                     <div class="col-sm-10">
                       <div class="form-control" style="height: 150px; overflow: auto;">
                         {% for order_status in order_statuses %}
@@ -746,7 +746,7 @@
                       {% endif %}</div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-fraud-status">{{ entry_fraud_status }}</label>
+                    <label for="input-fraud-status" class="col-sm-2 col-form-label">{{ entry_fraud_status }}</label>
                     <div class="col-sm-10">
                       <select name="config_fraud_status_id" id="input-fraud-status" class="form-control">
                         {% for order_status in order_statuses %}
@@ -761,7 +761,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-api">{{ entry_api }}</label>
+                    <label for="input-api" class="col-sm-2 col-form-label">{{ entry_api }}</label>
                     <div class="col-sm-10">
                       <select name="config_api_id" id="input-api" class="form-control">
                         <option value="0">{{ text_none }}</option>
@@ -828,7 +828,7 @@
                 <div id="tab-affiliate" class="tab-pane">
 
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-affiliate-group">{{ entry_affiliate_group }}</label>
+                    <label for="input-affiliate-group" class="col-sm-2 col-form-label">{{ entry_affiliate_group }}</label>
                     <div class="col-sm-10">
                       <select name="config_affiliate_group_id" id="input-affiliate-group" class="form-control">
                         {% for customer_group in customer_groups %}
@@ -872,14 +872,14 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-affiliate-commission">{{ entry_affiliate_commission }}</label>
+                    <label for="input-affiliate-commission" class="col-sm-2 col-form-label">{{ entry_affiliate_commission }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="config_affiliate_commission" value="{{ config_affiliate_commission }}" placeholder="{{ entry_affiliate_commission }}" id="input-affiliate-commission" class="form-control"/>
                       <small class="form-text text-muted">{{ help_affiliate_commission }}</small>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-affiliate">{{ entry_affiliate }}</label>
+                    <label for="input-affiliate" class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
                     <div class="col-sm-10">
                       <select name="config_affiliate_id" id="input-affiliate" class="form-control">
                         <option value="0">{{ text_none }}</option>
@@ -897,7 +897,7 @@
                 </div>
                 <div id="tab-return" class="tab-pane">
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-return">{{ entry_return }}</label>
+                    <label for="input-return" class="col-sm-2 col-form-label">{{ entry_return }}</label>
                     <div class="col-sm-10">
                       <select name="config_return_id" id="input-return" class="form-control">
                         <option value="0">{{ text_none }}</option>
@@ -913,7 +913,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-return-status">{{ entry_return_status }}</label>
+                    <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
                     <div class="col-sm-10">
                       <select name="config_return_status_id" id="input-return-status" class="form-control">
                         {% for return_status in return_statuses %}
@@ -930,7 +930,7 @@
                 </div>
                 <div id="tab-captcha" class="tab-pane">
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-captcha">{{ entry_captcha }}</label>
+                    <label for="input-captcha" class="col-sm-2 col-form-label">{{ entry_captcha }}</label>
                     <div class="col-sm-10">
                       <select name="config_captcha" id="input-captcha" class="form-control">
                         <option value="">{{ text_none }}</option>
@@ -968,7 +968,7 @@
             </div>
             <div id="tab-image" class="tab-pane">
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-logo">{{ entry_logo }}</label>
+                <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
                 <div class="col-sm-10">
                   <div class="card image">
                     <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
@@ -980,7 +980,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-icon">{{ entry_icon }}</label>
+                <label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
                 <div class="col-sm-10">
                   <div class="card image">
                     <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
@@ -997,7 +997,7 @@
               <fieldset>
                 <legend>{{ text_general }}</legend>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-engine">{{ entry_mail_engine }}</label>
+                  <label for="input-mail-engine" class="col-sm-2 col-form-label">{{ entry_mail_engine }}</label>
                   <div class="col-sm-10">
                     <select name="config_mail_engine" id="input-mail-engine" class="form-control">
                       {% if config_mail_engine == 'mail' %}
@@ -1015,40 +1015,40 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-parameter">{{ entry_mail_parameter }}</label>
+                  <label for="input-mail-parameter" class="col-sm-2 col-form-label">{{ entry_mail_parameter }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_mail_parameter" value="{{ config_mail_parameter }}" placeholder="{{ entry_mail_parameter }}" id="input-mail-parameter" class="form-control"/>
                     <small class="form-text text-muted">{{ help_mail_parameter }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-smtp-hostname">{{ entry_mail_smtp_hostname }}</label>
+                  <label for="input-mail-smtp-hostname" class="col-sm-2 col-form-label">{{ entry_mail_smtp_hostname }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_mail_smtp_hostname" value="{{ config_mail_smtp_hostname }}" placeholder="{{ entry_mail_smtp_hostname }}" id="input-mail-smtp-hostname" class="form-control"/>
                     <small class="form-text text-muted">{{ help_mail_smtp_hostname }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-smtp-username">{{ entry_mail_smtp_username }}</label>
+                  <label for="input-mail-smtp-username" class="col-sm-2 col-form-label">{{ entry_mail_smtp_username }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_mail_smtp_username" value="{{ config_mail_smtp_username }}" placeholder="{{ entry_mail_smtp_username }}" id="input-mail-smtp-username" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-smtp-password">{{ entry_mail_smtp_password }}</label>
+                  <label for="input-mail-smtp-password" class="col-sm-2 col-form-label">{{ entry_mail_smtp_password }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_mail_smtp_password" value="{{ config_mail_smtp_password }}" placeholder="{{ entry_mail_smtp_password }}" id="input-mail-smtp-password" class="form-control"/>
                     <small class="form-text text-muted">{{ help_mail_smtp_password }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-smtp-port">{{ entry_mail_smtp_port }}</label>
+                  <label for="input-mail-smtp-port" class="col-sm-2 col-form-label">{{ entry_mail_smtp_port }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_mail_smtp_port" value="{{ config_mail_smtp_port }}" placeholder="{{ entry_mail_smtp_port }}" id="input-mail-smtp-port" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-smtp-timeout">{{ entry_mail_smtp_timeout }}</label>
+                  <label for="input-mail-smtp-timeout" class="col-sm-2 col-form-label">{{ entry_mail_smtp_timeout }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_mail_smtp_timeout" value="{{ config_mail_smtp_timeout }}" placeholder="{{ entry_mail_smtp_timeout }}" id="input-mail-smtp-timeout" class="form-control"/>
                   </div>
@@ -1076,7 +1076,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-mail-alert-email">{{ entry_mail_alert_email }}</label>
+                  <label for="input-mail-alert-email" class="col-sm-2 col-form-label">{{ entry_mail_alert_email }}</label>
                   <div class="col-sm-10">
                     <textarea name="config_mail_alert_email" rows="5" placeholder="{{ entry_mail_alert_email }}" id="input-alert-email" class="form-control">{{ config_mail_alert_email }}</textarea>
                     <small class="form-text text-muted">{{ help_mail_alert_email }}</small>
@@ -1118,14 +1118,14 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-robots">{{ entry_robots }}</label>
+                  <label for="input-robots" class="col-sm-2 col-form-label">{{ entry_robots }}</label>
                   <div class="col-sm-10">
                     <textarea name="config_robots" rows="5" placeholder="{{ entry_robots }}" id="input-robots" class="form-control">{{ config_robots }}</textarea>
                     <small class="form-text text-muted">{{ help_robots }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-compression">{{ entry_compression }}</label>
+                  <label for="input-compression" class="col-sm-2 col-form-label">{{ entry_compression }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_compression" value="{{ config_compression }}" placeholder="{{ entry_compression }}" id="input-compression" class="form-control"/>
                     <small class="form-text text-muted">{{ help_compression }}</small>
@@ -1165,7 +1165,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-encryption">{{ entry_encryption }}</label>
+                  <label for="input-encryption" class="col-sm-2 col-form-label">{{ entry_encryption }}</label>
                   <div class="col-sm-10">
                     <textarea name="config_encryption" rows="5" placeholder="{{ entry_encryption }}" id="input-encryption" class="form-control">{{ config_encryption }}</textarea>
                     <small class="form-text text-muted">{{ help_encryption }}</small>
@@ -1177,14 +1177,14 @@
               <fieldset>
                 <legend>{{ text_upload }}</legend>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-file-max-size">{{ entry_file_max_size }}</label>
+                  <label for="input-file-max-size" class="col-sm-2 col-form-label">{{ entry_file_max_size }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_file_max_size" value="{{ config_file_max_size }}" placeholder="{{ entry_file_max_size }}" id="input-file-max-size" class="form-control"/>
                     <small class="form-text text-muted">{{ help_file_max_size }}</small>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-file-ext-allowed">{{ entry_file_ext_allowed }}</label>
+                  <label for="input-file-ext-allowed" class="col-sm-2 col-form-label">{{ entry_file_ext_allowed }}</label>
                   <div class="col-sm-10">
                     <textarea name="config_file_ext_allowed" rows="5" placeholder="{{ entry_file_ext_allowed }}" id="input-file-ext-allowed" class="form-control">{{ config_file_ext_allowed }}</textarea>
                     <small class="form-text text-muted">{{ help_file_ext_allowed }}</small>
@@ -1194,7 +1194,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-file-mime-allowed">{{ entry_file_mime_allowed }}</label>
+                  <label for="input-file-mime-allowed" class="col-sm-2 col-form-label">{{ entry_file_mime_allowed }}</label>
                   <div class="col-sm-10">
                     <textarea name="config_file_mime_allowed" rows="5" placeholder="{{ entry_file_mime_allowed }}" id="input-file-mime-allowed" class="form-control">{{ config_file_mime_allowed }}</textarea>
                     <small class="form-text text-muted">{{ help_file_mime_allowed }}</small>
@@ -1235,7 +1235,7 @@
                   </div>
                 </div>
                 <div class="form-group row required">
-                  <label class="col-sm-2 col-form-label" for="input-error-filename">{{ entry_error_filename }}</label>
+                  <label for="input-error-filename" class="col-sm-2 col-form-label">{{ entry_error_filename }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control"/>
                     {% if error_log %}

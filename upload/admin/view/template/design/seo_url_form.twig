@@ -23,7 +23,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-seo-url">
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-query">{{ entry_query }}</label>
+            <label for="input-query" class="col-sm-2 col-form-label">{{ entry_query }}</label>
             <div class="col-sm-10">
               <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
               <small class="form-text text-muted">{{ help_query }}</small>
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-keyword">{{ entry_keyword }}</label>
+            <label for="input-keyword" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
             <div class="col-sm-10">
               <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
               <small class="form-text text-muted">{{ help_keyword }}</small>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-push">{{ entry_push }}</label>
+            <label for="input-push" class="col-sm-2 col-form-label">{{ entry_push }}</label>
             <div class="col-sm-10">
               <input type="text" name="push" value="{{ push }}" placeholder="{{ entry_push }}" id="input-push" class="form-control"/>
               <small class="form-text text-muted">{{ help_push }}</small>
@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
+            <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 {% for store in stores %}
@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
+            <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
             <div class="col-sm-10">
               <select name="language_id" id="input-language" class="form-control">
                 {% for language in languages %}

@@ -32,7 +32,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+                <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
                   {% if error_name %}
@@ -40,7 +40,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-code">{{ entry_code }}</label>
+                <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
                   <small class="form-text text-muted">{{ help_code }}</small>
@@ -49,7 +49,7 @@
                   {% endif %}</div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
+                <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
                 <div class="col-sm-10">
                   <select name="type" id="input-type" class="form-control">
                     {% if type == 'P' %}
@@ -67,13 +67,13 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-discount">{{ entry_discount }}</label>
+                <label for="input-discount" class="col-sm-2 col-form-label">{{ entry_discount }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="discount" value="{{ discount }}" placeholder="{{ entry_discount }}" id="input-discount" class="form-control"/>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-total">{{ entry_total }}</label>
+                <label for="input-total" class="col-sm-2 col-form-label">{{ entry_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_total }}</small>
@@ -109,7 +109,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
+                <label for="input-product" class="col-sm-2 col-form-label">{{ entry_product }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
                   <div id="coupon-product" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
@@ -121,7 +121,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-category">{{ entry_category }}</label>
+                <label for="input-category" class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
                   <div id="coupon-category" class="form-control" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
@@ -133,8 +133,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-date-start">{{ entry_date_start }}</label>
-                <div class="col-sm-3">
+                <label for="input-date-start" class="col-sm-2 col-form-label">{{ entry_date_start }}</label>
+                <div class="col-sm-10 col-md-4">
                   <div class="input-group date">
                     <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
                     <div class="input-group-append">
@@ -144,8 +144,8 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-date-end">{{ entry_date_end }}</label>
-                <div class="col-sm-3">
+                <label for="input-date-end" class="col-sm-2 col-form-label">{{ entry_date_end }}</label>
+                <div class="col-sm-10 col-md-4">
                   <div class="input-group date">
                     <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
                     <div class="input-group-append">
@@ -155,21 +155,21 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-uses-total">{{ entry_uses_total }}</label>
+                <label for="input-uses-total" class="col-sm-2 col-form-label">{{ entry_uses_total }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
                   <small class="form-text text-muted">{{ help_uses_total }}</small>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-uses-customer">{{ entry_uses_customer }}</label>
+                <label for="input-uses-customer" class="col-sm-2 col-form-label">{{ entry_uses_customer }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
                   <small class="form-text text-muted">{{ help_uses_customer }}</small>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <select name="status" id="input-status" class="form-control">
                     {% if status %}

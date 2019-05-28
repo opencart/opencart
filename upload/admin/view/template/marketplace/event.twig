@@ -101,7 +101,7 @@ $('#form-event').on('click', '.btn-success', function() {
 			if (json['success']) {
 				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_disable }}"  class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -132,7 +132,7 @@ $('#form-event').on('click', '.btn-danger', function() {
 			if (json['success']) {
 				$('.alert-info').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}"  class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -153,10 +153,10 @@ $('#form-event').on('click', '.btn-info', function() {
 	html += '      </div>';
 	html += '      <div class="modal-body">';
 	html += '        <div class="form-group">';
-	html += '          <label class="col-form-label" for="input-trigger">{{ text_trigger }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-trigger') + '</textarea>';
+	html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-trigger') + '</textarea>';
 	html += '        </div>';
 	html += '        <div class="form-group">';
-	html += '          <label class="col-form-label" for="input-trigger">{{ text_action }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-action') + '</textarea>';
+	html += '          <label for="input-trigger" class="col-form-label">{{ text_action }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-action') + '</textarea>';
 	html += '        </div>';
 	html += '      </div>';
 	html += '    </div>';

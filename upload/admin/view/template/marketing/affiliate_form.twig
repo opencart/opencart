@@ -36,7 +36,7 @@
               <fieldset>
                 <legend>{{ text_affiliate }}</legend>
                 <div class="form-group row required">
-                  <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
+                  <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
                     {% if not customer_id %}
                       <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
@@ -47,19 +47,19 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-company">{{ entry_company }}</label>
+                  <label for="input-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-website">{{ entry_website }}</label>
+                  <label for="input-website" class="col-sm-2 col-form-label">{{ entry_website }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="website" value="{{ website }}" placeholder="{{ entry_website }}" id="input-website" class="form-control"/>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-tracking">{{ entry_tracking }}</label>
+                  <label for="input-tracking" class="col-sm-2 col-form-label">{{ entry_tracking }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
                     <small class="form-text text-muted">{{ help_tracking }}</small>
@@ -69,7 +69,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-commission">{{ entry_commission }}</label>
+                  <label for="input-commission" class="col-sm-2 col-form-label">{{ entry_commission }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="commission" value="{{ commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control"/>
                     <small class="form-text text-muted">{{ help_commission }}</small>
@@ -79,7 +79,7 @@
                   {% if custom_field.location == 'affiliate' %}
                     {% if custom_field.type == 'select' %}
                       <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
-                        <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                             <option value="">{{ text_select }}</option>
@@ -141,7 +141,7 @@
                     {% endif %}
                     {% if custom_field.type == 'text' %}
                       <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
-                        <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
                           {% if error_custom_field[custom_field.custom_field_id] %}
@@ -151,7 +151,7 @@
                     {% endif %}
                     {% if custom_field.type == 'textarea' %}
                       <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
-                        <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                           {% if error_custom_field[custom_field.custom_field_id] %}
@@ -173,7 +173,7 @@
                     {% endif %}
                     {% if custom_field.type == 'date' %}
                       <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
-                        <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group date">
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -189,7 +189,7 @@
                     {% endif %}
                     {% if custom_field.type == 'time' %}
                       <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
-                        <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group time">
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -205,7 +205,7 @@
                     {% endif %}
                     {% if custom_field.type == 'datetime' %}
                       <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
-                        <label class="col-sm-2 col-form-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group datetime">
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -225,7 +225,7 @@
               <fieldset>
                 <legend>{{ text_payment }}</legend>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-tax">{{ entry_tax }}</label>
+                  <label for="input-tax" class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="tax" value="{{ tax }}" placeholder="{{ entry_tax }}" id="input-tax" class="form-control"/>
                   </div>
@@ -253,7 +253,7 @@
                 </div>
                 <div id="payment-cheque" class="payment">
                   <div class="form-group row required">
-                    <label class="col-sm-2 col-form-label" for="input-cheque">{{ entry_cheque }}</label>
+                    <label for="input-cheque" class="col-sm-2 col-form-label">{{ entry_cheque }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control"/>
                       {% if error_cheque %}
@@ -263,7 +263,7 @@
                 </div>
                 <div id="payment-paypal" class="payment">
                   <div class="form-group row required">
-                    <label class="col-sm-2 col-form-label" for="input-paypal">{{ entry_paypal }}</label>
+                    <label for="input-paypal" class="col-sm-2 col-form-label">{{ entry_paypal }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control"/>
                       {% if error_paypal %}
@@ -273,25 +273,25 @@
                 </div>
                 <div id="payment-bank" class="payment">
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-bank-name">{{ entry_bank_name }}</label>
+                    <label for="input-bank-name" class="col-sm-2 col-form-label">{{ entry_bank_name }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="bank_name" value="{{ bank_name }}" placeholder="{{ entry_bank_name }}" id="input-bank-name" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-bank-branch-number">{{ entry_bank_branch_number }}</label>
+                    <label for="input-bank-branch-number" class="col-sm-2 col-form-label">{{ entry_bank_branch_number }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="bank_branch_number" value="{{ bank_branch_number }}" placeholder="{{ entry_bank_branch_number }}" id="input-bank-branch-number" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-bank-swift-code">{{ entry_bank_swift_code }}</label>
+                    <label for="input-bank-swift-code" class="col-sm-2 col-form-label">{{ entry_bank_swift_code }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="bank_swift_code" value="{{ bank_swift_code }}" placeholder="{{ entry_bank_swift_code }}" id="input-bank-swift-code" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group row required">
-                    <label class="col-sm-2 col-form-label" for="input-bank-account-name">{{ entry_bank_account_name }}</label>
+                    <label for="input-bank-account-name" class="col-sm-2 col-form-label">{{ entry_bank_account_name }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control"/>
                       {% if error_bank_account_name %}
@@ -299,7 +299,7 @@
                       {% endif %}</div>
                   </div>
                   <div class="form-group row required">
-                    <label class="col-sm-2 col-form-label" for="input-bank-account-number">{{ entry_bank_account_number }}</label>
+                    <label for="input-bank-account-number" class="col-sm-2 col-form-label">{{ entry_bank_account_number }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control"/>
                       {% if error_bank_account_number %}
@@ -311,7 +311,7 @@
               <fieldset>
                 <legend>{{ text_other }}</legend>
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                  <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <select name="status" id="input-status" class="form-control">
                       {% if status %}
@@ -336,7 +336,7 @@
                 <fieldset>
                   <legend>{{ text_history_add }}</legend>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
+                    <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                     <div class="col-sm-10">
                       <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
                     </div>
@@ -355,13 +355,13 @@
                 <fieldset>
                   <legend>{{ text_transaction_add }}</legend>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-description">{{ entry_description }}</label>
+                    <label for="input-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-description" class="form-control"/>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="input-amount">{{ entry_amount }}</label>
+                    <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                     </div>

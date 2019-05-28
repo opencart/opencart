@@ -56,7 +56,7 @@
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                  {% if override.product_description[language_id].name %}
+                                  {% if override.product_description[language.language_id].name %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name{{ language.language_id }}" class="custom-control-input"/>
@@ -81,7 +81,7 @@
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                  {% if override.product_description[language_id].description %}
+                                  {% if override.product_description[language.language_id].description %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][description]" value="1" id="input-variant-description{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][description]" value="1" id="input-variant-description{{ language.language_id }}" class="custom-control-input"/>
@@ -103,7 +103,7 @@
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                  {% if override.product_description[language_id].meta_title %}
+                                  {% if override.product_description[language.language_id].meta_title %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title{{ language.language_id }}" class="custom-control-input"/>
@@ -127,7 +127,7 @@
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                  {% if override.product_description[language_id].meta_description %}
+                                  {% if override.product_description[language.language_id].meta_description %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_description]" value="1" id="input-variant-meta-description{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_description]" value="1" id="input-variant-meta-description{{ language.language_id }}" class="custom-control-input"/>
@@ -149,7 +149,7 @@
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                  {% if override.product_description[language_id].meta_keyword %}
+                                  {% if override.product_description[language.language_id].meta_keyword %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_keyword]" value="1" id="input-variant-meta-keyword{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_keyword]" value="1" id="input-variant-meta-keyword{{ language.language_id }}" class="custom-control-input"/>
@@ -171,7 +171,7 @@
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                  {% if override.product_description[language_id].tag %}
+                                  {% if override.product_description[language.language_id].tag %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][tag]" value="1" id="input-variant-tag{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][tag]" value="1" id="input-variant-tag{{ language.language_id }}" class="custom-control-input"/>
@@ -971,7 +971,18 @@
                     <tr>
                       <td class="text-left">{{ entry_attribute }}</td>
                       <td class="text-left">{{ entry_text }}</td>
-                      <td></td>
+                      <td class="text-right">
+                        {% if master_id %}
+                          <div class="custom-control custom-switch">
+                            {% if override.product_attribute %}
+                              <input type="checkbox" name="override[product_attribute]" value="1" id="input-variant-attribute" class="custom-control-input" checked/>
+                            {% else %}
+                              <input type="checkbox" name="override[product_attribute]" value="1" id="input-variant-attribute" class="custom-control-input"/>
+                            {% endif %}
+                            <label for="input-variant-attribute" class="custom-control-label"></label>
+                          </div>
+                        {% endif %}
+                      </td>
                     </tr>
                   </thead>
                   <tbody>
@@ -988,21 +999,7 @@
                               <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
                             </div>
                           {% endfor %}</td>
-                        <td class="text-right">
-
-
-                          {% if not master_id %}
-                            <button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                          {% else %}
-                            <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-eye"></i></button>
-
-                            <div class="custom-control custom-switch">
-                              <input type="checkbox" name="override[]" value="" id="input-variant-attribute" class="custom-control-input"/> <label for="input-variant-attribute" class="custom-control-label"></label>
-                            </div>
-                          {% endif %}
-
-
-                        </td>
+                        <td class="text-right"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set attribute_row = attribute_row + 1 %}
                     {% endfor %}
@@ -1464,7 +1461,18 @@
                     <tr>
                       <td class="text-left">{{ entry_recurring }}</td>
                       <td class="text-left">{{ entry_customer_group }}</td>
-                      <td class="text-left"></td>
+                      <td class="text-right">
+                        {% if master_id %}
+                          <div class="custom-control custom-switch">
+                            {% if override.product_recurring %}
+                              <input type="checkbox" name="override[product_recurring]" value="1" id="input-variant-recurring" class="custom-control-input" checked/>
+                            {% else %}
+                              <input type="checkbox" name="override[product_recurring]" value="1" id="input-variant-recurring" class="custom-control-input"/>
+                            {% endif %}
+                            <label for="input-variant-recurring" class="custom-control-label"></label>
+                          </div>
+                        {% endif %}
+                      </td>
                     </tr>
                   </thead>
                   <tbody>
@@ -1489,13 +1497,7 @@
                               {% endif %}
                             {% endfor %}
                           </select></td>
-                        <td class="text-right">{% if not master_id %}
-                            <button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                          {% else %}
-                            <div class="custom-control custom-switch">
-                              <input type="checkbox" name="" value="" for="input-variant-recurring{{ recurring_row }}" class="custom-control-input" id="input-variant-recurring{{ recurring_row }}"><label class="custom-control-label"></label>
-                            </div>
-                          {% endif %}</td>
+                        <td class="text-right"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set recurring_row = recurring_row + 1 %}
                     {% endfor %}
@@ -1520,7 +1522,16 @@
                       <td class="text-right">{{ entry_price }}</td>
                       <td class="text-left">{{ entry_date_start }}</td>
                       <td class="text-left">{{ entry_date_end }}</td>
-                      <td></td>
+                      <td class="text-right">{% if master_id %}
+                          <div class="custom-control custom-switch">
+                            {% if override.product_discount %}
+                              <input type="checkbox" name="override[product_discount]" value="1" id="input-variant-discount" class="custom-control-input" checked/>
+                            {% else %}
+                              <input type="checkbox" name="override[product_discount]" value="1" id="input-variant-discount" class="custom-control-input"/>
+                            {% endif %}
+                            <label for="input-variant-discount" class="custom-control-label"></label>
+                          </div>
+                        {% endif %}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -1579,7 +1590,16 @@
                       <td class="text-right">{{ entry_price }}</td>
                       <td class="text-left">{{ entry_date_start }}</td>
                       <td class="text-left">{{ entry_date_end }}</td>
-                      <td></td>
+                      <td class="text-right">{% if master_id %}
+                          <div class="custom-control custom-switch">
+                            {% if override.product_special %}
+                              <input type="checkbox" name="override[product_special]" value="1" id="input-variant-special" class="custom-control-input" checked/>
+                            {% else %}
+                              <input type="checkbox" name="override[product_special]" value="1" id="input-variant-special" class="custom-control-input"/>
+                            {% endif %}
+                            <label for="input-variant-special" class="custom-control-label"></label>
+                          </div>
+                        {% endif %}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -1613,13 +1633,7 @@
                             </div>
                           </div>
                         </td>
-                        <td class="text-right">
-
-
-                          <button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-
-
-                        </td>
+                        <td class="text-right"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
                       {% set special_row = special_row + 1 %}
                     {% endfor %}
@@ -1849,20 +1863,21 @@
               </div>
             </div>
           </div>
-          <div id="product-variant" class="hide"></div>
         </form>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[data-toggle=\'switch\']').on('change', function(e) {
+$('.custom-switch input').on('change', function(e) {
 	e.preventDefault();
 
-	$($(this).attr('data-target')).prop('readonly', !$(this).prop('checked'));
+	console.log(this);
+
+	$($(this).attr('name')).prop('disabled', !$(this).prop('checked'));
 });
 
-$('input[data-toggle=\'switch\']').trigger('change');
+$('.custom-switch input').trigger('change');
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 

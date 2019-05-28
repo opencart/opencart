@@ -4106,6 +4106,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'override',
+				'type' => 'text',
+				'not_null' => true
+			),
+			array(
 				'name' => 'quantity',
 				'type' => 'int(4)',
 				'not_null' => true,

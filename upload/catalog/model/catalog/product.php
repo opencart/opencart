@@ -26,6 +26,7 @@ class ModelCatalogProduct extends Model {
 				'mpn'              => $query->row['mpn'],
 				'location'         => $query->row['location'],
 				'variant'          => (array)json_decode($query->row['variant'], true),
+				'override'         => (array)json_decode($query->row['override'], true),
 				'quantity'         => $query->row['quantity'],
 				'stock_status'     => $query->row['stock_status'],
 				'image'            => $query->row['image'],

@@ -320,7 +320,7 @@ class ControllerProductProduct extends Controller {
 			$product_options = $this->model_catalog_product->getProductOptions($product_id);
 
 			foreach ($product_options as $option) {
-				if ((int)$this->request->get['product_id'] && !isset($product_info['variant'][$option['product_option_id']])) {
+				if ((int)$this->request->get['product_id'] && !isset($product_info['override']['option'][$option['product_option_id']])) {
 					$product_option_value_data = array();
 
 					foreach ($option['product_option_value'] as $option_value) {

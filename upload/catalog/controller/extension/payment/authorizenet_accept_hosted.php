@@ -122,8 +122,9 @@ class ControllerExtensionPaymentAuthorizeNetAcceptHosted extends Controller {
 		} elseif (!$response_raw) {
 			$this->log->write('AUTHORIZE.NET ACCEPT HOSTED CURL ERROR: No response');
 		} else {
-			if (substr($response_raw, 0, 3) === "\xef\xbb\xbf")
+			if (substr($response_raw, 0, 3) === "\xef\xbb\xbf") {
 				$response_raw = substr($response_raw, 3); //result of RFC-violating inclusion of BOM by authorize.net; remove if they fix their bug
+			}
 
 			$response = json_decode($response_raw);
 			if ($response === null) $data['error'] = $this->language->get('error_no_form');
@@ -133,8 +134,9 @@ class ControllerExtensionPaymentAuthorizeNetAcceptHosted extends Controller {
 					$this->log->write('Authorize.net accept hosted returned error while getting payment form: ' .
 						$response->messages->resultCode . ': ' . $response->messages->message[0]->code . ' ' . $response->messages->message[0]->text);
 				}
-				else
+				else {
 					$data['token'] = $response->token;
+				}
 			}
 		}
 		$data['token_responder'] = 'https://accept.authorize.net/payment/payment';
@@ -212,8 +214,9 @@ class ControllerExtensionPaymentAuthorizeNetAcceptHosted extends Controller {
 			$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
 			return;
 		} else {
-			if (substr($tx_resp_raw, 0, 3) === "\xef\xbb\xbf")
+			if (substr($tx_resp_raw, 0, 3) === "\xef\xbb\xbf") {
 				$tx_resp_raw = substr($tx_resp_raw, 3); //result of RFC-violating inclusion of BOM by authorize.net; remove if they fix their bug
+			}
 
 			$tx_resp = json_decode($tx_resp_raw);
 			if ($tx_resp === null || !property_exists($tx_resp, 'transaction') || $tx_resp->transaction === null) {
@@ -238,8 +241,8 @@ class ControllerExtensionPaymentAuthorizeNetAcceptHosted extends Controller {
 			if (property_exists($txn, 'cardCodeResponse')) $message .= 'CVV Response Code: ' . $txn->cardCodeResponse . "\n";
 			if (property_exists($txn, 'CAVVResponse')) $message .= 'CAVV Response Code: ' . $txn->CAVVResponse . "\n";
 			if (property_exists($txn->payment, 'creditCard')) {
-				$message .= 'Masked Account Number: ' . $txn->payment->creditCard->cardNumber . "\n";
-				$message .= 'Account Type: ' . $txn->payment->creditCard->cardType;
+				$message .= 'Masked Card Number: ' . $txn->payment->creditCard->cardNumber . "\n";
+				$message .= 'Card Account Type: ' . $txn->payment->creditCard->cardType;
 			}
 			if (property_exists($txn->payment, 'bankAccount')) {
 				$message .= 'Masked Routing Number: ' . $txn->payment->bankAccount->routingNumber . "\n";

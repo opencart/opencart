@@ -1,0 +1,86 @@
+{% if error %}
+<div class="alert alert-danger" id="error-modal">{{ error }}</div>
+{% else %}
+<div class="alert alert-danger d-none" id="error-modal"></div>
+<div id="iframe_holder" class="center-block" style="width:90%;max-width: 1000px">
+	<iframe id="add_payment" class="embed-responsive-item panel" name="add_payment" width="100%" frameborder="0" scrolling="no">
+	</iframe>
+</div>
+<form id="send_token" action="{{ token_responder }}" method="post" target="add_payment">
+	<input type="hidden" name="token" value="{{ token }}" />
+</form>
+<form id="finalize" action="index.php?route=extension/payment/authorizenet_accept_hosted/complete" method="post">
+	<input type="hidden" name="resp" id="finalize-resp" />
+</form>
+{% endif %}
+
+<script type="text/javascript"><!--
+function handleError(err) {
+	var errbox = document.getElementById("error-modal");
+	errbox.innerText = err;
+	errbox.classList.remove("d-none");
+}
+
+function validResp(r) {
+	return (r.hasOwnProperty("responseCode") &&
+		r.hasOwnProperty("transId"))
+}
+
+function anResize(params) {
+	var w = parseInt(params.width);
+	var h = parseInt(params.height);
+	var ifrm = document.getElementById("add_payment");
+	ifrm.style.width = w.toString() + "px";
+	ifrm.style.height = h.toString() + "px";
+}
+
+function anRespond(params) {
+	var successCodes = ["1", "4"];
+	var ifrm = document.getElementById("add_payment");
+	ifrm.style.display = "none";
+	var resp = JSON.parse(params.response);
+	if (!validResp(resp)) {
+		handleError("Invalid response");
+		return;
+	}
+	if (!(successCodes.includes(resp.responseCode))) {
+		handleError("Transaction declined");
+		return;
+	}
+	document.getElementById("finalize-resp").value = JSON.stringify(resp);
+	document.getElementById("finalize").submit();
+}
+
+function parseQueryString(str) {
+	var vars = [];
+	var arr = str.split('&');
+	var pair;
+	for (var i = 0; i < arr.length; i++) {
+		pair = arr[i].split('=');
+		vars.push(pair[0]);
+		vars[pair[0]] = unescape(pair[1]);
+	}
+	return vars;
+}
+
+document.getElementById("send_token").submit();
+
+if (!window.AuthorizeNetIFrame) window.AuthorizeNetIFrame = {};
+
+AuthorizeNetIFrame.onReceiveCommunication = function (querystr) {
+	var params = parseQueryString(querystr);
+	switch (params.action) {
+		case "successfulSave":
+			break;
+		case "cancel":
+			window.location.href = "/";
+			break;
+		case "resizeWindow":
+			anResize(params);
+			break;
+		case "transactResponse":
+			anRespond(params);
+			break;
+	}
+};
+--></script>

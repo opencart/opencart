@@ -23,7 +23,7 @@
               <label for="input-ip" class="col-form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" id="input-ip" placeholder="{{ entry_ip }}" i class="form-control"/>
             </div>
             <div class="form-group">
-              <label for="input-customer" class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+              <label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
             </div>
             <div class="form-group text-right">
               <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
@@ -48,16 +48,13 @@
                   </tr>
                 </thead>
                 <tbody>
-
                   {% if customers %}
                     {% for customer in customers %}
                       <tr>
                         <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
                         <td class="text-left">{{ customer.customer }}</td>
-                        <td class="text-left"><a href="{{ customer.url }}" target="_blank" rel="noreferrer">{{ customer.url|split('', 30)|join('<br/>
-                    ') }}</a></td>
-                        <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>
-                    ') }}</a>{% endif %}</td>
+                        <td class="text-left"><a href="{{ customer.url }}" target="_blank" rel="noreferrer">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
+                        <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>{% endif %}</td>
                         <td class="text-left">{{ customer.date_added }}</td>
                         <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}
                             <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>

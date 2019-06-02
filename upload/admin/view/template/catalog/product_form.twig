@@ -791,7 +791,7 @@
             </div>
             <div id="tab-links" class="tab-pane">
               <div class="form-group row">
-                <label for="input-manufacturer" class="col-sm-2 col-form-label">{{ entry_manufacturer }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_manufacturer }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control"/> <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}"/>
@@ -814,7 +814,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="input-category" class="col-sm-2 col-form-label">{{ entry_category }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
                   <div class="input-group">
@@ -847,7 +847,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="input-filter" class="col-sm-2 col-form-label">{{ entry_filter }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
                   <div class="input-group">
@@ -914,7 +914,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="input-download" class="col-sm-2 col-form-label">{{ entry_download }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_download }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" class="form-control"/>
                   <div class="input-group">
@@ -947,7 +947,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="input-related" class="col-sm-2 col-form-label">{{ entry_related }}</label>
+                <label class="col-sm-2 col-form-label">{{ entry_related }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" class="form-control"/>
                   <div class="input-group">
@@ -1985,7 +1985,7 @@ $('input[name=\'category\']').autocomplete({
 
 		$('#product-category' + item['value']).remove();
 
-		html  = '<tr id="#product-category' + item['value'] + '">';
+		html = '<tr id="product-category' + item['value'] + '">';
 		html += '  <td>' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '"/></td>';
 		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
 		html += '</tr>';
@@ -2053,7 +2053,7 @@ $('input[name=\'download\']').autocomplete({
 
 		$('#product-download' + item['value']).remove();
 
-		html  = '<tr id="product-download' + item['value'] + '">';
+		html = '<tr id="product-download' + item['value'] + '">';
 		html += '  <td>' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '"/></td>';
 		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
 		html += '</tr>';
@@ -2087,13 +2087,13 @@ $('input[name=\'related\']').autocomplete({
 
 		$('#product-related' + item['value']).remove();
 
-		html  = '<tr id="product-related' + item['value'] + '">';
+		html = '<tr id="product-related' + item['value'] + '">';
 		html += '  <td>' + item['label'] + '<input type="hidden" name="product_related[]" value="' + item['value'] + '"/></td>';
 		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
 		html += '</tr>';
 
 		$('#product-related').append(html);
-    }
+	}
 });
 
 $('#product-related').on('click', '.btn', function() {

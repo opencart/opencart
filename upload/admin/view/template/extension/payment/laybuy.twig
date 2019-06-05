@@ -455,7 +455,7 @@ $('input[name=\'category\']').autocomplete({
 
 		$('#laybuy-category' + item['value']).remove();
 
-		html = '<tr id="laybuy-category' + item['value'] + '">';
+		html  = '<tr id="laybuy-category' + item['value'] + '">';
 		html += '  <td>' + item['label'] + '<input type="hidden" name="payment_laybuy_category[]" value="' + item['value'] + '"/></td>';
 		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
 		html += '</tr>';
@@ -500,7 +500,7 @@ $('input[name=\'customer_group\']').autocomplete({
 	}
 });
 
-$('#laybuy-customer-group').on('click', '.fa-minus-circle', function() {
+$('#laybuy-customer-group').on('click', '.btn', function() {
 	$(this).parent().parent().remove();
 });
 //--></script>

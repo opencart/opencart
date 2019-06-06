@@ -59,7 +59,7 @@
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                  {% if override.product_description[language.language_id].description %}
+                                  {% if override.product_description[language.language_id].name %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name{{ language.language_id }}" data-toggle="switch" data-target="#input-name{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name{{ language.language_id }}" data-toggle="switch" data-target="#input-name{{ language.language_id }}" class="custom-control-input"/>
@@ -426,7 +426,12 @@
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <div class="custom-control custom-switch">
-                              <input type="checkbox" name="override[tax_class_id]" value="1" id="input-variant-tax-class" data-toggle="switch" data-target="#input-tax-class" class="custom-control-input" checked/><label for="input-variant-tax-class" class="custom-control-label"></label>
+                              {% if override.tax_class_id %}
+                                <input type="checkbox" name="override[tax_class_id]" value="1" id="input-variant-tax-class" data-toggle="switch" data-target="#input-tax-class" class="custom-control-input" checked/>
+                              {% else %}
+                                <input type="checkbox" name="override[tax_class_id]" value="1" id="input-variant-tax-class" data-toggle="switch" data-target="#input-tax-class" class="custom-control-input"/>
+                              {% endif %}
+                              <label for="input-variant-tax-class" class="custom-control-label"></label>
                             </div>
                           </div>
                         </div>
@@ -633,7 +638,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" readonly>
                   <label for="input-length-class" class="col-sm-2 col-form-label">{{ entry_length_class }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -1784,18 +1789,7 @@
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_store }}</td>
-                      <td class="text-left">{{ entry_keyword }}
-                        {% if master_id %}
-                          <div class="custom-control custom-switch float-right">
-                            {% if override.product_seo_url %}
-                              <input type="checkbox" name="override[product_seo_url]" value="1" id="input-variant-product-seo" data-toggle="switch" data-target="#product-seo" class="custom-control-input" checked/>
-                            {% else %}
-                              <input type="checkbox" name="override[product_seo_url]" value="1" id="input-variant-product-seo" data-toggle="switch" data-target="#product-seo" class="custom-control-input"/>
-                            {% endif %}
-                            <label for="input-variant-product-seo" class="custom-control-label"></label>
-                          </div>
-                        {% endif %}
-                      </td>
+                      <td class="text-left">{{ entry_keyword }}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -1867,34 +1861,89 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+CKEDITOR.on('instanceReady', function(ev) {
+	editor = ev.editor;
+
+	// Show this "on" button.
+	document.getElementById('readOnlyOn').style.display = '';
+
+	// Event fired when the readOnly property changes.
+	editor.on('readOnly', function() {
+		document.getElementById('readOnlyOn').style.display = this.readOnly ? 'none' : '';
+		document.getElementById('readOnlyOff').style.display = this.readOnly ? '' : 'none';
+	});
+});
+
+function toggleReadOnly(isReadOnly) {
+	// Change the read-only state of the editor.
+	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-setReadOnly
+	editor.setReadOnly(isReadOnly);
+}
+
+$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+
 $('.custom-control-input').on('change', function(e) {
 	e.preventDefault();
 
-	var element = $(this);
+	var element = this;
 
 	var target = $(this).attr('data-target');
 
 	$($(target).not('.custom-control-input')).each(function() {
-		if ($(this).is('input, textarea')) {
-			$(this).prop('disabled', !$(element).prop('checked'));
+		if ($(this).is('input[type=\'text\'], textarea')) {
+			$(this).prop('readonly', !$(element).prop('checked'));
+
+            if (!$(element).prop('checked')) {
+				$(this).val(this.defaultValue);
+			}
+		}
+
+		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\']')) {
+			$(this).on('change', function() {
+				return !$(element).prop('checked')
+			});
 		}
 
 		if ($(this).is('select')) {
-			$(this).prop('disabled', !$(element).prop('checked'));
+            if (!$(element).prop('checked')) {
+				$(this).attr('readonly', 'readonly');
+			} else {
+				$(this).removeAttr('readonly');
+            }
+
+			$(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
 		}
 
 		if ($(this).is('button')) {
 			$(this).prop('disabled', !$(element).prop('checked'));
 		}
+
+		/*
+        if ($(this).is('textarea[data-toggle=\'ckeditor\']')) {
+            $(this).prop('readonly', !$(element).prop('checked'));
+
+            toggleReadOnly(!$(element).prop('checked'));
+        }
+        */
 	});
 
 	$($(target).find('input, textarea, select, button').not('.custom-control-input')).each(function() {
-		if ($(this).is('input, textarea')) {
-			$(this).prop('disabled', !$(element).prop('checked'));
+		if ($(this).is('input[type=\'text\'], textarea')) {
+			$(this).prop('readonly', !$(element).prop('checked'));
+		}
+
+		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\']')) {
+			$(this).prop('readonly', !$(element).prop('checked'));
 		}
 
 		if ($(this).is('select')) {
-			$(this).prop('disabled', !$(element).prop('checked'));
+			if (!$(element).prop('checked')) {
+				$(this).attr('readonly', 'readonly');
+			} else {
+				$(this).removeAttr('readonly');
+			}
+
+			$(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
 		}
 
 		if ($(this).is('button')) {
@@ -1904,12 +1953,6 @@ $('.custom-control-input').on('change', function(e) {
 });
 
 $('.custom-control-input').trigger('change');
-
-{% if master_id %}
-
-{% endif %}
-
-$('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
 // Manufacturer
 $('input[name=\'manufacturer\']').autocomplete({

@@ -69,11 +69,6 @@ class ControllerCatalogProduct extends Controller {
 		print_r($this->getForm());
 	}
 
-	public function merge() {
-
-
-	}
-
 	public function edit() {
 		$this->load->language('catalog/product');
 
@@ -82,111 +77,172 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-
+			// We need to update variant products with the new mast product data now we have added the product variant feature.
 			$products = $this->model_catalog_product->getProducts(array('filter_master_id' => $this->request->get['product_id']));
 
 			foreach ($products as $product) {
 				$product_data = array();
 
-				$override = json_decode($product['override'], true);
+				foreach ($product as $key => $value) {
+					$product_data[$key] = $value;
+				}
+
+				$product_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product['product_id']);
+				$product_data['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
+				$product_data['product_description'] = $this->model_catalog_product->getProductDescriptions($product['product_id']);
+				$product_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product['product_id']);
+				$product_data['product_download'] = $this->model_catalog_product->getProductDownloads($product['product_id']);
+				$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($product['product_id']);
+				$product_data['product_image'] = $this->model_catalog_product->getProductImages($product['product_id']);
+				$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product['product_id']);
+				$product_data['product_option'] = $this->model_catalog_product->getProductOptions($product['product_id']);
+				$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
+				$product_data['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
+				$product_data['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
+				$product_data['product_special'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
+				$product_data['product_store'] = $this->model_catalog_product->getProductStores($product['product_id']);
+				$product_data['product_seo_url'] = $this->model_catalog_product->getProductSeoUrls($product['product_id']);
+
+				$override = (array)json_decode($product['override'], true);
+
+				$ignore = array(
+					'quantity',
+					'variant',
+					'override',
+					'product_seo_url'
+				);
 
 				foreach ($product as $key => $value) {
-					if (isset($this->request->post[$key]) && !in_array($key, $override)) {
+					if (isset($this->request->post[$key]) && !array_key_exists($key, $override) && !in_array($key, $ignore)) {
 						$product_data[$key] = $this->request->post[$key];
-					} else {
-						$product_data[$key] = $value;
 					}
 				}
 
 				// Description
-				 $this->model_catalog_product->getProductDescriptions($product['product_id']);
-
-				if (!in_array('product_description', $override)) {
-					$product_data['product_description'] = '';
-				} elseif (isset($this->request->post['product_description'])) {
-					$product_data['product_description'] = $this->request->post['product_description'];
-				} else {
-					$product_data['product_description'] = array();
+				if (!array_key_exists('product_description', $override)) {
+					if (isset($this->request->post['product_description'])) {
+						foreach ($this->request->post['product_description'] as $language_id => $product_description) {
+							foreach ($product_description as $key => $value) {
+								if (!isset($override['product_description'][$language_id][$key])) {
+									$product_data['product_description'][$language_id][$key] = $value;
+								}
+							}
+						}
+					}
 				}
 
 				// Category
-				if (!in_array('product_category', $override)) {
-					$product_data['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
-				} elseif (isset($this->request->post['product_category'])) {
-					$product_data['product_category'] = $this->request->post['product_category'];
-				} else {
-					$product_data['product_category'] = array();
+				if (!array_key_exists('product_category', $override)) {
+					if (isset($this->request->post['product_category'])) {
+						$product_data['product_category'] = $this->request->post['product_category'];
+					} else {
+						$product_data['product_category'] = array();
+					}
 				}
 
 				// Filter
-				if (!in_array('product_filter', $override)) {
-					$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($product['product_id']);
-				} elseif (isset($this->request->post['product_filter'])) {
-					$product_data['product_filter'] = $this->request->post['product_filter'];
-				} else {
-					$product_data['product_filter'] = array();
+				if (!array_key_exists('product_filter', $override)) {
+					if (isset($this->request->post['product_filter'])) {
+						$product_data['product_filter'] = $this->request->post['product_filter'];
+					} else {
+						$product_data['product_filter'] = array();
+					}
 				}
-
-				print_r($override);
 
 				// Stores
-				//$data['product_store'] = $this->model_catalog_product->getProductStores($product_id);
-
-				// Downloads
-				//$data['product_download'] = $this->model_catalog_product->getProductDownloads($product_id);
-
-				// Related
-				//$data['product_related'] = $this->model_catalog_product->getProductRelated($product_id);
-
-				// Attributes
-				//$data['product_attributes'] = $this->model_catalog_product->getProductAttributes($product['product_id']);
-
-				// Recurring
-				//$data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
-
-				// Discount
-				//$data['product_discounts'] = $this->model_catalog_product->getProductDiscounts($product['product_id']);
-
-				// Special
-				//$data['product_specials'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
-
-				// Images
-				if (isset($this->request->post['product_image'])) {
-					$product_images = $this->request->post['product_image'];
-				} elseif (!empty($product_info)) {
-					$product_images = $this->model_catalog_product->getProductImages($product['product_id']);
-				} else {
-					$product_images = array();
+				if (!array_key_exists('product_store', $override)) {
+					if (isset($this->request->post['product_store'])) {
+						$product_data['product_store'] = $this->request->post['product_store'];
+					} else {
+						$product_data['product_store'] = array();
+					}
 				}
 
-				$product_data['product_images'] = array();
+				// Downloads
+				if (!array_key_exists('product_download', $override)) {
+					if (isset($this->request->post['product_download'])) {
+						$product_data['product_download'] = $this->request->post['product_download'];
+					} else {
+						$product_data['product_download'] = array();
+					}
+				}
 
-				foreach ($product_images as $product_image) {
-					$product_data['product_images'][] = array(
-						'image'      => $product_image['image'],
-						'sort_order' => $product_image['sort_order']
-					);
+				// Related
+				if (!array_key_exists('product_related', $override)) {
+					if (isset($this->request->post['product_related'])) {
+						$product_data['product_related'] = $this->request->post['product_related'];
+					} else {
+						$product_data['product_related'] = array();
+					}
+				}
+
+				// Attributes
+				if (!array_key_exists('product_attribute', $override)) {
+					if (isset($this->request->post['product_attribute'])) {
+						$product_data['product_attribute'] = $this->request->post['product_attribute'];
+					} else {
+						$product_data['product_attribute'] = array();
+					}
+				}
+
+				// Recurring
+				if (!array_key_exists('product_recurring', $override)) {
+					if (isset($this->request->post['product_recurring'])) {
+						$product_data['product_recurring'] = $this->request->post['product_recurring'];
+					} else {
+						$product_data['product_recurring'] = array();
+					}
+				}
+
+				// Discount
+				if (!array_key_exists('product_discount', $override)) {
+					if (isset($this->request->post['product_discount'])) {
+						$product_data['product_discount'] = $this->request->post['product_discount'];
+					} else {
+						$product_data['product_discount'] = array();
+					}
+				}
+
+				// Special
+				if (!array_key_exists('product_special', $override)) {
+					if (isset($this->request->post['product_special'])) {
+						$product_data['product_special'] = $this->request->post['product_special'];
+					} else {
+						$product_data['product_special'] = array();
+					}
+				}
+
+				// Images
+				if (!array_key_exists('product_image', $override)) {
+					if (isset($this->request->post['product_image'])) {
+						$product_data['product_image'] = $this->request->post['product_image'];
+					} else {
+						$product_data['product_image'] = array();
+					}
 				}
 
 				// Reward
-				//$data['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
+				if (!array_key_exists('product_reward', $override)) {
+					if (isset($this->request->post['product_reward'])) {
+						$product_data['product_reward'] = $this->request->post['product_reward'];
+					} else {
+						$product_data['product_reward'] = array();
+					}
+				}
 
 				// Layout
-				//$data['product_layouts'] = $this->model_catalog_product->getProductLayout($product['product_id']);
+				if (!array_key_exists('product_layout', $override)) {
+					if (isset($this->request->post['product_layout'])) {
+						$product_data['product_layout'] = $this->request->post['product_layout'];
+					} else {
+						$product_data['product_layout'] = array();
+					}
+				}
 
-
-				//$this->model_catalog_product->editProduct($product['product_id'], $product_data);
+				$this->model_catalog_product->editProduct($product['product_id'], $product_data);
 			}
 
-			if ($this->request->get['master_id']) {
-
-
-
-				$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
-			} else {
-				$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
-
-			}
+			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

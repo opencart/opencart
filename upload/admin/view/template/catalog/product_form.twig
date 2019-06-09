@@ -1653,19 +1653,21 @@
                 <legend>{{ text_image }}</legend>
                 <div class="row">
                   <div class="col-sm-4 col-md-3 mb-3">
-                    <div class="card image">
-                      <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                    <div id="image" class="card image">
+                      <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/><input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                       <div class="card-body">
                         <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
                         <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                         {% if master_id %}
-                          <div class="custom-control custom-switch mt-3">
-                            {% if override.product_image %}
-                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-image" class="custom-control-input" checked/>
-                            {% else %}
-                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-image" class="custom-control-input"/>
-                            {% endif %}
-                            <label for="input-variant-image" class="custom-control-label"></label>
+                          <div class="mx-auto w-25">
+                            <div class="custom-control custom-switch">
+                              {% if override.product_image %}
+                                <input type="checkbox" name="override[product_image]" value="1" id="input-variant-image" data-toggle="switch" data-target="#image" class="custom-control-input" checked/>
+                              {% else %}
+                                <input type="checkbox" name="override[product_image]" value="1" id="input-variant-image" data-toggle="switch" data-target="#image" class="custom-control-input"/>
+                              {% endif %}
+                              <label for="input-variant-image" class="custom-control-label"></label>
+                            </div>
                           </div>
                         {% endif %}
                       </div>
@@ -1881,7 +1883,7 @@ function toggleReadOnly(isReadOnly) {
 }
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
-
+{% if master_id %}
 $('.custom-control-input').on('change', function(e) {
 	e.preventDefault();
 
@@ -1892,24 +1894,20 @@ $('.custom-control-input').on('change', function(e) {
 	$($(target).not('.custom-control-input')).each(function() {
 		if ($(this).is('input[type=\'text\'], textarea')) {
 			$(this).prop('readonly', !$(element).prop('checked'));
-
-            if (!$(element).prop('checked')) {
-				$(this).val(this.defaultValue);
-			}
 		}
 
 		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\']')) {
-			$(this).on('change', function() {
-				return !$(element).prop('checked')
+			$(this).on('click', function() {
+				return $(element).prop('checked');
 			});
 		}
 
 		if ($(this).is('select')) {
-            if (!$(element).prop('checked')) {
+			if (!$(element).prop('checked')) {
 				$(this).attr('readonly', 'readonly');
 			} else {
 				$(this).removeAttr('readonly');
-            }
+			}
 
 			$(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
 		}
@@ -1933,7 +1931,9 @@ $('.custom-control-input').on('change', function(e) {
 		}
 
 		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\']')) {
-			$(this).prop('readonly', !$(element).prop('checked'));
+			$(this).on('click', function() {
+				return $(element).prop('checked');
+			});
 		}
 
 		if ($(this).is('select')) {
@@ -1953,6 +1953,7 @@ $('.custom-control-input').on('change', function(e) {
 });
 
 $('.custom-control-input').trigger('change');
+{% endif %}
 
 // Manufacturer
 $('input[name=\'manufacturer\']').autocomplete({

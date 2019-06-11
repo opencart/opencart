@@ -475,7 +475,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons" id="input-subtract">
                         {% if subtract %}
                           <label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
                           <label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
@@ -488,9 +488,9 @@
                         <div class="input-group-append align-items-center">
                           <div class="custom-control custom-switch">
                             {% if override.subtract %}
-                              <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" class="custom-control-input" checked/>
+                              <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-toggle="switch" data-target="#input-subtract" class="custom-control-input" checked/>
                             {% else %}
-                              <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" class="custom-control-input"/>
+                              <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-toggle="switch" data-target="#input-subtract" class="custom-control-input"/>
                             {% endif %}
                             <label for="input-variant-subtract" class="custom-control-label"></label>
                           </div>
@@ -562,7 +562,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons" id="input-shipping">
                         {% if shipping %}
                           <label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
                           <label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
@@ -1883,6 +1883,7 @@ function toggleReadOnly(isReadOnly) {
 }
 
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
+
 {% if master_id %}
 $('.custom-control-input').on('change', function(e) {
 	e.preventDefault();
@@ -1891,15 +1892,20 @@ $('.custom-control-input').on('change', function(e) {
 
 	var target = $(this).attr('data-target');
 
-	$($(target).not('.custom-control-input')).each(function() {
+	$(target).not('.custom-control-input').each(function() {
 		if ($(this).is('input[type=\'text\'], textarea')) {
 			$(this).prop('readonly', !$(element).prop('checked'));
 		}
 
-		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\']')) {
-			$(this).on('click', function() {
-				return $(element).prop('checked');
-			});
+
+		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-toggle=\'buttons\']')) {
+			if (!$(element).prop('checked')) {
+				$(this).on('click', function(e) {
+					return false;
+				});
+			} else {
+				$(this).off('click');
+			}
 		}
 
 		if ($(this).is('select')) {
@@ -1918,22 +1924,28 @@ $('.custom-control-input').on('change', function(e) {
 
 		/*
         if ($(this).is('textarea[data-toggle=\'ckeditor\']')) {
-            $(this).prop('readonly', !$(element).prop('checked'));
+            //var editor = CKEDITOR.instances['name'];
+
+            //editor
 
             toggleReadOnly(!$(element).prop('checked'));
         }
         */
 	});
 
-	$($(target).find('input, textarea, select, button').not('.custom-control-input')).each(function() {
+	$(target).find('input, textarea, select, button').not('.custom-control-input').each(function() {
 		if ($(this).is('input[type=\'text\'], textarea')) {
 			$(this).prop('readonly', !$(element).prop('checked'));
 		}
 
-		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\']')) {
-			$(this).on('click', function() {
-				return $(element).prop('checked');
-			});
+		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-toggle=\'buttons\']')) {
+			if (!$(element).prop('checked')) {
+				$(this).on('click', function(e) {
+					return false;
+				});
+			} else {
+				$(this).off('click');
+			}
 		}
 
 		if ($(this).is('select')) {

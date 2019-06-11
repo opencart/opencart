@@ -65,7 +65,7 @@ class ControllerCatalogProduct extends Controller {
 			$this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
-		print_r($this->getForm());
+		$this->getForm();
 	}
 
 	public function edit() {

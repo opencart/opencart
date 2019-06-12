@@ -87,7 +87,7 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
-		// Recurrings
+		// Recurring
 		if (isset($data['product_recurring'])) {
 			foreach ($data['product_recurring'] as $product_recurring) {
 				if (isset($product_recurring['recurring_id'])) {

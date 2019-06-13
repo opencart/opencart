@@ -1873,7 +1873,7 @@ $('.custom-control-input').on('change', function(e) {
 
 	var target = $(this).attr('data-target');
 
-	$(target).not('.custom-control-input').each(function() {
+	$.merge($(target).not('.custom-control-input'), $(target).find('input, textarea, select, button').not('.custom-control-input')).each(function() {
 		if ($(this).is('input[type=\'text\'], textarea')) {
             $(this).prop('readonly', !$(element).prop('checked'));
 		}
@@ -1915,40 +1915,9 @@ $('.custom-control-input').on('change', function(e) {
 			$(this).prop('disabled', !$(element).prop('checked'));
 		}
 	});
-
-	$(target).find('input, textarea, select, button').not('.custom-control-input').each(function() {
-		if ($(this).is('input[type=\'text\'], textarea')) {
-			$(this).prop('readonly', !$(element).prop('checked'));
-		}
-
-		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-toggle=\'buttons\']')) {
-			if (!$(element).prop('checked')) {
-				$(this).on('click', function(e) {
-					return false;
-				});
-			} else {
-				$(this).off('click');
-			}
-		}
-
-		if ($(this).is('select')) {
-			if (!$(element).prop('checked')) {
-				$(this).attr('readonly', 'readonly');
-			} else {
-				$(this).removeAttr('readonly');
-			}
-
-			$(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
-		}
-
-		if ($(this).is('button')) {
-			$(this).prop('disabled', !$(element).prop('checked'));
-		}
-	});
 });
 
 $('.custom-control-input').trigger('change');
-
 {% endif %}
 
 // Manufacturer

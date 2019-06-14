@@ -82,10 +82,6 @@ class ControllerCatalogProduct extends Controller {
 			foreach ($products as $product) {
 				$product_data = array();
 
-				// Make sure these are arrays not strings
-				$product_data['variant'] = (array)json_decode($product['variant'], true);
-				$product_data['override'] = (array)json_decode($product['override'], true);
-
 				$ignore = array(
 					'quantity',
 					'variant',
@@ -101,6 +97,10 @@ class ControllerCatalogProduct extends Controller {
 					}
 				}
 
+				// Make sure these are arrays not strings
+				$product_data['variant'] = (array)json_decode($product['variant'], true);
+				$product_data['override'] = (array)json_decode($product['override'], true);
+
 				// Description
 				if (array_key_exists('product_description', $product_data['override'])) {
 					$product_data['product_description'] = $this->model_catalog_product->getProductDescriptions($product['product_id']);
@@ -114,9 +114,14 @@ class ControllerCatalogProduct extends Controller {
 					foreach ($this->request->post['product_description'] as $language_id => $product_description) {
 
 						foreach ($product_description as $key => $value) {
+
+
 							if (!isset($product_data['override']['product_description'][$language_id][$key])) {
 								$product_data['product_description'][$language_id][$key] = $value;
 							}
+
+
+
 						}
 					}
 				}
@@ -1520,7 +1525,9 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->load->model('catalog/product');
 
-		$product_info = $this->model_catalog_product->getProducts($product_id);
+		$product_info = $this->model_catalog_product->getProduct($product_id);
+
+		//print_r($product_info);
 
 		if ($product_info) {
 			// Description
@@ -1536,16 +1543,23 @@ class ControllerCatalogProduct extends Controller {
 			$json['location'] = $product_info['location'];
 
 			$json['price'] = $product_info['price'];
+			$json['tax_class_id'] = $product_info['tax_class_id'];
 			$json['quantity'] = $product_info['quantity'];
 			$json['minimum'] = $product_info['minimum'];
 			$json['subtract'] = $product_info['subtract'];
+			$json['stock_status_id'] = $product_info['stock_status_id'];
 			$json['date_available'] = $product_info['date_available'];
 
 			$json['shipping'] = $product_info['shipping'];
+
 			$json['length'] = $product_info['length'];
 			$json['width'] = $product_info['width'];
 			$json['height'] = $product_info['height'];
+			$json['length_class_id'] = $product_info['length_class_id'];
+
 			$json['weight'] = $product_info['weight'];
+			$json['weight_class_id'] = $product_info['weight_class_id'];
+
 			$json['status'] = $product_info['status'];
 			$json['sort_order'] = $product_info['sort_order'];
 
@@ -1566,22 +1580,22 @@ class ControllerCatalogProduct extends Controller {
 			$json['product_category'] = $this->model_catalog_product->getProductCategories($product_id);
 
 			// Filter
-			$json['product_filter'] = $this->model_catalog_product->getProductFilters($product_id);
+			$json['product_filters'] = $this->model_catalog_product->getProductFilters($product_id);
 
 			// Store
 			$json['product_store'] = $this->model_catalog_product->getProductStores($product_id);
 
 			// Download
-			$json['product_download'] = $this->model_catalog_product->getProductDownloads($product_id);
+			$json['product_downloads'] = $this->model_catalog_product->getProductDownloads($product_id);
 
 			// Related
-			$json['product_related'] = $this->model_catalog_product->getProductRelated($product_id);
+			$json['product_relateds'] = $this->model_catalog_product->getProductRelated($product_id);
 
 			// Attributes
 			$json['product_attributes'] = $this->model_catalog_product->getProductAttributes($product_id);
 
 			// Recurring
-			$json['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product_id);
+			$json['product_recurrings'] = $this->model_catalog_product->getProductRecurrings($product_id);
 
 			// Discount
 			$json['product_discounts'] = $this->model_catalog_product->getProductDiscounts($product_id);
@@ -1629,7 +1643,7 @@ class ControllerCatalogProduct extends Controller {
 			$json['product_reward'] = $this->model_catalog_product->getProductRewards($product_id);
 
 			// Layout
-			$json['product_layouts'] = $this->model_catalog_product->getProductLayouts($product_id);
+			$json['product_layout'] = $this->model_catalog_product->getProductLayouts($product_id);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

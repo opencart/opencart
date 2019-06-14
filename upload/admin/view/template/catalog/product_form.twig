@@ -71,7 +71,7 @@
                           {% endif %}
                         </div>
                         {% if error_name[language.language_id] %}
-                          <div class="invalid-feedback">{{ error_name[language.language_id] }}</div>
+                          <div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
                         {% endif %}
                       </div>
                     </div>
@@ -1866,31 +1866,55 @@
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
 {% if master_id %}
-$('.custom-control-input').on('change', function(e) {
+$.ajax({
+	url: 'index.php?route=catalog/product/product&user_token={{ user_token }}&product_id={{ master_id }}',
+	dataType: 'json',
+	beforeSend: function() {
+		//$(element).button('loading');
+	},
+	complete: function() {
+		//$(element).button('reset');
+	},
+	success: function(json) {
+		var value = json;
+
+		console.log(value);
+	},
+	error: function(xhr, ajaxOptions, thrownError) {
+		console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+
+		//alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	}
+});
+
+// Variable products
+$('input[data-toggle=\'switch\']').on('change', function(e) {
 	e.preventDefault();
 
 	var element = this;
 
 	var target = $(this).attr('data-target');
 
-	$.merge($(target).not('.custom-control-input'), $(target).find('input, textarea, select, button').not('.custom-control-input')).each(function() {
+	$.merge($(target), $(target).find('input, textarea, select, button')).not('.custom-control-input').each(function() {
 		if ($(this).is('input[type=\'text\'], textarea')) {
-            $(this).prop('readonly', !$(element).prop('checked'));
+			$(this).prop('readonly', !$(element).prop('checked'));
 		}
 
-        // ckeditor readonly
-        if ($(this).is('[data-toggle=\'ckeditor\']')) {
-            var editor = CKEDITOR.instances[$(this).attr('id')];
+		// ckeditor readonly
+		if ($(this).is('[data-toggle=\'ckeditor\']')) {
+			var editor = CKEDITOR.instances[$(this).attr('id')];
 
-            if (editor.editable() == undefined) {
-                editor.on('instanceReady', function() {
-                    this.setReadOnly(!$(element).prop('checked'));
-                });
-            } else {
-                editor.setReadOnly(!$(element).prop('checked'));
-            }
-        }
+			if (editor.editable() == undefined) {
+				editor.on('instanceReady', function() {
+					this.setReadOnly(!$(element).prop('checked'));
+				});
+			} else {
+				editor.setReadOnly(!$(element).prop('checked'));
+			}
+		}
 
+		// Radio Checkbox Buttons
 		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-toggle=\'buttons\']')) {
 			if (!$(element).prop('checked')) {
 				$(this).on('click', function(e) {
@@ -1901,6 +1925,7 @@ $('.custom-control-input').on('change', function(e) {
 			}
 		}
 
+		// Select
 		if ($(this).is('select')) {
 			if (!$(element).prop('checked')) {
 				$(this).attr('readonly', 'readonly');
@@ -1913,6 +1938,17 @@ $('.custom-control-input').on('change', function(e) {
 
 		if ($(this).is('button')) {
 			$(this).prop('disabled', !$(element).prop('checked'));
+		}
+
+        if (!$(element).prop('checked')) {
+            //console.log($(this).attr('name'));
+
+			if ($(this).attr('name') == undefined) {
+				//console.log(this);
+			}
+
+			//value[$(this).attr('name')]
+
 		}
 	});
 });
@@ -2300,14 +2336,14 @@ $('#option').on('click', '.btn-primary', function() {
 	html += '      </div>';
 	html += '      <div class="modal-body">';
 	html += '        <div class="form-group">';
-	html += '      	   <label for="input-modal-value" class="col-form-label">{{ entry_option_value }}</label>';
-	html += '      	   <select name="option_value_id" id="input-option-value" class="form-control">';
+	html += '      	   <label for="input-modal-option-value" class="col-form-label">{{ entry_option_value }}</label>';
+	html += '      	   <select name="option_value_id" id="input-modal-option-value" class="form-control">';
 
 	option_value = $('#product-option-values' + $(element).attr('data-option-row') + ' option');
 
 	for (i = 0; i < option_value.length; i++) {
 		if ($(element).attr('data-option-value-row') && $(option_value[i]).val() == $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]\']').val()) {
-			html += '<option value="' + $(option_value[i]).val() + '" selected>' + $(option_value[i]).text() + '</option>';
+			html += '<option value="' + $(option_value[i]).val() + '" selected="selected">' + $(option_value[i]).text() + '</option>';
 		} else {
 			html += '<option value="' + $(option_value[i]).val() + '">' + $(option_value[i]).text() + '</option>';
 		}
@@ -2327,7 +2363,7 @@ $('#option').on('click', '.btn-primary', function() {
 	html += '      	   <select name="subtract" id="input-modal-subtract" class="form-control">';
 
 	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
-		html += '        <option value="1" selected>{{ text_yes }}</option>';
+		html += '        <option value="1" selected="selected">{{ text_yes }}</option>';
 		html += '      	 <option value="0">{{ text_no }}</option>';
 	} else {
 		html += '      	 <option value="1">{{ text_yes }}</option>';
@@ -2343,13 +2379,13 @@ $('#option').on('click', '.btn-primary', function() {
 	html += '            <select name="price_prefix" class="form-control col-2">';
 
 	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
-		html += '      	   <option value="+" selected>+</option>';
+		html += '      	   <option value="+" selected="selected">+</option>';
 	} else {
 		html += '      	   <option value="+">+</option>';
 	}
 
 	if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
-		html += '      	       <option value="-" selected>-</option>';
+		html += '      	       <option value="-" selected="selected">-</option>';
 	} else {
 		html += '      	       <option value="-">-</option>';
 	}
@@ -2446,7 +2482,7 @@ $('#option').on('click', '.btn-primary', function() {
 var discount_row = {{ discount_row }};
 
 $('#button-discount').on('click', function() {
-	html = '<tr id="discount-row' + discount_row + '">';
+	html  = '<tr id="discount-row' + discount_row + '">';
 	html += '  <td class="text-left"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
 	html += '    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';

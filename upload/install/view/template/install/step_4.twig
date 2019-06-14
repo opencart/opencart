@@ -3,17 +3,21 @@
   <header>
     <div class="row">
       <div class="col-sm-6">
-        <h1 class="pull-left">4<small>/4</small></h1>
-        <h3>{{ heading_title }}<br>
-          <small>{{ text_step_4 }}</small></h3>
+        <h1 class="pull-left">4
+          <small>/4</small>
+        </h1>
+        <h3>{{ heading_title }}
+          <br>
+          <small>{{ text_step_4 }}</small>
+        </h3>
       </div>
       <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart"/></div>
       </div>
     </div>
   </header>
   {% if success %}
-  <div class="alert alert-success alert-dismissible">{{ success }}</div>
+    <div class="alert alert-success alert-dismissible">{{ success }}</div>
   {% endif %}
   <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -36,19 +40,19 @@
   <div class="mailing">
     <div class="row">
       <div class="col-sm-12"><i class="fa fa-envelope-o fa-5x"></i>
-        <h3>{{ text_mail }}<br>
-          <small>{{ text_mail_description }}</small></h3>
+        <h3>{{ text_mail }}
+          <br>
+          <small>{{ text_mail_description }}</small>
+        </h3>
         <a href="http://newsletter.opencart.com/h/r/B660EBBE4980C85C" target="_BLANK" class="btn btn-secondary">{{ button_mail }}</a></div>
     </div>
   </div>
   <div class="core-modules">
     <div class="row">
-      <div class="col-sm-6 text-center"><img src="view/image/openbay_pro.gif" />
-        <p>{{ text_openbay }}</p>
-        <a class="btn btn-primary" href="{{ openbay }}">{{ button_setup }}</a></div>
-      <div class="col-sm-6 text-center"><img src="view/image/maxmind.gif" />
+      <div class="col-sm-12 text-center"><img src="view/image/maxmind.gif"/>
         <p>{{ text_maxmind }}</p>
-        <a class="btn btn-primary" href="{{ maxmind }}">{{ button_setup }}</a></div>
+        <a class="btn btn-primary" href="{{ maxmind }}">{{ button_setup }}</a>
+      </div>
     </div>
   </div>
   <div class="support text-center">

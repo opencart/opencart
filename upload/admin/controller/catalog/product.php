@@ -1291,6 +1291,7 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
+		// Recurring
 		$this->load->model('catalog/recurring');
 
 		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
@@ -1303,6 +1304,7 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_recurrings'] = array();
 		}
 
+		// Discount
 		if (isset($this->request->post['product_discount'])) {
 			$product_discounts = $this->request->post['product_discount'];
 		} elseif (!empty($product_info)) {
@@ -1324,6 +1326,7 @@ class ControllerCatalogProduct extends Controller {
 			);
 		}
 
+		// Special
 		if (isset($this->request->post['product_special'])) {
 			$product_specials = $this->request->post['product_special'];
 		} elseif (!empty($product_info)) {
@@ -1429,6 +1432,250 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_layout'] = array();
 		}
 
+		// For variant products we need to load the master product default values.
+		if (isset($this->request->get['master_id'])) {
+			$master_id = $this->request->get['master_id'];
+		} else {
+			$master_id = 0;
+		}
+
+		$master_info = $this->model_catalog_product->getProduct($master_id);
+
+		if ($master_info) {
+			$data['master']['product_description'] = $this->model_catalog_product->getProductDescriptions($master_id);
+		} else {
+			$data['master']['product_description'] = array();
+		}
+
+		if ($master_info) {
+			$data['master']['model'] = $master_info['model'];
+		} else {
+			$data['master']['model'] = '';
+		}
+
+		if ($master_info) {
+			$data['master']['sku'] = $master_info['sku'];
+		} else {
+			$data['master']['sku'] = '';
+		}
+
+		$data['master']['upc'] = $master_info['upc'];
+
+		$data['master']['ean'] = $master_info['ean'];
+
+		$data['master']['jan'] = $master_info['jan'];
+
+		$data['master']['isbn'] = $master_info['isbn'];
+
+		$data['master']['mpn'] = $master_info['mpn'];
+
+		$data['master']['location'] = $master_info['location'];
+
+		$data['master']['price'] = $master_info['price'];
+
+		$data['master']['tax_class_id'] = $master_info['tax_class_id'];
+
+		$data['master']['quantity'] = $master_info['quantity'];
+
+		$data['master']['minimum'] = $master_info['minimum'];
+
+		$data['master']['shipping'] = $master_info['shipping'];
+
+		$data['master']['subtract'] = $master_info['subtract'];
+
+		$data['master']['stock_status_id'] = $master_info['stock_status_id'];
+
+		$data['master']['date_available'] = ($master_info['date_available'] != '0000-00-00') ? $master_info['date_available'] : '';
+
+		$data['master']['length'] = $master_info['length'];
+
+		$data['master']['width'] = $master_info['width'];
+
+		$data['master']['master']['height'] = $master_info['height'];
+
+		$data['master']['length_class_id'] = $master_info['length_class_id'];
+
+		$data['master']['weight'] = $master_info['weight'];
+
+		$data['master']['weight_class_id'] = $master_info['weight_class_id'];
+
+		$data['master']['status'] = $master_info['status'];
+
+		$data['master']['sort_order'] = $master_info['sort_order'];
+
+		$data['master']['manufacturer_id'] = $master_info['manufacturer_id'];
+
+
+		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($master_info['manufacturer_id']);
+
+		if ($manufacturer_info) {
+			$data['master']['manufacturer'] = $manufacturer_info['name'];
+		} else {
+			$data['master']['manufacturer'] = '';
+		}
+
+		// Categories
+		$data['master']['product_categories'] = array();
+
+		$categories = $this->model_catalog_product->getProductCategories($master_id);
+
+		foreach ($categories as $category_id) {
+			$category_info = $this->model_catalog_category->getCategory($category_id);
+
+			if ($category_info) {
+				$data['master']['product_categories'][] = array(
+					'category_id' => $category_info['category_id'],
+					'name'        => ($category_info['path']) ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name']
+				);
+			}
+		}
+
+		// Filters
+		$data['master']['product_filters'] = array();
+
+		$filters = $this->model_catalog_product->getProductFilters($master_id);
+
+		foreach ($filters as $filter_id) {
+			$filter_info = $this->model_catalog_filter->getFilter($filter_id);
+
+			if ($filter_info) {
+				$data['master']['product_filters'][] = array(
+					'filter_id' => $filter_info['filter_id'],
+					'name'      => $filter_info['group'] . ' &gt; ' . $filter_info['name']
+				);
+			}
+		}
+
+		// Stores
+		$data['master']['product_store'] = $this->model_catalog_product->getProductStores($master_id);
+
+		// Downloads
+		$data['master']['product_downloads'] = array();
+
+		$this->load->model('catalog/download');
+
+		$product_downloads = $this->model_catalog_product->getProductDownloads($master_id);
+
+		foreach ($product_downloads as $download_id) {
+			$download_info = $this->model_catalog_download->getDownload($download_id);
+
+			if ($download_info) {
+				$data['master']['product_downloads'][] = array(
+					'download_id' => $download_info['download_id'],
+					'name'        => $download_info['name']
+				);
+			}
+		}
+
+		// Related Products
+		$data['master']['product_relateds'] = array();
+
+		$product_relateds = $this->model_catalog_product->getProductRelated($master_id);
+
+		foreach ($product_relateds as $related_id) {
+			$related_info = $this->model_catalog_product->getProduct($related_id);
+
+			if ($related_info) {
+				$data['master']['product_relateds'][] = array(
+					'product_id' => $related_info['product_id'],
+					'name'       => $related_info['name']
+				);
+			}
+		}
+
+		// Attributes
+		$data['master']['product_attributes'] = array();
+
+		$product_attributes = $this->model_catalog_product->getProductAttributes($master_id);
+
+		foreach ($product_attributes as $product_attribute) {
+			$attribute_info = $this->model_catalog_attribute->getAttribute($product_attribute['attribute_id']);
+
+			if ($attribute_info) {
+				$data['master']['product_attributes'][] = array(
+					'attribute_id'                  => $product_attribute['attribute_id'],
+					'name'                          => $attribute_info['name'],
+					'product_attribute_description' => $product_attribute['product_attribute_description']
+				);
+			}
+		}
+
+		// Recurring
+		$data['master']['product_recurrings'] = $this->model_catalog_product->getProductRecurrings($master_id);
+
+
+		// Discounts
+		$data['master']['product_discounts'] = array();
+
+		$product_discounts = $this->model_catalog_product->getProductDiscounts($master_id);
+
+		foreach ($product_discounts as $product_discount) {
+			$data['master']['product_discounts'][] = array(
+				'customer_group_id' => $product_discount['customer_group_id'],
+				'quantity'          => $product_discount['quantity'],
+				'priority'          => $product_discount['priority'],
+				'price'             => $product_discount['price'],
+				'date_start'        => ($product_discount['date_start'] != '0000-00-00') ? $product_discount['date_start'] : '',
+				'date_end'          => ($product_discount['date_end'] != '0000-00-00') ? $product_discount['date_end'] : ''
+			);
+		}
+
+		// Specials
+		$data['product_specials'] = array();
+
+		$product_specials = $this->model_catalog_product->getProductSpecials($master_id);
+
+		foreach ($product_specials as $product_special) {
+			$data['master']['product_specials'][] = array(
+				'customer_group_id' => $product_special['customer_group_id'],
+				'priority'          => $product_special['priority'],
+				'price'             => $product_special['price'],
+				'date_start'        => ($product_special['date_start'] != '0000-00-00') ? $product_special['date_start'] : '',
+				'date_end'          => ($product_special['date_end'] != '0000-00-00') ? $product_special['date_end'] : ''
+			);
+		}
+
+		// Image
+		$data['master']['image'] = $master_info['image'];
+
+		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
+			$data['master']['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+		} else {
+			$data['master']['thumb'] = $data['placeholder'];
+		}
+
+		// Images
+		$data['master']['product_images'] = array();
+
+		$product_images = $this->model_catalog_product->getProductImages($master_id);
+
+		foreach ($product_images as $product_image) {
+			if (is_file(DIR_IMAGE . html_entity_decode($product_image['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $product_image['image'];
+				$thumb = $product_image['image'];
+			} else {
+				$image = '';
+				$thumb = 'no_image.png';
+			}
+
+			$data['master']['product_images'][] = array(
+				'image'      => $image,
+				'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
+				'sort_order' => $product_image['sort_order']
+			);
+		}
+
+		// Rewards
+		$data['master']['points'] = $master_info['points'];
+		$data['master']['product_reward'] = $this->model_catalog_product->getProductRewards($master_id);
+
+		// SEO
+		$data['master']['product_seo_url'] = $this->model_catalog_product->getProductSeoUrls($master_id);
+
+		// Layout
+		$data['master']['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
+
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1510,144 +1757,6 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		return !$this->error;
-	}
-
-	public function product() {
-		$this->load->language('catalog/product');
-
-		$json = array();
-
-		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
-		} else {
-			$product_id = 0;
-		}
-
-		$this->load->model('catalog/product');
-
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-
-		//print_r($product_info);
-
-		if ($product_info) {
-			// Description
-			$json['product_description'] = $this->model_catalog_product->getProductDescriptions($product_id);
-
-			$json['model'] = $product_info['model'];
-			$json['sku'] = $product_info['sku'];
-			$json['upc'] = $product_info['upc'];
-			$json['ean'] = $product_info['ean'];
-			$json['jan'] = $product_info['jan'];
-			$json['isbn'] = $product_info['isbn'];
-			$json['mpn'] = $product_info['mpn'];
-			$json['location'] = $product_info['location'];
-
-			$json['price'] = $product_info['price'];
-			$json['tax_class_id'] = $product_info['tax_class_id'];
-			$json['quantity'] = $product_info['quantity'];
-			$json['minimum'] = $product_info['minimum'];
-			$json['subtract'] = $product_info['subtract'];
-			$json['stock_status_id'] = $product_info['stock_status_id'];
-			$json['date_available'] = $product_info['date_available'];
-
-			$json['shipping'] = $product_info['shipping'];
-
-			$json['length'] = $product_info['length'];
-			$json['width'] = $product_info['width'];
-			$json['height'] = $product_info['height'];
-			$json['length_class_id'] = $product_info['length_class_id'];
-
-			$json['weight'] = $product_info['weight'];
-			$json['weight_class_id'] = $product_info['weight_class_id'];
-
-			$json['status'] = $product_info['status'];
-			$json['sort_order'] = $product_info['sort_order'];
-
-			// Manufacturer
-			$json['manufacturer_id'] = $product_info['manufacturer_id'];
-
-			$this->load->model('catalog/manufacturer');
-
-			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
-
-			if ($manufacturer_info) {
-				$data['manufacturer'] = $manufacturer_info['name'];
-			} else {
-				$data['manufacturer'] = '';
-			}
-
-			// Category
-			$json['product_category'] = $this->model_catalog_product->getProductCategories($product_id);
-
-			// Filter
-			$json['product_filters'] = $this->model_catalog_product->getProductFilters($product_id);
-
-			// Store
-			$json['product_store'] = $this->model_catalog_product->getProductStores($product_id);
-
-			// Download
-			$json['product_downloads'] = $this->model_catalog_product->getProductDownloads($product_id);
-
-			// Related
-			$json['product_relateds'] = $this->model_catalog_product->getProductRelated($product_id);
-
-			// Attributes
-			$json['product_attributes'] = $this->model_catalog_product->getProductAttributes($product_id);
-
-			// Recurring
-			$json['product_recurrings'] = $this->model_catalog_product->getProductRecurrings($product_id);
-
-			// Discount
-			$json['product_discounts'] = $this->model_catalog_product->getProductDiscounts($product_id);
-
-			// Special
-			$json['product_specials'] = $this->model_catalog_product->getProductSpecials($product_id);
-
-			// Image
-			if (!empty($product_info)) {
-				$json['image'] = $product_info['image'];
-			} else {
-				$json['image'] = '';
-			}
-
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-				$json['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
-			} else {
-				$json['thumb'] = $data['placeholder'];
-			}
-
-			// Images
-			$json['product_images'] = array();
-
-			$product_images = $this->model_catalog_product->getProductImages($product_id);
-
-			foreach ($product_images as $product_image) {
-				if (is_file(DIR_IMAGE . html_entity_decode($product_image['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $product_image['image'];
-					$thumb = $product_image['image'];
-				} else {
-					$image = '';
-					$thumb = 'no_image.png';
-				}
-
-				$json['product_images'][] = array(
-					'image'      => $image,
-					'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
-					'sort_order' => $product_image['sort_order']
-				);
-			}
-
-			// Reward
-			$json['product_reward'] = $this->model_catalog_product->getProductRewards($product_id);
-
-			// Layout
-			$json['product_layout'] = $this->model_catalog_product->getProductLayouts($product_id);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function autocomplete() {

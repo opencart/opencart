@@ -1427,13 +1427,40 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		// For variant products we need to load the master product default values.
+		$data['master']['model'] = '';
+		$data['master']['sku'] = '';
+		$data['master']['upc'] = '';
+		$data['master']['ean'] = '';
+		$data['master']['jan'] = '';
+		$data['master']['isbn'] = '';
+		$data['master']['mpn'] = '';
+		$data['master']['location'] = '';
+		$data['master']['price'] = '';
+		$data['master']['tax_class_id'] = '';
+		$data['master']['minimum'] = 1;
+		$data['master']['shipping'] = 0;
+		$data['master']['subtract'] = 0;
+		$data['master']['stock_status_id'] = 0;
+		$data['master']['date_available'] = '';
+		$data['master']['length'] = '';
+		$data['master']['width'] = '';
+		$data['master']['height'] = '';
+		$data['master']['length_class_id'] = '';
+		$data['master']['weight'] = '';
+		$data['master']['weight_class_id'] = '';
+		$data['master']['status'] = '';
+		$data['master']['sort_order'] = 0;
+		$data['master']['manufacturer_id'] = 0;
+		$data['master']['manufacturer'] = '';
+		$data['master']['image'] = '';
+		$data['master']['thumb'] = $data['placeholder'];
+		$data['master']['points'] = '';
+
 		if (isset($this->request->get['master_id'])) {
 			$master_id = $this->request->get['master_id'];
 		} else {
 			$master_id = 0;
 		}
-
-		$data['master']['product_description'] = $this->model_catalog_product->getProductDescriptions($master_id);
 
 		$master_info = $this->model_catalog_product->getProduct($master_id);
 
@@ -1461,7 +1488,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['master']['weight'] = $master_info['weight'];
 			$data['master']['weight_class_id'] = $master_info['weight_class_id'];
 			$data['master']['status'] = $master_info['status'];
-
 			$data['master']['manufacturer_id'] = $master_info['manufacturer_id'];
 
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($master_info['manufacturer_id']);
@@ -1476,45 +1502,13 @@ class ControllerCatalogProduct extends Controller {
 
 			if (is_file(DIR_IMAGE . html_entity_decode($data['master']['image'], ENT_QUOTES, 'UTF-8'))) {
 				$data['master']['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['master']['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
-			} else {
-				$data['master']['thumb'] = $data['placeholder'];
 			}
 
 			$data['master']['points'] = $master_info['points'];
-		} else {
-			$data['master']['product_description'] = array();
-			$data['master']['model'] = '';
-			$data['master']['sku'] = '';
-			$data['master']['upc'] = '';
-			$data['master']['ean'] = '';
-			$data['master']['jan'] = '';
-			$data['master']['isbn'] = '';
-			$data['master']['mpn'] = '';
-			$data['master']['location'] = '';
-			$data['master']['price'] = '';
-			$data['master']['tax_class_id'] = '';
-			$data['master']['minimum'] = 1;
-			$data['master']['shipping'] = 0;
-			$data['master']['subtract'] = 0;
-			$data['master']['stock_status_id'] = 0;
-			$data['master']['date_available'] = '';
-			$data['master']['length'] = '';
-			$data['master']['width'] = '';
-			$data['master']['height'] = '';
-			$data['master']['length_class_id'] = '';
-			$data['master']['weight'] = '';
-			$data['master']['weight_class_id'] = '';
-			$data['master']['status'] = '';
-			$data['master']['sort_order'] = 0;
-			$data['master']['manufacturer_id'] = 0;
-			$data['master']['manufacturer'] = '';
-			$data['master']['image'] = '';
-			$data['master']['thumb'] = $data['placeholder'];
-
-			$data['master']['points'] = '';
 		}
 
-
+		// Description
+		$data['master']['product_description'] = $this->model_catalog_product->getProductDescriptions($master_id);
 
 		// Categories
 		$data['master']['product_categories'] = array();

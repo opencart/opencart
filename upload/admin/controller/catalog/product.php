@@ -26,10 +26,6 @@ class ControllerCatalogProduct extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['master_id'])) {
-				$url .= '&master_id=' . $this->request->get['master_id'];
-			}
-
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
@@ -104,8 +100,6 @@ class ControllerCatalogProduct extends Controller {
 				// Description
 				if (array_key_exists('product_description', $product_data['override'])) {
 					$product_data['product_description'] = $this->model_catalog_product->getProductDescriptions($product['product_id']);
-
-
 
 				} elseif (isset($this->request->post['product_description'])) {
 
@@ -896,14 +890,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['minimum'] = 1;
 		}
 
-		if (isset($this->request->post['shipping'])) {
-			$data['shipping'] = $this->request->post['shipping'];
-		} elseif (!empty($product_info)) {
-			$data['shipping'] = $product_info['shipping'];
-		} else {
-			$data['shipping'] = 1;
-		}
-
 		if (isset($this->request->post['subtract'])) {
 			$data['subtract'] = $this->request->post['subtract'];
 		} elseif (!empty($product_info)) {
@@ -930,6 +916,14 @@ class ControllerCatalogProduct extends Controller {
 			$data['date_available'] = ($product_info['date_available'] != '0000-00-00') ? $product_info['date_available'] : '';
 		} else {
 			$data['date_available'] = date('Y-m-d');
+		}
+
+		if (isset($this->request->post['shipping'])) {
+			$data['shipping'] = $this->request->post['shipping'];
+		} elseif (!empty($product_info)) {
+			$data['shipping'] = $product_info['shipping'];
+		} else {
+			$data['shipping'] = 1;
 		}
 
 		if (isset($this->request->post['length'])) {
@@ -1127,7 +1121,7 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
-		// Related Products
+		// Related
 		if (isset($this->request->post['product_related'])) {
 			$product_relateds = $this->request->post['product_related'];
 		} elseif (!empty($product_info)) {
@@ -1439,80 +1433,88 @@ class ControllerCatalogProduct extends Controller {
 			$master_id = 0;
 		}
 
+		$data['master']['product_description'] = $this->model_catalog_product->getProductDescriptions($master_id);
+
 		$master_info = $this->model_catalog_product->getProduct($master_id);
 
 		if ($master_info) {
-			$data['master']['product_description'] = $this->model_catalog_product->getProductDescriptions($master_id);
+			$data['master']['model'] = $master_info['model'];
+			$data['master']['sku'] = $master_info['sku'];
+			$data['master']['upc'] = $master_info['upc'];
+			$data['master']['ean'] = $master_info['ean'];
+			$data['master']['jan'] = $master_info['jan'];
+			$data['master']['isbn'] = $master_info['isbn'];
+			$data['master']['mpn'] = $master_info['mpn'];
+			$data['master']['location'] = $master_info['location'];
+			$data['master']['price'] = $master_info['price'];
+			$data['master']['tax_class_id'] = $master_info['tax_class_id'];
+			$data['master']['quantity'] = $master_info['quantity'];
+			$data['master']['minimum'] = $master_info['minimum'];
+			$data['master']['shipping'] = $master_info['shipping'];
+			$data['master']['subtract'] = $master_info['subtract'];
+			$data['master']['stock_status_id'] = $master_info['stock_status_id'];
+			$data['master']['date_available'] = ($master_info['date_available'] != '0000-00-00') ? $master_info['date_available'] : '';
+			$data['master']['length'] = $master_info['length'];
+			$data['master']['width'] = $master_info['width'];
+			$data['master']['height'] = $master_info['height'];
+			$data['master']['length_class_id'] = $master_info['length_class_id'];
+			$data['master']['weight'] = $master_info['weight'];
+			$data['master']['weight_class_id'] = $master_info['weight_class_id'];
+			$data['master']['status'] = $master_info['status'];
+
+			$data['master']['manufacturer_id'] = $master_info['manufacturer_id'];
+
+			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($master_info['manufacturer_id']);
+
+			if ($manufacturer_info) {
+				$data['master']['manufacturer'] = $manufacturer_info['name'];
+			} else {
+				$data['master']['manufacturer'] = '';
+			}
+
+			$data['master']['image'] = $master_info['image'];
+
+			if (is_file(DIR_IMAGE . html_entity_decode($data['master']['image'], ENT_QUOTES, 'UTF-8'))) {
+				$data['master']['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['master']['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			} else {
+				$data['master']['thumb'] = $data['placeholder'];
+			}
+
+			$data['master']['points'] = $master_info['points'];
 		} else {
 			$data['master']['product_description'] = array();
-		}
-
-		if ($master_info) {
-			$data['master']['model'] = $master_info['model'];
-		} else {
 			$data['master']['model'] = '';
-		}
-
-		if ($master_info) {
-			$data['master']['sku'] = $master_info['sku'];
-		} else {
 			$data['master']['sku'] = '';
-		}
-
-		$data['master']['upc'] = $master_info['upc'];
-
-		$data['master']['ean'] = $master_info['ean'];
-
-		$data['master']['jan'] = $master_info['jan'];
-
-		$data['master']['isbn'] = $master_info['isbn'];
-
-		$data['master']['mpn'] = $master_info['mpn'];
-
-		$data['master']['location'] = $master_info['location'];
-
-		$data['master']['price'] = $master_info['price'];
-
-		$data['master']['tax_class_id'] = $master_info['tax_class_id'];
-
-		$data['master']['quantity'] = $master_info['quantity'];
-
-		$data['master']['minimum'] = $master_info['minimum'];
-
-		$data['master']['shipping'] = $master_info['shipping'];
-
-		$data['master']['subtract'] = $master_info['subtract'];
-
-		$data['master']['stock_status_id'] = $master_info['stock_status_id'];
-
-		$data['master']['date_available'] = ($master_info['date_available'] != '0000-00-00') ? $master_info['date_available'] : '';
-
-		$data['master']['length'] = $master_info['length'];
-
-		$data['master']['width'] = $master_info['width'];
-
-		$data['master']['master']['height'] = $master_info['height'];
-
-		$data['master']['length_class_id'] = $master_info['length_class_id'];
-
-		$data['master']['weight'] = $master_info['weight'];
-
-		$data['master']['weight_class_id'] = $master_info['weight_class_id'];
-
-		$data['master']['status'] = $master_info['status'];
-
-		$data['master']['sort_order'] = $master_info['sort_order'];
-
-		$data['master']['manufacturer_id'] = $master_info['manufacturer_id'];
-
-
-		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($master_info['manufacturer_id']);
-
-		if ($manufacturer_info) {
-			$data['master']['manufacturer'] = $manufacturer_info['name'];
-		} else {
+			$data['master']['upc'] = '';
+			$data['master']['ean'] = '';
+			$data['master']['jan'] = '';
+			$data['master']['isbn'] = '';
+			$data['master']['mpn'] = '';
+			$data['master']['location'] = '';
+			$data['master']['price'] = '';
+			$data['master']['tax_class_id'] = '';
+			$data['master']['minimum'] = 1;
+			$data['master']['shipping'] = 0;
+			$data['master']['subtract'] = 0;
+			$data['master']['stock_status_id'] = 0;
+			$data['master']['date_available'] = '';
+			$data['master']['length'] = '';
+			$data['master']['width'] = '';
+			$data['master']['height'] = '';
+			$data['master']['length_class_id'] = '';
+			$data['master']['weight'] = '';
+			$data['master']['weight_class_id'] = '';
+			$data['master']['status'] = '';
+			$data['master']['sort_order'] = 0;
+			$data['master']['manufacturer_id'] = 0;
 			$data['master']['manufacturer'] = '';
+			$data['master']['image'] = '';
+			$data['master']['thumb'] = $data['placeholder'];
+
+			$data['master']['points'] = '';
 		}
+
+
 
 		// Categories
 		$data['master']['product_categories'] = array();
@@ -1551,8 +1553,6 @@ class ControllerCatalogProduct extends Controller {
 
 		// Downloads
 		$data['master']['product_downloads'] = array();
-
-		$this->load->model('catalog/download');
 
 		$product_downloads = $this->model_catalog_product->getProductDownloads($master_id);
 
@@ -1603,7 +1603,6 @@ class ControllerCatalogProduct extends Controller {
 		// Recurring
 		$data['master']['product_recurrings'] = $this->model_catalog_product->getProductRecurrings($master_id);
 
-
 		// Discounts
 		$data['master']['product_discounts'] = array();
 
@@ -1621,7 +1620,7 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		// Specials
-		$data['product_specials'] = array();
+		$data['master']['product_specials'] = array();
 
 		$product_specials = $this->model_catalog_product->getProductSpecials($master_id);
 
@@ -1633,15 +1632,6 @@ class ControllerCatalogProduct extends Controller {
 				'date_start'        => ($product_special['date_start'] != '0000-00-00') ? $product_special['date_start'] : '',
 				'date_end'          => ($product_special['date_end'] != '0000-00-00') ? $product_special['date_end'] : ''
 			);
-		}
-
-		// Image
-		$data['master']['image'] = $master_info['image'];
-
-		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['master']['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
-		} else {
-			$data['master']['thumb'] = $data['placeholder'];
 		}
 
 		// Images
@@ -1666,7 +1656,6 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		// Rewards
-		$data['master']['points'] = $master_info['points'];
 		$data['master']['product_reward'] = $this->model_catalog_product->getProductRewards($master_id);
 
 		// SEO
@@ -1674,7 +1663,6 @@ class ControllerCatalogProduct extends Controller {
 
 		// Layout
 		$data['master']['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
-
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

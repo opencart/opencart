@@ -55,23 +55,16 @@
                       <div class="col-sm-10">
                         <div class="input-group">
                           <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control"/>
-
-
                           {% if master_id %}
-                            <input type="hidden" value="{{ master.product_description[language.language_id] ? master.product_description[language.language_id].name }}" id="input-master-name{{ language.language_id }}" class="d-none"/>
-
                             <div class="input-group-append">
                               <div class="input-group-text">
-
                                 <div class="custom-control custom-switch">
                                   {% if override.product_description[language.language_id].name %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name{{ language.language_id }}" data-toggle="switch" data-target="#input-name{{ language.language_id }}" class="custom-control-input" checked/>
                                   {% else %}
                                     <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name{{ language.language_id }}" data-toggle="switch" data-target="#input-name{{ language.language_id }}" class="custom-control-input"/>
                                   {% endif %}
-
                                   <label for="input-variant-name{{ language.language_id }}" class="custom-control-label"></label>
-
                                 </div>
                               </div>
                             </div>
@@ -90,7 +83,6 @@
                             <textarea name="product_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="w-100 position-relative">{{ product_description[language.language_id] ? product_description[language.language_id].description }}</textarea>
                           </div>
                           {% if master_id %}
-                            <textarea id="input-master-description{{ language.language_id }}" class="d-none">{{ master.product_description[language.language_id] ? master.product_description[language.language_id].description }}</textarea>
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
@@ -112,11 +104,7 @@
                       <div class="col-sm-10">
                         <div class="input-group">
                           <input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title{{ language.language_id }}" class="form-control"/>
-
                           {% if master_id %}
-
-                            <input type="hidden" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" id="input-master-meta-title{{ language.language_id }}"/>
-
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
@@ -133,7 +121,8 @@
                         </div>
                         {% if error_meta_title[language.language_id] %}
                           <div class="invalid-tooltip">{{ error_meta_title[language.language_id] }}</div>
-                        {% endif %}</div>
+                        {% endif %}
+                      </div>
                     </div>
                     <div class="form-group row">
                       <label for="input-meta-description{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
@@ -141,9 +130,6 @@
                         <div class="input-group">
                           <textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
                           {% if master_id %}
-
-                            <textarea id="input-meta-description{{ language.language_id }}" class="d-none">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
-
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
@@ -166,8 +152,6 @@
                         <div class="input-group">
                           <textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
                           {% if master_id %}
-                            <textarea id="input-meta-keyword{{ language.language_id }}" class="d-none">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
-
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
@@ -190,9 +174,6 @@
                         <div class="input-group">
                           <input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag{{ language.language_id }}" class="form-control"/>
                           {% if master_id %}
-                            <input type="hidden" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" id="input-master-tag{{ language.language_id }}"/>
-
-
                             <div class="input-group-append">
                               <div class="input-group-text">
                                 <div class="custom-control custom-switch">
@@ -224,7 +205,6 @@
                     <div class="input-group">
                       <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
                       {% if master_id %}
-                        <input type="hidden" value="{{ master.model }}" id="input-master-model"/>
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <div class="custom-control custom-switch">
@@ -250,7 +230,6 @@
                     <div class="input-group">
                       <input type="text" name="sku" value="{{ sku }}" placeholder="{{ entry_sku }}" id="input-sku" class="form-control"/>
                       {% if master_id %}
-                        <input type="hidden" value="{{ master.sku }}" id="input-master-sku"/>
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <div class="custom-control custom-switch">
@@ -274,9 +253,6 @@
                     <div class="input-group">
                       <input type="text" name="upc" value="{{ upc }}" placeholder="{{ entry_upc }}" id="input-upc" class="form-control"/>
                       {% if master_id %}
-
-                        <input type="hidden" value="{{ master.upc }}" id="input-master-upc"/>
-
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <div class="custom-control custom-switch">
@@ -300,8 +276,6 @@
                     <div class="input-group">
                       <input type="text" name="ean" value="{{ ean }}" placeholder="{{ entry_ean }}" id="input-ean" class="form-control"/>
                       {% if master_id %}
-                        <input type="hidden" value="{{ master.ean }}" id="input-master-ean"/>
-
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <div class="custom-control custom-switch">
@@ -325,7 +299,6 @@
                     <div class="input-group">
                       <input type="text" name="jan" value="{{ jan }}" placeholder="{{ entry_jan }}" id="input-jan" class="form-control"/>
                       {% if master_id %}
-                        <input type="hidden" value="{{ master.jan }}" id="input-master-jan"/>
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <div class="custom-control custom-switch">
@@ -666,7 +639,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group row" readonly>
+                <div class="form-group row">
                   <label for="input-length-class" class="col-sm-2 col-form-label">{{ entry_length_class }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -995,7 +968,7 @@
             </div>
             <div id="tab-attribute" class="tab-pane">
               <div class="table-responsive">
-                <table id="product-attribute" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_attribute }}</td>
@@ -1014,7 +987,7 @@
                       </td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="product-attribute">
                     {% set attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row{{ attribute_row }}">
@@ -1126,7 +1099,7 @@
                       {% endif %}
                       {% if product_option.type == 'select' or product_option.type == 'radio' or product_option.type == 'checkbox' or product_option.type == 'image' %}
                         <div class="table-responsive">
-                          <table id="option-value{{ option_row }}" class="table table-bordered table-hover">
+                          <table class="table table-bordered table-hover">
                             <thead>
                               <tr>
                                 <td class="text-left">{{ entry_option_value }}</td>
@@ -1138,7 +1111,7 @@
                                 <td></td>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="option-value{{ option_row }}">
                               {% for product_option_value in product_option.product_option_value %}
                                 <tr id="option-value-row{{ option_value_row }}">
                                   <td class="text-left">{{ product_option_value.name }}
@@ -1485,7 +1458,7 @@
             {% endif %}
             <div id="tab-recurring" class="tab-pane">
               <div class="table-responsive">
-                <table id="product-recurring" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_recurring }}</td>
@@ -1504,7 +1477,7 @@
                       </td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="product-recurring">
                     {% set recurring_row = 0 %}
                     {% for product_recurring in product_recurrings %}
                       <tr id="recurring-row{{ recurring_row }}">
@@ -1542,7 +1515,7 @@
             </div>
             <div id="tab-discount" class="tab-pane">
               <div class="table-responsive">
-                <table id="product-discount" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_customer_group }}</td>
@@ -1563,7 +1536,7 @@
                         {% endif %}</td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="product-discount">
                     {% set discount_row = 0 %}
                     {% for product_discount in product_discounts %}
                       <tr id="discount-row{{ discount_row }}">
@@ -1611,7 +1584,7 @@
             </div>
             <div id="tab-special" class="tab-pane">
               <div class="table-responsive">
-                <table id="product-special" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_customer_group }}</td>
@@ -1631,7 +1604,7 @@
                         {% endif %}</td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="product-special">
                     {% set special_row = 0 %}
                     {% for product_special in product_specials %}
                       <tr id="special-row{{ special_row }}">
@@ -1682,7 +1655,7 @@
                 <div class="row">
                   <div class="col-sm-4 col-md-3 mb-3">
                     <div id="image" class="card image">
-                      <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/><input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                      <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
                       <div class="card-body">
                         <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
                         <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
@@ -1706,7 +1679,7 @@
               <fieldset>
                 <legend>{{ text_image_additional }}</legend>
                 <div class="table-responsive">
-                  <table id="product-image" class="table table-bordered table-hover">
+                  <table class="table table-bordered table-hover">
                     <thead>
                       <tr>
                         <td class="text-left">{{ entry_image }}</td>
@@ -1723,7 +1696,7 @@
                           {% endif %}</td>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="product-image">
                       {% set image_row = 0 %}
                       {% for product_image in product_images %}
                         <tr id="image-row{{ image_row }}">
@@ -1782,7 +1755,7 @@
               <fieldset>
                 <legend>{{ text_points }}</legend>
                 <div class="table-responsive">
-                  <table id="product-reward" class="table table-bordered table-hover">
+                  <table class="table table-bordered table-hover">
                     <thead>
                       <tr>
                         <td class="text-left">{{ entry_customer_group }}</td>
@@ -1800,7 +1773,7 @@
                         </td>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="product-reward">
                       {% for customer_group in customer_groups %}
                         <tr>
                           <td class="text-left">{{ customer_group.name }}</td>
@@ -1815,14 +1788,14 @@
             <div id="tab-seo" class="tab-pane">
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div class="table-responsive">
-                <table id="product-seo" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_store }}</td>
                       <td class="text-left">{{ entry_keyword }}</td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="product-seo">
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
@@ -1846,7 +1819,7 @@
             </div>
             <div id="tab-design" class="tab-pane">
               <div class="table-responsive">
-                <table id="product-layout" class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_store }}</td>
@@ -1864,7 +1837,7 @@
                       </td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="product-layout">
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
@@ -1890,6 +1863,296 @@
     </div>
   </div>
 </div>
+<div id="master" class="d-none">
+  {% for language in languages %}
+    <input type="hidden" value="{{ master.product_description[language.language_id] ? master.product_description[language.language_id].name }}" id="master-name{{ language.language_id }}"/>
+    <br/>
+    <textarea id="master-description{{ language.language_id }}">{{ master.product_description[language.language_id] ? master.product_description[language.language_id].description }}</textarea>
+    <br/>
+    <input type="hidden" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" id="master-meta-title{{ language.language_id }}"/>
+    <br/>
+    <textarea id="master-meta-description{{ language.language_id }}">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
+    <br/>
+    <textarea id="master-meta-keyword{{ language.language_id }}">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
+    <br/>
+    <input type="hidden" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" id="master-tag{{ language.language_id }}"/>
+    <br/>
+  {% endfor %}
+  <input type="hidden" value="{{ master.model }}" id="master-model"/>
+  <br/>
+  <input type="hidden" value="{{ master.sku }}" id="master-sku"/>
+  <br/>
+  <input type="hidden" value="{{ master.upc }}" id="master-upc"/>
+  <br/>
+  <input type="hidden" value="{{ master.ean }}" id="master-ean"/>
+  <br/>
+  <input type="hidden" value="{{ master.jan }}" id="master-jan"/>
+  <br/>
+  <input type="hidden" value="{{ master.isbn }}" id="master-isbn"/>
+  <br/>
+  <input type="hidden" value="{{ master.mpn }}" id="master-mpn"/>
+  <br/>
+  <input type="hidden" value="{{ master.location }}" id="master-location"/>
+  <br/>
+  <input type="hidden" value="{{ master.price }}" id="master-price"/>
+  <br/>
+  <input type="hidden" value="{{ master.tax_class_id }}" id="master-tax-class"/>
+  <br/>
+  <input type="hidden" value="{{ master.minimum }}" id="master-minimum"/>
+  <br/>
+  <input type="hidden" value="{{ master.subtract }}" id="master-subtract"/>
+  <br/>
+  <input type="hidden" value="{{ master.stock_status_id }}" id="master-stock-status"/>
+  <br/>
+  <input type="hidden" value="{{ master.image }}" id="master-image"/>
+  <br/>
+  <input type="hidden" value="{{ master.date_available }}" id="master-date-available"/>
+  <br/>
+  <input type="hidden" value="{{ master.shipping }}" id="master-shipping"/>
+  <br/>
+  <input type="hidden" value="{{ master.length }}" id="master-length"/>
+  <br/>
+  <input type="hidden" value="{{ master.width }}" id="master-width"/>
+  <br/>
+  <input type="hidden" value="{{ master.height }}" id="master-height"/>
+  <br/>
+  <input type="hidden" value="{{ master.length_class_id }}" id="master-length-class"/>
+  <br/>
+  <input type="hidden" value="{{ master.weight }}" id="master-weight"/>
+  <br/>
+  <input type="hidden" value="{{ master.weight_class_id }}" id="master-weight-class"/>
+  <br/>
+  <input type="hidden" value="{{ master.status }}" id="master-status"/>
+  <br/>
+  <input type="hidden" value="{{ master.sort_order }}" id="master-sort-order"/>
+  <br/>
+  <input type="hidden" value="{{ master.manufacturer }}" id="master-manufacturer"/>
+  <br/>
+  <input type="hidden" value="{{ master.manufacturer_id }}" id="master-manufacturer"/>
+  <br/>
+
+  <table id="master-product-category">
+    {% for product_category in master.product_categories %}
+      <tr id="master-product-category{{ product_category.category_id }}">
+        <td>{{ product_category.name }}<input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/></td>
+        <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <table id="master-product-filter">
+    {% for product_filter in master.product_filters %}
+      <tr id="master-product-filter{{ product_filter.filter_id }}">
+        <td>{{ product_filter.name }}<input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/></td>
+        <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <div id="master-product-store">
+    {% for store in stores %}
+      <label class="form-check">
+        {% if store.store_id in master.product_store %}
+          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+          {{ store.name }}
+        {% else %}
+          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"/>
+          {{ store.name }}
+        {% endif %}
+      </label>
+    {% endfor %}
+  </div>
+
+  <table id="master-product-download">
+    {% for product_download in master.product_downloads %}
+      <tr id="master-product-download{{ product_download.download_id }}">
+        <td>{{ product_download.name }}<input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/></td>
+        <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <table id="master-product-related">
+    {% for product_related in master.product_relateds %}
+      <tr id="master-product-related{{ product_related.product_id }}">
+        <td>{{ product_related.name }}<input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/></td>
+        <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <table id="master-product-attribute">
+    {% set master_attribute_row = 0 %}
+    {% for product_attribute in master.product_attributes %}
+      <tr id="master-attribute-row{{ attribute_row }}">
+        <td class="text-left"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/></td>
+        <td class="text-left">
+          {% for language in languages %}
+            <div class="input-group mb-12">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
+              </div>
+              <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
+            </div>
+          {% endfor %}
+        </td>
+        <td class="text-right"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+      {% set master_attribute_row = master_attribute_row + 1 %}
+    {% endfor %}
+  </table>
+
+  <table id="master-product-recurring">
+    {% set recurring_row = 0 %}
+    {% for product_recurring in master.product_recurrings %}
+      <tr id="master-recurring-row{{ recurring_row }}">
+        <td class="text-left"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-control">
+            {% for recurring in recurrings %}
+              {% if recurring.recurring_id == product_recurring.recurring_id %}
+                <option value="{{ recurring.recurring_id }}" selected="selected">{{ recurring.name }}</option>
+              {% else %}
+                <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select></td>
+        <td class="text-left"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-control">
+            {% for customer_group in customer_groups %}
+              {% if customer_group.customer_group_id == product_recurring.customer_group_id %}
+                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+              {% else %}
+                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select></td>
+        <td class="text-right"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+      {% set recurring_row = recurring_row + 1 %}
+    {% endfor %}
+  </table>
+
+  <table id="master-product-discount">
+    {% set master_discount_row = 0 %}
+    {% for product_discount in master.product_discounts %}
+      <tr id="discount-row{{ discount_row }}">
+        <td class="text-left"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-control">
+            {% for customer_group in customer_groups %}
+              {% if customer_group.customer_group_id == product_discount.customer_group_id %}
+                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+              {% else %}
+                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select></td>
+        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
+        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
+        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
+        <td class="text-left">
+          <div class="input-group date">
+            <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+            </div>
+          </div>
+        </td>
+        <td class="text-left">
+          <div class="input-group date">
+            <input type="text" name="product_discount[{{ discount_row }}][date_end]" value="{{ product_discount.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+            </div>
+          </div>
+        </td>
+        <td class="text-right"><button type="button" onclick="$('#discount-row{{ discount_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+      {% set master_discount_row = master_discount_row + 1 %}
+    {% endfor %}
+  </table>
+
+  <table id="master-product-special">
+    {% set special_row = 0 %}
+    {% for product_special in master.product_specials %}
+      <tr id="special-row{{ special_row }}">
+        <td class="text-left"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-control">
+            {% for customer_group in customer_groups %}
+              {% if customer_group.customer_group_id == product_special.customer_group_id %}
+                <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
+              {% else %}
+                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select></td>
+        <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
+        <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
+        <td class="text-left">
+          <div class="input-group date">
+            <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" class="form-control"/>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+            </div>
+          </div>
+        </td>
+        <td class="text-left">
+          <div class="input-group date">
+            <input type="text" name="product_special[{{ special_row }}][date_end]" value="{{ product_special.date_end }}" placeholder="{{ entry_date_end }}" class="form-control"/>
+            <div class="input-group-append">
+              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+            </div>
+          </div>
+        </td>
+        <td class="text-right"><button type="button" onclick="$('#special-row{{ special_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+      {% set special_row = special_row + 1 %}
+    {% endfor %}
+  </table>
+
+  <table id="master-product-image">
+    {% set image_row = 0 %}
+    {% for product_image in master.product_images %}
+      <tr id="image-row{{ image_row }}">
+        <td>
+          <div class="card image">
+            <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
+            <div class="card-body">
+              <button type="button" data-toggle="image" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+              <button type="button" data-toggle="clear" data-target="#input-image{{ image_row }}" data-thumb="#thumb-image{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+            </div>
+          </div>
+        </td>
+        <td class="text-left"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+        <td class="text-right"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+      </tr>
+      {% set image_row = image_row + 1 %}
+    {% endfor %}
+  </table>
+
+  <table id="master-product-reward">
+    {% for customer_group in master.customer_groups %}
+      <tr>
+        <td class="text-left">{{ customer_group.name }}</td>
+        <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/></td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <table id="master-product-layout">
+    {% for store in stores %}
+      <tr>
+        <td class="text-left">{{ store.name }}</td>
+        <td class="text-left"><select name="product_layout[{{ store.store_id }}]" class="form-control">
+            <option value=""></option>
+            {% for layout in layouts %}
+              {% if master.product_layout[store.store_id] and master.product_layout[store.store_id] == layout.layout_id %}
+                <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
+              {% else %}
+                <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select></td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
 <script type="text/javascript"><!--
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
@@ -1905,6 +2168,9 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 	$.merge($(target), $(target).find('input, textarea, select, button')).not('.custom-control-input').each(function() {
 		if ($(this).is('input[type=\'text\'], textarea')) {
 			$(this).prop('readonly', !$(element).prop('checked'));
+
+			$(this).val(0);
+
 		}
 
 		// ckeditor readonly
@@ -2131,7 +2397,7 @@ $('#button-attribute').on('click', function() {
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
-	$('#product-attribute tbody').append(html);
+	$('#product-attribute').append(html);
 
 	attributeautocomplete(attribute_row);
 
@@ -2162,7 +2428,7 @@ function attributeautocomplete(attribute_row) {
 	});
 }
 
-$('#product-attribute tbody tr').each(function(index, element) {
+$('#product-attribute tr').each(function(index, element) {
 	attributeautocomplete(index);
 });
 //--></script>
@@ -2477,7 +2743,7 @@ $('#option').on('click', '.btn-primary', function() {
 var discount_row = {{ discount_row }};
 
 $('#button-discount').on('click', function() {
-	html = '<tr id="discount-row' + discount_row + '">';
+	html  = '<tr id="discount-row' + discount_row + '">';
 	html += '  <td class="text-left"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
 	html += '    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
@@ -2491,7 +2757,7 @@ $('#button-discount').on('click', function() {
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
-	$('#product-discount tbody').append(html);
+	$('#product-discount').append(html);
 
 	$('.date').datetimepicker({
 		'format': 'YYYY-MM-DD',
@@ -2506,7 +2772,7 @@ $('#button-discount').on('click', function() {
 var special_row = {{ special_row }};
 
 $('#button-special').on('click', function() {
-	html = '<tr id="special-row' + special_row + '">';
+	html  = '<tr id="special-row' + special_row + '">';
 	html += '  <td class="text-left"><select name="product_special[' + special_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
@@ -2519,7 +2785,7 @@ $('#button-special').on('click', function() {
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
-	$('#product-special tbody').append(html);
+	$('#product-special').append(html);
 
 	$('.date').datetimepicker({
 		'format': 'YYYY-MM-DD',
@@ -2546,7 +2812,7 @@ $('#button-image').on('click', function() {
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#image-row' + image_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
-	$('#product-image tbody').append(html);
+	$('#product-image').append(html);
 
 	image_row++;
 });
@@ -2569,7 +2835,7 @@ $('#button-recurring').on('click', function() {
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
-	$('#product-recurring tbody').append(html);
+	$('#product-recurring').append(html);
 
 	recurring_row++;
 });

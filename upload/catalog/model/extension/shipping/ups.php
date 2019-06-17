@@ -227,7 +227,7 @@ class ModelExtensionShippingUps extends Model {
 			$xml .= '</RatingServiceSelectionRequest>';
 
 			if (!$this->config->get('shipping_ups_test')) {
-				$url = 'https://www.ups.com/ups.app/xml/Rate';
+				$url = 'https://onlinetools.ups.com/ups.app/xml/Rate';
 			} else {
 				$url = 'https://wwwcie.ups.com/ups.app/xml/Rate';
 			}
@@ -238,8 +238,6 @@ class ModelExtensionShippingUps extends Model {
 			curl_setopt($curl, CURLOPT_POST, 1);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
 
 			$result = curl_exec($curl);

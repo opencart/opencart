@@ -35,6 +35,12 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 			$data['error_key'] = '';
 		}
 
+		if (isset($this->error['sig_key'])) {
+			$data['error_sig_key'] = $this->error['sig_key'];
+		} else {
+			$data['error_sig_key'] = '';
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -76,10 +82,10 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 
 		$data['callback'] = HTTP_CATALOG . 'index.php?route=extension/payment/authorizenet_sim/callback';
 
-		if (isset($this->request->post['payment_authorizenet_sim_md5'])) {
-			$data['payment_authorizenet_sim_md5'] = $this->request->post['payment_authorizenet_sim_md5'];
+		if (isset($this->request->post['payment_authorizenet_sim_sig_key'])) {
+			$data['payment_authorizenet_sim_sig_key'] = $this->request->post['payment_authorizenet_sim_sig_key'];
 		} else {
-			$data['payment_authorizenet_sim_md5'] = $this->config->get('payment_authorizenet_sim_md5');
+			$data['payment_authorizenet_sim_sig_key'] = $this->config->get('payment_authorizenet_sim_sig_key');
 		}
 
 		if (isset($this->request->post['payment_authorizenet_sim_total'])) {
@@ -138,6 +144,10 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 
 		if (!$this->request->post['payment_authorizenet_sim_key']) {
 			$this->error['key'] = $this->language->get('error_key');
+		}
+
+		if (!$this->request->post['payment_authorizenet_sim_sig_key']) {
+			$this->error['sig_key'] = $this->language->get('error_sig_key');
 		}
 
 		return !$this->error;

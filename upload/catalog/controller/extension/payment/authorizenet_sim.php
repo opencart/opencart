@@ -53,13 +53,13 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 		$data['oc_store_url'] = $this->config->get('config_url');
 
 		$to_hash = $data['x_login'] . '^' . $data['x_fp_sequence'] . '^' . $data['x_fp_timestamp'] . '^' . $data['x_amount'] . '^' . $data['x_currency_code'];
-		$data['x_fp_hash'] = $data['x_fp_hash'] = strtoupper(hash_hmac('sha512', $to_hash, hex2bin($this->config->get('payment_authorizenet_sim_hash'))));
+		$data['x_fp_hash'] = $data['x_fp_hash'] = strtoupper(hash_hmac('sha512', $to_hash, hex2bin($this->config->get('payment_authorizenet_sim_sig_key'))));
 
 		return $this->load->view('extension/payment/authorizenet_sim', $data);
 	}
 
 	public function callback() {
-		if (isset($this->request->post['x_SHA2_Hash']) && ($this->request->post['x_SHA2_Hash'] == $this->generateResponseHash($this->request->post, $this->config->get('payment_authorizenet_sim_hash')))) {
+		if (isset($this->request->post['x_SHA2_Hash']) && ($this->request->post['x_SHA2_Hash'] == $this->generateResponseHash($this->request->post, $this->config->get('payment_authorizenet_sim_sig_key')))) {
 			$this->load->model('checkout/order');
 
 			$order_info = $this->model_checkout_order->getOrder($this->request->post['x_invoice_num']);

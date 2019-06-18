@@ -15,7 +15,7 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		$data['x_fp_hash'] = null; // calculated later, once all fields are populated
 		$data['x_show_form'] = 'PAYMENT_FORM';
-		$data['x_test_request'] = $this->config->get('authorizenet_sim_mode');
+		$data['x_test_request'] = $this->config->get('payment_authorizenet_sim_mode');
 		$data['x_type'] = 'AUTH_CAPTURE';
 		$data['x_currency_code'] = $this->session->data['currency'];
 		$data['x_invoice_num'] = $this->session->data['order_id'];
@@ -41,16 +41,28 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 		$data['x_email'] = $order_info['email'];
 		$data['x_relay_response'] = 'true';
 
-		$data['x_fp_hash'] = hash_hmac('md5', $data['x_login'] . '^' . $data['x_fp_sequence'] . '^' . $data['x_fp_timestamp'] . '^' . $data['x_amount'] . '^' . $data['x_currency_code'], $this->config->get('payment_authorizenet_sim_key'));
+		$data['x_test_mode'] = $this->config->get('payment_authorizenet_sim_test');
+		if ( $data['x_test_mode'] == '1' ) {
+			$data['x_post_url'] = 'https://test.authorize.net/gateway/transact.dll';
+		} else {
+			$data['x_post_url'] = 'https://secure.authorize.net/gateway/transact.dll';
+		}
+		$data['oc_session_id'] = $_COOKIE['OCSESSID'];
+ 		$data['oc_customer_id'] = $this->customer->getId();
+		$data['oc_store_id'] = $this->config->get('config_store_id');
+		$data['oc_store_url'] = $this->config->get('config_url');
+
+		$to_hash = $data['x_login'] . '^' . $data['x_fp_sequence'] . '^' . $data['x_fp_timestamp'] . '^' . $data['x_amount'] . '^' . $data['x_currency_code'];
+		$data['x_fp_hash'] = $data['x_fp_hash'] = strtoupper(hash_hmac('sha512', $to_hash, hex2bin($this->config->get('payment_authorizenet_sim_hash'))));
 
 		return $this->load->view('extension/payment/authorizenet_sim', $data);
 	}
 
 	public function callback() {
-		if (md5($this->config->get('authorizenet_sim_response_key') . $this->request->post['x_login'] . $this->request->post['x_trans_id'] . $this->request->post['x_amount']) == strtolower($this->request->post['x_MD5_Hash'])) {
+		if (isset($this->request->post['x_SHA2_Hash']) && ($this->request->post['x_SHA2_Hash'] == $this->generateResponseHash($this->request->post, $this->config->get('payment_authorizenet_sim_hash')))) {
 			$this->load->model('checkout/order');
 
-			$order_info = $this->model_checkout_order->getOrder($details['x_invoice_num']);
+			$order_info = $this->model_checkout_order->getOrder($this->request->post['x_invoice_num']);
 
 			if ($order_info && $this->request->post['x_response_code'] == '1') {
 				$message = '';
@@ -71,14 +83,60 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 					$message .= 'Receipt: ' . $this->request->post['exact_ctr'];
 				}
 
-				$this->model_checkout_order->addOrderHistory($details['x_invoice_num'], $this->config->get('payment_authorizenet_sim_order_status_id'), $message, true);
+				$this->model_checkout_order->addOrderHistory($this->request->post['x_invoice_num'], $this->config->get('payment_authorizenet_sim_order_status_id'), $message, true);
 
-				$this->response->redirect($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
+				echo '<script>location.href="' . $this->url->link('checkout/success') . '"</script>';
 			} else {
-				$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
+				echo '<script>location.href="' . $this->url->link('checkout/failure') . '"</script>';
 			}
 		} else {
-			$this->response->redirect($this->url->link('checkout/failure', 'language=' . $this->config->get('config_language')));
+			echo '<script>location.href="' . $this->url->link('checkout/failure') . '"</script>';
 		}
+	}
+	
+	private function generateResponseHash($post_fields, $signature_key) {
+		/**
+		 * The following array must not be reordered or elements removed, the hash requires ALL, even if empty/not set
+		 */
+		$verify_hash_fields = [
+			'x_trans_id',
+			'x_test_request',
+			'x_response_code',
+			'x_auth_code',
+			'x_cvv2_resp_code',
+			'x_cavv_response',
+			'x_avs_code',
+			'x_method',
+			'x_account_number',
+			'x_amount',
+			'x_company',
+			'x_first_name',
+			'x_last_name',
+			'x_address',
+			'x_city',
+			'x_state',
+			'x_zip',
+			'x_country',
+			'x_phone',
+			'x_fax',
+			'x_email',
+			'x_ship_to_company',
+			'x_ship_to_first_name',
+			'x_ship_to_last_name',
+			'x_ship_to_address',
+			'x_ship_to_city',
+			'x_ship_to_state',
+			'x_ship_to_zip',
+			'x_ship_to_country',
+			'x_invoice_num',
+		];
+
+		$to_hash = '^';
+
+		foreach ($verify_hash_fields as $hash_field) {
+			$to_hash .= (isset($post_fields[$hash_field]) ? $post_fields[$hash_field] : '') . '^';
+		}
+
+		return $this->generateHash($to_hash, $signature_key);
 	}
 }

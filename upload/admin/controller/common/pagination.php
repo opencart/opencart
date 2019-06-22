@@ -1,12 +1,14 @@
 <?php
 class ControllerCommonPagination extends Controller {
-	public function index(int $total) {
+	public function index(int $total, $limit = '') {
 		$provider_url = $this->provider->link('', array('page' => '{page}'));
+
+		$limit = empty($limit) ? $this->provider->limit : $limit;
 
 		$url = str_replace('%7Bpage%7D', '{page}', $provider_url);
 
 		$num_links = 8;
-		$num_pages = ceil($total / $this->provider->limit);
+		$num_pages = ceil($total / $limit);
 
 		$data['page'] = $this->provider->page;
 
@@ -67,8 +69,10 @@ class ControllerCommonPagination extends Controller {
 		}
 	}
 
-	public function results(int $total)
+	public function results(int $total, $limit = '')
 	{
-		return sprintf($this->language->get('text_pagination'), ($total) ? (($this->provider->page - 1) * $this->provider->limit) + 1 : 0, ((($this->provider->page - 1) * $this->provider->limit) > ($total - $this->provider->limit)) ? $total : ((($this->provider->page - 1) * $this->provider->limit) + $this->provider->limit), $total, ceil($total / $this->provider->limit));
+		$limit = empty($limit) ? $this->provider->limit : $limit;
+
+		return sprintf($this->language->get('text_pagination'), ($total) ? (($this->provider->page - 1) * $limit) + 1 : 0, ((($this->provider->page - 1) * $limit) > ($total - $limit)) ? $total : ((($this->provider->page - 1) * $limit) + $limit), $total, ceil($total / $limit));
 	}
 }

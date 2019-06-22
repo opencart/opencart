@@ -30,59 +30,13 @@ class ControllerCommonProfile extends Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
+		$errors = array('warning', 'username', 'password', 'confirm', 'firstname', 'lastname', 'email');
+
+		foreach ($errors as $index) {
+			$data['error_' . $index] = isset($this->error[$index]) ? $this->error[$index] : '';
 		}
 
-		if (isset($this->error['username'])) {
-			$data['error_username'] = $this->error['username'];
-		} else {
-			$data['error_username'] = '';
-		}
-
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
-		}
-
-		if (isset($this->error['confirm'])) {
-			$data['error_confirm'] = $this->error['confirm'];
-		} else {
-			$data['error_confirm'] = '';
-		}
-
-		if (isset($this->error['firstname'])) {
-			$data['error_firstname'] = $this->error['firstname'];
-		} else {
-			$data['error_firstname'] = '';
-		}
-
-		if (isset($this->error['lastname'])) {
-			$data['error_lastname'] = $this->error['lastname'];
-		} else {
-			$data['error_lastname'] = '';
-		}
-
-		if (isset($this->error['email'])) {
-			$data['error_email'] = $this->error['email'];
-		} else {
-			$data['error_email'] = '';
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'])
-		);
+		$this->breadcrumbs->setDefaults();
 
 		$data['action'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
 
@@ -92,56 +46,20 @@ class ControllerCommonProfile extends Controller {
 			$user_info = $this->model_user_user->getUser($this->user->getId());
 		}
 
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
-		} elseif (!empty($user_info)) {
-			$data['username'] = $user_info['username'];
-		} else {
-			$data['username'] = '';
-		}
+		$data['password'] = $this->request->hasPost('password') ? $this->request->post['password'] : '';
 
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
+		$data['confirm'] = $this->request->hasPost('confirm') ? $this->request->post['confirm'] : '';
 
-		if (isset($this->request->post['confirm'])) {
-			$data['confirm'] = $this->request->post['confirm'];
-		} else {
-			$data['confirm'] = '';
-		}
+		$variables = array('username', 'firstname', 'lastname', 'email', 'image');
 
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($user_info)) {
-			$data['firstname'] = $user_info['firstname'];
-		} else {
-			$data['firstname'] = '';
-		}
-
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($user_info)) {
-			$data['lastname'] = $user_info['lastname'];
-		} else {
-			$data['lastname'] = '';
-		}
-
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} elseif (!empty($user_info)) {
-			$data['email'] = $user_info['email'];
-		} else {
-			$data['email'] = '';
-		}
-
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($user_info)) {
-			$data['image'] = $user_info['image'];
-		} else {
-			$data['image'] = '';
+		foreach ($variables as $index) {
+			if ($this->request->hasPost($index)) {
+				$data[$index] = $this->request->post[$index];
+			} elseif (!empty($user_info)) {
+				$data[$index] = $user_info[$index];
+			} else {
+				$data[$index] = '';
+			}
 		}
 
 		$this->load->model('tool/image');
@@ -156,6 +74,7 @@ class ControllerCommonProfile extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('common/profile', $data));

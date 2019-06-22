@@ -4,22 +4,16 @@ class ControllerCommonFileManager extends Controller {
 		$this->load->language('common/filemanager');
 
 		// Make sure we have the correct directory
-		if (isset($this->request->get['directory'])) {
+		if ($this->request->hasGet('directory')) {
 			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
 			$directory = DIR_IMAGE . 'catalog/';
 		}
 
-		if (isset($this->request->get['filter_name'])) {
+		if ($this->request->hasGet('filter_name')) {
 			$filter_name = basename(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		} else {
 			$filter_name = '';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
 		}
 
 		$data['directories'] = array();
@@ -29,31 +23,17 @@ class ControllerCommonFileManager extends Controller {
 
 		if ($directories) {
 			// Split the array based on current page number and max number of items per page of 10
-			$images = array_splice($directories, ($page - 1) * 16, 16);
+			$images = array_splice($directories, ($this->provider->page - 1) * 16, 16);
 
 			foreach ($images as $image) {
 				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 					$name = basename($image);
 
-					$url = '';
-
-					if (isset($this->request->get['target'])) {
-						$url .= '&target=' . $this->request->get['target'];
-					}
-
-					if (isset($this->request->get['thumb'])) {
-						$url .= '&thumb=' . $this->request->get['thumb'];
-					}
-
-					if (isset($this->request->get['ckeditor'])) {
-						$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-					}
-
 					$data['directories'][] = array(
 						'name' => $name,
 						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 						'type' => 'directory',
-						'href' => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url)
+						'href' => $this->provider->link('common/filemanager', array('directory' => utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))))
 					);
 				}
 			}
@@ -67,7 +47,7 @@ class ControllerCommonFileManager extends Controller {
 
 		if ($files) {
 			// Split the array based on current page number and max number of items per page of 10
-			$images = array_splice($files, ($page - 1) * 16, 16 - count($data['images']));
+			$images = array_splice($files, ($this->provider->page - 1) * 16, 16 - count($data['images']));
 
 			foreach ($images as $image) {
 				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
@@ -85,121 +65,31 @@ class ControllerCommonFileManager extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->get['directory'])) {
-			$data['directory'] = urldecode($this->request->get['directory']);
-		} else {
-			$data['directory'] = '';
+		$variables = array('directory', 'filter_name', 'target', 'thumb', 'ckeditor');
+
+		foreach ($variables as $index) {
+			$data[$index] = $this->request->hasGet($index) ? $this->request->get[$index] : '';
 		}
 
-		if (isset($this->request->get['filter_name'])) {
-			$data['filter_name'] = $this->request->get['filter_name'];
-		} else {
-			$data['filter_name'] = '';
-		}
+		$parent = '';
 
-		// Return the target ID for the file manager to set the value
-		if (isset($this->request->get['target'])) {
-			$data['target'] = $this->request->get['target'];
-		} else {
-			$data['target'] = '';
-		}
-
-		// Return the thumbnail for the file manager to show a thumbnail
-		if (isset($this->request->get['thumb'])) {
-			$data['thumb'] = $this->request->get['thumb'];
-		} else {
-			$data['thumb'] = '';
-		}
-
-		if (isset($this->request->get['ckeditor'])) {
-			$data['ckeditor'] = $this->request->get['ckeditor'];
-		} else {
-			$data['ckeditor'] = '';
-		}
-
-		// Parent
-		$url = '';
-
-		if (isset($this->request->get['directory'])) {
+		if ($this->request->hasGet('directory')) {
 			$pos = strrpos($this->request->get['directory'], '/');
 
 			if ($pos) {
-				$url .= '&directory=' . urlencode(substr($this->request->get['directory'], 0, $pos));
+				$parent = urlencode(substr($this->request->get['directory'], 0, $pos));
 			}
 		}
 
-		if (isset($this->request->get['target'])) {
-			$url .= '&target=' . $this->request->get['target'];
-		}
-
-		if (isset($this->request->get['thumb'])) {
-			$url .= '&thumb=' . $this->request->get['thumb'];
-		}
-
-		if (isset($this->request->get['ckeditor'])) {
-			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-		}
-
-		$data['parent'] = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['parent'] = $this->provider->link('common/filemanager', array('directory' => $parent));
 
 		// Refresh
-		$url = '';
+		$data['refresh'] = $this->provider->link('common/filemanager');
 
-		if (isset($this->request->get['directory'])) {
-			$url .= '&directory=' . urlencode(html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-		
-		if (isset($this->request->get['target'])) {
-			$url .= '&target=' . $this->request->get['target'];
-		}
-
-		if (isset($this->request->get['thumb'])) {
-			$url .= '&thumb=' . $this->request->get['thumb'];
-		}
-
-		if (isset($this->request->get['ckeditor'])) {
-			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['refresh'] = $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		$url = '';
-
-		if (isset($this->request->get['directory'])) {
-			$url .= '&directory=' . urlencode(html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['target'])) {
-			$url .= '&target=' . $this->request->get['target'];
-		}
-
-		if (isset($this->request->get['thumb'])) {
-			$url .= '&thumb=' . $this->request->get['thumb'];
-		}
-
-		if (isset($this->request->get['ckeditor'])) {
-			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-		}
+		$total = count(array_merge((array)$directories, (array)$files));
 
 		// Get total number of files and directories
-		$data['pagination'] = $this->load->controller('common/pagination', array(
-			'total' => count(array_merge((array)$directories, (array)$files)),
-			'page'  => $page,
-			'limit' => 16,
-			'url'   => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		$data['pagination'] = $this->load->controller('common/pagination', $total, 16);
 
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
@@ -215,7 +105,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Make sure we have the correct directory
-		if (isset($this->request->get['directory'])) {
+		if ($this->request->hasGet('directory')) {
 			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
 			$directory = DIR_IMAGE . 'catalog/';
@@ -310,7 +200,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Make sure we have the correct directory
-		if (isset($this->request->get['directory'])) {
+		if ($this->request->hasGet('directory')) {
 			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
 		} else {
 			$directory = DIR_IMAGE . 'catalog/';
@@ -359,7 +249,7 @@ class ControllerCommonFileManager extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (isset($this->request->post['path'])) {
+		if ($this->request->hasPost('path')) {
 			$paths = $this->request->post['path'];
 		} else {
 			$paths = array();

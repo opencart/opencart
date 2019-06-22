@@ -26,8 +26,6 @@ class Language {
 	}
 	
 	/**
-     * 
-     *
      * @param	string	$key
 	 * 
 	 * @return	string
@@ -37,8 +35,6 @@ class Language {
 	}
 
 	/**
-     * 
-     *
      * @param	string	$key
 	 * @param	string	$value
      */	
@@ -47,8 +43,6 @@ class Language {
 	}
 	
 	/**
-     * 
-     *
 	 * @return	array
      */	
 	public function all() {
@@ -56,8 +50,6 @@ class Language {
 	}
 	
 	/**
-     * 
-     *
      * @param	string	$filename
 	 * @param	string	$key
 	 * 

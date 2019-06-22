@@ -23,8 +23,6 @@ class Document {
 	private $price;
 
 	/**
-     *
-     *
      * @param	string	$title
      */
 	public function setTitle($title) {
@@ -32,8 +30,6 @@ class Document {
 	}
 
 	/**
-     *
-	 *
 	 * @return	string
      */
 	public function getTitle() {
@@ -41,8 +37,6 @@ class Document {
 	}
 
 	/**
-     *
-     *
      * @param	string	$description
      */
 	public function setDescription($description) {
@@ -50,8 +44,6 @@ class Document {
 	}
 
 	/**
-     *
-     *
      * @param	string	$description
 	 *
 	 * @return	string
@@ -61,8 +53,6 @@ class Document {
 	}
 
 	/**
-     *
-     *
      * @param	string	$keywords
      */
 	public function setKeywords($keywords) {
@@ -70,8 +60,6 @@ class Document {
 	}
 
 	/**
-     *
-	 *
 	 * @return	string
      */
 	public function getKeywords() {
@@ -79,8 +67,6 @@ class Document {
 	}
 
 	/**
-     *
-     *
      * @param	string	$href
 	 * @param	string	$rel
      */
@@ -92,8 +78,6 @@ class Document {
 	}
 
 	/**
-     *
-	 *
 	 * @return	array
      */
 	public function getLinks() {
@@ -101,8 +85,6 @@ class Document {
 	}
 
 	/**
-     *
-     *
      * @param	string	$href
 	 * @param	string	$rel
 	 * @param	string	$media
@@ -116,8 +98,6 @@ class Document {
 	}
 
 	/**
-     *
-	 *
 	 * @return	array
      */
 	public function getStyles() {
@@ -125,8 +105,6 @@ class Document {
 	}
 
 	/**
-     *
-     *
      * @param	string	$href
 	 * @param	string	$position
      */
@@ -135,8 +113,6 @@ class Document {
 	}
 
 	/**
-     *
-     *
      * @param	string	$position
 	 *
 	 * @return	array

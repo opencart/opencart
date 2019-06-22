@@ -14,8 +14,6 @@ class Proxy {
 	private $data = array();
 
     /**
-     * 
-     *
      * @param	string	$key
      */	
 	public function &__get($key) {
@@ -27,8 +25,6 @@ class Proxy {
 	}
 
     /**
-     * 
-     *
      * @param	string	$key
 	 * @param	string	$value
      */	

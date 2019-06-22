@@ -21,15 +21,13 @@ class Event {
 	/**
 	 * Constructor
 	 *
-	 * @param	object	$route
+	 * @param	object	$registry
  	*/
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	string	$trigger
 	 * @param	object	$action
 	 * @param	int		$priority
@@ -51,8 +49,6 @@ class Event {
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	string	$event
 	 * @param	array	$args
  	*/		
@@ -69,8 +65,6 @@ class Event {
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	string	$trigger
 	 * @param	string	$route
  	*/	
@@ -83,8 +77,6 @@ class Event {
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	string	$trigger
  	*/		
 	public function clear($trigger) {

@@ -24,21 +24,7 @@ class ControllerCatalogCategory extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/category'));
 		}
 
 		$this->getForm();
@@ -56,21 +42,9 @@ class ControllerCatalogCategory extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
+			$this->provider->detach('category_id');
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/category'));
 		}
 
 		$this->getForm();
@@ -83,28 +57,14 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->load->model('catalog/category');
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+		if ($this->request->hasPost('selected') && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $category_id) {
 				$this->model_catalog_category->deleteCategory($category_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/category'));
 		}
 
 		$this->getList();
@@ -122,95 +82,36 @@ class ControllerCatalogCategory extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/category'));
 		}
 
 		$this->getList();
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
+		$this->provider->parser(array('sort' => 'name'));
 
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
-
-		$data['add'] = $this->url->link('catalog/category/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/category/delete', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['repair'] = $this->url->link('catalog/category/repair', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		$data['categories'] = array();
-
-		$filter_data = array(
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
+		$filter_data = array_merge($this->provider->getParams(), $this->provider->default_filter);
 
 		$category_total = $this->model_catalog_category->getTotalCategories();
 
 		$results = $this->model_catalog_category->getCategories($filter_data);
+
+		$this->breadcrumbs->setDefaults();
+
+		$data['add'] = $this->provider->link('catalog/category/add');
+		$data['delete'] = $this->provider->link('catalog/category/delete');
+		$data['repair'] = $this->provider->link('catalog/category/repair');
+
+		$data['categories'] = array();
 
 		foreach ($results as $result) {
 			$data['categories'][] = array(
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
 				'sort_order'  => $result['sort_order'],
-				'edit'        => $this->url->link('catalog/category/edit', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url),
-				'delete'      => $this->url->link('catalog/category/delete', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
+				'edit'        => $this->provider->link('catalog/category/edit', array('category_id' => $result['category_id'])),
+				'delete'      => $this->provider->link('catalog/category/delete', array('category_id' => $result['category_id']))
 			);
 		}
 
@@ -228,51 +129,28 @@ class ControllerCatalogCategory extends Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->request->post['selected'])) {
+		if ($this->request->hasPost('selected')) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
 			$data['selected'] = array();
 		}
 
-		$url = '';
+		$sorts = array('sort_name' => 'name', 'sort_order' => 'sort_order');
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
+		foreach ($sorts as $key => $sort) {
+			$data[$key] = $this->provider->link('catalog/category', array('sort' => $sort, 'order' => $this->provider->order));
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$data['pagination'] = $this->load->controller('common/pagination', $category_total);
 
-		$data['sort_name'] = $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		$data['results'] = $this->load->controller('common/pagination/results', $category_total);
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		$data['pagination'] = $this->load->controller('common/pagination', array(
-			'total' => $category_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
-			'url'   => $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($category_total - $this->config->get('config_limit_admin'))) ? $category_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $category_total, ceil($category_total / $this->config->get('config_limit_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
+		$data['sort'] = $this->provider->getParser('sort');
+		$data['order'] = $this->provider->getParser('order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/category_list', $data));
@@ -282,73 +160,29 @@ class ControllerCatalogCategory extends Controller {
 		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
 		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
 
-		$data['text_form'] = !isset($this->request->get['category_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$this->provider->detach('category_id');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
+		$data['text_form'] = $this->request->hasGet('category_id') ? $this->language->get('text_edit') : $this->language->get('text_add');
+
+		$this->breadcrumbs->setDefaults();
+
+		$this->breadcrumbs->set((string)$data['text_form']);
+
+		$errors = array('warning' => '', 'name' => array(), 'meta_title' => array(), 'keyword' => '', 'parent' => '');
+
+		foreach ($errors as $key => $value) {
+			$data['error_' . $key] = isset($this->error[$key]) ? $this->error[$key] : $value;
+		}
+
+		if ($this->request->hasGet('category_id')) {
+			$data['action'] = $this->provider->link('catalog/category/edit', array('category_id' => $this->request->get['category_id']));
 		} else {
-			$data['error_warning'] = '';
+			$data['action'] = $this->provider->link('catalog/category/add');
 		}
 
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = array();
-		}
+		$data['cancel'] = $this->provider->link('catalog/category');
 
-		if (isset($this->error['meta_title'])) {
-			$data['error_meta_title'] = $this->error['meta_title'];
-		} else {
-			$data['error_meta_title'] = array();
-		}
-
-		if (isset($this->error['keyword'])) {
-			$data['error_keyword'] = $this->error['keyword'];
-		} else {
-			$data['error_keyword'] = '';
-		}
-
-		if (isset($this->error['parent'])) {
-			$data['error_parent'] = $this->error['parent'];
-		} else {
-			$data['error_parent'] = '';
-		}
-		
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
-
-		if (!isset($this->request->get['category_id'])) {
-			$data['action'] = $this->url->link('catalog/category/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('catalog/category/edit', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $this->request->get['category_id'] . $url);
-		}
-
-		$data['cancel'] = $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['category_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if ($this->request->hasGet('category_id') && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);
 		}
 
@@ -358,7 +192,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['category_description'])) {
+		if ($this->request->hasPost('category_description')) {
 			$data['category_description'] = $this->request->post['category_description'];
 		} elseif (!empty($category_info)) {
 			$data['category_description'] = $this->model_catalog_category->getCategoryDescriptions($this->request->get['category_id']);
@@ -366,25 +200,21 @@ class ControllerCatalogCategory extends Controller {
 			$data['category_description'] = array();
 		}
 
-		if (isset($this->request->post['path'])) {
-			$data['path'] = $this->request->post['path'];
-		} elseif (!empty($category_info)) {
-			$data['path'] = $category_info['path'];
-		} else {
-			$data['path'] = '';
-		}
+		$variables = array('path' => '', 'parent_id' => 0, 'image' => '', 'top' => 0, 'column' => 1, 'sort_order' => 0, 'status' => true);
 
-		if (isset($this->request->post['parent_id'])) {
-			$data['parent_id'] = $this->request->post['parent_id'];
-		} elseif (!empty($category_info)) {
-			$data['parent_id'] = $category_info['parent_id'];
-		} else {
-			$data['parent_id'] = 0;
+		foreach ($variables as $key => $value) {
+			if ($this->request->hasPost($key)) {
+				$data[$key] = $this->request->post[$key];
+			} elseif (!empty($category_info)) {
+				$data[$key] = $category_info[$key];
+			} else {
+				$data[$key] = $value;
+			}
 		}
 
 		$this->load->model('catalog/filter');
 
-		if (isset($this->request->post['category_filter'])) {
+		if ($this->request->hasPost('category_filter')) {
 			$filters = $this->request->post['category_filter'];
 		} elseif (!empty($category_info)) {
 			$filters = $this->model_catalog_category->getCategoryFilters($this->request->get['category_id']);
@@ -423,20 +253,12 @@ class ControllerCatalogCategory extends Controller {
 			);
 		}
 
-		if (isset($this->request->post['category_store'])) {
+		if ($this->request->hasPost('category_store')) {
 			$data['category_store'] = $this->request->post['category_store'];
-		} elseif (isset($this->request->get['category_id'])) {
+		} elseif ($this->request->hasGet('category_id')) {
 			$data['category_store'] = $this->model_catalog_category->getCategoryStores($this->request->get['category_id']);
 		} else {
 			$data['category_store'] = array(0);
-		}
-
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($category_info)) {
-			$data['image'] = $category_info['image'];
-		} else {
-			$data['image'] = '';
 		}
 
 		$this->load->model('tool/image');
@@ -448,40 +270,8 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
-
-		if (isset($this->request->post['top'])) {
-			$data['top'] = $this->request->post['top'];
-		} elseif (!empty($category_info)) {
-			$data['top'] = $category_info['top'];
-		} else {
-			$data['top'] = 0;
-		}
-
-		if (isset($this->request->post['column'])) {
-			$data['column'] = $this->request->post['column'];
-		} elseif (!empty($category_info)) {
-			$data['column'] = $category_info['column'];
-		} else {
-			$data['column'] = 1;
-		}
-
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($category_info)) {
-			$data['sort_order'] = $category_info['sort_order'];
-		} else {
-			$data['sort_order'] = 0;
-		}
-
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($category_info)) {
-			$data['status'] = $category_info['status'];
-		} else {
-			$data['status'] = true;
-		}
 		
-		if (isset($this->request->post['category_seo_url'])) {
+		if ($this->request->hasPost('category_seo_url')) {
 			$data['category_seo_url'] = $this->request->post['category_seo_url'];
 		} elseif (!empty($category_info)) {
 			$data['category_seo_url'] = $this->model_catalog_category->getCategorySeoUrls($this->request->get['category_id']);
@@ -489,7 +279,7 @@ class ControllerCatalogCategory extends Controller {
 			$data['category_seo_url'] = array();
 		}
 				
-		if (isset($this->request->post['category_layout'])) {
+		if ($this->request->hasPost('category_layout')) {
 			$data['category_layout'] = $this->request->post['category_layout'];
 		} elseif (!empty($category_info)) {
 			$data['category_layout'] = $this->model_catalog_category->getCategoryLayouts($this->request->get['category_id']);
@@ -503,6 +293,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/category_form', $data));
@@ -523,7 +314,7 @@ class ControllerCatalogCategory extends Controller {
 			}
 		}
 
-		if (isset($this->request->get['category_id']) && $this->request->post['parent_id']) {
+		if ($this->request->hasGet('category_id') && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getCategoryPath($this->request->post['parent_id']);
 			
 			foreach ($results as $result) {
@@ -544,7 +335,7 @@ class ControllerCatalogCategory extends Controller {
 						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
 
 						foreach ($seo_urls as $seo_url) {
-							if (($seo_url['store_id'] == $store_id) && ($seo_url['language_id'] == $language_id) && (!isset($this->request->get['category_id']) || ($seo_url['query'] != 'path=' . $this->model_catalog_category->getPath($this->request->get['category_id'])))) {
+							if (($seo_url['store_id'] == $store_id) && ($seo_url['language_id'] == $language_id) && (!$this->request->hasGet('category_id') || ($seo_url['query'] != 'path=' . $this->model_catalog_category->getPath($this->request->get['category_id'])))) {
 								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 
 								break;
@@ -583,7 +374,7 @@ class ControllerCatalogCategory extends Controller {
 	public function autocomplete() {
 		$json = array();
 
-		if (isset($this->request->get['filter_name'])) {
+		if ($this->request->hasGet('filter_name')) {
 			$this->load->model('catalog/category');
 
 			$filter_data = array(

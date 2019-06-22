@@ -6,7 +6,7 @@ class User {
 	private $username;
 	private $permission = array();
 
-	public function __construct($registry) {
+	public function __construct(\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');

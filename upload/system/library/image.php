@@ -52,8 +52,6 @@ class Image {
 	}
 	
 	/**
-     * 
-	 * 
 	 * @return	string
      */
 	public function getFile() {
@@ -61,8 +59,6 @@ class Image {
 	}
 
 	/**
-     * 
-	 * 
 	 * @return	array
      */
 	public function getImage() {
@@ -70,8 +66,6 @@ class Image {
 	}
 	
 	/**
-     * 
-	 * 
 	 * @return	string
      */
 	public function getWidth() {
@@ -79,8 +73,6 @@ class Image {
 	}
 	
 	/**
-     * 
-	 * 
 	 * @return	string
      */
 	public function getHeight() {
@@ -88,8 +80,6 @@ class Image {
 	}
 	
 	/**
-     * 
-	 * 
 	 * @return	string
      */
 	public function getBits() {
@@ -97,8 +87,6 @@ class Image {
 	}
 	
 	/**
-     * 
-	 * 
 	 * @return	string
      */
 	public function getMime() {
@@ -106,8 +94,6 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
      * @param	string	$file
 	 * @param	int		$quality
      */
@@ -130,8 +116,6 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
      * @param	int	$width
 	 * @param	int	$height
 	 * @param	string	$default
@@ -189,8 +173,6 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
      * @param	string	$watermark
 	 * @param	string	$position
      */
@@ -242,12 +224,10 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
-     * @param	int		$top_x
-	 * @param	int		$top_y
-	 * @param	int		$bottom_x
-	 * @param	int		$bottom_y
+     * @param	int	$top_x
+	 * @param	int	$top_y
+	 * @param	int	$bottom_x
+	 * @param	int	$bottom_y
      */
 	public function crop($top_x, $top_y, $bottom_x, $bottom_y) {
 		$image_old = $this->image;
@@ -261,8 +241,6 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
      * @param	int		$degree
 	 * @param	string	$color
      */
@@ -275,10 +253,6 @@ class Image {
 		$this->height = imagesy($this->image);
 	}
 	
-	/**
-     * 
-     *
-     */
 	private function filter() {
         $args = func_get_args();
 
@@ -286,8 +260,6 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
      * @param	string	$text
 	 * @param	int		$x
 	 * @param	int		$y 
@@ -301,8 +273,6 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
      * @param	object	$merge
 	 * @param	object	$x
 	 * @param	object	$y
@@ -313,8 +283,6 @@ class Image {
 	}
 	
 	/**
-     * 
-     *
      * @param	string	$color
 	 * 
 	 * @return	array

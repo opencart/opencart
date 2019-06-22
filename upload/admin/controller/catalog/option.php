@@ -24,21 +24,7 @@ class ControllerCatalogOption extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/option'));
 		}
 
 		$this->getForm();
@@ -56,21 +42,9 @@ class ControllerCatalogOption extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
+			$this->provider->detach('option_id');
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/option'));
 		}
 
 		$this->getForm();
@@ -83,100 +57,41 @@ class ControllerCatalogOption extends Controller {
 
 		$this->load->model('catalog/option');
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+		if ($this->request->hasPost('selected') && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $option_id) {
 				$this->model_catalog_option->deleteOption($option_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/option'));
 		}
 
 		$this->getList();
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'od.name';
-		}
+		$this->provider->parser(array('sort' => 'od.name'));
 
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
-
-		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		$data['options'] = array();
-
-		$filter_data = array(
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
+		$filter_data = array_merge($this->provider->getParams(), $this->provider->default_filter);
 
 		$option_total = $this->model_catalog_option->getTotalOptions();
 
 		$results = $this->model_catalog_option->getOptions($filter_data);
+
+		$this->breadcrumbs->setDefaults();
+
+		$data['add'] = $this->provider->link('catalog/option/add');
+		$data['delete'] = $this->provider->link('catalog/option/delete');
+
+		$data['options'] = array();
 
 		foreach ($results as $result) {
 			$data['options'][] = array(
 				'option_id'  => $result['option_id'],
 				'name'       => $result['name'],
 				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)
+				'edit'       => $this->provider->link('catalog/option/edit', array('option_id' => $result['option_id']))
 			);
 		}
 
@@ -194,58 +109,41 @@ class ControllerCatalogOption extends Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->request->post['selected'])) {
+		if ($this->request->hasPost('selected')) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
 			$data['selected'] = array();
 		}
 
-		$url = '';
+		$sorts = array('sort_name' => 'od.name', 'sort_order' => 'o.sort_order');
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
+		foreach ($sorts as $key => $sort) {
+			$data[$key] = $this->provider->link('catalog/option', array('sort' => $sort, 'order' => $this->provider->order));
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$data['pagination'] = $this->load->controller('common/pagination', $option_total);
 
-		$data['sort_name'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
+		$data['results'] = $this->load->controller('common/pagination/results', $option_total);
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		$data['pagination'] = $this->load->controller('common/pagination', array(
-			'total' => $option_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
-			'url'   => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($option_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($option_total - $this->config->get('config_limit_admin'))) ? $option_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $option_total, ceil($option_total / $this->config->get('config_limit_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
+		$data['sort'] = $this->provider->getParser('sort');
+		$data['order'] = $this->provider->getParser('order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/option_list', $data));
 	}
 
 	protected function getForm() {
-		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$this->provider->detach('option_id');
+
+		$data['text_form'] = $this->request->hasGet('option_id') ? $this->language->get('text_edit') : $this->language->get('text_add');
+
+		$this->breadcrumbs->setDefaults();
+
+		$this->breadcrumbs->set((string)$data['text_form']);
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -265,41 +163,15 @@ class ControllerCatalogOption extends Controller {
 			$data['error_option_value'] = array();
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
-
-		if (!isset($this->request->get['option_id'])) {
-			$data['action'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
+		if ($this->request->hasGet('option_id')) {
+			$data['action'] = $this->provider->link('catalog/option/edit', array('option_id' => $this->request->get['option_id']));
 		} else {
-			$data['action'] = $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id'] . $url);
+			$data['action'] = $this->provider->link('catalog/option/add');
 		}
 
-		$data['cancel'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['cancel'] = $this->provider->link('catalog/option');
 
-		if (isset($this->request->get['option_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if ($this->request->hasGet('option_id') && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
 		}
 
@@ -309,7 +181,7 @@ class ControllerCatalogOption extends Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['option_description'])) {
+		if ($this->request->hasPost('option_description')) {
 			$data['option_description'] = $this->request->post['option_description'];
 		} elseif (!empty($option_info)) {
 			$data['option_description'] = $this->model_catalog_option->getOptionDescriptions($this->request->get['option_id']);
@@ -317,7 +189,7 @@ class ControllerCatalogOption extends Controller {
 			$data['option_description'] = array();
 		}
 
-		if (isset($this->request->post['type'])) {
+		if ($this->request->hasPost('type')) {
 			$data['type'] = $this->request->post['type'];
 		} elseif (!empty($option_info)) {
 			$data['type'] = $option_info['type'];
@@ -325,7 +197,7 @@ class ControllerCatalogOption extends Controller {
 			$data['type'] = '';
 		}
 
-		if (isset($this->request->post['sort_order'])) {
+		if ($this->request->hasPost('sort_order')) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($option_info)) {
 			$data['sort_order'] = $option_info['sort_order'];
@@ -333,7 +205,7 @@ class ControllerCatalogOption extends Controller {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->post['option_value'])) {
+		if ($this->request->hasPost('option_value')) {
 			$option_values = $this->request->post['option_value'];
 		} elseif (!empty($option_info)) {
 			$option_values = $this->model_catalog_option->getOptionValueDescriptions($this->request->get['option_id']);
@@ -367,6 +239,7 @@ class ControllerCatalogOption extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/option_form', $data));
@@ -383,12 +256,12 @@ class ControllerCatalogOption extends Controller {
 			}
 		}
 
-		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['option_value'])) {
+		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !$this->request->hasPost('option_value')) {
 			$this->error['warning'] = $this->language->get('error_type');
 		}
 
-		if (isset($this->request->post['option_value'])) {
-			if (isset($this->request->get['option_id'])) {
+		if ($this->request->hasPost('option_value')) {
+			if ($this->request->hasGet('option_id')) {
 				$this->load->model('catalog/product');
 
 				$option_value_data = array();
@@ -409,7 +282,7 @@ class ControllerCatalogOption extends Controller {
 			}
 		}
 
-		if (isset($this->request->post['option_value'])) {
+		if ($this->request->hasPost('option_value')) {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					if ((utf8_strlen($option_value_description['name']) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
@@ -443,7 +316,7 @@ class ControllerCatalogOption extends Controller {
 	public function autocomplete() {
 		$json = array();
 
-		if (isset($this->request->get['filter_name'])) {
+		if ($this->request->hasGet('filter_name')) {
 			$this->load->language('catalog/option');
 
 			$this->load->model('catalog/option');

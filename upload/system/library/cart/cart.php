@@ -3,7 +3,7 @@ namespace Cart;
 class Cart {
 	private $data = array();
 
-	public function __construct($registry) {
+	public function __construct(\Registry $registry) {
 		$this->config = $registry->get('config');
 		$this->customer = $registry->get('customer');
 		$this->session = $registry->get('session');

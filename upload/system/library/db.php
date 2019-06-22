@@ -35,8 +35,6 @@ class DB {
 	}
 
 	/**
-     * 
-     *
      * @param	string	$sql
 	 * 
 	 * @return	array
@@ -46,8 +44,6 @@ class DB {
 	}
 
 	/**
-     * 
-     *
      * @param	string	$value
 	 * 
 	 * @return	string
@@ -57,8 +53,6 @@ class DB {
 	}
 
 	/**
-     * 
-	 * 
 	 * @return	int
      */
 	public function countAffected() {
@@ -66,8 +60,6 @@ class DB {
 	}
 
 	/**
-     * 
-	 * 
 	 * @return	int
      */
 	public function getLastId() {
@@ -75,8 +67,6 @@ class DB {
 	}
 	
 	/**
-     * 
-	 * 
 	 * @return	bool
      */	
 	public function connected() {

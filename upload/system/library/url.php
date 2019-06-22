@@ -14,6 +14,7 @@
 class Url {
 	/** @var string */
 	private $url;
+
 	/** @var Controller[] */
 	private $rewrite = array();
 
@@ -28,19 +29,15 @@ class Url {
 	}
 
 	/**
-	 *
-	 *
 	 * @param Controller $rewrite
 	 *
 	 * @return void
 	 */
-	public function addRewrite($rewrite) {
+	public function addRewrite(Controller $rewrite) {
 		$this->rewrite[] = $rewrite;
 	}
 
 	/**
-	 *
-	 *
 	 * @param string          $route
 	 * @param string|string[] $args
 	 *

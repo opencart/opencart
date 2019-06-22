@@ -39,8 +39,6 @@ class Session {
 	}
 	
 	/**
-	 * 
-	 *
 	 * @return	string
  	*/	
 	public function getId() {
@@ -48,8 +46,6 @@ class Session {
 	}
 
 	/**
-	 *
-	 *
 	 * @param	string	$session_id
 	 *
 	 * @return	string
@@ -74,16 +70,10 @@ class Session {
 		return $session_id;
 	}
 	
-	/**
-	 * 
- 	*/
 	public function close() {
 		$this->adaptor->write($this->session_id, $this->data);
 	}
 	
-	/**
-	 * 
- 	*/	
 	public function __destroy() {
 		$this->adaptor->destroy($this->session_id);
 	}

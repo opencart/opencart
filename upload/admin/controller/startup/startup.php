@@ -78,5 +78,17 @@ class ControllerStartupStartup extends Controller {
 		
 		// Encryption
 		$this->registry->set('encryption', new Encryption());
+
+		$limit = $this->config->get('config_limit_admin');
+
+		if ($limit <= 0) {
+			$limit = 10;
+		}
+
+		// Provider
+		$this->registry->set('provider', new Provider($this->registry, $limit));
+
+		// Breadcrumbs
+		$this->registry->set('breadcrumbs', $this->load->controller('common/breadcrumbs'));
 	}
 }

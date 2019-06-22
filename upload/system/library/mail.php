@@ -39,8 +39,6 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	mixed	$to
      */
 	public function setTo($to) {
@@ -48,8 +46,6 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	string	$from
      */
 	public function setFrom($from) {
@@ -57,8 +53,6 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	string	$sender
      */
 	public function setSender($sender) {
@@ -66,8 +60,6 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	string	$reply_to
      */
 	public function setReplyTo($reply_to) {
@@ -75,8 +67,6 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	string	$subject
      */
 	public function setSubject($subject) {
@@ -84,8 +74,6 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	string	$text
      */
 	public function setText($text) {
@@ -93,8 +81,6 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	string	$html
      */
 	public function setHtml($html) {
@@ -102,18 +88,12 @@ class Mail {
 	}
 
 	/**
-     *
-     *
      * @param	string	$filename
      */
 	public function addAttachment($filename) {
 		$this->attachments[] = $filename;
 	}
 
-	/**
-     *
-     *
-     */
 	public function send() {
 		if (!$this->to) {
 			throw new \Exception('Error: E-Mail to required!');

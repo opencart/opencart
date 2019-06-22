@@ -16,9 +16,9 @@ final class Loader {
 	/**
 	 * Constructor
 	 *
-	 * @param    object $registry
+	 * @param object $registry
 	 */
-	public function __construct($registry) {
+	public function __construct(Registry $registry) {
 		$this->registry = $registry;
 	}
 
@@ -27,10 +27,10 @@ final class Loader {
 	 *
 	 * https://wiki.php.net/rfc/variadics
 	 *
-	 * @param    string $route
-	 * @param    array $data
+	 * @param  string $route
+	 * @param  $args
 	 *
-	 * @return    mixed
+	 * @return mixed
 	 */
 	//public function controller($route, &...$args) {
 	public function controller($route, ...$args) {
@@ -66,7 +66,7 @@ final class Loader {
 	/**
 	 * Model
 	 *
-	 * @param    string $route
+	 * @param string $route
 	 */
 	public function model($route) {
 		// Sanitize the call
@@ -99,12 +99,12 @@ final class Loader {
 	/**
 	 * View
 	 *
-	 * @param    string $route
-	 * @param    array $data
+	 * @param  string $route
+	 * @param  array $data
 	 *
-	 * @return   string
+	 * @return string
 	 */
-	public function view($route, $data = array()) {
+	public function view($route, array $data = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -143,7 +143,8 @@ final class Loader {
 	/**
 	 * Library
 	 *
-	 * @param    string $route
+	 * @param string $route
+	 * @param $config
 	 */
 	public function library($route, $config = array()) {
 		// Sanitize the call
@@ -164,7 +165,7 @@ final class Loader {
 	/**
 	 * Helper
 	 *
-	 * @param    string $route
+	 * @param string $route
 	 */
 	public function helper($route) {
 		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
@@ -179,7 +180,7 @@ final class Loader {
 	/**
 	 * Config
 	 *
-	 * @param    string $route
+	 * @param string $route
 	 */
 	public function config($route) {
 		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
@@ -192,10 +193,10 @@ final class Loader {
 	/**
 	 * Language
 	 *
-	 * @param    string $route
-	 * @param    string $key
+	 * @param  string $route
+	 * @param  string $key
 	 *
-	 * @return    array
+	 * @return array
 	 */
 	public function language($route, $key = '') {
 		// Sanitize the call

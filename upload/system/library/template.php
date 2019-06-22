@@ -16,7 +16,7 @@ class Template {
 	/**
 	 * Constructor
 	 *
-	 * @param    string $adaptor
+	 * @param string $adaptor
 	 *
 	 */
 	public function __construct($adaptor) {
@@ -42,10 +42,10 @@ class Template {
 	/**
 	 * Render
 	 *
-	 * @param    string $filename
-	 * @param    string $code
+	 * @param  string $filename
+	 * @param  string $code
 	 *
-	 * @return    string
+	 * @return string
 	 */
 	public function render($filename, $code = '') {
 		return $this->adaptor->render($filename, $code);

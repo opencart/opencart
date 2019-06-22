@@ -24,21 +24,7 @@ class ControllerCatalogDownload extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/download'));
 		}
 
 		$this->getForm();
@@ -56,21 +42,9 @@ class ControllerCatalogDownload extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
+			$this->provider->detach('download_id');
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/download'));
 		}
 
 		$this->getForm();
@@ -83,100 +57,41 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->load->model('catalog/download');
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+		if ($this->request->hasPost('selected') && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $download_id) {
 				$this->model_catalog_download->deleteDownload($download_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url));
+			$this->response->redirect($this->provider->link('catalog/download'));
 		}
 
 		$this->getList();
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'dd.name';
-		}
+		$this->provider->parser(array('sort' => 'dd.name'));
 
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
-
-		$data['add'] = $this->url->link('catalog/download/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/download/delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		$data['downloads'] = array();
-
-		$filter_data = array(
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
+		$filter_data = array_merge($this->provider->getParams(), $this->provider->default_filter);
 
 		$download_total = $this->model_catalog_download->getTotalDownloads();
 
 		$results = $this->model_catalog_download->getDownloads($filter_data);
+
+		$this->breadcrumbs->setDefaults();
+
+		$data['add'] = $this->provider->link('catalog/download/add');
+		$data['delete'] = $this->provider->link('catalog/download/delete');
+
+		$data['downloads'] = array();
 
 		foreach ($results as $result) {
 			$data['downloads'][] = array(
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('catalog/download/edit', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $result['download_id'] . $url)
+				'edit'        => $this->provider->link('catalog/download/edit', array('download_id' => $result['download_id']))
 			);
 		}
 
@@ -194,136 +109,79 @@ class ControllerCatalogDownload extends Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->request->post['selected'])) {
+		if ($this->request->hasPost('selected')) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
 			$data['selected'] = array();
 		}
 
-		$url = '';
+		$sorts = array('sort_name' => 'dd.name', 'sort_date_added' => 'd.date_added');
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
+		foreach ($sorts as $key => $sort) {
+			$data[$key] = $this->provider->link('catalog/download', array('sort' => $sort, 'order' => $this->provider->order));
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$data['pagination'] = $this->load->controller('common/pagination', $download_total);
 
-		$data['sort_name'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . '&sort=dd.name' . $url);
-		$data['sort_date_added'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . '&sort=d.date_added' . $url);
+		$data['results'] = $this->load->controller('common/pagination/results', $download_total);
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		$data['pagination'] = $this->load->controller('common/pagination', array(
-			'total' => $download_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
-			'url'   => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($download_total - $this->config->get('config_limit_admin'))) ? $download_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $download_total, ceil($download_total / $this->config->get('config_limit_admin')));
-
-		$data['sort'] = $sort;
-		$data['order'] = $order;
+		$data['sort'] = $this->provider->getParser('sort');
+		$data['order'] = $this->provider->getParser('order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/download_list', $data));
 	}
 
 	protected function getForm() {
-		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$this->provider->detach('download_id');
+
+		$data['text_form'] = $this->request->hasGet('download_id') ? $this->language->get('text_edit') : $this->language->get('text_add');
+
+		$this->breadcrumbs->setDefaults();
+
+		$this->breadcrumbs->set((string)$data['text_form']);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
+		$errors = array('warning', 'name', 'filename', 'mask');
+
+		foreach ($errors as $index) {
+			if (isset($this->error[$index])) {
+				$data['error_' . $index] = $this->error[$index];
+			} else {
+				$data['error_' . $index] = ($index == 'name') ? array() : '';
+			}
+		}
+
+		if ($this->request->hasGet('download_id')) {
+			$data['action'] = $this->provider->link('catalog/download/edit', array('download_id' => $this->request->get['download_id']));
 		} else {
-			$data['error_warning'] = '';
+			$data['action'] = $this->provider->link('catalog/download/add');
 		}
 
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = array();
-		}
-
-		if (isset($this->error['filename'])) {
-			$data['error_filename'] = $this->error['filename'];
-		} else {
-			$data['error_filename'] = '';
-		}
-
-		if (isset($this->error['mask'])) {
-			$data['error_mask'] = $this->error['mask'];
-		} else {
-			$data['error_mask'] = '';
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
-
-		if (!isset($this->request->get['download_id'])) {
-			$data['action'] = $this->url->link('catalog/download/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('catalog/download/edit', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $this->request->get['download_id'] . $url);
-		}
-
-		$data['cancel'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['cancel'] = $this->provider->link('catalog/download');
 
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['download_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if ($this->request->hasGet('download_id') && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->get['download_id'])) {
+		if ($this->request->hasGet('download_id')) {
 			$data['download_id'] = (int)$this->request->get['download_id'];
 		} else {
 			$data['download_id'] = 0;
 		}
 
-		if (isset($this->request->post['download_description'])) {
+		if ($this->request->hasPost('download_description')) {
 			$data['download_description'] = $this->request->post['download_description'];
 		} elseif (!empty($download_info)) {
 			$data['download_description'] = $this->model_catalog_download->getDownloadDescriptions($this->request->get['download_id']);
@@ -331,7 +189,7 @@ class ControllerCatalogDownload extends Controller {
 			$data['download_description'] = array();
 		}
 
-		if (isset($this->request->post['filename'])) {
+		if ($this->request->hasPost('filename')) {
 			$data['filename'] = $this->request->post['filename'];
 		} elseif (!empty($download_info)) {
 			$data['filename'] = $download_info['filename'];
@@ -339,7 +197,7 @@ class ControllerCatalogDownload extends Controller {
 			$data['filename'] = '';
 		}
 
-		if (isset($this->request->post['mask'])) {
+		if ($this->request->hasPost('mask')) {
 			$data['mask'] = $this->request->post['mask'];
 		} elseif (!empty($download_info)) {
 			$data['mask'] = $download_info['mask'];
@@ -349,6 +207,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['breadcrumbs'] = $this->breadcrumbs->render();
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/download_form', $data));
@@ -401,16 +260,10 @@ class ControllerCatalogDownload extends Controller {
 	public function report() {
 		$this->load->language('catalog/download');
 
-		if (isset($this->request->get['download_id'])) {
+		if ($this->request->hasGet('download_id')) {
 			$download_id = (int)$this->request->get['download_id'];
 		} else {
 			$download_id = 0;
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
 		}
 
 		$data['reports'] = array();
@@ -419,7 +272,7 @@ class ControllerCatalogDownload extends Controller {
 		$this->load->model('customer/customer');
 		$this->load->model('setting/store');
 
-		$results = $this->model_catalog_download->getReports($download_id, ($page - 1) * 10, 10);
+		$results = $this->model_catalog_download->getReports($download_id, ($this->provider->page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$store_info = $this->model_setting_store->getStore($result['store_id']);
@@ -438,20 +291,15 @@ class ControllerCatalogDownload extends Controller {
 				'store'      => $store,
 				'country'    => $result['country'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'])
+				'filter_ip'  => $this->provider->link('customer/customer', array('filter_ip' => $result['ip']))
 			);
 		}
 
 		$report_total = $this->model_catalog_download->getTotalReports($download_id);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
-			'total' => $report_total,
-			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
-			'url'   => $this->url->link('catalog/download/report', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $download_id . '&page={page}')
-		));
+		$data['pagination'] = $this->load->controller('common/pagination', $report_total);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
+		$data['results'] = $this->load->controller('common/pagination/results', $report_total);
 
 		$this->response->setOutput($this->load->view('catalog/download_report', $data));
 	}
@@ -540,7 +388,7 @@ class ControllerCatalogDownload extends Controller {
 	public function autocomplete() {
 		$json = array();
 
-		if (isset($this->request->get['filter_name'])) {
+		if ($this->request->hasGet('filter_name')) {
 			$this->load->model('catalog/download');
 
 			$filter_data = array(

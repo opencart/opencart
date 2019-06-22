@@ -6,11 +6,7 @@
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-category').submit() : false;"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
+      {{ breadcrumbs }}
     </div>
   </div>
   <div class="container-fluid">
@@ -39,9 +35,9 @@
                       <a href="{{ sort_name }}">{{ column_name }}</a>
                     {% endif %}</td>
                   <td class="text-right">{% if sort == 'sort_order' %}
-                      <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
+                      <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
-                      <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
+                      <a href="{{ sort_order }}">{{ column_sort_order }}</a>
                     {% endif %}</td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>

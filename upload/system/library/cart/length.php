@@ -3,7 +3,7 @@ namespace Cart;
 class Length {
 	private $lengths = array();
 
-	public function __construct($registry) {
+	public function __construct(\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
 

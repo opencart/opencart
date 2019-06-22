@@ -1,42 +1,22 @@
 <?php
 class ControllerCommonPagination extends Controller {
-	public function index($setting) {
-		if (isset($setting['total'])) {
-			$total = $setting['total'];
-		} else {
-			$total = 0;
-		}
+	public function index(int $total) {
+		$provider_url = $this->provider->link('', array('page' => '{page}'));
 
-		if (isset($setting['page']) && $setting['page'] > 0) {
-			$page = (int)$setting['page'];
-		} else {
-			$page = 1;
-		}
-
-		if (isset($setting['limit'])) {
-			$limit = (int)$setting['limit'];
-		} else {
-			$limit = 10;
-		}
-
-		if (isset($setting['url'])) {
-			$url = str_replace('%7Bpage%7D', '{page}', (string)$setting['url']);
-		} else {
-			$url = '';
-		}
+		$url = str_replace('%7Bpage%7D', '{page}', $provider_url);
 
 		$num_links = 8;
-		$num_pages = ceil($total / $limit);
+		$num_pages = ceil($total / $this->provider->limit);
 
-		$data['page'] = $page;
+		$data['page'] = $this->provider->page;
 
-		if ($page > 1) {
+		if ($this->provider->page > 1) {
 			$data['first'] = str_replace(array('&amp;page={page}', '?page={page}', '&page={page}'), '', $url);
 
-			if ($page - 1 === 1) {
+			if ($this->provider->page - 1 === 1) {
 				$data['prev'] = str_replace(array('&amp;page={page}', '?page={page}', '&page={page}'), '', $url);
 			} else {
-				$data['prev'] = str_replace('{page}', $page - 1, $url);
+				$data['prev'] = str_replace('{page}', $this->provider->page - 1, $url);
 			}
 		} else {
 			$data['first'] = '';
@@ -50,8 +30,8 @@ class ControllerCommonPagination extends Controller {
 				$start = 1;
 				$end = $num_pages;
 			} else {
-				$start = $page - floor($num_links / 2);
-				$end = $page + floor($num_links / 2);
+				$start = $this->provider->page - floor($num_links / 2);
+				$end = $this->provider->page + floor($num_links / 2);
 
 				if ($start < 1) {
 					$end += abs($start) + 1;
@@ -72,8 +52,8 @@ class ControllerCommonPagination extends Controller {
 			}
 		}
 
-		if ($num_pages > $page) {
-			$data['next'] = str_replace('{page}', $page + 1, $url);
+		if ($num_pages > $this->provider->page) {
+			$data['next'] = str_replace('{page}', $this->provider->page + 1, $url);
 			$data['last'] = str_replace('{page}', $num_pages, $url);
 		} else {
 			$data['next'] = '';
@@ -85,5 +65,10 @@ class ControllerCommonPagination extends Controller {
 		} else {
 			return '';
 		}
+	}
+
+	public function results(int $total)
+	{
+		return sprintf($this->language->get('text_pagination'), ($total) ? (($this->provider->page - 1) * $this->provider->limit) + 1 : 0, ((($this->provider->page - 1) * $this->provider->limit) > ($total - $this->provider->limit)) ? $total : ((($this->provider->page - 1) * $this->provider->limit) + $this->provider->limit), $total, ceil($total / $this->provider->limit));
 	}
 }

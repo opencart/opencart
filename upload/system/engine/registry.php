@@ -14,8 +14,6 @@ final class Registry {
 	private $data = array();
 
 	/**
-     * 
-     *
      * @param	string	$key
 	 * 
 	 * @return	mixed
@@ -25,8 +23,6 @@ final class Registry {
 	}
 
     /**
-     * 
-     *
      * @param	string	$key
 	 * @param	string	$value
      */	
@@ -35,8 +31,6 @@ final class Registry {
 	}
 	
     /**
-     * 
-     *
      * @param	string	$key
 	 *
 	 * @return	bool

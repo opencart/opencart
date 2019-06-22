@@ -3,7 +3,7 @@ namespace Cart;
 class Currency {
 	private $currencies = array();
 
-	public function __construct($registry) {
+	public function __construct(\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
 

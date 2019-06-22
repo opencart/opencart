@@ -16,18 +16,13 @@ class Response {
 	private $output;
 
 	/**
-	 * Constructor
-	 *
 	 * @param	string	$header
-	 *
  	*/
 	public function addHeader($header) {
 		$this->headers[] = $header;
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	string	$url
 	 * @param	int		$status
 	 *
@@ -38,17 +33,13 @@ class Response {
 	}
 	
 	/**
-	 * 
-	 *
-	 * @param	int		$level
+	 * @param	int	$level
  	*/
 	public function setCompression($level) {
 		$this->level = $level;
 	}
 	
 	/**
-	 * 
-	 *
 	 * @return	array
  	*/
 	public function getOutput() {
@@ -65,8 +56,6 @@ class Response {
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	string	$data
 	 * @param	int		$level
 	 * 
@@ -102,9 +91,6 @@ class Response {
 		return gzencode($data, (int)$level);
 	}
 	
-	/**
-	 * 
- 	*/
 	public function output() {
 		if ($this->output) {
 			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;

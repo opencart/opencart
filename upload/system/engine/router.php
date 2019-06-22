@@ -18,15 +18,13 @@ final class Router {
 	/**
 	 * Constructor
 	 *
-	 * @param	object	$route
+	 * @param	object	$registry
  	*/
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	object	$pre_action
  	*/	
 	public function addPreAction(Action $pre_action) {
@@ -34,8 +32,6 @@ final class Router {
 	}
 
 	/**
-	 * 
-	 *
 	 * @param	object	$action
 	 * @param	object	$error
  	*/		
@@ -58,8 +54,6 @@ final class Router {
 	}
 	
 	/**
-	 * 
-	 *
 	 * @param	object	$action
 	 * @return	object
  	*/

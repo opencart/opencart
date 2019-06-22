@@ -12,8 +12,6 @@
 */
 final class Encryption {
 	/**
-     * 
-     *
      * @param	string	$key
 	 * @param	string	$value
 	 * 
@@ -24,8 +22,6 @@ final class Encryption {
 	}
 	
 	/**
-     * 
-     *
      * @param	string	$key
 	 * @param	string	$value
 	 * 

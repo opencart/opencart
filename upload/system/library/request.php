@@ -28,9 +28,18 @@ class Request {
 		$this->files = $this->clean($_FILES);
 		$this->server = $this->clean($_SERVER);
 	}
+
+	public function hasGet($key)
+	{
+		return isset($this->get[$key]);
+	}
+
+	public function hasPost($key)
+	{
+		return isset($this->post[$key]);
+	}
 	
 	/**
-     * 
 	 * @param	array	$data
 	 *
      * @return	array

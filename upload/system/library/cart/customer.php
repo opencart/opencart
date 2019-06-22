@@ -10,7 +10,7 @@ class Customer {
 	private $newsletter;
 	private $address_id;
 
-	public function __construct($registry) {
+	public function __construct(\Registry $registry) {
 		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');

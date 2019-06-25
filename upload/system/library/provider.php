@@ -45,7 +45,7 @@ class Provider
 		
 		$this->request = $registry->get('request');
 
-		$this->route = $this->request->hasGet('route') ? $this->request->get['route'] : '';
+		$this->route = $this->request->hasGet('route') ? (string)$this->request->get['route'] : '';
 
 		$this->page = $this->request->hasGet('page') ? (int)$this->request->get['page'] : 1;
 

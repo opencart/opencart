@@ -111,36 +111,70 @@ class ControllerMarketplaceModification extends Controller {
 			$xml = array();
 
 			// Load the default modification XML
-			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+			$xml[] = array(
+				'content'    => file_get_contents(DIR_SYSTEM . 'modification.xml'),
+				'sort_order' => 0,
+			);
 
 			// This is purly for developers so they can run mods directly and have them run without upload after each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
 			if ($files) {
 				foreach ($files as $file) {
-					$xml[] = file_get_contents($file);
+
+					$content = file_get_contents($file);
+					$dom = new DOMDocument('1.0', 'UTF-8');
+					$dom->preserveWhiteSpace = false;
+					$dom->loadXml($content);
+					$priority = false;
+
+					$priority = $dom->getElementsByTagName('priority')->item(0);
+
+					if($priority) {
+						$priority = $priority->nodeValue;
+						$xml[] = array(
+							'content'    => file_get_contents($file),
+							'sort_order' => $priority,
+						);
+					} else {
+						$xml[] = array(
+							'content'    => file_get_contents($file),
+							'sort_order' => 0,
+						);
+					}
 				}
 			}
 
+			$filter_array = array(
+				'sort'  => 'sort_order',
+				'order' => 'ASC',
+			);
+
 			// Get the default modification file
-			$results = $this->model_setting_modification->getModifications();
+			$results = $this->model_setting_modification->getModifications($filter_array);
 
 			foreach ($results as $result) {
 				if ($result['status']) {
-					$xml[] = $result['xml'];
+					$xml[] = array(
+						'content'    => $result['xml'],
+						'sort_order' => $result['sort_order'],
+					);
 				}
 			}
+
+			$sort_order = array_column($xml, 'sort_order');
+			array_multisort($sort_order, SORT_ASC, $xml);
 
 			$modification = array();
 
 			foreach ($xml as $xml) {
-				if (empty($xml)){
+				if (empty($xml['content'])){
 					continue;
 				}
 				
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
-				$dom->loadXml($xml);
+				$dom->loadXml($xml['content']);
 
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
@@ -680,6 +714,7 @@ class ControllerMarketplaceModification extends Controller {
 				'status'          => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'link'            => $result['link'],
+				'sort_order'      => $result['sort_order'],
 				'enable'          => $this->url->link('marketplace/modification/enable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id']),
 				'disable'         => $this->url->link('marketplace/modification/disable', 'user_token=' . $this->session->data['user_token'] . '&modification_id=' . $result['modification_id']),
 				'enabled'         => $result['status']

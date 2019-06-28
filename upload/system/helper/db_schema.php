@@ -3001,6 +3001,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'sort_order',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true

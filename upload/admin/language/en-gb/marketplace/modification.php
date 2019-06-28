@@ -12,6 +12,7 @@ $_['column_name']       = 'Modification Name';
 $_['column_author']     = 'Author';
 $_['column_version']    = 'Version';
 $_['column_status']     = 'Status';
+$_['column_sort_order'] = 'Sort Order';
 $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 

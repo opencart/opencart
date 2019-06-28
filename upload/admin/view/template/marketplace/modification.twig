@@ -60,6 +60,7 @@
                         {% else %}
                           <a href="{{ sort_status }}">{{ column_status }}</a>
                         {% endif %}</td>
+                      <td class="text-left">{{ column_sort_order }}</td>
                       <td class="text-left">{% if sort == 'date_added' %}
                           <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                         {% else %}
@@ -81,6 +82,7 @@
                           <td class="text-left">{{ modification.author }}</td>
                           <td class="text-left">{{ modification.version }}</td>
                           <td class="text-left">{{ modification.status }}</td>
+                          <td class="text-left">{{ modification.sort_order }}</td>
                           <td class="text-left">{{ modification.date_added }}</td>
                           <td class="text-right">{% if modification.link %}
                               <a href="{{ modification.link }}" data-toggle="tooltip" title="{{ button_link }}" class="btn btn-info" target="_blank"><i class="fas fa-link"></i></a>

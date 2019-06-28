@@ -316,6 +316,14 @@ class ControllerMarketplaceInstall extends Controller {
 						} else {
 							$link = '';
 						}
+
+						$priority = $dom->getElementsByTagName('priority')->item(0);
+
+						if($priority) {
+							$priority = $priority->nodeValue;
+						} else {
+							$priority = 0;
+						}
 	
 						if (!$json) {
 							$modification_data = array(
@@ -326,7 +334,8 @@ class ControllerMarketplaceInstall extends Controller {
 								'version'              => $version,
 								'link'                 => $link,
 								'xml'                  => $xml,
-								'status'               => 1
+								'status'               => 1,
+								'sort_order'           => $priority,
 							);
 	
 							$this->model_setting_modification->addModification($modification_data);

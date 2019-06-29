@@ -806,12 +806,14 @@
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-category" class="table table-sm m-0">
-                        {% for product_category in product_categories %}
-                          <tr id="product-category{{ product_category.category_id }}">
-                            <td>{{ product_category.name }}<input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/></td>
-                            <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
-                          </tr>
-                        {% endfor %}
+                        <tbody>
+                          {% for product_category in product_categories %}
+                            <tr id="product-category{{ product_category.category_id }}">
+                              <td>{{ product_category.name }}<input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/></td>
+                              <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
                       </table>
                     </div>
                     {% if master_id %}
@@ -968,7 +970,7 @@
             </div>
             <div id="tab-attribute" class="tab-pane">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table id="product-attribute" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_attribute }}</td>
@@ -987,7 +989,7 @@
                       </td>
                     </tr>
                   </thead>
-                  <tbody id="product-attribute">
+                  <tbody>
                     {% set attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row{{ attribute_row }}">
@@ -1458,7 +1460,7 @@
             {% endif %}
             <div id="tab-recurring" class="tab-pane">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table id="product-recurring" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_recurring }}</td>
@@ -1477,7 +1479,7 @@
                       </td>
                     </tr>
                   </thead>
-                  <tbody id="product-recurring">
+                  <tbody>
                     {% set recurring_row = 0 %}
                     {% for product_recurring in product_recurrings %}
                       <tr id="recurring-row{{ recurring_row }}">
@@ -1515,7 +1517,7 @@
             </div>
             <div id="tab-discount" class="tab-pane">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table id="product-discount" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_customer_group }}</td>
@@ -1536,7 +1538,7 @@
                         {% endif %}</td>
                     </tr>
                   </thead>
-                  <tbody id="product-discount">
+                  <tbody>
                     {% set discount_row = 0 %}
                     {% for product_discount in product_discounts %}
                       <tr id="discount-row{{ discount_row }}">
@@ -1584,7 +1586,7 @@
             </div>
             <div id="tab-special" class="tab-pane">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table id="product-special" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_customer_group }}</td>
@@ -1604,7 +1606,7 @@
                         {% endif %}</td>
                     </tr>
                   </thead>
-                  <tbody id="product-special">
+                  <tbody>
                     {% set special_row = 0 %}
                     {% for product_special in product_specials %}
                       <tr id="special-row{{ special_row }}">
@@ -1679,7 +1681,7 @@
               <fieldset>
                 <legend>{{ text_image_additional }}</legend>
                 <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
+                  <table id="product-image" class="table table-bordered table-hover">
                     <thead>
                       <tr>
                         <td class="text-left">{{ entry_image }}</td>
@@ -1696,7 +1698,7 @@
                           {% endif %}</td>
                       </tr>
                     </thead>
-                    <tbody id="product-image">
+                    <tbody>
                       {% set image_row = 0 %}
                       {% for product_image in product_images %}
                         <tr id="image-row{{ image_row }}">
@@ -1755,7 +1757,7 @@
               <fieldset>
                 <legend>{{ text_points }}</legend>
                 <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
+                  <table id="product-reward" class="table table-bordered table-hover">
                     <thead>
                       <tr>
                         <td class="text-left">{{ entry_customer_group }}</td>
@@ -1773,7 +1775,7 @@
                         </td>
                       </tr>
                     </thead>
-                    <tbody id="product-reward">
+                    <tbody>
                       {% for customer_group in customer_groups %}
                         <tr>
                           <td class="text-left">{{ customer_group.name }}</td>
@@ -1787,7 +1789,7 @@
             </div>
             <div id="tab-seo" class="tab-pane">
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
-              <div class="table-responsive">
+              <div id="product-seo" class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
@@ -1795,7 +1797,7 @@
                       <td class="text-left">{{ entry_keyword }}</td>
                     </tr>
                   </thead>
-                  <tbody id="product-seo">
+                  <tbody>
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
@@ -1819,7 +1821,7 @@
             </div>
             <div id="tab-design" class="tab-pane">
               <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table id="product-layout" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_store }}</td>
@@ -1837,7 +1839,7 @@
                       </td>
                     </tr>
                   </thead>
-                  <tbody id="product-layout">
+                  <tbody>
                     {% for store in stores %}
                       <tr>
                         <td class="text-left">{{ store.name }}</td>
@@ -1863,6 +1865,7 @@
     </div>
   </div>
 </div>
+<!-- Had to add a lot more code to replace values with the master product values -->
 <div id="master" class="d-none">
   {% for language in languages %}
     <input type="hidden" value="{{ master.product_description[language.language_id] ? master.product_description[language.language_id].name }}" id="master-name{{ language.language_id }}"/>
@@ -2003,7 +2006,7 @@
   </table>
 
   <table id="master-product-recurring">
-    {% set recurring_row = 0 %}
+    {% set master_recurring_row = 0 %}
     {% for product_recurring in master.product_recurrings %}
       <tr id="master-recurring-row{{ recurring_row }}">
         <td class="text-left"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-control">
@@ -2026,7 +2029,7 @@
           </select></td>
         <td class="text-right"><button type="button" onclick="$('#recurring-row{{ recurring_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
       </tr>
-      {% set recurring_row = recurring_row + 1 %}
+      {% set master_recurring_row = master_recurring_row + 1 %}
     {% endfor %}
   </table>
 
@@ -2108,7 +2111,7 @@
   <table id="master-product-image">
     {% set image_row = 0 %}
     {% for product_image in master.product_images %}
-      <tr id="image-row{{ image_row }}">
+      <tr id="master-image-row{{ image_row }}">
         <td>
           <div class="card image">
             <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/>
@@ -2126,7 +2129,7 @@
   </table>
 
   <table id="master-product-reward">
-    {% for customer_group in master.customer_groups %}
+    {% for customer_group in customer_groups %}
       <tr>
         <td class="text-left">{{ customer_group.name }}</td>
         <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/></td>
@@ -2152,7 +2155,6 @@
     {% endfor %}
   </table>
 </div>
-
 <script type="text/javascript"><!--
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
@@ -2165,15 +2167,37 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 
 	var target = $(this).attr('data-target');
 
-	$.merge($(target), $(target).find('input, textarea, select, button')).not('.custom-control-input').each(function() {
-		if ($(this).is('input[type=\'text\'], textarea')) {
-			$(this).prop('readonly', !$(element).prop('checked'));
+    // First we need to grab the default values
+	$(target).each(function() {
 
-			$(this).val(0);
 
+
+		// Table
+		if ($(this).is('table')) {
+			if (!$(element).prop('checked')) {
+
+
+
+
+
+				$(element).html($(this).html());
+			}
+
+			console.log(this);
+
+			//$(this).prop('disabled', !$(element).prop('checked'));
 		}
 
-		// ckeditor readonly
+	});
+
+    // Now we need to enable or disable any fields in the targets
+	$.merge($(target), $(target).find('input, textarea, select, button')).not('.custom-control-input').each(function() {
+		// Text Textarea
+        if ($(this).is('input[type=\'text\'], textarea')) {
+			$(this).prop('readonly', !$(element).prop('checked'));
+		}
+
+		// CKEditor readonly
 		if ($(this).is('[data-toggle=\'ckeditor\']')) {
 			var editor = CKEDITOR.instances[$(this).attr('id')];
 
@@ -2186,7 +2210,7 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 			}
 		}
 
-		// Radio Checkbox Buttons
+		// Radio Checkbox
 		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-toggle=\'buttons\']')) {
 			if (!$(element).prop('checked')) {
 				$(this).on('click', function(e) {
@@ -2208,6 +2232,7 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 			$(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
 		}
 
+		// Button
 		if ($(this).is('button')) {
 			$(this).prop('disabled', !$(element).prop('checked'));
 		}
@@ -2215,6 +2240,36 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 });
 
 $('.custom-control-input').trigger('change');
+
+$(document).ready(function() {
+	$.ajax({
+		url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+		dataType: 'json',
+		success: function(json) {
+
+
+			$('#product-category' + item['value']).remove();
+
+			html = '<tr id="product-category' + item['value'] + '">';
+			html += '  <td>' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '"/></td>';
+			html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+			html += '</tr>';
+
+			$('#product-category').append(html);
+		}
+	});
+});
+
+
+$('input[data-toggle=\'switch\']').on('change', function(e) {
+
+
+var ['data-targe']
+
+
+
+
+});
 {% endif %}
 
 // Manufacturer
@@ -2743,7 +2798,7 @@ $('#option').on('click', '.btn-primary', function() {
 var discount_row = {{ discount_row }};
 
 $('#button-discount').on('click', function() {
-	html  = '<tr id="discount-row' + discount_row + '">';
+	html = '<tr id="discount-row' + discount_row + '">';
 	html += '  <td class="text-left"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
 	html += '    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
@@ -2772,7 +2827,7 @@ $('#button-discount').on('click', function() {
 var special_row = {{ special_row }};
 
 $('#button-special').on('click', function() {
-	html  = '<tr id="special-row' + special_row + '">';
+	html = '<tr id="special-row' + special_row + '">';
 	html += '  <td class="text-left"><select name="product_special[' + special_row + '][customer_group_id]" class="form-control">';
   {% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';

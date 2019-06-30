@@ -8,6 +8,9 @@ class Provider
 	private $route;
 
 	/** @var int */
+	private $store_id;
+
+	/** @var int */
 	private $page;
 
 	/** @var int */
@@ -41,8 +44,10 @@ class Provider
 
 		$this->route = $this->request->hasGet('route') ? (string)$this->request->get['route'] : '';
 
+		$this->store_id = $this->request->hasGet('store_id') ? (int)$this->request->get['store_id'] : 0;
+		
 		$this->page = $this->request->hasGet('page') ? (int)$this->request->get['page'] : 1;
-
+		
 		$this->limit = $limit;
 
 		$this->order = ($this->request->hasGet('order') && $this->request->get['order'] === 'ASC') ? 'DESC' : 'ASC';
@@ -145,7 +150,7 @@ class Provider
 	 * remove duplicate keys from request header
 	 *
 	 * @param string $route
-	 * @param array	 $args to merge with @var object|Request and @var $detached and @var $this->attached
+	 * @param array	 $args to merge with @var object|Request and @var $detached and @var $attached
 	 *
 	 * @return string
 	 */
@@ -163,7 +168,7 @@ class Provider
 			return $value !== '';
 		});
 		
-		$url = empty($query) ? '' : '&' . http_build_query($query, '', '&');
+		$url = empty($query) ? '' : http_build_query($query, '', '&');
 
 		return $this->url->link($route, $url);
 	}

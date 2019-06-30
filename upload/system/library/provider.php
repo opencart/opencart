@@ -4,12 +4,6 @@
  */
 class Provider
 {
-	/** @var object */
-	private $url;
-
-	/** @var object */
-	private $request;
-	
 	/** @var string */
 	private $route;
 

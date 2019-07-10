@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionModuleAmazonPay extends Controller {
-	private $version = '3.0';
+	private $version = '3.2';
 	private $error = array();
 
 	public function index() {
@@ -13,6 +13,11 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('module_amazon_pay', $this->request->post);
+
+			$this->load->model('setting/event');
+			$this->model_setting_event->deleteEventByCode('amazon_pay');
+			$this->model_setting_event->addEvent('amazon_pay', 'catalog/controller/account/logout/after', 'extension/module/amazon_pay/logout');
+			
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
@@ -99,7 +104,7 @@ class ControllerExtensionModuleAmazonPay extends Controller {
 
 	public function install() {
 		$this->load->model('setting/event');
-		$this->model_setting_event->addEvent('amazon_pay', 'catalog/controller/account/logout/after', 'extension/module/amazon_pay/logout');
+		$this->model_setting_event->deleteEventByCode('amazon_pay');
 	}
 
 	public function uninstall() {

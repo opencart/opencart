@@ -1,194 +1,190 @@
 <?php
 
 class ControllerExtensionModuleAmazonLogin extends Controller {
-	private $error = array();
-	public function index() {
-		$this->load->model('extension/payment/amazon_login_pay');
+    public function index() {
+        if ($this->config->get('payment_amazon_login_pay_status') && $this->config->get('module_amazon_login_status') && !$this->customer->isLogged() && !empty($this->request->server['HTTPS'])) {
 
-		if ($this->config->get('payment_amazon_login_pay_status') && $this->config->get('module_amazon_login_status') && !$this->customer->isLogged() && !empty($this->request->server['HTTPS'])) {
-			// capital L in Amazon cookie name is required, do not alter for coding standards
-			if (isset($this->request->cookie['amazon_Login_state_cache'])) {
-				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
-			}
+            $this->load->model('extension/payment/amazon_login_pay');
 
-			$amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
+            // capital L in Amazon cookie name is required, do not alter for coding standards
+            if (isset($this->request->cookie['amazon_Login_state_cache'])) {
+                setcookie('amazon_Login_state_cache', null, -1, '/');
+            }
 
-			$this->document->addScript($amazon_payment_js);
+            $amazon_payment_js = $this->model_extension_payment_amazon_login_pay->getWidgetJs();
 
-			$data['payment_amazon_login_pay_client_id'] = trim($this->config->get('payment_amazon_login_pay_client_id'));
-			$data['payment_amazon_login_pay_merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
-			$data['module_amazon_login_return_url'] = $this->url->link('extension/module/amazon_login/login');
+            $this->document->addScript($amazon_payment_js);
 
-			if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
-				$data['payment_amazon_login_pay_test'] = true;
-			}
+            $data['client_id'] = trim($this->config->get('payment_amazon_login_pay_client_id'));
+            $data['merchant_id'] = $this->config->get('payment_amazon_login_pay_merchant_id');
+            $data['return_url'] = html_entity_decode($this->url->link('extension/module/amazon_login/login', '', true), ENT_COMPAT, "UTF-8");
+            $data['button_id'] = 'AmazonLoginButton';
 
-			if ($this->config->get('module_amazon_login_button_type')) {
-				$data['module_amazon_login_button_type'] = $this->config->get('module_amazon_login_button_type');
-			} else {
-				$data['module_amazon_login_button_type'] = 'lwa';
-			}
+            if ($this->config->get('payment_amazon_login_pay_test') == 'sandbox') {
+                $data['sandbox'] = isset($this->session->data['user_id']); // Require an active admin card session to show debug messages
+            }
 
-			if ($this->config->get('module_amazon_login_button_colour')) {
-				$data['module_amazon_login_button_colour'] = $this->config->get('module_amazon_login_button_colour');
-			} else {
-				$data['module_amazon_login_button_colour'] = 'gold';
-			}
+            if ($this->config->get('module_amazon_login_button_type')) {
+                $data['button_type'] = $this->config->get('module_amazon_login_button_type');
+            } else {
+                $data['button_type'] = 'lwa';
+            }
 
-			if ($this->config->get('module_amazon_login_button_size')) {
-				$data['module_amazon_login_button_size'] = $this->config->get('module_amazon_login_button_size');
-			} else {
-				$data['module_amazon_login_button_size'] = 'medium';
-			}
+            if ($this->config->get('module_amazon_login_button_colour')) {
+                $data['button_colour'] = $this->config->get('module_amazon_login_button_colour');
+            } else {
+                $data['button_colour'] = 'gold';
+            }
 
-			if ($this->config->get('payment_amazon_login_pay_language')) {
-				$data['payment_amazon_login_pay_language'] = $this->config->get('payment_amazon_login_pay_language');
-			} else {
-				$data['payment_amazon_login_pay_language'] = 'en-US';
-			}
+            if ($this->config->get('module_amazon_login_button_size')) {
+                $data['button_size'] = $this->config->get('module_amazon_login_button_size');
+            } else {
+                $data['button_size'] = 'medium';
+            }
 
-			return $this->load->view('extension/module/amazon_login', $data);
-		}
-	}
+            if(!empty($this->session->data['language'])) {
+              $session_lang = $this->session->data['language'];
+              $session_lang_code = current(explode('-', $session_lang));
+              $language_region_mapping = array(
+                'EUR' => array('de-De', 'es-ES','fr-FR', 'it-IT', 'en-GB'),
+                'GBP' => array('de-De', 'es-ES','fr-FR', 'it-IT', 'en-GB'),
+                'USD' =>array('en-US')
+              );
 
-	public function login() {
-		$this->load->model('extension/payment/amazon_login_pay');
-		$this->load->model('account/customer');
-		$this->load->model('account/customer_group');
-		$this->load->language('extension/payment/amazon_login_pay');
+              if($this->config->get('payment_amazon_login_pay_payment_region')) {
+                $merchant_location = $this->config->get('payment_amazon_login_pay_payment_region');
+                $available_codes = $language_region_mapping[$merchant_location];
+                $data['language'] = ($this->config->get('payment_amazon_login_pay_language')) ? $this->config->get('payment_amazon_login_pay_language') : 'en-US';
+                foreach ($available_codes as $l_code) {
+                  $l_code_short = current(explode('-', $l_code));
+                  if($session_lang_code == $l_code_short) {
+                    $data['language'] = $l_code;
+                  }
+                }
+              }
+            } else {
+              $data['language'] = ($this->config->get('payment_amazon_login_pay_language')) ? $this->config->get('payment_amazon_login_pay_language') : 'en-US';
+            }
 
-		unset($this->session->data['lpa']);
-		unset($this->session->data['access_token']);
+            return $this->load->view('extension/module/amazon_login', $data);
+        }
+    }
 
-		if (isset($this->request->get['access_token'])) {
-			$this->session->data['access_token'] = $this->request->get['access_token'];
-			$user = $this->model_extension_payment_amazon_login_pay->getUserInfo($this->request->get['access_token']);
-		} else {
-			$user = array();
-		}
+    public function login() {
+        $this->load->language('extension/payment/amazon_login_pay');
+        $this->load->language('account/login');
 
-		if ((array)$user) {
-			if (isset($user->error)) {
-				$this->model_extension_payment_amazon_login_pay->logger($user->error . ': ' . $user->error_description);
-				$this->session->data['lpa']['error'] = $this->language->get('error_login');
-				$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
-			}
+        $this->load->model('extension/module/amazon_login');
 
-			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
-			$this->model_extension_payment_amazon_login_pay->logger($user);
+        $from_amazon_pay = isset($this->request->get['from_amazon_pay']);
 
-			if ($customer_info) {
-				if ($this->validate($user->email)) {
-					unset($this->session->data['guest']);
+        unset($this->session->data['apalwa']);
 
-					$this->load->model('account/address');
+        try {
+            if (isset($this->request->get['access_token'])) {
+                $access_token = $this->request->get['access_token'];
 
-					if ($this->config->get('config_tax_customer') == 'payment') {
-						$payment_address = $this->model_account_address->getAddress($this->customer->getAddressId());
-						if($payment_address){
-							$this->session->data['payment_address'] = $payment_address;
-						}
-					}
+                $this->session->data['apalwa']['login']['access_token'] = $access_token;
 
-					if ($this->config->get('config_tax_customer') == 'shipping') {
-						$shipping_address = $this->model_account_address->getAddress($this->customer->getAddressId());
-						if($shipping_address){
-							$this->session->data['shipping_address'] = $shipping_address;
-						}
-					}
+                $this->model_extension_module_amazon_login->verifyAccessToken($access_token);
 
-					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
-				} else {
-					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
-					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
-				}
-				$this->response->redirect($this->url->link('account/account', '', true));
-			} else {
-				$country_id = 0;
-				$zone_id = 0;
+                $amazon_profile = $this->model_extension_module_amazon_login->fetchProfile($access_token);
+            } else {
+                $this->model_extension_module_amazon_login->debugLog("EXCEPTION", $this->language->get('error_login'));
 
-				$full_name = explode(' ', $user->name);
-				$last_name = array_pop($full_name);
-				$first_name = implode(' ', $full_name);
+                throw new \RuntimeException($this->language->get('error_login'));
+            }
 
-				$data = array(
-					'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
-					'firstname' => $first_name,
-					'lastname' => $last_name,
-					'email' => $user->email,
-					'telephone' => '',
-					'password' => uniqid(rand(), true),
-					'company' => '',
-					'address_1' => '',
-					'address_2' => '',
-					'city' => '',
-					'postcode' => '',
-					'country_id' => (int)$country_id,
-					'zone_id' => (int)$zone_id,
-				);
+            // No issues found, and the Amazon profile has been fetched
+            if ($from_amazon_pay) {
+                unset($this->session->data['guest']);
+                unset($this->session->data['account']);
 
-				$customer_id = $this->model_account_customer->addCustomer($data);
+                if ($this->config->get('payment_amazon_login_pay_checkout') == 'guest') {
+                    $this->session->data['account'] = 'guest';
 
-				$this->model_extension_payment_amazon_login_pay->logger('Customer ID created: ' . $customer_id);
+                    $this->session->data['guest']['customer_group_id'] = $this->config->get('config_customer_group_id');
+                    $this->session->data['guest']['firstname'] = (string)$amazon_profile->first_name;
+                    $this->session->data['guest']['lastname'] = (string)$amazon_profile->last_name;
+                    $this->session->data['guest']['email'] = (string)$amazon_profile->email;
+                    $this->session->data['guest']['telephone'] = '0000000';
 
-				if ($this->validate($user->email)) {
-					unset($this->session->data['guest']);
+                    $this->session->data['apalwa']['pay']['profile'] = $this->session->data['guest'];
+                } else {
+                    // The payment button must log in a customer
+                    $this->session->data['account'] = 'register';
 
-					$this->load->model('account/address');
+                    $profile = $this->model_extension_module_amazon_login->loginProfile($amazon_profile);
 
-					if ($this->config->get('config_tax_customer') == 'payment') {
-						$payment_address = $this->model_account_address->getAddress($this->customer->getAddressId());
-						if($payment_address){
-							$this->session->data['payment_address'] = $payment_address;
-						}
-					}
+                    $this->session->data['apalwa']['pay']['profile'] = $profile;
 
-					if ($this->config->get('config_tax_customer') == 'shipping') {
-						$shipping_address = $this->model_account_address->getAddress($this->customer->getAddressId());
-						if($shipping_address){
-							$this->session->data['shipping_address'] = $shipping_address;
-						}
-					}
+                    // If a customer is already logged in, we must overwrite their data with amazon data
+                    // Therefore, at the end of the day, we will have a 
+                }
 
-					$this->model_extension_payment_amazon_login_pay->logger('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
+                $this->response->redirect($this->url->link('extension/payment/amazon_login_pay/address', '', true));
+            } else {
+                $this->model_extension_module_amazon_login->loginProfile($amazon_profile);
 
-					$this->response->redirect($this->url->link('account/account', '', true));
-				} else {
-					$this->model_extension_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
+                $this->response->redirect($this->url->link('account/account', '', true));
+            }
+        } catch (\RuntimeException $e) {
+            $this->session->data['apalwa']['login']['error'] = $e->getMessage();
 
-					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
-				}
-			}
-		} else {
-			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('extension/payment/amazon_login_pay/loginFailure', '', true));
-		}
-	}
+            $this->response->redirect($this->url->link('extension/module/amazon_login/error', '', true));
+        }
+    }
 
-	public function logout() {
-		unset($this->session->data['lpa']);
-		unset($this->session->data['access_token']);
+    public function error() {
+        $this->load->language('extension/payment/amazon_login_pay');
 
-		// capital L in Amazon cookie name is required, do not alter for coding standards
-		if (isset($this->request->cookie['amazon_Login_state_cache'])) {
-			setcookie('amazon_Login_state_cache', '', time() - 4815162342);
-		}
-	}
+        $data = array();
 
-	protected function validate($email) {
-		if (!$this->customer->login($email, '', true)) {
-			$this->error['warning'] = $this->language->get('error_login');
-		}
+        $continue = $this->url->link('common/home', '', true);
 
-		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+        if (isset($this->session->data['apalwa']['login']['error'])) {
+            $data['error'] = $this->session->data['apalwa']['login']['error'];
+            $data['continue'] = $continue;
+            $data['heading_title'] = $this->language->get('error_login');
 
-		if ($customer_info && !$customer_info['status']) {
-			$this->error['warning'] = $this->language->get('error_approved');
-		}
+            $this->document->setTitle($this->language->get('error_login'));
 
-		return !$this->error;
-	}
+            unset($this->session->data['apalwa']);
 
+            $data['breadcrumbs'] = array();
+
+            $data['breadcrumbs'][] = array(
+                'href' => $this->url->link('common/home', '', true),
+                'text' => $this->language->get('text_home')
+            );
+
+            $data['breadcrumbs'][] = array(
+                'href' => null,
+                'current' => true,
+                'text' => $this->language->get('error_login')
+            );
+
+            $data['content_main'] = $this->load->view('extension/module/amazon_login_error', $data);
+            $data['column_left'] = $this->load->controller('common/column_left');
+            $data['column_right'] = $this->load->controller('common/column_right');
+            $data['content_top'] = $this->load->controller('common/content_top');
+            $data['content_bottom'] = $this->load->controller('common/content_bottom');
+            $data['footer'] = $this->load->controller('common/footer');
+            $data['header'] = $this->load->controller('common/header');
+
+            $this->response->setOutput($this->load->view('extension/payment/amazon_login_pay_generic', $data));
+        } else {
+            $this->response->redirect($continue);
+        }
+    }
+
+    public function logout() {
+        unset($this->session->data['apalwa']);
+
+        // capital L in Amazon cookie name is required, do not alter for coding standards
+        if (isset($this->request->cookie['amazon_Login_state_cache'])) {
+            //@todo - rework this by triggering the JavaScript logout
+            setcookie('amazon_Login_state_cache', null, -1, '/');
+        }
+    }
 }

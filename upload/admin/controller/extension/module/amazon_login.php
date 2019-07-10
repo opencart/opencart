@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionModuleAmazonLogin extends Controller {
-	private $version = '3.0';
+	private $version = '3.2';
 	private $error = array();
 
 	public function index() {
@@ -14,6 +14,10 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('module_amazon_login', $this->request->post);
+
+			$this->load->model('setting/event');
+			$this->model_setting_event->deleteEventByCode('amazon_login');
+			$this->model_setting_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -98,6 +102,7 @@ class ControllerExtensionModuleAmazonLogin extends Controller {
 
 	public function install() {
 		$this->load->model('setting/event');
+		$this->model_setting_event->deleteEventByCode('amazon_login');
         $this->model_setting_event->addEvent('amazon_login', 'catalog/controller/account/logout/after', 'extension/module/amazon_login/logout');
 	}
 

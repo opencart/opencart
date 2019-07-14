@@ -3,7 +3,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 	public function index() {
 		if ($this->config->get('feed_google_sitemap_status')) {
 			$output  = '<?xml version="1.0" encoding="UTF-8"?>';
-			$output .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">';
+			$output .= '<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">';
 
 			$this->load->model('catalog/product');
 			$this->load->model('tool/image');

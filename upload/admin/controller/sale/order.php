@@ -1,5 +1,4 @@
 <?php
-
 class ControllerSaleOrder extends Controller {
 	private $error = array();
 

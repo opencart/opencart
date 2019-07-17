@@ -63,29 +63,31 @@ class Language {
 	 * 
 	 * @return	array
      */	
-	public function load($filename, $key = '') {
-		if (!$key) {
-			$_ = array();
-	
-			$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
-	
-			if (is_file($file)) {
-				require($file);
-			}
-	
-			$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
-			
-			if (is_file($file)) {
-				require($file);
-			} 
-	
-			$this->data = array_merge($this->data, $_);
-		} else {
-			// Put the language into a sub key
-			$this->data[$key] = new Language($this->directory);
-			$this->data[$key]->load($filename);
+	public function load($filename, $prefix = '') {
+		$_ = array();
+
+		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+
+		if (is_file($file)) {
+			require($file);
 		}
-		
+
+		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
+
+		if (is_file($file)) {
+			require($file);
+		}
+
+		if ($prefix) {
+			foreach ($_ as $key => $value) {
+				$_[$prefix . $key] = $value;
+
+				unset($_[$key]);
+			}
+		}
+
+		$this->data = array_merge($this->data, $_);
+
 		return $this->data;
 	}
 }

@@ -25,8 +25,10 @@ function getURLVar(key) {
 $(document).ready(function() {
 	//Form Submit for IE Browser
 	$('button[type=\'submit\']').on('click', function(e) {
-		e.preventDefault(); // prevent the native submit behavior of the browser which results in double submits
-		$('form[id*=\'form-\']').submit();
+              if($(this).attr('form') == 'form-product') { 
+                    e.preventDefault();
+              }
+              $("form[id*='form-']").submit();
 	});
 
 	// Highlight any found errors

@@ -8,11 +8,11 @@ OpenCart is a free open source ecommerce platform for online merchants. OpenCart
 
 Read the instructions below before you create a bug report.
 
- 1. Search the [OpenCart forum](http://forum.opencart.com/viewforum.php?f=191), ask the community if they have seen the bug or know how to fix it.
+ 1. Search the [OpenCart forum](https://forum.opencart.com/viewforum.php?f=191), ask the community if they have seen the bug or know how to fix it.
  2. Check all open and closed issues on the [GitHub bug tracker](https://github.com/opencart/opencart/issues).
  3. If your bug is related to the OpenCart core code then please create a bug report on GitHub.
- 4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/changelog.md)
- 5. Use [Google](http://www.google.com) to search for your issue.
+ 4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/CHANGELOG.md)
+ 5. Use [Google](https://www.google.com) to search for your issue.
  6. Make sure that your bug/issue is not related to your hosting environment.
 
 If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](http://forum.opencart.com/viewforum.php?f=191)
@@ -25,7 +25,7 @@ If you are not sure about your issue, it is always best to ask the community on 
 
 Please do not create a bug report if you think something needs improving / adding (such as features or change to code standards etc).
 
-We welcome public suggestions on our [User Voice site](http://opencart.uservoice.com).
+We welcome public suggestions on our [User Voice site](https://opencart.uservoice.com).
 
 ## How to contribute
 
@@ -69,9 +69,9 @@ Please read the installation instructions included in the repository or download
 
 ## Links
 
-- [OpenCart homepage](http://www.opencart.com/)
-- [OpenCart forums](http://forum.opencart.com/)
-- [OpenCart blog](http://www.opencart.com/index.php?route=feature/blog)
-- [How to documents](http://docs.opencart.com/)
-- [Newsletter](http://newsletter.opencart.com/h/r/B660EBBE4980C85C)
-- [User Voice suggestions](http://opencart.uservoice.com)
+- [OpenCart homepage](https://www.opencart.com/)
+- [OpenCart forums](https://forum.opencart.com/)
+- [OpenCart blog](https://www.opencart.com/index.php?route=feature/blog)
+- [How to documents](http://docs.opencart.com/en-gb/introduction/)
+- [Newsletter](https://newsletter.opencart.com/h/r/B660EBBE4980C85C)
+- [User Voice suggestions](https://opencart.uservoice.com)

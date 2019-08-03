@@ -12,12 +12,12 @@ class ControllerExtensionModuleDividoCalculator extends Controller {
 			return false;
 		}
 
-		$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		$result = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
 		$price = 0;
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-			$base_price = !empty($product_info['special']) ? $product_info['special'] : $product_info['price'];
-			$price = $this->tax->calculate($base_price, $product_info['tax_class_id'], $this->config->get('config_tax'));
+			$base_price = !empty($result['special']) ? $result['special'] : $result['price'];
+			$price = $this->tax->calculate($base_price, $result['tax_class_id'], $this->config->get('config_tax'));
 		}
 
 		if ($product_selection == 'threshold' && $product_threshold > $price) {

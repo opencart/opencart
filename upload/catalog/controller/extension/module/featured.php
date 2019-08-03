@@ -17,10 +17,10 @@ class ControllerExtensionModuleFeatured extends Controller {
 			$product_data = array();
 
 			foreach ($setting['product'] as $product_id) {
-				$product_info = $this->model_catalog_product->getProduct($product_id);
+				$result = $this->model_catalog_product->getProduct($product_id);
 
-				if ($product_info) {
-					$product_data[] = $product_info;
+				if ($result) {
+					$product_data[] = $result;
 				}
 			}
 

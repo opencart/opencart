@@ -123,18 +123,14 @@ class ControllerMarketplaceInstall extends Controller {
 	
 				// A list of allowed directories to be written to
 				$allowed = array(
-					'admin/controller/extension/',
-					'admin/language/',
-					'admin/model/extension/',
 					'admin/view/image/',
 					'admin/view/javascript/',
 					'admin/view/stylesheet/',
-					'admin/view/template/extension/',
-					'catalog/controller/extension/',
-					'catalog/language/',
-					'catalog/model/extension/',
+					'admin/view/template/',
+
 					'catalog/view/javascript/',
 					'catalog/view/theme/',
+
 					'system/config/',
 					'system/library/',
 					'image/catalog/',
@@ -178,6 +174,10 @@ class ControllerMarketplaceInstall extends Controller {
 						if (substr($destination, 0, 6) == 'system') {
 							$destination = DIR_SYSTEM . substr($destination, 7);
 						}
+
+						if (substr($destination, 0, 7) == 'storage') {
+							$destination = DIR_STORAGE . substr($destination, 8);
+						}
 					} else {
 						$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
 	
@@ -208,7 +208,12 @@ class ControllerMarketplaceInstall extends Controller {
 						if (substr($destination, 0, 6) == 'system') {
 							$path = DIR_SYSTEM . substr($destination, 7);
 						}
-	
+
+						// Added storage location
+						if (substr($destination, 0, 7) == 'storage') {
+							$path = DIR_STORAGE . substr($destination, 8);
+						}
+
 						if (is_dir($file) && !is_dir($path)) {
 							if (mkdir($path, 0777)) {
 								$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
@@ -453,6 +458,10 @@ class ControllerMarketplaceInstall extends Controller {
 				
 				if (substr($result['path'], 0, 14) == 'system/library') {
 					$source = DIR_SYSTEM . 'library/' . substr($result['path'], 15);
+				}
+
+				if (substr($result['path'], 0, 7) == 'storage') {
+					$source = DIR_STORAGE . substr($result['path'], 8);
 				}
 
 				if (is_file($source)) {

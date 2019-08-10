@@ -20,7 +20,12 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_product->addProduct($this->request->post);
+
+			if (!isset($this->request->get['master_id'])) {
+				$this->model_catalog_product->addProduct($this->request->post);
+			} else {
+				$this->model_catalog_product->addVariant($this->request->post);
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -72,170 +77,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/product');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			// We need to update variant products with the new mast product data now we have added the product variant feature.
-			$products = $this->model_catalog_product->getProducts(array('filter_master_id' => $this->request->get['product_id']));
-
-			foreach ($products as $product) {
-				$product_data = array();
-
-				$ignore = array(
-					'quantity',
-					'variant',
-					'override',
-					'product_seo_url'
-				);
-
-				foreach ($product as $key => $value) {
-					if (isset($this->request->post[$key]) && !array_key_exists($key, $product_data['override']) && !in_array($key, $ignore)) {
-						$product_data[$key] = $this->request->post[$key];
-					} else {
-						$product_data[$key] = $value;
-					}
-				}
-
-				// Make sure these are arrays not strings
-				$product_data['variant'] = (array)json_decode($product['variant'], true);
-				$product_data['override'] = (array)json_decode($product['override'], true);
-
-				// Description
-				if (array_key_exists('product_description', $product_data['override'])) {
-					$product_data['product_description'] = $this->model_catalog_product->getProductDescriptions($product['product_id']);
-
-				} elseif (isset($this->request->post['product_description'])) {
-
-
-
-					foreach ($this->request->post['product_description'] as $language_id => $product_description) {
-
-						foreach ($product_description as $key => $value) {
-
-
-							if (!isset($product_data['override']['product_description'][$language_id][$key])) {
-								$product_data['product_description'][$language_id][$key] = $value;
-							}
-
-
-
-						}
-					}
-				}
-
-				// Category
-				if (array_key_exists('product_category', $product_data['override'])) {
-					$product_data['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
-				} elseif (isset($this->request->post['product_category'])) {
-					$product_data['product_category'] = $this->request->post['product_category'];
-				} else {
-					$product_data['product_category'] = array();
-				}
-
-				// Filter
-				if (array_key_exists('product_filter', $product_data['override'])) {
-					$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($product['product_id']);
-				} elseif (isset($this->request->post['product_filter'])) {
-					$product_data['product_filter'] = $this->request->post['product_filter'];
-				} else {
-					$product_data['product_filter'] = array();
-				}
-
-				// Stores
-				if (array_key_exists('product_store', $product_data['override'])) {
-					$product_data['product_store'] = $this->model_catalog_product->getProductStores($product['product_id']);
-				} elseif (isset($this->request->post['product_store'])) {
-					$product_data['product_store'] = $this->request->post['product_store'];
-				} else {
-					$product_data['product_store'] = array();
-				}
-
-				// Downloads
-				if (array_key_exists('product_download', $product_data['override'])) {
-					$product_data['product_download'] = $this->model_catalog_product->getProductDownloads($product['product_id']);
-				} elseif (isset($this->request->post['product_download'])) {
-					$product_data['product_download'] = $this->request->post['product_download'];
-				} else {
-					$product_data['product_download'] = array();
-				}
-
-				// Related
-				if (array_key_exists('product_related', $product_data['override'])) {
-					$product_data['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
-				} elseif (isset($this->request->post['product_related'])) {
-					$product_data['product_related'] = $this->request->post['product_related'];
-				} else {
-					$product_data['product_related'] = array();
-				}
-
-				// Attributes
-				if (array_key_exists('product_attribute', $product_data['override'])) {
-					$product_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product['product_id']);
-				} elseif (isset($this->request->post['product_attribute'])) {
-					$product_data['product_attribute'] = $this->request->post['product_attribute'];
-				} else {
-					$product_data['product_attribute'] = array();
-				}
-
-				$product_data['product_option'] = $this->model_catalog_product->getProductOptions($product['product_id']);
-
-				// Recurring
-				if (array_key_exists('product_recurring', $product_data['override'])) {
-					$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
-				} elseif (isset($this->request->post['product_recurring'])) {
-					$product_data['product_recurring'] = $this->request->post['product_recurring'];
-				} else {
-					$product_data['product_recurring'] = array();
-				}
-
-				// Discount
-				if (array_key_exists('product_discount', $product_data['override'])) {
-					$product_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product['product_id']);
-				} elseif (isset($this->request->post['product_discount'])) {
-					$product_data['product_discount'] = $this->request->post['product_discount'];
-				} else {
-					$product_data['product_discount'] = array();
-				}
-
-				// Special
-				if (array_key_exists('product_special', $product_data['override'])) {
-					$product_data['product_special'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
-				} elseif (isset($this->request->post['product_special'])) {
-					$product_data['product_special'] = $this->request->post['product_special'];
-				} else {
-					$product_data['product_special'] = array();
-				}
-
-				// Images
-				if (array_key_exists('product_image', $product_data['override'])) {
-					$product_data['product_image'] = $this->model_catalog_product->getProductImages($product['product_id']);
-				} elseif (isset($this->request->post['product_image'])) {
-					$product_data['product_image'] = $this->request->post['product_image'];
-				} else {
-					$product_data['product_image'] = array();
-				}
-
-				// Reward
-				if (array_key_exists('product_reward', $product_data['override'])) {
-					$product_data['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
-				} elseif (isset($this->request->post['product_reward'])) {
-					$product_data['product_reward'] = $this->request->post['product_reward'];
-				} else {
-					$product_data['product_reward'] = array();
-				}
-
-				// SEO URL
-				$product_data['product_seo_url'] = $this->model_catalog_product->getProductSeoUrls($product['product_id']);
-
-				// Layout
-				if (array_key_exists('product_layout', $product_data['override'])) {
-					$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product['product_id']);
-				} elseif (isset($this->request->post['product_layout'])) {
-					$product_data['product_layout'] = $this->request->post['product_layout'];
-				} else {
-					$product_data['product_layout'] = array();
-				}
-
-				$this->model_catalog_product->editProduct($product['product_id'], $product_data);
-			}
-
 			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -954,8 +795,8 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
 
-		if (isset($this->request->post['length_class_id'])) {
-			$data['length_class_id'] = $this->request->post['length_class_id'];
+		if (isset($this->request->post['length_class_id'])) {			$data['length_class_id'] = $this->request->post['length_class_id'];
+
 		} elseif (!empty($product_info)) {
 			$data['length_class_id'] = $product_info['length_class_id'];
 		} else {

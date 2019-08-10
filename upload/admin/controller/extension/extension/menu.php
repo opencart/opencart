@@ -85,10 +85,10 @@ class ControllerExtensionExtensionMenu extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/menu/' . $extension, 'extension');
+				$this->load->language('extension/menu/' . $extension,  $extension . '_');
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get('extension')->get('heading_title'),
+					'name'      => $this->language->get($extension . '_heading_title'),
 					'status'    => $this->config->get('menu_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->link('extension/extension/menu/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'uninstall' => $this->url->link('extension/extension/menu/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),

@@ -197,22 +197,22 @@ final class Loader {
 	 *
 	 * @return    array
 	 */
-	public function language($route, $key = '') {
+	public function language($route, $prefix = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$key));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$prefix));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$output = $this->registry->get('language')->load($route, $key);
+			$output = $this->registry->get('language')->load($route, $prefix);
 		}
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$key, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$prefix, &$output));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;

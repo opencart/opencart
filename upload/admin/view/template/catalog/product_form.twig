@@ -968,6 +968,7 @@
                 </div>
               </div>
             </div>
+
             <div id="tab-attribute" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-attribute" class="table table-bordered table-hover">
@@ -1017,6 +1018,7 @@
                 </table>
               </div>
             </div>
+
             {% if not master_id %}
               <div id="tab-option" class="tab-pane">
                 <div id="option">
@@ -1212,6 +1214,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'radio' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1254,6 +1257,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'checkbox' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1296,6 +1300,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'text' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1321,6 +1326,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'textarea' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1346,6 +1352,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'file' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1370,6 +1377,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'date' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1398,6 +1406,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'time' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1426,6 +1435,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if option.type == 'datetime' %}
                       <div class="form-group row{% if option.required %} required{% endif %}">
                         <label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1454,10 +1464,12 @@
                         </div>
                       </div>
                     {% endif %}
+
                   </fieldset>
                 {% endfor %}
               </div>
             {% endif %}
+
             <div id="tab-recurring" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-recurring" class="table table-bordered table-hover">
@@ -1515,6 +1527,7 @@
                 </table>
               </div>
             </div>
+
             <div id="tab-discount" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-discount" class="table table-bordered table-hover">
@@ -1584,6 +1597,7 @@
                 </table>
               </div>
             </div>
+
             <div id="tab-special" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-special" class="table table-bordered table-hover">
@@ -1651,6 +1665,7 @@
                 </table>
               </div>
             </div>
+
             <div id="tab-image" class="tab-pane">
               <fieldset>
                 <legend>{{ text_image }}</legend>
@@ -1727,6 +1742,7 @@
                 </div>
               </fieldset>
             </div>
+
             <div id="tab-reward" class="tab-pane">
               <fieldset>
                 <legend>{{ text_reward }}</legend>
@@ -1787,6 +1803,7 @@
                 </div>
               </fieldset>
             </div>
+
             <div id="tab-seo" class="tab-pane">
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div id="product-seo" class="table-responsive">
@@ -1819,6 +1836,7 @@
                 </table>
               </div>
             </div>
+
             <div id="tab-design" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-layout" class="table table-bordered table-hover">
@@ -1859,12 +1877,15 @@
                 </table>
               </div>
             </div>
+
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
 <!-- Had to add a lot more code to replace values with the master product values -->
 <div id="master" class="d-none">
   {% for language in languages %}
@@ -1943,6 +1964,7 @@
     {% endfor %}
   </table>
 
+
   <table id="master-product-filter">
     {% for product_filter in master.product_filters %}
       <tr id="master-product-filter{{ product_filter.filter_id }}">
@@ -1951,6 +1973,7 @@
       </tr>
     {% endfor %}
   </table>
+
 
   <div id="master-product-store">
     {% for store in stores %}
@@ -1975,6 +1998,7 @@
     {% endfor %}
   </table>
 
+
   <table id="master-product-related">
     {% for product_related in master.product_relateds %}
       <tr id="master-product-related{{ product_related.product_id }}">
@@ -1983,6 +2007,7 @@
       </tr>
     {% endfor %}
   </table>
+
 
   <table id="master-product-attribute">
     {% set master_attribute_row = 0 %}
@@ -2004,6 +2029,7 @@
       {% set master_attribute_row = master_attribute_row + 1 %}
     {% endfor %}
   </table>
+
 
   <table id="master-product-recurring">
     {% set master_recurring_row = 0 %}
@@ -2032,6 +2058,7 @@
       {% set master_recurring_row = master_recurring_row + 1 %}
     {% endfor %}
   </table>
+
 
   <table id="master-product-discount">
     {% set master_discount_row = 0 %}
@@ -2071,6 +2098,7 @@
     {% endfor %}
   </table>
 
+
   <table id="master-product-special">
     {% set special_row = 0 %}
     {% for product_special in master.product_specials %}
@@ -2108,6 +2136,7 @@
     {% endfor %}
   </table>
 
+
   <table id="master-product-image">
     {% set image_row = 0 %}
     {% for product_image in master.product_images %}
@@ -2128,6 +2157,7 @@
     {% endfor %}
   </table>
 
+
   <table id="master-product-reward">
     {% for customer_group in customer_groups %}
       <tr>
@@ -2136,6 +2166,7 @@
       </tr>
     {% endfor %}
   </table>
+
 
   <table id="master-product-layout">
     {% for store in stores %}
@@ -2154,6 +2185,8 @@
       </tr>
     {% endfor %}
   </table>
+
+
 </div>
 <script type="text/javascript"><!--
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
@@ -2161,13 +2194,12 @@ $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 {% if master_id %}
 // Variable products
 $('input[data-toggle=\'switch\']').on('change', function(e) {
-	e.preventDefault();
-
 	var element = this;
 
 	var target = $(this).attr('data-target');
 
-    // First we need to grab the default values
+
+	// First we need to grab the default values
 	$(target).each(function() {
 
 
@@ -2175,10 +2207,6 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 		// Table
 		if ($(this).is('table')) {
 			if (!$(element).prop('checked')) {
-
-
-
-
 
 				$(element).html($(this).html());
 			}
@@ -2190,10 +2218,11 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 
 	});
 
-    // Now we need to enable or disable any fields in the targets
+
+	// Now we need to enable or disable any fields in the targets
 	$.merge($(target), $(target).find('input, textarea, select, button')).not('.custom-control-input').each(function() {
 		// Text Textarea
-        if ($(this).is('input[type=\'text\'], textarea')) {
+		if ($(this).is('input[type=\'text\'], textarea')) {
 			$(this).prop('readonly', !$(element).prop('checked'));
 		}
 
@@ -2236,40 +2265,37 @@ $('input[data-toggle=\'switch\']').on('change', function(e) {
 		if ($(this).is('button')) {
 			$(this).prop('disabled', !$(element).prop('checked'));
 		}
+
+
 	});
+
+
 });
 
 $('.custom-control-input').trigger('change');
 
+/*
 $(document).ready(function() {
-	$.ajax({
-		url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-		dataType: 'json',
-		success: function(json) {
 
+$.ajax({
+    url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=',
+    dataType: 'json',
+    success: function(json) {
+        html = '<tr id="product-category' + item['value'] + '">';
+        html += '  <td>' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '"/></td>';
+        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '</tr>';
 
-			$('#product-category' + item['value']).remove();
-
-			html = '<tr id="product-category' + item['value'] + '">';
-			html += '  <td>' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '"/></td>';
-			html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
-			html += '</tr>';
-
-			$('#product-category').append(html);
-		}
-	});
+        $('#product-category').append(html);
+    }
 });
-
+});
 
 $('input[data-toggle=\'switch\']').on('change', function(e) {
 
 
-var ['data-targe']
-
-
-
-
 });
+*/
 {% endif %}
 
 // Manufacturer
@@ -2354,7 +2380,7 @@ $('input[name=\'filter\']').autocomplete({
 
 		$('#product-filter' + item['value']).remove();
 
-		html = '<tr id="product-filter' + item['value'] + '">';
+		html  = '<tr id="product-filter' + item['value'] + '">';
 		html += '  <td>' + item['label'] + '<input type="hidden" name="product_filter[]" value="' + item['value'] + '"/></td>';
 		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
 		html += '</tr>';
@@ -2584,7 +2610,7 @@ $('input[name=\'option\']').autocomplete({
 			html += '    <tbody></tbody>';
 			html += '    <tfoot>';
 			html += '      <tr>';
-			html += '        <td colspan="6"></td>';
+			html += '        <td colspan="5"></td>';
 			html += '        <td class="text-right"><button type="button" data-option-row="' + option_row + '" data-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>';
 			html += '      </tr>';
 			html += '    </tfoot>';
@@ -2690,7 +2716,7 @@ $('#option').on('click', '.btn-primary', function() {
 	html += '        </div>';
 
 	html += '        <div class="form-group">';
-	html += '      	 <label for="input-modal-price" class="col-form-label">{{ entry_price }}</label>';
+	html += '      	   <label for="input-modal-price" class="col-form-label">{{ entry_price }}</label>';
 	html += '          <div class="input-group">';
 	html += '            <select name="price_prefix" class="form-control col-2">';
 

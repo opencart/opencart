@@ -21,14 +21,14 @@ class Url {
 	 * Constructor.
 	 *
 	 * @param string $url
-	 * @param string $ssl Unused
+	 * @param string $ssl Depricated
 	 */
-	public function __construct($url, $ssl = '') {
+	public function __construct($url) {
 		$this->url = $url;
 	}
 
 	/**
-	 *
+	 *	Add a rewrite method to the URL system
 	 *
 	 * @param Controller $rewrite
 	 *
@@ -39,21 +39,28 @@ class Url {
 	}
 
 	/**
+	 * Generates a URL
 	 *
-	 *
-	 * @param string          $route
-	 * @param string|string[] $args
+	 * @param string        $route
+	 * @param string|array	$args
+	 * @param bool			$js
 	 *
 	 * @return string
 	 */
-	public function link($route, $args = '') {
+	public function link($route, $args = '', $js = false) {
 		$url = $this->url . 'index.php?route=' . (string)$route;
 
 		if ($args) {
-			if (is_array($args)) {
-				$url .= '&amp;' . http_build_query($args, '', '&amp;');
+			if (!$js) {
+				$amp = '&amp;';
 			} else {
-				$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+				$amp = '&';
+			}
+
+			if (is_array($args)) {
+				$url .= $amp . http_build_query($args, '', $amp);
+			} else {
+				$url .= str_replace('&', $amp, '&' . ltrim($args, '&'));
 			}
 		}
 

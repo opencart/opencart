@@ -328,7 +328,7 @@ class ControllerDesignLayout extends Controller {
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
-			$this->load->language('extension/module/' . $code, 'extension');
+			$this->load->language('extension/module/' . $code, $code . '_');
 
 			$module_data = array();
 
@@ -343,7 +343,7 @@ class ControllerDesignLayout extends Controller {
 
 			if ($this->config->has('module_' . $code . '_status') || $module_data) {
 				$data['extensions'][] = array(
-					'name'   => strip_tags($this->language->get('extension')->get('heading_title')),
+					'name'   => strip_tags($this->language->get($code . '_heading_title')),
 					'code'   => $code,
 					'module' => $module_data
 				);
@@ -365,11 +365,11 @@ class ControllerDesignLayout extends Controller {
 		foreach ($layout_modules as $layout_module) {
 			$part = explode('.', $layout_module['code']);
 
-			$this->load->language('extension/module/' . $part[0]);
+			$this->load->language('extension/module/' . $part[0], $part[0] . '_');
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
-					'name'       => strip_tags($this->language->get('heading_title')),
+					'name'       => strip_tags($this->language->get($part[0] . '_heading_title')),
 					'code'       => $layout_module['code'],
 					'position'   => $layout_module['position'],
 					'sort_order' => $layout_module['sort_order'],

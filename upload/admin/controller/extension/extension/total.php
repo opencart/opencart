@@ -83,10 +83,10 @@ class ControllerExtensionExtensionTotal extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/total/' . $extension, 'extension');
+				$this->load->language('extension/total/' . $extension, $extension . '_');
 
 				$data['extensions'][] = array(
-					'name'       => $this->language->get('extension')->get('heading_title'),
+					'name'       => $this->language->get($extension . '_heading_title'),
 					'status'     => $this->config->get('total_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('total_' . $extension . '_sort_order'),
 					'install'    => $this->url->link('extension/extension/total/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),

@@ -8,8 +8,8 @@
 
 {% for product in products %}
 {{ product.quantity }}x {{ product.name }} ({{ product.model }}) {{ product.total }}
-{% if product.option %}
-{% for option in product.option %}
+{% if product.options %}
+{% for option in product.options %}
 	- {{ option.name }} {{ option.value }}
 {% endfor %}
 {% endif %}

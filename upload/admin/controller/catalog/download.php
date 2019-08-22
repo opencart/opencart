@@ -364,13 +364,55 @@ class ControllerCatalogDownload extends Controller {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
+    // this we will use to skip the check if we already have filename error
+    $flag = true;
 
 		if ((utf8_strlen($this->request->post['filename']) < 3) || (utf8_strlen($this->request->post['filename']) > 128)) {
-			$this->error['filename'] = $this->language->get('error_filename');
+			 $this->error['filename'] = $this->language->get('error_filename');
+			 $flag = false;
 		}
 
-		if (!is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
-			$this->error['filename'] = $this->language->get('error_exists');
+		if ($flag && !is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
+			 $this->error['filename'] = $this->language->get('error_exists');
+			 $flag = false;
+		}
+
+		if ($flag && isset($this->request->post['filename']) && file_exists(DIR_DOWNLOAD . $this->request->post['filename'])) {
+
+			$filename = basename(html_entity_decode($this->request->post['filename'], ENT_QUOTES, 'UTF-8'));
+			// Allowed file extension types
+			$allowed = array();
+
+			$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
+
+			$filetypes = explode("\n", $extension_allowed);
+
+			foreach ($filetypes as $filetype) {
+				$allowed[] = trim($filetype);
+			}
+
+			// Check to see if any PHP files are trying to be uploaded
+			$content = file_get_contents(DIR_DOWNLOAD . $this->request->post['filename']);
+
+			if ($flag && preg_match('/\<\?php/i', $content)) {
+				$this->error['filename']  = $this->language->get('error_filetype');
+				$flag = false;
+			}
+
+			// Allowed file mime types
+			$allowed_mime_type = array();
+
+			$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+
+			foreach ($filetypes as $filetype) {
+				$allowed_mime_type[] = trim($filetype);
+			}
+
+			$get_mime_type = mime_content_type(DIR_DOWNLOAD . $this->request->post['filename']);
+
+			if (!in_array($get_mime_type, $allowed_mime_type)) {
+				$this->error['filename'] = $this->language->get('error_filetype')
+			}
 		}
 
 		if ((utf8_strlen($this->request->post['mask']) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {

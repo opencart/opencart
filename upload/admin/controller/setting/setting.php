@@ -205,7 +205,7 @@ class ControllerSettingSetting extends Controller {
 				$this->load->language('extension/theme/' . $code, 'extension');
 
 				$data['themes'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('extensionheading_title'),
 					'value' => $code
 				);
 			}
@@ -271,13 +271,15 @@ class ControllerSettingSetting extends Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
-		if (is_file(DIR_IMAGE . html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+		if (isset($this->request->post['config_image']) && is_file(DIR_IMAGE . $this->request->post['config_image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['config_image'], 100, 100);
+		} elseif ($this->config->get('config_image') && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
+			$data['thumb'] = $this->model_tool_image->resize($this->config->get('config_image'), 100, 100);
 		} else {
-			$data['thumb'] = $data['placeholder'];
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
+
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if (isset($this->request->post['config_open'])) {
 			$data['config_open'] = $this->request->post['config_open'];
@@ -380,7 +382,7 @@ class ControllerSettingSetting extends Controller {
 				$this->load->language('extension/currency/' . $code, 'extension');
 
 				$data['currency_engines'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('extensionheading_title'),
 					'value' => $code
 				);
 			}
@@ -456,24 +458,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_voucher_max'] = $this->request->post['config_voucher_max'];
 		} else {
 			$data['config_voucher_max'] = $this->config->get('config_voucher_max');
-		}
-
-		if (isset($this->request->post['config_cookie_id'])) {
-			$data['config_cookie_id'] = $this->request->post['config_cookie_id'];
-		} else {
-			$data['config_cookie_id'] = $this->config->get('config_cookie_id');
-		}
-
-		if (isset($this->request->post['config_gdpr_id'])) {
-			$data['config_gdpr_id'] = $this->request->post['config_gdpr_id'];
-		} else {
-			$data['config_gdpr_id'] = $this->config->get('config_gdpr_id');
-		}
-
-		if (isset($this->request->post['config_gdpr_limit'])) {
-			$data['config_gdpr_limit'] = $this->request->post['config_gdpr_limit'];
-		} else {
-			$data['config_gdpr_limit'] = $this->config->get('config_gdpr_limit');
 		}
 
 		if (isset($this->request->post['config_tax'])) {
@@ -710,7 +694,7 @@ class ControllerSettingSetting extends Controller {
 
 			if ($this->config->get('captcha_' . $code . '_status')) {
 				$data['captchas'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('extensionheading_title'),
 					'value' => $code
 				);
 			}
@@ -757,14 +741,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_logo'] = $this->config->get('config_logo');
 		}
 
-		$this->load->model('tool/image');
-
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
-		if (is_file(DIR_IMAGE . html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), 100, 100);
+		if (isset($this->request->post['config_logo']) && is_file(DIR_IMAGE . $this->request->post['config_logo'])) {
+			$data['logo'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);
+		} elseif ($this->config->get('config_logo') && is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+			$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), 100, 100);
 		} else {
-			$data['logo'] = $data['placeholder'];
+			$data['logo'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		if (isset($this->request->post['config_icon'])) {
@@ -773,10 +755,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_icon'] = $this->config->get('config_icon');
 		}
 
-		if (is_file(DIR_IMAGE . html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'))) {
-			$data['icon'] = $this->model_tool_image->resize(html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'), 100, 100);
+		if (isset($this->request->post['config_icon']) && is_file(DIR_IMAGE . $this->request->post['config_icon'])) {
+			$data['icon'] = $this->model_tool_image->resize($this->request->post['config_icon'], 100, 100);
+		} elseif ($this->config->get('config_icon') && is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
+			$data['icon'] = $this->model_tool_image->resize($this->config->get('config_icon'), 100, 100);
 		} else {
-			$data['icon'] = $data['placeholder'];
+			$data['icon'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		if (isset($this->request->post['config_mail_engine'])) {

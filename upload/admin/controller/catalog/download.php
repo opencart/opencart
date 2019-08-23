@@ -411,7 +411,7 @@ class ControllerCatalogDownload extends Controller {
 			$get_mime_type = mime_content_type(DIR_DOWNLOAD . $this->request->post['filename']);
 
 			if (!in_array($get_mime_type, $allowed_mime_type)) {
-				$this->error['filename'] = $this->language->get('error_filetype')
+				$this->error['filename'] = $this->language->get('error_filetype');
 			}
 		}
 

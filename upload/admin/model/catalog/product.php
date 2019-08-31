@@ -633,7 +633,7 @@ class ModelCatalogProduct extends Model {
 
 			foreach ($product as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
-				if (array_key_exists($key, $override) && in_array($key, $replace)) {
+				if (array_key_exists($key, $override) || in_array($key, $replace)) {
 					$variant_data[$key] = $value;
 				}
 			}
@@ -646,23 +646,21 @@ class ModelCatalogProduct extends Model {
 
 			foreach ($product_descriptions as $language_id => $product_description) {
 				foreach ($product_description as $key => $value) {
-
-
 					// If override set use the POST data values
-					if (isset($override['product_description'][$language_id][$key]) && isset($data['product_description'][$language_id][$key])) {
-						$variant_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
-					} else {
-						$variant_data['product_description'][$language_id][$key] = $value;
-					}
-
-
-
 					if (isset($override['product_description'][$language_id][$key])) {
-						$variant_data['product_description'][$language_id][$key] = $value;
-					}
 
+						$variant_data['product_description'][$language_id][$key] = $value;
+
+
+					} elseif (isset($data['product_description'][$language_id][$key])) {
+
+						$variant_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
+
+					}
 				}
 			}
+
+			print_r($variant_data);
 
 			// Attributes
 			if (isset($override['product_attribute'])) {
@@ -731,8 +729,7 @@ class ModelCatalogProduct extends Model {
 			}
 
 
-
-			$this->model_catalog_product->editProduct($product['product_id'], array_merge($data, $variant_data));
+			//$this->model_catalog_product->editProduct($product['product_id'], array_merge($data, $variant_data));
 		}
 	}
 

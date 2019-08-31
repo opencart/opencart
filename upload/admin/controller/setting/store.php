@@ -331,10 +331,10 @@ class ControllerSettingStore extends Controller {
 
 		foreach ($extensions as $code) {
 			if ($this->config->get('theme_' . $code . '_status')) {
-				$this->load->language('extension/theme/' . $code, 'extension');
+				$this->load->language('extension/theme/' . $code, $code . '_');
 
 				$data['themes'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get($code . '_heading_title'),
 					'value' => $code
 				);
 			}

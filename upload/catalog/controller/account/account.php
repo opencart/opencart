@@ -43,10 +43,10 @@ class ControllerAccountAccount extends Controller {
 			$code = basename($file, '.php');
 			
 			if ($this->config->get('payment_' . $code . '_status') && $this->config->get('payment_' . $code . '_card')) {
-				$this->load->language('extension/credit_card/' . $code, 'extension');
+				$this->load->language('extension/credit_card/' . $code, $code . '_');
 
 				$data['credit_cards'][] = array(
-					'name' => $this->language->get('extension')->get('heading_title'),
+					'name' => $this->language->get($code . '_heading_title'),
 					'href' => $this->url->link('extension/credit_card/' . $code, 'language=' . $this->config->get('config_language'))
 				);
 			}

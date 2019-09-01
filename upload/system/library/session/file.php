@@ -1,8 +1,6 @@
 <?php
 namespace Session;
 class File {
-	private $directory;
-
 	public function read($session_id) {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);
 
@@ -55,7 +53,7 @@ class File {
 		}
 	}
 
-	public function __destruct() {
+	public function gc() {
 		if (ini_get('session.gc_divisor')) {
 			$gc_divisor = ini_get('session.gc_divisor');
 		} else {
@@ -79,5 +77,9 @@ class File {
 				}
 			}
 		}
+	}
+
+	public function __destruct() {
+		$this->gc();
 	}
 }

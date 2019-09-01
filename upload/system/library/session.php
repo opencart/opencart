@@ -87,4 +87,8 @@ class Session {
 	public function destroy() {
 		$this->adaptor->destroy($this->session_id);
 	}
+
+	public function gc() {
+		$this->adaptor->gc();
+	}
 }

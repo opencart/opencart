@@ -41,7 +41,7 @@ final class DB {
 		return true;
 	}
 	
-	public function gc($expire) {
+	public function gc() {
 		if (ini_get('session.gc_divisor')) {
 			$gc_divisor = ini_get('session.gc_divisor');
 		} else {

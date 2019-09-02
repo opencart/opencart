@@ -6,8 +6,9 @@ class Currency {
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
+		$this->config = $registry->get('config');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE status = '1'");
 
 		foreach ($query->rows as $result) {
 			$this->currencies[$result['code']] = array(
@@ -22,6 +23,29 @@ class Currency {
 	}
 
 	public function format($number, $currency, $value = '', $format = true) {
+		if (!isset($this->currencies[$currency])) {
+			if (isset($this->currencies[$this->config->get('config_currency')])) {
+				$currency = $this->config->get('config_currency');
+			} else {
+				$currency_main = false;
+				$currency_last = false;
+
+				foreach ($this->currencies as $key => $result) {
+					if ((float)$result['value'] == 1) {
+						$currency_main = $key;
+					} else {
+						$currency_last = $key;
+					}
+				}
+
+				if ($currency_main) {
+					$currency = $currency_main;
+				} else {
+					$currency = $currency_last;
+				}
+			}
+		}
+
 		$symbol_left = $this->currencies[$currency]['symbol_left'];
 		$symbol_right = $this->currencies[$currency]['symbol_right'];
 		$decimal_place = $this->currencies[$currency]['decimal_place'];

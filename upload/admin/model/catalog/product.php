@@ -388,7 +388,7 @@ class ModelCatalogProduct extends Model {
 		$master_info = $this->model_catalog_product->getProduct($master_id);
 
 		if ($master_info) {
-			// We use the override
+			// We use the override to override the master product values
 			if (isset($data['override'])) {
 				$override = (array)$data['override'];
 			} else {
@@ -409,6 +409,8 @@ class ModelCatalogProduct extends Model {
 					$master_data[$key] = $value;
 				}
 			}
+
+
 
 			// Descriptions
 			$product_descriptions = $this->model_catalog_product->getProductDescriptions($master_id);
@@ -502,7 +504,7 @@ class ModelCatalogProduct extends Model {
 		$master_info = $this->model_catalog_product->getProduct($master_id);
 
 		if ($master_info) {
-			// We use the override
+			// We use the override to override the master product values
 			if (isset($data['override'])) {
 				$override = (array)$data['override'];
 			} else {
@@ -610,15 +612,22 @@ class ModelCatalogProduct extends Model {
 	}
 
 	function editVariants($master_id, $data) {
+		// product_option should not be passed to product variants
+		unset($data['product_option']);
+
 		// If product is master update variants
 		$products = $this->model_catalog_product->getProducts(array('filter_master_id' => $master_id));
 
 		foreach ($products as $product) {
-			$product_variant = array();
+			$variant_data = array();
 
-			// We find out which
+			// We need to convert JSON strings back into an array so they can be re-encoded to a string to go back into the database.
+			$product['override'] = (array)json_decode($product['override'], true);
+			$product['variant'] = (array)json_decode($product['variant'], true);
+
+			// We use the override to override the master product values
 			if ($product['override']) {
-				$override = (array)json_decode($product['override'], true);
+				$override = $product['override'];
 			} else {
 				$override = array();
 			}
@@ -631,6 +640,7 @@ class ModelCatalogProduct extends Model {
 				'variant'
 			);
 
+			// Now we want to
 			foreach ($product as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
 				if (array_key_exists($key, $override) || in_array($key, $replace)) {
@@ -638,14 +648,13 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 
-			$variant_data['override'] = (array)json_decode($product['override'], true);
-			$variant_data['variant'] = (array)json_decode($product['variant'], true);
-
 			// Descriptions
-			$product_descriptions = $this->model_catalog_product->getProductDescriptions($data['master_id']);
+			$product_descriptions = $this->model_catalog_product->getProductDescriptions($product['product_id']);
 
 			foreach ($product_descriptions as $language_id => $product_description) {
+
 				foreach ($product_description as $key => $value) {
+
 					// If override set use the POST data values
 					if (isset($override['product_description'][$language_id][$key])) {
 
@@ -660,55 +669,53 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 
-			print_r($variant_data);
-
 			// Attributes
-			if (isset($override['product_attribute'])) {
+			if (!isset($override['product_attribute'])) {
 				$variant_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product['product_id']);
 			}
 
 			// Category
-			if (isset($override['product_category'])) {
+			if (!isset($override['product_category'])) {
 				$variant_data['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
 			}
 
 			// Discounts
-			if (isset($override['product_discount'])) {
+			if (!isset($override['product_discount'])) {
 				$variant_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product['product_id']);
 			}
 
 			// Downloads
-			if (isset($override['product_download'])) {
+			if (!isset($override['product_download'])) {
 				$variant_data['product_download'] = $this->model_catalog_product->getProductDownloads($product['product_id']);
 			}
 
 			// Filters
-			if (isset($override['product_filter'])) {
+			if (!isset($override['product_filter'])) {
 				$variant_data['product_filter'] = $this->model_catalog_product->getProductFilters($product['product_id']);
 			}
 
 			// Images
-			if (isset($override['product_image'])) {
+			if (!isset($override['product_image'])) {
 				$variant_data['product_image'] = $this->model_catalog_product->getProductImages($product['product_id']);
 			}
 
 			// Layouts
-			if (isset($override['product_layout'])) {
+			if (!isset($override['product_layout'])) {
 				$variant_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product['product_id']);
 			}
 
 			// Recurring
-			if (isset($override['product_recurring'])) {
+			if (!isset($override['product_recurring'])) {
 				$variant_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
 			}
 
 			// Related
-			if (isset($override['product_related'])) {
+			if (!isset($override['product_related'])) {
 				$variant_data['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
 			}
 
 			// Rewards
-			if (isset($override['product_reward'])) {
+			if (!isset($override['product_reward'])) {
 				$variant_data['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
 			}
 
@@ -719,17 +726,16 @@ class ModelCatalogProduct extends Model {
 			$variant_data['product_seo_url'] = $this->model_catalog_product->getProductSeoUrls($product['product_id']);
 
 			// Specials
-			if (isset($override['product_special'])) {
+			if (!isset($override['product_special'])) {
 				$variant_data['product_special'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
 			}
 
 			// Stores
-			if (isset($override['product_store'])) {
+			if (!isset($override['product_store'])) {
 				$variant_data['product_store'] = $this->model_catalog_product->getProductStores($product['product_id']);
 			}
 
-
-			//$this->model_catalog_product->editProduct($product['product_id'], array_merge($data, $variant_data));
+			$this->model_catalog_product->editProduct($product['product_id'], array_merge($data, $variant_data));
 		}
 	}
 

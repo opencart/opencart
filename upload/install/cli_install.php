@@ -394,9 +394,7 @@ class ControllerCliInstall extends Controller {
 		return $output;
 	}
 
-	public function db($argv) {
-
-
+	public function cloud($argv) {
 		// Options
 		$option = array(
 			'db_driver'   => 'mysqli',

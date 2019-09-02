@@ -670,68 +670,65 @@ class ModelCatalogProduct extends Model {
 			}
 
 			// Attributes
-			if (!isset($override['product_attribute'])) {
+			if (isset($override['product_attribute'])) {
 				$variant_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product['product_id']);
 			}
 
 			// Category
-			if (!isset($override['product_category'])) {
+			if (isset($override['product_category'])) {
 				$variant_data['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
 			}
 
 			// Discounts
-			if (!isset($override['product_discount'])) {
+			if (isset($override['product_discount'])) {
 				$variant_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product['product_id']);
 			}
 
 			// Downloads
-			if (!isset($override['product_download'])) {
+			if (isset($override['product_download'])) {
 				$variant_data['product_download'] = $this->model_catalog_product->getProductDownloads($product['product_id']);
 			}
 
 			// Filters
-			if (!isset($override['product_filter'])) {
+			if (isset($override['product_filter'])) {
 				$variant_data['product_filter'] = $this->model_catalog_product->getProductFilters($product['product_id']);
 			}
 
 			// Images
-			if (!isset($override['product_image'])) {
+			if (isset($override['product_image'])) {
 				$variant_data['product_image'] = $this->model_catalog_product->getProductImages($product['product_id']);
 			}
 
 			// Layouts
-			if (!isset($override['product_layout'])) {
+			if (isset($override['product_layout'])) {
 				$variant_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product['product_id']);
 			}
 
 			// Recurring
-			if (!isset($override['product_recurring'])) {
+			if (isset($override['product_recurring'])) {
 				$variant_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
 			}
 
 			// Related
-			if (!isset($override['product_related'])) {
+			if (isset($override['product_related'])) {
 				$variant_data['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
 			}
 
 			// Rewards
-			if (!isset($override['product_reward'])) {
+			if (isset($override['product_reward'])) {
 				$variant_data['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
 			}
-
-			// product_option should not be passed to product variants
-			unset($data['product_option']);
 
 			// SEO
 			$variant_data['product_seo_url'] = $this->model_catalog_product->getProductSeoUrls($product['product_id']);
 
 			// Specials
-			if (!isset($override['product_special'])) {
+			if (isset($override['product_special'])) {
 				$variant_data['product_special'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
 			}
 
 			// Stores
-			if (!isset($override['product_store'])) {
+			if (isset($override['product_store'])) {
 				$variant_data['product_store'] = $this->model_catalog_product->getProductStores($product['product_id']);
 			}
 

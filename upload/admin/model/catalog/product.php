@@ -62,7 +62,7 @@ class ModelCatalogProduct extends Model {
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
 						$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '" . (int)$product_attribute['attribute_id'] . "' AND language_id = '" . (int)$language_id . "'");
 
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");
+						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($product_attribute_description['text']) . "'");
 					}
 				}
 			}
@@ -125,7 +125,7 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
-		
+
 		// SEO URL
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
@@ -222,7 +222,7 @@ class ModelCatalogProduct extends Model {
 					$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '" . (int)$product_attribute['attribute_id'] . "'");
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");
+						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($product_attribute_description['text']) . "'");
 					}
 				}
 			}
@@ -298,10 +298,10 @@ class ModelCatalogProduct extends Model {
 				}
 			}
 		}
-		
+
 		// SEO URL
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'product_id=" . (int)$product_id . "'");
-		
+
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
@@ -409,7 +409,6 @@ class ModelCatalogProduct extends Model {
 					$master_data[$key] = $value;
 				}
 			}
-
 
 
 			// Descriptions
@@ -822,12 +821,12 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($query->rows as $result) {
 			$product_description_data[$result['language_id']] = array(
-				'name'             => $result['name'],
-				'description'      => $result['description'],
-				'meta_title'       => $result['meta_title'],
+				'name' => $result['name'],
+				'description' => $result['description'],
+				'meta_title' => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
-				'meta_keyword'     => $result['meta_keyword'],
-				'tag'              => $result['tag']
+				'meta_keyword' => $result['meta_keyword'],
+				'tag' => $result['tag']
 			);
 		}
 
@@ -873,7 +872,7 @@ class ModelCatalogProduct extends Model {
 			}
 
 			$product_attribute_data[] = array(
-				'attribute_id'                  => $product_attribute['attribute_id'],
+				'attribute_id' => $product_attribute['attribute_id'],
 				'product_attribute_description' => $product_attribute_description_data
 			);
 		}
@@ -894,26 +893,26 @@ class ModelCatalogProduct extends Model {
 			foreach ($product_option_value_query->rows as $product_option_value) {
 				$product_option_value_data[] = array(
 					'product_option_value_id' => $product_option_value['product_option_value_id'],
-					'option_value_id'         => $product_option_value['option_value_id'],
-					'quantity'                => $product_option_value['quantity'],
-					'subtract'                => $product_option_value['subtract'],
-					'price'                   => $product_option_value['price'],
-					'price_prefix'            => $product_option_value['price_prefix'],
-					'points'                  => $product_option_value['points'],
-					'points_prefix'           => $product_option_value['points_prefix'],
-					'weight'                  => $product_option_value['weight'],
-					'weight_prefix'           => $product_option_value['weight_prefix']
+					'option_value_id' => $product_option_value['option_value_id'],
+					'quantity' => $product_option_value['quantity'],
+					'subtract' => $product_option_value['subtract'],
+					'price' => $product_option_value['price'],
+					'price_prefix' => $product_option_value['price_prefix'],
+					'points' => $product_option_value['points'],
+					'points_prefix' => $product_option_value['points_prefix'],
+					'weight' => $product_option_value['weight'],
+					'weight_prefix' => $product_option_value['weight_prefix']
 				);
 			}
 
 			$product_option_data[] = array(
-				'product_option_id'    => $product_option['product_option_id'],
+				'product_option_id' => $product_option['product_option_id'],
 				'product_option_value' => $product_option_value_data,
-				'option_id'            => $product_option['option_id'],
-				'name'                 => $product_option['name'],
-				'type'                 => $product_option['type'],
-				'value'                => $product_option['value'],
-				'required'             => $product_option['required']
+				'option_id' => $product_option['option_id'],
+				'name' => $product_option['name'],
+				'type' => $product_option['type'],
+				'value' => $product_option['value'],
+				'required' => $product_option['required']
 			);
 		}
 
@@ -991,10 +990,10 @@ class ModelCatalogProduct extends Model {
 
 		return $product_store_data;
 	}
-	
+
 	public function getProductSeoUrls($product_id) {
 		$product_seo_url_data = array();
-		
+
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'product_id=" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
@@ -1003,7 +1002,7 @@ class ModelCatalogProduct extends Model {
 
 		return $product_seo_url_data;
 	}
-	
+
 	public function getProductLayouts($product_id) {
 		$product_layout_data = array();
 

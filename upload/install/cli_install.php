@@ -94,13 +94,13 @@ class ControllerCliInstall extends Controller {
 	public function install($argv) {
 		// Options
 		$option = array(
-			'db_driver'   => 'mysqli',
+			'db_driver' => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_database' => 'opencart',
 			'db_password' => '',
-			'db_prefix'   => 'oc_',
-			'db_port'     => '3306',
-			'username'    => 'admin'
+			'db_prefix' => 'oc_',
+			'db_port' => '3306',
+			'username' => 'admin'
 		);
 
 		$total = count($argv);
@@ -306,7 +306,7 @@ class ControllerCliInstall extends Controller {
 		}
 
 		// Write config files
-		$output  = '<?php' . "\n";
+		$output = '<?php' . "\n";
 		$output .= '// HTTP' . "\n";
 		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
 
@@ -343,7 +343,7 @@ class ControllerCliInstall extends Controller {
 
 		fclose($file);
 
-		$output  = '<?php' . "\n";
+		$output = '<?php' . "\n";
 		$output .= '// HTTP' . "\n";
 		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
 		$output .= 'define(\'HTTP_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
@@ -387,7 +387,7 @@ class ControllerCliInstall extends Controller {
 		fclose($file);
 
 		// Return success message
-		$output  = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
+		$output = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
 		$output .= 'Store link: ' . $option['http_server'] . "\n";
 		$output .= 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
 
@@ -397,13 +397,13 @@ class ControllerCliInstall extends Controller {
 	public function cloud($argv) {
 		// Options
 		$option = array(
-			'db_driver'   => 'mysqli',
+			'db_driver' => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_database' => 'opencart',
 			'db_password' => '',
-			'db_prefix'   => 'oc_',
-			'db_port'     => '3306',
-			'username'    => 'admin'
+			'db_prefix' => 'oc_',
+			'db_port' => '3306',
+			'username' => 'admin'
 		);
 
 		$total = count($argv);
@@ -609,7 +609,7 @@ class ControllerCliInstall extends Controller {
 		}
 
 		// Write config files
-		$output  = '<?php' . "\n";
+		$output = '<?php' . "\n";
 		$output .= '// HTTP' . "\n";
 		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
 
@@ -641,7 +641,6 @@ class ControllerCliInstall extends Controller {
 		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
 
 
-
 		$output .= '// DB' . "\n";
 		$output .= 'define(\'DB_DRIVER\', \'' . addslashes($option['db_driver']) . '\');' . "\n";
 		$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($option['db_hostname']) . '\');' . "\n";
@@ -656,7 +655,7 @@ class ControllerCliInstall extends Controller {
 
 
 		// Return success message
-		$output  = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
+		$output = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
 		$output .= 'Store link: ' . $option['http_server'] . "\n";
 		$output .= 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
 
@@ -687,7 +686,7 @@ class ControllerCliInstall extends Controller {
 			'youremail@example.com'
 		));
 
-		$output  = 'Usage:' . "\n";
+		$output = 'Usage:' . "\n";
 		$output .= '======' . "\n\n";
 		$output .= 'php cli_install.php install ' . $option . "\n\n";
 

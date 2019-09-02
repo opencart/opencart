@@ -205,7 +205,7 @@ class ControllerSettingSetting extends Controller {
 				$this->load->language('extension/theme/' . $code, 'extension');
 
 				$data['themes'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('heading_title'),
 					'value' => $code
 				);
 			}
@@ -380,7 +380,7 @@ class ControllerSettingSetting extends Controller {
 				$this->load->language('extension/currency/' . $code, 'extension');
 
 				$data['currency_engines'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('heading_title'),
 					'value' => $code
 				);
 			}
@@ -710,7 +710,7 @@ class ControllerSettingSetting extends Controller {
 
 			if ($this->config->get('captcha_' . $code . '_status')) {
 				$data['captchas'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('heading_title'),
 					'value' => $code
 				);
 			}

@@ -1,8 +1,6 @@
 <?php
 namespace Session;
 class File {
-	private $directory;
-
 	public function read($session_id) {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);
 
@@ -55,28 +53,14 @@ class File {
 		}
 	}
 
-	public function __destruct() {
-		if (ini_get('session.gc_divisor')) {
-			$gc_divisor = ini_get('session.gc_divisor');
-		} else {
-			$gc_divisor = 1;
-		}
+	public function clean() {
+		$expire = time() - ini_get('session.gc_maxlifetime');
 
-		if (ini_get('session.gc_probability')) {
-			$gc_probability = ini_get('session.gc_probability');
-		} else {
-			$gc_probability = 1;
-		}
+		$files = glob(DIR_SESSION . 'sess_*');
 
-		if ((rand() % $gc_divisor) < $gc_probability) {
-			$expire = time() - ini_get('session.gc_maxlifetime');
-
-			$files = glob(DIR_SESSION . 'sess_*');
-
-			foreach ($files as $file) {
-				if (filemtime($file) < $expire) {
-					unlink($file);
-				}
+		foreach ($files as $file) {
+			if (filemtime($file) < $expire) {
+				unlink($file);
 			}
 		}
 	}

@@ -79,6 +79,8 @@ class Session {
  	*/
 	public function close() {
 		$this->adaptor->write($this->session_id, $this->data);
+
+		$this->gc();
 	}
 	
 	/**
@@ -86,5 +88,27 @@ class Session {
  	*/	
 	public function destroy() {
 		$this->adaptor->destroy($this->session_id);
+	}
+
+	public function clean() {
+		$this->adaptor->clean();
+	}
+
+	public function gc() {
+		if (ini_get('session.gc_divisor')) {
+			$gc_divisor = ini_get('session.gc_divisor');
+		} else {
+			$gc_divisor = 1;
+		}
+
+		if (ini_get('session.gc_probability')) {
+			$gc_probability = ini_get('session.gc_probability');
+		} else {
+			$gc_probability = 1;
+		}
+
+		if ((rand() % $gc_divisor) < $gc_probability) {
+			$this->clean();
+		}
 	}
 }

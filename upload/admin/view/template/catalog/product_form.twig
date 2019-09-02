@@ -1887,113 +1887,6 @@
 <script type="text/javascript"><!--
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
-{% if master_id %}
-// Variable products
-$('input[data-toggle=\'switch\']').on('change', function(e) {
-	var element = this;
-
-	var target = $(this).attr('data-target');
-
-
-	// First we need to grab the default values
-	$(target).each(function() {
-
-
-
-		// Table
-		if ($(this).is('table')) {
-			if (!$(element).prop('checked')) {
-
-				$(element).html($(this).html());
-			}
-
-			console.log(this);
-
-			//$(this).prop('disabled', !$(element).prop('checked'));
-		}
-
-	});
-
-
-	// Now we need to enable or disable any fields in the targets
-	$.merge($(target), $(target).find('input, textarea, select, button')).not('.custom-control-input').each(function() {
-		// Text Textarea
-		if ($(this).is('input[type=\'text\'], textarea')) {
-			$(this).prop('readonly', !$(element).prop('checked'));
-		}
-
-		// CKEditor readonly
-		if ($(this).is('[data-toggle=\'ckeditor\']')) {
-			var editor = CKEDITOR.instances[$(this).attr('id')];
-
-			if (editor.editable() == undefined) {
-				editor.on('instanceReady', function() {
-					this.setReadOnly(!$(element).prop('checked'));
-				});
-			} else {
-				editor.setReadOnly(!$(element).prop('checked'));
-			}
-		}
-
-		// Radio Checkbox
-		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-toggle=\'buttons\']')) {
-			if (!$(element).prop('checked')) {
-				$(this).on('click', function(e) {
-					return false;
-				});
-			} else {
-				$(this).off('click');
-			}
-		}
-
-		// Select
-		if ($(this).is('select')) {
-			if (!$(element).prop('checked')) {
-				$(this).attr('readonly', 'readonly');
-			} else {
-				$(this).removeAttr('readonly');
-			}
-
-			$(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
-		}
-
-		// Button
-		if ($(this).is('button')) {
-			$(this).prop('disabled', !$(element).prop('checked'));
-		}
-
-
-	});
-
-
-});
-
-$('.custom-control-input').trigger('change');
-
-/*
-$(document).ready(function() {
-
-$.ajax({
-    url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=',
-    dataType: 'json',
-    success: function(json) {
-        html = '<tr id="product-category' + item['value'] + '">';
-        html += '  <td>' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
-        html += '</tr>';
-
-        $('#product-category').append(html);
-    }
-});
-});
-
-$('input[data-toggle=\'switch\']').on('change', function(e) {
-
-
-});
-*/
-{% endif %}
-
 // Manufacturer
 $('input[name=\'manufacturer\']').autocomplete({
 	'source': function(request, response) {
@@ -2689,6 +2582,113 @@ $('.datetime').datetimepicker({
 	'locale': '{{ datepicker }}',
 	'allowInputToggle': true
 });
+
+
+{% if master_id %}
+// Variable products
+$('input[data-toggle=\'switch\']').on('change', function(e) {
+	var element = this;
+
+	var target = $(this).attr('data-target');
+
+
+	// First we need to grab the default values
+	$(target).each(function() {
+
+
+
+		// Table
+		if ($(this).is('table')) {
+			if (!$(element).prop('checked')) {
+
+				$(element).html($(this).html());
+			}
+
+			console.log(this);
+
+			//$(this).prop('disabled', !$(element).prop('checked'));
+		}
+	});
+
+
+	// Now we need to enable or disable any fields in the targets
+	$.merge($(target), $(target).find('input, textarea, select, button')).not('.custom-control-input').each(function() {
+		// Text Textarea
+		if ($(this).is('input[type=\'text\'], textarea')) {
+			$(this).prop('readonly', !$(element).prop('checked'));
+		}
+
+		// CKEditor readonly
+		if ($(this).is('[data-toggle=\'ckeditor\']')) {
+			var editor = CKEDITOR.instances[$(this).attr('id')];
+
+			if (editor.editable() == undefined) {
+				editor.on('instanceReady', function() {
+					this.setReadOnly(!$(element).prop('checked'));
+				});
+			} else {
+				editor.setReadOnly(!$(element).prop('checked'));
+			}
+		}
+
+		// Radio Checkbox
+		if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-toggle=\'buttons\']')) {
+			if (!$(element).prop('checked')) {
+				$(this).on('click', function(e) {
+					return false;
+				});
+			} else {
+				$(this).off('click');
+			}
+		}
+
+		// Select
+		if ($(this).is('select')) {
+			if (!$(element).prop('checked')) {
+				$(this).attr('readonly', 'readonly');
+			} else {
+				$(this).removeAttr('readonly');
+			}
+
+			$(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
+		}
+
+		// Button
+		if ($(this).is('button')) {
+			$(this).prop('disabled', !$(element).prop('checked'));
+		}
+
+
+	});
+
+
+});
+
+$('.custom-control-input').trigger('change');
+
+/*
+$(document).ready(function() {
+
+$.ajax({
+    url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=',
+    dataType: 'json',
+    success: function(json) {
+        html = '<tr id="product-category' + item['value'] + '">';
+        html += '  <td>' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '"/></td>';
+        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '</tr>';
+
+        $('#product-category').append(html);
+    }
+});
+});
+
+$('input[data-toggle=\'switch\']').on('change', function(e) {
+
+
+});
+*/
+{% endif %}
 //--></script>
 <script type="text/javascript"><!--
 $('#language li:first-child a').tab('show');

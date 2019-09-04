@@ -58,7 +58,7 @@ $response = new Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
-set_error_handler(function ($code, $message, $file, $line, array $errcontext) {
+set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 	// error was suppressed with the @-operator
 	if (error_reporting() === 0) {
 		return false;
@@ -79,7 +79,7 @@ class ControllerCliInstall extends Controller {
 			case 'install':
 				$output = $this->install($argv);
 				break;
-			case 'db':
+			case 'cloud':
 				$output = $this->db($argv);
 				break;
 			case 'usage':
@@ -94,13 +94,13 @@ class ControllerCliInstall extends Controller {
 	public function install($argv) {
 		// Options
 		$option = array(
-			'db_driver' => 'mysqli',
+			'username'    => 'admin',
+			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_database' => 'opencart',
 			'db_password' => '',
-			'db_prefix' => 'oc_',
-			'db_port' => '3306',
-			'username' => 'admin'
+			'db_prefix'   => 'oc_',
+			'db_port'     => '3306'
 		);
 
 		$total = count($argv);
@@ -117,16 +117,16 @@ class ControllerCliInstall extends Controller {
 
 		// Validation
 		$required = array(
+			'http_server',
+			'username',
+			'email',
+			'password',
 			'db_hostname',
 			'db_username',
 			'db_password',
 			'db_database',
 			'db_prefix',
-			'db_port',
-			'http_server',
-			'username',
-			'password',
-			'email'
+			'db_port'
 		);
 
 		$missing = array();
@@ -394,16 +394,24 @@ class ControllerCliInstall extends Controller {
 		return $output;
 	}
 
+
+
+
+
+
+
+
+
 	public function cloud($argv) {
 		// Options
 		$option = array(
-			'db_driver' => 'mysqli',
+			'username'    => 'admin',
+			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_database' => 'opencart',
 			'db_password' => '',
-			'db_prefix' => 'oc_',
-			'db_port' => '3306',
-			'username' => 'admin'
+			'db_prefix'   => 'oc_',
+			'db_port'     => '3306'
 		);
 
 		$total = count($argv);
@@ -420,16 +428,16 @@ class ControllerCliInstall extends Controller {
 
 		// Validation
 		$required = array(
+			'username',
+			'email',
+			'password',
+			'hashed',
 			'db_hostname',
 			'db_username',
 			'db_password',
 			'db_database',
 			'db_prefix',
-			'db_port',
-			'http_server',
-			'username',
-			'password',
-			'email'
+			'db_port'
 		);
 
 		$missing = array();
@@ -445,55 +453,56 @@ class ControllerCliInstall extends Controller {
 		}
 
 		// Requirements
-		$error = '';
+		$json['error'] = array();
 
 		if (version_compare(phpversion(), '7.0.0', '<')) {
-			$error .= 'You need to use PHP7+ or above for OpenCart to work!';
+			$json['error']['version'] = 'You need to use PHP7+ or above for OpenCart to work!';
 		}
 
 		if (!ini_get('file_uploads')) {
-			$error .= 'file_uploads needs to be enabled!';
+			$json['error']['file_upload'] = 'file_uploads needs to be enabled!';
 		}
 
 		if (ini_get('session.auto_start')) {
-			$error .= 'OpenCart will not work with session.auto_start enabled!';
+			$json['error']['session_auto_start'] = 'OpenCart will not work with session.auto_start enabled!';
 		}
 
 		if (!extension_loaded('mysqli')) {
-			$error .= 'MySQLi extension needs to be loaded for OpenCart to work!';
+			$json['error']['mysqli'] = 'MySQLi extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('gd')) {
-			$error .= 'GD extension needs to be loaded for OpenCart to work!';
+			$json['error']['gd'] = 'GD extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('curl')) {
-			$error .= 'CURL extension needs to be loaded for OpenCart to work!';
+			$json['error']['curl'] = 'CURL extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!function_exists('openssl_encrypt')) {
-			$error .= 'OpenSSL extension needs to be loaded for OpenCart to work!';
+			$json['error']['openssl'] = 'OpenSSL extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('zlib')) {
-			$error .= 'ZLIB extension needs to be loaded for OpenCart to work!';
+			$json['error']['zlib'] = 'ZLIB extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {
-			$error .= 'config.php does not exist. You need to rename config-dist.php to config.php!';
+			$json['error']['config_exist'] = 'config.php does not exist. You need to rename config-dist.php to config.php!';
+
 		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
-			$error .= 'config.php needs to be writable for OpenCart to be installed!';
+			$json['error']['config_writable'] .= 'config.php needs to be writable for OpenCart to be installed!';
+
 		} elseif (!is_file(DIR_OPENCART . 'admin/config.php')) {
-			$error .= 'admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+			$json['error']['config'] .= 'admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+
 		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$error .= 'admin/config.php needs to be writable for OpenCart to be installed!';
+			$json['error']['admin_config'] .= 'admin/config.php needs to be writable for OpenCart to be installed!';
+
 		}
 
-		if ($error) {
-			$output = 'FAILED! Pre-installation check failed: ' . "\n\n";
-			$output .= $error . "\n\n";
-
-			return $output;
+		if ($json['error']) {
+			return $json;
 		}
 
 		try {
@@ -607,51 +616,6 @@ class ControllerCliInstall extends Controller {
 		} catch (ErrorException $e) {
 			return 'FAILED!: ' . $e->getMessage() . "\n";
 		}
-
-		// Write config files
-		$output = '<?php' . "\n";
-		$output .= '// HTTP' . "\n";
-		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
-
-		$output .= '// HTTPS' . "\n";
-		$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
-
-		$output .= '// DIR' . "\n";
-		$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
-		$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
-		$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
-		$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
-		$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
-		$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/theme/\');' . "\n";
-		$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
-		$output .= 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
-		$output .= 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
-		$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
-		$output .= 'define(\'DIR_MODIFICATION\', DIR_STORAGE . \'modification/\');' . "\n";
-		$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
-		$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
-
-		$output .= '// DB' . "\n";
-		$output .= 'define(\'DB_DRIVER\', \'' . addslashes($option['db_driver']) . '\');' . "\n";
-		$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($option['db_hostname']) . '\');' . "\n";
-		$output .= 'define(\'DB_USERNAME\', \'' . addslashes($option['db_username']) . '\');' . "\n";
-		$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($option['db_password']) . '\');' . "\n";
-		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
-		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
-		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
-
-
-		$output .= '// DB' . "\n";
-		$output .= 'define(\'DB_DRIVER\', \'' . addslashes($option['db_driver']) . '\');' . "\n";
-		$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($option['db_hostname']) . '\');' . "\n";
-		$output .= 'define(\'DB_USERNAME\', \'' . addslashes($option['db_username']) . '\');' . "\n";
-		$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($option['db_password']) . '\');' . "\n";
-		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
-		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
-		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
-
-		$output .= '// OpenCart API' . "\n";
-		$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
 
 		// Return success message

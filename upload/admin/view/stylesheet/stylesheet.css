@@ -56,6 +56,10 @@ legend {
     background: #EEEEEE;
 }
 
+.is-invalid + .invalid-tooltip, .input-group + .invalid-tooltip {
+    position: static !important;
+}
+
 #header .navbar-nav .nav-link {
     padding-left: 20px;
     padding-right: 20px;

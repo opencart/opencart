@@ -223,9 +223,6 @@ class ModelSaleOrder extends Model {
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
-echo '<pre>';
-print_r($sql);
-echo '</pre>';
 
 		$query = $this->db->query($sql);
 

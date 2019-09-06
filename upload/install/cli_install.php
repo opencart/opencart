@@ -1,25 +1,24 @@
 <?php
 //
 // Command line tool for installing opencart
-// Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
-//
+// Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
+// Updated and maintained by OpenCart
 // (Currently tested on linux only)
 //
 // Usage:
 //
 //   cd install
-//   php cli_install.php install --db_hostname localhost
+//   php cli_install.php install --http_server http://localhost/opencart/
+//                               --username admin
+//                               --email email@example.com
+//                               --password password
+//                               --db_hostname localhost
 //                               --db_username root
 //                               --db_password pass
 //                               --db_database opencart
 //                               --db_driver mysqli
 //								 --db_port 3306
-//                               --username admin
-//                               --password admin
-//                               --email youremail@example.com
-//                               --http_server http://localhost/opencart/
 //
-//echo 'hifgfgfg';
 ini_set('display_errors', 1);
 
 error_reporting(E_ALL);
@@ -69,18 +68,21 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 
 class ControllerCliInstall extends Controller {
 	public function index() {
-		$argv = $this->request->server['argv'];
+		if (isset($this->request->server['argv'])) {
+			$argv = $this->request->server['argv'];
+		} else {
+			$argv = array();
+		}
 
+		// Just displays the path to the file
 		$script = array_shift($argv);
 
+		// Get the arguments passed with the command
 		$command = array_shift($argv);
 
 		switch ($command) {
 			case 'install':
 				$output = $this->install($argv);
-				break;
-			case 'cloud':
-				$output = $this->db($argv);
 				break;
 			case 'usage':
 			default:
@@ -92,6 +94,8 @@ class ControllerCliInstall extends Controller {
 	}
 
 	public function install($argv) {
+		print_r($argv);
+
 		// Options
 		$option = array(
 			'username'    => 'admin',
@@ -103,16 +107,20 @@ class ControllerCliInstall extends Controller {
 			'db_port'     => '3306'
 		);
 
+		// Turn args into an array
 		$total = count($argv);
 
 		for ($i = 0; $i < $total; $i = $i + 2) {
+			// Validate args
 			$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
 
 			if (!$is_flag) {
-				return $argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'';
+				return $argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'' . "\n";
 			}
 
-			$option[$match[1]] = $argv[$i + 1];
+			//if (!isset()) {
+				$option[$match[1]] = $argv[$i + 1];
+			//}
 		}
 
 		// Validation
@@ -138,42 +146,42 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if (count($missing)) {
-			return 'FAILED! Following inputs were missing or invalid: ' . implode(', ', $missing) . "\n\n";
+			return 'FAILED! Following inputs were missing or invalid: ' . implode(', ', $missing)  . "\n";
 		}
 
 		// Requirements
-		$error = '';
+		$error = array();
 
 		if (version_compare(phpversion(), '7.0.0', '<')) {
-			$error .= 'You need to use PHP7+ or above for OpenCart to work!';
+			$error .= 'You need to use PHP7+ or above for OpenCart to work!' . "\n";
 		}
 
 		if (!ini_get('file_uploads')) {
-			$error .= 'file_uploads needs to be enabled!';
+			$json['error']['file_upload'] = 'file_uploads needs to be enabled!' . "\n";
 		}
 
 		if (ini_get('session.auto_start')) {
-			$error .= 'OpenCart will not work with session.auto_start enabled!';
+			$error .= 'OpenCart will not work with session.auto_start enabled!' . "\n";
 		}
 
 		if (!extension_loaded('mysqli')) {
-			$error .= 'MySQLi extension needs to be loaded for OpenCart to work!';
+			$error .= 'MySQLi extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('gd')) {
-			$error .= 'GD extension needs to be loaded for OpenCart to work!';
+			$error .= 'GD extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('curl')) {
-			$error .= 'CURL extension needs to be loaded for OpenCart to work!';
+			$error .= 'CURL extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!function_exists('openssl_encrypt')) {
-			$error .= 'OpenSSL extension needs to be loaded for OpenCart to work!';
+			$error .= 'OpenSSL extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('zlib')) {
-			$error .= 'ZLIB extension needs to be loaded for OpenCart to work!';
+			$error .= 'ZLIB extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {
@@ -187,7 +195,7 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if ($error) {
-			$output = 'FAILED! Pre-installation check failed: ' . "\n\n";
+			$output = 'FAILED! Pre-installation check failed: ' . "\n";
 			$output .= $error . "\n\n";
 
 			return $output;
@@ -387,239 +395,7 @@ class ControllerCliInstall extends Controller {
 		fclose($file);
 
 		// Return success message
-		$output = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
-		$output .= 'Store link: ' . $option['http_server'] . "\n";
-		$output .= 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
-
-		return $output;
-	}
-
-
-
-
-
-
-
-
-
-	public function cloud($argv) {
-		// Options
-		$option = array(
-			'username'    => 'admin',
-			'db_driver'   => 'mysqli',
-			'db_hostname' => 'localhost',
-			'db_database' => 'opencart',
-			'db_password' => '',
-			'db_prefix'   => 'oc_',
-			'db_port'     => '3306'
-		);
-
-		$total = count($argv);
-
-		for ($i = 0; $i < $total; $i = $i + 2) {
-			$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
-
-			if (!$is_flag) {
-				return $argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'';
-			}
-
-			$option[$match[1]] = $argv[$i + 1];
-		}
-
-		// Validation
-		$required = array(
-			'username',
-			'email',
-			'password',
-			'hashed',
-			'db_hostname',
-			'db_username',
-			'db_password',
-			'db_database',
-			'db_prefix',
-			'db_port'
-		);
-
-		$missing = array();
-
-		foreach ($required as $value) {
-			if (!array_key_exists($value, $option)) {
-				$missing[] = $value;
-			}
-		}
-
-		if (count($missing)) {
-			return 'FAILED! Following inputs were missing or invalid: ' . implode(', ', $missing) . "\n\n";
-		}
-
-		// Requirements
-		$json['error'] = array();
-
-		if (version_compare(phpversion(), '7.0.0', '<')) {
-			$json['error']['version'] = 'You need to use PHP7+ or above for OpenCart to work!';
-		}
-
-		if (!ini_get('file_uploads')) {
-			$json['error']['file_upload'] = 'file_uploads needs to be enabled!';
-		}
-
-		if (ini_get('session.auto_start')) {
-			$json['error']['session_auto_start'] = 'OpenCart will not work with session.auto_start enabled!';
-		}
-
-		if (!extension_loaded('mysqli')) {
-			$json['error']['mysqli'] = 'MySQLi extension needs to be loaded for OpenCart to work!';
-		}
-
-		if (!extension_loaded('gd')) {
-			$json['error']['gd'] = 'GD extension needs to be loaded for OpenCart to work!';
-		}
-
-		if (!extension_loaded('curl')) {
-			$json['error']['curl'] = 'CURL extension needs to be loaded for OpenCart to work!';
-		}
-
-		if (!function_exists('openssl_encrypt')) {
-			$json['error']['openssl'] = 'OpenSSL extension needs to be loaded for OpenCart to work!';
-		}
-
-		if (!extension_loaded('zlib')) {
-			$json['error']['zlib'] = 'ZLIB extension needs to be loaded for OpenCart to work!';
-		}
-
-		if (!is_file(DIR_OPENCART . 'config.php')) {
-			$json['error']['config_exist'] = 'config.php does not exist. You need to rename config-dist.php to config.php!';
-
-		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
-			$json['error']['config_writable'] .= 'config.php needs to be writable for OpenCart to be installed!';
-
-		} elseif (!is_file(DIR_OPENCART . 'admin/config.php')) {
-			$json['error']['config'] .= 'admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
-
-		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$json['error']['admin_config'] .= 'admin/config.php needs to be writable for OpenCart to be installed!';
-
-		}
-
-		if ($json['error']) {
-			return $json;
-		}
-
-		try {
-			// Database
-			$db = new DB($option['db_driver'], htmlspecialchars_decode($option['db_hostname']), htmlspecialchars_decode($option['db_username']), htmlspecialchars_decode($option['db_password']), htmlspecialchars_decode($option['db_database']), $option['db_port']);
-
-			$file = DIR_APPLICATION . 'opencart.sql';
-
-			if (!is_file($file)) {
-				return 'Could not load sql file: ' . $file;
-			}
-
-			// Set up Database structure
-			$this->load->helper('db_schema');
-
-			$tables = db_schema();
-
-			foreach ($tables as $table) {
-				$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $option['db_database'] . "' AND TABLE_NAME = '" . $option['db_prefix'] . $table['name'] . "'");
-
-				if ($table_query->num_rows) {
-					$db->query("DROP TABLE `" . $option['db_prefix'] . $table['name'] . "`");
-				}
-
-				$sql = "CREATE TABLE `" . $option['db_prefix'] . $table['name'] . "` (" . "\n";
-
-				foreach ($table['field'] as $field) {
-					$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
-				}
-
-				if (isset($table['primary'])) {
-					$primary_data = array();
-
-					foreach ($table['primary'] as $primary) {
-						$primary_data[] = "`" . $primary . "`";
-					}
-
-					$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
-				}
-
-				if (isset($table['index'])) {
-					foreach ($table['index'] as $index) {
-						$index_data = array();
-
-						foreach ($index['key'] as $key) {
-							$index_data[] = "`" . $key . "`";
-						}
-
-						$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
-					}
-				}
-
-				$sql = rtrim($sql, ",\n") . "\n";
-				$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
-
-				$db->query($sql);
-			}
-
-			// Setup database data
-			$lines = file($file, FILE_IGNORE_NEW_LINES);
-
-			if ($lines) {
-				$sql = '';
-
-				$start = false;
-
-				foreach ($lines as $line) {
-					if (substr($line, 0, 12) == 'INSERT INTO ') {
-						$sql = '';
-
-						$start = true;
-					}
-
-					if ($start) {
-						$sql .= $line;
-					}
-
-					if (substr($line, -2) == ');') {
-						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $option['db_prefix'], $sql));
-
-						$start = false;
-					}
-				}
-
-				$db->query("SET CHARACTER SET utf8");
-
-				$db->query("SET @@session.sql_mode = 'MYSQL40'");
-
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "user` WHERE user_id = '1'");
-
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape(password_hash($option['password'], PASSWORD_DEFAULT)) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
-
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_email'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
-
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
-
-				$db->query("UPDATE `" . $option['db_prefix'] . "product` SET `viewed` = '0'");
-
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
-
-				$api_id = $db->getLastId();
-
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
-
-				// set the current years prefix
-				$db->query("UPDATE `" . $option['db_prefix'] . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
-			}
-		} catch (ErrorException $e) {
-			return 'FAILED!: ' . $e->getMessage() . "\n";
-		}
-
-
-		// Return success message
-		$output = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
+		$output  = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
 		$output .= 'Store link: ' . $option['http_server'] . "\n";
 		$output .= 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
 
@@ -628,6 +404,14 @@ class ControllerCliInstall extends Controller {
 
 	public function usage() {
 		$option = implode(' ', array(
+			'--http_server',
+			'http://localhost/opencart/',
+			'--username',
+			'admin',
+			'--password',
+			'password',
+			'--email',
+			'email@example.com',
 			'--db_hostname',
 			'localhost',
 			'--db_username',
@@ -639,18 +423,10 @@ class ControllerCliInstall extends Controller {
 			'--db_driver',
 			'mysqli',
 			'--db_port',
-			'3306',
-			'--http_server',
-			'http://localhost/opencart/',
-			'--username',
-			'admin',
-			'--password',
-			'admin',
-			'--email',
-			'youremail@example.com'
+			'3306'
 		));
 
-		$output = 'Usage:' . "\n";
+		$output  = 'Usage:' . "\n";
 		$output .= '======' . "\n\n";
 		$output .= 'php cli_install.php install ' . $option . "\n\n";
 

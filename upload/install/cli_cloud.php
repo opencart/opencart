@@ -1,35 +1,35 @@
 <?php
 //
-// Cloud Command line tool for installing OpenCart
+// Cloud command line tool for installing OpenCart
+//
 //
 // Usage:
 //
-//   cd install
-//   php cli_cloud.php install --username admin
-//                             -
-//                             --email email@example.com
-//                             -password admin
+// cd install
+// php cli_cloud.php install --username admin
+//                           --email email@example.com
+//                           --password admin
 //
+// Returns JSON string.
 //
+// If successful the response will return the key success.
+//
+// If there is an error the response will return a error key array with another key indicating the error code.
 //
 // Error Codes
 //
-// {
-//   error {
-//     php_version: 'You need to use PHP7+ or above for OpenCart to work!
-//     file_upload: 'You need to use PHP7+ or above for OpenCart to work!
-//     session_auto_start: 'You need to use PHP7+ or above for OpenCart to work!
-//     mysqli: 'You need to use PHP7+ or above for OpenCart to work!
-//     gd: 'You need to use PHP7+ or above for OpenCart to work!
-//     curl: 'You need to use PHP7+ or above for OpenCart to work!
-//     openssl: 'You need to use PHP7+ or above for OpenCart to work!
-//     zlib: 'You need to use PHP7+ or above for OpenCart to work!
-//	},
-// {
-// }
-// }
+// option              %s Found in command line args instead of a valid option name starting with \'--\'
+// required
+// php_version:        You need to use PHP7+ or above for OpenCart to work!
+// file_upload:
+// session_auto_start:
+// mysqli:
+// gd:
+// curl:
+// openssl:
+// zlib:
 //
-
+//
 
 ini_set('display_errors', 1);
 
@@ -37,7 +37,6 @@ error_reporting(E_ALL);
 
 // DIR
 define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
-
 define('DIR_APPLICATION', DIR_OPENCART . 'install/');
 define('DIR_SYSTEM', DIR_OPENCART . '/system/');
 define('DIR_IMAGE', DIR_OPENCART . '/image/');
@@ -58,16 +57,14 @@ require_once(DIR_SYSTEM . 'startup.php');
 // Registry
 $registry = new Registry();
 
-// Loader
-$loader = new Loader($registry);
-$registry->set('load', $loader);
-
 // Request
 $registry->set('request', new Request());
 
 // Response
 $response = new Response();
-$response->addHeader('Content-Type: text/plain; charset=utf-8');
+
+// Setting JSON
+$response->addHeader('Content-Type: application/json');
 $registry->set('response', $response);
 
 set_error_handler(function($code, $message, $file, $line, array $errcontext) {
@@ -80,6 +77,10 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 });
 
 class ControllerCliInstall extends Controller {
+	public function __construct($registry) {
+		$this->registry = $registry;
+	}
+
 	public function index() {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
@@ -96,12 +97,6 @@ class ControllerCliInstall extends Controller {
 		switch ($command) {
 			case 'install':
 				$output = $this->install($argv);
-
-
-
-				json_encode($output);
-
-
 				break;
 			case 'usage':
 			default:
@@ -109,14 +104,14 @@ class ControllerCliInstall extends Controller {
 				break;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput($output);
+		$this->response->setOutput(json_encode($output));
 	}
 
 	public function install($argv) {
 		$json = array();
 
-		$json['error'] = array();
+		// Options
+		$option = array();
 
 		// Validate args
 		$total = count($argv);
@@ -125,7 +120,9 @@ class ControllerCliInstall extends Controller {
 			$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
 
 			if (!$is_flag) {
-				return $argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'';
+				$json['error']['option'] = $argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'';
+
+				break;
 			}
 
 			$option[$match[1]] = $argv[$i + 1];
@@ -147,7 +144,7 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if (count($missing)) {
-			return 'FAILED! Following inputs were missing or invalid: ' . implode(', ', $missing) . "\n\n";
+			$json['error']['required'] = 'FAILED! Following inputs were missing or invalid: ' . implode(', ', $missing);
 		}
 
 		// Requirements
@@ -198,68 +195,79 @@ class ControllerCliInstall extends Controller {
 		}
 
 		try {
+			// Grab the DB details
+			//
+			//define('DB_DRIVER', 'mysqli');
+			//define('DB_HOSTNAME', 'localhost');
+			//define('DB_USERNAME', 'root');
+			//define('DB_PASSWORD', '');
+			//define('DB_DATABASE', 'opencart-master');
+			//define('DB_PORT', '3306');
+			//define('DB_PREFIX', 'oc_');
+
+			$lines = file(DIR_OPENCART . 'config.php', FILE_IGNORE_NEW_LINES);
+
+			foreach ($lines as $line) {
+				$match = array();
+
+				if (preg_match('/^define\(\'(DB_.*)\', \'(.*)\'\);/', $line, $match)) {
+					define($match[1], $match[2]);
+				}
+			}
+
+			$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
+
 			// Database
-			$db = new DB($option['db_driver'], htmlspecialchars_decode($option['db_hostname']), htmlspecialchars_decode($option['db_username']), htmlspecialchars_decode($option['db_password']), htmlspecialchars_decode($option['db_database']), $option['db_port']);
-
-			// Setup database data
-			$lines = file($file, FILE_IGNORE_NEW_LINES);
-
-			if ($db->connected()) {
-
-
+			if ($db->isConnected()) {
 				$db->query("SET CHARACTER SET utf8");
 
 				$db->query("SET @@session.sql_mode = 'MYSQL40'");
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "user` WHERE user_id = '1'");
+				$db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '1'");
 
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape(password_hash($option['password'], PASSWORD_DEFAULT)) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
+				$db->query("INSERT INTO `" . DB_PREFIX . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape($option['password']) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_email'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
+				$db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_email'");
+				$db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
+				$db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_encryption'");
+				$db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
 
-				$db->query("UPDATE `" . $option['db_prefix'] . "product` SET `viewed` = '0'");
+				$db->query("UPDATE `" . DB_PREFIX . "product` SET `viewed` = '0'");
 
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+				$db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
 
 				$api_id = $db->getLastId();
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
+				$db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_api_id'");
+				$db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
 
 				// set the current years prefix
-				$db->query("UPDATE `" . $option['db_prefix'] . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
+				$db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
 			}
 		} catch (ErrorException $e) {
 			return 'FAILED!: ' . $e->getMessage() . "\n";
 		}
 
 		// Return success message
-		$output  = 'SUCCESS! OpenCart successfully installed on your server' . "\n";
-		$output .= 'Store link: ' . $option['http_server'] . "\n";
-		$output .= 'Admin link: ' . $option['http_server'] . 'admin/' . "\n\n";
+		$json['success'] = 'OpenCart successfully installed on your server!';
 
-		return $output;
+		return $json;
 	}
 
 	public function usage() {
 		$option = implode(' ', array(
-			'--http_server',
-			'http://localhost/opencart/',
 			'--username',
 			'admin',
+			'--email',
+			'youremail@example.com',
 			'--password',
-			'admin',
-			'--password',
-			'youremail@example.com'
+			'password'
 		));
 
 		$output = 'Usage:' . "\n";
 		$output .= '======' . "\n\n";
-		$output .= 'php cli_install.php install ' . $option . "\n\n";
+		$output .= 'php cli_cloud.php install ' . $option . "\n\n";
 
 		return $output;
 	}

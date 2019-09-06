@@ -36,6 +36,7 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+              <input type="hidden" name="filter_customer_id" id="input-customer-id" value="{{ filter_customer_id }}"/>
             </div>
             <div class="form-group">
               <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-control">
@@ -162,6 +163,12 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 
+  var filter_customer_id = $('input[name=\'filter_customer_id\']').val();
+
+	if (filter_customer_id) {
+		url += '&filter_customer_id=' + encodeURIComponent(filter_customer_id);
+	}
+
 	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
 
 	if (filter_order_status_id !== '') {
@@ -207,6 +214,7 @@ $('input[name=\'filter_customer\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_customer\']').val(item['label']);
+    $('input[name=\'filter_customer_id\']').val(item['value']);
 	}
 });
 //--></script>

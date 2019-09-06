@@ -96,6 +96,13 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$filter_customer = '';
 		}
+		
+        // added checks for the selected customer with same name
+		if (isset($this->request->get['filter_customer_id'])) {
+			$filter_customer_id = $this->request->get['filter_customer_id'];
+		} else {
+			$filter_customer_id = 0;
+		}
 
 		if (isset($this->request->get['filter_order_status'])) {
 			$filter_order_status = $this->request->get['filter_order_status'];
@@ -209,6 +216,7 @@ class ControllerSaleOrder extends Controller {
 		$filter_data = array(
 			'filter_order_id' => $filter_order_id,
 			'filter_customer' => $filter_customer,
+			'filter_customer_id' => $filter_customer_id,
 			'filter_order_status' => $filter_order_status,
 			'filter_order_status_id' => $filter_order_status_id,
 			'filter_total' => $filter_total,
@@ -356,6 +364,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['filter_order_id'] = $filter_order_id;
 		$data['filter_customer'] = $filter_customer;
+		$data['filter_customer_id'] = $filter_customer_id;
 		$data['filter_order_status'] = $filter_order_status;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 		$data['filter_total'] = $filter_total;

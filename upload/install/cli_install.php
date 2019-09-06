@@ -94,8 +94,6 @@ class ControllerCliInstall extends Controller {
 	}
 
 	public function install($argv) {
-		print_r($argv);
-
 		// Options
 		$option = array(
 			'username'    => 'admin',
@@ -114,13 +112,11 @@ class ControllerCliInstall extends Controller {
 			// Validate args
 			$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
 
-			if (!$is_flag) {
+			if (!$is_flag) {// || !isset($argv[$i + 1])
 				return $argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'' . "\n";
 			}
 
-			//if (!isset()) {
-				$option[$match[1]] = $argv[$i + 1];
-			//}
+			$option[$match[1]] = $argv[$i + 1];
 		}
 
 		// Validation
@@ -150,7 +146,7 @@ class ControllerCliInstall extends Controller {
 		}
 
 		// Requirements
-		$error = array();
+		$error = '';
 
 		if (version_compare(phpversion(), '7.0.0', '<')) {
 			$error .= 'You need to use PHP7+ or above for OpenCart to work!' . "\n";

@@ -7,17 +7,26 @@
 //
 // Usage:
 //
-//   cd install
-//   php cli_install.php install --http_server http://localhost/opencart/
-//                               --username admin
+//   Normal Install
+//
+//   php cli_install.php install --username admin
 //                               --email email@example.com
 //                               --password password
+//                               --cloud
+//                               --http_server http://localhost/opencart/
 //                               --db_hostname localhost
 //                               --db_username root
 //                               --db_password pass
 //                               --db_database opencart
 //                               --db_driver mysqli
 //								 --db_port 3306
+//
+//   Cloud Install
+//
+//   php cli_install.php install --cloud
+//                               --username admin
+//                               --email email@example.com
+//                               --password password
 //
 ini_set('display_errors', 1);
 
@@ -96,43 +105,57 @@ class ControllerCliInstall extends Controller {
 	public function install($argv) {
 		// Options
 		$option = array(
+			'cloud'       => false,
 			'username'    => 'admin',
 			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
-			'db_database' => 'opencart',
 			'db_password' => '',
-			'db_prefix'   => 'oc_',
-			'db_port'     => '3306'
+			'db_port'     => '3306',
+			'db_prefix'   => 'oc_'
 		);
 
 		// Turn args into an array
-		$total = count($argv);
+		for ($i = 0; $i < count($argv); $i++) {
+			if (substr($argv[$i], 0, 2) == '--') {
+				$key = substr($argv[$i], 2);
 
-		for ($i = 0; $i < $total; $i = $i + 2) {
-			// Validate args
-			$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
+				// If the next line also starts with -- we need to fill in a null value for the current one
+				if (isset($argv[$i + 1]) && substr($argv[$i + 1], 0, 2) != '--') {
+					$option[$key] = substr($argv[$i + 1], 0, 2);
 
-			if (!$is_flag) {// || !isset($argv[$i + 1])
-				return $argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'' . "\n";
+					// Need to skip
+					$i++;
+				} else {
+					$option[$key] = '';
+				}
 			}
+		}
 
-			$option[$match[1]] = $argv[$i + 1];
+		//print_r($option);
+
+		// Cloud Install
+		if (!$option['cloud']) {
+			$required = array(
+				'http_server',
+				'username',
+				'email',
+				'password',
+				'db_hostname',
+				'db_username',
+				'db_password',
+				'db_database',
+				'db_prefix',
+				'db_port'
+			);
+		} else {
+			$required = array(
+				'username',
+				'email',
+				'password'
+			);
 		}
 
 		// Validation
-		$required = array(
-			'http_server',
-			'username',
-			'email',
-			'password',
-			'db_hostname',
-			'db_username',
-			'db_password',
-			'db_database',
-			'db_prefix',
-			'db_port'
-		);
-
 		$missing = array();
 
 		foreach ($required as $value) {
@@ -142,42 +165,42 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if (count($missing)) {
-			return 'FAILED! Following inputs were missing or invalid: ' . implode(', ', $missing)  . "\n";
+			return 'ERROR: Following inputs were missing or invalid: ' . implode(', ', $missing)  . "\n";
 		}
 
 		// Requirements
 		$error = '';
 
 		if (version_compare(phpversion(), '7.0.0', '<')) {
-			$error .= 'You need to use PHP7+ or above for OpenCart to work!' . "\n";
+			$error .= 'ERROR: You need to use PHP7+ or above for OpenCart to work!' . "\n";
 		}
 
 		if (!ini_get('file_uploads')) {
-			$json['error']['file_upload'] = 'file_uploads needs to be enabled!' . "\n";
+			$error.= 'ERROR: file_uploads needs to be enabled!' . "\n";
 		}
 
 		if (ini_get('session.auto_start')) {
-			$error .= 'OpenCart will not work with session.auto_start enabled!' . "\n";
+			$error .= 'ERROR: OpenCart will not work with session.auto_start enabled!' . "\n";
 		}
 
 		if (!extension_loaded('mysqli')) {
-			$error .= 'MySQLi extension needs to be loaded for OpenCart to work!' . "\n";
+			$error .= 'ERROR: MySQLi extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('gd')) {
-			$error .= 'GD extension needs to be loaded for OpenCart to work!' . "\n";
+			$error .= 'ERROR: GD extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('curl')) {
-			$error .= 'CURL extension needs to be loaded for OpenCart to work!' . "\n";
+			$error .= 'ERROR: CURL extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!function_exists('openssl_encrypt')) {
-			$error .= 'OpenSSL extension needs to be loaded for OpenCart to work!' . "\n";
+			$error .= 'ERROR: OpenSSL extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!extension_loaded('zlib')) {
-			$error .= 'ZLIB extension needs to be loaded for OpenCart to work!' . "\n";
+			$error .= 'ERROR: ZLIB extension needs to be loaded for OpenCart to work!' . "\n";
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {
@@ -191,20 +214,38 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if ($error) {
-			$output = 'FAILED! Pre-installation check failed: ' . "\n";
+			$output  = 'ERROR: Pre-installation check failed: ' . "\n";
 			$output .= $error . "\n\n";
 
 			return $output;
 		}
 
+		if (!$option['cloud']) {
+			$db_driver   = htmlspecialchars_decode($option['db_driver']);
+			$db_hostname = htmlspecialchars_decode($option['db_hostname']);
+			$db_username = htmlspecialchars_decode($option['db_username']);
+			$db_password = htmlspecialchars_decode($option['db_password']);
+			$db_database = htmlspecialchars_decode($option['db_database']);
+			$db_port     = $option['db_port'];
+			$db_prefix   = $option['db_prefix'];
+		} else {
+			$db_driver   = getenv('DB_DRIVER', true);
+			$db_hostname = getenv('DB_HOSTNAME', true);
+			$db_username = getenv('DB_USERNAME', true);
+			$db_password = getenv('DB_PASSWORD', true);
+			$db_database = getenv('DB_DATABASE', true);
+			$db_port     = getenv('DB_PORT', true);
+			$db_prefix   = getenv('DB_PREFIX', true);
+		}
+
 		try {
 			// Database
-			$db = new DB($option['db_driver'], htmlspecialchars_decode($option['db_hostname']), htmlspecialchars_decode($option['db_username']), htmlspecialchars_decode($option['db_password']), htmlspecialchars_decode($option['db_database']), $option['db_port']);
+			$db = new DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
 
 			$file = DIR_APPLICATION . 'opencart.sql';
 
 			if (!is_file($file)) {
-				return 'Could not load sql file: ' . $file;
+				return 'ERROR: Could not load SQL file: ' . $file;
 			}
 
 			// Set up Database structure
@@ -213,13 +254,13 @@ class ControllerCliInstall extends Controller {
 			$tables = db_schema();
 
 			foreach ($tables as $table) {
-				$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $option['db_database'] . "' AND TABLE_NAME = '" . $option['db_prefix'] . $table['name'] . "'");
+				$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
 
 				if ($table_query->num_rows) {
-					$db->query("DROP TABLE `" . $option['db_prefix'] . $table['name'] . "`");
+					$db->query("DROP TABLE `" . $db_prefix . $table['name'] . "`");
 				}
 
-				$sql = "CREATE TABLE `" . $option['db_prefix'] . $table['name'] . "` (" . "\n";
+				$sql = "CREATE TABLE `" . $db_prefix . $table['name'] . "` (" . "\n";
 
 				foreach ($table['field'] as $field) {
 					$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
@@ -273,7 +314,7 @@ class ControllerCliInstall extends Controller {
 					}
 
 					if (substr($line, -2) == ');') {
-						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $option['db_prefix'], $sql));
+						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $db_prefix, $sql));
 
 						$start = false;
 					}
@@ -283,112 +324,121 @@ class ControllerCliInstall extends Controller {
 
 				$db->query("SET @@session.sql_mode = 'MYSQL40'");
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "user` WHERE user_id = '1'");
+				$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
 
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape(password_hash($option['password'], PASSWORD_DEFAULT)) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
+				if (!$option['cloud']) {
+					$password = password_hash($option['password'], PASSWORD_DEFAULT);
+				} else {
+					$password = $option['password'];
+				}
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_email'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
+				$db->query("INSERT INTO `" . $db_prefix . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape($password) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
+				$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");
+				$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
 
-				$db->query("UPDATE `" . $option['db_prefix'] . "product` SET `viewed` = '0'");
+				$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_encryption'");
+				$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
 
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+				$db->query("UPDATE `" . $db_prefix . "product` SET `viewed` = '0'");
 
-				$api_id = $db->getLastId();
+				$db->query("INSERT INTO `" . $db_prefix . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
 
-				$db->query("DELETE FROM `" . $option['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
-				$db->query("INSERT INTO `" . $option['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
+				$last_id = $db->getLastId();
+
+				$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_api_id'");
+				$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$last_id . "'");
 
 				// set the current years prefix
-				$db->query("UPDATE `" . $option['db_prefix'] . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
+				$db->query("UPDATE `" . $db_prefix . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
 			}
 		} catch (ErrorException $e) {
-			return 'FAILED!: ' . $e->getMessage() . "\n";
+			return 'ERROR: ' . $e->getMessage() . "\n";
 		}
 
-		// Write config files
-		$output = '<?php' . "\n";
-		$output .= '// HTTP' . "\n";
-		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
+		// Cloud Install
+		if (!$option['cloud']) {
+			// Write config files
+			$output = '<?php' . "\n";
+			$output .= '// HTTP' . "\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
 
-		$output .= '// HTTPS' . "\n";
-		$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
+			$output .= '// HTTPS' . "\n";
+			$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
 
-		$output .= '// DIR' . "\n";
-		$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
-		$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
-		$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
-		$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
-		$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
-		$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/theme/\');' . "\n";
-		$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
-		$output .= 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
-		$output .= 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
-		$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
-		$output .= 'define(\'DIR_MODIFICATION\', DIR_STORAGE . \'modification/\');' . "\n";
-		$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
-		$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
+			$output .= '// DIR' . "\n";
+			$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
+			$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
+			$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
+			$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
+			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
+			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/theme/\');' . "\n";
+			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
+			$output .= 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
+			$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
+			$output .= 'define(\'DIR_MODIFICATION\', DIR_STORAGE . \'modification/\');' . "\n";
+			$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
+			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
-		$output .= '// DB' . "\n";
-		$output .= 'define(\'DB_DRIVER\', \'' . addslashes($option['db_driver']) . '\');' . "\n";
-		$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($option['db_hostname']) . '\');' . "\n";
-		$output .= 'define(\'DB_USERNAME\', \'' . addslashes($option['db_username']) . '\');' . "\n";
-		$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($option['db_password']) . '\');' . "\n";
-		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
-		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
-		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
+			$output .= '// DB' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($option['db_driver']) . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($option['db_hostname']) . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($option['db_username']) . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($option['db_password']) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
+			$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
 
-		$file = fopen(DIR_OPENCART . 'config.php', 'w');
+			$file = fopen(DIR_OPENCART . 'config.php', 'w');
 
-		fwrite($file, $output);
+			fwrite($file, $output);
 
-		fclose($file);
+			fclose($file);
 
-		$output = '<?php' . "\n";
-		$output .= '// HTTP' . "\n";
-		$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
-		$output .= 'define(\'HTTP_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
+			$output = '<?php' . "\n";
+			$output .= '// HTTP' . "\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
+			$output .= 'define(\'HTTP_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
 
-		$output .= '// HTTPS' . "\n";
-		$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
-		$output .= 'define(\'HTTPS_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
+			$output .= '// HTTPS' . "\n";
+			$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
+			$output .= 'define(\'HTTPS_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
 
-		$output .= '// DIR' . "\n";
-		$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'admin/\');' . "\n";
-		$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
-		$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
-		$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
-		$output .= 'define(\'DIR_CATALOG\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
-		$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
-		$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/template/\');' . "\n";
-		$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
-		$output .= 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
-		$output .= 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
-		$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
-		$output .= 'define(\'DIR_MODIFICATION\', DIR_STORAGE . \'modification/\');' . "\n";
-		$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
-		$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
+			$output .= '// DIR' . "\n";
+			$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'admin/\');' . "\n";
+			$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
+			$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
+			$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
+			$output .= 'define(\'DIR_CATALOG\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
+			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
+			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/template/\');' . "\n";
+			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
+			$output .= 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
+			$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
+			$output .= 'define(\'DIR_MODIFICATION\', DIR_STORAGE . \'modification/\');' . "\n";
+			$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
+			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
-		$output .= '// DB' . "\n";
-		$output .= 'define(\'DB_DRIVER\', \'' . addslashes($option['db_driver']) . '\');' . "\n";
-		$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($option['db_hostname']) . '\');' . "\n";
-		$output .= 'define(\'DB_USERNAME\', \'' . addslashes($option['db_username']) . '\');' . "\n";
-		$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($option['db_password']) . '\');' . "\n";
-		$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
-		$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
-		$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
+			$output .= '// DB' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($option['db_driver']) . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($option['db_hostname']) . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($option['db_username']) . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($option['db_password']) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
+			$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
 
-		$output .= '// OpenCart API' . "\n";
-		$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
+			$output .= '// OpenCart API' . "\n";
+			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
-		$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
+			$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
 
-		fwrite($file, $output);
+			fwrite($file, $output);
 
-		fclose($file);
+			fclose($file);
+		}
 
 		// Return success message
 		$output  = 'SUCCESS! OpenCart successfully installed on your server' . "\n";

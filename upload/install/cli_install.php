@@ -143,25 +143,25 @@ class ControllerCliInstall extends Controller {
 		// Cloud Install
 		if (!$cloud) {
 			$required = array(
-				'username',
+				'username',    // Already set
 				'email',
 				'password',
-				'cloud',
-				'http_server',
-				'db_driver',
+				'cloud',       // Already set
+				'http_server', // Already set
+				'db_driver',   // Already set
 				'db_hostname',
-				'db_username',
-				'db_password',
+				'db_username', // Already set
+				'db_password', // Already set
 				'db_database',
-				'db_port',
-				'db_prefix'
+				'db_port',     // Already set
+				'db_prefix'    // Already set
 			);
 		} else {
 			$required = array(
-				'username',
+				'username', // Already set
 				'email',
 				'password',
-				'cloud'
+				'cloud'     // Already set
 			);
 		}
 
@@ -186,7 +186,7 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if (!ini_get('file_uploads')) {
-			$error.= 'ERROR: file_uploads needs to be enabled!' . "\n";
+			$error .= 'ERROR: file_uploads needs to be enabled!' . "\n";
 		}
 
 		if (ini_get('session.auto_start')) {
@@ -214,13 +214,13 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {
-			$error .= 'config.php does not exist. You need to rename config-dist.php to config.php!';
+			$error .= 'ERROR: config.php does not exist. You need to rename config-dist.php to config.php!';
 		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
-			$error .= 'config.php needs to be writable for OpenCart to be installed!';
+			$error .= 'ERROR: config.php needs to be writable for OpenCart to be installed!';
 		} elseif (!is_file(DIR_OPENCART . 'admin/config.php')) {
-			$error .= 'admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+			$error .= 'ERROR: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
 		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$error .= 'admin/config.php needs to be writable for OpenCart to be installed!';
+			$error .= 'ERROR: admin/config.php needs to be writable for OpenCart to be installed!';
 		}
 
 		if ($error) {
@@ -287,114 +287,114 @@ class ControllerCliInstall extends Controller {
 		try {
 			// Database
 			$db = new \DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
-
-			// Set up Database structure
-			$this->load->helper('db_schema');
-
-			$tables = db_schema();
-
-			foreach ($tables as $table) {
-				$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
-
-				if ($table_query->num_rows) {
-					$db->query("DROP TABLE `" . $db_prefix . $table['name'] . "`");
-				}
-
-				$sql = "CREATE TABLE `" . $db_prefix . $table['name'] . "` (" . "\n";
-
-				foreach ($table['field'] as $field) {
-					$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
-				}
-
-				if (isset($table['primary'])) {
-					$primary_data = array();
-
-					foreach ($table['primary'] as $primary) {
-						$primary_data[] = "`" . $primary . "`";
-					}
-
-					$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
-				}
-
-				if (isset($table['index'])) {
-					foreach ($table['index'] as $index) {
-						$index_data = array();
-
-						foreach ($index['key'] as $key) {
-							$index_data[] = "`" . $key . "`";
-						}
-
-						$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
-					}
-				}
-
-				$sql = rtrim($sql, ",\n") . "\n";
-				$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
-
-				$db->query($sql);
-			}
-
-			// Setup database data
-			$lines = file($file, FILE_IGNORE_NEW_LINES);
-
-			if ($lines) {
-				$sql = '';
-
-				$start = false;
-
-				foreach ($lines as $line) {
-					if (substr($line, 0, 12) == 'INSERT INTO ') {
-						$sql = '';
-
-						$start = true;
-					}
-
-					if ($start) {
-						$sql .= $line;
-					}
-
-					if (substr($line, -2) == ');') {
-						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $db_prefix, $sql));
-
-						$start = false;
-					}
-				}
-
-				$db->query("SET CHARACTER SET utf8");
-
-				$db->query("SET @@session.sql_mode = 'MYSQL40'");
-
-				$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
-
-				// If cloud we do not need to hash the password as we will be passing the password hash
-				if (!$cloud) {
-					$password = password_hash(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT);
-				} else {
-					$password = $option['password'];
-				}
-
-				$db->query("INSERT INTO `" . $db_prefix . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape($password) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
-
-				$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");
-				$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
-
-				$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_encryption'");
-				$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
-
-				$db->query("UPDATE `" . $db_prefix . "product` SET `viewed` = '0'");
-
-				$db->query("INSERT INTO `" . $db_prefix . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
-
-				$last_id = $db->getLastId();
-
-				$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_api_id'");
-				$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$last_id . "'");
-
-				// set the current years prefix
-				$db->query("UPDATE `" . $db_prefix . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
-			}
 		} catch (ErrorException $e) {
-			return 'ERROR: ' . $e->getMessage() . "\n";
+			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
+		}
+
+		// Set up Database structure
+		$this->load->helper('db_schema');
+
+		$tables = db_schema();
+
+		foreach ($tables as $table) {
+			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
+
+			if ($table_query->num_rows) {
+				$db->query("DROP TABLE `" . $db_prefix . $table['name'] . "`");
+			}
+
+			$sql = "CREATE TABLE `" . $db_prefix . $table['name'] . "` (" . "\n";
+
+			foreach ($table['field'] as $field) {
+				$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
+			}
+
+			if (isset($table['primary'])) {
+				$primary_data = array();
+
+				foreach ($table['primary'] as $primary) {
+					$primary_data[] = "`" . $primary . "`";
+				}
+
+				$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
+			}
+
+			if (isset($table['index'])) {
+				foreach ($table['index'] as $index) {
+					$index_data = array();
+
+					foreach ($index['key'] as $key) {
+						$index_data[] = "`" . $key . "`";
+					}
+
+					$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
+				}
+			}
+
+			$sql = rtrim($sql, ",\n") . "\n";
+			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
+
+			$db->query($sql);
+		}
+
+		// Setup database data
+		$lines = file($file, FILE_IGNORE_NEW_LINES);
+
+		if ($lines) {
+			$sql = '';
+
+			$start = false;
+
+			foreach ($lines as $line) {
+				if (substr($line, 0, 12) == 'INSERT INTO ') {
+					$sql = '';
+
+					$start = true;
+				}
+
+				if ($start) {
+					$sql .= $line;
+				}
+
+				if (substr($line, -2) == ');') {
+					$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $db_prefix, $sql));
+
+					$start = false;
+				}
+			}
+
+			$db->query("SET CHARACTER SET utf8");
+
+			$db->query("SET @@session.sql_mode = 'MYSQL40'");
+
+			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
+
+			// If cloud we do not need to hash the password as we will be passing the password hash
+			if (!$cloud) {
+				$password = password_hash(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT);
+			} else {
+				$password = $option['password'];
+			}
+
+			$db->query("INSERT INTO `" . $db_prefix . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape($password) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
+
+			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
+
+			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_encryption'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(1024)) . "'");
+
+			$db->query("UPDATE `" . $db_prefix . "product` SET `viewed` = '0'");
+
+			$db->query("INSERT INTO `" . $db_prefix . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+
+			$last_id = $db->getLastId();
+
+			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_api_id'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$last_id . "'");
+
+			// set the current years prefix
+			$db->query("UPDATE `" . $db_prefix . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
 		}
 
 		// Cloud Install
@@ -402,10 +402,10 @@ class ControllerCliInstall extends Controller {
 			// Write config files
 			$output = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n\n";
 
 			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . '\');' . "\n";
+			$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . '\');' . "\n\n";
 
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
@@ -472,7 +472,7 @@ class ControllerCliInstall extends Controller {
 			$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
 
 			$output .= '// OpenCart API' . "\n";
-			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
+			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');';
 
 			$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
 

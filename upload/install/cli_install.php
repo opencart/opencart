@@ -9,23 +9,23 @@
 //
 //   Normal Install
 //
-//   php cli_install.php install --username admin
-//                               --email email@example.com
-//                               --password password
-//                               --cloud
+//   php cli_install.php install --username    admin
+//                               --email       email@example.com
+//                               --password    password
+//                               --cloud       false
 //                               --http_server http://localhost/opencart/
 //                               --db_hostname localhost
 //                               --db_username root
 //                               --db_password pass
 //                               --db_database opencart
-//                               --db_driver mysqli
-//								 --db_port 3306
+//                               --db_driver   mysqli
+//								 --db_port     3306
 //
 //   Cloud Install
 //
-//   php cli_install.php install --cloud
+//   php cli_install.php install --cloud    true
 //                               --username admin
-//                               --email email@example.com
+//                               --email    email@example.com
 //                               --password password
 //
 ini_set('display_errors', 1);
@@ -121,7 +121,7 @@ class ControllerCliInstall extends Controller {
 
 				// If the next line also starts with -- we need to fill in a null value for the current one
 				if (isset($argv[$i + 1]) && substr($argv[$i + 1], 0, 2) != '--') {
-					$option[$key] = substr($argv[$i + 1], 0, 2);
+					$option[$key] = $argv[$i + 1];
 
 					// Need to skip
 					$i++;

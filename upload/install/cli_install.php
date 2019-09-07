@@ -108,7 +108,7 @@ class ControllerCliInstall extends Controller {
 		// Options
 		$option = array(
 			'username'    => 'admin',
-			'cloud'       => false,
+			'cloud'       => 'false',
 			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_password' => '',
@@ -133,10 +133,15 @@ class ControllerCliInstall extends Controller {
 			}
 		}
 
-		print_r($option);
+		// Command line is sending true and false as strings.
+		if ($option['cloud'] == 'true') {
+			$cloud = 1;
+		} else {
+			$cloud = 0;
+		}
 
 		// Cloud Install
-		if (!$option['cloud']) {
+		if (!$cloud) {
 			$required = array(
 				'username',
 				'email',
@@ -173,7 +178,7 @@ class ControllerCliInstall extends Controller {
 			return 'ERROR: Following inputs were missing or invalid: ' . implode(', ', $missing)  . "\n";
 		}
 
-		// Requirements
+		// Pre-installation check
 		$error = '';
 
 		if (version_compare(phpversion(), '7.0.0', '<')) {
@@ -225,12 +230,48 @@ class ControllerCliInstall extends Controller {
 			return $output;
 		}
 
-		if (!$option['cloud']) {
-			$db_driver   = htmlspecialchars_decode($option['db_driver']);
-			$db_hostname = htmlspecialchars_decode($option['db_hostname']);
-			$db_username = htmlspecialchars_decode($option['db_username']);
-			$db_password = htmlspecialchars_decode($option['db_password']);
-			$db_database = htmlspecialchars_decode($option['db_database']);
+		// Pre-installation check
+		$error = '';
+
+		if ((utf8_strlen($option['username']) < 3) || (utf8_strlen($option['username']) > 20)) {
+			$error .= 'ERROR: Username must be between 3 and 20 characters!';
+		}
+
+		if ((utf8_strlen($option['email']) > 96) || !filter_var($option['email'], FILTER_VALIDATE_EMAIL)) {
+			$error .= 'ERROR: E-Mail Address does not appear to be valid!';
+		}
+
+		// If not cloud then we validate the password
+		if (!$cloud) {
+			$password = html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8');
+
+			if ((utf8_strlen($password) < 3) || (utf8_strlen($password) > 20)) {
+				$error .= 'ERROR: Password must be between 4 and 20 characters!';
+			}
+		} elseif (!$option['password']) {
+			$error .= 'ERROR: Password hash required!';
+		}
+
+		if ($error) {
+			$output  = 'ERROR: Validation failed: ' . "\n";
+			$output .= $error . "\n\n";
+
+			return $output;
+		}
+
+		// Make sure there is a SQL file to load sample data
+		$file = DIR_APPLICATION . 'opencart.sql';
+
+		if (!is_file($file)) {
+			return 'ERROR: Could not load SQL file: ' . $file;
+		}
+
+		if (!$cloud) {
+			$db_driver   = html_entity_decode($option['db_driver'], ENT_QUOTES, 'UTF-8');
+			$db_hostname = html_entity_decode($option['db_hostname'], ENT_QUOTES, 'UTF-8');
+			$db_username = html_entity_decode($option['db_username'], ENT_QUOTES, 'UTF-8');
+			$db_password = html_entity_decode($option['db_password'], ENT_QUOTES, 'UTF-8');
+			$db_database = html_entity_decode($option['db_database'], ENT_QUOTES, 'UTF-8');
 			$db_port     = $option['db_port'];
 			$db_prefix   = $option['db_prefix'];
 		} else {
@@ -245,13 +286,7 @@ class ControllerCliInstall extends Controller {
 
 		try {
 			// Database
-			$db = new DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
-
-			$file = DIR_APPLICATION . 'opencart.sql';
-
-			if (!is_file($file)) {
-				return 'ERROR: Could not load SQL file: ' . $file;
-			}
+			$db = new \DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
 
 			// Set up Database structure
 			$this->load->helper('db_schema');
@@ -331,8 +366,9 @@ class ControllerCliInstall extends Controller {
 
 				$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
 
-				if (!$option['cloud']) {
-					$password = password_hash($option['password'], PASSWORD_DEFAULT);
+				// If cloud we do not need to hash the password as we will be passing the password hash
+				if (!$cloud) {
+					$password = password_hash(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT);
 				} else {
 					$password = $option['password'];
 				}
@@ -362,7 +398,7 @@ class ControllerCliInstall extends Controller {
 		}
 
 		// Cloud Install
-		if (!$option['cloud']) {
+		if (!$cloud) {
 			// Write config files
 			$output = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
@@ -433,7 +469,7 @@ class ControllerCliInstall extends Controller {
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($option['db_password']) . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($option['db_database']) . '\');' . "\n";
 			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($option['db_prefix']) . '\');' . "\n";
-			$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n";
+			$output .= 'define(\'DB_PORT\', \'' . addslashes($option['db_port']) . '\');' . "\n\n";
 
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";

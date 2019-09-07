@@ -14,20 +14,22 @@
 //                               --password    password
 //                               --cloud       false
 //                               --http_server http://localhost/opencart/
+//                               --db_driver   mysqli
 //                               --db_hostname localhost
 //                               --db_username root
 //                               --db_password pass
 //                               --db_database opencart
-//                               --db_driver   mysqli
 //								 --db_port     3306
+//                               --db_prefix   oc_
 //
 //   Cloud Install
 //
-//   php cli_install.php install --cloud    true
-//                               --username admin
+//   php cli_install.php install --username admin
 //                               --email    email@example.com
 //                               --password password
+//                               --cloud    true
 //
+
 ini_set('display_errors', 1);
 
 error_reporting(E_ALL);
@@ -105,8 +107,8 @@ class ControllerCliInstall extends Controller {
 	public function install($argv) {
 		// Options
 		$option = array(
-			'cloud'       => false,
 			'username'    => 'admin',
+			'cloud'       => false,
 			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_password' => '',
@@ -123,7 +125,7 @@ class ControllerCliInstall extends Controller {
 				if (isset($argv[$i + 1]) && substr($argv[$i + 1], 0, 2) != '--') {
 					$option[$key] = $argv[$i + 1];
 
-					// Need to skip
+					// Skip the counter by 2
 					$i++;
 				} else {
 					$option[$key] = '';
@@ -131,27 +133,30 @@ class ControllerCliInstall extends Controller {
 			}
 		}
 
-		//print_r($option);
+		print_r($option);
 
 		// Cloud Install
 		if (!$option['cloud']) {
 			$required = array(
-				'http_server',
 				'username',
 				'email',
 				'password',
+				'cloud',
+				'http_server',
+				'db_driver',
 				'db_hostname',
 				'db_username',
 				'db_password',
 				'db_database',
-				'db_prefix',
-				'db_port'
+				'db_port',
+				'db_prefix'
 			);
 		} else {
 			$required = array(
 				'username',
 				'email',
-				'password'
+				'password',
+				'cloud'
 			);
 		}
 
@@ -450,14 +455,18 @@ class ControllerCliInstall extends Controller {
 
 	public function usage() {
 		$option = implode(' ', array(
-			'--http_server',
-			'http://localhost/opencart/',
 			'--username',
 			'admin',
-			'--password',
-			'password',
 			'--email',
 			'email@example.com',
+			'--password',
+			'password',
+			'--http_server',
+			'http://localhost/opencart/',
+			'--cloud',
+			'false',
+			'--db_driver',
+			'mysqli',
 			'--db_hostname',
 			'localhost',
 			'--db_username',
@@ -466,10 +475,10 @@ class ControllerCliInstall extends Controller {
 			'pass',
 			'--db_database',
 			'opencart',
-			'--db_driver',
-			'mysqli',
 			'--db_port',
-			'3306'
+			'3306',
+			'--db_prefix',
+			'oc_'
 		));
 
 		$output  = 'Usage:' . "\n";

@@ -225,13 +225,13 @@ class ControllerCliInstall extends Controller {
 			$tables = db_schema();
 
 			foreach ($tables as $table) {
-				$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $option['db_database'] . "' AND TABLE_NAME = '" . $option['db_prefix'] . $table['name'] . "'");
+				$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $option['db_database'] . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "'");
 
 				if ($table_query->num_rows) {
-					$db->query("DROP TABLE `" . $option['db_prefix'] . $table['name'] . "`");
+					$db->query("DROP TABLE `" . DB_PREFIX . $table['name'] . "`");
 				}
 
-				$sql = "CREATE TABLE `" . $option['db_prefix'] . $table['name'] . "` (" . "\n";
+				$sql = "CREATE TABLE `" . DB_PREFIX . $table['name'] . "` (" . "\n";
 
 				foreach ($table['field'] as $field) {
 					$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
@@ -285,7 +285,7 @@ class ControllerCliInstall extends Controller {
 					}
 
 					if (substr($line, -2) == ');') {
-						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . $option['db_prefix'], $sql));
+						$db->query(str_replace("INSERT INTO `oc_", "INSERT INTO `" . DB_PREFIX, $sql));
 
 						$start = false;
 					}

@@ -431,11 +431,11 @@ class ControllerUserUser extends Controller {
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
-				$this->error['warning'] = $this->language->get('error_exists_username');
+				$this->error['warning'] = $this->language->get('error_username_exists');
 			}
 		} else {
 			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists_username');
+				$this->error['warning'] = $this->language->get('error_username_exists');
 			}
 		}
 

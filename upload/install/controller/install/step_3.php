@@ -309,12 +309,12 @@ class ControllerInstallStep3 extends Controller {
 			$this->error['username'] = $this->language->get('error_username');
 		}
 
-		if (!$this->request->post['password']) {
-			$this->error['password'] = $this->language->get('error_password');
-		}
-
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
+		}
+
+		if (!$this->request->post['password']) {
+			$this->error['password'] = $this->language->get('error_password');
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php')) {

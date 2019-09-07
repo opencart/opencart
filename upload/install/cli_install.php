@@ -12,7 +12,7 @@
 //   php cli_install.php install --username    admin
 //                               --email       email@example.com
 //                               --password    password
-//                               --cloud       false
+//                               --cloud       0
 //                               --http_server http://localhost/opencart/
 //                               --db_driver   mysqli
 //                               --db_hostname localhost
@@ -27,7 +27,7 @@
 //   php cli_install.php install --username admin
 //                               --email    email@example.com
 //                               --password password
-//                               --cloud    true
+//                               --cloud    1
 //
 
 ini_set('display_errors', 1);
@@ -108,7 +108,7 @@ class ControllerCliInstall extends Controller {
 		// Options
 		$option = array(
 			'username'    => 'admin',
-			'cloud'       => 'false',
+			'cloud'       => 0,
 			'db_driver'   => 'mysqli',
 			'db_hostname' => 'localhost',
 			'db_password' => '',
@@ -133,8 +133,8 @@ class ControllerCliInstall extends Controller {
 			}
 		}
 
-		// Command line is sending true and false as strings.
-		if ($option['cloud'] == 'true') {
+		// Command line is sending true and false as strings so used 1 or 0 instead.
+		if ($option['cloud']) {
 			$cloud = 1;
 		} else {
 			$cloud = 0;
@@ -500,7 +500,7 @@ class ControllerCliInstall extends Controller {
 			'--http_server',
 			'http://localhost/opencart/',
 			'--cloud',
-			'false',
+			'0',
 			'--db_driver',
 			'mysqli',
 			'--db_hostname',

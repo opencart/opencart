@@ -13,7 +13,7 @@
 class Response {
 	private $headers = array();
 	private $level = 0;
-	private $output;
+	private $output = false;
 
 	/**
 	 * Constructor
@@ -106,7 +106,7 @@ class Response {
 	 * 
  	*/
 	public function output() {
-		if ($this->output) {
+		if ($this->output !== false) {
 			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;
 			
 			if (!headers_sent()) {

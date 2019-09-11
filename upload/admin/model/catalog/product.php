@@ -415,10 +415,8 @@ class ModelCatalogProduct extends Model {
 
 			foreach ($product_descriptions as $language_id => $product_description) {
 				foreach ($product_description as $key => $value) {
-					// If override set use the POST data values
-					if (isset($override['product_description'][$language_id][$key]) && isset($data['product_description'][$language_id][$key])) {
-						$product_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
-					} else {
+					// If override set then use the POST data values
+					if (!isset($override['product_description'][$language_id][$key])) {
 						$product_data['product_description'][$language_id][$key] = $value;
 					}
 				}
@@ -491,9 +489,21 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		// If override set the POST data values
 		foreach ($data as $key => $value) {
 			if (!isset($product_data[$key])) {
 				$product_data[$key] = $value;
+			}
+		}
+
+		// Product Description
+		if (isset($data['product_description'])) {
+			foreach ($data['product_description'] as $language_id => $product_description) {
+				foreach ($product_description as $key => $value) {
+					if (!isset($product_data['product_description'][$language_id][$key])) {
+						$product_data['product_description'][$language_id][$key] = $value;
+					}
+				}
 			}
 		}
 
@@ -531,24 +541,15 @@ class ModelCatalogProduct extends Model {
 			}
 
 			// Description
-			if (!isset($override['product_description'])) {
-				$product_descriptions = $this->model_catalog_product->getProductDescriptions($master_id);
+			$product_descriptions = $this->model_catalog_product->getProductDescriptions($master_id);
 
-				foreach ($product_descriptions as $language_id => $product_description) {
-					foreach ($product_description as $key => $value) {
-						// If override set the POST data values
-						if (isset($override['product_description'][$language_id][$key])) {
-							$master_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
-						}
+			foreach ($product_descriptions as $language_id => $product_description) {
+				foreach ($product_description as $key => $value) {
+					if (!isset($override['product_description'][$language_id][$key])) {
+						$product_data['product_description'][$language_id][$key] = $value;
 					}
 				}
 			}
-
-
-			//} else {
-		//		$master_data['product_description'][$language_id][$key] = $value; && isset($data['product_description'][$language_id][$key])
-	//		}
-
 
 			// Attributes
 			if (!isset($override['product_attribute'])) {
@@ -615,19 +616,25 @@ class ModelCatalogProduct extends Model {
 			if (!isset($override['product_store'])) {
 				$product_data['product_store'] = $this->model_catalog_product->getProductStores($master_id);
 			}
-
-
-
-
 		}
 
+		// If override set the POST data values
 		foreach ($data as $key => $value) {
 			if (!isset($product_data[$key])) {
 				$product_data[$key] = $value;
 			}
 		}
 
-
+		// Product Description
+		if (isset($data['product_description'])) {
+			foreach ($data['product_description'] as $language_id => $product_description) {
+				foreach ($product_description as $key => $value) {
+					if (!isset($product_data['product_description'][$language_id][$key])) {
+						$product_data['product_description'][$language_id][$key] = $value;
+					}
+				}
+			}
+		}
 
 		// Override the variant product data with the master product values
 		$this->model_catalog_product->editProduct($product_id, $product_data);
@@ -667,6 +674,18 @@ class ModelCatalogProduct extends Model {
 				// So if key not in override or ignore list we replace with master value
 				if (array_key_exists($key, $override) || in_array($key, $replace)) {
 					$product_data[$key] = $value;
+				}
+			}
+
+			// Descriptions
+			$product_descriptions = $this->model_catalog_product->getProductDescriptions($product['product_id']);
+
+			foreach ($product_descriptions as $language_id => $product_description) {
+				foreach ($product_description as $key => $value) {
+					// If override set use the POST data values
+					if (isset($override['product_description'][$language_id][$key])) {
+						$product_data['product_description'][$language_id][$key] = $value;
+					}
 				}
 			}
 
@@ -733,26 +752,24 @@ class ModelCatalogProduct extends Model {
 				$product_data['product_store'] = $this->model_catalog_product->getProductStores($product['product_id']);
 			}
 
-			// Descriptions
-			$product_descriptions = $this->model_catalog_product->getProductDescriptions($product['product_id']);
-
-			foreach ($product_descriptions as $language_id => $product_description) {
-				foreach ($product_description as $key => $value) {
-					// If override set use the POST data values
-					if (isset($override['product_description'][$language_id][$key])) {
-						$product_data['product_description'][$language_id][$key] = $value;
-					}
-				}
-			}
-
-
-
-
-
+			// If override set the POST data values
 			foreach ($data as $key => $value) {
 				if (!isset($product_data[$key])) {
 					$product_data[$key] = $value;
 				}
+			}
+
+			// Descriptions
+			if (isset($data['product_description'])) {
+				foreach ($data['product_description'] as $language_id => $product_description) {
+					foreach ($product_description as $key => $value) {
+						// If override set use the POST data values
+						if (!isset($product_data['product_description'][$language_id][$key])) {
+							$product_data['product_description'][$language_id][$key] = $value;
+						}
+					}
+				}
+
 			}
 
 			$this->model_catalog_product->editProduct($product['product_id'], $product_data);

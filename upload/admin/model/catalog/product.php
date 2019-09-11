@@ -328,28 +328,28 @@ class ModelCatalogProduct extends Model {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			$data = $product_info;
+			$product_data = $product_info;
 
-			$data['sku'] = '';
-			$data['upc'] = '';
-			$data['status'] = '0';
+			$product_data['sku'] = '';
+			$product_data['upc'] = '';
+			$product_data['status'] = '0';
 
-			$data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product_id);
-			$data['product_category'] = $this->model_catalog_product->getProductCategories($product_id);
-			$data['product_description'] = $this->model_catalog_product->getProductDescriptions($product_id);
-			$data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product_id);
-			$data['product_download'] = $this->model_catalog_product->getProductDownloads($product_id);
-			$data['product_filter'] = $this->model_catalog_product->getProductFilters($product_id);
-			$data['product_image'] = $this->model_catalog_product->getProductImages($product_id);
-			$data['product_layout'] = $this->model_catalog_product->getProductLayouts($product_id);
-			$data['product_option'] = $this->model_catalog_product->getProductOptions($product_id);
-			$data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product_id);
-			$data['product_related'] = $this->model_catalog_product->getProductRelated($product_id);
-			$data['product_reward'] = $this->model_catalog_product->getProductRewards($product_id);
-			$data['product_special'] = $this->model_catalog_product->getProductSpecials($product_id);
-			$data['product_store'] = $this->model_catalog_product->getProductStores($product_id);
+			$product_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product_id);
+			$product_data['product_category'] = $this->model_catalog_product->getProductCategories($product_id);
+			$product_data['product_description'] = $this->model_catalog_product->getProductDescriptions($product_id);
+			$product_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product_id);
+			$product_data['product_download'] = $this->model_catalog_product->getProductDownloads($product_id);
+			$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($product_id);
+			$product_data['product_image'] = $this->model_catalog_product->getProductImages($product_id);
+			$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product_id);
+			$product_data['product_option'] = $this->model_catalog_product->getProductOptions($product_id);
+			$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product_id);
+			$product_data['product_related'] = $this->model_catalog_product->getProductRelated($product_id);
+			$product_data['product_reward'] = $this->model_catalog_product->getProductRewards($product_id);
+			$product_data['product_special'] = $this->model_catalog_product->getProductSpecials($product_id);
+			$product_data['product_store'] = $this->model_catalog_product->getProductStores($product_id);
 
-			$this->model_catalog_product->addProduct($data);
+			$this->model_catalog_product->addProduct($product_data);
 		}
 	}
 
@@ -382,7 +382,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function addVariant($master_id, $data) {
-		$master_data = array();
+		$product_data = array();
 
 		// Use master values to override the values
 		$master_info = $this->model_catalog_product->getProduct($master_id);
@@ -406,10 +406,9 @@ class ModelCatalogProduct extends Model {
 			foreach ($master_info as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
 				if (!array_key_exists($key, $override) && !in_array($key, $ignore)) {
-					$master_data[$key] = $value;
+					$product_data[$key] = $value;
 				}
 			}
-
 
 			// Descriptions
 			$product_descriptions = $this->model_catalog_product->getProductDescriptions($master_id);
@@ -418,46 +417,46 @@ class ModelCatalogProduct extends Model {
 				foreach ($product_description as $key => $value) {
 					// If override set use the POST data values
 					if (isset($override['product_description'][$language_id][$key]) && isset($data['product_description'][$language_id][$key])) {
-						$master_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
+						$product_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
 					} else {
-						$master_data['product_description'][$language_id][$key] = $value;
+						$product_data['product_description'][$language_id][$key] = $value;
 					}
 				}
 			}
 
 			// Attributes
 			if (!isset($override['product_attribute'])) {
-				$master_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($master_id);
+				$product_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($master_id);
 			}
 
 			// Category
 			if (!isset($override['product_category'])) {
-				$master_data['product_category'] = $this->model_catalog_product->getProductCategories($master_id);
+				$product_data['product_category'] = $this->model_catalog_product->getProductCategories($master_id);
 			}
 
 			// Discounts
 			if (!isset($override['product_discount'])) {
-				$master_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($master_id);
+				$product_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($master_id);
 			}
 
 			// Downloads
 			if (!isset($override['product_download'])) {
-				$master_data['product_download'] = $this->model_catalog_product->getProductDownloads($master_id);
+				$product_data['product_download'] = $this->model_catalog_product->getProductDownloads($master_id);
 			}
 
 			// Filters
 			if (!isset($override['product_filter'])) {
-				$master_data['product_filter'] = $this->model_catalog_product->getProductFilters($master_id);
+				$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($master_id);
 			}
 
 			// Filters
 			if (!isset($override['product_image'])) {
-				$master_data['product_image'] = $this->model_catalog_product->getProductImages($master_id);
+				$product_data['product_image'] = $this->model_catalog_product->getProductImages($master_id);
 			}
 
 			// Layouts
 			if (!isset($override['product_layout'])) {
-				$master_data['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
+				$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
 			}
 
 			// Options
@@ -465,17 +464,17 @@ class ModelCatalogProduct extends Model {
 
 			// Recurring
 			if (!isset($override['product_recurring'])) {
-				$master_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($master_id);
+				$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($master_id);
 			}
 
 			// Related
 			if (!isset($override['product_related'])) {
-				$master_data['product_related'] = $this->model_catalog_product->getProductRelated($master_id);
+				$product_data['product_related'] = $this->model_catalog_product->getProductRelated($master_id);
 			}
 
 			// Rewards
 			if (!isset($override['product_reward'])) {
-				$master_data['product_reward'] = $this->model_catalog_product->getProductRewards($master_id);
+				$product_data['product_reward'] = $this->model_catalog_product->getProductRewards($master_id);
 			}
 
 			// SEO
@@ -483,21 +482,27 @@ class ModelCatalogProduct extends Model {
 
 			// Specials
 			if (!isset($override['product_special'])) {
-				$master_data['product_special'] = $this->model_catalog_product->getProductSpecials($master_id);
+				$product_data['product_special'] = $this->model_catalog_product->getProductSpecials($master_id);
 			}
 
 			// Stores
 			if (!isset($override['product_store'])) {
-				$master_data['product_store'] = $this->model_catalog_product->getProductStores($master_id);
+				$product_data['product_store'] = $this->model_catalog_product->getProductStores($master_id);
+			}
+		}
+
+		foreach ($data as $key => $value) {
+			if (!isset($product_data[$key])) {
+				$product_data[$key] = $value;
 			}
 		}
 
 		// Product add with master product overridden values
-		$this->model_catalog_product->addProduct(array_merge($data, $master_data));
+		$this->model_catalog_product->addProduct($product_data);
 	}
 
 	public function editVariant($master_id, $product_id, $data) {
-		$master_data = array();
+		$product_data = array();
 
 		// Use master values to override the values
 		$master_info = $this->model_catalog_product->getProduct($master_id);
@@ -521,57 +526,63 @@ class ModelCatalogProduct extends Model {
 			foreach ($master_info as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
 				if (!array_key_exists($key, $override) && !in_array($key, $ignore)) {
-					$master_data[$key] = $value;
+					$product_data[$key] = $value;
 				}
 			}
 
 			// Description
-			$product_descriptions = $this->model_catalog_product->getProductDescriptions($master_id);
+			if (!isset($override['product_description'])) {
+				$product_descriptions = $this->model_catalog_product->getProductDescriptions($master_id);
 
-			foreach ($product_descriptions as $language_id => $product_description) {
-				foreach ($product_description as $key => $value) {
-					// If override set the POST data values
-					if (isset($override['product_description'][$language_id][$key]) && isset($data['product_description'][$language_id][$key])) {
-						$master_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
-					} else {
-						$master_data['product_description'][$language_id][$key] = $value;
+				foreach ($product_descriptions as $language_id => $product_description) {
+					foreach ($product_description as $key => $value) {
+						// If override set the POST data values
+						if (isset($override['product_description'][$language_id][$key])) {
+							$master_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
+						}
 					}
 				}
 			}
 
+
+			//} else {
+		//		$master_data['product_description'][$language_id][$key] = $value; && isset($data['product_description'][$language_id][$key])
+	//		}
+
+
 			// Attributes
 			if (!isset($override['product_attribute'])) {
-				$master_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($master_id);
+				$product_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($master_id);
 			}
 
 			// Category
 			if (!isset($override['product_category'])) {
-				$master_data['product_category'] = $this->model_catalog_product->getProductCategories($master_id);
+				$product_data['product_category'] = $this->model_catalog_product->getProductCategories($master_id);
 			}
 
 			// Discounts
 			if (!isset($override['product_discount'])) {
-				$master_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($master_id);
+				$product_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($master_id);
 			}
 
 			// Downloads
 			if (!isset($override['product_download'])) {
-				$master_data['product_download'] = $this->model_catalog_product->getProductDownloads($master_id);
+				$product_data['product_download'] = $this->model_catalog_product->getProductDownloads($master_id);
 			}
 
 			// Filters
 			if (!isset($override['product_filter'])) {
-				$master_data['product_filter'] = $this->model_catalog_product->getProductFilters($master_id);
+				$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($master_id);
 			}
 
 			// Filters
 			if (!isset($override['product_image'])) {
-				$master_data['product_image'] = $this->model_catalog_product->getProductImages($master_id);
+				$product_data['product_image'] = $this->model_catalog_product->getProductImages($master_id);
 			}
 
 			// Layouts
 			if (!isset($override['product_layout'])) {
-				$master_data['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
+				$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
 			}
 
 			// Options
@@ -579,17 +590,17 @@ class ModelCatalogProduct extends Model {
 
 			// Recurring
 			if (!isset($override['product_recurring'])) {
-				$master_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($master_id);
+				$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($master_id);
 			}
 
 			// Related
 			if (!isset($override['product_related'])) {
-				$master_data['product_related'] = $this->model_catalog_product->getProductRelated($master_id);
+				$product_data['product_related'] = $this->model_catalog_product->getProductRelated($master_id);
 			}
 
 			// Rewards
 			if (!isset($override['product_reward'])) {
-				$master_data['product_reward'] = $this->model_catalog_product->getProductRewards($master_id);
+				$product_data['product_reward'] = $this->model_catalog_product->getProductRewards($master_id);
 			}
 
 			// SEO
@@ -602,12 +613,24 @@ class ModelCatalogProduct extends Model {
 
 			// Stores
 			if (!isset($override['product_store'])) {
-				$master_data['product_store'] = $this->model_catalog_product->getProductStores($master_id);
+				$product_data['product_store'] = $this->model_catalog_product->getProductStores($master_id);
+			}
+
+
+
+
+		}
+
+		foreach ($data as $key => $value) {
+			if (!isset($product_data[$key])) {
+				$product_data[$key] = $value;
 			}
 		}
 
+
+
 		// Override the variant product data with the master product values
-		$this->model_catalog_product->editProduct($product_id, array_merge($data, $master_data));
+		$this->model_catalog_product->editProduct($product_id, $product_data);
 	}
 
 	function editVariants($master_id, $data) {
@@ -618,7 +641,7 @@ class ModelCatalogProduct extends Model {
 		$products = $this->model_catalog_product->getProducts(array('filter_master_id' => $master_id));
 
 		foreach ($products as $product) {
-			$variant_data = array();
+			$product_data = array();
 
 			// We need to convert JSON strings back into an array so they can be re-encoded to a string to go back into the database.
 			$product['override'] = (array)json_decode($product['override'], true);
@@ -643,95 +666,96 @@ class ModelCatalogProduct extends Model {
 			foreach ($product as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
 				if (array_key_exists($key, $override) || in_array($key, $replace)) {
-					$variant_data[$key] = $value;
+					$product_data[$key] = $value;
 				}
+			}
+
+			// Attributes
+			if (isset($override['product_attribute'])) {
+				$product_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product['product_id']);
+			}
+
+			// Category
+			if (isset($override['product_category'])) {
+				$product_data['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
+			}
+
+			// Discounts
+			if (isset($override['product_discount'])) {
+				$product_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product['product_id']);
+			}
+
+			// Downloads
+			if (isset($override['product_download'])) {
+				$product_data['product_download'] = $this->model_catalog_product->getProductDownloads($product['product_id']);
+			}
+
+			// Filters
+			if (isset($override['product_filter'])) {
+				$product_data['product_filter'] = $this->model_catalog_product->getProductFilters($product['product_id']);
+			}
+
+			// Images
+			if (isset($override['product_image'])) {
+				$product_data['product_image'] = $this->model_catalog_product->getProductImages($product['product_id']);
+			}
+
+			// Layouts
+			if (isset($override['product_layout'])) {
+				$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product['product_id']);
+			}
+
+			// Recurring
+			if (isset($override['product_recurring'])) {
+				$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
+			}
+
+			// Related
+			if (isset($override['product_related'])) {
+				$product_data['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
+			}
+
+			// Rewards
+			if (isset($override['product_reward'])) {
+				$product_data['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
+			}
+
+			// SEO
+			$product_data['product_seo_url'] = $this->model_catalog_product->getProductSeoUrls($product['product_id']);
+
+			// Specials
+			if (isset($override['product_special'])) {
+				$product_data['product_special'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
+			}
+
+			// Stores
+			if (isset($override['product_store'])) {
+				$product_data['product_store'] = $this->model_catalog_product->getProductStores($product['product_id']);
 			}
 
 			// Descriptions
 			$product_descriptions = $this->model_catalog_product->getProductDescriptions($product['product_id']);
 
 			foreach ($product_descriptions as $language_id => $product_description) {
-
 				foreach ($product_description as $key => $value) {
-
 					// If override set use the POST data values
 					if (isset($override['product_description'][$language_id][$key])) {
-
-						$variant_data['product_description'][$language_id][$key] = $value;
-
-
-					} elseif (isset($data['product_description'][$language_id][$key])) {
-
-						$variant_data['product_description'][$language_id][$key] = $data['product_description'][$language_id][$key];
-
+						$product_data['product_description'][$language_id][$key] = $value;
 					}
 				}
 			}
 
-			// Attributes
-			if (isset($override['product_attribute'])) {
-				$variant_data['product_attribute'] = $this->model_catalog_product->getProductAttributes($product['product_id']);
+
+
+
+
+			foreach ($data as $key => $value) {
+				if (!isset($product_data[$key])) {
+					$product_data[$key] = $value;
+				}
 			}
 
-			// Category
-			if (isset($override['product_category'])) {
-				$variant_data['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
-			}
-
-			// Discounts
-			if (isset($override['product_discount'])) {
-				$variant_data['product_discount'] = $this->model_catalog_product->getProductDiscounts($product['product_id']);
-			}
-
-			// Downloads
-			if (isset($override['product_download'])) {
-				$variant_data['product_download'] = $this->model_catalog_product->getProductDownloads($product['product_id']);
-			}
-
-			// Filters
-			if (isset($override['product_filter'])) {
-				$variant_data['product_filter'] = $this->model_catalog_product->getProductFilters($product['product_id']);
-			}
-
-			// Images
-			if (isset($override['product_image'])) {
-				$variant_data['product_image'] = $this->model_catalog_product->getProductImages($product['product_id']);
-			}
-
-			// Layouts
-			if (isset($override['product_layout'])) {
-				$variant_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product['product_id']);
-			}
-
-			// Recurring
-			if (isset($override['product_recurring'])) {
-				$variant_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
-			}
-
-			// Related
-			if (isset($override['product_related'])) {
-				$variant_data['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
-			}
-
-			// Rewards
-			if (isset($override['product_reward'])) {
-				$variant_data['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
-			}
-
-			// SEO
-			$variant_data['product_seo_url'] = $this->model_catalog_product->getProductSeoUrls($product['product_id']);
-
-			// Specials
-			if (isset($override['product_special'])) {
-				$variant_data['product_special'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
-			}
-
-			// Stores
-			if (isset($override['product_store'])) {
-				$variant_data['product_store'] = $this->model_catalog_product->getProductStores($product['product_id']);
-			}
-
-			$this->model_catalog_product->editProduct($product['product_id'], array_merge($data, $variant_data));
+			$this->model_catalog_product->editProduct($product['product_id'], $product_data);
 		}
 	}
 
@@ -821,12 +845,12 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($query->rows as $result) {
 			$product_description_data[$result['language_id']] = array(
-				'name' => $result['name'],
-				'description' => $result['description'],
-				'meta_title' => $result['meta_title'],
+				'name'             => $result['name'],
+				'description'      => $result['description'],
+				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
-				'meta_keyword' => $result['meta_keyword'],
-				'tag' => $result['tag']
+				'meta_keyword'     => $result['meta_keyword'],
+				'tag'              => $result['tag']
 			);
 		}
 

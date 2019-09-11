@@ -68,12 +68,17 @@ final class Loader {
 	 *
 	 * @param    string $route
 	 */
-	public function model($route) {
+	public function model($route, $path = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
-			$file = DIR_APPLICATION . 'model/' . $route . '.php';
+			if (!$path) {
+				$file = DIR_APPLICATION . 'model/' . $route . '.php';
+			} else {
+				$file = $path . $route . '.php';
+			}
+
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 
 			if (is_file($file)) {
@@ -104,7 +109,7 @@ final class Loader {
 	 *
 	 * @return   string
 	 */
-	public function view($route, $data = array()) {
+	public function view($route, $data = array(), $path = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 

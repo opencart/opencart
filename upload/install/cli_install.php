@@ -147,7 +147,7 @@ class ControllerCliInstall extends Controller {
 				'email',
 				'password',
 				'cloud',       // Already set
-				'http_server', // Already set
+				'http_server',
 				'db_driver',   // Already set
 				'db_hostname',
 				'db_username', // Already set

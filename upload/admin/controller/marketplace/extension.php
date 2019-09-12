@@ -34,14 +34,14 @@ class ControllerMarketplaceExtension extends Controller {
 
 			if ($extension != 'promotion') {
 				// Compatibility code for old extension folders
-				$this->load->language('extension/extension/' . $extension, $extension . '_');
+				$this->load->language('extension/extension/' . $extension, $extension);
 
 				if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
 					$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
 
 					$data['categories'][] = array(
 						'code' => $extension,
-						'text' => $this->language->get($extension . '_heading_title') . ' (' . count($files) . ')'
+						'text' => $this->language->get($extension . 'heading_title') . ' (' . count($files) . ')'
 					);
 				}
 			}

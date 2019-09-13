@@ -7,7 +7,7 @@ class ControllerEventTranslation extends Controller {
 
 		foreach ($results as $result) {
 			if (!$prefix) {
-				$this->language->set($prefix . '_' . $result['key'], $result['value']);
+				$this->language->set($result['key'], $result['value']);
 			} else {
 				$this->language->set($prefix . '_' . $result['key'], $result['value']);
 			}

@@ -26,7 +26,7 @@ class Language {
 	}
 	
 	/**
-     * 
+     * Get language tex string
      *
      * @param	string	$key
 	 * 
@@ -37,7 +37,7 @@ class Language {
 	}
 
 	/**
-     * 
+     *  Set language text string
      *
      * @param	string	$key
 	 * @param	string	$value
@@ -80,7 +80,7 @@ class Language {
 
 		if ($prefix) {
 			foreach ($_ as $key => $value) {
-				$_[$prefix . $key] = $value;
+				$_[$prefix . '_' . $key] = $value;
 
 				unset($_[$key]);
 			}

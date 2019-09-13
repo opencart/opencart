@@ -8,17 +8,19 @@ class Currency {
 		$this->language = $registry->get('language');
 		$this->config = $registry->get('config');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency WHERE status = '1'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
 
 		foreach ($query->rows as $result) {
-			$this->currencies[$result['code']] = array(
-				'currency_id'   => $result['currency_id'],
-				'title'         => $result['title'],
-				'symbol_left'   => $result['symbol_left'],
-				'symbol_right'  => $result['symbol_right'],
-				'decimal_place' => $result['decimal_place'],
-				'value'         => $result['value']
-			);
+			if ($result['status'] == 1 || $result['code'] == $this->config->get('config_currency')) {
+				$this->currencies[$result['code']] = array(
+					'currency_id'   => $result['currency_id'],
+					'title'         => $result['title'],
+					'symbol_left'   => $result['symbol_left'],
+					'symbol_right'  => $result['symbol_right'],
+					'decimal_place' => $result['decimal_place'],
+					'value'         => $result['value']
+				);
+			}
 		}
 	}
 

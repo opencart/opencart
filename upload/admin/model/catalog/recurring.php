@@ -36,7 +36,7 @@ class ModelCatalogRecurring extends Model {
 
 	public function deleteRecurring($recurring_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "recurring` WHERE recurring_id = '" . (int)$recurring_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "recurring_description` WHERE recurring_id = " . (int)$recurring_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "recurring_description` WHERE recurring_id = '" . (int)$recurring_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE recurring_id = '" . (int)$recurring_id . "'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = 0 WHERE `recurring_id` = '" . (int)$recurring_id . "'");
 	}

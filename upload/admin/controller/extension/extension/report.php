@@ -86,7 +86,7 @@ class ControllerExtensionExtensionReport extends Controller {
 				$this->load->language('extension/report/' . $extension, $extension);
 
 				$data['extensions'][] = array(
-					'name'       => $this->language->get($extension . 'heading_title'),
+					'name'       => $this->language->get($extension . '_heading_title'),
 					'status'     => $this->config->get('report_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('report_' . $extension . '_sort_order'),
 					'install'    => $this->url->link('extension/extension/report/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),

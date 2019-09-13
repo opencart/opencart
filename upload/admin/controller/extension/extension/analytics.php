@@ -108,7 +108,7 @@ class ControllerExtensionExtensionAnalytics extends Controller {
 				}
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get($extension . 'heading_title'),
+					'name'      => $this->language->get($extension . '_heading_title'),
 					'install'   => $this->url->link('extension/extension/analytics/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'uninstall' => $this->url->link('extension/extension/analytics/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'installed' => in_array($extension, $extensions),

@@ -25,17 +25,23 @@ class ControllerEventStatistics extends Controller {
 			
 			// If order status in complete or processing add value to sale total
 			if (in_array($args[1], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
-				$this->model_report_statistics->addValue('order_sale', $order_info['total']);	
+				$this->model_report_statistics->addValue('order_sale', $order_info['total']);
+
+				$this->log->write('addValue ' . $args[1] . ' If order status in complete or processing add value to sale total');
 			}
 			
 			// If order status not in complete or processing remove value to sale total
 			if (!in_array($args[1], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
 				$this->model_report_statistics->removeValue('order_sale', $order_info['total']);
+
+				$this->log->write('removeValue ' . $args[1] . ' If order status not in complete or processing remove value to sale total');
 			}
 			
 			// Remove from processing status if new status is not array
 			if (in_array($order_info['order_status_id'], (array)$this->config->get('config_processing_status')) && !in_array($args[1], (array)$this->config->get('config_processing_status'))) {
 				$this->model_report_statistics->removeValue('order_processing', 1);
+
+				$this->log->write('removeValue ' . $args[1] . ' Remove from processing status if new status is not array');
 			}
 			
 			// Add to processing status if new status is not array		

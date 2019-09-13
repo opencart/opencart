@@ -96,7 +96,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 				}
 
 				$data['extensions'][] = array(
-					'name'       => $this->language->get($extension . 'heading_title'),
+					'name'       => $this->language->get($extension . '_heading_title'),
 					'link'       => $link,
 					'status'     => $this->config->get('payment_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('payment_' . $extension . '_sort_order'),

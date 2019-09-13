@@ -86,7 +86,7 @@ class ControllerExtensionExtensionCurrency extends Controller {
 				$this->load->language('extension/currency/' . $extension, $extension);
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get($extension . 'heading_title') . (($extension == $this->config->get('config_currency')) ? $this->language->get('text_default') : null),
+					'name'      => $this->language->get($extension . '_heading_title') . (($extension == $this->config->get('config_currency')) ? $this->language->get('text_default') : null),
 					'status'    => $this->config->get('currency_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->link('extension/extension/currency/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'uninstall' => $this->url->link('extension/extension/currency/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),

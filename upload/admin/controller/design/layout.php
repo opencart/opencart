@@ -343,7 +343,7 @@ class ControllerDesignLayout extends Controller {
 
 			if ($this->config->has('module_' . $code . '_status') || $module_data) {
 				$data['extensions'][] = array(
-					'name'   => strip_tags($this->language->get($code . 'heading_title')),
+					'name'   => strip_tags($this->language->get($code . '_heading_title')),
 					'code'   => $code,
 					'module' => $module_data
 				);
@@ -369,7 +369,7 @@ class ControllerDesignLayout extends Controller {
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
-					'name'       => strip_tags($this->language->get($part[0] . 'heading_title')),
+					'name'       => strip_tags($this->language->get($part[0] . '_heading_title')),
 					'code'       => $layout_module['code'],
 					'position'   => $layout_module['position'],
 					'sort_order' => $layout_module['sort_order'],

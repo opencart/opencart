@@ -41,7 +41,7 @@ class ControllerMarketplaceExtension extends Controller {
 
 					$data['categories'][] = array(
 						'code' => $extension,
-						'text' => $this->language->get($extension . 'heading_title') . ' (' . count($files) . ')'
+						'text' => $this->language->get($extension . '_heading_title') . ' (' . count($files) . ')'
 					);
 				}
 			}

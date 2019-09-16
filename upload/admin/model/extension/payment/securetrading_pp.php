@@ -165,7 +165,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 	}
 
 	public function increaseRefundedAmount($order_id, $amount) {
-		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_pp_order SET refunded = refunded + " . (double)$amount . " WHERE order_id = " . (int)$order_id);
+		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_pp_order SET refunded = refunded + " . (double)$amount . " WHERE order_id = '" . (int)$order_id . "'");
 	}
 
 	public function call($data) {

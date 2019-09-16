@@ -387,7 +387,7 @@ class ModelExtensionPaymentSagepayServer extends Model {
 	}
 
 	private function getProfile($order_recurring_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
+		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
 		return $qry->row;
 	}
 

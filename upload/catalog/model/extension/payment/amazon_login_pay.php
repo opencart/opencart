@@ -37,7 +37,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function setOrderShipping($order_id, $has_free_shipping) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order` SET `order_id` = '" . (int)$order_id . "', `free_shipping` = '" . (int)$has_free_shipping . "',`date_added` = now(), `modified` = now() ");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order` SET `order_id` = '" . (int)$order_id . "', `free_shipping` = '" . (int)$has_free_shipping . "',`date_added` = NOW(), `modified` = NOW() ");
 		return $this->db->getLastId();
 	}
 
@@ -58,11 +58,11 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 	}
 
 	public function addAmazonOrderId($order_id, $amazon_authorization_id, $capture_status, $total, $currency_code) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_login_pay_order` SET `amazon_order_reference_id` = '" . $this->db->escape($this->session->data['lpa']['AmazonOrderReferenceId']) . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "', `currency_code` = '" . $this->db->escape($currency_code) . "', `total` = '" . $total . "' WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_login_pay_order` SET `amazon_order_reference_id` = '" . $this->db->escape($this->session->data['lpa']['AmazonOrderReferenceId']) . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `modified` = NOW(), `capture_status` = '" . $this->db->escape($capture_status) . "', `currency_code` = '" . $this->db->escape($currency_code) . "', `total` = '" . $total . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function addTransaction($amazon_login_pay_order_id, $amazon_authorization_id, $amazon_capture_id, $type, $status, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order_transaction` SET `amazon_login_pay_order_id` = '" . (int)$amazon_login_pay_order_id . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `amazon_capture_id` = '" . $this->db->escape($amazon_capture_id) . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `status` = '" . $this->db->escape($status) . "', `amount` = '" . $total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order_transaction` SET `amazon_login_pay_order_id` = '" . (int)$amazon_login_pay_order_id . "', `amazon_authorization_id` = '" . $this->db->escape($amazon_authorization_id) . "', `amazon_capture_id` = '" . $this->db->escape($amazon_capture_id) . "', `date_added` = NOW(), `type` = '" . $this->db->escape($type) . "', `status` = '" . $this->db->escape($status) . "', `amount` = '" . $total . "'");
 	}
 
 	public function closeOrderRef($amazon_order_reference_id) {

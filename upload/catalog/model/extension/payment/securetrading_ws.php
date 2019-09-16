@@ -97,7 +97,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET transaction_reference = '" . $this->db->escape($transaction_reference) . "' WHERE order_id = '" . (int)$order_id . "'");
 
 		if ($this->db->countAffected() == 0) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "securetrading_ws_order SET order_id = '" . (int)$order_id . "', transaction_reference = '" . $this->db->escape($transaction_reference) . "', `created` = now(), `modified` = now()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "securetrading_ws_order SET order_id = '" . (int)$order_id . "', transaction_reference = '" . $this->db->escape($transaction_reference) . "', `created` = NOW(), `modified` = NOW()");
 		}
 	}
 
@@ -141,9 +141,9 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 				$trans_type = '';
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_ws_order` SET `settle_type` = '" . $this->config->get('payment_securetrading_ws_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = '" . (int)$order_info['order_id'] . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_ws_order` SET `settle_type` = '" . $this->config->get('payment_securetrading_ws_settle_status') . "', `modified` = NOW(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = '" . (int)$order_info['order_id'] . "'");
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order['securetrading_ws_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = now()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order['securetrading_ws_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = NOW()");
 	}
 
 	public function updateOrder($order_id, $order_status_id, $comment = '', $notify = false) {

@@ -31,18 +31,18 @@ class ModelExtensionPaymentG2apay extends Model {
 	}
 
 	public function addG2aOrder($order_info) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "g2apay_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `date_added` = now(), `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "g2apay_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `date_added` = NOW(), `modified` = NOW(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 	}
 
 	public function updateOrder($g2apay_order_id, $g2apay_transaction_id, $type, $order_info) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "g2apay_order` SET `g2apay_transaction_id` = '" . $this->db->escape($g2apay_transaction_id) . "', `modified` = now() WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "g2apay_order` SET `g2apay_transaction_id` = '" . $this->db->escape($g2apay_transaction_id) . "', `modified` = NOW() WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
 
 		$this->addTransaction($g2apay_order_id, $type, $order_info);
 
 	}
 
 	public function addTransaction($g2apay_order_id, $type, $order_info) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "g2apay_order_transaction` SET `g2apay_order_id` = '" . (int)$g2apay_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "g2apay_order_transaction` SET `g2apay_order_id` = '" . (int)$g2apay_order_id . "', `date_added` = NOW(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 	}
 
 	public function getG2aOrder($order_id) {

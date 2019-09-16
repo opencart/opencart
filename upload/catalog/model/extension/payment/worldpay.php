@@ -314,12 +314,12 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	private function getProfile($order_recurring_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
+		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
 		return $qry->row;
 	}
 
 	public function getWorldpayOrder($worldpay_order_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order WHERE order_code = " . (int)$worldpay_order_id);
+		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order WHERE order_code = '" . (int)$worldpay_order_id . "'");
 		return $qry->row;
 	}
 

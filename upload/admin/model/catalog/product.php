@@ -251,7 +251,7 @@ class ModelCatalogProduct extends Model {
 		}
 
 		// Recurring
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = " . (int)$product_id);
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		if (isset($data['product_recurring'])) {
 			foreach ($data['product_recurring'] as $product_recurring) {
@@ -362,7 +362,7 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value WHERE product_id = '" . (int)$product_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "product_recurring WHERE product_id = " . (int)$product_id);
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_recurring WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE related_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$product_id . "'");

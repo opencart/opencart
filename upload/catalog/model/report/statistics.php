@@ -17,10 +17,14 @@ class ModelReportStatistics extends Model {
 	}
 	
 	public function addValue($code, $value) {
+		$this->log->write('addValue $code ' . $code . ' $value ' . $value);
+
 		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` + '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 	
 	public function removeValue($code, $value) {
+		$this->log->write('removeValue $code ' . $code . ' $value ' . $value);
+
 		$this->db->query("UPDATE " . DB_PREFIX . "statistics SET `value` = (`value` - '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
 	}	
 	

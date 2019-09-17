@@ -500,18 +500,20 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	 * @return string
 	 */
 	private function prepareField($field, $key = false) {
-		$field = htmlspecialchars_decode($field);
-		$field = strip_tags($field);
-		$from = array('"', '&', '>', '<', '\'');
-		$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
-		$field = str_replace($from, $to, $field);
-		if ($key == 'description') {
-			$field = "<![CDATA[" . mb_substr($field, 0, 3000) . "]]>";
+		if ($field) {
+			$field = htmlspecialchars_decode($field);
+			$field = strip_tags($field);
+			$from = array('"', '&', '>', '<', '\'');
+			$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
+			$field = str_replace($from, $to, $field);
+			if ($key == 'description') {
+				$field = "<![CDATA[" . mb_substr($field, 0, 3000) . "]]>";
+			}
+			if ($this->from_charset == 'windows-1251') {
+				$field = iconv($this->from_charset, 'windows-1251//TRANSLIT//IGNORE', $field);
+			}
+			$field = preg_replace('#[\x00-\x08\x0B-\x0C\x0E-\x1F]+#is', ' ', $field);
 		}
-		if ($this->from_charset == 'windows-1251') {
-			$field = iconv($this->from_charset, 'windows-1251//TRANSLIT//IGNORE', $field);
-		}
-		$field = preg_replace('#[\x00-\x08\x0B-\x0C\x0E-\x1F]+#is', ' ', $field);
 
 		return trim($field);
 	}

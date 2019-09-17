@@ -211,6 +211,10 @@ $('input[name=\'filter_email\']').autocomplete({
 $('.date').datetimepicker({
 	'format': 'YYYY-MM-DD',
 	'locale': '{{ datepicker }}',
+	widgetPositioning: {
+    	horizontal: 'right',
+        vertical: 'top',
+    },
 	'allowInputToggle': true
 });
 //--></script>

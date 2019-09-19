@@ -30,6 +30,16 @@ class ModelAccountCustomer extends Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '', password = '" . $this->db->escape(password_hash(html_entity_decode($password, ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', code = '' WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
+	public function checkCustomerPassword($password) {
+		$customer_info = $this->getCustomerByEmail($this->customer->getEmail());
+		if ($customer_info) {
+			if (password_verify($password, $customer_info['password'])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function editAddressId($customer_id, $address_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 	}

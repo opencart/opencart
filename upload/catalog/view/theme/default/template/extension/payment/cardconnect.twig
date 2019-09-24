@@ -168,7 +168,7 @@ $('#button-delete').bind('click', function() {
 						url: 'index.php?route=checkout/confirm',
 						dataType: 'html',
 						success: function(html) {
-							$('#collapse-checkout-confirm .panel-body').html(html);
+							$('#collapse-checkout-confirm .card-body').html(html);
 						},
 						error: function(xhr, ajaxOptions, thrownError) {
 							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

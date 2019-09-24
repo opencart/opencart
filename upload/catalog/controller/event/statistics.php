@@ -11,13 +11,11 @@ class ControllerEventStatistics extends Controller {
 	public function addReturn(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->addValue('return', 1);	
+		$this->model_report_statistics->addValue('return', 1);
 	}
 	
 	// catalog/model/checkout/order/addOrderHistory/before
 	public function addOrderHistory(&$route, &$args) {
-		$this->log->write('addOrderHistory $route: ' . $route . ' $args: ' . json_encode($args));
-
 		$this->load->model('checkout/order');
 				
 		$order_info = $this->model_checkout_order->getOrder($args[0]);

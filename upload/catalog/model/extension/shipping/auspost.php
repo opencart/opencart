@@ -43,7 +43,7 @@ class ModelExtensionShippingAusPost extends Model {
 						$width = $product['width'];
 					}
 
-					$length += ($product['length']*$product['quantity']);
+					$length += ($product['length'] * $product['quantity']);
 				}
 
 				$curl = curl_init();

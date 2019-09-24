@@ -24,7 +24,7 @@
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       {% if coupon or voucher or reward %}
-        <div class="panel-group" id="accordion">{{ coupon }}{{ voucher }}{{ reward }}</div>
+        <div id="accordion" class="card-group">{{ coupon }}{{ voucher }}{{ reward }}</div>
       {% endif %}
       {% if has_shipping %}
         {% if not shipping_methods %}

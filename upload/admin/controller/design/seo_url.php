@@ -89,7 +89,7 @@ class ControllerDesignSeoUrl extends Controller {
 			if (isset($this->request->get['filter_language_id'])) {
 				$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 			}
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . (string)$this->request->get['sort'];
 			}
@@ -139,7 +139,7 @@ class ControllerDesignSeoUrl extends Controller {
 			if (isset($this->request->get['filter_language_id'])) {
 				$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 			}
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . (string)$this->request->get['sort'];
 			}
@@ -182,7 +182,7 @@ class ControllerDesignSeoUrl extends Controller {
 		} else {
 			$filter_language_id = 0;
 		}
-		
+
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
 		} else {
@@ -218,7 +218,7 @@ class ControllerDesignSeoUrl extends Controller {
 		if (isset($this->request->get['filter_language_id'])) {
 			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . (string)$this->request->get['sort'];
 		}
@@ -249,9 +249,9 @@ class ControllerDesignSeoUrl extends Controller {
 		$data['seo_urls'] = array();
 
 		$filter_data = array(
-			'filter_query'	     => $filter_query,
-			'filter_keyword'	 => $filter_keyword,
-			'filter_store_id'	 => $filter_store_id,
+			'filter_query'       => $filter_query,
+			'filter_keyword'     => $filter_keyword,
+			'filter_store_id'    => $filter_store_id,
 			'filter_language_id' => $filter_language_id,
 			'sort'               => $sort,
 			'order'              => $order,
@@ -313,7 +313,7 @@ class ControllerDesignSeoUrl extends Controller {
 		if (isset($this->request->get['filter_language_id'])) {
 			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
-			
+
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -346,7 +346,7 @@ class ControllerDesignSeoUrl extends Controller {
 		if (isset($this->request->get['filter_language_id'])) {
 			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
 		}
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . (string)$this->request->get['sort'];
 		}
@@ -357,9 +357,9 @@ class ControllerDesignSeoUrl extends Controller {
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $seo_url_total,
-			'page'  => $page,
+			'page' => $page,
 			'limit' => $this->config->get('config_limit_admin'),
-			'url'   => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url' => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($seo_url_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($seo_url_total - $this->config->get('config_limit_admin'))) ? $seo_url_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $seo_url_total, ceil($seo_url_total / $this->config->get('config_limit_admin')));
@@ -371,15 +371,15 @@ class ControllerDesignSeoUrl extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
-		
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -493,10 +493,10 @@ class ControllerDesignSeoUrl extends Controller {
 		}
 
 		$data['stores'] = array();
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name' => $this->language->get('text_default')
 		);
 
 		$this->load->model('setting/store');
@@ -506,18 +506,18 @@ class ControllerDesignSeoUrl extends Controller {
 		foreach ($stores as $store) {
 			$data['stores'][] = array(
 				'store_id' => $store['store_id'],
-				'name'     => $store['name']
+				'name' => $store['name']
 			);
 		}
-				
+
 		if (isset($this->request->post['store_id'])) {
 			$data['store_id'] = $this->request->post['store_id'];
 		} elseif (!empty($seo_url_info)) {
 			$data['store_id'] = $seo_url_info['store_id'];
 		} else {
 			$data['store_id'] = '';
-		}			
-				
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -546,10 +546,13 @@ class ControllerDesignSeoUrl extends Controller {
 			$seo_urls = $this->model_design_seo_url->getSeoUrlsByQuery($this->request->post['query']);
 
 			foreach ($seo_urls as $seo_url) {
-				if (($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) && (!isset($this->request->get['seo_url_id']) || (($seo_url['query'] != 'seo_url_id=' . $this->request->get['seo_url_id'])))) {
-					$this->error['query'] = $this->language->get('error_query_exists');
+				// We need to make to check the query is not all ready been used.
+				if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) {
+					if (!isset($this->request->get['seo_url_id']) || $seo_url['seo_url_id'] != $this->request->get['seo_url_id']) {
+						$this->error['query'] = $this->language->get('error_query_exists');
 
-					break;
+						break;
+					}
 				}
 			}
 		} else {
@@ -564,10 +567,12 @@ class ControllerDesignSeoUrl extends Controller {
 			$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($this->request->post['keyword']);
 
 			foreach ($seo_urls as $seo_url) {
-				if (($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) && (!isset($this->request->get['seo_url_id']) || (($seo_url['query'] != 'seo_url_id=' . $this->request->get['seo_url_id'])))) {
-					$this->error['keyword'] = $this->language->get('error_keyword_exists');
+				if ($seo_url['store_id'] == $this->request->post['store_id'] && $seo_url['language_id'] == $this->request->post['language_id']) {
+					if (!isset($this->request->get['seo_url_id']) || $seo_url['seo_url_id'] != $this->request->get['seo_url_id']) {
+						$this->error['keyword'] = $this->language->get('error_keyword_exists');
 
-					break;
+						break;
+					}
 				}
 			}
 		}

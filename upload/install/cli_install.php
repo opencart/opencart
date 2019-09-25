@@ -214,13 +214,13 @@ class ControllerCliInstall extends Controller {
 		}
 
 		if (!is_file(DIR_OPENCART . 'config.php')) {
-			$error .= 'ERROR: config.php does not exist. You need to rename config-dist.php to config.php!';
+			$error .= 'ERROR: config.php does not exist. You need to rename config-dist.php to config.php!' . "\n";
 		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
-			$error .= 'ERROR: config.php needs to be writable for OpenCart to be installed!';
+			$error .= 'ERROR: config.php needs to be writable for OpenCart to be installed!' . "\n";
 		} elseif (!is_file(DIR_OPENCART . 'admin/config.php')) {
-			$error .= 'ERROR: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+			$error .= 'ERROR: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!' . "\n";
 		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$error .= 'ERROR: admin/config.php needs to be writable for OpenCart to be installed!';
+			$error .= 'ERROR: admin/config.php needs to be writable for OpenCart to be installed!' . "\n";
 		}
 
 		if ($error) {
@@ -234,11 +234,11 @@ class ControllerCliInstall extends Controller {
 		$error = '';
 
 		if ((utf8_strlen($option['username']) < 3) || (utf8_strlen($option['username']) > 20)) {
-			$error .= 'ERROR: Username must be between 3 and 20 characters!';
+			$error .= 'ERROR: Username must be between 3 and 20 characters!' . "\n";
 		}
 
 		if ((utf8_strlen($option['email']) > 96) || !filter_var($option['email'], FILTER_VALIDATE_EMAIL)) {
-			$error .= 'ERROR: E-Mail Address does not appear to be valid!';
+			$error .= 'ERROR: E-Mail Address does not appear to be valid!' . "\n";
 		}
 
 		// If not cloud then we validate the password
@@ -246,10 +246,10 @@ class ControllerCliInstall extends Controller {
 			$password = html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8');
 
 			if ((utf8_strlen($password) < 3) || (utf8_strlen($password) > 20)) {
-				$error .= 'ERROR: Password must be between 4 and 20 characters!';
+				$error .= 'ERROR: Password must be between 4 and 20 characters!' . "\n";
 			}
 		} elseif (!$option['password']) {
-			$error .= 'ERROR: Password hash required!';
+			$error .= 'ERROR: Password hash required!' . "\n";
 		}
 
 		if ($error) {

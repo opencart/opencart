@@ -11,6 +11,11 @@ $_['text_edit']                    = 'Edit Store';
 $_['text_items']                   = 'Items';
 $_['text_shipping']                = 'Shipping Address';
 $_['text_payment']                 = 'Payment Address';
+$_['text_legal']                   = 'Legal';
+$_['text_tax']                     = 'Taxes';
+$_['text_account']                 = 'Account';
+$_['text_checkout']                = 'Checkout';
+$_['text_stock']                   = 'Stock';
 
 // Column
 $_['column_name']                  = 'Store Name';
@@ -56,13 +61,6 @@ $_['entry_stock_display']          = 'Display Stock';
 $_['entry_stock_checkout']         = 'Stock Checkout';
 $_['entry_logo']                   = 'Store Logo';
 $_['entry_icon']                   = 'Icon';
-
-// Tab
-$_['tab_legal']                      = 'Legal';
-$_['tab_tax']                        = 'Taxes';
-$_['tab_account']                    = 'Account';
-$_['tab_checkout']                   = 'Checkout';
-$_['tab_stock']                      = 'Stock';
 
 // Help
 $_['help_url']                     = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';

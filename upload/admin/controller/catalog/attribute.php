@@ -209,10 +209,6 @@ class ControllerCatalogAttribute extends Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		$data['sort_name'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name' . $url);
 		$data['sort_attribute_group'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=attribute_group' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . '&sort=a.sort_order' . $url);

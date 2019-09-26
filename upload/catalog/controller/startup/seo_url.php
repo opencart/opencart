@@ -1,17 +1,23 @@
 <?php
 class ControllerStartupSeoUrl extends Controller {
 	private $regex = array();
+	private $keyword = array();
 
 	public function index() {
-		// Add rewrite to url class
+		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
 
-		// Load all regexes in the var so we are not accessing the db so much.
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_regex ORDER BY sort_order ASC");
+		$this->load->model('design/seo_url');
+		$this->load->model('design/seo_regex');
 
-		$this->regex = $query->rows;
+		// Load all regexes in the var so we are not accessing the db so much.
+		$results = $this->model_design_seo_regex->getSeoRegexes();
+
+		foreach ($results as $result) {
+			$this->regex[] = $result['regex'];
+		}
 
 		// Decode URL
 		if (isset($this->request->get['_route_'])) {
@@ -23,10 +29,13 @@ class ControllerStartupSeoUrl extends Controller {
 			}
 
 			foreach ($parts as $part) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+				$results = $this->model_design_seo_url->getSeoUrlsByKeyword($part);
 
-				if ($query->num_rows) {
-					foreach ($query->rows as $result) {
+				if ($results) {
+					foreach ($results as $result) {
+						$data = array();
+
+						// Push additional query string vars into GET data
 						parse_str($result['push'], $data);
 
 						foreach ($data as $key => $value) {
@@ -47,31 +56,49 @@ class ControllerStartupSeoUrl extends Controller {
 
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
+		$data = array();
+
 		parse_str($url_info['query'], $data);
 
-		foreach ($this->regex as $result) {
-			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
+		foreach ($this->regex as $regex) {
+			$matches = array();
+
+			$regex = preg_quote($regex, '/');
+
+			if (preg_match('/' . $regex . '/', $url_info['query'], $matches)) {
 				array_shift($matches);
 
 				foreach ($matches as $match) {
-					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-					if ($query->num_rows) {
-						foreach ($query->rows as $seo) {
-							if (!empty($seo['keyword'])) {
-								$url .= '/' . $seo['keyword'];
+
+
+					if (!$this->keyword[$match]) {
+						$results = $this->model_design_seo_url->getSeoUrlsByQuery($match);
+
+						if ($results) {
+							foreach ($results as $result) {
+								if (!empty($result['keyword'])) {
+									$url .= '/' . $result['keyword'];
+								}
 							}
-						}
 
-						parse_str($match, $remove);
+							parse_str($match, $remove);
 
-						// Remove all the matched url elements
-						foreach (array_keys($remove) as $key) {
-							if (isset($data[$key])) {
-								unset($data[$key]);
+							// Remove all the matched url elements
+							foreach (array_keys($remove) as $key) {
+								if (isset($data[$key])) {
+									unset($data[$key]);
+								}
 							}
 						}
 					}
+
+
+
+
+
+
+
 				}
 			}
 		}

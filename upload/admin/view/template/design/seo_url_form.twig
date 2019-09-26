@@ -13,7 +13,8 @@
       </ol>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -22,16 +23,6 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-seo-url">
-          <div class="form-group row required">
-            <label for="input-query" class="col-sm-2 col-form-label">{{ entry_query }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
-              <small class="form-text text-muted">{{ help_query }}</small>
-              {% if error_query %}
-                <div class="invalid-tooltip">{{ error_query }}</div>
-              {% endif %}
-            </div>
-          </div>
           <div class="form-group row">
             <label for="input-keyword" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
             <div class="col-sm-10">
@@ -43,14 +34,23 @@
             </div>
           </div>
           <div class="form-group row required">
+            <label for="input-query" class="col-sm-2 col-form-label">{{ entry_query }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
+              <small class="form-text text-muted">{{ help_query }}</small>
+              {% if error_query %}
+                <div class="invalid-tooltip">{{ error_query }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row required">
             <label for="input-push" class="col-sm-2 col-form-label">{{ entry_push }}</label>
             <div class="col-sm-10">
               <input type="text" name="push" value="{{ push }}" placeholder="{{ entry_push }}" id="input-push" class="form-control"/>
+              <small class="form-text text-muted">{{ help_push }}</small>
               {% if error_push %}
                 <div class="invalid-tooltip">{{ error_push }}</div>
               {% endif %}
-              <small class="form-text text-muted">{{ help_push }}</small>
-
             </div>
           </div>
           <div class="form-group row">

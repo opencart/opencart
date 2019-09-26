@@ -5752,12 +5752,12 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'query',
+				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(
-				'name' => 'keyword',
+				'name' => 'query',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),

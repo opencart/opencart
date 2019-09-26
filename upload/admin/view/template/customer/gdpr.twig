@@ -4,9 +4,9 @@
     <div class="container-fluid">
       <div class="float-right">
         <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-gdpr').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
-        <button type="button" data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+        <button type="button" id="button-approve" formaction="{{ approve }}" data-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
+        <button type="button" id="button-deny" formaction="{{ deny }}" data-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
+        <button type="button" id="button-delete" formaction="{{ delete }}" data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -34,24 +34,27 @@
           <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="form-group">
-              <label class="col-form-label" for="input-email">{{ entry_email }}</label> <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <label class="col-form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-action">{{ entry_action }}</label> <select name="filter_action" id="input-action" class="form-control">
+              <label for="input-action" class="col-form-label">{{ entry_action }}</label> <select name="filter_action" id="input-action" class="form-control">
                 <option value=""></option>
                 <option value="export">{{ text_export }}</option>
                 <option value="remove">{{ text_remove }}</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-status">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
+              <label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
+					<option value="0">{{ text_unverified }}</option>
+					<option value="1">{{ text_pending }}</option>
+                <option value="2">{{ text_processing }}</option>
+                <option value="3">{{ text_complete }}</option>
+                <option value="-1">{{ text_denied }}</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
+              <label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
                 <div class="input-group-append">
@@ -85,14 +88,16 @@ $('#gdpr').on('click', '.pagination a', function(e) {
 
 $('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
 
-$('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
+$('#button-approve, #button-deny, #button-delete').on('click', function(e) {
 	e.preventDefault();
 
 	var element = this;
 
 	$.ajax({
-		url: $(element).attr('href'),
+		url: $(element).attr('formaction'),
+		type: 'post',
 		dataType: 'json',
+		data: $('#gdpr input[name=\'selected[]\']:checked'),
 		beforeSend: function() {
 			$(element).button('loading');
 		},
@@ -118,7 +123,7 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
 	});
 });
 
-$('.page-header').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
+$('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
 	e.preventDefault();
 
 	var element = this;

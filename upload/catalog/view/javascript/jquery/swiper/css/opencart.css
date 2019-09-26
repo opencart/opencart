@@ -59,18 +59,20 @@
 .swiper-button-prev:before {
 	width: 40px;
     height: 40px;
-	font-family: FontAwesome;
-	content: "\f053"; 
-	color: rgba(0,0,0,0.8);
+	font-family: 'Font Awesome\ 5 Free';
 	font-size: 40px;
+	font-weight: 900;
+	content: '\f053';
+	color: rgba(0,0,0,0.8);
 }
 .swiper-button-next:before {
 	width: 40px;
     height: 40px;
-	font-family: FontAwesome;
-	content: "\f054"; 
-	color: rgba(0,0,0,0.8);
+	font-family: 'Font Awesome\ 5 Free';
 	font-size: 40px;
+	font-weight: 900;
+	content: '\f054';
+	color: rgba(0,0,0,0.8);
 }
 .swiper-pagination {
 	bottom: -40px;

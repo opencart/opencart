@@ -133,16 +133,16 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 		$this->load->model('extension/fraud/fraudlabspro');
 
 		// Action of the Approve/Reject/Blacklist button click
-		if (isset($_POST['flp_id'])){
-			$flp_status = $_POST['new_status'];
-			$feedback_note = $_POST['feedback_note'];
+		if (isset($this->request->post['flp_id'])){
+			$flp_status = $this->request->post['new_status'];
+			$feedback_note = $this->request->post['feedback_note'];
 			$note = urlencode($feedback_note);
 
 			//Feedback FLP status to server
 			$fraud_fraudlabspro_key = $this->config->get('fraud_fraudlabspro_key');
 
 			for($i=0; $i<3; $i++){
-				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraud_fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status . '&note=' . $note);
+				$result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraud_fraudlabspro_key . '&format=json&id=' . $this->request->post['flp_id'] . '&action=' . $flp_status . '&note=' . $note);
 
 				if($result) break;
 			}
@@ -153,7 +153,7 @@ class ControllerExtensionFraudFraudLabsPro extends Controller {
 			$data['flp_status'] = $flp_status;
 
 			// Update fraud status into table
-			$this->db->query("UPDATE `" . DB_PREFIX . "fraudlabspro` SET fraudlabspro_status = '" . $this->db->escape((string)$flp_status) . "' WHERE order_id = " . (int)$this->request->get['order_id']);
+			$this->db->query("UPDATE `" . DB_PREFIX . "fraudlabspro` SET fraudlabspro_status = '" . $this->db->escape((string)$flp_status) . "' WHERE order_id = '" . (int)$this->request->get['order_id'] . "'");
 
 			//Update history record
 			if (strtolower($flp_status) == 'approve'){

@@ -55,13 +55,13 @@
       </div>
       {% if locations %}
         <h3>{{ text_store }}</h3>
-        <div class="panel-group" id="accordion">
+        <div id="accordion" class="card-group">
           {% for location in locations %}
             <div class="card">
-              <div class="panel-heading">
-                <h4 class="panel-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
+              <div class="card-heading">
+                <h4 class="card-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
               </div>
-              <div class="panel-collapse collapse" id="collapse-location{{ location.location_id }}">
+              <div class="card-collapse collapse" id="collapse-location{{ location.location_id }}">
                 <div class="card-body">
                   <div class="row">
                     {% if location.image %}

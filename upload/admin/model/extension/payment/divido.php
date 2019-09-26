@@ -51,7 +51,7 @@ class ModelExtensionPaymentDivido extends Model {
 	}
 
 	public function getLookupByOrderId($order_id) {
-		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "divido_lookup` WHERE `order_id` = " . (int)$order_id);
+		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "divido_lookup` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function install() {

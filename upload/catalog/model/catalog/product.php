@@ -10,6 +10,7 @@ class ModelCatalogProduct extends Model {
 		if ($query->num_rows) {
 			return array(
 				'product_id'       => $query->row['product_id'],
+				'master_id'        => $query->row['master_id'],
 				'name'             => $query->row['name'],
 				'description'      => $query->row['description'],
 				'meta_title'       => $query->row['meta_title'],
@@ -24,6 +25,8 @@ class ModelCatalogProduct extends Model {
 				'isbn'             => $query->row['isbn'],
 				'mpn'              => $query->row['mpn'],
 				'location'         => $query->row['location'],
+				'variant'          => (array)json_decode($query->row['variant'], true),
+				'override'         => (array)json_decode($query->row['override'], true),
 				'quantity'         => $query->row['quantity'],
 				'stock_status'     => $query->row['stock_status'],
 				'image'            => $query->row['image'],
@@ -201,8 +204,8 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($query->rows as $result) {
 			// for never get one more time with same product id
-			if(!isset($product_data[$result['product_id']])){
-			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			if (!isset($product_data[$result['product_id']])){
+				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 			}	
 		}
 
@@ -525,7 +528,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getProfiles($product_id) {
-		$query = $this->db->query("SELECT rd.* FROM " . DB_PREFIX . "product_recurring pr JOIN " . DB_PREFIX . "recurring_description rd ON (rd.language_id = " . (int)$this->config->get('config_language_id') . " AND rd.recurring_id = pr.recurring_id) JOIN " . DB_PREFIX . "recurring r ON r.recurring_id = rd.recurring_id WHERE pr.product_id = " . (int)$product_id . " AND status = '1' AND pr.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' ORDER BY sort_order ASC");
+		$query = $this->db->query("SELECT rd.* FROM " . DB_PREFIX . "product_recurring pr JOIN " . DB_PREFIX . "recurring_description rd ON (rd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND rd.recurring_id = pr.recurring_id) JOIN " . DB_PREFIX . "recurring r ON r.recurring_id = rd.recurring_id WHERE pr.product_id = '" . (int)$product_id . "' AND status = '1' AND pr.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' ORDER BY sort_order ASC");
 
 		return $query->rows;
 	}

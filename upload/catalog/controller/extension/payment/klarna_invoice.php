@@ -36,7 +36,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 			}
 
 			// Store Taxes to send to Klarna
-			$total_data = array();
+			$totals = array();
 			$total = 0;
 
 			$this->load->model('setting/extension');
@@ -58,9 +58,9 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 					$this->load->model('extension/total/' . $result['code']);
 
 					$taxes = array();
-					
-					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_extension_total_' . $result['code']}->getTotal(array("totals"=>$total_data, "total"=>$total, "taxes"=>$taxes));
+
+					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+					($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 
 					$amount = 0;
 
@@ -72,21 +72,21 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 				}
 			}
 
-			foreach ($total_data as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 
 				if (isset($klarna_tax[$value['code']])) {
 					if ($klarna_tax[$value['code']]) {
-						$total_data[$key]['tax_rate'] = abs($klarna_tax[$value['code']] / $value['value'] * 100);
+						$totals[$key]['tax_rate'] = abs($klarna_tax[$value['code']] / $value['value'] * 100);
 					} else {
-						$total_data[$key]['tax_rate'] = 0;
+						$totals[$key]['tax_rate'] = 0;
 					}
 				} else {
-					$total_data[$key]['tax_rate'] = '0';
+					$totals[$key]['tax_rate'] = '0';
 				}
 			}
 
-			$this->session->data['klarna'][$this->session->data['order_id']] = $total_data;
+			$this->session->data['klarna'][$this->session->data['order_id']] = $totals;
 
 			// Order must have identical shipping and billing address or have no shipping address at all
 			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
@@ -121,7 +121,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 			$data['iso_code_3'] = $order_info['payment_iso_code_3'];
 
 			// Get the invoice fee
-			$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int)$order_info['order_id'] . " AND `code` = 'klarna_fee'");
+			$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_info['order_id'] . "' AND `code` = 'klarna_fee'");
 
 			if ($query->num_rows && !$query->row['value']) {
 				$data['klarna_fee'] = $query->row['value'];
@@ -249,7 +249,7 @@ class ControllerExtensionPaymentKlarnaInvoice extends Controller {
 					'country'         => $country,
 				);
 
-				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int)$order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
+				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_info['order_id'] . "' UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
 
 				foreach ($product_query->rows as $product) {
 					$goods_list[] = array(

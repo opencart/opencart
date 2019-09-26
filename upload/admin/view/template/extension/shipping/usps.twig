@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping">
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-user-id">{{ entry_user_id }}</label>
+            <label for="input-user-id" class="col-sm-2 col-form-label">{{ entry_user_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_usps_user_id" value="{{ shipping_usps_user_id }}" placeholder="{{ entry_user_id }}" id="input-user-id" class="form-control"/>
               {% if error_user_id %}
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-postcode">{{ entry_postcode }}</label>
+            <label for="input-postcode" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_usps_postcode" value="{{ shipping_usps_postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
               {% if error_postcode %}
@@ -362,7 +362,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-size">{{ entry_size }}</label>
+            <label for="input-size" class="col-sm-2 col-form-label">{{ entry_size }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_size" id="input-size" class="form-control">
                 {% for size in sizes %}
@@ -376,7 +376,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-container">{{ entry_container }}</label>
+            <label for="input-container" class="col-sm-2 col-form-label">{{ entry_container }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_container" id="input-container" class="form-control">
                 {% for container in containers %}
@@ -390,7 +390,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-machinable">{{ entry_machinable }}</label>
+            <label for="input-machinable" class="col-sm-2 col-form-label">{{ entry_machinable }}</label>
             <div class="col-sm-10">
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 {% if shipping_usps_machinable %}
@@ -404,7 +404,7 @@
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-length">{{ entry_dimension }}</label>
+            <label for="input-length" class="col-sm-2 col-form-label">{{ entry_dimension }}</label>
             <div class="col-sm-10">
               <div class="row">
                 <div class="col-sm-4">
@@ -454,7 +454,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-weight-class">{{ entry_weight_class }}</label>
+            <label for="input-weight-class" class="col-sm-2 col-form-label">{{ entry_weight_class }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_weight_class_id" id="input-weight-class" class="form-control">
                 {% for weight_class in weight_classes %}
@@ -469,7 +469,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-tax-class">{{ entry_tax }}</label>
+            <label for="input-tax-class" class="col-sm-2 col-form-label">{{ entry_tax }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_tax_class_id" id="input-tax-class" class="form-control">
                 <option value="0">{{ text_none }}</option>
@@ -484,7 +484,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_geo_zone_id" id="input-geo-zone" class="form-control">
                 <option value="0">{{ text_all_zones }}</option>
@@ -499,7 +499,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+            <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_status" id="input-status" class="form-control">
                 {% if shipping_usps_status %}
@@ -513,13 +513,13 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="shipping_usps_sort_order" value="{{ shipping_usps_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-debug">{{ entry_debug }}</label>
+            <label for="input-debug" class="col-sm-2 col-form-label">{{ entry_debug }}</label>
             <div class="col-sm-10">
               <select name="shipping_usps_debug" id="input-debug" class="form-control">
                 {% if shipping_usps_debug %}

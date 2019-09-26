@@ -41,6 +41,12 @@ class ControllerExtensionShippingUPS extends Controller {
 			$data['error_password'] = '';
 		}
 
+		if (isset($this->error['shippernumber'])) {
+			$data['error_shippernumber'] = $this->error['shippernumber'];
+		} else {
+			$data['error_shippernumber'] = '';
+		}
+
 		if (isset($this->error['city'])) {
 			$data['error_city'] = $this->error['city'];
 		} else {
@@ -142,11 +148,6 @@ class ControllerExtensionShippingUPS extends Controller {
 			'text'  => $this->language->get('text_air_service_center')
 		);
 
-		$data['pickups'][] = array(
-			'value' => '11',
-			'text'  => $this->language->get('text_suggested_retail_rates')
-		);
-
 		if (isset($this->request->post['shipping_ups_packaging'])) {
 			$data['shipping_ups_packaging'] = $this->request->post['shipping_ups_packaging'];
 		} else {
@@ -197,18 +198,33 @@ class ControllerExtensionShippingUPS extends Controller {
 		}
 
 		$data['classifications'][] = array(
-			'value' => '01',
-			'text'  => '01'
+			'value' => '00',
+			'text'  => $this->language->get('text_ups_class_00')
 		);
 
 		$data['classifications'][] = array(
-			'value' => '03',
-			'text'  => '03'
+			'value' => '01',
+			'text'  => $this->language->get('text_ups_class_01')
 		);
 
 		$data['classifications'][] = array(
 			'value' => '04',
-			'text'  => '04'
+			'text'  => $this->language->get('text_ups_class_04')
+		);
+
+		$data['classifications'][] = array(
+			'value' => '05',
+			'text'  => $this->language->get('text_ups_class_05')
+		);
+
+		$data['classifications'][] = array(
+			'value' => '06',
+			'text'  => $this->language->get('text_ups_class_06')
+		);
+
+		$data['classifications'][] = array(
+			'value' => '53',
+			'text'  => $this->language->get('text_ups_class_53')
 		);
 
 		if (isset($this->request->post['shipping_ups_origin'])) {
@@ -248,6 +264,18 @@ class ControllerExtensionShippingUPS extends Controller {
 			'value' => 'other',
 			'text'  => $this->language->get('text_other')
 		);
+
+		if (isset($this->request->post['shipping_ups_shippernumber'])) {
+			$data['shipping_ups_shippernumber'] = $this->request->post['shipping_ups_shippernumber'];
+		} else {
+			$data['shipping_ups_shippernumber'] = $this->config->get('shipping_ups_shippernumber');
+		}
+
+		if (isset($this->request->post['shipping_ups_use_negotiated_rates'])) {
+			$data['shipping_ups_use_negotiated_rates'] = $this->request->post['shipping_ups_use_negotiated_rates'];
+		} else {
+			$data['shipping_ups_use_negotiated_rates'] = $this->config->get('shipping_ups_use_negotiated_rates');
+		}
 
 		if (isset($this->request->post['shipping_ups_city'])) {
 			$data['shipping_ups_city'] = $this->request->post['shipping_ups_city'];
@@ -595,6 +623,12 @@ class ControllerExtensionShippingUPS extends Controller {
 			$data['shipping_ups_other_65'] = $this->request->post['shipping_ups_other_65'];
 		} else {
 			$data['shipping_ups_other_65'] = $this->config->get('shipping_ups_other_65');
+		}
+
+		if (isset($this->request->post['shipping_ups_display_time'])) {
+			$data['shipping_ups_display_time'] = $this->request->post['shipping_ups_display_time'];
+		} else {
+			$data['shipping_ups_display_time'] = $this->config->get('shipping_ups_display_time');
 		}
 
 		if (isset($this->request->post['shipping_ups_display_weight'])) {

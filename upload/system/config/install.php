@@ -8,13 +8,12 @@ $_['language_default']  = 'en-gb';
 $_['language_autoload'] = array('en-gb');
 
 // Session
-$_['session_engine']    = 'file';
 $_['session_autostart'] = true;
+$_['session_engine']    = 'file';
 $_['session_name']      = 'OCSESSID';
 
 // Template
 $_['template_engine']   = 'twig';
-$_['template_cache']    = true;
 
 // Error
 $_['error_display']     = true;
@@ -30,8 +29,4 @@ $_['action_pre_action'] = array(
 );
 
 // Action Events
-$_['action_event'] = array(
-    'view/*/before' => array(
-		'event/theme'
-	)
-);
+$_['action_event'] = array();

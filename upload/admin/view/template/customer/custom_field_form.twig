@@ -39,7 +39,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label" for="input-location">{{ entry_location }}</label>
+              <label for="input-location" class="col-sm-2 col-form-label">{{ entry_location }}</label>
               <div class="col-sm-10">
                 <select name="location" id="input-location" class="form-control">
                   {% if location == 'account' %}
@@ -61,7 +61,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
+              <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
               <div class="col-sm-10">
                 <select name="type" id="input-type" class="form-control">
                   <optgroup label="{{ text_choose }}">
@@ -121,13 +121,13 @@
               </div>
             </div>
             <div class="form-group row" id="display-value">
-              <label class="col-sm-2 col-form-label" for="input-value">{{ entry_value }}</label>
+              <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
               <div class="col-sm-10">
                 <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
               </div>
             </div>
             <div class="form-group row" id="display-validation">
-              <label class="col-sm-2 col-form-label" for="input-validation">{{ entry_validation }}</label>
+              <label for="input-validation" class="col-sm-2 col-form-label">{{ entry_validation }}</label>
               <div class="col-sm-10">
                 <input type="text" name="validation" id="input-validation" value="{{ validation }}" placeholder="{{ text_regex }}" class="form-control"/>
                 <small class="form-text text-muted">{{ help_regex }}</small>
@@ -173,7 +173,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+              <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="status" id="input-status" class="form-control">
                   {% if status %}
@@ -187,7 +187,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+              <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
                 <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
                 <small class="form-text text-muted">{{ help_sort_order }}</small>
@@ -198,7 +198,7 @@
           <div id="custom-field-value">
             <fieldset>
               <legend>{{ text_value }}</legend>
-              <table class="table table-striped table-bordered table-hover">
+              <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
                     <td class="text-left required">{{ entry_custom_value }}</td>
@@ -223,7 +223,7 @@
                           {% endif %}
                         {% endfor %}</td>
                       <td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                      <td class="text-left"><button type="button" onclick="$('#custom-field-value-row{{ custom_field_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                      <td class="text-right"><button type="button" onclick="$('#custom-field-value-row{{ custom_field_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                     </tr>
                     {% set custom_field_value_row = custom_field_value_row + 1 %}
                   {% endfor %}
@@ -231,7 +231,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addCustomFieldValue();" data-toggle="tooltip" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                    <td class="text-right"><button type="button" onclick="addCustomFieldValue();" data-toggle="tooltip" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -298,7 +298,7 @@ function addCustomFieldValue() {
   {% endfor %}
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-right"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#custom-field-value tbody').append(html);

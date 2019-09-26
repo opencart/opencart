@@ -44,6 +44,7 @@ $_['tab_refund']             = 'Refund';
 $_['button_void']			 = 'Void';
 $_['button_capture']		 = 'Capture';
 $_['button_refund']		     = 'Issue refund';
+$_['button_resend']			 = 'Resend';
 
 // Error
 $_['error_capture']		     = 'Enter an amount to capture';

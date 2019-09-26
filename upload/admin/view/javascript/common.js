@@ -66,6 +66,15 @@ $(document).ready(function() {
 		}
 	}
 
+	// Fix for overflow in responsive tables
+	$('.table-responsive').on('show.bs.dropdown', function() {
+		$('.table-responsive').css('overflow', 'inherit');
+	});
+
+	$('.table-responsive').on('hide.bs.dropdown', function() {
+		$('.table-responsive').css('overflow', 'auto');
+	});
+
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
 
@@ -119,6 +128,36 @@ $(document).on('click', '[data-toggle=\'clear\']', function() {
 
 	$($(this).attr('data-target')).val('');
 });
+
+// Chain ajax calls.
+class Chain {
+	constructor() {
+		this.start = false;
+		this.data = [];
+	}
+
+	attach(call) {
+		this.data.push(call);
+
+		if (!this.start) {
+			this.execute();
+		}
+	}
+
+	execute() {
+		if (this.data.length) {
+			this.start = true;
+
+			(this.data.shift())().done(function() {
+				chain.execute();
+			});
+		} else {
+			this.start = false;
+		}
+	}
+}
+
+var chain = new Chain();
 
 // Autocomplete
 (function($) {

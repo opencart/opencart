@@ -4,29 +4,12 @@ class ControllerCommonDeveloper extends Controller {
 		$this->load->language('common/developer');
 		
 		$data['user_token'] = $this->session->data['user_token'];
-		
-		$data['developer_theme'] = $this->config->get('developer_theme');
-		$data['developer_sass'] = $this->config->get('developer_sass');	
-				
-		$eval = false;
-		
-		$eval = '$eval = true;';
 
-		eval($eval);		
-		
-		if ($eval === true) {
-			$data['eval'] = true;
-		} else {
-			$this->load->model('setting/setting');
+		$data['developer_sass'] = $this->config->get('developer_sass');
 
-			$this->model_setting_setting->editSetting('developer', array('developer_theme' => 1), 0);
-		
-			$data['eval'] = false;			
-		}
-	
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
-	
+
 	public function edit() {
 		$this->load->language('common/developer');
 
@@ -43,9 +26,9 @@ class ControllerCommonDeveloper extends Controller {
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
+		$this->response->setOutput(json_encode($json));
 	}
-		
+
 	public function theme() {
 		$this->load->language('common/developer');
 		
@@ -54,7 +37,7 @@ class ControllerCommonDeveloper extends Controller {
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$directories = glob(DIR_CACHE . '*', GLOB_ONLYDIR);
+			$directories = glob(DIR_CACHE . 'template/*', GLOB_ONLYDIR);
 
 			if ($directories) {
 				foreach ($directories as $directory) {

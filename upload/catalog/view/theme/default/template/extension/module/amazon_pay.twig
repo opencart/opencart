@@ -26,9 +26,9 @@ $(document).ready(function() {
 			authRequest = amazon.Login.authorize(loginOptions, "{{ module_amazon_pay_return_url }}");
 		},
 		onError: function(error) {
-			{% if payment_amazon_login_pay_test %}
-				console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
-			{% endif %}
+          {% if payment_amazon_login_pay_test %}
+			console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
+          {% endif %}
 		}
 	});
 });

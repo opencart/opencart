@@ -167,13 +167,6 @@ class ControllerCheckoutCart extends Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			// Because __call can not keep var references so we put them into an array.
-			$total_data = array(
-				'totals' => &$totals,
-				'taxes'  => &$taxes,
-				'total'  => &$total
-			);
-
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$sort_order = array();
@@ -190,8 +183,8 @@ class ControllerCheckoutCart extends Controller {
 					if ($this->config->get('total_' . $result['code'] . '_status')) {
 						$this->load->model('extension/total/' . $result['code']);
 
-						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+						// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+						($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 					}
 				}
 
@@ -216,8 +209,6 @@ class ControllerCheckoutCart extends Controller {
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
-
-			$this->load->model('setting/extension');
 
 			$data['modules'] = array();
 
@@ -287,7 +278,17 @@ class ControllerCheckoutCart extends Controller {
 				$option = array();
 			}
 
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+			// If variant get master product
+			if ($product_info['master_id']) {
+				$product_id = $product_info['master_id'];
+			}
+
+			// Merge variant code with options
+			foreach ($product_info['variant'] as $key => $value) {
+				$option[$key] = $value;
+			}
+
+			$product_options = $this->model_catalog_product->getProductOptions($product_id);
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {

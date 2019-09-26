@@ -150,7 +150,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function addTransaction($securetrading_ws_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "', `created` = NOW(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
 	}
 
 	public function getTotalReleased($securetrading_ws_order_id) {
@@ -166,7 +166,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function increaseRefundedAmount($order_id, $amount) {
-		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET refunded = refunded + " . (double)$amount . " WHERE order_id = " . (int)$order_id);
+		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET refunded = refunded + " . (double)$amount . " WHERE order_id = '" . (int)$order_id . "'");
 	}
 
 	public function getCsv($data) {

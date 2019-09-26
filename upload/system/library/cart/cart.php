@@ -24,8 +24,8 @@ class Cart {
 			foreach ($cart_query->rows as $cart) {
 				$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE cart_id = '" . (int)$cart['cart_id'] . "'");
 
-				// The advantage of using $this->add is that it will check if the products already exist and increaser the quantity if necessary.
-				$this->add($cart['product_id'], $cart['quantity'], json_decode($cart['option']), $cart['recurring_id']);
+				// The advantage of using $this->add is that it will check if the products already exist and increase the quantity if necessary.
+				$this->add($cart['product_id'], $cart['quantity'], json_decode($cart['option'], true), $cart['recurring_id']);
 			}
 		}
 	}
@@ -46,8 +46,21 @@ class Cart {
 
 					$option_data = array();
 
-					foreach (json_decode($cart['option']) as $product_option_id => $value) {
-						$option_query = $this->db->query("SELECT po.product_option_id, po.option_id, od.name, o.type FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_option_id = '" . (int)$product_option_id . "' AND po.product_id = '" . (int)$cart['product_id'] . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+					$product_options = (array)json_decode($cart['option'], true);
+
+					// Merge variant code with options
+					foreach ((array)json_decode($product_query->row['variant'], true) as $key => $value) {
+						$product_options[$key] = $value;
+					}
+
+					foreach ($product_options as $product_option_id => $value) {
+						if (!$product_query->row['master_id']) {
+							$product_id = $cart['product_id'];
+						} else {
+							$product_id = $product_query->row['master_id'];
+						}
+
+						$option_query = $this->db->query("SELECT po.product_option_id, po.option_id, od.name, o.type FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_option_id = '" . (int)$product_option_id . "' AND po.product_id = '" . (int)$product_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 						if ($option_query->num_rows) {
 							if ($option_query->row['type'] == 'select' || $option_query->row['type'] == 'radio') {
@@ -214,7 +227,7 @@ class Cart {
 						$stock = false;
 					}
 
-					$recurring_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "recurring r LEFT JOIN " . DB_PREFIX . "product_recurring pr ON (r.recurring_id = pr.recurring_id) LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE r.recurring_id = '" . (int)$cart['recurring_id'] . "' AND pr.product_id = '" . (int)$cart['product_id'] . "' AND rd.language_id = " . (int)$this->config->get('config_language_id') . " AND r.status = 1 AND pr.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "'");
+					$recurring_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "recurring r LEFT JOIN " . DB_PREFIX . "product_recurring pr ON (r.recurring_id = pr.recurring_id) LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE r.recurring_id = '" . (int)$cart['recurring_id'] . "' AND pr.product_id = '" . (int)$cart['product_id'] . "' AND rd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND r.status = 1 AND pr.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "'");
 
 					if ($recurring_query->num_rows) {
 						$recurring = array(
@@ -237,6 +250,7 @@ class Cart {
 					$this->data[] = array(
 						'cart_id'         => $cart['cart_id'],
 						'product_id'      => $product_query->row['product_id'],
+						'master_id'       => $product_query->row['master_id'],
 						'name'            => $product_query->row['name'],
 						'model'           => $product_query->row['model'],
 						'shipping'        => $product_query->row['shipping'],
@@ -273,9 +287,7 @@ class Cart {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id = '" . (int)$product_id . "' AND recurring_id = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 
 		if (!$query->row['total']) {
-
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "cart` SET api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "', customer_id = '" . (int)$this->customer->getId() . "', session_id = '" . $this->db->escape($this->session->getId()) . "', product_id = '" . (int)$product_id . "', recurring_id = '" . (int)$recurring_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', quantity = '" . (int)$quantity . "', date_added = NOW()");
-
 		} else {
 			$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET quantity = (quantity + " . (int)$quantity . ") WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id = '" . (int)$product_id . "' AND recurring_id = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 		}

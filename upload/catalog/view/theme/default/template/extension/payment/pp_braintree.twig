@@ -43,7 +43,7 @@
           <img style="display: none;" class="card-logo" id="visa-logo" src="https://assets.braintreegateway.com/payment_method_logo/visa.png" alt="Visa" />
           <img style="display: none;" class="card-logo" id="master-card-logo" src="https://assets.braintreegateway.com/payment_method_logo/mastercard.png" alt="MasterCard" />
           <img style="display: none;" class="card-logo" id="american-express-logo" src="https://assets.braintreegateway.com/payment_method_logo/american_express.png" alt="American Express" />
-          <img style="display: none;" class="card-logo" id="discover-logo" src="https://assets.braintreegateway.com/payment_method_logo/discover.png" alt="Discover" />
+          <img id="discover-logo" class="card-logo" style="display: none;" src="https://assets.braintreegateway.com/payment_method_logo/discover.png" alt="Discover" />
           <img style="display: none;" class="card-logo" id="jcb-image" src="https://assets.braintreegateway.com/payment_method_logo/jcb.png" alt="JCB" />
           <img style="display: none;" class="card-logo" id="maestro-image" src="https://assets.braintreegateway.com/payment_method_logo/maestro.png" alt="Maestro" />
         </div>
@@ -118,9 +118,9 @@
   <div class="col-sm-0 col-md-0 col-lg-3"></div>
   <div class="col-sm-12 col-md-12 col-lg-6">
     <div class="card">
-      <div class="panel-heading text-center">{{ text_authentication }}</div>
+      <div class="card-heading text-center">{{ text_authentication }}</div>
       <div class="card-body" id="braintree-3ds-body"></div>
-      <div class="panel-footer text-center">
+      <div class="card-footer text-center">
         <a id="braintree-3ds-close" href="#" class="braintree-button">{{ button_cancel }}</a>
       </div>
     </div>
@@ -658,7 +658,7 @@
   $(document).delegate('#button-payment-method', 'click', function() {
     console.log("Teardown!");
 
-    $('#collapse-checkout-confirm .panel-body').empty();
+    $('#collapse-checkout-confirm .card-body').empty();
 
     {% if payment_pp_braintree_paypal_option %}
       paypal_instance.teardown();

@@ -1,6 +1,9 @@
 <?php
 class ControllerCommonLanguage extends Controller {
 	public function index() {
+		//public function index(&$test) {
+		//$test = 99;
+
 		$this->load->language('common/language');
 
 		$data['code'] = $this->config->get('config_language');

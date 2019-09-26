@@ -40,13 +40,6 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			// Because __call can not keep var references so we put them into an array.
-			$total_data = array(
-				'totals' => &$totals,
-				'taxes'  => &$taxes,
-				'total'  => &$total
-			);
-
 			$this->load->model('setting/extension');
 
 			$sort_order = array();
@@ -66,9 +59,9 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 					$this->load->model('extension/total/' . $result['code']);
 
 					$taxes = array();
-					
-					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+
+					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+					($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 
 					$amount = 0;
 
@@ -379,7 +372,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 					'country'         => $country
 				);
 
-				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int)$order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
+				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_info['order_id'] . "' UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
 
 				foreach ($product_query->rows as $product) {
 					$goods_list[] = array(

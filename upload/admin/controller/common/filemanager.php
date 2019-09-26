@@ -261,9 +261,6 @@ class ControllerCommonFileManager extends Controller {
 					);
 
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
-
-						echo substr(strrchr($filename, '.'), 1);
-
 						$json['error'] = $this->language->get('error_filetype');
 					}
 

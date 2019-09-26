@@ -1,10 +1,10 @@
 <?php
 /**
- * @package		OpenCart
- * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
- * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
+ * @package        OpenCart
+ * @author        Daniel Kerr
+ * @copyright    Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license        https://opensource.org/licenses/GPL-3.0
+ * @link        https://www.opencart.com
  */
 
 /**
@@ -23,18 +23,17 @@ final class Loader {
 	}
 
 	/**
+	 * Controller
 	 *
+	 * https://wiki.php.net/rfc/variadics
 	 *
 	 * @param    string $route
 	 * @param    array $data
 	 *
 	 * @return    mixed
 	 */
-	public function controller($route) {
-		$args = func_get_args();
-
-		array_shift($args);
-
+	//public function controller($route, &...$args) {
+	public function controller($route, ...$args) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -65,16 +64,21 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Model
 	 *
 	 * @param    string $route
 	 */
-	public function model($route) {
+	public function model($route, $path = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
-			$file = DIR_APPLICATION . 'model/' . $route . '.php';
+			if (!$path) {
+				$file = DIR_APPLICATION . 'model/' . $route . '.php';
+			} else {
+				$file = $path . $route . '.php';
+			}
+
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 
 			if (is_file($file)) {
@@ -85,7 +89,9 @@ final class Loader {
 				// Overriding models is a little harder so we have to use PHP's magic methods
 				// In future version we can use runkit
 				foreach (get_class_methods($class) as $method) {
-					$proxy->{$method} = $this->callback($route . '/' . $method);
+					$function = $this->callback($route . '/' . $method);
+
+					$proxy->attach($method, $function);
 				}
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
@@ -96,34 +102,37 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * View
 	 *
 	 * @param    string $route
 	 * @param    array $data
 	 *
 	 * @return   string
 	 */
-	public function view($route, $data = array()) {
+	public function view($route, $data = array(), $path = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
 
-		$template = new Template($this->registry->get('config')->get('template_engine'));
+		// Modified template contents. Not the output!
+		$code = '';
 
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$code));
 
 		// Make sure its only the last event that returns an output if required.
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
+			$template = new Template($this->registry->get('config')->get('template_engine'));
+
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);
 			}
 
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'));
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 		}
 
 		// Trigger the post events
@@ -137,11 +146,11 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Library
 	 *
 	 * @param    string $route
 	 */
-	public function library($route) {
+	public function library($route, $config = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -158,7 +167,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Helper
 	 *
 	 * @param    string $route
 	 */
@@ -173,7 +182,7 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Config
 	 *
 	 * @param    string $route
 	 */
@@ -186,29 +195,29 @@ final class Loader {
 	}
 
 	/**
-	 *
+	 * Language
 	 *
 	 * @param    string $route
 	 * @param    string $key
 	 *
 	 * @return    array
 	 */
-	public function language($route, $key = '') {
+	public function language($route, $prefix = '') {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$key));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$prefix));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$output = $this->registry->get('language')->load($route, $key);
+			$output = $this->registry->get('language')->load($route, $prefix);
 		}
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$key, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$prefix, &$output));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
@@ -217,11 +226,18 @@ final class Loader {
 		return $output;
 	}
 
+	/**
+	 * Callback
+	 *
+	 * @param	string $route
+	 *
+	 * @return	closure
+	 */
 	protected function callback($route) {
-		return function () use ($route) {
+		return function (&...$args) use ($route) {
 			// Grab args using function because we don't know the number of args being passed.
-			$args = func_get_args();
-
+			// https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+			// https://wiki.php.net/rfc/variadics
 			$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 			// Keep the original trigger
@@ -240,12 +256,16 @@ final class Loader {
 
 				// Check if the model has already been initialised or not
 				if (!$this->registry->has($key)) {
-					$this->registry->set($key, new $class($this->registry));
+					$object = new $class($this->registry);
+
+					$this->registry->set($key, $object);
+				} else {
+					$object = $this->registry->get($key);
 				}
 
 				$method = substr($route, strrpos($route, '/') + 1);
 
-				$callable = array($this->registry->get($key), $method);
+				$callable = array($object, $method);
 
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);

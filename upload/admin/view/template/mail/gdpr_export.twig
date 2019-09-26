@@ -4,68 +4,64 @@
       <tr>
         <td style="text-align: center; border-bottom: 1px solid #ddd; padding-top: 15px; padding-bottom: 15px;">
           {% if logo %}
-            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store }}" title="{{ store }}" style="margin-left: auto; margin-right: auto;"/></a>
+            <a href="{{ store_url }}"><img src="{{ logo }}" alt="{{ store_name }}" title="{{ store_name }}" style="margin-left: auto; margin-right: auto;"/></a>
           {% else %}
-            <a href="{{ store_url }}">{{ store }}</a>
+            <a href="{{ store_url }}">{{ store_name }}</a>
           {% endif %}
         </td>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_gdpr }}</h1></td>
+        <td style="text-align: center; border-bottom: 1px solid #ddd;"><h1>{{ text_request }}</h1></td>
       </tr>
       <tr>
-        <td style="line-height: 1.8;">
+        <td style="border-bottom: 1px solid #ddd;">
           <p>{{ text_hello }}</p>
-
-          <table class="table table-bordered">
-            <thead>
-              <tr class="table-light">
-                <th colspan="2">{{ text_customer }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="w-25">{{ text_firstname }}</td>
-                <td>{{ firstname }}</td>
-              </tr>
-              <tr>
-                <td>{{ text_lastname }}</td>
-                <td>{{ lastname }}</td>
-              </tr>
-              <tr>
-                <td>{{ text_email }}</td>
-                <td>{{ email }}</td>
-              </tr>
-              <tr>
-                <td>{{ text_telephone }}</td>
-                <td>{{ telephone }}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          {% if addresses %}
-            {% set address_row = 1 %}
-            {% for address in addresses %}
-
-              <table class="table table-bordered">
-                <thead>
-                  <tr class="table-light">
-                    <th colspan="2">{{ text_addresses }}</th>
-                  </tr>
-                  <tr>
-                    <th colspan="2">{{ text_address }} {{ address_row }}</th>
-                  </tr>
-                </thead>
+          <p>{{ text_gdpr }}</p>
+        </td>
+      </tr>
+      {% if customer_id %}
+        <tr>
+          <td style="text-align: center; border-bottom: 1px solid #ddd;"><h2>{{ text_customer }}</h2></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 1px solid #ddd;">
+            <table style="width: 100%;">
+              <tbody>
+                <tr>
+                  <td style="width: 30%;">{{ text_name }}</td>
+                  <td>{{ firstname }} {{ lastname }}</td>
+                </tr>
+                <tr>
+                  <td>{{ text_email }}</td>
+                  <td>{{ email }}</td>
+                </tr>
+                <tr>
+                  <td>{{ text_telephone }}</td>
+                  <td>{{ telephone }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      {% endif %}
+      {% if addresses %}
+        <tr>
+          <td style="text-align: center; border-bottom: 1px solid #ddd;"><h2>{{ text_addresses }}</h2></td>
+        </tr>
+        {% set address_row = 1 %}
+        {% for address in addresses %}
+          <tr>
+            <td style="text-align: center; border-bottom: 1px solid #ddd;"><h3>{{ text_address }} {{ address_row }}</h3></td>
+          </tr>
+          <tr>
+            <td style="border-bottom: 1px solid #ddd;">
+              <table style="width: 100%;">
                 <tbody>
                   <tr>
-                    <td class="w-25">{{ text_firstname }}</td>
-                    <td>{{ address.firstname }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ text_lastname }}</td>
-                    <td>{{ address.lastname }}</td>
+                    <td style="width: 30%;">{{ text_recipient }}</td>
+                    <td>{{ address.firstname }} {{ address.lastname }}</td>
                   </tr>
                   {% if address.company %}
                     <tr>
@@ -93,67 +89,58 @@
                       <td>{{ address.postcode }}</td>
                     </tr>
                   {% endif %}
-                  <tr>
-                    <td>{{ text_country }}</td>
-                    <td>{{ address.country }}</td>
-                  </tr>
                   {% if address.zone %}
                     <tr>
                       <td>{{ text_zone }}</td>
                       <td>{{ address.zone }}</td>
                     </tr>
                   {% endif %}
+                  <tr>
+                    <td>{{ text_country }}</td>
+                    <td>{{ address.country }}</td>
+                  </tr>
                 </tbody>
               </table>
-              {% set address_row = address_row + 1 %}
-            {% endfor %}
-          {% endif %}
-
-          {% if ips %}
-            <table class="table table-bordered">
-              <thead>
-                <tr class="table-light">
-                  <th colspan="3">{{ text_history }}</th>
-                </tr>
-              </thead>
+            </td>
+          </tr>
+          {% set address_row = address_row + 1 %}
+        {% endfor %}
+      {% endif %}
+      {% if ips %}
+        <tr>
+          <td style="text-align: center; border-bottom: 1px solid #ddd;"><h2>{{ text_history }}</h2></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 1px solid #ddd;">
+            <table style="width: 100%;">
               <thead>
                 <tr>
-                  <th class="w-25">{{ text_ip }}</th>
-                  <th class="w-25">{{ text_country }}</th>
-                  <th class="w-25">{{ text_date_added }}</th>
+                  <th style="width: 50%; text-align: left;">{{ text_ip }}</th>
+                  <th style="text-align: left;">{{ text_date_added }}</th>
                 </tr>
               </thead>
               <tbody>
                 {% for ip in ips %}
                   <tr>
                     <td>{{ ip.ip }}</td>
-                    <td>{{ ip.country }}</td>
                     <td>{{ ip.date_added }}</td>
                   </tr>
                 {% endfor %}
               </tbody>
             </table>
-          {% endif %}
-          <div class="d-inline-block pt-2 pd-2 w-100">
-            <div class="float-right"><a href="{{ cancel }}" class="btn btn-light">{{ button_continue }}</a></div>
-          </div>
-
-          <p>{{ text_ip }}</p>
-          <p>{{ ip }}</p>
-
-          <p>{{ text_contact }}</p>
-
-          <p>
-            <br/>
-          </p>
-          <p style="text-align: center;"><a href="{{ store_url }}" style="border-radius: 4px; color: #fff; text-decoration: none; background-color: #01b3e8; padding-left: 18px; padding-right: 18px; padding-top: 10px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">{{ store }}</a></p>
-          <p>
-            {{ text_thanks }}
-            <br/>
-            <strong>{{ store }}</strong>
-          </p>
-        </td>
-      </tr>
+          </td>
+        </tr>
+      {% endif %}
     </tbody>
   </table>
+  <p>{{ text_contact }}</p>
+  <p>
+    <br/>
+  </p>
+  <p style="text-align: center;"><a href="{{ store_url }}" style="border-radius: 4px; color: #fff; text-decoration: none; background-color: #01b3e8; padding-left: 18px; padding-right: 18px; padding-top: 10px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">{{ store_name }}</a></p>
+  <p>
+    {{ text_thanks }}
+    <br/>
+    <strong>{{ store_name }}</strong>
+  </p>
 </div>

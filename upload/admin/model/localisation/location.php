@@ -11,7 +11,7 @@ class ModelLocalisationLocation extends Model {
 	}
 
 	public function deleteLocation($location_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "location WHERE location_id = " . (int)$location_id);
+		$this->db->query("DELETE FROM " . DB_PREFIX . "location WHERE location_id = '" . (int)$location_id . "'");
 	}
 
 	public function getLocation($location_id) {

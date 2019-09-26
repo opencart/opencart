@@ -37,7 +37,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_payflow_iframe_order WHERE order_id = " . (int)$order_id);
+		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_payflow_iframe_order WHERE order_id = '" . (int)$order_id . "'");
 
 		if ($result->num_rows) {
 			$order = $result->row;
@@ -51,7 +51,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	public function updateOrderStatus($order_id, $status) {
 		$this->db->query("
 			UPDATE " . DB_PREFIX .  "paypal_payflow_iframe_order
-			SET `complete` = " . (int)$status . "
+			SET `complete` = '" . (int)$status . "'
 			WHERE order_id = '" . (int)$order_id . "'
 		");
 	}
@@ -59,7 +59,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	public function addTransaction($data) {
 		$this->db->query("
 			INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			SET order_id = " . (int)$data['order_id'] . ",
+			SET order_id = '" . (int)$data['order_id'] . "',
 				transaction_reference = '" . $this->db->escape((string)$data['transaction_reference']) . "',
 				transaction_type = '" . $this->db->escape((string)$data['type']) . "',
 				`time` = NOW(),
@@ -71,7 +71,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 		return $this->db->query("
 			SELECT *
 			FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			WHERE order_id = " . (int)$order_id . "
+			WHERE order_id = '" . (int)$order_id . "'
 			ORDER BY `time` ASC")->rows;
 	}
 

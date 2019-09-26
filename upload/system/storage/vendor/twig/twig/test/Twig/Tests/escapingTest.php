@@ -3,26 +3,27 @@
 /**
  * This class is adapted from code coming from Zend Framework.
  *
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://framework.zend.com/license/new-bsd New BSD License
  */
 class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * All character encodings supported by htmlspecialchars().
      */
-    protected $htmlSpecialChars = array(
+    protected $htmlSpecialChars = [
         '\'' => '&#039;',
         '"' => '&quot;',
         '<' => '&lt;',
         '>' => '&gt;',
         '&' => '&amp;',
-    );
+    ];
 
-    protected $htmlAttrSpecialChars = array(
+    protected $htmlAttrSpecialChars = [
         '\'' => '&#x27;',
         /* Characters beyond ASCII value 255 to unicode escape */
         'Ā' => '&#x0100;',
+        '😀' => '&#x1F600;',
         /* Immune chars excluded */
         ',' => ',',
         '.' => '.',
@@ -47,17 +48,19 @@ class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
         '"' => '&quot;',
         /* Encode spaces for quoteless attribute protection */
         ' ' => '&#x20;',
-    );
+    ];
 
-    protected $jsSpecialChars = array(
+    protected $jsSpecialChars = [
         /* HTML special chars - escape without exception to hex */
-        '<' => '\\x3C',
-        '>' => '\\x3E',
-        '\'' => '\\x27',
-        '"' => '\\x22',
-        '&' => '\\x26',
+        '<' => '\\u003C',
+        '>' => '\\u003E',
+        '\'' => '\\u0027',
+        '"' => '\\u0022',
+        '&' => '\\u0026',
+        '/' => '\\/',
         /* Characters beyond ASCII value 255 to unicode escape */
         'Ā' => '\\u0100',
+        '😀' => '\\uD83D\\uDE00',
         /* Immune chars excluded */
         ',' => ',',
         '.' => '.',
@@ -70,15 +73,17 @@ class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
         '0' => '0',
         '9' => '9',
         /* Basic control characters and null */
-        "\r" => '\\x0D',
-        "\n" => '\\x0A',
-        "\t" => '\\x09',
-        "\0" => '\\x00',
+        "\r" => '\r',
+        "\n" => '\n',
+        "\x08" => '\b',
+        "\t" => '\t',
+        "\x0C" => '\f',
+        "\0" => '\\u0000',
         /* Encode spaces for quoteless attribute protection */
-        ' ' => '\\x20',
-    );
+        ' ' => '\\u0020',
+    ];
 
-    protected $urlSpecialChars = array(
+    protected $urlSpecialChars = [
         /* HTML special chars - escape without exception to percent encoding */
         '<' => '%3C',
         '>' => '%3E',
@@ -111,9 +116,9 @@ class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
         ' ' => '%20',
         '~' => '~',
         '+' => '%2B',
-    );
+    ];
 
-    protected $cssSpecialChars = array(
+    protected $cssSpecialChars = [
         /* HTML special chars - escape without exception to hex */
         '<' => '\\3C ',
         '>' => '\\3E ',
@@ -140,7 +145,7 @@ class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
         "\0" => '\\0 ',
         /* Encode spaces for quoteless attribute protection */
         ' ' => '\\20 ',
-    );
+    ];
 
     protected $env;
 
@@ -215,7 +220,7 @@ class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
     public function testUnicodeCodepointConversionToUtf8()
     {
         $expected = ' ~ޙ';
-        $codepoints = array(0x20, 0x7e, 0x799);
+        $codepoints = [0x20, 0x7e, 0x799];
         $result = '';
         foreach ($codepoints as $value) {
             $result .= $this->codepointToUtf8($value);
@@ -255,7 +260,7 @@ class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
 
     public function testJavascriptEscapingEscapesOwaspRecommendedRanges()
     {
-        $immune = array(',', '.', '_'); // Exceptions to escaping ranges
+        $immune = [',', '.', '_']; // Exceptions to escaping ranges
         for ($chr = 0; $chr < 0xFF; ++$chr) {
             if ($chr >= 0x30 && $chr <= 0x39
             || $chr >= 0x41 && $chr <= 0x5A
@@ -278,7 +283,7 @@ class Twig_Test_EscapingTest extends \PHPUnit\Framework\TestCase
 
     public function testHtmlAttributeEscapingEscapesOwaspRecommendedRanges()
     {
-        $immune = array(',', '.', '-', '_'); // Exceptions to escaping ranges
+        $immune = [',', '.', '-', '_']; // Exceptions to escaping ranges
         for ($chr = 0; $chr < 0xFF; ++$chr) {
             if ($chr >= 0x30 && $chr <= 0x39
             || $chr >= 0x41 && $chr <= 0x5A

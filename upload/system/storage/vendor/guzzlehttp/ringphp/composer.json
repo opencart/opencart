@@ -31,6 +31,10 @@
             "GuzzleHttp\\Tests\\Ring\\": "tests/"
         }
     },
+    "scripts": {
+        "test": "make test",
+        "test-ci": "make coverage"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.1-dev"

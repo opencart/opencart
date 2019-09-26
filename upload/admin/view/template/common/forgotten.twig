@@ -7,7 +7,7 @@
       <div class="offset-sm-4 col-sm-4">
         <div class="card">
           <div class="card-header">
-            <i class="fas fa-repeat"></i> {{ heading_title }}
+            <i class="fas fa-redo"></i> {{ heading_title }}
           </div>
           <div class="card-body">
             {% if error_warning %}
@@ -17,7 +17,7 @@
             {% endif %}
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
               <div class="form-group">
-                <label class="col-form-label" for="input-email">{{ entry_email }}</label>
+                <label for="input-email" class="col-form-label">{{ entry_email }}</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>

@@ -93,6 +93,7 @@ $_['entry_fraud_status']           = 'Fraud Order Status';
 $_['entry_api']                    = 'API User';
 $_['entry_stock_display']          = 'Display Stock';
 $_['entry_stock_warning']          = 'Show Out Of Stock Warning';
+$_['entry_stock_checkout']         = 'Stock Checkout';
 $_['entry_affiliate_enabled']      = 'Enable Affiliates';
 $_['entry_affiliate_group']        = 'Affiliate Group';
 $_['entry_affiliate_approval']     = 'Affiliate Requires Approval';

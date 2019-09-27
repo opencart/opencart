@@ -1834,7 +1834,7 @@ INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `keyword`, `q
 (0, 0, 1, 'test-21', 'path=34_53', 'route=product/category&path=34_53'),
 (0, 0, 1, 'test-22', 'path=34_54', 'route=product/category&path=34_54'),
 (0, 0, 1, 'test-23', 'path=34_55', 'route=product/category&path=34_55'),
-(0, 0, 1, 'test-24', 'path=34_56', 'route=product/category&path=34_56'),l
+(0, 0, 1, 'test-24', 'path=34_56', 'route=product/category&path=34_56'),
 (0, 0, 1, 'test-4', 'path=34_38', 'route=product/category&path=34_38'),
 (0, 0, 1, 'test-5', 'path=34_37', 'route=product/category&path=34_37'),
 (0, 0, 1, 'test-6', 'path=34_39', 'route=product/category&path=34_39'),

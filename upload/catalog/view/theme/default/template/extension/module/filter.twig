@@ -37,6 +37,10 @@ $('#button-filter').on('click', function() {
 		filter.push(this.value);
 	});
 
-	location = '{{ action }}&filter=' + filter.join(',');
+	if (filter != 0) {
+		location = '{{ action }}&filter=' + filter.join(',');
+    	} else if (filter = []) {
+		location = '{{ action }}';
+    	}
 });
 //--></script>

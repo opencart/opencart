@@ -1,6 +1,6 @@
 <?php
 class ControllerStartupSeoUrl extends Controller {
-	private $regex = array();
+	private $regex   = array();
 	private $keyword = array();
 
 	public function index() {
@@ -56,54 +56,75 @@ class ControllerStartupSeoUrl extends Controller {
 
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
+		if ($url_info['scheme']) {
+			$url .= $url_info['scheme'];
+		}
+
+		$url .= '://';
+
+		if ($url_info['host']) {
+			$url .= $url_info['host'];
+		}
+
+		if (isset($url_info['port'])) {
+			$url .= ':' . $url_info['port'];
+		}
+
+		if ($url_info['path']) {
+			$url .= str_replace('/index.php', '', $url_info['path']);
+		}
+
+
+		// Start replacing the URL query
 		$data = array();
 
 		parse_str($url_info['query'], $data);
 
+		echo $url_info['query'] . "\n";
+
 		foreach ($this->regex as $regex) {
 			$matches = array();
-
-			$regex = preg_quote($regex, '/');
 
 			if (preg_match('/' . $regex . '/', $url_info['query'], $matches)) {
 				array_shift($matches);
 
 				foreach ($matches as $match) {
+					echo $match . "\n";
 
-
-
-					if (!$this->keyword[$match]) {
-						$results = $this->model_design_seo_url->getSeoUrlsByQuery($match);
-
-						if ($results) {
-							foreach ($results as $result) {
-								if (!empty($result['keyword'])) {
-									$url .= '/' . $result['keyword'];
-								}
-							}
-
-							parse_str($match, $remove);
-
-							// Remove all the matched url elements
-							foreach (array_keys($remove) as $key) {
-								if (isset($data[$key])) {
-									unset($data[$key]);
-								}
-							}
-						}
+					if (!isset($this->keyword[$match])) {
+						$this->keyword[$match] = $this->model_design_seo_url->getKeywordByQuery($match);
 					}
 
+					if ($this->keyword[$match]) {
+						$url .= '/' . $this->keyword[$match];
+					}
 
+					parse_str($match, $remove);
 
+					// Remove all the matched url elements
+					foreach (array_keys($remove) as $key) {
+						//echo $key . "\n";
 
-
-
-
+						if (isset($data[$key])) {
+							unset($data[$key]);
+						}
+					}
 				}
+
+
+
+
+
+
 			}
 		}
 
+
+		
+
 		if ($url) {
+			//echo 'h';
+
 			$query = '';
 
 			if ($data) {
@@ -116,7 +137,11 @@ class ControllerStartupSeoUrl extends Controller {
 				}
 			}
 
-			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
+
+
+
+
+			return $url . $query;
 		} else {
 			return $link;
 		}

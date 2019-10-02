@@ -23,7 +23,7 @@ class ModelDesignSeoUrl extends Model {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -84,7 +84,7 @@ class ModelDesignSeoUrl extends Model {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -100,12 +100,16 @@ class ModelDesignSeoUrl extends Model {
 	public function getSeoUrlsByKeyword($keyword) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `keyword` = '" . $this->db->escape($keyword) . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
-		return $query->row;
+		return $query->rows;
 	}
 
-	public function getSeoUrlsByQuery($query) {
+	public function getKeywordByQuery($query) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `query` = '" . $this->db->escape($query) . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
-		return $query->rows;
+		if ($query->row) {
+			return $query->row['keyword'];
+		} else {
+			return '';
+		}
 	}
 }

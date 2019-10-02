@@ -33,7 +33,7 @@ $_['text_checkout']                = 'Checkout';
 $_['text_stock']                   = 'Stock';
 $_['text_affiliate']               = 'Affiliate';
 $_['text_return']                  = 'Return';
-$_['text_Captcha']                 = 'Captcha';
+$_['text_captcha']                 = 'Captcha';
 
 // Entry
 $_['entry_meta_title']             = 'Meta Title';

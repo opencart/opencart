@@ -489,12 +489,9 @@ footer {
   @media (min-width: 768px) {
   .product-list .product-thumb .image {
     padding: 0 15px;
-    display: inline-block;
-    width: 30%; }
+    display: inline-block; }
     .product-list .product-thumb .image + div {
-      display: inline-block;
-      margin-left: 0%;
-      width: 69.5%; } }
+      margin-left: 0%; } }
   @media (max-width: 767px) {
   .product-list .product-thumb .caption {
     min-height: 0;

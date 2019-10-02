@@ -492,7 +492,7 @@ class ControllerDesignSeoUrl extends Controller {
 
 		$data['stores'][] = array(
 			'store_id' => 0,
-			'name' => $this->language->get('text_default')
+			'name'     => $this->language->get('text_default')
 		);
 
 		$this->load->model('setting/store');
@@ -571,10 +571,6 @@ class ControllerDesignSeoUrl extends Controller {
 			}
 		} else {
 			$this->error['query'] = $this->language->get('error_query');
-		}
-
-		if (!$this->request->post['push']) {
-			$this->error['push'] = $this->language->get('error_push');
 		}
 
 		return !$this->error;

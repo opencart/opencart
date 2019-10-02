@@ -9,7 +9,7 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <label class="col-form-label" for="input-search">{{ entry_search }}</label>
+      <label for="input-search" class="col-form-label">{{ entry_search }}</label>
       <div class="row">
         <div class="col-md-4">
           <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control"/>
@@ -49,7 +49,7 @@
                 <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"/>
               {% endif %}
             </div>
-            <label class="form-check-label" for="input-sub-category">{{ text_sub_category }}</label>
+            <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
         {% else %}
           <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"/>
         {% endif %}
-        <label class="form-check-label" for="input-description">{{ entry_description }}</label>
+        <label for="input-description" class="form-check-label">{{ entry_description }}</label>
       </div>
       <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
       <hr/>
@@ -80,7 +80,7 @@
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-sort">{{ text_sort }}</label>
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
               </div>
               <select id="input-sort" class="form-control" onchange="location = this.value;">
                 {% for sorts in sorts %}
@@ -96,7 +96,7 @@
           <div class="col-md-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-limit">{{ text_limit }}</label>
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
               </div>
               <select id="input-limit" class="form-control" onchange="location = this.value;">
                 {% for limits in limits %}

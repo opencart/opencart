@@ -25,7 +25,7 @@
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-sort">{{ text_sort }}</label>
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
               </div>
               <select id="input-sort" class="form-control" onchange="location = this.value;">
                 {% for sorts in sorts %}
@@ -41,7 +41,7 @@
           <div class="col-md-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-limit">{{ text_limit }}</label>
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
               </div>
               <select id="input-limit" class="form-control" onchange="location = this.value;">
                 {% for limits in limits %}

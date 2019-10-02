@@ -40,12 +40,12 @@
       </div>
       <div class="col-sm-2">
         <div id="card-type">
-          <img style="display: none;" class="card-logo" id="visa-logo" src="https://assets.braintreegateway.com/payment_method_logo/visa.png" alt="Visa" />
-          <img style="display: none;" class="card-logo" id="master-card-logo" src="https://assets.braintreegateway.com/payment_method_logo/mastercard.png" alt="MasterCard" />
-          <img style="display: none;" class="card-logo" id="american-express-logo" src="https://assets.braintreegateway.com/payment_method_logo/american_express.png" alt="American Express" />
-          <img id="discover-logo" class="card-logo" style="display: none;" src="https://assets.braintreegateway.com/payment_method_logo/discover.png" alt="Discover" />
-          <img style="display: none;" class="card-logo" id="jcb-image" src="https://assets.braintreegateway.com/payment_method_logo/jcb.png" alt="JCB" />
-          <img style="display: none;" class="card-logo" id="maestro-image" src="https://assets.braintreegateway.com/payment_method_logo/maestro.png" alt="Maestro" />
+          <img src="https://assets.braintreegateway.com/payment_method_logo/visa.png" alt="Visa" id="visa-logo" class="card-logo" style="display: none;"/>
+          <img src="https://assets.braintreegateway.com/payment_method_logo/mastercard.png" alt="MasterCard" id="master-card-logo" class="card-logo" style="display: none;"/>
+          <img src="https://assets.braintreegateway.com/payment_method_logo/american_express.png" alt="American Express" id="american-express-logo" class="card-logo" style="display: none;"/>
+          <img src="https://assets.braintreegateway.com/payment_method_logo/discover.png" alt="Discover" id="discover-logo" class="card-logo" style="display: none;"/>
+          <img src="https://assets.braintreegateway.com/payment_method_logo/jcb.png" alt="JCB" id="jcb-image" class="card-logo"style="display: none;" />
+          <img src="https://assets.braintreegateway.com/payment_method_logo/maestro.png" alt="Maestro" id="maestro-image" class="card-logo" style="display: none;"/>
         </div>
       </div>
     </div>
@@ -119,7 +119,7 @@
   <div class="col-sm-12 col-md-12 col-lg-6">
     <div class="card">
       <div class="card-heading text-center">{{ text_authentication }}</div>
-      <div class="card-body" id="braintree-3ds-body"></div>
+      <div id="braintree-3ds-body" class="card-body"></div>
       <div class="card-footer text-center">
         <a id="braintree-3ds-close" href="#" class="braintree-button">{{ button_cancel }}</a>
       </div>

@@ -804,8 +804,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 .list-check li::before {
-    font-family: 'Font Awesome 5 Free';
-    content: '\f00c';
+    font-family: 'Font Awesome 5 Solid';
+    content: "\f00c";
     margin-left: -30px;
     width: 29px;
     display: inline-block;

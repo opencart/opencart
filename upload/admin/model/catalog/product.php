@@ -609,7 +609,7 @@ class ModelCatalogProduct extends Model {
 
 			// Specials
 			if (!isset($override['product_special'])) {
-				$master_data['product_special'] = $this->model_catalog_product->getProductSpecials($master_id);
+				$product_data['product_special'] = $this->model_catalog_product->getProductSpecials($master_id);
 			}
 
 			// Stores

@@ -69,13 +69,15 @@
                           <tr>
                             <td>{{ download.name }}</td>
                             <td>{{ download.date_added }}</td>
-                            <td class="text-right">{% if download.extension_install_id %}
+                            <td class="text-right">
+                              {% if download.extension_install_id %}
                                 <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_uninstall }}</button>
                               {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
                                 <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_install }}</button>
                               {% else %}
                                 <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
-                              {% endif %}</td>
+                              {% endif %}
+                            </td>
                           </tr>
                         {% endfor %}
                       {% else %}
@@ -87,7 +89,7 @@
                   </table>
                 </fieldset>
               </div>
-              <div id="tab-comment" class="tab-pane fade">
+              <div id="tab-comment" class="tab-pane">
                 <fieldset>
                   <legend>{{ text_comment_add }}</legend>
                   <div class="form-group">
@@ -392,13 +394,13 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 	});
 });
 
+// Comment
 $('#comment').on('click', '.pagination a', function(e) {
 	e.preventDefault();
 
 	$('#comment').load(this.href);
 });
 
-// Comment
 $('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
 // Add comment

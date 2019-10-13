@@ -55,8 +55,6 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
-		$this->cache->delete('category');
-
 		return $category_id;
 	}
 
@@ -169,8 +167,6 @@ class ModelCatalogCategory extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "category_to_layout SET category_id = '" . (int)$category_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
 			}
 		}
-
-		$this->cache->delete('category');
 	}
 
 	public function deleteCategory($category_id) {
@@ -190,8 +186,6 @@ class ModelCatalogCategory extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE category_id = '" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE query = 'path=" . $this->db->escape($this->getPath($category_id)) . "'");
-
-		$this->cache->delete('category');
 	}
 
 	public function repairCategories($parent_id = 0) {

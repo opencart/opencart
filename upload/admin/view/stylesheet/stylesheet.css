@@ -21,7 +21,6 @@ legend {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 15px;
 }
-
 #container {
     min-height: 100%;
     width: 100%;
@@ -805,8 +804,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 .list-check li::before {
-    font-family: 'Font Awesome 5 Free';
-    content: '\f00c';
+    font-family: 'Font Awesome 5 Solid';
+    content: "\f00c";
     margin-left: -30px;
     width: 29px;
     display: inline-block;
@@ -815,4 +814,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .list-check.list-color-blue li::before {
     color: #02afe9;
+}
+
+.table-responsive {
+    overflow: visible;
 }

@@ -17,10 +17,6 @@ class Document {
 	private $links = array();
 	private $styles = array();
 	private $scripts = array();
-	private $image;
-	private $url;
-	private $type;
-	private $price;
 
 	/**
      *

@@ -113,7 +113,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function addTransaction($worldpay_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order_transaction` SET `worldpay_order_id` = '" . (int)$worldpay_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order_transaction` SET `worldpay_order_id` = '" . (int)$worldpay_order_id . "', `date_added` = NOW(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
 	}
 
 	public function getTotalReleased($worldpay_order_id) {

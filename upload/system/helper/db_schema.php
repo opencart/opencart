@@ -2076,12 +2076,14 @@ function db_schema() {
 			array(
 				'name' => 'status',
 				'type' => 'tinyint(1)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => '0'
 			),
 			array(
 				'name' => 'sort_order',
 				'type' => 'int(3)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => '1'
 			)
 		),
 		'primary' => array(
@@ -4104,6 +4106,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'override',
+				'type' => 'text',
+				'not_null' => true
+			),
+			array(
 				'name' => 'quantity',
 				'type' => 'int(4)',
 				'not_null' => true,
@@ -5745,12 +5752,12 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'query',
+				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(
-				'name' => 'keyword',
+				'name' => 'query',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),

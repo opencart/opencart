@@ -34,8 +34,6 @@ final class Loader {
 	 */
 	//public function controller($route, &...$args) {
 	public function controller($route, ...$args) {
-		//$args = func_get_args();
-
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -70,12 +68,17 @@ final class Loader {
 	 *
 	 * @param    string $route
 	 */
-	public function model($route) {
+	public function model($route, $path = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
-			$file = DIR_APPLICATION . 'model/' . $route . '.php';
+			if (!$path) {
+				$file = DIR_APPLICATION . 'model/' . $route . '.php';
+			} else {
+				$file = $path . $route . '.php';
+			}
+
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 
 			if (is_file($file)) {
@@ -106,7 +109,7 @@ final class Loader {
 	 *
 	 * @return   string
 	 */
-	public function view($route, $data = array()) {
+	public function view($route, $data = array(), $path = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -129,7 +132,7 @@ final class Loader {
 				$template->set($key, $value);
 			}
 
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'), $code);
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 		}
 
 		// Trigger the post events
@@ -147,7 +150,7 @@ final class Loader {
 	 *
 	 * @param    string $route
 	 */
-	public function library($route) {
+	public function library($route, $config = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -199,22 +202,22 @@ final class Loader {
 	 *
 	 * @return    array
 	 */
-	public function language($route, $key = '') {
+	public function language($route, $prefix = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$key));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$prefix));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$output = $this->registry->get('language')->load($route, $key);
+			$output = $this->registry->get('language')->load($route, $prefix);
 		}
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$key, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$prefix, &$output));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;

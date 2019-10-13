@@ -161,6 +161,8 @@ class ControllerDesignTranslation extends Controller {
 		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		$this->load->model('localisation/language');
+
 		$data['translations'] = array();
 
 		$filter_data = array(
@@ -175,14 +177,22 @@ class ControllerDesignTranslation extends Controller {
 		$results = $this->model_design_translation->getTranslations($filter_data);
 
 		foreach ($results as $result) {
+			$language_info = $this->model_localisation_language->getLanguage($result['language_id']);
+
+			if ($language_info) {
+				$code = $language_info['code'];
+			} else {
+				$code = '';
+			}
+
 			$data['translations'][] = array(
 				'translation_id' => $result['translation_id'],
-				'store' => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
-				'route' => $result['route'],
-				'language' => $result['language'],
-				'key' => $result['key'],
-				'value' => $result['value'],
-				'edit' => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id']),
+				'store'          => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
+				'route'          => $result['route'],
+				'language'       => $code,
+				'key'            => $result['key'],
+				'value'          => $result['value'],
+				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
 			);
 		}
 

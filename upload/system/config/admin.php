@@ -18,9 +18,6 @@ $_['session_engine']    = 'db';
 // Error
 $_['error_display']     = true;
 
-// Template
-$_['template_cache']    = true;
-
 // Actions
 $_['action_pre_action'] = array(
 	'startup/startup',
@@ -43,8 +40,7 @@ $_['action_event']      = array(
 		'event/language/after'
 	),
 	'view/*/before' => array(
-		999  => 'event/language',
-		1000 => 'event/theme'
+		999  => 'event/language'
 	),
 	//'model/*/after' => array(
 	//	'event/debug/before'

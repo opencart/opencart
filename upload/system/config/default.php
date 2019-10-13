@@ -44,7 +44,6 @@ $_['session_expire']       = 3600;
 // Template
 $_['template_engine']      = 'twig';
 $_['template_directory']   = '';
-$_['template_cache']       = false;
 $_['template_extension']   = '.twig';
 
 // Error
@@ -62,8 +61,11 @@ $_['config_autoload']      = array();
 // Autoload Libraries
 $_['library_autoload']     = array();
 
-// Autoload Libraries
+// Autoload Models
 $_['model_autoload']       = array();
+
+// Autoload Helpers
+$_['helper_autoload']      = array();
 
 // Actions
 $_['action_default']       = 'common/home';

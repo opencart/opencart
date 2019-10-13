@@ -81,7 +81,7 @@ class ModelExtensionPaymentDivido extends Model {
 		$application_id = $this->db->escape($application_id);
 		$deposit_amount = $this->db->escape($deposit_amount);
 
-		$query_get_lookup = "SELECT `application_id` from `" . DB_PREFIX . "divido_lookup` WHERE order_id = " . $order_id;
+		$query_get_lookup = "SELECT `application_id` from `" . DB_PREFIX . "divido_lookup` WHERE order_id = '" . (int)$order_id . "'";
 		$result_get_lookup = $this->db->query($query_get_lookup);
 
 		if ($result_get_lookup->num_rows == 0) {
@@ -89,31 +89,32 @@ class ModelExtensionPaymentDivido extends Model {
 			$application_id = ($application_id) ? "'" . $application_id . "'" : 'NULL';
 			$deposit_amount = ($deposit_amount) ? $deposit_amount : 'NULL';
 
-			$query_upsert = "INSERT INTO `" . DB_PREFIX . "divido_lookup` (`order_id`, `salt`, `proposal_id`, `application_id`, `deposit_amount`) VALUES (" . $order_id . ", '" . $salt . "', " . $proposal_id . ", " . $application_id . ", " . $deposit_amount . ")";
+			$query_upsert = "INSERT INTO `" . DB_PREFIX . "divido_lookup` (`order_id`, `salt`, `proposal_id`, `application_id`, `deposit_amount`) VALUES (" . (int)$order_id . ", '" . $salt . "', " . $proposal_id . ", " . $application_id . ", " . $deposit_amount . ")";
 		} else {
 			$query_upsert = "UPDATE `" . DB_PREFIX . "divido_lookup` SET `salt` = '" . $salt . "'";
 
 			if ($proposal_id) {
-				$query_upsert .= ", `proposal_id` = '" . $proposal_id . "'";
+				$query_upsert .= ", `proposal_id` = '" . (int)$proposal_id . "'";
 			}
 
 			if ($application_id) {
-				$query_upsert .= ", `application_id` = '" . $application_id . "'";
+				$query_upsert .= ", `application_id` = '" . (int)$application_id . "'";
 			}
 
 			if ($deposit_amount) {
-				$query_upsert .= ", `deposit_amount` = " . $deposit_amount;
+				$query_upsert .= ", `deposit_amount` = '" . $deposit_amount . "'";
 			}
 
-			$query_upsert .= " WHERE `order_id` = " . $order_id;
+			$query_upsert .= " WHERE `order_id` = '" . (int)$order_id . "'";
 		}
 
 		$this->db->query($query_upsert);
 	}
 
 	public function getLookupByOrderId($order_id) {
-		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "divido_lookup` WHERE `order_id` = " . $order_id);
+		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "divido_lookup` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
+
 	public function getGlobalSelectedPlans() {
 		$all_plans     = $this->getAllPlans();
 		$display_plans = $this->config->get('payment_divido_planselection');
@@ -229,7 +230,7 @@ class ModelExtensionPaymentDivido extends Model {
 			if ($this->config->get('total_' . $result['code'] . '_status')) {
 				$this->load->model('extension/total/' . $result['code']);
 
-				// We have to put the totals in an array so that they pass by reference.
+				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
 				($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 			}
 		}

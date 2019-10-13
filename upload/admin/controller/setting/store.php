@@ -334,7 +334,7 @@ class ControllerSettingStore extends Controller {
 				$this->load->language('extension/theme/' . $code, 'extension');
 
 				$data['themes'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $code
 				);
 			}

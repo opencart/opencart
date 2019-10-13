@@ -56,7 +56,7 @@ class ModelDesignSeoRegex extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalSeoRegexes($data = array()) {
+	public function getTotalSeoRegexes() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "seo_regex`");
 
 		return $query->row['total'];

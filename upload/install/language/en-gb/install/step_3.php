@@ -32,5 +32,5 @@ $_['error_db_prefix']        = 'DB Prefix can only contain lowercase characters 
 $_['error_db_connect']       = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
 $_['error_username']         = 'Username required!';
 $_['error_password']         = 'Password required!';
-$_['error_email']            = 'Invalid E-Mail!';
+$_['error_email']            = 'E-Mail Address does not appear to be valid!';
 $_['error_config']           = 'Error: Could not write to config.php please check you have set the correct permissions on: ';

@@ -30,7 +30,7 @@ class Template {
 	}
 
 	/**
-	 *
+	 * Set
 	 *
 	 * @param    string $key
 	 * @param    mixed $value
@@ -40,14 +40,14 @@ class Template {
 	}
 
 	/**
+	 * Render
 	 *
-	 *
-	 * @param    string $template
-	 * @param    bool $cache
+	 * @param    string $filename
+	 * @param    string $code
 	 *
 	 * @return    string
 	 */
-	public function render($template, $cache = false) {
-		return $this->adaptor->render($template, $cache);
+	public function render($filename, $code = '') {
+		return $this->adaptor->render($filename, $code);
 	}
 }

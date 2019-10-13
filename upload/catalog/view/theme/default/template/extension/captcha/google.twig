@@ -2,7 +2,7 @@
 <fieldset>
   <legend>{{ text_captcha }}</legend>
   <div class="form-group row required">{% if route|slice(0, 9) == 'checkout/' %}
-    <label class="col-form-label" for="input-payment-captcha">{{ entry_captcha }}</label>
+    <label for="input-payment-captcha" class="col-form-label">{{ entry_captcha }}</label>
     <div id="input-payment-captcha" class="g-recaptcha" data-sitekey="{{ site_key }}"></div>
     {% if error_captcha %}
     <div class="text-danger">{{ error_captcha }}</div>

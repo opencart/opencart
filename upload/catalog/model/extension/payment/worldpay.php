@@ -68,7 +68,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function addOrder($order_info, $order_code) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_code` = '" . $this->db->escape($order_code) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_code` = '" . $this->db->escape($order_code) . "', `date_added` = NOW(), `date_modified` = NOW(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 
 		return $this->db->getLastId();
 	}
@@ -87,7 +87,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function addTransaction($worldpay_order_id, $type, $order_info) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order_transaction` SET `worldpay_order_id` = '" . (int)$worldpay_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order_transaction` SET `worldpay_order_id` = '" . (int)$worldpay_order_id . "', `date_added` = NOW(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 	}
 
 	public function getTransactions($worldpay_order_id) {
@@ -280,11 +280,11 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	private function addRecurringOrder($order_info, $order_code, $token, $price, $order_recurring_id, $trial_end, $subscription_end) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order_recurring` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_recurring_id` = '" . (int)$order_recurring_id . "', `order_code` = '" . $this->db->escape($order_code) . "', `token` = '" . $this->db->escape($token) . "', `date_added` = now(), `date_modified` = now(), `next_payment` = now(), `trial_end` = '" . $trial_end . "', `subscription_end` = '" . $subscription_end . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($price, $order_info['currency_code'], false, false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "worldpay_order_recurring` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_recurring_id` = '" . (int)$order_recurring_id . "', `order_code` = '" . $this->db->escape($order_code) . "', `token` = '" . $this->db->escape($token) . "', `date_added` = NOW(), `date_modified` = NOW(), `next_payment` = NOW(), `trial_end` = '" . $trial_end . "', `subscription_end` = '" . $subscription_end . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($price, $order_info['currency_code'], false, false) . "'");
 	}
 
 	private function updateRecurringOrder($order_recurring_id, $next_payment) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "worldpay_order_recurring` SET `next_payment` = '" . $next_payment . "', `date_modified` = now() WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "worldpay_order_recurring` SET `next_payment` = '" . $next_payment . "', `date_modified` = NOW() WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
 	}
 
 	private function getRecurringOrder($order_recurring_id) {
@@ -314,12 +314,12 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	private function getProfile($order_recurring_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
+		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
 		return $qry->row;
 	}
 
 	public function getWorldpayOrder($worldpay_order_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order WHERE order_code = " . (int)$worldpay_order_id);
+		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order WHERE order_code = '" . (int)$worldpay_order_id . "'");
 		return $qry->row;
 	}
 

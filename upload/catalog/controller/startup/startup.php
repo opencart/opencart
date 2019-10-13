@@ -58,16 +58,13 @@ class ControllerStartupStartup extends Controller {
 
 			$this->session->start($session_id);
 
-			setcookie($this->config->get('session_name'), $this->session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+			setcookie($this->config->get('session_name'), $this->session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
 		}
 
 		// Response output compression level
 		if ($this->config->get('config_compression')) {
 			$this->response->setCompression($this->config->get('config_compression'));
 		}
-
-		// Theme
-		$this->config->set('template_cache', $this->config->get('developer_theme'));
 
 		// Url
 		$this->registry->set('url', new Url($this->config->get('config_url')));

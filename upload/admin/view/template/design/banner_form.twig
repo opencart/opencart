@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-banner">
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               {% if error_name %}
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+            <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
                 {% if status %}
@@ -59,7 +59,7 @@
                 <table id="image{{ language.language_id }}" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-left">{{ entry_title }}</td>
+                      <td class="text-left required">{{ entry_title }}</td>
                       <td class="text-left">{{ entry_link }}</td>
                       <td class="text-center">{{ entry_image }}</td>
                       <td class="text-right">{{ entry_sort_order }}</td>
@@ -94,7 +94,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="4"></td>
-                      <td class="text-right"><button type="button" id="button-banner" data-language="{{ language.language_id }}" data-toggle="tooltip" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                      <td class="text-right"><button type="button" id="button-banner{{ language.language_id }}" data-language="{{ language.language_id }}" data-toggle="tooltip" title="{{ button_banner_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -109,10 +109,10 @@
 <script type="text/javascript"><!--
 var image_row = {{ image_row }};
 
-$('#button-banner').on('click', function() {
+$('button[id^=\'button-banner\']').on('click', function() {
 	var element = this;
 
-	html  = '<tr id="image-row' + image_row + '">';
+	html = '<tr id="image-row' + image_row + '">';
 	html += '  <td class="text-left"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control" /></td>';
 	html += '  <td class="text-center">';
@@ -126,7 +126,7 @@ $('#button-banner').on('click', function() {
 	html += '    </div>';
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row + ', .tooltip\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-right"><button type="button" onclick="$(\'#image-row' + image_row + ', .tooltip\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#image' + $(element).attr('data-language') + ' tbody').append(html);

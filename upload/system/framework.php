@@ -121,7 +121,7 @@ if ($config->get('session_autostart')) {
 
 	$session->start($session_id);
 
-	setcookie($config->get('session_name'), $session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+	setcookie($config->get('session_name'), $session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
 }
 
 // Cache
@@ -160,6 +160,13 @@ if ($config->has('library_autoload')) {
 // Model Autoload
 if ($config->has('model_autoload')) {
 	foreach ($config->get('model_autoload') as $value) {
+		$loader->model($value);
+	}
+}
+
+// Helper Autoload
+if ($config->has('helper_autoload')) {
+	foreach ($config->get('helper_autoload') as $value) {
 		$loader->model($value);
 	}
 }

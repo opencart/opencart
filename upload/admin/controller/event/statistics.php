@@ -1,30 +1,30 @@
 <?php
 class ControllerEventStatistics extends Controller {
-	// model/catalog/review/addReview/after
+	// admin/model/catalog/review/addReview/after
 	public function addReview(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('review', 1);
 	}
 
-	// model/catalog/review/deleteReview/after
+	// admin/model/catalog/review/deleteReview/after
 	public function deleteReview(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->removeValue('review', 1);
 	}
 
-	// model/sale/return/addReturn/after
+	// admin/model/sale/return/addReturn/after
 	public function addReturn(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('return', 1);
 	}
 
-	// model/sale/return/deleteReturn/after
+	// admin/model/sale/return/deleteReturn/after
 	public function deleteReturn(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->minusValue('return', 1);
+		$this->model_report_statistics->removeValue('return', 1);
 	}
 }

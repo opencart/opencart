@@ -50,7 +50,7 @@
                   <div class="col-sm-10"> {{ transaction.order_id }} </div>
                 </div>
               </div>
-              <div class="tab-pane" id="tab-customer">
+              <div id="tab-customer" class="tab-pane">
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ text_firstname }}</label>
                   <div class="col-sm-10"> {{ transaction.firstname }} </div>
@@ -84,7 +84,7 @@
                   <div class="col-sm-10"> {{ transaction.postcode }} </div>
                 </div>
               </div>
-              <div class="tab-pane" id="tab-payment-plan">
+              <div id="tab-payment-plan" class="tab-pane">
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ text_status }}</label>
                   <div class="col-sm-10"> {{ transaction.status }} </div>
@@ -156,7 +156,7 @@
                 </div>
               </div>
               {% if transaction.status_id == 1 %}
-                <div class="tab-pane" id="tab-modify">
+                <div id="tab-modify" class="tab-pane">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">{{ text_cancel_plan }}</label>
                     <div class="col-sm-10">

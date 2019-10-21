@@ -144,13 +144,13 @@ class ControllerMarketplaceInstall extends Controller {
 					$safe = false;
 	
 					foreach ($allowed as $value) {
-						if (strlen($destination) < strlen($value) && substr($value, 0, strlen($destination)) == $destination) {
+						if (substr($value, 0, strlen($destination)) == $destination) {
 							$safe = true;
 	
 							break;
 						}
 	
-						if (strlen($destination) > strlen($value) && substr($destination, 0, strlen($value)) == $value) {
+						if (substr($destination, 0, strlen($value)) == $value) {
 							$safe = true;
 	
 							break;

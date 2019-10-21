@@ -16,7 +16,7 @@ class ControllerStartupSeoUrl extends Controller {
 		$results = $this->model_design_seo_regex->getSeoRegexes();
 
 		foreach ($results as $result) {
-			$this->regex[] = $result['regex'];
+			$this->regex[$result['key']][] = '/' . $result['regex'] . '/';
 		}
 
 		// Decode URL
@@ -70,80 +70,99 @@ class ControllerStartupSeoUrl extends Controller {
 			$url .= ':' . $url_info['port'];
 		}
 
+		// Start replacing the URL query
+		$url_data = array();
+
+		$path = '';
+
+		parse_str($url_info['query'], $url_data);
+
+		foreach ($url_data as $key => $value) {
+			$url_key = $key . '=' . $value;
+
+			if (isset($this->regex[$key])) {
+				foreach ($this->regex[$key] as $regex) {
+					echo $regex . "\n";
+
+					$matches = array();
+
+					if (preg_match($regex, $value, $matches)) {
+						print_r($matches);
+
+						array_shift($matches);
+
+						foreach ($matches as $match) {
+							print_r($match);
+
+							$path .= '/' . $match[0];
+
+							if (!isset($this->keyword[$url_key])) {
+								$this->keyword[$url_key] = $this->model_design_seo_url->getKeywordByQuery($url_key);
+							}
+
+
+							if ($this->keyword[$url_key]) {
+								$path .= '/' . $this->keyword[$url_key];
+
+								unset($url_data[$key]);
+							}
+
+
+						}
+
+
+					}
+				}
+			}
+
+
+			echo $path . "\n";
+		}
+
+		$query = '';
+
+		//foreach ($data as $key => $value) {
+		//	$query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode(is_array($value) ? http_build_query($value) : (string)$value);
+		//}
+
+		//if ($query) {
+		//	$query = '?' . str_replace('&', '&amp;', trim(str_replace('%2F', '/', $query), '&'));
+		//}
+
+		/*
+		foreach ($matches as $match) {
+			echo $match . "\n";
+
+			if (!isset($this->keyword[$match])) {
+				$this->keyword[$match] = $this->model_design_seo_url->getKeywordByQuery($match);
+
+				$url .= '/' . $this->keyword[$match];
+
+			}
+
+			if ($this->keyword[$match]) {
+
+			}
+
+			parse_str($match, $remove);
+
+			// Remove all the matched url elements
+			foreach (array_keys($remove) as $key) {
+				//echo $key . "\n";
+
+				if (isset($data[$key])) {
+					unset($data[$key]);
+				}
+			}
+		}
+		*/
+
 		if ($url_info['path']) {
 			$url .= str_replace('/index.php', '', $url_info['path']);
 		}
 
 
-		// Start replacing the URL query
-		$data = array();
-
-		parse_str($url_info['query'], $data);
-
-		echo $url_info['query'] . "\n";
-
-		foreach ($this->regex as $regex) {
-			$matches = array();
-
-			if (preg_match('/' . $regex . '/', $url_info['query'], $matches)) {
-				array_shift($matches);
-
-				foreach ($matches as $match) {
-					echo $match . "\n";
-
-					if (!isset($this->keyword[$match])) {
-						$this->keyword[$match] = $this->model_design_seo_url->getKeywordByQuery($match);
-					}
-
-					if ($this->keyword[$match]) {
-						$url .= '/' . $this->keyword[$match];
-					}
-
-					parse_str($match, $remove);
-
-					// Remove all the matched url elements
-					foreach (array_keys($remove) as $key) {
-						//echo $key . "\n";
-
-						if (isset($data[$key])) {
-							unset($data[$key]);
-						}
-					}
-				}
-
-
-
-
-
-
-			}
-		}
-
-
-		
-
-		if ($url) {
-			//echo 'h';
-
-			$query = '';
-
-			if ($data) {
-				foreach ($data as $key => $value) {
-					$query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode(is_array($value) ? http_build_query($value) : (string)$value);
-				}
-
-				if ($query) {
-					$query = '?' . str_replace('&', '&amp;', trim(str_replace('%2F', '/', $query), '&'));
-				}
-			}
-
-
-
-
-
-			return $url . $query;
-		} else {
-			return $link;
-		}
+		return $link;
 	}
+
 }

@@ -206,8 +206,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if ($response_info['promotions'] && $page == 1) {
 			foreach ($response_info['promotions'] as $result) {
 				$data['promotions'][] = array(
-					'name'         => $result['name'],
-					'description'  => $result['description'],
+					'name'         => utf8_decode($result['name']),
+					'description'  => utf8_decode($result['description']),
 					'image'        => $result['image'],
 					'license'      => $result['license'],
 					'price'        => $result['price'],

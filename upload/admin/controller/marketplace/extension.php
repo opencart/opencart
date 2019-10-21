@@ -24,7 +24,18 @@ class ControllerMarketplaceExtension extends Controller {
 		} else {
 			$data['type'] = '';
 		}
-		
+
+
+
+
+		$sdsd = $this->load->controller('');
+
+
+		//$extensions = $this->model_setting_extension->getDownloaded('analytics');
+
+
+
+
 		$data['categories'] = array();
 		
 		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);
@@ -44,8 +55,6 @@ class ControllerMarketplaceExtension extends Controller {
 				);
 			}
 		}
-
-		$data['user_token'] = $this->request->get['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -23,6 +23,8 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
+	$('form').trigger('reset');
+	
 	//Form Submit for IE Browser
 	$('button[type=\'submit\']').on('click', function() {
 		$('form[id*=\'form-\']').submit();

@@ -23,6 +23,8 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
+	$('form').trigger('reset');
+	
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().find(':input');

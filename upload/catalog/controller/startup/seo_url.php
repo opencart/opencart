@@ -52,6 +52,7 @@ class ControllerStartupSeoUrl extends Controller {
 	}
 
 	public function rewrite($link) {
+		/*
 		$url = '';
 
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
@@ -155,12 +156,12 @@ class ControllerStartupSeoUrl extends Controller {
 				}
 			}
 		}
-		*/
+
 
 		if ($url_info['path']) {
 			$url .= str_replace('/index.php', '', $url_info['path']);
 		}
-
+*/
 
 		return $link;
 	}

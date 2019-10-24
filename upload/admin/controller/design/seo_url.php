@@ -246,6 +246,8 @@ class ControllerDesignSeoUrl extends Controller {
 		$data['add'] = $this->url->link('design/seo_url/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/seo_url/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		$this->load->model('localisation/language');
+
 		$data['seo_urls'] = array();
 
 		$filter_data = array(
@@ -264,12 +266,20 @@ class ControllerDesignSeoUrl extends Controller {
 		$results = $this->model_design_seo_url->getSeoUrls($filter_data);
 
 		foreach ($results as $result) {
+			$language_info = $this->model_localisation_language->getLanguage($result['language_id']);
+
+			if ($language_info) {
+				$code = $language_info['code'];
+			} else {
+				$code = '';
+			}
+
 			$data['seo_urls'][] = array(
 				'seo_url_id' => $result['seo_url_id'],
 				'keyword'    => $result['keyword'],
 				'query'      => htmlspecialchars($result['query'], ENT_COMPAT, 'UTF-8'),
 				'store'      => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
-				'language'   => $result['language'],
+				'language'   => $code,
 				'edit'       => $this->url->link('design/seo_url/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $result['seo_url_id'] . $url)
 			);
 		}

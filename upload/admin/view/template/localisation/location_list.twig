@@ -50,7 +50,7 @@
                 {% if locations %}
                   {% for location in locations %}
                     <tr>
-                      <td class="text-center">{% if locations.location_id in selected %}
+                      <td class="text-center">{% if location.location_id in selected %}
                           <input type="checkbox" name="selected[]" value="{{ location.location_id }}" checked="checked"/>
                         {% else %}
                           <input type="checkbox" name="selected[]" value="{{ location.location_id }}"/>

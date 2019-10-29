@@ -16,7 +16,7 @@ class ControllerStartupSeoUrl extends Controller {
 		$results = $this->model_design_seo_regex->getSeoRegexes();
 
 		foreach ($results as $result) {
-			$this->regex[$result['key']][] = '/' . $result['regex'] . '/';
+			//$this->regex[$result['key']][] = '/' . $result['regex'] . '/';
 		}
 
 		// Decode URL

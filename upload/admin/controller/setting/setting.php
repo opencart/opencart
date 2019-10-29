@@ -710,7 +710,7 @@ class ControllerSettingSetting extends Controller {
 
 			if ($this->config->get('captcha_' . $code . '_status')) {
 				$data['captchas'][] = array(
-					'text'  => $this->language->get('heading_title'),
+					'text'  => $this->language->get('extension')->get('heading_title'),
 					'value' => $code
 				);
 			}

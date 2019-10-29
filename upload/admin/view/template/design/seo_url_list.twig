@@ -15,7 +15,8 @@
       </ol>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -30,12 +31,11 @@
         <div class="card">
           <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
-
-            <div class="form-group">
-              <label for="input-query" class="col-form-label">{{ entry_query }}</label> <input type="text" name="filter_query" value="{{ filter_query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
-            </div>
             <div class="form-group">
               <label for="input-keyword" class="col-form-label">{{ entry_keyword }}</label> <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label for="input-query" class="col-form-label">{{ entry_query }}</label> <input type="text" name="filter_query" value="{{ filter_query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
             </div>
             <div class="form-group">
               <label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
@@ -69,7 +69,6 @@
             <div class="text-right">
               <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
             </div>
-
           </div>
         </div>
       </div>
@@ -83,10 +82,10 @@
                   <thead>
                     <tr>
                       <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                      <td class="text-left">{% if sort == 'query' %}<a href="{{ sort_query }}" class="{{ order|lower }}">{{ column_query }}</a> {% else %}<a href="{{ sort_query }}">{{ column_query }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'query' %}<a href="{{ sort_query }}" class="{{ order|lower }}">{{ column_query }}</a> {% else %}<a href="{{ sort_query }}">{{ column_query }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
-                      <td class="text-left">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
+                      <td class="text-center">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
@@ -94,15 +93,16 @@
                     {% if seo_urls %}
                       {% for seo_url in seo_urls %}
                         <tr>
-                          <td class="text-center">{% if seo_url.seo_url_id in selected %}
+                          <td class="text-center">
+                            {% if seo_url.seo_url_id in selected %}
                               <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" checked="checked"/>
                             {% else %}
                               <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/>
                             {% endif %}</td>
-                          <td class="text-left">{{ seo_url.query }}</td>
                           <td class="text-left">{{ seo_url.keyword }}</td>
+                          <td class="text-left">{{ seo_url.query }}</td>
                           <td class="text-left">{{ seo_url.store }}</td>
-                          <td class="text-left">{{ seo_url.language }}</td>
+                          <td class="text-center"><img src="language/{{ seo_url.language }}/{{ seo_url.language }}.png" alt="{{ seo_url.language }}" title="{{ seo_url.language }}"></td>
                           <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                         </tr>
                       {% endfor %}
@@ -129,16 +129,16 @@
 $('#button-filter').on('click', function() {
 	var url = 'index.php?route=design/seo_url&user_token={{ user_token }}';
 
-	var filter_query = $('input[name=\'filter_query\']').val();
-
-	if (filter_query) {
-		url += '&filter_query=' + encodeURIComponent(filter_query);
-	}
-
 	var filter_keyword = $('input[name=\'filter_keyword\']').val();
 
 	if (filter_keyword) {
 		url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
+	}
+
+	var filter_query = $('input[name=\'filter_query\']').val();
+
+	if (filter_query) {
+		url += '&filter_query=' + encodeURIComponent(filter_query);
 	}
 
 	var filter_store_id = $('select[name=\'filter_store_id\']').val();

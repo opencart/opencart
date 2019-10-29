@@ -5,7 +5,7 @@
       <div class="form-group row required">
         <label class="col-sm-2 col-form-label" for="input-cc-type"><span data-toggle="tooltip" title="{{ help_select_card }}">{{ entry_cc_type }}</span></label>
         <div class="col-sm-10">
-          <select name="ACCOUNT" class="form-control" id="input-cc-type">
+          <select name="ACCOUNT" id="input-cc-type" class="form-control">
             {% for card in cards %}
               <option value="{{ card.account }}">{{ card.type }}</option>
             {% endfor %}

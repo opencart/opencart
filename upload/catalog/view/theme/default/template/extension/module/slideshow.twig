@@ -1,8 +1,14 @@
-<div class="swiper-viewport">
+<div class="slideshow swiper-viewport">
   <div id="slideshow{{ module }}" class="swiper-container">
     <div class="swiper-wrapper">
       {% for banner in banners %}
-        <div class="swiper-slide text-center">{% if banner.link %}<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>{% else %}<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />{% endif %}</div>
+        <div class="swiper-slide text-center">
+          {% if banner.link %}
+            <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
+          {% else %}
+            <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
+          {% endif %}
+        </div>
       {% endfor %}
     </div>
   </div>
@@ -18,8 +24,8 @@ $('#slideshow{{ module }}').swiper({
 	slidesPerView: 1,
 	pagination: '.slideshow{{ module }}',
 	paginationClickable: true,
-	nextButton: '.swiper-button-next',
-	prevButton: '.swiper-button-prev',
+	nextButton: '.slideshow .swiper-button-next',
+	prevButton: '.slideshow .swiper-button-prev',
 	spaceBetween: 30,
 	autoplay: 2500,
 	autoplayDisableOnInteraction: true,

@@ -16,16 +16,16 @@
           {% endif %}
         {% endfor %}</div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-firstname">{{ entry_firstname }}</label> <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+        <label for="input-payment-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-lastname">{{ entry_lastname }}</label> <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+        <label for="input-payment-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-email">{{ entry_email }}</label> <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-payment-email" class="form-control"/>
+        <label for="input-payment-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-payment-email" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-telephone">{{ entry_telephone }}</label> <input type="text" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-payment-telephone" class="form-control"/>
+        <label for="input-payment-telephone" class="col-form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-payment-telephone" class="form-control"/>
       </div>
       {% for custom_field in custom_fields %}
         {% if custom_field.location == 'account' %}
@@ -120,10 +120,10 @@
     <fieldset>
       <legend>{{ text_your_password }}</legend>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-password">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-payment-password" class="form-control"/>
+        <label for="input-payment-password" class="col-form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-payment-password" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-confirm">{{ entry_confirm }}</label> <input type="password" name="confirm" value="" placeholder="{{ entry_confirm }}" id="input-payment-confirm" class="form-control"/>
+        <label for="input-payment-confirm" class="col-form-label">{{ entry_confirm }}</label> <input type="password" name="confirm" value="" placeholder="{{ entry_confirm }}" id="input-payment-confirm" class="form-control"/>
       </div>
     </fieldset>
   </div>
@@ -131,22 +131,22 @@
     <fieldset id="address">
       <legend>{{ text_your_address }}</legend>
       <div class="form-group">
-        <label class="col-form-label" for="input-payment-company">{{ entry_company }}</label> <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+        <label for="input-payment-company" class="col-form-label">{{ entry_company }}</label> <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-address-1">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+        <label for="input-payment-address-1" class="col-form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
       </div>
       <div class="form-group">
-        <label class="col-form-label" for="input-payment-address-2">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+        <label for="input-payment-address-2" class="col-form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-city">{{ entry_city }}</label> <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+        <label for="input-payment-city" class="col-form-label">{{ entry_city }}</label> <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-postcode">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+        <label for="input-payment-postcode" class="col-form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-country">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-control">
+        <label for="input-payment-country" class="col-form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-control">
           <option value="">{{ text_select }}</option>
           {% for country in countries %}
             {% if country.country_id == country_id %}
@@ -158,7 +158,7 @@
         </select>
       </div>
       <div class="form-group required">
-        <label class="col-form-label" for="input-payment-zone">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-control"> </select>
+        <label for="input-payment-zone" class="col-form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-control"> </select>
       </div>
       {% for custom_field in custom_fields %}
         {% if custom_field.location == 'address' %}

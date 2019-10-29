@@ -7,45 +7,47 @@
   </ul>
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
-      <div class="row"> {% if column_left or column_right %}
+      <div class="row">
+        {% if column_left or column_right %}
           {% set class = 'col-sm-6' %}
         {% else %}
           {% set class = 'col-sm-8' %}
         {% endif %}
-        <div class="{{ class }}"> {% if thumb or images %}
+        <div class="{{ class }}">
+          {% if thumb or images %}
             <ul class="thumbnails">
               {% if thumb %}
-                <li class="text-center"><a href="{{ popup }}" title="{{ heading_title }}"> <img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
+                <li class="text-center"><a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
               {% endif %}
               {% if images %}
                 {% for image in images %}
-                  <li class="image-additional"><a href="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
+                  <li class="image-additional"><a href="{{ image.popup }}" title="{{ heading_title }}"><img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
                 {% endfor %}
               {% endif %}
             </ul>
           {% endif %}
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" id="description-tab" data-toggle="tab" href="#tab-description" role="tab" aria-controls="tab-description" aria-selected="true">
+              <a id="description-tab" class="nav-link active" data-toggle="tab" href="#tab-description" role="tab" aria-controls="tab-description" aria-selected="true">
                 {{ tab_description }}</a></li>
             {% if attribute_groups %}
               <li class="nav-item">
-                <a class="nav-link" id="specification-tab" data-toggle="tab" href="#tab-specification" role="tab" aria-controls="tab-specification" aria-selected="true">
+                <a id="specification-tab" class="nav-link" data-toggle="tab" href="#tab-specification" role="tab" aria-controls="tab-specification" aria-selected="true">
                   {{ tab_attribute }}</a></li>
             {% endif %}
             {% if review_status %}
               <li class="nav-item">
-                <a class="nav-link" id="review-tab" data-toggle="tab" href="#tab-review" role="tab" aria-controls="tab-review" aria-selected="true">
+                <a id="review-tab" class="nav-link" data-toggle="tab" href="#tab-review" role="tab" aria-controls="tab-review" aria-selected="true">
                   {{ tab_review }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
-            <div class="tab-pane fade show active mb-4" id="tab-description" role="tabpanel" aria-labelledby="description-tab">
+            <div id="tab-description" class="tab-pane fade show active mb-4" role="tabpanel" aria-labelledby="description-tab">
               {{ description }}
             </div>
 
             {% if attribute_groups %}
-              <div class="tab-pane fade" id="tab-specification" role="tabpanel" aria-labelledby="specification-tab">
+              <div id="tab-specification" class="tab-pane fade" role="tabpanel" aria-labelledby="specification-tab">
                 <div class="table-responsive">
                   <table class="table table-bordered">
                     {% for attribute_group in attribute_groups %}
@@ -68,16 +70,16 @@
               </div>
             {% endif %}
             {% if review_status %}
-              <div class="tab-pane fade" id="tab-review" role="tabpanel" aria-labelledby="review-tab">
+              <div id="tab-review" class="tab-pane fade" role="tabpanel" aria-labelledby="review-tab">
                 <form id="form-review">
                   <div id="review"></div>
                   <h2>{{ text_write }}</h2>
                   {% if review_guest %}
                     <div class="form-group required">
-                      <label class="col-form-label" for="input-name">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+                      <label for="input-name" class="col-form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
                     </div>
                     <div class="form-group required">
-                      <label class="col-form-label" for="input-review">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
+                      <label for="input-review" class="col-form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
                       <div class="help-block">{{ text_note }}</div>
                     </div>
                     <div class="form-group row required">
@@ -270,11 +272,11 @@
                     <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
                   {% endfor %}
                 </select>
-                <div class="help-block" id="recurring-description"></div>
+                <div id="recurring-description" class="help-block"></div>
               </div>
             {% endif %}
             <div class="form-group">
-              <label class="col-form-label" for="input-quantity">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
+              <label for="input-quantity" class="col-form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
               <br/>
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>

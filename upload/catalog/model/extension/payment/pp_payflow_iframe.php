@@ -50,7 +50,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 			UPDATE `" . DB_PREFIX . "paypal_payflow_iframe_order`
 			SET `transaction_reference` = '" . $this->db->escape((string)$data['transaction_reference']) . "',
 				`transaction_type` = '" . $this->db->escape((string)$data['transaction_type']) . "',
-				`complete` = " . (int)$data['complete'] . "
+				`complete` = '" . (int)$data['complete'] . "'
 			WHERE `secure_token_id` = '" . $this->db->escape((string)$data['secure_token_id']) . "'
 		");
 	}
@@ -102,7 +102,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	public function addTransaction($data) {
 		$this->db->query("
 			INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			SET order_id = " . (int)$data['order_id'] . ",
+			SET order_id = '" . (int)$data['order_id'] . "',
 				transaction_reference = '" . $this->db->escape((string)$data['transaction_reference']) . "',
 				transaction_type = '" . $this->db->escape((string)$data['type']) . "',
 				`time` = NOW(),

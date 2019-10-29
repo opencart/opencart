@@ -257,15 +257,9 @@
               </div>
             </div>
             <div id="tab-option" class="tab-pane">
-              <ul class="nav nav-tabs">
-                <li class="nav-item"><a href="#tab-legal" data-toggle="tab" class="nav-link active">{{ tab_legal }}</a></li>
-                <li class="nav-item"><a href="#tab-tax" data-toggle="tab" class="nav-link">{{ tab_tax }}</a></li>
-                <li class="nav-item"><a href="#tab-account" data-toggle="tab" class="nav-link">{{ tab_account }}</a></li>
-                <li class="nav-item"><a href="#tab-checkout" data-toggle="tab" class="nav-link">{{ tab_checkout }}</a></li>
-                <li class="nav-item"><a href="#tab-stock" data-toggle="tab" class="nav-link">{{ tab_stock }}</a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab-legal">
+              <fieldset>
+                <legend><a href="#collapse-legal" data-toggle="collapse">{{ text_legal }}</a></legend>
+                <div id="collapse-legal" class="collapse" data-parent="#tab-option">
                   <div class="form-group row">
                     <label for="input-cookie" class="col-sm-2 col-form-label">{{ entry_cookie }}</label>
                     <div class="col-sm-10">
@@ -299,7 +293,10 @@
                     </div>
                   </div>
                 </div>
-                <div id="tab-tax" class="tab-pane">
+              </fieldset>
+              <fieldset>
+                <legend><a href="#collapse-tax" data-toggle="collapse">{{ text_tax }}</a></legend>
+                <div id="collapse-tax" class="collapse" data-parent="#tab-option">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                     <div class="col-sm-10">
@@ -353,7 +350,10 @@
                     </div>
                   </div>
                 </div>
-                <div id="tab-account" class="tab-pane">
+              </fieldset>
+              <fieldset>
+                <legend><a href="#collapse-account" data-toggle="collapse">{{ text_account }}</a></legend>
+                <div id="collapse-account" class="collapse" data-parent="#tab-option">
                   <div class="form-group row">
                     <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
                     <div class="col-sm-10">
@@ -423,7 +423,10 @@
                     </div>
                   </div>
                 </div>
-                <div id="tab-checkout" class="tab-pane">
+              </fieldset>
+              <fieldset>
+                <legend><a href="#collapse-checkout" data-toggle="collapse">{{ text_checkout }}</a></legend>
+                <div id="collapse-checkout" class="collapse" data-parent="#tab-option">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                     <div class="col-sm-10">
@@ -485,7 +488,10 @@
                     </div>
                   </div>
                 </div>
-                <div id="tab-stock" class="tab-pane">
+              </fieldset>
+              <fieldset>
+                <legend><a href="#collapse-stock" data-toggle="collapse">{{ text_stock }}</a></legend>
+                <div id="collapse-stock" class="collapse" data-parent="#tab-option">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                     <div class="col-sm-10">
@@ -517,7 +523,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </fieldset>
             </div>
             <div id="tab-image" class="tab-pane">
               <div class="form-group row">

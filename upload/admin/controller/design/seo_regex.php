@@ -175,6 +175,7 @@ class ControllerDesignSeoRegex extends Controller {
 			$data['seo_regexes'][] = array(
 				'seo_regex_id' => $result['seo_regex_id'],
 				'name'         => $result['name'],
+				'key'          => $result['key'],
 				'regex'        => htmlspecialchars($result['regex'], ENT_COMPAT, 'UTF-8'),
 				'sort_order'   => $result['sort_order'],
 				'edit'         => $this->url->link('design/seo_regex/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_regex_id=' . $result['seo_regex_id'] . $url)
@@ -211,13 +212,20 @@ class ControllerDesignSeoRegex extends Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . (int)$this->request->get['page'];
+		$data['sort_name'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_key'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
+		$data['sort_regex'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
+		$data['sort_sort_order'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . (string)$this->request->get['sort'];
 		}
 
-		$data['sort_name'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_regex'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=regex' . $url);
-		$data['sort_sort_order'] = $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . (string)$this->request->get['order'];
+		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $seo_regex_total,
@@ -251,6 +259,12 @@ class ControllerDesignSeoRegex extends Controller {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = '';
+		}
+
+		if (isset($this->error['key'])) {
+			$data['error_key'] = $this->error['key'];
+		} else {
+			$data['error_key'] = '';
 		}
 
 		if (isset($this->error['regex'])) {
@@ -305,10 +319,18 @@ class ControllerDesignSeoRegex extends Controller {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['regex'])) {
-			$data['regex'] = $this->request->post['regex'];
+		if (isset($this->request->post['key'])) {
+			$data['key'] = $this->request->post['key'];
 		} elseif (!empty($seo_regex_info)) {
-			$data['regex'] = htmlspecialchars($seo_regex_info['regex'], ENT_COMPAT, 'UTF-8');
+			$data['key'] = $seo_regex_info['key'];
+		} else {
+			$data['key'] = '';
+		}
+
+		if (isset($this->request->post['regex'])) {
+			$data['regex'] = html_entity_decode($this->request->post['regex'], ENT_COMPAT, 'UTF-8');
+		} elseif (!empty($seo_regex_info)) {
+			$data['regex'] = $seo_regex_info['regex'];
 		} else {
 			$data['regex'] = '';
 		}
@@ -337,8 +359,12 @@ class ControllerDesignSeoRegex extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
+		if (!$this->request->post['key']) {
+			$this->error['key'] = $this->language->get('error_key');
+		}
+
 		if (@preg_match('/' . html_entity_decode($this->request->post['regex'], ENT_QUOTES, 'UTF-8') . '/', null) === false) {
-			$this->error['regex'] = $this->language->get('error_invalid');
+			$this->error['regex'] = $this->language->get('error_regex');
 		}
 
 		return !$this->error;

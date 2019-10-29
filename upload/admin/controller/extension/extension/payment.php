@@ -85,18 +85,18 @@ class ControllerExtensionExtensionPayment extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('extension/payment/' . $extension, 'extension');
+				$this->load->language('extension/payment/' . $extension, $extension);
 
-				$text_link = $this->language->get('extension')->get('text_' . $extension);
+				$text_link = $this->language->get($extension . '_text_' . $extension);
 
-				if ($text_link != 'text_' . $extension) {
+				if ($text_link != $extension . '_text_' . $extension) {
 					$link = $text_link;
 				} else {
 					$link = '';
 				}
 
 				$data['extensions'][] = array(
-					'name'       => $this->language->get('extension')->get('heading_title'),
+					'name'       => $this->language->get($extension . '_heading_title'),
 					'link'       => $link,
 					'status'     => $this->config->get('payment_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('payment_' . $extension . '_sort_order'),

@@ -9,13 +9,15 @@
     <div id="content" class="col">{{ content_top }}
       <h2>{{ heading_title }}</h2>
       {% if thumb or description %}
-        <div class="row"> {% if thumb %}
+        <div class="row">
+          {% if thumb %}
             <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/></div>
           {% endif %}
           {% if description %}
             <div class="col-sm-10">{{ description }}</div>
-          {% endif %}</div>
-        <hr>
+          {% endif %}
+        </div>
+        <hr/>
       {% endif %}
       {% if categories %}
         <h3>{{ text_refine }}</h3>
@@ -60,7 +62,7 @@
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-sort">{{ text_sort }}</label>
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
               </div>
               <select id="input-sort" class="form-control" onchange="location = this.value;">
                 {% for sorts in sorts %}
@@ -76,7 +78,7 @@
           <div class="col-md-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-limit">{{ text_limit }}</label>
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
               </div>
               <select id="input-limit" class="form-control" onchange="location = this.value;">
                 {% for limits in limits %}
@@ -93,18 +95,28 @@
         <div class="row">
           {% for product in products %}
             <div class="product-layout product-list col-12">
+
               <div class="product-thumb">
+
                 <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid"/></a></div>
+
                 <div>
                   <div class="caption">
                     <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
                     <p>{{ product.description }}</p>
+
                     {% if product.price %}
-                      <p class="price"> {% if not product.special %}
+                      <p class="price">
+                        {% if not product.special %}
                           {{ product.price }}
-                        {% else %} <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
-                        {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
+                        {% else %}
+                          <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span> {% endif %}
+                        {% if product.tax %}
+                          <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+                        {% endif %}
+                      </p>
                     {% endif %}
+
                     {% if product.rating %}
                       <div class="rating">
                         {% for i in 1..5 %}
@@ -118,9 +130,14 @@
                     <button type="button" data-toggle="tooltip" data-placement="top" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fas fa-heart"></i></button>
                     <button type="button" data-toggle="tooltip" data-placement="top" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fas fa-exchange-alt"></i></button>
                   </div>
+
                 </div>
+
+
               </div>
+
             </div>
+
           {% endfor %}
         </div>
         <div class="row">
@@ -128,12 +145,14 @@
           <div class="col-sm-6 text-right">{{ results }}</div>
         </div>
       {% endif %}
+
       {% if not categories and not products %}
         <p>{{ text_no_results }}</p>
         <div class="d-inline-block pt-2 pd-2 w-100">
           <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
         </div>
       {% endif %}
+
       {{ content_bottom }}
     </div>
     {{ column_right }}

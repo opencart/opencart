@@ -84,7 +84,7 @@ class Session {
 	/**
 	 * 
  	*/	
-	public function __destroy() {
+	public function destroy() {
 		$this->adaptor->destroy($this->session_id);
 	}
 }

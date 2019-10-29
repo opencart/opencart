@@ -423,7 +423,7 @@
 
 				// Top and bottom logic
 				if (vertical === 'auto') {
-					if (offset.top + widget.height() * 1.5 >= $(window).height() + $(window).scrollTop() &&
+					if (typeof offset !== 'undefined' && offset.top + widget.height() * 1.5 >= $(window).height() + $(window).scrollTop() &&
 						widget.height() + element.outerHeight() < offset.top) {
 						vertical = 'top';
 					} else {
@@ -433,7 +433,7 @@
 
 				// Left and right logic
 				if (horizontal === 'auto') {
-					if (parent.width() < offset.left + widget.outerWidth() / 2 &&
+					if (typeof offset !== 'undefined' && parent.width() < offset.left + widget.outerWidth() / 2 &&
 						offset.left + widget.outerWidth() > $(window).width()) {
 						horizontal = 'right';
 					} else {
@@ -465,7 +465,7 @@
 				}
 
 				widget.css({
-					top: vertical === 'top' ? 'auto' : position.top + element.outerHeight(),
+					top: vertical === 'top' ? 'auto' : typeof position == 'undefined' ? 'top' : position.top + element.outerHeight(),
 					bottom: vertical === 'top' ? parent.outerHeight() - (parent === element ? 0 : position.top) : 'auto',
 					left: horizontal === 'left' ? (parent === element ? 0 : position.left) : 'auto',
 					right: horizontal === 'left' ? 'auto' : parent.outerWidth() - element.outerWidth() - (parent === element ? 0 : position.left)

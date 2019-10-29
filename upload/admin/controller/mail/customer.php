@@ -49,7 +49,7 @@ class ControllerMailCustomer extends Controller {
 
 			$data['button_login'] = $language->get('button_login');
 
-			$data['login'] = $store_url . 'index.php?route=account/login';
+			$data['login'] = $store_url;
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 

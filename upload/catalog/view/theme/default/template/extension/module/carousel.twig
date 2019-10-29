@@ -1,4 +1,4 @@
-<div class="swiper-viewport">
+<div class="carousel swiper-viewport">
   <div id="carousel{{ module }}" class="swiper-container">
     <div class="swiper-wrapper">
       {% for banner in banners %}
@@ -25,8 +25,8 @@ $('#carousel{{ module }}').swiper({
 	slidesPerGroup: 5,
 	pagination: '.carousel{{ module }}',
 	paginationClickable: true,
-	nextButton: '.swiper-button-next',
-	prevButton: '.swiper-button-prev',
+	nextButton: '.carousel .swiper-button-next',
+	prevButton: '.carousel .swiper-button-prev',
 	autoplay: 2500,
 	loop: true
 });

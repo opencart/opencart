@@ -164,6 +164,7 @@ $('#modal-image').popover({
 	placement: 'bottom',
 	selector: '#button-folder',
 	title: '{{ entry_folder }}',
+	sanitize: false,
 	content: function() {
 		html  = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';

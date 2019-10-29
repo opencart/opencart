@@ -17,6 +17,8 @@ function squareup_chdir($current_dir) {
 function squareup_define_route() {
     define('SQUAREUP_ROUTE', 'extension/recurring/squareup/recurring');
 
+    $_GET = &$_GET;
+
     $_GET['route'] = SQUAREUP_ROUTE;
 }
 
@@ -25,6 +27,8 @@ function squareup_init($current_dir) {
 
     // Validate environment
     squareup_validate();
+
+    $_SERVER = &$_SERVER;
 
     // Set up default server vars
     if (isset($argc) && isset($argv) && $argc >= 3) {

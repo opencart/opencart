@@ -120,7 +120,7 @@
                     {% if product.rating %}
                       <div class="rating">
                         {% for i in 1..5 %}
-                          {% if product.rating < i %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span>{% endif %}
+                          {% if product.rating < i %} <span class="fas fa-stack"><i class="far fa-star fa-stack-2x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="far fa-star fa-stack-2x"></i></span>{% endif %}
                         {% endfor %}
                       </div>
                     {% endif %}

@@ -819,3 +819,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .table-responsive {
     overflow: visible;
 }
+
+.is-invalid + .invalid-tooltip, .input-group + .invalid-tooltip {
+    position: static !important;
+}

@@ -68,7 +68,7 @@ class ModelSaleReturn extends Model {
 			'customer',
 			'r.product',
 			'r.model',
-			'status',
+			'return_status',
 			'r.date_added',
 			'r.date_modified'
 		);

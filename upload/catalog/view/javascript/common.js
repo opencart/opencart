@@ -370,7 +370,7 @@ $(document).delegate('.agree', 'click', function(e) {
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">';
 			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
-			html += '        <button type="button" class="close" data-dismiss="toast">&times;</button>';
+			html += '        <button type="button" class="close" data-dismiss="modal">&times;</button>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
 			html += '    </div>';

@@ -1,0 +1,47 @@
+{{ header }}{{ column_left }}{{ column_right }}
+<div id="container" class="container j-container">{{ content_top }}
+    {% if breadcrumbs %}
+    <style type="text/css">
+        .breadcrumb > .current > span {
+            text-decoration: underline;
+        }
+
+        ul.breadcrumb li span {
+            margin: 0 4px;
+        }
+
+        ul.breadcrumb li.text-muted.disabled span {
+            color: #666;
+        }
+
+        .breadcrumb span {
+            color: inherit;
+            font-size: inherit;
+            transition: all .2s ease;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .secondary-title, .cart-info, .attention, .warning, .success {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+            {% if breadcrumb.href and not breadcrumb.current %}
+            <li><a href="{{ breadcrumb.href }}">
+                {{ breadcrumb.text }}
+            </a></li>
+            {% else %}
+                <li class="text-muted {{ breadcrumb.current ? 'current' : 'disabled' }}"><span>{{ breadcrumb.text }}</span></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div id="content">
+        {{ content_main }}
+    </div>
+{{ content_bottom }}</div>
+{{ footer }}

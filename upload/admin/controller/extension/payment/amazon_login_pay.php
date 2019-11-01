@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionPaymentAmazonLoginPay extends Controller {
-	private $version = '3.1';
+	private $version = '3.2.1';
 	private $error = array();
 
 	public function index() {
@@ -218,6 +218,14 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 			$data['payment_amazon_login_pay_pending_status'] = '0';
 		}
 
+		if (isset($this->request->post['payment_amazon_login_pay_capture_oc_status'])) {
+			$data['payment_amazon_login_pay_capture_oc_status'] = $this->request->post['payment_amazon_login_pay_capture_oc_status'];
+		} elseif ($this->config->get('payment_amazon_login_pay_capture_oc_status')) {
+			$data['payment_amazon_login_pay_capture_oc_status'] = $this->config->get('payment_amazon_login_pay_capture_oc_status');
+		} else {
+			$data['payment_amazon_login_pay_capture_oc_status'] = '0';
+		}
+
 		if (isset($this->request->post['payment_amazon_login_pay_ipn_token'])) {
 			$data['payment_amazon_login_pay_ipn_token'] = $this->request->post['payment_amazon_login_pay_ipn_token'];
 		} elseif ($this->config->get('payment_amazon_login_pay_ipn_token')) {
@@ -243,7 +251,28 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		} else {
 			$data['payment_amazon_login_pay_geo_zone'] = '0';
 		}
-
+		if (isset($this->request->post['payment_amazon_login_pay_buyer_multi_currency'])) {
+			$data['payment_amazon_login_pay_buyer_multi_currency'] = $this->request->post['payment_amazon_login_pay_buyer_multi_currency'];
+		} elseif ($this->config->get('payment_amazon_login_pay_buyer_multi_currency')) {
+			$data['payment_amazon_login_pay_buyer_multi_currency'] = $this->config->get('payment_amazon_login_pay_buyer_multi_currency');
+		} else {
+			$data['payment_amazon_login_pay_buyer_multi_currency'] = '0';
+		}
+		//list available currencies for buyer multi-currency feature
+		$this->load->model('localisation/currency');
+		$store_buyer_currencies = array();
+		$oc_currencies =  $this->model_localisation_currency->getCurrencies();
+		$amazon_supported_currencies = array('AUD', 'GBP','DKK', 'EUR', 'HKD', 'JPY', 'NZD','NOK', 'ZAR', 'SEK', 'CHF', 'USD');
+		foreach ($amazon_supported_currencies as $amazon_supported_currency) {
+			if(isset($oc_currencies[$amazon_supported_currency]) && $oc_currencies[$amazon_supported_currency]['status'] == '1') {
+				array_push($store_buyer_currencies,$amazon_supported_currency);
+			}
+		}
+		$this->load->language('common/column_left');
+		$data['help_buyer_multi_currency'] = !empty($store_buyer_currencies) ? sprintf($this->language->get('help_buyer_multi_currency'), implode(', ', $store_buyer_currencies)) : $this->language->get('help_buyer_multi_currency_no_available_currency');
+		$data['text_info_buyer_multi_currencies'] = sprintf($this->language->get('text_info_buyer_multi_currencies'), $this->session->data['user_token'], $this->language->get('text_system'), $this->language->get('text_localisation'),$this->language->get('text_currency'));
+		$data['help_capture_oc_status'] = sprintf($this->language->get('help_capture_oc_status'), $this->language->get('text_sale'), $this->language->get('text_order'), $this->language->get('button_view'));
+		
 		if (isset($this->request->post['payment_amazon_login_pay_debug'])) {
 			$data['payment_amazon_login_pay_debug'] = $this->request->post['payment_amazon_login_pay_debug'];
 		} elseif ($this->config->get('payment_amazon_login_pay_debug')) {
@@ -318,6 +347,9 @@ class ControllerExtensionPaymentAmazonLoginPay extends Controller {
 		);
 
 		$data['has_ssl'] = !empty($this->request->server['HTTPS']);
+
+		$data['has_modify_permission'] = $this->user->hasPermission('modify', 'extension/payment/amazon_login_pay');
+		$data['text_generic_password'] = str_repeat('*', 32);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

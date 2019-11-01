@@ -1,0 +1,145 @@
+<div id="amazonContainer">
+    <h1 class="heading-title">{{ heading_address }}</h1>
+    <div class="amazonWidget" id="addressBookWidget"></div>
+    <div class="amazonWidget" id="shippingMethods"></div>
+    <div class="buttons">
+        <div class="left">
+            <a href="{{ cart }}" class="button">{{ text_cart }}</a>
+        </div>
+        <div class="right">
+            <input class="button" id="continue-button" type="submit" value="{{ text_continue }}" />
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #amazonContainer {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .amazonWidget {
+        margin: 0 0 10px 0;
+        width: 100%;
+    }
+
+    #addressBookWidget {
+        height: 350px;
+    }
+
+    .button[disabled] {
+        background-image: none;
+        background-color: #ccc;
+        color: #333;
+        cursor: not-allowed;
+    }
+</style>
+<input type="hidden" name="addressSelected" value="0" />
+<script type="text/javascript">
+(function($) {
+    $(document).ready(function() {
+        var AmazonOrderReferenceId;
+
+        var showError = function(message) {
+            $('#continue-button').attr('disabled', false);
+
+            $('#addressBookWidget').before('<div class="warning">' + message + '</div>');
+        }
+
+        amazon.Login.setClientId('{{ client_id }}');
+
+        $('#continue-button').click(function(e) {
+            if ($(this).is('[disabled]')) {
+                e.preventDefault();
+                return;
+            }
+
+            $('#continue-button').attr('disabled', true);
+            $('.warning, .attention').remove();
+
+            if ($('input[name="addressSelected"]').val() == '0') {
+                showError('{{ error_shipping_address }}');
+            } else if ($('input[name="shipping_method"]:checked').length == 0) {
+                showError('{{ error_shipping }}');
+            } else {
+                $.ajax({
+                    url: '{{ shipping }}',
+                    type: 'post',
+                    data: $('input[name="shipping_method"]:checked'),
+                    dataType: 'json',
+                    success: function(json) {
+                        if (json['error']) {
+                            showError(json['error']);
+                        } else if (json['redirect']) {
+                            document.location = json['redirect'];
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        showError(xhr.statusText + ': ' + thrownError + '; ' + xhr.responseText);
+                    }
+                });
+            }
+        });
+
+        new OffAmazonPayments.Widgets.AddressBook({
+            sellerId: '{{ merchant_id }}',
+            onOrderReferenceCreate: function(orderReference) {
+                AmazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
+            },
+            onAddressSelect: function(orderReference) {
+                $('input[name="addressSelected"]').val('1');
+                $('.warning, .attention').remove();
+
+                $('#shippingMethods').empty();
+
+                $.get('{{ shipping_methods }}&AmazonOrderReferenceId=' + AmazonOrderReferenceId, {}, function(data) {
+                    $('#shippingMethods').empty();
+
+                    if (data.error) {
+                        $('#addressBookWidget').before('<div class="warning">' + data.error + '</div>');
+                    } else if (data.quotes) {
+                        var html = '';
+
+                        $.each(data.quotes, function(code, shippingMethod) {
+                            html += '<h2 class="secondary-title">' + shippingMethod.title + '</h2>';
+
+                            $.each(shippingMethod.quote, function(i, quote) {
+                                html += '<div class="radio">';
+                                html += '<label>';
+
+                                if (data.selected == quote.code) {
+                                    html += '<input type="radio" name="shipping_method" value="' + quote.code + '" id="' + quote.code + '" checked="checked" />';
+                                } else {
+                                    html += '<input type="radio" name="shipping_method" value="' + quote.code + '" id="' + quote.code + '" />';
+                                }
+
+                                html += quote.title + ' - ';
+                                html += quote.text;
+                                html += '</label>';
+                                html += '</div>';
+                            });
+                        });
+
+                        $('#shippingMethods').html(html);
+
+                        if ($('input[name="shipping_method"]:checked').length == 0) {
+                            $('input[name="shipping_method"]:first').attr('checked', 'checked');
+                        }
+                    }
+                }, 'json');
+            },
+            design: {
+                designMode: 'responsive'
+            },
+            onError: function(error) {
+                if (error.getErrorCode() == 'BuyerSessionExpired') {
+                    document.location = '{{ session_expired }}';
+                }
+
+                {% if sandbox %}
+                    console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
+                {% endif %}
+            }
+        }).bind("addressBookWidget");
+    });
+})(jQuery);
+</script>

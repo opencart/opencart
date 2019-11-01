@@ -1,122 +1,150 @@
 <div id="amazonContainer">
     {% if success %}
-        <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i> {{ success }}
-        </div>
+        <div class="success">{{ success }}</div>
     {% endif %}
-    <h3 class="text-center">{{ heading_confirm }}</h3>
+    <h1 class="heading-title">{{ heading_confirm }}</h1>
     <div class="row">
-        <div class="col-md-6">
+        <div class="column">
             <div class="amazonWidget" id="addressBookWidget"></div>
         </div>
-        <div class="col-md-6">
+        <div class="column">
             <div class="amazonWidget" id="walletWidget"></div>
         </div>
     </div>
     {% if is_coupon_change_allowed %}
-        <hr />
-        <h3 class="text-center">{{ text_coupon }}</h3>
+        <h2 class="secondary-title">{{ text_coupon }}</h2>
         <p>{{ text_enter_coupon }}</p>
-        <div class="input-group" id="couponContainer">
+        <div id="couponContainer">
             {% if coupon %}
-                <input id="coupon" class="form-control" type="text" disabled value="{{ coupon }}" />
-                <span class="input-group-btn">
-                    <a id="couponDiscard" href="{{ coupon_discard }}" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                <input id="coupon" type="text" disabled value="{{ coupon }}" />
+                <span>
+                    <a id="couponDiscard" href="{{ coupon_discard }}" class="button">X</a>
                 </span>
             {% else %}
-                <input id="coupon" class="form-control" type="text" value="" />
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" id="couponApply"><i class="fa fa-tick"></i> {{ button_coupon }}</button>
+                <input id="coupon" type="text" value="" />
+                <span>
+                    <a class="button" id="couponApply"><span>{{ button_coupon }}</span></a>
                 </span>
             {% endif %}
         </div>
     {% endif %}
-    <hr />
-    <h3 class="text-center">{{ text_comments }}</h3>
-    <div class="form-group">
-        <textarea class="form-control" id="comment">{{ comment }}</textarea>
+    <h2 class="secondary-title">{{ text_comments }}</h2>
+    <div class="row">
+        <textarea id="comment">{{ comment }}</textarea>
     </div>
-    <hr />
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th class="text-left">{{ column_name }}</th>
-                <th class="text-left">{{ column_model }}</th>
-                <th class="text-right">{{ column_quantity }}</th>
-                <th class="text-right">{{ column_price }}</th>
-                <th class="text-right">{{ column_total }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in order.products %}
-            <tr>
-                <td class="text-left">{{ product.name }}
-                    {% for option in product.option %} <br />
-                    <small>- {{ option.name }}: {{ option.value }}</small>
-                    {% endfor %}
-                </td>
-                <td class="text-left">{{ product.model }}</td>
-                <td class="text-right">{{ product.quantity }}</td>
-                <td class="text-right">{{ product.text_price }}</td>
-                <td class="text-right">{{ product.text_total }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-        {% for total in order.totals %}
-            <tr>
-                <td colspan="4" class="text-right">
-                    <strong>{{ total.title }}</strong>
-                </td>
-                <td class="text-right">{{ total.text }}</td>
-            </tr>
-        {% endfor %}
-        </tfoot>
-    </table>
+    <div class="cart-info">
+        <table>
+            <thead>
+                <tr>
+                    <td class="name">{{ column_name }}</td>
+                    <td class="model">{{ column_model }}</td>
+                    <td class="quantity">{{ column_quantity }}</td>
+                    <td class="price">{{ column_price }}</td>
+                    <td class="total">{{ column_total }}</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in order.products %}
+                <tr>
+                    <td class="name">{{ product.name }}
+                        {% for option in product.option %} <br />
+                        <small>- {{ option.name }}: {{ option.value }}</small>
+                        {% endfor %}
+                    </td>
+                    <td class="model">{{ product.model }}</td>
+                    <td class="quantity">{{ product.quantity }}</td>
+                    <td class="price">{{ product.text_price }}</td>
+                    <td class="total">{{ product.text_total }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="cart-total">
+        <table id="total">
+            <tbody>
+            {% for total in order.totals %}
+                <tr>
+                    <td colspan="4" class="price">
+                        <strong>{{ total.title }}</strong>
+                    </td>
+                    <td class="total">{{ total.text }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="attention" id="text-must-apply-coupon" style="display: none;">
+        {{ text_must_apply_coupon }}
+    </div>
+    {% if is_order_total_positive %}
+        {% if is_amount_converted %}
+            <div class="attention">
+                {{ text_amount_converted }}
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="attention">
+            {{ error_order_total_zero }}
+        </div>
+    {% endif %}
     <div class="buttons">
-        <div class="pull-right form-control-static">
-            <div class="alert alert-warning" id="text-must-apply-coupon" style="display: none;">{{ text_must_apply_coupon }}</div>
+        <div class="right">
             {% if is_order_total_positive %}
-                {% if enabled_buyers_multi_currency %}
-                    <a class="btn btn-primary" id="confirm-button">{{ text_confirm }}</a>
-                {% else %}
-                    {% if is_amount_converted %}
-                        <div class="alert alert-warning">
-                            <i class="fa fa-exclamation-circle"></i> {{ text_amount_converted }}
-                            <hr />
-                            <div class="text-right">
-                                <a class="btn btn-primary" id="confirm-button">{{ text_confirm }}</a>
-                            </div>
-                        </div>
-                    {% else %}
-                        <a class="btn btn-primary" id="confirm-button">{{ text_confirm }}</a>
-                    {% endif %}
-                {% endif %}
+                <a class="button" id="confirm-button">{{ text_confirm }}</a>
             {% else %}
-                <div class="alert alert-warning">
-                    <i class="fa fa-exclamation-circle"></i> {{ error_order_total_zero }}
-                    <hr />
-                    <div class="text-right">
-                        <a class="btn btn-primary" href="{{ standard_checkout }}" id="confirm-button">{{ text_continue_checkout }}</a>
-                    </div>
-                </div>
+                <a class="button" href="{{ standard_checkout }}" id="confirm-button">{{ text_continue_checkout }}</a>
             {% endif %}
         </div>
-        <div class="pull-left form-control-static">
-            <a href="{{ back }}" class="btn btn-default">{{ text_back }}</a>
+        <div class="left">
+            <a href="{{ back }}" class="button"><span>{{ text_back }}</span></a>
         </div>
     </div>
 </div>
 <style type="text/css">
+    .row {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 -10px;
+    }
+
+    @media (max-width: 767px) {
+        .row {
+            flex-direction: column;
+        }
+    }
+
+    .column {
+        flex-grow: 1;
+        margin: 10px 10px;
+    }
+
+    hr {
+        border-top: 1px solid #ccc;
+        border-bottom: none;
+        margin: 15px 0;
+    }
+
+    .button[disabled] {
+        background-image: none;
+        background-color: #ccc;
+        color: #333;
+        cursor: not-allowed;
+    }
+
     #amazonContainer {
         width: 100%;
         margin: 0 auto;
     }
 
     #comment {
+        width: 100%;
+        margin: 0 10px;
         height: 150px;
     }
     
     #coupon {
+        max-width: 240px;
         font-size: 1.5em;
         font-family: Courier;
     }
@@ -130,7 +158,7 @@
 <script>
 (function($) {
     var showCouponError = function(message) {
-        $('#couponContainer').before('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;' + message + '</div>');
+        $('#couponContainer').before('<div class="warning">' + message + '</div>');
     }
 
     var typewatch = (function() {
@@ -163,7 +191,7 @@
             }
         }).bind("addressBookWidget");
 
-        var walletWidgetC  =  new OffAmazonPayments.Widgets.Wallet({
+        new OffAmazonPayments.Widgets.Wallet({
             sellerId: '{{ merchant_id }}',
             amazonOrderReferenceId: '{{ order_reference_id }}',
             displayMode: "Read",
@@ -179,23 +207,27 @@
                     console.log("Amazon Login Error for Wallet (" + error.getErrorCode() + "): " + error.getErrorMessage());
                 {% endif %}
             }
-        });
-
-        {% if enabled_buyers_multi_currency %}
-            walletWidgetC.setPresentmentCurrency('{{ buyer_currency }}');
-        {% endif %}
-
-        walletWidgetC.bind("walletWidget");
+        }).bind("walletWidget");
     });
 
-    $(document).on('click', '#couponDiscard', function() {
+    $(document).on('click', '#couponDiscard', function(e) {
+        if ($(this).is('[disabled]')) {
+            e.preventDefault();
+            return;
+        }
+
         $('#couponDiscard').attr('disabled', true);
     });
 
-    $(document).on('click', '#couponApply', function() {
+    $(document).on('click', '#couponApply', function(e) {
+        if ($(this).is('[disabled]')) {
+            e.preventDefault();
+            return;
+        }
+
         $('#couponApply').attr('disabled', true);
 
-        $('.alert-danger').remove();
+        $('.warning').remove();
 
         $.ajax({
             url: '{{ coupon_apply }}',

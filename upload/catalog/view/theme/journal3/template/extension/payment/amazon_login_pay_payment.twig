@@ -1,16 +1,17 @@
 <div id="amazonContainer">
     {% if error %}
-        <div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i> {{ error }}
+        <div class="alert alert-danger">{{ error }}
+          
         </div>
     {% endif %}
-    <h3 class="text-center">{{ heading_payment }}</h3>
+    <h1 class="title page-title">{{ heading_payment }}</h1>
     <div class="amazonWidget" id="walletWidget"></div>
     <div class="buttons clearfix">
-        <div class="pull-left form-control-static">
-            <a href="{{ back }}" class="btn btn-default">{{ text_back }}</a>
+        <div class="pull-left">
+            <a href="{{ back }}" class="btn btn-primary">{{ text_back }}</a>
         </div>
-        <div class="pull-right form-control-static">
-            <input class="btn btn-primary" id="continue-button" type="submit" value="{{ text_continue }}" />
+        <div class="pull-right">
+            <a class="btn btn-primary" id="continue-button">{{ text_continue }}</a>
         </div>
     </div>
 </div>
@@ -34,16 +35,21 @@
 (function($) {
     $(document).ready(function() {
         var showError = function(message) {
-            $('#continue-button').button('reset');
+            $('#continue-button').attr('disabled', false);
 
-            $('#walletWidget').before('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;' + message + '</div>');
+            $('#walletWidget').before('<div class="alert alert-danger">' + message + '</div>');
         }
 
         amazon.Login.setClientId('{{ client_id }}');
 
-        $('#continue-button').click(function() {
-            $('#continue-button').button('loading');
-            $('div.alert').remove();
+        $('#continue-button').click(function(e) {
+            if ($(this).is('[disabled]')) {
+                e.preventDefault();
+                return;
+            }
+            
+            $('#continue-button').attr('disabled', true);
+            $('.alert alert-danger, .alert alert-warning').remove();
 
             if ($("input[name='payment_method']").val() == '1') {
                 location = '{{ confirm }}';
@@ -52,7 +58,7 @@
             }
         });
 
-        var walletWidgetP  = new OffAmazonPayments.Widgets.Wallet({
+        new OffAmazonPayments.Widgets.Wallet({
             sellerId: '{{ merchant_id }}',
 
             {% if order_reference_id %}
@@ -78,13 +84,7 @@
                     console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
                 {% endif %}
             }
-        });
-
-        {% if enabled_buyers_multi_currency %}
-            walletWidgetP.setPresentmentCurrency('{{ buyer_currency }}');
-        {% endif %}
-
-        walletWidgetP.bind("walletWidget");
+        }).bind("walletWidget");
     });
 })(jQuery);
 </script>

@@ -86,7 +86,7 @@
 		  <div class="form-group required">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-merchant-id">{{ entry_merchant_id }}</label>
 			<div class="col-sm-10">
-			  <input type="text" name="payment_amazon_login_pay_merchant_id" value="{{ payment_amazon_login_pay_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="amazon-login-pay-merchant-id" class="form-control" />
+			  <input type="text" name="payment_amazon_login_pay_merchant_id" value="{{ payment_amazon_login_pay_merchant_id }}" placeholder="{{ entry_merchant_id }}" id="amazon-login-pay-merchant-id" class="form-control" autocomplete="new-password" />
 			  {% if error_merchant_id %}
 				  <div class="text-danger">{{ error_merchant_id }}</div>
 			  {% endif %}
@@ -95,7 +95,7 @@
 		  <div class="form-group required">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-access-key">{{ entry_access_key }}</label>
 			<div class="col-sm-10">
-			  <input type="text" name="payment_amazon_login_pay_access_key" value="{{ payment_amazon_login_pay_access_key }}" placeholder="{{ entry_access_key }}" id="amazon-login-pay-access-key" class="form-control" />
+			  <input type="text" name="payment_amazon_login_pay_access_key" value="{{ payment_amazon_login_pay_access_key }}" placeholder="{{ entry_access_key }}" id="amazon-login-pay-access-key" class="form-control" autocomplete="new-password" />
 			  {% if error_access_key %}
 				  <div class="text-danger">{{ error_access_key }}</div>
 			  {% endif %}
@@ -104,7 +104,12 @@
 		  <div class="form-group required">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-access-secret">{{ entry_access_secret }}</label>
 			<div class="col-sm-10">
-			  <input type="text" name="payment_amazon_login_pay_access_secret" value="{{ payment_amazon_login_pay_access_secret }}" placeholder="{{ entry_access_secret }}" id="amazon-login-pay-access-secret" class="form-control" />
+			  <div class="input-group">
+			  	<input data-toggle-password type="password" name="payment_amazon_login_pay_access_secret" value="{{ has_modify_permission ? payment_amazon_login_pay_access_secret : text_generic_password }}" placeholder="{{ entry_access_secret }}" id="amazon-login-pay-access-secret" class="form-control" autocomplete="new-password" />
+			  	<div class="input-group-addon btn btn-default toggle-password">
+			  	    <i class="fa fa-eye"></i>
+			  	</div>
+			  </div>
 			  {% if error_access_secret %}
 				  <div class="text-danger">{{ error_access_secret }}</div>
 			  {% endif %}
@@ -113,7 +118,7 @@
 		  <div class="form-group required">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-client-id">{{ entry_client_id }}</label>
 			<div class="col-sm-10">
-			  <input type="text" name="payment_amazon_login_pay_client_id" value="{{ payment_amazon_login_pay_client_id }}" placeholder="{{ entry_client_id }}" id="amazon-login-pay-client-id" class="form-control" />
+			  <input type="text" name="payment_amazon_login_pay_client_id" value="{{ payment_amazon_login_pay_client_id }}" placeholder="{{ entry_client_id }}" id="amazon-login-pay-client-id" class="form-control" autocomplete="new-password" />
 			  {% if error_client_id %}
 				  <div class="text-danger">{{ error_client_id }}</div>
 			 {% endif %}
@@ -122,7 +127,12 @@
 		  <div class="form-group required">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-client-secret">{{ entry_client_secret }}</label>
 			<div class="col-sm-10">
-			  <input type="text" name="payment_amazon_login_pay_client_secret" value="{{ payment_amazon_login_pay_client_secret }}" placeholder="{{ entry_client_secret }}" id="amazon-login-pay-client-secret" class="form-control" />
+			  <div class="input-group">
+			  	<input data-toggle-password type="password" name="payment_amazon_login_pay_client_secret" value="{{ has_modify_permission ? payment_amazon_login_pay_client_secret : text_generic_password }}" placeholder="{{ entry_client_secret }}" id="amazon-login-pay-client-secret" class="form-control" autocomplete="new-password" />
+			  	<div class="input-group-addon btn btn-default toggle-password">
+			  	    <i class="fa fa-eye"></i>
+			  	</div>
+			  </div>
 			  {% if error_client_secret %}
 				  <div class="text-danger">{{ error_client_secret }}</div>
 			  {% endif %}
@@ -222,6 +232,20 @@
 			  </select>
 			</div>
 		  </div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="amazon-login-pay-pending-status"><span data-toggle="tooltip" title="{{ help_capture_oc_status }}">{{ entry_capture_oc_status }}</span></label>
+          <div class="col-sm-10">
+            <select name="payment_amazon_login_pay_capture_oc_status" id="amazon-login-pay-capture-oc-status" class="form-control">
+              {% for order_status in order_statuses %}
+                  {% if order_status.order_status_id == payment_amazon_login_pay_capture_oc_status %}
+                      <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                  {% else %}
+                      <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                  {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
 		  <div class="form-group">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-minimum-total"><span data-toggle="tooltip" title="{{ help_minimum_total }}">{{ text_minimum_total }}</span></label>
 			<div class="col-sm-10">
@@ -250,6 +274,26 @@
 			  </select>
 			</div>
 		  </div>
+          <div class="form-group" id="buyer-multi-currency">
+              <label class="col-sm-2 control-label" for="amazon-login-pay-buyer-multi-currency"><span data-toggle="tooltip" title="{{ help_buyer_multi_currency }}">
+                {{ text_buyer_multi_currency }}</span></label>
+              <div class="col-sm-10">
+                {% if store_buyer_currencies is empty %}
+                    <div class="alert alert-info">
+                        <i class="fa fa-exclamation-circle"></i> {{ text_info_buyer_multi_currencies }}
+                    </div>
+                {% endif %}
+                <select name="payment_amazon_login_pay_buyer_multi_currency" id="amazon-login-pay-buyer-multi-currency" class="form-control">
+                  {% if payment_amazon_login_pay_buyer_multi_currency %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                  {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>
+              </div>
+        </div>
 		  <div class="form-group">
 			<label class="col-sm-2 control-label" for="amazon-login-pay-input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
 			<div class="col-sm-10">
@@ -347,6 +391,7 @@
             break;
           case 'USD':
             $('#amazon-login-pay-language').html('<option selected value="en-US">American English</option>');
+            $('#buyer-multi-currency').hide();
             break;
         }
         $('<input>').attr({
@@ -370,5 +415,23 @@
         $("#container-credentials").show();
       });
       //</script>
+<script type="text/javascript">
+	$(document).on('click', '.toggle-password', function(e) {
+	    let target = $(this).closest('.form-group').find('input[data-toggle-password]');
+
+	    if ($(target).attr('type') == 'password') {
+	        $(target).attr('type', 'text');
+	        $(this).find('.fa-eye').removeClass('fa-eye').addClass('fa-eye-slash');
+	    } else {
+	        $(target).attr('type', 'password');
+	        $(this).find('.fa-eye-slash').removeClass('fa-eye-slash').addClass('fa-eye');
+	    }
+	});
+    $(document).ready(function() {
+        if ($('#amazon-login-pay-payment_region').val() === 'USD') {
+            $('#buyer-multi-currency').hide();
+        }
+    });
+</script>
 </div>
 {{ footer }}

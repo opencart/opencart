@@ -1,6 +1,6 @@
 <?php
 class ControllerExtensionModuleAmazonLogin extends Controller {
-	private $version = '3.1';
+	private $version = '3.2.1';
 	private $error = array();
 
 	public function index() {

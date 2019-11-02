@@ -52,7 +52,7 @@
             }
         });
 
-        new OffAmazonPayments.Widgets.Wallet({
+        var walletWidgetP  = new OffAmazonPayments.Widgets.Wallet({
             sellerId: '{{ merchant_id }}',
 
             {% if order_reference_id %}
@@ -78,7 +78,13 @@
                     console.log("Amazon Login Error (" + error.getErrorCode() + "): " + error.getErrorMessage());
                 {% endif %}
             }
-        }).bind("walletWidget");
+        });
+
+        {% if enabled_buyers_multi_currency %}
+            walletWidgetP.setPresentmentCurrency('{{ buyer_currency }}');
+        {% endif %}
+
+        walletWidgetP.bind("walletWidget");
     });
 })(jQuery);
 </script>

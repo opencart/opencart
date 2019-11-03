@@ -286,7 +286,7 @@
           {% if review_status %}
             <div class="rating">
               <p>{% for i in 1..5 %}
-                  {% if rating < i %}<span class="fas fa-stack"><i class="fas fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="fas fa-star-o fa-stack-1x"></i></span>{% endif %}
+                  {% if rating < i %}<span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="far fa-star fa-stack-1x"></i></span>{% endif %}
                 {% endfor %}
                 <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
               <hr/>

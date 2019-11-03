@@ -403,6 +403,17 @@ footer {
   .btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .btn-inverse.disabled, .btn-inverse[disabled] {
     background-color: #222;
     background-image: linear-gradient(to bottom, #333, #111); }
+
+.rating .fa-stack {
+  font-size: 8px; }
+  .rating .far.fa-star {
+    color: #999;
+    font-size: 15px; }
+  .rating .fa-star {
+    color: #fc0;
+    font-size: 15px; }
+    .rating .fa-star + .far.fa-star {
+      color: #e69500; }
 /* list group */
 .list-group a {
   color: #888;
@@ -436,6 +447,8 @@ footer {
     min-height: 180px; }
   .product-thumb .rating {
     padding-bottom: 10px; }
+  .product-thumb .rating .far.fa-star {
+    color: #fc0; }
   .product-thumb .price {
     color: #444; }
   .product-thumb .price-new {

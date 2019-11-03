@@ -619,6 +619,25 @@ footer {
   }
 }
 
+.rating {
+  .fa-stack {
+    font-size: 8px;
+  }
+  .far {
+    &.fa-star {
+      color: #999;
+      font-size: 15px;
+    }
+  }
+  .fa-star {
+    color: #FC0;
+    font-size: 15px;
+    + .far.fa-star {
+      color: #E69500;
+    }
+  }
+}
+
 /* list group */
 .list-group {
   a {
@@ -670,6 +689,11 @@ footer {
   }
   .rating {
     padding-bottom: 10px;
+    .far {
+      &.fa-star {
+        color: #FC0;
+      }
+    }
   }
   .price {
     color: #444;
@@ -787,23 +811,6 @@ footer {
       .button-group {
         border-left: none;
       }
-    }
-  }
-}
-
-.rating {
-  .fa-stack {
-    font-size: 8px;
-  }
-  .fa-star-o {
-    color: #999;
-    font-size: 15px;
-  }
-  .fa-star {
-    color: #FC0;
-    font-size: 15px;
-    + .fa-star-o {
-      color: #E69500;
     }
   }
 }

@@ -58,12 +58,12 @@
           <fieldset>
             <legend>{{ text_product }}</legend>
             <div class="form-group row required">
-              <label for="input-catalog-limit" class="col-sm-2 col-form-label">{{ entry_product_limit }}</label>
+              <label for="input-catalog-limit" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
               <div class="col-sm-10">
-                <input type="text" name="theme_default_product_limit" value="{{ theme_default_product_limit }}" placeholder="{{ entry_product_limit }}" id="input-catalog-limit" class="form-control"/>
-                <small class="form-text text-muted">{{ help_product_limit }}</small>
-                {% if error_product_limit %}
-                  <div class="invalid-tooltip">{{ error_product_limit }}</div>
+                <input type="text" name="theme_default_pagination" value="{{ theme_default_pagination }}" placeholder="{{ entry_pagination }}" id="input-catalog-limit" class="form-control"/>
+                <small class="form-text text-muted">{{ help_pagination }}</small>
+                {% if error_pagination %}
+                  <div class="invalid-tooltip">{{ error_pagination }}</div>
                 {% endif %}
               </div>
             </div>

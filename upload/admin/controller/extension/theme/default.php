@@ -24,9 +24,9 @@ class ControllerExtensionThemeDefault extends Controller {
 		}
 
 		if (isset($this->error['product_limit'])) {
-			$data['error_product_limit'] = $this->error['product_limit'];
+			$data['error_pagination'] = $this->error['product_limit'];
 		} else {
-			$data['error_product_limit'] = '';
+			$data['error_pagination'] = '';
 		}
 
 		if (isset($this->error['product_description_length'])) {
@@ -136,12 +136,12 @@ class ControllerExtensionThemeDefault extends Controller {
 			$data['directories'][] = basename($directory);
 		}
 
-		if (isset($this->request->post['theme_default_product_limit'])) {
-			$data['theme_default_product_limit'] = $this->request->post['theme_default_product_limit'];
-		} elseif (isset($setting_info['theme_default_product_limit'])) {
-			$data['theme_default_product_limit'] = $setting_info['theme_default_product_limit'];
+		if (isset($this->request->post['theme_default_pagination'])) {
+			$data['theme_default_pagination'] = $this->request->post['theme_default_pagination'];
+		} elseif (isset($setting_info['theme_default_pagination'])) {
+			$data['theme_default_pagination'] = $setting_info['theme_default_pagination'];
 		} else {
-			$data['theme_default_product_limit'] = 15;
+			$data['theme_default_pagination'] = 15;
 		}		
 		
 		if (isset($this->request->post['theme_default_status'])) {
@@ -332,7 +332,7 @@ class ControllerExtensionThemeDefault extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['theme_default_product_limit']) {
+		if (!$this->request->post['theme_default_pagination']) {
 			$this->error['product_limit'] = $this->language->get('error_limit');
 		}
 

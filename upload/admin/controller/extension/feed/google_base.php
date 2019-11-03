@@ -161,7 +161,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $category_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('extension/feed/google_base/category', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		));
 

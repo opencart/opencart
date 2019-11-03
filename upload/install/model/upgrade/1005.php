@@ -156,10 +156,10 @@ class ModelUpgrade1005 extends Model {
 		}
 
 		// setting
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_limit_admin'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_pagination'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_limit_admin', `value` = '20', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_pagination', `value` = '20', `code` = 'config', `serialized` = '0', `store_id` = 0");
 		}
 
 		// setting

@@ -111,8 +111,8 @@ class ControllerExtensionReportSaleReturn extends Controller {
 			'filter_date_end'	      => $filter_date_end,
 			'filter_group'            => $filter_group,
 			'filter_return_status_id' => $filter_return_status_id,
-			'start'                   => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'                   => $this->config->get('config_limit_admin')
+			'start'                   => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'                   => $this->config->get('config_pagination')
 		);
 
 		$return_total = $this->model_extension_report_return->getTotalReturns($filter_data);
@@ -176,11 +176,11 @@ class ControllerExtensionReportSaleReturn extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $return_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_return' . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($return_total - $this->config->get('config_limit_admin'))) ? $return_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $return_total, ceil($return_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($return_total - $this->config->get('config_pagination'))) ? $return_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $return_total, ceil($return_total / $this->config->get('config_pagination')));
 
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;

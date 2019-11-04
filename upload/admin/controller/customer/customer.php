@@ -901,16 +901,17 @@ class ControllerCustomerCustomer extends Controller {
 					$this->error['address'][$key]['city'] = $this->language->get('error_city');
 				}
 
-				$this->load->model('localisation/country');
-
-				$country_info = $this->model_localisation_country->getCountry($value['country_id']);
-
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
-					$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
-				}
-
-				if ($value['country_id'] == '') {
+				if (!isset($value['country_id']) || $value['country_id'] == '') {
 					$this->error['address'][$key]['country'] = $this->language->get('error_country');
+				} else {
+					
+					$this->load->model('localisation/country');
+
+					$country_info = $this->model_localisation_country->getCountry($value['country_id']);
+	
+					if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
+						$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
+					}
 				}
 
 				if (!isset($value['zone_id']) || $value['zone_id'] == '') {

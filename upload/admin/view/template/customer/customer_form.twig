@@ -292,7 +292,7 @@
               </fieldset>
             </div>
             <div id="tab-address" class="tab-pane">
-              {% set address_row = 0 %}
+              {% set address_row = 1 %}
               {% for address in addresses %}
                 <fieldset id="address-row{{ address_row }}">
                   <legend>{{ text_address }} {{ address_row + 1 }} <button type="button" onclick="$('#address-row{{ address_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-right"><i class="fas fa-minus-circle"></i></button></legend>
@@ -1175,7 +1175,6 @@ $('.datetime').datetimepicker({
 });
 
 // Sort the custom fields
-{% set address_row = 1 %}
 {% for address in addresses %}
 $('#tab-address{{ address_row }} .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address{{ address_row }} .form-group').length) {
@@ -1190,7 +1189,6 @@ $('#tab-address{{ address_row }} .form-group[data-sort]').detach().each(function
 		$('#tab-address{{ address_row }} .form-group:first').before(this);
 	}
 });
-{% set address_row = address_row + 1 %}
 {% endfor %}
 
 $('#tab-customer .form-group[data-sort]').detach().each(function() {

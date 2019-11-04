@@ -46,8 +46,8 @@ class ModelDesignSeoUrl extends Model {
 		$sort_data = array(
 			'query',
 			'keyword',
-			'store',
-			'language'
+			'store_id',
+			'language_id'
 		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

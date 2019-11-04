@@ -445,12 +445,10 @@ class ControllerCustomerCustomField extends Controller {
 		$data['custom_field_required'] = array();
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if ($custom_field_customer_group['required']) {
-				if(isset($custom_field_customer_group['customer_group_id'])) {
-					$data['custom_field_required'][] = $custom_field_customer_group['customer_group_id'];
-				} else {
-					$data['custom_field_required'][] = '';
-				}
+			if(isset($custom_field_customer_group['required'])  && isset($custom_field_customer_group['customer_group_id'])) {
+				$data['custom_field_required'][] = $custom_field_customer_group['customer_group_id'];
+			} else {
+				$data['custom_field_required'][] = '';
 			}
 		}
 

@@ -76,16 +76,20 @@
         <div class="pull-right form-control-static">
             <div class="alert alert-warning" id="text-must-apply-coupon" style="display: none;">{{ text_must_apply_coupon }}</div>
             {% if is_order_total_positive %}
-                {% if is_amount_converted %}
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-circle"></i> {{ text_amount_converted }}
-                        <hr />
-                        <div class="text-right">
-                            <a class="btn btn-primary" href="{{ process }}" id="confirm-button">{{ text_confirm }}</a>
-                        </div>
-                    </div>
+                {% if enabled_buyers_multi_currency %}
+                    <a class="btn btn-primary" id="confirm-button">{{ text_confirm }}</a>
                 {% else %}
-                    <a class="btn btn-primary" href="{{ process }}" id="confirm-button">{{ text_confirm }}</a>
+                    {% if is_amount_converted %}
+                        <div class="alert alert-warning">
+                            <i class="fa fa-exclamation-circle"></i> {{ text_amount_converted }}
+                            <hr />
+                            <div class="text-right">
+                                <a class="btn btn-primary" id="confirm-button">{{ text_confirm }}</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a class="btn btn-primary" id="confirm-button">{{ text_confirm }}</a>
+                    {% endif %}
                 {% endif %}
             {% else %}
                 <div class="alert alert-warning">
@@ -159,7 +163,7 @@
             }
         }).bind("addressBookWidget");
 
-        new OffAmazonPayments.Widgets.Wallet({
+        var walletWidgetC  =  new OffAmazonPayments.Widgets.Wallet({
             sellerId: '{{ merchant_id }}',
             amazonOrderReferenceId: '{{ order_reference_id }}',
             displayMode: "Read",
@@ -175,7 +179,13 @@
                     console.log("Amazon Login Error for Wallet (" + error.getErrorCode() + "): " + error.getErrorMessage());
                 {% endif %}
             }
-        }).bind("walletWidget");
+        });
+
+        {% if enabled_buyers_multi_currency %}
+            walletWidgetC.setPresentmentCurrency('{{ buyer_currency }}');
+        {% endif %}
+
+        walletWidgetC.bind("walletWidget");
     });
 
     $(document).on('click', '#couponDiscard', function() {
@@ -230,8 +240,38 @@
         });
     });
 
-    $('#confirm-button').click(function() {
-        $('#confirm-button').button('loading');
+    var buyNowBtn = document.getElementById("confirm-button");
+    var psd_enabled = {{ psd_enabled }};
+
+    buyNowBtn.addEventListener('click', function () {
+        if(psd_enabled) {
+            OffAmazonPayments.initConfirmationFlow('{{ merchant_id }}', '{{ order_reference_id }}', placeOrder);
+        } else {
+            buyNowBtn.setAttribute("href", '{{ process_us }}');
+        }
+        $(buyNowBtn).button('loading');
     });
+
+    function placeOrder(amazonPayFlow) {
+        $.ajax({
+            url: '{{ process }}',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if(data.redirect) {
+                    document.location = data.redirect;
+                } else if (data.error) {
+                    window.alert(data.error);
+                    amazonPayFlow.error();
+                } else {
+                    amazonPayFlow.success();
+                }
+            },
+            error: function () {
+                amazonPayFlow.error();
+                window.alert('{{ error_unexpected_network_error }}');
+            },
+        });
+    }
 })(jQuery);
 </script>

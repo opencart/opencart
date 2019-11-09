@@ -8,51 +8,42 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	<title></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<script type="text/javascript">
-		(function() {
-			function doLoadScript(url) {
-				if (!url) {
-					return false;
-				}
 
-				var s = document.createElement("script");
+function doLoadScript( url )
+{
+	if ( !url )
+		return false ;
 
-				s.type = "text/javascript";
-				s.src = url;
-				document.getElementsByTagName("head")[0].appendChild(s);
+	var s = document.createElement( "script" ) ;
+	s.type = "text/javascript" ;
+	s.src = url ;
+	document.getElementsByTagName( "head" )[ 0 ].appendChild( s ) ;
 
-				return true;
-			}
+	return true ;
+}
 
-			function tryLoad() {
-				window.opener = window.parent;
+var opener;
+function tryLoad()
+{
+	opener = window.parent;
 
-				// get access to global parameters
-				var oParams = window.opener.oldFramesetPageParams;
+	// get access to global parameters
+	var oParams = window.opener.oldFramesetPageParams;
 
-				// make frameset rows string prepare
-				var sFramesetRows = (parseInt(oParams.firstframeh, 10) || '30') + ",*," + (parseInt(oParams.thirdframeh, 10) || '150') + ',0';
+	// make frameset rows string prepare
+	var sFramesetRows = ( parseInt( oParams.firstframeh, 10 ) || '30') + ",*," + ( parseInt( oParams.thirdframeh, 10 ) || '150' ) + ',0' ;
+	document.getElementById( 'itFrameset' ).rows = sFramesetRows ;
 
-				document.getElementById('itFrameset').rows = sFramesetRows;
+	// dynamic including init frames and crossdomain transport code
+	// from config sproxy_js_frameset url
+	var addScriptUrl = oParams.sproxy_js_frameset ;
+	doLoadScript( addScriptUrl ) ;
+}
 
-				// dynamic including init frames and crossdomain transport code
-				// from config sproxy_js_frameset url
-				var addScriptUrl = oParams.sproxy_js_frameset;
-
-				doLoadScript(addScriptUrl);
-			}
-
-			if (window.addEventListener) { // all browsers except IE before version 9
-				window.addEventListener("load", tryLoad);
-			} else {
-				if (window.attachEvent) { // IE before version 9
-					window.attachEvent("onload", tryLoad);
-				}
-			}
-		})();
 	</script>
 </head>
 
-<frameset id="itFrameset" border="0" rows="30,*,*,0">
+<frameset id="itFrameset" onload="tryLoad();" border="0" rows="30,*,*,0">
     <frame scrolling="no" framespacing="0" frameborder="0" noresize="noresize" marginheight="0" marginwidth="2" src="" name="navbar"></frame>
     <frame scrolling="auto" framespacing="0" frameborder="0" noresize="noresize" marginheight="0" marginwidth="0" src="" name="mid"></frame>
     <frame scrolling="no" framespacing="0" frameborder="0" noresize="noresize" marginheight="1" marginwidth="1" src="" name="bot"></frame>

@@ -2,12 +2,6 @@
 	background: transparent;
 }
 
-.cke_table-faked-selection-editor {
-	/* With love, dedicated for Chrome, until https://bugs.chromium.org/p/chromium/issues/detail?id=702610 is resolved.
-	It will force repaint (without reflow) so that selection is properly displayed.	*/
-	transform: translateZ( 0 );
-}
-
 .cke_table-faked-selection {
 	background: darkgray !important;
 	color: black;
@@ -29,4 +23,14 @@
 }
 .cke_table-faked-selection::selection, .cke_table-faked-selection ::selection {
 	background: transparent;
+}
+
+/* Change the cursor when selecting cells (#706).
+ *
+ * This solution does not work in IE, Edge and Safari due to upstream isues:
+ * https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/3419602/
+ * https://bugs.webkit.org/show_bug.cgi?id=53341
+ */
+table[data-cke-table-faked-selection-table] {
+	cursor: cell;
 }

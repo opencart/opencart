@@ -112,7 +112,10 @@ class ControllerSettingStore extends Controller {
 
 		$data['stores'] = array();
 
+		$store_total = 0;
+
 		if ($page == 1) {
+			$store_total = 1;
 			$data['stores'][] = array(
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
@@ -126,7 +129,7 @@ class ControllerSettingStore extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$store_total = $this->model_setting_store->getTotalStores();
+		$store_total += $this->model_setting_store->getTotalStores();
 
 		$results = $this->model_setting_store->getStores();
 
@@ -321,10 +324,10 @@ class ControllerSettingStore extends Controller {
 		}
 
 		$data['themes'] = array();
-		
+
 		// Create a new language container so we don't pollute the current one
 		$language = new Language($this->config->get('config_language'));
-		
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getInstalled('theme');
@@ -399,7 +402,7 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_telephone'] = '';
 		}
-		
+
 		if (isset($this->request->post['config_fax'])) {
 			$data['config_fax'] = $this->request->post['config_fax'];
 		} elseif (isset($store_info['config_fax'])) {
@@ -407,7 +410,7 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_fax'] = '';
 		}
-		
+
 		if (isset($this->request->post['config_image'])) {
 			$data['config_image'] = $this->request->post['config_image'];
 		} elseif (isset($store_info['config_image'])) {

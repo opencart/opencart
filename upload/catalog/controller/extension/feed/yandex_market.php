@@ -14,7 +14,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	private $currencies = array();
 	private $categories = array();
 	private $offers = array();
-	private $from_charset = 'utf-8';
+	private $from_charset = 'utf-8'; // UTF-8, windows-1251
 	private $eol = "\n";
 
 	public function index() {
@@ -61,7 +61,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 			$currencies = $this->model_localisation_currency->getCurrencies();
 
-			$supported_currencies = array('RUR', 'RUB', 'USD', 'BYR', 'KZT', 'EUR', 'UAH');
+			$supported_currencies = array('RUR', 'RUB', 'USD', 'BYN', 'BYR', 'KZT', 'EUR', 'UAH');
 
 			$currencies = array_intersect_key($currencies, array_flip($supported_currencies));
 
@@ -71,31 +71,27 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				}
 			}
 
-			// Категории
+			// Категории <categories></categories>
 			$categories = $this->model_extension_feed_yandex_market->getCategory();
 
 			foreach ($categories as $category) {
 				$this->setCategory($category['name'], $category['category_id'], $category['parent_id']);
 			}
 
-			// Товарные предложения
+			// Параметры товарного предложения <offer></offer>
 			$bus_id = $this->config->get('feed_yandex_market_id'); // Идентификатор товара - "id"
 			$bus_type = $this->config->get('feed_yandex_market_type'); // Тип предложений - "type"
 			$bus_name = $this->config->get('feed_yandex_market_name'); // Название товара - "name"
 			$bus_model = $this->config->get('feed_yandex_market_model'); // Код товара - "model"
-			$bus_vendorCode = $this->config->get('feed_yandex_market_vendorCode'); // Артикул товара - "vendorCode"
-
+			$bus_vendorCode = $this->config->get('feed_yandex_market_vendorCode'); // Артикул товара - "SKU"
 			$bus_image = $this->config->get('feed_yandex_market_image'); // Статус товара без изображений
 			$bus_image_width = $this->config->get('feed_yandex_market_image_width'); // Ширина изображения товара
 			$bus_image_height = $this->config->get('feed_yandex_market_image_height'); // Высота изображения товара
 			$bus_image_quantity = $this->config->get('feed_yandex_market_image_quantity'); // Количество изображений товара
-
 			$bus_main_category = $this->config->get('feed_yandex_market_main_category'); // Статус товара без главной категории
-
 			$in_stock_id = $this->config->get('feed_yandex_market_in_stock'); // id статуса товара "В наличии"
 			$out_of_stock_id = $this->config->get('feed_yandex_market_out_of_stock'); // id статуса товара "Нет на складе"
 			$bus_quantity_status = $this->config->get('feed_yandex_market_quantity_status'); // Статус товара "количество равное 0"
-
 			$vendor_required = false; // true - только товары у которых задан производитель, необходимо для 'vendor.model'
 
 			$products = $this->model_extension_feed_yandex_market->getProduct($allowed_categories, $allowed_manufacturers, $out_of_stock_id, $vendor_required, $bus_image, $bus_image_quantity, $bus_main_category, $bus_quantity_status);
@@ -208,7 +204,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	/**
 	 * Валюты
 	 *
-	 * @param string $id - код валюты (RUR, RUB, USD, BYR, KZT, EUR, UAH)
+	 * @param string $id - код валюты (RUR, RUB, USD, BYN, BYR, KZT, EUR, UAH)
 	 * @param float|string $rate - курс этой валюты к валюте, взятой за единицу.
 	 *	Параметр rate может иметь так же следующие значения:
 	 *		CBRF - курс по Центральному банку РФ.
@@ -221,7 +217,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	 * @return bool
 	 */
 	private function setCurrency($id, $rate = 'CBRF', $plus = 0) {
-		$allow_id = array('RUR', 'RUB', 'USD', 'BYR', 'KZT', 'EUR', 'UAH');
+		$allow_id = array('RUR', 'RUB', 'USD', 'BYN', 'BYR', 'KZT', 'EUR', 'UAH');
 		if (!in_array($id, $allow_id)) {
 			return false;
 		}
@@ -380,7 +376,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		// поэтому важно соблюдать его в соответствии с порядком описанным в DTD
 		$offer['data'] = array();
 		foreach ($allowed_tags as $key => $value) {
-			$offer['data'][$key] = $this->prepareField($data[$key]);
+			$offer['data'][$key] = $this->prepareField($data[$key], $key);
 		}
 
 		$this->offers[] = $offer;
@@ -392,7 +388,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	 * @return string
 	 */
 	private function getYml() {
-		$yml  = '<?xml version="1.0" encoding="windows-1251"?>' . $this->eol;
+		$yml  = '<?xml version="1.0" encoding="' . $this->from_charset . '"?>' . $this->eol;
 		$yml .= '<!DOCTYPE yml_catalog SYSTEM "shops.dtd">' . $this->eol;
 		$yml .= '<yml_catalog date="' . date('Y-m-d H:i') . '">' . $this->eol;
 		$yml .= '<shop>' . $this->eol;
@@ -467,8 +463,6 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 				foreach (explode(',', $value) as $val) {
 					$retval .= '<' . $key . '>' . $val . '</' . $key . '>' . $this->eol;
 				}
-			} elseif ($key == 'description') {
-				$retval .= '<' . $key . '><![CDATA[﻿' . substr($value, 0, 3000) . ']]></' . $key . '>' . $this->eol;
 			} else {
 				$retval .= '<' . $key . '>' . $value . '</' . $key . '>' . $this->eol;
 			}
@@ -505,16 +499,21 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 	 * @param string $text
 	 * @return string
 	 */
-	private function prepareField($field) {
-		$field = htmlspecialchars_decode($field);
-		$field = strip_tags($field);
-		$from = array('"', '&', '>', '<', '\'');
-		$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
-		$field = str_replace($from, $to, $field);
-		if ($this->from_charset != 'windows-1251') {
-			$field = iconv($this->from_charset, 'windows-1251//TRANSLIT//IGNORE', $field);
+	private function prepareField($field, $key = false) {
+		if ($field) {
+			$field = htmlspecialchars_decode($field);
+			$field = strip_tags($field);
+			$from = array('"', '&', '>', '<', '\'');
+			$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
+			$field = str_replace($from, $to, $field);
+			if ($key == 'description') {
+				$field = "<![CDATA[" . mb_substr($field, 0, 3000) . "]]>";
+			}
+			if ($this->from_charset == 'windows-1251') {
+				$field = iconv($this->from_charset, 'windows-1251//TRANSLIT//IGNORE', $field);
+			}
+			$field = preg_replace('#[\x00-\x08\x0B-\x0C\x0E-\x1F]+#is', ' ', $field);
 		}
-		$field = preg_replace('#[\x00-\x08\x0B-\x0C\x0E-\x1F]+#is', ' ', $field);
 
 		return trim($field);
 	}
@@ -534,7 +533,6 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 			} else {
 				return $new_path;
 			}
-
 		}
 	}
 

@@ -52,10 +52,10 @@
                 {% if categories %}
                 {% for category in categories %}
                 <tr>
-                  <td class="text-center">{% if category.category_id in selected %}
-                    <input type="checkbox" name="selected[]" value="{{ category.category_id }}" checked="checked" />
+                  <td class="text-center">{% if category.blog_category_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ category.blog_category_id }}" checked="checked" />
                     {% else %}
-                    <input type="checkbox" name="selected[]" value="{{ category.category_id }}" />
+                    <input type="checkbox" name="selected[]" value="{{ category.blog_category_id }}" />
                     {% endif %}</td>
 				  {% if category.href %}
                   <td class="left">{{ category.indent }}<a href="{{ category.href }}">{{ category.name }}</a>&nbsp;<i class="fa fa-sort-desc"></i></td>

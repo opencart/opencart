@@ -29,6 +29,9 @@ class ControllerAccountReset extends Controller {
 			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 				$this->model_account_customer->editPassword($customer_info['email'], $this->request->post['password']);
 
+				// Clear any previous login attempts
+				$this->model_account_customer->deleteLoginAttempts($customer_info['email']);
+
 				$this->session->data['success'] = $this->language->get('text_success');
 
 				$this->response->redirect($this->url->link('account/login', '', true));

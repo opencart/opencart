@@ -153,7 +153,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 		}
 
 		if (isset($this->request->post['feed_yandex_market_vendorcode'])) {
-			$data['feed_yandex_market_company'] = $this->request->post['feed_yandex_market_company'];
+			$data['feed_yandex_market_vendorcode'] = $this->request->post['feed_yandex_market_vendorcode'];
 		} elseif ($this->config->has('feed_yandex_market_vendorcode')) {
 			$data['feed_yandex_market_vendorcode'] = $this->config->get('feed_yandex_market_vendorcode');
 		} else {
@@ -228,7 +228,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 		$currencies = $this->model_localisation_currency->getCurrencies();
 
-		$allowed_currencies = array_flip(array('RUR', 'RUB', 'BYR', 'KZT', 'UAH'));
+		$allowed_currencies = array_flip(array('RUR', 'RUB', 'USD', 'BYN', 'BYR', 'KZT', 'EUR', 'UAH'));
 
 		$data['currencies'] = array_intersect_key($currencies, $allowed_currencies);
 
@@ -252,7 +252,7 @@ class ControllerExtensionFeedYandexMarket extends Controller {
 
 		if (isset($this->request->post['feed_yandex_market_out_of_stock'])) {
 			$data['feed_yandex_market_out_of_stock'] = $this->request->post['feed_yandex_market_out_of_stock'];
-		} elseif ($this->config->get('feed_yandex_market_in_stock')) {
+		} elseif ($this->config->get('feed_yandex_market_out_of_stock')) {
 			$data['feed_yandex_market_out_of_stock'] = $this->config->get('feed_yandex_market_out_of_stock');
 		} else {
 			$data['feed_yandex_market_out_of_stock'] = 5;

@@ -28,7 +28,7 @@ class Url {
 	}
 
 	/**
-	 *	Add a rewrite method to the URL system
+	 * Add a rewrite method to the URL system
 	 *
 	 * @param Controller $rewrite
 	 *

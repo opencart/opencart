@@ -26,5 +26,4 @@ $_['error_name']             = 'Zone Name must be between 1 and 128 characters!'
 $_['error_default']          = 'Warning: This zone cannot be deleted as it is currently assigned as the default store zone!';
 $_['error_store']            = 'Warning: This zone cannot be deleted as it is currently assigned to %s stores!';
 $_['error_address']          = 'Warning: This zone cannot be deleted as it is currently assigned to %s address book entries!';
-$_['error_affiliate']        = 'Warning: This zone cannot be deleted as it is currently assigned to %s affiliates!';
 $_['error_zone_to_geo_zone'] = 'Warning: This zone cannot be deleted as it is currently assigned to %s zones to geo zones!';

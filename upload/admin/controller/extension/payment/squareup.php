@@ -462,8 +462,8 @@ class ControllerExtensionPaymentSquareup extends Controller {
         );
 
         $filter_data = array(
-            'start' => ($page - 1) * (int)$this->config->get('config_limit_admin'),
-            'limit' => $this->config->get('config_limit_admin')
+            'start' => ($page - 1) * (int)$this->config->get('config_pagination'),
+            'limit' => $this->config->get('config_pagination')
         );
 
         if (isset($this->request->get['order_id'])) {
@@ -505,7 +505,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $transactions_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => '{page}'
 		));
 

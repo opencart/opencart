@@ -256,5 +256,7 @@ class ModelUpgrade1010 extends Model {
 		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_pagination' WHERE `key` = 'config_limit_admin'");
 	}
 }

@@ -513,17 +513,6 @@ footer {
     .product-list .product-thumb .button-group {
       border-left: none; } }
 
-.rating .fa-stack {
-  font-size: 8px; }
-  .rating .fa-star-o {
-    color: #999;
-    font-size: 15px; }
-  .rating .fa-star {
-    color: #fc0;
-    font-size: 15px; }
-  .rating .fa-star + .fa-star-o {
-    color: #e69500; }
-
 .thumbnails {
   overflow: auto;
   clear: both;

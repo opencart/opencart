@@ -913,7 +913,7 @@ class ModelCatalogProduct extends Model {
 			}
 
 			$product_attribute_data[] = array(
-				'attribute_id' => $product_attribute['attribute_id'],
+				'attribute_id'                  => $product_attribute['attribute_id'],
 				'product_attribute_description' => $product_attribute_description_data
 			);
 		}

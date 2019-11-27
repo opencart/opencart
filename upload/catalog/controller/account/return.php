@@ -64,11 +64,11 @@ class ControllerAccountReturn extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $return_total,
 			'page'  => $page,
-			'limit' => $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'),
+			'limit' => $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'),
 			'url'   => $this->url->link('account/return', 'language=' . $this->config->get('config_language') . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) > ($return_total - $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'))) ? $return_total : ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) + $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')), $return_total, ceil($return_total / $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')) > ($return_total - $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'))) ? $return_total : ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')) + $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')), $return_total, ceil($return_total / $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')));
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 

@@ -132,7 +132,7 @@ class ModelExtensionTotalCoupon extends Model {
 					if ($status) {
 						if ($coupon_info['type'] == 'F') {
 							$discount = $coupon_info['discount'] * ($product['total'] / $sub_total);
-						} elseif ($coupon_info['type'] == 'P' && $coupon_info['shipping'] == 0) {
+						} elseif ($coupon_info['type'] == 'P') {
 							$discount = $product['total'] / 100 * $coupon_info['discount'];
 						}
 

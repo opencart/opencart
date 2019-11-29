@@ -25,16 +25,24 @@ class ControllerMarketplaceExtension extends Controller {
 			$data['type'] = '';
 		}
 
-
-
-
-		$sdsd = $this->load->controller('');
-
+		//$sdsd = $this->load->controller('');
 
 		//$extensions = $this->model_setting_extension->getDownloaded('analytics');
 
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/core');
 
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_POST, 1);
 
+		$response = curl_exec($curl);
+
+		curl_close($curl);
+
+		echo $response;
 
 		$data['categories'] = array();
 		

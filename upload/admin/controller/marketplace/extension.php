@@ -42,7 +42,22 @@ class ControllerMarketplaceExtension extends Controller {
 
 		curl_close($curl);
 
-		echo $response;
+
+		$response_info = json_decode($response, true);
+
+		foreach ($response_info['extension'] as $extension) {
+			$this->model_setting_extension->addExtension($extension, '');
+		}
+
+
+
+
+
+
+
+
+
+		//echo $response;
 
 		$data['categories'] = array();
 		

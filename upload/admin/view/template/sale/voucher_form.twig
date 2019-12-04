@@ -38,7 +38,6 @@
                 <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-                  
                   {% if error_code %}
                     <div class="invalid-tooltip">{{ error_code }}</div>
                   {% endif %}

@@ -2397,7 +2397,7 @@ $('#option').on('click', '.btn-primary', function() {
 		if ($(element).attr('data-option-value-row')) {
 			$('#option-value-row' + element.option_value_row).replaceWith(html);
 		} else {
-			$('#option-value' + $(element).attr('data-option-row') + ' tbody').append(html);
+			$('#option-value' + $(element).attr('data-option-row')).append(html);
 
 			option_value_row++;
 		}

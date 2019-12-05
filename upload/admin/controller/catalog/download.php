@@ -373,7 +373,7 @@ class ControllerCatalogDownload extends Controller {
 			$this->error['filename'] = $this->language->get('error_exists');
 		}
 
-		if ((utf8_strlen($this->request->post['mask']) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
+		if (empty(trim($this->request->post['mask'])) || (utf8_strlen(trim($this->request->post['mask'])) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
 			$this->error['mask'] = $this->language->get('error_mask');
 		}
 

@@ -41,10 +41,10 @@
                 <label for="input-url" class="col-sm-2 col-form-label">{{ entry_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_url }}</small>
                   {% if error_url %}
                     <div class="invalid-tooltip">{{ error_url }}</div>
                   {% endif %}
+                  <small class="form-text text-muted">{{ help_url }}</small>
                 </div>
               </div>
               <div class="form-group row required">

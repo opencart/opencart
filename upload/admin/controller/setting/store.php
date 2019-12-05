@@ -673,31 +673,31 @@ class ControllerSettingStore extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['config_url']) {
+		if (empty(trim($this->request->post['config_url'])) || !$this->request->post['config_url']) {
 			$this->error['url'] = $this->language->get('error_url');
 		}
 
-		if (!$this->request->post['config_meta_title']) {
+		if (empty(trim($this->request->post['config_meta_title'])) || !$this->request->post['config_meta_title']) {
 			$this->error['meta_title'] = $this->language->get('error_meta_title');
 		}
 
-		if (!$this->request->post['config_name']) {
+		if (empty(trim($this->request->post['config_name'])) || !$this->request->post['config_name']) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if ((utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
+		if (empty(trim($this->request->post['config_owner'])) || (utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
 			$this->error['owner'] = $this->language->get('error_owner');
 		}
 
-		if ((utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
+		if (empty(trim($this->request->post['config_address'])) || (utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
 			$this->error['address'] = $this->language->get('error_address');
 		}
 
-		if ((utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
+		if (empty(trim($this->request->post['config_email'])) || (utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
+		if (empty(trim($this->request->post['config_telephone'])) || (utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 

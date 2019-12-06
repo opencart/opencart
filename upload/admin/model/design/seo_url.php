@@ -34,15 +34,15 @@ class ModelDesignSeoUrl extends Model {
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
-				
+
 		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
-		
+
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}	
-		
+
 		$sort_data = array(
 			'query',
 			'keyword',
@@ -95,15 +95,15 @@ class ModelDesignSeoUrl extends Model {
 		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
-				
+
 		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
-		
+
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}		
-		
+		}
+
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];

@@ -378,7 +378,7 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
-			if (empty(trim($value['name'])) || (utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 128)) {
+			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen(trim($value['name'])) > 128)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}

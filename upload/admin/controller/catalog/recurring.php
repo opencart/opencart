@@ -473,7 +473,7 @@ class ControllerCatalogRecurring extends Controller {
 		}
 
 		foreach ($this->request->post['recurring_description'] as $language_id => $value) {
-			if (empty(trim($value['name'])) || (utf8_strlen(trim($value['name'])) < 3) || (utf8_strlen(trim($value['name'])) > 255)) {
+			if ((utf8_strlen(trim($value['name'])) < 3) || (utf8_strlen(trim($value['name'])) > 255)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}

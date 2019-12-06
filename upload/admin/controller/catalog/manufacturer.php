@@ -389,7 +389,7 @@ class ControllerCatalogManufacturer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (empty(trim($this->request->post['name'])) || (utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 64)) {
+		if ((utf8_strlen(trim($this->request->post['name'])) < 1) || (utf8_strlen(trim($this->request->post['name'])) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 

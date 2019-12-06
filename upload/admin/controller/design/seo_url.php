@@ -566,7 +566,7 @@ class ControllerDesignSeoUrl extends Controller {
 			}
 		}
 
-		if (empty(trim($this->request->post['query'])) || (utf8_strlen($this->request->post['query']) < 3) || (utf8_strlen($this->request->post['query']) > 255)) {
+		if ((utf8_strlen(trim($this->request->post['query'])) < 3) || (utf8_strlen(trim($this->request->post['query'])) > 255)) {
 			$this->error['query'] = $this->language->get('error_query');
 		} else {
 			$seo_urls = $this->model_design_seo_url->getSeoUrlsByQuery($this->request->post['query']);
@@ -583,7 +583,7 @@ class ControllerDesignSeoUrl extends Controller {
 			}
 		}
 
-		if(empty(trim($this->request->post['push'])) || !$this->request->post['push']) {
+		if(!$this->request->post['push']) {
 			$this->error['push'] = $this->language->get('error_push');
 		}
 

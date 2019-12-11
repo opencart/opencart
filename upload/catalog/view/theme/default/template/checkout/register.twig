@@ -342,7 +342,7 @@ $('#button-register').on('click', function() {
 					$('.text-danger').parent().addClass('has-error');
 				} else {
                   {% if shipping_required %}
-					var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
+					var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
 
 					if (shipping_address) {
 						chain.attach(function() {
@@ -353,18 +353,18 @@ $('#button-register').on('click', function() {
 									$('#collapse-shipping-method .card-body').html(html);
 
 									// Add the shipping address
-									deffered.attach(function() {
-										$.ajax({
-											url: 'index.php?route=checkout/shipping_address',
-											dataType: 'html',
-											success: function(html) {
-												$('#collapse-shipping-address .card-body').html(html);
-											},
-											error: function(xhr, ajaxOptions, thrownError) {
-												alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-											}
-										});
-									});
+									chain.attach(function() {
+                    return $.ajax({
+                      url: 'index.php?route=checkout/shipping_address',
+                      dataType: 'html',
+                      success: function(html) {
+                        $('#collapse-shipping-address .card-body').html(html);
+                      },
+                      error: function(xhr, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                      }
+                    });
+                  });
 
 									$('#heading-shipping-method').attr('data-toggle', 'collapse');
 

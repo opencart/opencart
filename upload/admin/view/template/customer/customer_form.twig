@@ -726,7 +726,7 @@ $('#button-address').on('click', function(e) {
 	html += '        <option value="">{{ text_select }}</option>';
 
   {% for custom_field_value in custom_field.custom_field_value %}
-	html += '  		 <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field.name|e('js') }}</option>';
+	html += '  		 <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name|e('js') }}</option>';
   {% endfor %}
 
 	html += '  	     </select>';

@@ -2311,7 +2311,8 @@ function db_schema() {
 			array(
 				'name' => 'gdpr_id',
 				'type' => 'int(11)',
-				'not_null' => true
+				'not_null' => true,
+				'auto_increment' => true
 			),
 			array(
 				'name' => 'store_id',

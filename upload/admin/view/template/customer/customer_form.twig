@@ -1175,7 +1175,7 @@ $('.datetime').datetimepicker({
 });
 
 // Sort the custom fields
-{% set address_row = 1 %}
+{% set address_row = 0 %}
 {% for address in addresses %}
 $('#tab-address{{ address_row }} .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address{{ address_row }} .form-group').length) {

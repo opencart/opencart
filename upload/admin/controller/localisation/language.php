@@ -375,7 +375,7 @@ class ControllerLocalisationLanguage extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if (utf8_strlen(trim($this->request->post['code'])) < 2) {
+		if (utf8_strlen($this->request->post['code']) < 2) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 		

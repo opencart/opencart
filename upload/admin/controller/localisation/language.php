@@ -371,15 +371,15 @@ class ControllerLocalisationLanguage extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
+		if ((utf8_strlen(trim($this->request->post['name'])) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if (utf8_strlen($this->request->post['code']) < 2) {
+		if (utf8_strlen(trim($this->request->post['code'])) < 2) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 		
-		if (!$this->request->post['locale']) {
+		if ((utf8_strlen(trim($this->request->post['locale'])) < 2) || (utf8_strlen($this->request->post['locale']) > 255)) {
 			$this->error['locale'] = $this->language->get('error_locale');
 		}
 		

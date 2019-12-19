@@ -8,7 +8,6 @@ $_['text_register']             = 'Affiliate Register';
 $_['text_account_already']      = 'If you already have an account with us, please login at the <a href="%s">login page</a>.';
 $_['text_signup']               = 'To create an affiliate account, fill in the form below ensuring you complete all the required fields:';
 $_['text_your_details']         = 'Your Personal Details';
-$_['text_your_address']         = 'Your Address Details';
 $_['text_your_affiliate']       = 'Your Affiliate Information';
 $_['text_your_password']        = 'Your Password';
 $_['text_cheque']               = 'Cheque';

@@ -84,7 +84,7 @@ class ControllerSettingStore extends Controller {
 
 	protected function getList() {
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}

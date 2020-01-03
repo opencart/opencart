@@ -637,8 +637,6 @@ class ControllerSettingStore extends Controller {
 			$data['config_logo'] = '';
 		}
 
-		$this->load->model('tool/image');
-
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'))) {

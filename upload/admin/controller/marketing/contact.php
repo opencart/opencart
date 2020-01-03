@@ -69,12 +69,12 @@ class ControllerMarketingContact extends Controller {
 				}
 				
 				$this->load->model('setting/setting');
+				
 				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
+				
 				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
 				$this->load->model('customer/customer');
-
-				$this->load->model('customer/customer_group');
 
 				$this->load->model('sale/order');
 

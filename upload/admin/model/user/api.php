@@ -1,7 +1,7 @@
 <?php
 class ModelUserApi extends Model {
 	public function addApi($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
 
 		$api_id = $this->db->getLastId();
 
@@ -17,7 +17,7 @@ class ModelUserApi extends Model {
 	}
 
 	public function editApi($api_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET username = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "api_ip WHERE api_id = '" . (int)$api_id . "'");
 
@@ -90,15 +90,9 @@ class ModelUserApi extends Model {
 	}
 
 	public function getApiIps($api_id) {
-		$ip_data = array();
-
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE api_id = '" . (int)$api_id . "'");
 
-		foreach ($query->rows as $result) {
-			$ip_data[] = $result['ip'];
-		}
-
-		return $ip_data;
+		return $query->rows;
 	}
 
 	public function addApiSession($api_id, $session_id, $ip) {
@@ -119,11 +113,15 @@ class ModelUserApi extends Model {
 		return $query->rows;
 	}
 	
-	public function deleteApiSession($api_session_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE api_session_id = '" . (int)$api_session_id . "'");
+	public function deleteApiSession($session_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE session_id = '" . (int)$session_id . "'");
 	}
 	
 	public function deleteApiSessionBySessonId($session_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE session_id = '" . $this->db->escape($session_id) . "'");
-	}		
+	}
+	
+	public function deleteApiSessions() {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE date_modified < DATE_SUB(NOW(), INTERVAL 1 HOUR)");
+	}
 }

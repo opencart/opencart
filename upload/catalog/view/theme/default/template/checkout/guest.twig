@@ -375,18 +375,20 @@ $('#button-guest').on('click', function() {
 									$('#collapse-shipping-method .card-body').html(html);
 
 									// Add the shipping address
-									$.ajax({
-										url: 'index.php?route=checkout/guest_shipping',
-										dataType: 'html',
-										success: function(html) {
-											$('#collapse-shipping-address .card-body').html(html);
+									chain.attach(function() {
+                    return $.ajax({
+                      url: 'index.php?route=checkout/guest_shipping',
+                      dataType: 'html',
+                      success: function(html) {
+                        $('#collapse-shipping-address .card-body').html(html);
 
-											$('#heading-shipping-address').attr('data-toggle', 'collapse');
-										},
-										error: function(xhr, ajaxOptions, thrownError) {
-											alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-										}
-									});
+                        $('#heading-shipping-address').attr('data-toggle', 'collapse');
+                      },
+                      error: function(xhr, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                      }
+                    });
+                  });
 
 									$('#heading-shipping-method').attr('data-toggle', 'collapse');
 

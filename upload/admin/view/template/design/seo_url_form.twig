@@ -27,30 +27,30 @@
             <label for="input-keyword" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
             <div class="col-sm-10">
               <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
-              <small class="form-text text-muted">{{ help_keyword }}</small>
               {% if error_keyword %}
                 <div class="invalid-tooltip">{{ error_keyword }}</div>
               {% endif %}
+              <small class="form-text text-muted">{{ help_keyword }}</small>
             </div>
           </div>
           <div class="form-group row required">
             <label for="input-query" class="col-sm-2 col-form-label">{{ entry_query }}</label>
             <div class="col-sm-10">
               <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
-              <small class="form-text text-muted">{{ help_query }}</small>
               {% if error_query %}
                 <div class="invalid-tooltip">{{ error_query }}</div>
               {% endif %}
+              <small class="form-text text-muted">{{ help_query }}</small>
             </div>
           </div>
           <div class="form-group row required">
             <label for="input-push" class="col-sm-2 col-form-label">{{ entry_push }}</label>
             <div class="col-sm-10">
               <input type="text" name="push" value="{{ push }}" placeholder="{{ entry_push }}" id="input-push" class="form-control"/>
-              <small class="form-text text-muted">{{ help_push }}</small>
               {% if error_push %}
                 <div class="invalid-tooltip">{{ error_push }}</div>
               {% endif %}
+              <small class="form-text text-muted">{{ help_push }}</small>
             </div>
           </div>
           <div class="form-group row">

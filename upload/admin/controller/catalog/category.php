@@ -196,8 +196,8 @@ class ControllerCatalogCategory extends Controller {
 		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
 		$category_total = $this->model_catalog_category->getTotalCategories();
@@ -262,11 +262,11 @@ class ControllerCatalogCategory extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $category_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($category_total - $this->config->get('config_limit_admin'))) ? $category_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $category_total, ceil($category_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($category_total - $this->config->get('config_pagination'))) ? $category_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $category_total, ceil($category_total / $this->config->get('config_pagination')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -514,11 +514,11 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		foreach ($this->request->post['category_description'] as $language_id => $value) {
-			if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 255)) {
+			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 255)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 
-			if ((utf8_strlen($value['meta_title']) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}

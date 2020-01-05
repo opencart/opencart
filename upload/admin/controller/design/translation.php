@@ -168,8 +168,8 @@ class ControllerDesignTranslation extends Controller {
 		$filter_data = array(
 			'sort' => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
 		$translation_total = $this->model_design_translation->getTotalTranslations();
@@ -239,11 +239,11 @@ class ControllerDesignTranslation extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $translation_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($translation_total - $this->config->get('config_limit_admin'))) ? $translation_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $translation_total, ceil($translation_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($translation_total - $this->config->get('config_pagination'))) ? $translation_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $translation_total, ceil($translation_total / $this->config->get('config_pagination')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -370,7 +370,7 @@ class ControllerDesignTranslation extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['key']) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
+		if ((utf8_strlen(trim($this->request->post['key'])) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 

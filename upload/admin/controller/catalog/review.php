@@ -255,8 +255,8 @@ class ControllerCatalogReview extends Controller {
 			'filter_date_added' => $filter_date_added,
 			'sort'              => $sort,
 			'order'             => $order,
-			'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'             => $this->config->get('config_limit_admin')
+			'start'             => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'             => $this->config->get('config_pagination')
 		);
 
 		$review_total = $this->model_catalog_review->getTotalReviews($filter_data);
@@ -360,11 +360,11 @@ class ControllerCatalogReview extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $review_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($review_total - $this->config->get('config_limit_admin'))) ? $review_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $review_total, ceil($review_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($review_total - $this->config->get('config_pagination'))) ? $review_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $review_total, ceil($review_total / $this->config->get('config_pagination')));
 
 		$data['filter_product'] = $filter_product;
 		$data['filter_author'] = $filter_author;
@@ -544,11 +544,11 @@ class ControllerCatalogReview extends Controller {
 			$this->error['product'] = $this->language->get('error_product');
 		}
 
-		if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
+		if ((utf8_strlen(trim($this->request->post['author'])) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
 			$this->error['author'] = $this->language->get('error_author');
 		}
 
-		if (utf8_strlen($this->request->post['text']) < 1) {
+		if (utf8_strlen(trim($this->request->post['text'])) < 1) {
 			$this->error['text'] = $this->language->get('error_text');
 		}
 

@@ -61,3 +61,10 @@
 # IDE Project files
 /.idea
 /upload/.idea
+/.buildpath
+/.project
+/.settings
+/.settings/*
+
+
+

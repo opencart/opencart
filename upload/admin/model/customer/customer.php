@@ -219,7 +219,7 @@ class ModelCustomerCustomer extends Model {
 	}
 
 	public function getTotalCustomers($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer";
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer c";
 
 		if (!empty($data['filter_affiliate'])) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "customer_affiliate ca ON (ca.customer_id = c.customer_id)";

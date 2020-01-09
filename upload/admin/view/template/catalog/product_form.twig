@@ -2501,7 +2501,7 @@ $('#button-recurring').on('click', function() {
   {% for customer_group in customer_groups %}
 	html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
-	html += '  <select></td>';
+	html += '  </select></td>';
 	html += '  <td class="text-right"><button type="button" onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 

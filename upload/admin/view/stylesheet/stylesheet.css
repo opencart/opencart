@@ -484,9 +484,39 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     margin: 0;
 }
 
+/* Breadcrumb */
+.breadcrumb {
+    display: inline-block;
+}
+
+.breadcrumb-item {
+    text-shadow: 0 1px #fff;
+    font-size: .9231rem;
+    display: inline-block;
+}
+
+.breadcrumb-item a {
+    color: #999999;
+}
+
+.breadcrumb-item:last-child a {
+    color: #1e91cf;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 600;
+    font-size: .7692rem;
+    color: #BBBBBB;
+}
+
 /* Cards */
 .card {
     border-radius: 0px;
+}
+
+.card-header {
+    font-size: 0.9375rem;
 }
 
 .card-header > i {

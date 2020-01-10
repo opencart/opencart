@@ -14,10 +14,9 @@
   vertical-align: baseline;
   @include border-radius($badge-border-radius);
   @include transition($badge-transition);
-  
-  &[href] {
-  //@at-root a#{&} {
-    @include hover-focus {
+
+  @at-root a#{&} {
+    @include hover-focus() {
       text-decoration: none;
     }
   }

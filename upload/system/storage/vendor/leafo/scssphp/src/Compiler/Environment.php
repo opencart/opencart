@@ -34,6 +34,11 @@ class Environment
     public $store;
 
     /**
+     * @var array
+     */
+    public $storeUnreduced;
+
+    /**
      * @var integer
      */
     public $depth;

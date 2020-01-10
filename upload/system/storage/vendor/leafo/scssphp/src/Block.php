@@ -62,4 +62,9 @@ class Block
      * @var array
      */
     public $children;
+
+    /**
+     * @var \Leafo\ScssPhp\Block
+     */
+    public $selfParent;
 }

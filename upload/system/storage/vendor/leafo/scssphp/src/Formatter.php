@@ -256,7 +256,8 @@ abstract class Formatter
                 $this->currentLine,
                 $this->currentColumn,
                 $this->currentBlock->sourceLine,
-                $this->currentBlock->sourceColumn - 1, //columns from parser are off by one
+                //columns from parser are off by one
+                $this->currentBlock->sourceColumn > 0 ? $this->currentBlock->sourceColumn - 1 : 0,
                 $this->currentBlock->sourceName
             );
 

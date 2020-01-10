@@ -21,11 +21,13 @@
         "psr-4": { "Leafo\\ScssPhp\\Test\\": "tests/" }
     },
     "require": {
-        "php": ">=5.4.0"
+        "php": "^5.4.0 || ^7"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~2.5",
-        "phpunit/phpunit": "~4.6"
+        "phpunit/phpunit": "~4.6",
+        "twbs/bootstrap": "~4.3",
+        "zurb/foundation": "~6.5"
     },
     "bin": ["bin/pscss"],
     "archive": {
@@ -37,5 +39,6 @@
             "/phpunit.xml.dist",
             "/tests"
         ]
-    }
+    },
+    "abandoned": "scssphp/scssphp"
 }

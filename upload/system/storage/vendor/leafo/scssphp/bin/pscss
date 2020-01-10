@@ -201,7 +201,7 @@ if ($style) {
 }
 
 if ($sourceMap) {
-    $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
+    $scss->setSourceMap(Compiler::SOURCE_MAP_INLINE);
 }
 
 if ($encoding) {

@@ -468,7 +468,7 @@ class Server
 
         if ($root !== null) {
             // If we have a root value which means we should rebuild.
-            $out = array();
+            $out = [];
             $out['root'] = $root;
             $out['compiled'] = $this->compileFile($root);
             $out['files'] = $this->scss->getParsedFiles();

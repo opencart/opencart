@@ -104,18 +104,18 @@ $(document).ready(function() {
 
 // Image Manager
 $(document).on('click', '[data-toggle=\'image\']', function(e) {
-	var element = this;
+	var $element = $(this);
 
 	$('#modal-image').remove();
 
 	$.ajax({
-		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-thumb')),
+		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($element.attr('data-target')) + '&thumb=' + encodeURIComponent($element.attr('data-thumb')),
 		dataType: 'html',
 		beforeSend: function() {
-			$(element).button('loading');
+			$element.button('loading');
 		},
 		complete: function() {
-			$(element).button('reset');
+			$element.button('reset');
 		},
 		success: function(html) {
 			$('body').append(html);

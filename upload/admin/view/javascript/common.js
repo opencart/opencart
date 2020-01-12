@@ -126,9 +126,11 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 });
 
 $(document).on('click', '[data-toggle=\'clear\']', function() {
-	$($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
+	var $that = $(this);
+	
+	$($that.attr('data-thumb')).attr('src', $($that.attr('data-thumb')).attr('data-placeholder'));
 
-	$($(this).attr('data-target')).val('');
+	$($that.attr('data-target')).val('');
 });
 
 // Chain ajax calls.

@@ -4,274 +4,260 @@ class ControllerStartupSeoUrl extends Controller {
     private $keyword = array();
 
     public function index() {
-		// Add rewrite to url class
-		if ($this->config->get('config_seo_url')) {
-			$this->url->addRewrite($this);
-		}
+        // Add rewrite to url class
+        if ($this->config->get('config_seo_url')) {
+            $this->url->addRewrite($this);
+        }
 
-		$this->load->model('design/seo_url');
-		$this->load->model('design/seo_regex');
+        $this->load->model('design/seo_url');
+        $this->load->model('design/seo_regex');
 
-		// Load all regexes in the var so we are not accessing the db so much.
-		$results = $this->model_design_seo_regex->getSeoRegexes();
+        // Load all regexes in the var so we are not accessing the db so much.
+        $results = $this->model_design_seo_regex->getSeoRegexes();
 
-		foreach ($results as $result) {
-		    //$this->regex[$result['key']][] = '/' . $result['regex'] . '/';
-		}
+        foreach ($results as $result) {
+            //$this->regex[$result['key']][] = '/' . $result['regex'] . '/';
+        }
 
-		// Decode URL
-		if (isset($this->request->get['_route_'])) {
-		    /*
-            echo __METHOD__ . ": route: '{$this->request->get['_route_']}'<br />\n";
-            echo __METHOD__ . ": req dmp:\n";
-            var_dump($this->request);
-            echo "<br />\n";
-            */
+        // Decode URL
+        if (isset($this->request->get['_route_'])) {
 
-			$parts = explode('/', $this->request->get['_route_']);
+            $parts = explode('/', $this->request->get['_route_']);
 
-			//echo "arr parts: '" . print_r($parts, true) . "'<br />\n";
+            // remove any empty arrays from trailing
+            if (utf8_strlen(end($parts)) == 0) {
+                array_pop($parts);
+            }
 
-			// remove any empty arrays from trailing
-			if (utf8_strlen(end($parts)) == 0) {
-				array_pop($parts);
-			}
+            foreach ($parts as $part) {
+                $results = $this->model_design_seo_url->getSeoUrlsByKeyword($part);
 
-			foreach ($parts as $part) {
-			    $results = $this->model_design_seo_url->getSeoUrlsByKeyword($part);
+                if ($results) {
+                    foreach ($results as $result) {
+                        $data = array();
 
-			    //echo "rs seo url: '" . print_r($results, true) . "'<br />\n";
+                        // Push additional query string vars into GET data
+                        parse_str($result['push'], $data);
 
-			    if ($results) {
-			        foreach ($results as $result) {
-			            $data = array();
+                        foreach ($data as $key => $value) {
+                            $this->request->get[$key] = $value;
+                        }
+                    }   //foreach ($results as $result)
+                } else {
+                    $this->request->get['route'] = 'error/not_found';
 
-			            // Push additional query string vars into GET data
-			            parse_str($result['push'], $data);
+                    break;
+                }   //if ($results)
+            }   //foreach ($parts as $part)
 
-			            foreach ($data as $key => $value) {
-			                $this->request->get[$key] = $value;
-			            }
-			        }
-				} else {
-					$this->request->get['route'] = 'error/not_found';
+          if (isset($this->request->get['product_id']))
+              $this->request->get['route'] = 'product/product';
 
-					break;
-				}
-			}    //foreach ($parts as $part)
+        } //if (isset($this->request->get['_route_']))
+    }
 
-			if (isset($this->request->get['product_id']))
-			    $this->request->get['route'] = 'product/product';
+    public function rewrite($link) {
+        $url_info = parse_url(str_replace('&amp;', '&', $link));
 
-			//echo "rs arr get: '" . print_r($this->request->get, true) . "'<br />\n";
+        $url = '';
 
-		} //if (isset($this->request->get['_route_']))
-	}
+        $data = array();
 
-	public function rewrite($link) {
-        //echo __METHOD__ . ": link: '$link'<br />\n";
+        parse_str($url_info['query'], $data);
 
-		$url_info = parse_url(str_replace('&amp;', '&', $link));
+        if (isset($data['route'])) {
+            switch ($data['route']) {
+                case "product/product":
+                    if (isset($data['path'])) {
+                        $categories = explode('_', $data['path']);
+                        $categorysearch = '';
 
-        //echo "url info: '" . print_r($url_info, true) . "'<br />\n";
+                        foreach ($categories as $category) {
+                            if ($categorysearch !== '')
+                              $categorysearch .= '_';
 
-		$url = '';
+                            $categorysearch .= $category;
 
-		$data = array();
+                            $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
 
-		parse_str($url_info['query'], $data);
+                            if ($skeyword !== '') {
+                                $url .= '/' . $skeyword;
+                            } else {
+                                //The URL is not defined yet
+                                //Leave it unchanged
+                                $url = '';
 
-        //echo "query data: '" . print_r($data, true) . "'<br />\n";
+                                break;
+                            }  //if ($skeyword !== '')
+                        }  //foreach ($categories as $category)
 
-        if(isset($data['route']))
-        {
-          switch($data['route'])
-          {
-            case "product/product":
-              if (isset($data['path'])) {
-                  $categories = explode('_', $data['path']);
-                  $categorysearch = '';
+                        unset($data['path']);
+                    } //if (isset($data['path']))
 
-                  foreach ($categories as $category) {
-                      if ($categorysearch !== '')
-                          $categorysearch .= '_';
+                    foreach ($data as $key => $value) {
+                        if (isset($data['route'])) {
+                            if (($data['route'] == 'product/product' && $key == 'product_id')
+                                || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id')
+                                || ($data['route'] == 'information/information' && $key == 'information_id')) {
+                                $skeyword = $this->model_design_seo_url->getKeywordByQuery($key . '=' . (int)$value);
 
-                      $categorysearch .= $category;
+                                if ($skeyword !== '') {
+                                    $url .= '/' . $skeyword;
 
-                      $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
+                                  unset($data[$key]);
+                                }
+                            } elseif ($key == 'path') {
+                                $categories = explode('_', $value);
+                                $categorysearch = '';
 
-                      if ($skeyword !== '') {
-                          $url .= '/' . $skeyword;
-                      } else {
-                          //The URL is not defined yet
-                          //Leave it unchanged
-                          $url = '';
+                                foreach ($categories as $category) {
+                                    if ($categorysearch !== '')
+                                        $categorysearch .= '_';
 
-                          break;
-                      }  //if ($skeyword !== '')
-                  }  //foreach ($categories as $category)
+                                    $categorysearch .= $category;
 
-                unset($data['path']);
-              } //if (isset($data['path']))
+                                    $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
 
-              foreach ($data as $key => $value) {
-                  //echo "key: '$key': value: '$value'\n";
+                                    if ($skeyword !== '') {
+                                        $url .= '/' . $skeyword;
+                                    } else {
+                                        //The URL is not defined yet
+                                        //Leave it unchanged
+                                        $url = '';
 
-                if (isset($data['route'])) {
-                  if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
-                    $skeyword = $this->model_design_seo_url->getKeywordByQuery($key . '=' . (int)$value);
+                                        break;
+                                    }  //if ($skeyword !== '')
+                                }  //foreach ($categories as $category)
+
+                                unset($data[$key]);
+                            }   //if (($data['route'] == 'product/product' && $key == 'product_id')
+                                //  || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id')
+                                //  || ($data['route'] == 'information/information' && $key == 'information_id'))
+                        }   //if (isset($data['route']))
+                    }   //foreach ($data as $key => $value)
+                    break;
+
+                case "product/category":
+                    if (isset($data['path'])) {
+                        $categories = explode('_', $data['path']);
+                        $categorysearch = '';
+
+                        foreach ($categories as $category) {
+                            if ($categorysearch !== '')
+                                $categorysearch .= '_';
+
+                            $categorysearch .= $category;
+
+                            $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
+
+                            if ($skeyword !== '') {
+                                $url .= '/' . $skeyword;
+                            } else {
+                                //The URL is not defined yet
+                                //Leave it unchanged
+                                $url = '';
+
+                                break;
+                            }   //if ($skeyword !== '')
+                        }  //foreach ($categories as $category)
+
+                        unset($data['path']);
+                    } //if (isset($data['path']))
+                    break;
+
+                case "product/manufacturer/info":
+                case "information/information":
+                    foreach ($data as $key => $value) {
+                        if (isset($data['route'])) {
+                            if (($data['route'] == 'product/product' && $key == 'product_id')
+                                || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id')
+                                || ($data['route'] == 'information/information' && $key == 'information_id')) {
+                                $skeyword = $this->model_design_seo_url->getKeywordByQuery($key . '=' . (int)$value);
+
+                                if ($skeyword !== '') {
+                                    $url .= '/' . $skeyword;
+
+                                    unset($data[$key]);
+                                }
+                            } elseif ($key == 'path') {
+                                $categories = explode('_', $value);
+                                $categorysearch = '';
+
+                                foreach ($categories as $category) {
+                                    if ($categorysearch !== '')
+                                        $categorysearch .= '_';
+
+                                    $categorysearch .= $category;
+
+                                    $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
+
+                                    if ($skeyword !== '') {
+                                        $url .= '/' . $skeyword;
+                                    } else {
+                                        //The URL is not defined yet
+                                        //Leave it unchanged
+                                        $url = '';
+
+                                        break;
+                                    } //if ($query->num_rows && $query->row['keyword'])
+                                }  //foreach ($categories as $category)
+
+                                unset($data[$key]);
+                            }   //if (($data['route'] == 'product/product' && $key == 'product_id')
+                                //  || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id')
+                                //  || ($data['route'] == 'information/information' && $key == 'information_id'))
+                        }   //if (isset($data['route']))
+                    } //foreach ($data as $key => $value)
+                    break;
+
+                default:
+                    $skeyword = $this->model_design_seo_url->getKeywordByQuery($data['route']);
 
                     if ($skeyword !== '') {
                         $url .= '/' . $skeyword;
-
-                      unset($data[$key]);
                     }
-                  } elseif ($key == 'path') {
-                    $categories = explode('_', $value);
-                    $categorysearch = '';
+                    break;
 
-                    foreach ($categories as $category) {
-                        if ($categorysearch !== '')
-                            $categorysearch .= '_';
-
-                        $categorysearch .= $category;
-
-                        $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
-
-                        if ($skeyword !== '') {
-                            $url .= '/' . $skeyword;
-                        } else {
-                            //The URL is not defined yet
-                            //Leave it unchanged
-                            $url = '';
-
-                            break;
-                        }  //if ($skeyword !== '')
-                    }  //foreach ($categories as $category)
-
-                    unset($data[$key]);
-                  }
-                }   //if (isset($data['route']))
-              } //foreach ($data as $key => $value)
-              break;
-
-            case "product/category":
-              if (isset($data['path'])) {
-                  $categories = explode('_', $data['path']);
-                  $categorysearch = '';
-
-                  foreach ($categories as $category) {
-                      if ($categorysearch !== '')
-                          $categorysearch .= '_';
-
-                      $categorysearch .= $category;
-
-                      $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
-
-                      if ($skeyword !== '') {
-                          $url .= '/' . $skeyword;
-                      } else {
-                          //The URL is not defined yet
-                          //Leave it unchanged
-                          $url = '';
-
-                          break;
-                      }
-                  }  //foreach ($categories as $category)
-
-                unset($data['path']);
-              } //if (isset($data['path']))
-              break;
-
-            case "product/manufacturer/info":
-            case "information/information":
-                foreach ($data as $key => $value) {
-                    if (isset($data['route'])) {
-                  if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
-                    $skeyword = $this->model_design_seo_url->getKeywordByQuery($key . '=' . (int)$value);
-
-                    if ($skeyword !== '') {
-                        $url .= '/' . $skeyword;
-
-                      unset($data[$key]);
-                    }
-                  } elseif ($key == 'path') {
-                    $categories = explode('_', $value);
-                    $categorysearch = '';
-
-                    foreach ($categories as $category) {
-                        if ($categorysearch !== '')
-                            $categorysearch .= '_';
-
-                        $categorysearch .= $category;
-
-                        $skeyword = $this->model_design_seo_url->getKeywordByQuery('path=' . $categorysearch);
-
-                        if ($skeyword !== '') {
-                            $url .= '/' . $skeyword;
-                        } else {
-                            //The URL is not defined yet
-                            //Leave it unchanged
-                            $url = '';
-
-                            break;
-                        } //if ($query->num_rows && $query->row['keyword'])
-                    }  //foreach ($categories as $category)
-
-                    unset($data[$key]);
-                  }
-                }
-              } //foreach ($data as $key => $value)
-              break;
-
-            default:
-                $skeyword = $this->model_design_seo_url->getKeywordByQuery($data['route']);
-
-                if ($skeyword !== '') {
-                    $url .= '/' . $skeyword;
-                }
-              break;
-
-          } //switch($data['route'])
+            } //switch($data['route'])
         } //if(isset($data['route']))
 
-            //echo "res url: '$url'<br />\n";
+        if ($url !== '') {
+            unset($data['route']);
 
-    		if ($url) {
-    			unset($data['route']);
+            $link = '';
+            $query = '';
 
-            $link = "";
-			$query = '';
+            if ($data) {
+                foreach ($data as $key => $value) {
+                  $query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode((is_array($value) ? http_build_query($value) : (string)$value));
+                }
 
-			if ($data) {
-				foreach ($data as $key => $value) {
-					$query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode((is_array($value) ? http_build_query($value) : (string)$value));
-				}
+                if ($query) {
+                  $query = '?' . str_replace('&', '&amp;', trim($query, '&'));
+                }
+            }   //if ($data)
 
-				if ($query) {
-					$query = '?' . str_replace('&', '&amp;', trim($query, '&'));
-				}
-			}
-
-            if(!empty($url_info['scheme']))
+            if (!empty($url_info['scheme'])) {
                 $link = $url_info['scheme'];
+            }
 
-            if(!empty($url_info['host']))
-            {
-                if(!empty($link))
-                  $link .= ":";
+            if (!empty($url_info['host'])) {
+                if (!empty($link)) {
+                    $link .= ":";
+                }
 
                 $link .= "//" . $url_info['host'];
             } //if(!empty($url_info['host']))
 
-            if(isset($url_info['port']))
+            if (isset($url_info['port'])) {
                 $link .= $url_info['port'];
+            }
 
             $link = str_replace('/index.php', '', $url_info['path']) . $url . $query;
 
-			return $link;
-		} else {
-			return $link;
-		}
-	}
+            return $link;
+        } else {
+            return $link;
+        }   //if ($url !== '')
+    }
 }

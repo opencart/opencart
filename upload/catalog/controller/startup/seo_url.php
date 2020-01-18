@@ -21,7 +21,6 @@ class ControllerStartupSeoUrl extends Controller {
 
         // Decode URL
         if (isset($this->request->get['_route_'])) {
-
             $parts = explode('/', $this->request->get['_route_']);
 
             // remove any empty arrays from trailing
@@ -50,9 +49,9 @@ class ControllerStartupSeoUrl extends Controller {
                 }   //if ($results)
             }   //foreach ($parts as $part)
 
-          if (isset($this->request->get['product_id']))
-              $this->request->get['route'] = 'product/product';
-
+            if (isset($this->request->get['product_id'])) {
+                $this->request->get['route'] = 'product/product';
+            }
         } //if (isset($this->request->get['_route_']))
     }
 

@@ -230,7 +230,9 @@ class ControllerCheckoutConfirm extends Controller {
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = array(
-						'description' => $voucher['description'],
+						'name'		  	   => html_entity_decode($voucher['name'], ENT_QUOTES, 'UTF-8'),
+						'description' 	   => $voucher['description'],
+						'image'		  	   => $this->model_tool_image->resize($voucher['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height')),
 						'code' => token(10),
 						'to_name' => $voucher['to_name'],
 						'to_email' => $voucher['to_email'],

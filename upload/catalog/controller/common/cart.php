@@ -108,7 +108,9 @@ class ControllerCommonCart extends Controller {
 			foreach ($this->session->data['vouchers'] as $key => $voucher) {
 				$data['vouchers'][] = array(
 					'key'         => $key,
-					'description' => $voucher['description'],
+					'name'			   	=> $voucher['name'],
+					'image'			   	=> $this->model_tool_image->resize($voucher['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height')),
+					'description'      	=> $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
 				);
 			}

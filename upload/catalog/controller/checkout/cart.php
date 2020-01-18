@@ -153,7 +153,9 @@ class ControllerCheckoutCart extends Controller {
 				foreach ($this->session->data['vouchers'] as $key => $voucher) {
 					$data['vouchers'][] = array(
 						'key'         => $key,
+						'name'		  => html_entity_decode($voucher['name'], ENT_QUOTES, 'UTF-8'),
 						'description' => $voucher['description'],
+						'image'		  => $this->model_tool_image->resize($voucher['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height')),
 						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
 						'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
 					);

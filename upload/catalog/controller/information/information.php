@@ -47,7 +47,7 @@ class ControllerInformationInformation extends Controller {
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('information/information', 'language=' . $this->config->get('config_language') , '&information_id=' . $information_id)
+				'href' => $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_id)
 			);
 
 			$this->document->setTitle($this->language->get('text_error'));

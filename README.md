@@ -75,3 +75,13 @@ Please read the installation instructions included in the repository or download
 - [How to documents](http://docs.opencart.com/en-gb/introduction/)
 - [Newsletter](https://newsletter.opencart.com/h/r/B660EBBE4980C85C)
 - [User Voice suggestions](https://opencart.uservoice.com)
+
+## Documentation
+
+- [admin] controls the administration level features of modifying the user caccess to the system. It has customer support, customer database change, marketing and catalog for the model design. Controller offers events description, and mails.
+
+- [catalog] Offers the complete catalog of the system. Controller side = login can be performed to create and update user data, edit orders, recieve newletters, track transactions and gain rewards. The view enables different grid views for viewing cataog.
+
+- [system] Stores the libraries, db engines and helper libraries. Incorporates a caching system to track the sessions better.
+
+

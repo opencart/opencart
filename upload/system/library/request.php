@@ -27,6 +27,18 @@ class Request {
 		$this->cookie = $this->clean($_COOKIE);
 		$this->files = $this->clean($_FILES);
 		$this->server = $this->clean($_SERVER);
+
+		if (isset($this->server['CONTENT_TYPE']) && $this->server['CONTENT_TYPE'] == 'application/json') {
+			$data = file_get_contents("php://input");
+
+			if ($data !== false) {
+				$data = json_decode($data, true);
+
+				if (is_array($data)) {
+					$this->post = $this->clean($data);
+				}
+			}
+		}
 	}
 	
 	/**

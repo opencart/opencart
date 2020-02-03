@@ -233,7 +233,7 @@ class ControllerCommonFileManager extends Controller {
 			if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
 				foreach (array_keys($this->request->files['file']['name']) as $key) {
 					$files[] = array(
-						'name'     => $this->request->files['file']['name'][$key],
+						'name'     => $this->replateEmptyStaces($this->request->files['file']['name'][$key]),
 						'type'     => $this->request->files['file']['type'][$key],
 						'tmp_name' => $this->request->files['file']['tmp_name'][$key],
 						'error'    => $this->request->files['file']['error'][$key],
@@ -311,7 +311,7 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
+			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->replateEmptyStaces($this->request->get['directory']), ENT_QUOTES, 'UTF-8') . '/';
 		} else {
 			$directory = DIR_IMAGE . 'catalog/';
 		}
@@ -430,5 +430,10 @@ class ControllerCommonFileManager extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	private function replateEmptySpaces($string, $replacer = "_"){
+		$string = str_replace(" ", $replacer, $string);
+		return $string;
 	}
 }

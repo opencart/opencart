@@ -20,7 +20,7 @@ class ControllerInformationContact extends Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setReplyTo($this->request->post['email']);
 			$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->post['name']), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->post['name'] . ' (' . $this->request->post['email'] . ')'), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($this->request->post['enquiry']);
 			$mail->send();
 

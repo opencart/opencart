@@ -17,7 +17,7 @@ $_['text_latest']       = 'Новинки';
 $_['text_bestseller']   = 'Хиты Продаж';
 $_['text_mostviewed']   = 'Популярные Товары';
 $_['text_account']      = 'Личный кабинет';
-$_['text_order']        = 'История заказа';
+$_['text_order']        = 'История заказов';
 $_['text_wishlist']     = 'Закладки';
 $_['text_newsletter']   = 'Рассылка';
 $_['text_powered']      = 'Работает на <a target="_blank" href="https://ocstore.com/">ocStore</a><br /> %s &copy; %s';

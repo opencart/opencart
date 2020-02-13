@@ -116,7 +116,7 @@ class ModelCatalogManufacturer extends Model {
 		return $query->rows;
 	}
 
-	public function getManufacturerStores($manufacturer_id) {
+	public function getStores($manufacturer_id) {
 		$manufacturer_store_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_store WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
@@ -128,7 +128,7 @@ class ModelCatalogManufacturer extends Model {
 		return $manufacturer_store_data;
 	}
 	
-	public function getManufacturerSeoUrls($manufacturer_id) {
+	public function getSeoUrls($manufacturer_id) {
 		$manufacturer_seo_url_data = array();
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "'");

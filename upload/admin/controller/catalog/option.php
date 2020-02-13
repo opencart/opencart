@@ -312,7 +312,7 @@ class ControllerCatalogOption extends Controller {
 		if (isset($this->request->post['option_description'])) {
 			$data['option_description'] = $this->request->post['option_description'];
 		} elseif (!empty($option_info)) {
-			$data['option_description'] = $this->model_catalog_option->getOptionDescriptions($this->request->get['option_id']);
+			$data['option_description'] = $this->model_catalog_option->getDescriptions($this->request->get['option_id']);
 		} else {
 			$data['option_description'] = array();
 		}

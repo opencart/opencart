@@ -144,7 +144,7 @@ class ModelCatalogInformation extends Model {
 		}
 	}
 
-	public function getInformationDescriptions($information_id) {
+	public function getDescriptions($information_id) {
 		$information_description_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
@@ -162,7 +162,7 @@ class ModelCatalogInformation extends Model {
 		return $information_description_data;
 	}
 
-	public function getInformationStores($information_id) {
+	public function getStores($information_id) {
 		$information_store_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
@@ -174,7 +174,7 @@ class ModelCatalogInformation extends Model {
 		return $information_store_data;
 	}
 
-	public function getInformationSeoUrls($information_id) {
+	public function getSeoUrls($information_id) {
 		$information_seo_url_data = array();
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE query = 'information_id=" . (int)$information_id . "'");
@@ -186,7 +186,7 @@ class ModelCatalogInformation extends Model {
 		return $information_seo_url_data;
 	}
 
-	public function getInformationLayouts($information_id) {
+	public function getLayouts($information_id) {
 		$information_layout_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . (int)$information_id . "'");

@@ -45,9 +45,9 @@ class ControllerMarketplaceExtension extends Controller {
 
 		$response_info = json_decode($response, true);
 
-		foreach ($response_info['extension'] as $extension) {
-			$this->model_setting_extension->addExtension($extension, '');
-		}
+		//foreach ($response_info['extension'] as $extension) {
+		//	$this->model_setting_extension->addExtension($extension, '');
+		//}
 
 
 

@@ -109,7 +109,7 @@ class ModelCatalogOption extends Model {
 		return $query->rows;
 	}
 
-	public function getOptionDescriptions($option_id) {
+	public function getDescriptions($option_id) {
 		$option_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_description WHERE option_id = '" . (int)$option_id . "'");

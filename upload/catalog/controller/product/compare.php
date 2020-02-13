@@ -83,7 +83,7 @@ class ControllerProductCompare extends Controller {
 
 				$attribute_data = array();
 
-				$attribute_groups = $this->model_catalog_product->getProductAttributes($product_id);
+				$attribute_groups = $this->model_catalog_product->getAttributes($product_id);
 
 				foreach ($attribute_groups as $attribute_group) {
 					foreach ($attribute_group['attribute'] as $attribute) {

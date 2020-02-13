@@ -16,7 +16,7 @@ class ControllerExtensionModuleSpecial extends Controller {
 			'limit' => $setting['limit']
 		);
 
-		$results = $this->model_catalog_product->getProductSpecials($filter_data);
+		$results = $this->model_catalog_product->getSpecials($filter_data);
 
 		if ($results) {
 			foreach ($results as $result) {

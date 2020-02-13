@@ -103,7 +103,7 @@ class ModelCatalogFilter extends Model {
 		return $query->rows;
 	}
 
-	public function getFilterGroupDescriptions($filter_group_id) {
+	public function getDescriptions($filter_group_id) {
 		$filter_group_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_group_description WHERE filter_group_id = '" . (int)$filter_group_id . "'");

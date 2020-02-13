@@ -288,7 +288,7 @@ class ControllerCheckoutCart extends Controller {
 				$option[$key] = $value;
 			}
 
-			$product_options = $this->model_catalog_product->getProductOptions($product_id);
+			$product_options = $this->model_catalog_product->getOptions($product_id);
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {

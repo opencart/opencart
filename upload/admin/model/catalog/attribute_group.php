@@ -70,7 +70,7 @@ class ModelCatalogAttributeGroup extends Model {
 		return $query->rows;
 	}
 
-	public function getAttributeGroupDescriptions($attribute_group_id) {
+	public function getDescriptions($attribute_group_id) {
 		$attribute_group_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "attribute_group_description WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");

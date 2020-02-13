@@ -185,13 +185,13 @@ class ModelSaleReturn extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalReturnHistories($return_id) {
+	public function getTotalHistories($return_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "return_history WHERE return_id = '" . (int)$return_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalReturnHistoriesByReturnStatusId($return_status_id) {
+	public function getTotalHistoriesByReturnStatusId($return_status_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "return_history WHERE return_status_id = '" . (int)$return_status_id . "'");
 
 		return $query->row['total'];

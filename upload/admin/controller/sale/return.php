@@ -882,7 +882,7 @@ class ControllerSaleReturn extends Controller {
 			);
 		}
 
-		$history_total = $this->model_sale_return->getTotalReturnHistories($this->request->get['return_id']);
+		$history_total = $this->model_sale_return->getTotalHistories($this->request->get['return_id']);
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $history_total,

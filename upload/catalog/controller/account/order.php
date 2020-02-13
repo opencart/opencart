@@ -49,8 +49,8 @@ class ControllerAccountOrder extends Controller {
 		$results = $this->model_account_order->getOrders(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
-			$voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
+			$product_total = $this->model_account_order->getTotalProductsByOrderId($result['order_id']);
+			$voucher_total = $this->model_account_order->getTotalVouchersByOrderId($result['order_id']);
 
 			$data['orders'][] = array(
 				'order_id'   => $result['order_id'],
@@ -357,7 +357,7 @@ class ControllerAccountOrder extends Controller {
 				$order_product_id = 0;
 			}
 
-			$order_product_info = $this->model_account_order->getOrderProduct($order_id, $order_product_id);
+			$order_product_info = $this->model_account_order->getProduct($order_id, $order_product_id);
 
 			if ($order_product_info) {
 				$this->load->model('catalog/product');

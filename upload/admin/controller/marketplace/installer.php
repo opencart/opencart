@@ -155,7 +155,7 @@ class ControllerMarketplaceInstaller extends Controller {
 			if (is_file($file)) {
 				$this->load->model('setting/extension');
 				
-				$extension_install_id = $this->model_setting_extension->addExtensionInstall($this->request->files['file']['name']);
+				$extension_install_id = $this->model_setting_extension->addInstall($this->request->files['file']['name']);
 				
 				$json['text'] = $this->language->get('text_install');
 

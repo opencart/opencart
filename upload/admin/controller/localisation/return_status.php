@@ -342,7 +342,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);
 			}
 
-			$return_total = $this->model_sale_return->getTotalReturnHistoriesByReturnStatusId($return_status_id);
+			$return_total = $this->model_sale_return->getTotalHistoriesByReturnStatusId($return_status_id);
 
 			if ($return_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);

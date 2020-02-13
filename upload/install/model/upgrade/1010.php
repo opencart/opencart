@@ -72,8 +72,8 @@ class ModelUpgrade1010 extends Model {
 		
 		$events[] = array(
 			'code'    => 'activity_order_add', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/before', 
-			'action'  => 'event/activity/addOrderHistory'
+			'trigger' => 'catalog/model/checkout/order/addHistory/before',
+			'action'  => 'event/activity/addHistory'
 		);
 		
 		$events[] = array(
@@ -120,19 +120,19 @@ class ModelUpgrade1010 extends Model {
 			
 		$events[] = array(
 			'code'    => 'mail_voucher', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/after', 
+			'trigger' => 'catalog/model/checkout/order/addHistory/after',
 			'action'  => 'extension/total/voucher/send'
 		);
 			
 		$events[] = array(
 			'code'    => 'mail_order_add', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/before', 
+			'trigger' => 'catalog/model/checkout/order/addHistory/before',
 			'action'  => 'mail/order'
 		);
 			
 		$events[] = array(
 			'code'    => 'mail_order_alert', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/before', 
+			'trigger' => 'catalog/model/checkout/order/addHistory/before',
 			'action'  => 'mail/order/alert'
 		);
 			
@@ -150,8 +150,8 @@ class ModelUpgrade1010 extends Model {
 		
 		$events[] = array(
 			'code'    => 'statistics_order_history', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/after', 
-			'action'  => 'event/statistics/addOrderHistory'
+			'trigger' => 'catalog/model/checkout/order/addHistory/after',
+			'action'  => 'event/statistics/addHistory'
 		);
 		
 		$events[] = array(

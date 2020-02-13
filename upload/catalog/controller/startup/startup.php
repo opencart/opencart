@@ -39,7 +39,7 @@ class ControllerStartupStartup extends Controller {
 		if (isset($this->request->get['route']) && substr((string)$this->request->get['route'], 0, 4) == 'api/') {
 			$this->load->model('setting/api');
 
-			$this->model_setting_api->cleanApiSessions();
+			$this->model_setting_api->cleanSessions();
 
 			// Make sure the IP is allowed
 			$api_info = $this->model_setting_api->getApiByToken($this->request->get['api_token']);
@@ -47,7 +47,7 @@ class ControllerStartupStartup extends Controller {
 			if ($api_info) {
 				$this->session->start($this->request->get['api_token']);
 
-				$this->model_setting_api->updateApiSession($api_info['api_session_id']);
+				$this->model_setting_api->updateSession($api_info['api_session_id']);
 			}
 		} else {
 			if (isset($this->request->cookie[$this->config->get('session_name')])) {

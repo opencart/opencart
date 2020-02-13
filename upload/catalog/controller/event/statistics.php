@@ -14,8 +14,8 @@ class ControllerEventStatistics extends Controller {
 		$this->model_report_statistics->addValue('return', 1);
 	}
 	
-	// catalog/model/checkout/order/addOrderHistory/before
-	public function addOrderHistory(&$route, &$args) {
+	// catalog/model/checkout/order/addHistory/before
+	public function addHistory(&$route, &$args) {
 		$this->load->model('checkout/order');
 				
 		$order_info = $this->model_checkout_order->getOrder($args[0]);

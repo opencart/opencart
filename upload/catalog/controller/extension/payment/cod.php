@@ -10,7 +10,7 @@ class ControllerExtensionPaymentCod extends Controller {
 		if ($this->session->data['payment_method']['code'] == 'cod') {
 			$this->load->model('checkout/order');
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_cod_order_status_id'));
+			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_cod_order_status_id'));
 		
 			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		}

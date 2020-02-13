@@ -884,7 +884,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 					$this->load->model('setting/extension');
 
-					$json['extension_install_id'] = $this->model_setting_extension->addExtensionInstall($response_info['extension'], $extension_id, $extension_download_id);
+					$json['extension_install_id'] = $this->model_setting_extension->addInstall($response_info['extension'], $extension_id, $extension_download_id);
 
 					$json['text'] = $this->language->get('text_install');
 

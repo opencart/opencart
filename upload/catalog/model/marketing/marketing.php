@@ -6,7 +6,7 @@ class ModelMarketingMarketing extends Model {
 		return $query->row;
 	}
 
-	public function addMarketingReport($marketing_id, $ip, $country = '') {
+	public function addReport($marketing_id, $ip, $country = '') {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "marketing_report` SET marketing_id = '" . (int)$marketing_id . "', store_id = '" . (int)$this->config->get('config_store_id') . "', ip = '" . $this->db->escape($ip) . "', country = '" . $this->db->escape($country) . "', date_added = NOW()");
 	}
 }

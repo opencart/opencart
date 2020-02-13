@@ -260,7 +260,7 @@ class ControllerMailOrder extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$from = $this->model_setting_setting->getSettingValue('config_email', $order_info['store_id']);
+		$from = $this->model_setting_setting->getValue('config_email', $order_info['store_id']);
 
 		if (!$from) {
 			$from = $this->config->get('config_email');
@@ -317,7 +317,7 @@ class ControllerMailOrder extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$from = $this->model_setting_setting->getSettingValue('config_email', $order_info['store_id']);
+		$from = $this->model_setting_setting->getValue('config_email', $order_info['store_id']);
 
 		if (!$from) {
 			$from = $this->config->get('config_email');
@@ -339,7 +339,7 @@ class ControllerMailOrder extends Controller {
 		$mail->send();
 	}
 
-	// catalog/model/checkout/order/addOrderHistory/before
+	// catalog/model/checkout/order/addHistory/before
 	public function alert(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];

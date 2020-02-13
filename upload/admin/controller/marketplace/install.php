@@ -478,7 +478,7 @@ class ControllerMarketplaceInstall extends Controller {
 			}
 
 			// Remove the install
-			$this->model_setting_extension->deleteExtensionInstall($extension_install_id);
+			$this->model_setting_extension->deleteInstall($extension_install_id);
 			
 			// Remove any xml modifications
 			$this->load->model('setting/modification');

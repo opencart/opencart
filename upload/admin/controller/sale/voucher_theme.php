@@ -310,7 +310,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		if (isset($this->request->post['voucher_theme_description'])) {
 			$data['voucher_theme_description'] = $this->request->post['voucher_theme_description'];
 		} elseif (!empty($voucher_theme_info)) {
-			$data['voucher_theme_description'] = $this->model_sale_voucher_theme->getVoucherThemeDescriptions($this->request->get['voucher_theme_id']);
+			$data['voucher_theme_description'] = $this->model_sale_voucher_theme->getDescriptions($this->request->get['voucher_theme_id']);
 		} else {
 			$data['voucher_theme_description'] = array();
 		}

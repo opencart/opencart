@@ -114,7 +114,7 @@ class ModelAccountOrder extends Model {
 		return $query->rows;
 	}
 
-	public function getOrderProduct($order_id, $order_product_id) {
+	public function getProduct($order_id, $order_product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
 
 		return $query->row;
@@ -156,13 +156,13 @@ class ModelAccountOrder extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalOrderProductsByOrderId($order_id) {
+	public function getTotalProductsByOrderId($order_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalOrderVouchersByOrderId($order_id) {
+	public function getTotalVouchersByOrderId($order_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_voucher` WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row['total'];

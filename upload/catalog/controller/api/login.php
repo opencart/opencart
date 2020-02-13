@@ -14,7 +14,7 @@ class ControllerApiLogin extends Controller {
 			// Check if IP is allowed
 			$ip_data = array();
 	
-			$results = $this->model_account_api->getApiIps($api_info['api_id']);
+			$results = $this->model_account_api->getIps($api_info['api_id']);
 	
 			foreach ($results as $result) {
 				$ip_data[] = trim($result['ip']);
@@ -30,7 +30,7 @@ class ControllerApiLogin extends Controller {
 				$session = new Session($this->config->get('session_engine'), $this->registry);
 				$session->start();
 				
-				$this->model_account_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+				$this->model_account_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
 				
 				$session->data['api_id'] = $api_info['api_id'];
 				

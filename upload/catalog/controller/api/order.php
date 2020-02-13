@@ -349,7 +349,7 @@ class ControllerApiOrder extends Controller {
 					$order_status_id = $this->config->get('config_order_status_id');
 				}
 
-				$this->model_checkout_order->addOrderHistory($json['order_id'], $order_status_id);
+				$this->model_checkout_order->addHistory($json['order_id'], $order_status_id);
 				
 				// clear cart since the order has already been successfully stored.
 				$this->cart->clear();
@@ -685,7 +685,7 @@ class ControllerApiOrder extends Controller {
 						$order_status_id = $this->config->get('config_order_status_id');
 					}
 					
-					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
+					$this->model_checkout_order->addHistory($order_id, $order_status_id);
 				}
 			} else {
 				$json['error'] = $this->language->get('error_not_found');
@@ -791,7 +791,7 @@ class ControllerApiOrder extends Controller {
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 
 			if ($order_info) {
-				$this->model_checkout_order->addOrderHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
+				$this->model_checkout_order->addHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
 
 				$json['success'] = $this->language->get('text_success');
 			} else {

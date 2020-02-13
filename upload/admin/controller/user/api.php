@@ -338,7 +338,7 @@ class ControllerUserApi extends Controller {
 		if (isset($this->request->post['api_ip'])) {
 			$data['api_ips'] = $this->request->post['api_ip'];
 		} elseif (!empty($api_info)) {
-			$data['api_ips'] = $this->model_user_api->getApiIps($this->request->get['api_id']);
+			$data['api_ips'] = $this->model_user_api->getIps($this->request->get['api_id']);
 		} else {
 			$data['api_ips'] = array();
 		}
@@ -347,7 +347,7 @@ class ControllerUserApi extends Controller {
 		$data['api_sessions'] = array();
 
 		if (!empty($api_info)) {
-			$results = $this->model_user_api->getApiSessions($this->request->get['api_id']);
+			$results = $this->model_user_api->getSessions($this->request->get['api_id']);
 
 			foreach ($results as $result) {
 				$data['api_sessions'][] = array(
@@ -405,7 +405,7 @@ class ControllerUserApi extends Controller {
 		} else {
 			$this->load->model('user/api');
 
-			$this->model_user_api->deleteApiSession($this->request->get['api_session_id']);
+			$this->model_user_api->deleteSession($this->request->get['api_session_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

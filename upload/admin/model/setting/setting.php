@@ -34,7 +34,7 @@ class ModelSettingSetting extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 	}
 	
-	public function getSettingValue($key, $store_id = 0) {
+	public function getValue($key, $store_id = 0) {
 		$query = $this->db->query("SELECT value FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
 
 		if ($query->num_rows) {

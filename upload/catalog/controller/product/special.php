@@ -76,7 +76,7 @@ class ControllerProductSpecial extends Controller {
 			'limit' => $limit
 		);
 
-		$product_total = $this->model_catalog_product->getTotalProductSpecials();
+		$product_total = $this->model_catalog_product->getTotalSpecials();
 
 		$results = $this->model_catalog_product->getSpecials($filter_data);
 

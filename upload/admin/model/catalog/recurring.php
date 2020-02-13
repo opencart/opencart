@@ -25,7 +25,7 @@ class ModelCatalogRecurring extends Model {
 	public function copyRecurring($recurring_id) {
 		$data = $this->getRecurring($recurring_id);
 
-		$data['recurring_description'] = $this->getRecurringDescription($recurring_id);
+		$data['recurring_description'] = $this->getDescription($recurring_id);
 
 		foreach ($data['recurring_description'] as &$recurring_description) {
 			$recurring_description['name'] .= ' - 2';
@@ -47,7 +47,7 @@ class ModelCatalogRecurring extends Model {
 		return $query->row;
 	}
 
-	public function getRecurringDescription($recurring_id) {
+	public function getDescription($recurring_id) {
 		$recurring_description_data = array();
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring_description` WHERE `recurring_id` = '" . (int)$recurring_id . "'");

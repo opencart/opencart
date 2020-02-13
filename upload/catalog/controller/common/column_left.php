@@ -43,7 +43,7 @@ class ControllerCommonColumnLeft extends Controller {
 
 		$data['modules'] = array();
 
-		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'column_left');
+		$modules = $this->model_design_layout->getModules($layout_id, 'column_left');
 
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);

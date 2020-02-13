@@ -390,7 +390,7 @@ class ControllerMarketingCoupon extends Controller {
 		if (isset($this->request->post['coupon_product'])) {
 			$products = $this->request->post['coupon_product'];
 		} elseif (!empty($coupon_info)) {
-			$products = $this->model_marketing_coupon->getCouponProducts($this->request->get['coupon_id']);
+			$products = $this->model_marketing_coupon->getProducts($this->request->get['coupon_id']);
 		} else {
 			$products = array();
 		}
@@ -413,7 +413,7 @@ class ControllerMarketingCoupon extends Controller {
 		if (isset($this->request->post['coupon_category'])) {
 			$categories = $this->request->post['coupon_category'];
 		} elseif (!empty($coupon_info)) {
-			$categories = $this->model_marketing_coupon->getCouponCategories($this->request->get['coupon_id']);
+			$categories = $this->model_marketing_coupon->getCategories($this->request->get['coupon_id']);
 		} else {
 			$categories = array();
 		}
@@ -533,7 +533,7 @@ class ControllerMarketingCoupon extends Controller {
 
 		$data['histories'] = array();
 
-		$results = $this->model_marketing_coupon->getCouponHistories($coupon_id, ($page - 1) * 10, 10);
+		$results = $this->model_marketing_coupon->getHistories($coupon_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = array(
@@ -544,7 +544,7 @@ class ControllerMarketingCoupon extends Controller {
 			);
 		}
 
-		$history_total = $this->model_marketing_coupon->getTotalCouponHistories($coupon_id);
+		$history_total = $this->model_marketing_coupon->getTotalHistories($coupon_id);
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $history_total,

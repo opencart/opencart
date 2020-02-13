@@ -91,13 +91,13 @@ class ModelLocalisationWeightClass extends Model {
 		return $query->row;
 	}
 
-	public function getWeightClassDescriptionByUnit($unit) {
+	public function getDescriptionByUnit($unit) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE unit = '" . $this->db->escape($unit) . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getWeightClassDescriptions($weight_class_id) {
+	public function getDescriptions($weight_class_id) {
 		$weight_class_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE weight_class_id = '" . (int)$weight_class_id . "'");

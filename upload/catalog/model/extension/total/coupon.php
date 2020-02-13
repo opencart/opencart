@@ -10,7 +10,7 @@ class ModelExtensionTotalCoupon extends Model {
 				$status = false;
 			}
 
-			$coupon_total = $this->getTotalCouponHistoriesByCoupon($code);
+			$coupon_total = $this->getTotalHistoriesByCoupon($code);
 
 			if ($coupon_query->row['uses_total'] > 0 && ($coupon_total >= $coupon_query->row['uses_total'])) {
 				$status = false;
@@ -21,7 +21,7 @@ class ModelExtensionTotalCoupon extends Model {
 			}
 
 			if ($this->customer->getId()) {
-				$customer_total = $this->getTotalCouponHistoriesByCustomerId($code, $this->customer->getId());
+				$customer_total = $this->getTotalHistoriesByCustomerId($code, $this->customer->getId());
 				
 				if ($coupon_query->row['uses_customer'] > 0 && ($customer_total >= $coupon_query->row['uses_customer'])) {
 					$status = false;
@@ -199,14 +199,14 @@ class ModelExtensionTotalCoupon extends Model {
 			$coupon_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon` WHERE code = '" . $this->db->escape($code) . "' AND status = '1'");
 
 			if ($coupon_query->num_rows) {
-				$coupon_total = $this->getTotalCouponHistoriesByCoupon($code);
+				$coupon_total = $this->getTotalHistoriesByCoupon($code);
 	
 				if ($coupon_query->row['uses_total'] > 0 && ($coupon_total >= $coupon_query->row['uses_total'])) {
 					$status = false;
 				}
 				
 				if ($order_info['customer_id']) {
-					$customer_total = $this->getTotalCouponHistoriesByCustomerId($code, $order_info['customer_id']);
+					$customer_total = $this->getTotalHistoriesByCustomerId($code, $order_info['customer_id']);
 					
 					if ($coupon_query->row['uses_customer'] > 0 && ($customer_total >= $coupon_query->row['uses_customer'])) {
 						$status = false;
@@ -228,13 +228,13 @@ class ModelExtensionTotalCoupon extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE order_id = '" . (int)$order_id . "'");
 	}
 	
-	public function getTotalCouponHistoriesByCoupon($coupon) {
+	public function getTotalHistoriesByCoupon($coupon) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.coupon_id = c.coupon_id) WHERE c.code = '" . $this->db->escape($coupon) . "'");	
 		
 		return $query->row['total'];
 	}
 	
-	public function getTotalCouponHistoriesByCustomerId($coupon, $customer_id) {
+	public function getTotalHistoriesByCustomerId($coupon, $customer_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.coupon_id = c.coupon_id) WHERE c.code = '" . $this->db->escape($coupon) . "' AND ch.customer_id = '" . (int)$customer_id . "'");
 		
 		return $query->row['total'];

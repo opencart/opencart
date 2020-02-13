@@ -312,7 +312,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		if (isset($this->request->post['weight_class_description'])) {
 			$data['weight_class_description'] = $this->request->post['weight_class_description'];
 		} elseif (!empty($weight_class_info)) {
-			$data['weight_class_description'] = $this->model_localisation_weight_class->getWeightClassDescriptions($this->request->get['weight_class_id']);
+			$data['weight_class_description'] = $this->model_localisation_weight_class->getDescriptions($this->request->get['weight_class_id']);
 		} else {
 			$data['weight_class_description'] = array();
 		}

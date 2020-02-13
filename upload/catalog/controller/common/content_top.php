@@ -43,7 +43,7 @@ class ControllerCommonContentTop extends Controller {
 
 		$data['modules'] = array();
 
-		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'content_top');
+		$modules = $this->model_design_layout->getModules($layout_id, 'content_top');
 
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);

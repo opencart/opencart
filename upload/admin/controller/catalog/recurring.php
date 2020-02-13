@@ -341,7 +341,7 @@ class ControllerCatalogRecurring extends Controller {
 		if (isset($this->request->post['recurring_description'])) {
 			$data['recurring_description'] = $this->request->post['recurring_description'];
 		} elseif (!empty($recurring_info)) {
-			$data['recurring_description'] = $this->model_catalog_recurring->getRecurringDescription($recurring_info['recurring_id']);
+			$data['recurring_description'] = $this->model_catalog_recurring->getDescription($recurring_info['recurring_id']);
 		} else {
 			$data['recurring_description'] = array();
 		}

@@ -398,7 +398,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['products'] = array();
 
-			$results = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+			$results = $this->model_catalog_product->getRelated($this->request->get['product_id']);
 
 			foreach ($results as $result) {
 				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -621,7 +621,7 @@ class ControllerProductProduct extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getRecurringDescription() {
+	public function getDescription() {
 		$this->load->language('product/product');
 
 		if (isset($this->request->post['product_id'])) {

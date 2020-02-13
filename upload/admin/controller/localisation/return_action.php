@@ -298,7 +298,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		if (isset($this->request->post['return_action'])) {
 			$data['return_action'] = $this->request->post['return_action'];
 		} elseif (isset($this->request->get['return_action_id'])) {
-			$data['return_action'] = $this->model_localisation_return_action->getReturnActionDescriptions($this->request->get['return_action_id']);
+			$data['return_action'] = $this->model_localisation_return_action->getDescriptions($this->request->get['return_action_id']);
 		} else {
 			$data['return_action'] = array();
 		}

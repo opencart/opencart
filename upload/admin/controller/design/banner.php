@@ -330,7 +330,7 @@ class ControllerDesignBanner extends Controller {
 		if (isset($this->request->post['banner_image'])) {
 			$banner_images = $this->request->post['banner_image'];
 		} elseif (!empty($banner_info)) {
-			$banner_images = $this->model_design_banner->getBannerImages($this->request->get['banner_id']);
+			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id']);
 		} else {
 			$banner_images = array();
 		}

@@ -341,10 +341,10 @@ class ModelCatalogProduct extends Model {
 			$product_data['product_download'] = $this->model_catalog_product->getDownloads($product_id);
 			$product_data['product_filter'] = $this->model_catalog_product->getFilters($product_id);
 			$product_data['product_image'] = $this->model_catalog_product->getImages($product_id);
-			$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product_id);
+			$product_data['product_layout'] = $this->model_catalog_product->getLayouts($product_id);
 			$product_data['product_option'] = $this->model_catalog_product->getOptions($product_id);
-			$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product_id);
-			$product_data['product_related'] = $this->model_catalog_product->getProductRelated($product_id);
+			$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($product_id);
+			$product_data['product_related'] = $this->model_catalog_product->getRelated($product_id);
 			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 			$product_data['product_special'] = $this->model_catalog_product->getSpecials($product_id);
 			$product_data['product_store'] = $this->model_catalog_product->getStores($product_id);
@@ -454,7 +454,7 @@ class ModelCatalogProduct extends Model {
 
 			// Layouts
 			if (!isset($override['product_layout'])) {
-				$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
+				$product_data['product_layout'] = $this->model_catalog_product->getLayouts($master_id);
 			}
 
 			// Options
@@ -462,12 +462,12 @@ class ModelCatalogProduct extends Model {
 
 			// Recurring
 			if (!isset($override['product_recurring'])) {
-				$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($master_id);
+				$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($master_id);
 			}
 
 			// Related
 			if (!isset($override['product_related'])) {
-				$product_data['product_related'] = $this->model_catalog_product->getProductRelated($master_id);
+				$product_data['product_related'] = $this->model_catalog_product->getRelated($master_id);
 			}
 
 			// Rewards
@@ -583,7 +583,7 @@ class ModelCatalogProduct extends Model {
 
 			// Layouts
 			if (!isset($override['product_layout'])) {
-				$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($master_id);
+				$product_data['product_layout'] = $this->model_catalog_product->getLayouts($master_id);
 			}
 
 			// Options
@@ -591,12 +591,12 @@ class ModelCatalogProduct extends Model {
 
 			// Recurring
 			if (!isset($override['product_recurring'])) {
-				$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($master_id);
+				$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($master_id);
 			}
 
 			// Related
 			if (!isset($override['product_related'])) {
-				$product_data['product_related'] = $this->model_catalog_product->getProductRelated($master_id);
+				$product_data['product_related'] = $this->model_catalog_product->getRelated($master_id);
 			}
 
 			// Rewards
@@ -721,17 +721,17 @@ class ModelCatalogProduct extends Model {
 
 			// Layouts
 			if (isset($override['product_layout'])) {
-				$product_data['product_layout'] = $this->model_catalog_product->getProductLayouts($product['product_id']);
+				$product_data['product_layout'] = $this->model_catalog_product->getLayouts($product['product_id']);
 			}
 
 			// Recurring
 			if (isset($override['product_recurring'])) {
-				$product_data['product_recurring'] = $this->model_catalog_product->getProductRecurrings($product['product_id']);
+				$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($product['product_id']);
 			}
 
 			// Related
 			if (isset($override['product_related'])) {
-				$product_data['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
+				$product_data['product_related'] = $this->model_catalog_product->getRelated($product['product_id']);
 			}
 
 			// Rewards
@@ -1044,7 +1044,7 @@ class ModelCatalogProduct extends Model {
 		return $product_seo_url_data;
 	}
 
-	public function getProductLayouts($product_id) {
+	public function getLayouts($product_id) {
 		$product_layout_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_layout WHERE product_id = '" . (int)$product_id . "'");
@@ -1056,7 +1056,7 @@ class ModelCatalogProduct extends Model {
 		return $product_layout_data;
 	}
 
-	public function getProductRelated($product_id) {
+	public function getRelated($product_id) {
 		$product_related_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "'");
@@ -1068,7 +1068,7 @@ class ModelCatalogProduct extends Model {
 		return $product_related_data;
 	}
 
-	public function getProductRecurrings($product_id) {
+	public function getRecurrings($product_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = '" . (int)$product_id . "'");
 
 		return $query->rows;

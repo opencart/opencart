@@ -298,7 +298,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		if (isset($this->request->post['return_status'])) {
 			$data['return_status'] = $this->request->post['return_status'];
 		} elseif (isset($this->request->get['return_status_id'])) {
-			$data['return_status'] = $this->model_localisation_return_status->getReturnStatusDescriptions($this->request->get['return_status_id']);
+			$data['return_status'] = $this->model_localisation_return_status->getDescriptions($this->request->get['return_status_id']);
 		} else {
 			$data['return_status'] = array();
 		}

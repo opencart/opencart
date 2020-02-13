@@ -45,7 +45,7 @@ class ControllerMailOrder extends Controller {
 		// Check for any downloadable products
 		$download_status = false;
 
-		$order_products = $this->model_checkout_order->getOrderProducts($order_info['order_id']);
+		$order_products = $this->model_checkout_order->getProducts($order_info['order_id']);
 
 		foreach ($order_products as $order_product) {
 			// Check if there are any linked downloads
@@ -203,7 +203,7 @@ class ControllerMailOrder extends Controller {
 		foreach ($order_products as $order_product) {
 			$option_data = array();
 
-			$order_options = $this->model_checkout_order->getOrderOptions($order_info['order_id'], $order_product['order_product_id']);
+			$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
 			foreach ($order_options as $order_option) {
 				if ($order_option['type'] != 'file') {
@@ -237,7 +237,7 @@ class ControllerMailOrder extends Controller {
 		// Vouchers
 		$data['vouchers'] = array();
 
-		$order_vouchers = $this->model_checkout_order->getOrderVouchers($order_info['order_id']);
+		$order_vouchers = $this->model_checkout_order->getVouchers($order_info['order_id']);
 
 		foreach ($order_vouchers as $order_voucher) {
 			$data['vouchers'][] = array(
@@ -249,7 +249,7 @@ class ControllerMailOrder extends Controller {
 		// Order Totals
 		$data['totals'] = array();
 
-		$order_totals = $this->model_checkout_order->getOrderTotals($order_info['order_id']);
+		$order_totals = $this->model_checkout_order->getTotals($order_info['order_id']);
 
 		foreach ($order_totals as $order_total) {
 			$data['totals'][] = array(
@@ -405,12 +405,12 @@ class ControllerMailOrder extends Controller {
 
 			$data['products'] = array();
 
-			$order_products = $this->model_checkout_order->getOrderProducts($order_id);
+			$order_products = $this->model_checkout_order->getProducts($order_id);
 
 			foreach ($order_products as $order_product) {
 				$option_data = array();
 
-				$order_options = $this->model_checkout_order->getOrderOptions($order_info['order_id'], $order_product['order_product_id']);
+				$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
 				foreach ($order_options as $order_option) {
 					if ($order_option['type'] != 'file') {
@@ -442,7 +442,7 @@ class ControllerMailOrder extends Controller {
 
 			$data['vouchers'] = array();
 
-			$order_vouchers = $this->model_checkout_order->getOrderVouchers($order_id);
+			$order_vouchers = $this->model_checkout_order->getVouchers($order_id);
 
 			foreach ($order_vouchers as $order_voucher) {
 				$data['vouchers'][] = array(
@@ -453,7 +453,7 @@ class ControllerMailOrder extends Controller {
 
 			$data['totals'] = array();
 
-			$order_totals = $this->model_checkout_order->getOrderTotals($order_id);
+			$order_totals = $this->model_checkout_order->getTotals($order_id);
 
 			foreach ($order_totals as $order_total) {
 				$data['totals'][] = array(

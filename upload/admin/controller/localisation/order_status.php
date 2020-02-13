@@ -298,7 +298,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		if (isset($this->request->post['order_status'])) {
 			$data['order_status'] = $this->request->post['order_status'];
 		} elseif (isset($this->request->get['order_status_id'])) {
-			$data['order_status'] = $this->model_localisation_order_status->getOrderStatusDescriptions($this->request->get['order_status_id']);
+			$data['order_status'] = $this->model_localisation_order_status->getDescriptions($this->request->get['order_status_id']);
 		} else {
 			$data['order_status'] = array();
 		}
@@ -353,7 +353,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);
 			}
 
-			$order_total = $this->model_sale_order->getTotalOrderHistoriesByOrderStatusId($order_status_id);
+			$order_total = $this->model_sale_order->getTotalHistoriesByOrderStatusId($order_status_id);
 
 			if ($order_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);

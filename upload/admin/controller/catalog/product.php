@@ -1006,7 +1006,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['product_related'])) {
 			$product_relateds = $this->request->post['product_related'];
 		} elseif (!empty($product_info)) {
-			$product_relateds = $this->model_catalog_product->getProductRelated($product_id);
+			$product_relateds = $this->model_catalog_product->getRelated($product_id);
 		} else {
 			$product_relateds = array();
 		}
@@ -1174,7 +1174,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['product_recurring'])) {
 			$data['product_recurrings'] = $this->request->post['product_recurring'];
 		} elseif (!empty($product_info)) {
-			$data['product_recurrings'] = $this->model_catalog_product->getProductRecurrings($product_id);
+			$data['product_recurrings'] = $this->model_catalog_product->getRecurrings($product_id);
 		} else {
 			$data['product_recurrings'] = array();
 		}
@@ -1302,7 +1302,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['product_layout'])) {
 			$data['product_layout'] = $this->request->post['product_layout'];
 		} elseif (!empty($product_info)) {
-			$data['product_layout'] = $this->model_catalog_product->getProductLayouts($product_id);
+			$data['product_layout'] = $this->model_catalog_product->getLayouts($product_id);
 		} else {
 			$data['product_layout'] = array();
 		}

@@ -166,12 +166,12 @@ class ModelSaleReturn extends Model {
 		return $query->row['total'];
 	}
 	
-	public function addReturnHistory($return_id, $return_status_id, $comment, $notify) {
+	public function addHistory($return_id, $return_status_id, $comment, $notify) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET `return_status_id` = '" . (int)$return_status_id . "', date_modified = NOW() WHERE return_id = '" . (int)$return_id . "'");
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_history` SET `return_id` = '" . (int)$return_id . "', return_status_id = '" . (int)$return_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape(strip_tags($comment)) . "', date_added = NOW()");
 	}
 
-	public function getReturnHistories($return_id, $start = 0, $limit = 10) {
+	public function getHistories($return_id, $start = 0, $limit = 10) {
 		if ($start < 0) {
 			$start = 0;
 		}

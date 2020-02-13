@@ -237,12 +237,12 @@ class ControllerAccountOrder extends Controller {
 			// Products
 			$data['products'] = array();
 
-			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
+			$products = $this->model_account_order->getProducts($this->request->get['order_id']);
 
 			foreach ($products as $product) {
 				$option_data = array();
 
-				$options = $this->model_account_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+				$options = $this->model_account_order->getOptions($this->request->get['order_id'], $product['order_product_id']);
 
 				foreach ($options as $option) {
 					if ($option['type'] != 'file') {
@@ -286,7 +286,7 @@ class ControllerAccountOrder extends Controller {
 			// Voucher
 			$data['vouchers'] = array();
 
-			$vouchers = $this->model_account_order->getOrderVouchers($this->request->get['order_id']);
+			$vouchers = $this->model_account_order->getVouchers($this->request->get['order_id']);
 
 			foreach ($vouchers as $voucher) {
 				$data['vouchers'][] = array(
@@ -298,7 +298,7 @@ class ControllerAccountOrder extends Controller {
 			// Totals
 			$data['totals'] = array();
 
-			$totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+			$totals = $this->model_account_order->getTotals($this->request->get['order_id']);
 
 			foreach ($totals as $total) {
 				$data['totals'][] = array(
@@ -312,7 +312,7 @@ class ControllerAccountOrder extends Controller {
 			// History
 			$data['histories'] = array();
 
-			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);
+			$results = $this->model_account_order->getHistories($this->request->get['order_id']);
 
 			foreach ($results as $result) {
 				$data['histories'][] = array(
@@ -367,7 +367,7 @@ class ControllerAccountOrder extends Controller {
 				if ($product_info) {
 					$option_data = array();
 
-					$order_options = $this->model_account_order->getOrderOptions($order_product_info['order_id'], $order_product_id);
+					$order_options = $this->model_account_order->getOptions($order_product_info['order_id'], $order_product_id);
 
 					foreach ($order_options as $order_option) {
 						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {

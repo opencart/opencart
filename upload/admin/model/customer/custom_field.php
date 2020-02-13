@@ -141,7 +141,7 @@ class ModelCustomerCustomField extends Model {
 		return $query->rows;
 	}
 
-	public function getCustomFieldDescriptions($custom_field_id) {
+	public function getDescriptions($custom_field_id) {
 		$custom_field_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_description WHERE custom_field_id = '" . (int)$custom_field_id . "'");
@@ -153,13 +153,13 @@ class ModelCustomerCustomField extends Model {
 		return $custom_field_data;
 	}
 	
-	public function getCustomFieldValue($custom_field_value_id) {
+	public function getValue($custom_field_value_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_value_id = '" . (int)$custom_field_value_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 	
-	public function getCustomFieldValues($custom_field_id) {
+	public function getValues($custom_field_id) {
 		$custom_field_value_data = array();
 
 		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cfv.sort_order ASC");
@@ -174,13 +174,13 @@ class ModelCustomerCustomField extends Model {
 		return $custom_field_value_data;
 	}
 	
-	public function getCustomFieldCustomerGroups($custom_field_id) {
+	public function getCustomerGroups($custom_field_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getCustomFieldValueDescriptions($custom_field_id) {
+	public function getValueDescriptions($custom_field_id) {
 		$custom_field_value_data = array();
 
 		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value WHERE custom_field_id = '" . (int)$custom_field_id . "'");

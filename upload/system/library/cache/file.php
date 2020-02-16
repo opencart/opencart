@@ -70,9 +70,11 @@ class File {
 
 		if ($files) {
 			foreach ($files as $file) {
+				fclose($file);
 				if (!@unlink($file)) {
 					clearstatcache(false, $file);
 				}
+				unset($file);				
 			}
 		}
 	}

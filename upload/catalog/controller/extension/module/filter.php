@@ -46,7 +46,7 @@ class ControllerExtensionModuleFilter extends Controller {
 
 			if ($filter_groups) {
 				foreach ($filter_groups as $filter_group) {
-					$childen_data = array();
+					$children_data = array();
 
 					foreach ($filter_group['filter'] as $filter) {
 						$filter_data = array(
@@ -63,7 +63,7 @@ class ControllerExtensionModuleFilter extends Controller {
 					$data['filter_groups'][] = array(
 						'filter_group_id' => $filter_group['filter_group_id'],
 						'name'            => $filter_group['name'],
-						'filter'          => $childen_data
+						'filter'          => $children_data
 					);
 				}
 

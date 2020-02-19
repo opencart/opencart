@@ -216,13 +216,13 @@ class ControllerMarketplaceInstall extends Controller {
 
 						if (is_dir($file) && !is_dir($path)) {
 							if (mkdir($path, 0777)) {
-								$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+								$this->model_setting_extension->addPath($extension_install_id, $destination);
 							}
 						}
 	
 						if (is_file($file)) {
 							if (rename($file, $path)) {
-								$this->model_setting_extension->addExtensionPath($extension_install_id, $destination);
+								$this->model_setting_extension->addPath($extension_install_id, $destination);
 							}
 						}
 					}
@@ -436,7 +436,7 @@ class ControllerMarketplaceInstall extends Controller {
 		if (!$json) {
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getExtensionPathsByExtensionInstallId($extension_install_id);
+			$results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
 
 			rsort($results);
 
@@ -474,7 +474,7 @@ class ControllerMarketplaceInstall extends Controller {
 					}
 				}
 
-				$this->model_setting_extension->deleteExtensionPath($result['extension_path_id']);
+				$this->model_setting_extension->deletePath($result['extension_path_id']);
 			}
 
 			// Remove the install

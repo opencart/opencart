@@ -650,7 +650,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			if ($response_info['downloads']) {
 				foreach ($response_info['downloads'] as $result) {
-					$extension_install_info = $this->model_setting_extension->getExtensionInstallByExtensionDownloadId($result['extension_download_id']);
+					$extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($result['extension_download_id']);
 
 					if ($extension_install_info) {
 						$extension_install_id = $extension_install_info['extension_install_id'];

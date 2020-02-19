@@ -167,9 +167,9 @@ class ControllerCatalogFilter extends Controller {
 			'limit' => $this->config->get('config_pagination')
 		);
 
-		$filter_total = $this->model_catalog_filter->getTotalFilterGroups();
+		$filter_total = $this->model_catalog_filter->getTotalGroups();
 
-		$results = $this->model_catalog_filter->getFilterGroups($filter_data);
+		$results = $this->model_catalog_filter->getGroups($filter_data);
 
 		foreach ($results as $result) {
 			$data['filters'][] = array(
@@ -300,7 +300,7 @@ class ControllerCatalogFilter extends Controller {
 		$data['cancel'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['filter_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$filter_group_info = $this->model_catalog_filter->getFilterGroup($this->request->get['filter_group_id']);
+			$filter_group_info = $this->model_catalog_filter->getGroup($this->request->get['filter_group_id']);
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -312,7 +312,7 @@ class ControllerCatalogFilter extends Controller {
 		if (isset($this->request->post['filter_group_description'])) {
 			$data['filter_group_description'] = $this->request->post['filter_group_description'];
 		} elseif (!empty($filter_group_info)) {
-			$data['filter_group_description'] = $this->model_catalog_filter->getDescriptions($this->request->get['filter_group_id']);
+			$data['filter_group_description'] = $this->model_catalog_filter->getGroupDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filter_group_description'] = array();
 		}
@@ -328,7 +328,7 @@ class ControllerCatalogFilter extends Controller {
 		if (isset($this->request->post['filter'])) {
 			$data['filters'] = $this->request->post['filter'];
 		} elseif (!empty($filter_group_info)) {
-			$data['filters'] = $this->model_catalog_filter->getFilterDescriptions($this->request->get['filter_group_id']);
+			$data['filters'] = $this->model_catalog_filter->getDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filters'] = array();
 		}

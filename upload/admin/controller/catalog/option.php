@@ -336,7 +336,7 @@ class ControllerCatalogOption extends Controller {
 		if (isset($this->request->post['option_value'])) {
 			$option_values = $this->request->post['option_value'];
 		} elseif (!empty($option_info)) {
-			$option_values = $this->model_catalog_option->getOptionValueDescriptions($this->request->get['option_id']);
+			$option_values = $this->model_catalog_option->getValueDescriptions($this->request->get['option_id']);
 		} else {
 			$option_values = array();
 		}
@@ -399,7 +399,7 @@ class ControllerCatalogOption extends Controller {
 					}
 				}
 
-				$product_option_values = $this->model_catalog_product->getProductOptionValuesByOptionId($this->request->get['option_id']);
+				$product_option_values = $this->model_catalog_product->getOptionValuesByOptionId($this->request->get['option_id']);
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
@@ -462,7 +462,7 @@ class ControllerCatalogOption extends Controller {
 				$option_value_data = array();
 
 				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
-					$option_values = $this->model_catalog_option->getOptionValues($option['option_id']);
+					$option_values = $this->model_catalog_option->getValues($option['option_id']);
 
 					foreach ($option_values as $option_value) {
 						if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {

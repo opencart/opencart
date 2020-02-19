@@ -44,9 +44,9 @@ class ControllerAccountRecurring extends Controller {
 
 		$this->load->model('account/recurring');
 
-		$recurring_total = $this->model_account_recurring->getTotalOrderRecurrings();
+		$recurring_total = $this->model_account_recurring->getTotalRecurrings();
 
-		$results = $this->model_account_recurring->getOrderRecurrings(($page - 1) * 10, 10);
+		$results = $this->model_account_recurring->getRecurrings(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			if ($result['status']) {
@@ -100,7 +100,7 @@ class ControllerAccountRecurring extends Controller {
 
 		$this->load->model('account/recurring');
 
-		$recurring_info = $this->model_account_recurring->getOrderRecurring($order_recurring_id);
+		$recurring_info = $this->model_account_recurring->getRecurring($order_recurring_id);
 
 		if ($recurring_info) {
 			$this->document->setTitle($this->language->get('text_recurring'));
@@ -153,7 +153,7 @@ class ControllerAccountRecurring extends Controller {
 			// Transactions
 			$data['transactions'] = array();
 
-			$results = $this->model_account_recurring->getOrderRecurringTransactions($this->request->get['order_recurring_id']);
+			$results = $this->model_account_recurring->getRecurringTransactions($this->request->get['order_recurring_id']);
 
 			foreach ($results as $result) {
 				$data['transactions'][] = array(

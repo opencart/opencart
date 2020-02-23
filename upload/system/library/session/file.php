@@ -21,12 +21,20 @@ class File {
 				fclose($handle);
 
 				return json_decode($data, true);
-			} else {
-				return array();
 			}
 		}
 
 		return array();
+	}
+
+	public function exists($session_id) {
+		$file = DIR_SESSION . 'sess_' . basename($session_id);
+
+		if (is_file($file)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public function write($session_id, $data) {

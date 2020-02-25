@@ -101,27 +101,9 @@ $session = new Session($config->get('session_engine'), $registry);
 $registry->set('session', $session);
 
 if ($config->get('session_autostart')) {
-	/*
-	We are adding the session cookie outside of the session class as I believe
-	PHP messed up in a big way handling sessions. Why in the hell is it so hard to
-	have more than one concurrent session using cookies!
-
-	Is it not better to have multiple cookies when accessing parts of the system
-	that requires different cookie sessions for security reasons.
-
-	Also cookies can be accessed via the URL parameters. So why force only one cookie
-	for all sessions!
-	*/
-
-	if (isset($_COOKIE[$config->get('session_name')])) {
-		$session_id = $_COOKIE[$config->get('session_name')];
-	} else {
-		$session_id = '';
-	}
-
+	$session_id = $session->get_cookie();
 	$session->start($session_id);
-
-	setcookie($config->get('session_name'), $session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
+	$session->set_cookie();
 }
 
 // Cache

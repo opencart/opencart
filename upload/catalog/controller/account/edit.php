@@ -24,6 +24,9 @@ class ControllerAccountEdit extends Controller {
 			$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
+			
+			// Regenerate session_id
+			$this->session->regenerate_session_id();
 
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}

@@ -258,7 +258,7 @@ class Session {
 		} else if (function_exists('openssl_random_pseudo_bytes')) {
 			$generator = 'openssl';
 		} else {
-			exit('Erro: A extensão OpenSSL não está habilitada no PHP!');
+			exit('Error: OpenSSL extension is not enabled in PHP!');
 		}
 
 		do {

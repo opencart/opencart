@@ -18,6 +18,9 @@ class ControllerCommonProfile extends Controller {
 			$this->model_user_user->editUser($this->user->getId(), $user_data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
+			
+			// Regenerate session_id
+			$this->session->regenerate_session_id();
 
 			$this->response->redirect($this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']));
 		}

@@ -432,7 +432,7 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	private function replateEmptySpaces($string, $replacer = "_"){
+	private function replaceEmptySpaces($string, $replacer = "_"){
 		$string = str_replace(" ", $replacer, $string);
 		return $string;
 	}

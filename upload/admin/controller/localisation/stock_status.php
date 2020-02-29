@@ -298,7 +298,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		if (isset($this->request->post['stock_status'])) {
 			$data['stock_status'] = $this->request->post['stock_status'];
 		} elseif (isset($this->request->get['stock_status_id'])) {
-			$data['stock_status'] = $this->model_localisation_stock_status->getStockStatusDescriptions($this->request->get['stock_status_id']);
+			$data['stock_status'] = $this->model_localisation_stock_status->getDescriptions($this->request->get['stock_status_id']);
 		} else {
 			$data['stock_status'] = array();
 		}

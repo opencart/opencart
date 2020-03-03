@@ -233,7 +233,7 @@ class ControllerCommonFileManager extends Controller {
 			if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
 				foreach (array_keys($this->request->files['file']['name']) as $key) {
 					$files[] = array(
-						'name'     => $this->replateEmptySpaces($this->request->files['file']['name'][$key]),
+						'name'     => $this->replaceEmptySpaces($this->request->files['file']['name'][$key]),
 						'type'     => $this->request->files['file']['type'][$key],
 						'tmp_name' => $this->request->files['file']['tmp_name'][$key],
 						'error'    => $this->request->files['file']['error'][$key],

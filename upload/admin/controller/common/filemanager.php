@@ -311,7 +311,7 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->replateEmptySpaces($this->request->get['directory']), ENT_QUOTES, 'UTF-8') . '/';
+			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->replaceEmptySpaces($this->request->get['directory']), ENT_QUOTES, 'UTF-8') . '/';
 		} else {
 			$directory = DIR_IMAGE . 'catalog/';
 		}
@@ -432,8 +432,8 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	private function replaceEmptySpaces($string, $replacer = "_"){
-		$string = str_replace(" ", $replacer, $string);
-		return $string;
+	private function replaceEmptySpaces(string $image_url) {
+		
+		return str_replace(' ', '-', $image_url);
 	}
 }

@@ -89,9 +89,7 @@ final class Loader {
 				// Overriding models is a little harder so we have to use PHP's magic methods
 				// In future version we can use runkit
 				foreach (get_class_methods($class) as $method) {
-					$function = $this->callback($route . '/' . $method);
-
-					$proxy->attach($method, $function);
+					$proxy->{$method} = $this->callback($route . '/' . $method);
 				}
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);

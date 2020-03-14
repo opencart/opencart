@@ -435,7 +435,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$data['text_error'] = $this->language->get('text_error');
 
-			$data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('sale/recurring');
 
 			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 			

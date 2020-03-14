@@ -689,7 +689,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$data['text_error'] = $this->language->get('text_error');
 
-			$data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('marketplace/marketplace');
 
 			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 			

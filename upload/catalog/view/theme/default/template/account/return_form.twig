@@ -147,17 +147,17 @@
                 {% for result in return_description %}
 					<tr id="return-row{{ return_row }}">
 						<td class="text-left"><input type="text" name="return_description[{{ return_row }}][product]" value="{{ result.product }}" placeholder="{{ entry_product }}" class="form-control" /><input type="hidden" name="return_description[{{ return_row }}][return_id]" value="{{ result.return_id }}" /><input type="hidden" name="return_description[{{ return_row }}][product_id]" value="{{ result.product_id }}" />
-						{% if error_product[{{ return_row }}] %}
+						{% if error_product[return_row] %}
 							<div class="invalid-tooltip">{{ error_product[{{ return_row }}] }}</div>
 						{% endif %}
 						</td>
 						<td class="text-left"><input type="text" name="return_description[{{ return_row }}][model]" value="{{ result.model }}" placeholder="{{ entry_model }}" class="form-control" />
-						{% if error_model[{{ return_row }}] %}
+						{% if error_model[return_row] %}
 							<div class="invalid-tooltip">{{ error_model[{{ return_row }}] }}</div>
 						{% endif %}
 						</td>
 						<td class="text-left"><input type="text" name="return_description[{{ return_row }}][quantity]" value="{{ result.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" />
-						{% if error_quantity[{{ return_row }}] %}
+						{% if error_quantity[return_row] %}
 							<div class="invalid-tooltip">{{ error_quantity[{{ return_row }}] }}</div>
 						{% endif %}
 						</td>

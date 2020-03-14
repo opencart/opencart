@@ -1839,4 +1839,25 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
 	}
+	
+	public function autocomplete() {
+		$json = array();
+		
+		if (!empty($this->request->get['filter_name'])) {
+			$order_id = $this->request->get['filter_name'];
+		} else {
+			$order_id = 0;
+		}
+		
+		$this->load->model('sale/order');
+		
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+		
+		if ($order_info) {
+			$json['order_id'] = $order_info['order_id'];
+		}
+		
+		$this->response->addHeader('content-type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

@@ -4950,12 +4950,7 @@ function db_schema() {
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
-				'name' => 'product_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
+			),			
 			array(
 				'name' => 'customer_id',
 				'type' => 'int(11)',
@@ -4980,27 +4975,7 @@ function db_schema() {
 				'name' => 'telephone',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
-				'name' => 'product',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'model',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'quantity',
-				'type' => 'int(4)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'opened',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			),
+			),			
 			array(
 				'name' => 'return_reason_id',
 				'type' => 'int(11)',
@@ -5040,6 +5015,63 @@ function db_schema() {
 		),
 		'primary' => array(
 			'return_id'
+		),
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	);
+	
+	$tables[] = array(
+		'name' => 'return_description',
+		'field' => array(
+			array(
+				'name' => 'return_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),			
+			array(
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),			
+			array(
+				'name' => 'product',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'model',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'quantity',
+				'type' => 'int(4)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'opened',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			),
+		),
+		'primary' => array(
+			'return_id',
+			'product_id'
+		),
+		'index' => array(
+			array(
+				'name' => 'product',
+				'key' => array(
+					'product'
+				)
+			),
+			array(
+				'name' => 'model',
+				'key' => array(
+					'model'
+				)
+			)
 		),
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',

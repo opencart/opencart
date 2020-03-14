@@ -2,6 +2,9 @@
 // Heading
 $_['heading_title']      = 'Product Returns';
 
+// Button
+$_['button_product_add'] = 'Add Product';
+
 // Text
 $_['text_account']       = 'Account';
 $_['text_return']        = 'Return Information';

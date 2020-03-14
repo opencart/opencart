@@ -2,6 +2,9 @@
 // Heading
 $_['heading_title']        = 'Product Returns';
 
+// Button
+$['button_product_add']	   = 'Add Product';
+
 // Text
 $_['text_success']         = 'Success: You have modified returns!';
 $_['text_list']            = 'Product Return List';

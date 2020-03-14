@@ -424,7 +424,26 @@ class ControllerSaleRecurring extends Controller {
 
 			$this->response->setOutput($this->load->view('sale/recurring_info', $data));
 		} else {
-			return new Action('error/not_found');
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_error'),
+				'href' => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token']),
+			);
+
+			$this->document->setTitle($this->language->get('text_error'));
+
+			$data['heading_title'] = $this->language->get('text_error');
+
+			$data['text_error'] = $this->language->get('text_error');
+
+			$data['continue'] = $this->url->link('common/home');
+
+			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+			
+			$data['header'] = $this->load->controller('common/header');
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['footer'] = $this->load->controller('common/footer');
+			
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 }

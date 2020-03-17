@@ -53,7 +53,7 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		} else {
 			$data['report_sale_order_sort_order'] = $this->config->get('report_sale_order_sort_order');
 		}
-
+  
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -95,9 +95,45 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		} else {
 			$filter_order_status_id = 0;
 		}
-
+  
+		if (isset($this->request->get['filter_payment_country_id'])) {
+			$filter_payment_country_id = $this->request->get['filter_payment_country_id'];
+		} else {
+			$filter_payment_country_id = '';
+		}
+		
+		if (isset($this->request->get['filter_payment_zone_id'])) {
+			$filter_payment_zone_id = $this->request->get['filter_payment_zone_id'];
+		} else {
+			$filter_payment_zone_id = '';
+		}
+		
+		if (isset($this->request->get['filter_payment_city'])) {
+			$filter_payment_city = $this->request->get['filter_payment_city'];
+		} else {
+			$filter_payment_city = '';
+		}
+		
+		if (isset($this->request->get['filter_shipping_country_id'])) {
+			$filter_shipping_country_id = $this->request->get['filter_shipping_country_id'];
+		} else {
+			$filter_shipping_country_id = '';
+		}
+		
+		if (isset($this->request->get['filter_shipping_zone_id'])) {
+			$filter_shipping_zone_id = $this->request->get['filter_shipping_zone_id'];
+		} else {
+			$filter_shipping_zone_id = '';
+		}
+		
+		if (isset($this->request->get['filter_shipping_city'])) {
+			$filter_shipping_city = $this->request->get['filter_shipping_city'];
+		} else {
+			$filter_shipping_city = '';
+		}
+		
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -107,12 +143,18 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		$data['orders'] = array();
 
 		$filter_data = array(
-			'filter_date_start'	     => $filter_date_start,
-			'filter_date_end'	     => $filter_date_end,
-			'filter_group'           => $filter_group,
-			'filter_order_status_id' => $filter_order_status_id,
-			'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'                  => $this->config->get('config_limit_admin')
+			'filter_date_start'	     	=> $filter_date_start,
+			'filter_date_end'	     	=> $filter_date_end,
+			'filter_group'           	=> $filter_group,
+			'filter_order_status_id' 	=> $filter_order_status_id,
+			'filter_payment_country_id' 	=> $filter_payment_country_id,
+			'filter_payment_zone_id'	=> $filter_payment_zone_id,
+			'filter_payment_city'	 	=> $filter_payment_city,
+			'filter_shipping_country_id' 	=> $filter_shipping_country_id,
+			'filter_shipping_zone_id'	=> $filter_shipping_zone_id,
+			'filter_shipping_city'	 	=> $filter_shipping_city,
+			'start'                  	=> ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                  	=> $this->config->get('config_limit_admin')
 		);
 
 		$order_total = $this->model_extension_report_sale->getTotalOrders($filter_data);
@@ -175,7 +217,31 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		if (isset($this->request->get['filter_order_status_id'])) {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
-
+  
+		if (isset($this->request->get['filter_payment_country_id'])) {
+			$url .= '&filter_payment_country_id=' . $this->request->get['filter_payment_country_id'];
+		}
+		
+		if (isset($this->request->get['filter_payment_zone_id'])) {
+			$url .= '&filter_payment_zone_id=' . $this->request->get['filter_payment_zone_id'];
+		}
+		
+		if (isset($this->request->get['filter_payment_city'])) {
+			$url .= '&filter_payment_city=' . $this->request->get['filter_payment_city'];
+		}
+		
+		if (isset($this->request->get['filter_shipping_country_id'])) {
+			$url .= '&filter_shipping_country_id=' . $this->request->get['filter_shipping_country_id'];
+		}
+		
+		if (isset($this->request->get['filter_shipping_zone_id'])) {
+			$url .= '&filter_shipping_zone_id=' . $this->request->get['filter_shipping_zone_id'];
+		}
+		
+		if (isset($this->request->get['filter_shipping_city'])) {
+			$url .= '&filter_shipping_city=' . $this->request->get['filter_shipping_city'];
+		}
+		
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $order_total,
 			'page'  => $page,
@@ -189,7 +255,19 @@ class ControllerExtensionReportSaleOrder extends Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
-
+		$data['filter_payment_country_id'] = $filter_payment_country_id;
+		$data['filter_payment_zone_id'] = $filter_payment_zone_id;
+		$data['filter_payment_city'] = $filter_payment_city;
+		$data['filter_shipping_country_id'] = $filter_shipping_country_id;
+		$data['filter_shipping_zone_id'] = $filter_shipping_zone_id;
+		$data['filter_shipping_city'] = $filter_shipping_city;
+		
+		if (isset($this->request->post['location'])) {
+			$data['location'] = $this->request->post['location'];
+		} else {
+			$data['location'] = '';
+		}
+		
 		return $this->load->view('extension/report/sale_order_info', $data);
 	}
 }

@@ -127,8 +127,11 @@ class ControllerCheckoutCheckout extends Controller {
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
+		
+		$filter_data = array('customer_group_id'			=> $customer_group_id
+							);
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			$json[] = array(

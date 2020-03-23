@@ -2772,6 +2772,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'custom_field',
+				'type' => 'text',
+				'not_null' => true
+			),
+			array(
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true

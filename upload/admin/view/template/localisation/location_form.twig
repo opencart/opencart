@@ -24,7 +24,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-location">
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               {% if error_name %}
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-address">{{ entry_address }}</label>
+            <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
             <div class="col-sm-10">
               <textarea type="text" name="address" placeholder="{{ entry_address }}" rows="5" id="input-address" class="form-control">{{ address }}</textarea>
               {% if error_address %}
@@ -42,14 +42,14 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-geocode">{{ entry_geocode }}</label>
+            <label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
             <div class="col-sm-10">
               <input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
               <small class="form-text text-muted">{{ help_geocode }}</small>
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_telephone }}</label>
+            <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
               {% if error_telephone %}
@@ -58,13 +58,13 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-telephone">{{ entry_fax }}</label>
+            <label for="input-fax" class="col-sm-2 col-form-label">{{ entry_fax }}</label>
             <div class="col-sm-10">
               <input type="text" name="fax" value="{{ fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-image">{{ entry_image }}</label>
+            <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
             <div class="col-sm-10">
               <div class="card image">
                 <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
@@ -76,19 +76,160 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-open">{{ entry_open }}</label>
+            <label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
             <div class="col-sm-10">
               <textarea name="open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ open }}</textarea>
               <small class="form-text text-muted">{{ help_open }}</small>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
+            <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
             <div class="col-sm-10">
               <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
               <small class="form-text text-muted">{{ help_comment }}</small>
             </div>
-          </div>
+          </div>		  
+		  {% for custom_field in custom_fields %}
+                  {% if custom_field.location == 'location_address' %}
+                    {% if custom_field.type == 'select' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+                            <option value="">{{ text_select }}</option>
+                            {% for custom_field_value in custom_field.custom_field_value %}
+                              {% if location_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == location_custom_field[custom_field.custom_field_id] %}
+                                <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
+                              {% else %}
+                                <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'radio' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <div>
+                            {% for custom_field_value in custom_field.custom_field_value %}
+                              <label class="form-check">
+                                {% if location_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == location_custom_field[custom_field.custom_field_id] %}
+                                  <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/>
+                                  {{ custom_field_value.name }}
+                                {% else %}
+                                  <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                                  {{ custom_field_value.name }}
+                                {% endif %}
+                              </label>
+                            {% endfor %}
+                          </div>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'checkbox' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-control" style="height: 150px; overflow: auto;">
+                            {% for custom_field_value in custom_field.custom_field_value %}
+                              <label class="form-check">
+                                {% if location_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in location_custom_field[custom_field.custom_field_id] %}
+                                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/> {{ custom_field_value.name }}
+                                {% else %}
+                                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}
+                                {% endif %}
+                              </label>
+                            {% endfor %}
+                          </div>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'text' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ location_custom_field[custom_field.custom_field_id] ? location_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'textarea' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ location_custom_field[custom_field.custom_field_id] ? location_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'file' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                          <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ location_custom_field[custom_field.custom_field_id] ? location_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}"/>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'date' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <div class="input-group date">
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ location_custom_field[custom_field.custom_field_id] ? location_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                            </div>
+                          </div>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'time' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <div class="input-group time">
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ location_custom_field[custom_field.custom_field_id] ? location_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                            </div>
+                          </div>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                    {% if custom_field.type == 'datetime' %}
+                      <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                        <label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+                        <div class="col-sm-10">
+                          <div class="input-group datetime">
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ location_custom_field[custom_field.custom_field_id] ? location_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+                            <div class="input-group-append">
+                              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                            </div>
+                          </div>
+                          {% if error_custom_field[custom_field.custom_field_id] %}
+                            <div class="invalid-tooltip">{{ error_custom_field[custom_field.custom_field_id] }}</div>
+                          {% endif %}</div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
         </form>
       </div>
     </div>

@@ -212,13 +212,15 @@ class ControllerAccountAffiliate extends Controller {
 
 		// Custom Fields
 		$this->load->model('account/custom_field');
+		
+		$filter_data = array('customer_group_id'		=> $this->config->get('config_customer_group_id'),
+							 'location'					=> 'affiliate'
+							);
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'affiliate') {
-				$data['custom_fields'][] = $custom_field;
-			}
+			$data['custom_fields'][] = $custom_field;
 		}
 
 		if (isset($this->request->post['custom_field']['affiliate'])) {
@@ -237,7 +239,7 @@ class ControllerAccountAffiliate extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}
@@ -280,8 +282,12 @@ class ControllerAccountAffiliate extends Controller {
 		
 		// Custom field validation
 		$this->load->model('account/custom_field');
+		
+		$filter_data = array('customer_group_id'			=> $this->config->get('config_customer_group_id'),
+							 'affiliate'					=> true
+							);
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'affiliate') {

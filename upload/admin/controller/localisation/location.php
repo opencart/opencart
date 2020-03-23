@@ -158,13 +158,13 @@ class ControllerLocalisationLocation extends Controller {
 		$data['add'] = $this->url->link('localisation/location/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/location/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['location'] = array();
+		$data['locations'] = array();
 
 		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
 		$location_total = $this->model_localisation_location->getTotalLocations();
@@ -172,7 +172,7 @@ class ControllerLocalisationLocation extends Controller {
 		$results = $this->model_localisation_location->getLocations($filter_data);
 
 		foreach ($results as $result) {
-			$data['location'][] =   array(
+			$data['locations'][] =   array(
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],
 				'address'     => $result['address'],
@@ -184,6 +184,12 @@ class ControllerLocalisationLocation extends Controller {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
+		}
+		
+		if (isset($this->error['custom_field'])) {
+			$data['error_custom_field'] = $this->error['custom_field'];
+		} else {
+			$data['error_custom_field'] = array();
 		}
 
 		if (isset($this->session->data['success'])) {
@@ -228,11 +234,11 @@ class ControllerLocalisationLocation extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $location_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($location_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($location_total - $this->config->get('config_limit_admin'))) ? $location_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $location_total, ceil($location_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($location_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($location_total - $this->config->get('config_pagination'))) ? $location_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $location_total, ceil($location_total / $this->config->get('config_pagination')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -386,6 +392,39 @@ class ControllerLocalisationLocation extends Controller {
 		} else {
 			$data['comment'] = '';
 		}
+		
+		// Custom Fields
+		$this->load->model('customer/custom_field');
+
+		$data['custom_fields'] = array();
+
+		$filter_data = array(
+			'sort'  => 'cf.sort_order',
+			'order' => 'ASC'
+		);
+
+		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['status']) {
+				$data['custom_fields'][] = array(
+					'custom_field_id'    => $custom_field['custom_field_id'],
+					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
+					'name'               => $custom_field['name'],
+					'value'              => $custom_field['value'],
+					'type'               => $custom_field['type'],
+					'location'           => $custom_field['location'],
+					'sort_order'         => $custom_field['sort_order']
+				);
+			}
+		}
+		if (isset($this->request->post['custom_field'])) {
+			$data['location_custom_field'] = $this->request->post['custom_field'];
+		} elseif (!empty($customer_info)) {
+			$data['location_custom_field'] = json_decode($customer_info['custom_field'], true);
+		} else {
+			$data['location_custom_field'] = array();
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -410,6 +449,19 @@ class ControllerLocalisationLocation extends Controller {
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
+		
+		// Custom field validation
+		$this->load->model('customer/custom_field');
+		
+		$custom_fields = $this->model_customer_custom_field->getCustomFields();
+		
+		foreach ($custom_fields as $custom_field) {
+			if (($custom_field['location'] == 'location_address') && $custom_field['required'] && empty($value['custom_field'][$custom_field['custom_field_id']])) {
+				$this->error['custom_field'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			} elseif (($custom_field['location'] == 'location_address') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($value['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+				$this->error['custom_field'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+            }
+		}
 
 		return !$this->error;
 	}
@@ -420,5 +472,42 @@ class ControllerLocalisationLocation extends Controller {
 		}
 
 		return !$this->error;
+	}
+	
+	public function autocomplete() {
+		$json = array();
+
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['limit'])) {
+			$limit = $this->request->get['limit'];
+		} else {
+			$limit = $this->config->get('config_pagination');
+		}
+
+		if ($filter_name) {
+			$this->load->model('localisation/location');
+			
+			$filter_data = array('filter_name'			=> $filter_name,
+								 'start' 				=> 0,
+								 'limit'				=> $this->config->get('config_pagination'),
+								);
+			
+			$locations = $this->model_localisation_location->getLocations($filter_data);
+			
+			foreach ($locations as $result) {
+				$json[] = array(
+					'location_id' 	=> $result['location_id'],
+					'name'       	=> strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+				);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

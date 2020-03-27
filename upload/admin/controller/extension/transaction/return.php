@@ -180,4 +180,11 @@ class ControllerExtensionTransactionReturn extends Controller {
 		
 		$this->model_extension_transaction_return->uninstall();
 	}
+	
+	// admin/model/customer/custom_field/deleteCustomField/after
+	public function deleteCustomField(&$route, &$args, &$output) {
+		$this->load->model('extension/transaction/return');
+		
+		$this->model_extension_transaction_return->deleteCustomField($output);
+	}
 }

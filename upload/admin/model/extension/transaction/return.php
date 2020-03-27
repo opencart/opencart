@@ -53,7 +53,7 @@ class ModelExtensionTransactionReturn extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_transaction` SET custom_field_id = '" . (int)$custom_field_id . "', `status` = '1', code = '" . $this->db->escape($code) . "'");
 	}
 	
-	public function deny($custom_field_id) {
+	public function deny($custom_field_id, $code) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_transaction` SET custom_field_id = '" . (int)$custom_field_id . "', `status` = '0', code = '" . $this->db->escape($code) . "'");
 	}
 }

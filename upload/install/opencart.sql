@@ -809,8 +809,10 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 (40, 'activity_admin_logout', 'admin/controller/common/logout/before', 'event/activity/logout', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (41, 'activity_admin_deleteapisessions', 'admin/controller/common/header/after', 'event/activity/deleteApiSessions', 1);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (42, 'return_custom_field', 'admin/model/customer/custom_field/deleteCustomField/after', 'extension/transaction/return/deleteCustomField', 1);
-
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
+(43, 'return_extension_code', 'admin/model/setting/extension/uninstall/after', 'extension/transaction/return/deleteExtension', 1);
 -----------------------------------------------------------
 
 --

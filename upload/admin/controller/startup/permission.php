@@ -21,7 +21,8 @@ class ControllerStartupPermission extends Controller {
 				'extension/captcha',
 				'extension/currency',
 				'extension/extension',
-				'extension/feed',
+				'extension/feed',				
+				'extension/transaction',
 				'extension/menu',
 				'extension/fraud',
 				'extension/module',
@@ -29,8 +30,7 @@ class ControllerStartupPermission extends Controller {
 				'extension/shipping',
 				'extension/theme',
 				'extension/total',
-				'extension/report',
-                'extension/openbay'
+				'extension/report'
 			);
 
 			if (isset($part[2]) && in_array($route, $extension)) {
@@ -50,26 +50,7 @@ class ControllerStartupPermission extends Controller {
 			);
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				$data['breadcrumbs'][] = array(
-					'text' => $this->language->get('text_error'),
-					'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
-				);
-
-				$this->document->setTitle($this->language->get('text_error'));
-
-				$data['heading_title'] = $this->language->get('text_error');
-
-				$data['text_error'] = $this->language->get('text_error');
-
-				$data['continue'] = $this->url->link('common/dashboard');
-
-				$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
-
-				$data['header'] = $this->load->controller('common/header');
-				$data['column_left'] = $this->load->controller('common/column_left');
-				$data['footer'] = $this->load->controller('common/footer');
-
-				$this->response->setOutput($this->load->view('error/not_found', $data));
+				return new Action('error/permission');
 			}
 		}
 	}

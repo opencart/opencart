@@ -1417,7 +1417,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['product_return'])) {
 			$data['product_return'] = $this->request->post['product_return'];
 		} elseif (!empty($product_info)) {
-			//$data['product_return'] = $product_info['return'];
+			$data['product_return'] = $product_info['return'];
 		} else {
 			$data['product_return'] = array();
 		}
@@ -1425,7 +1425,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['product_type'])) {
 			$data['product_type'] = $this->request->post['product_type'];
 		} elseif (!empty($product_info)) {
-			//$data['product_type'] = $product_info['type'];
+			$data['product_type'] = $product_info['type'];
 		} else {
 			$data['product_type'] = array();
 		}

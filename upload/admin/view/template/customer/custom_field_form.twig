@@ -62,6 +62,11 @@
                   {% else %}
                     <option value="location_address">{{ text_location_address }}</option>
                   {% endif %}
+				  {% if location == 'return_address' %}
+                    <option value="return_address" selected="selected">{{ text_return_address }}</option>
+                  {% else %}
+                    <option value="return_address">{{ text_return_address }}</option>
+                  {% endif %}
                 </select>
               </div>
             </div>

@@ -22,8 +22,12 @@ class ModelExtensionTransactionReturn extends Model {
 	public function deleteCustomField($custom_field_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "return_transaction WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 	}
+	
+	public function deleteExtension($code) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "return_transaction WHERE code = '" . $this->db->escape($code) . "'");
+	}
 
-    public function getApproval($custom_field_id) {
+    	public function getApproval($custom_field_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_transaction` WHERE `custom_field_id` = '" . (int)$custom_field_id . "' AND `status` = '1'");
 		
 		return $query->row;

@@ -4138,6 +4138,16 @@ function db_schema() {
 				'default' => '1'
 			),
 			array(
+				'name' => 'return',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'type',
+				'type' => 'int(2)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'price',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,

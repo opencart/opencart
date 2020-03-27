@@ -56,14 +56,7 @@ class ControllerExtensionTransactionReturn extends Controller {
 			'limit'                    	=> $this->config->get('config_pagination')
 		);
 		
-		// Transactions
-		$this->load->model('setting/extension');
-		
-		$extensions = $this->model_setting_extension->getInstalled('shipping');
-
-		$data['transactions'] = array();
-		
-		// Compatibility code for old extension folders
+		// Shipping - Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
 		
 		$this->load->model('extension/transaction/return');
@@ -79,13 +72,13 @@ class ControllerExtensionTransactionReturn extends Controller {
 				if ($files) {
 					$transactions = array();
 					
-					foreach ($files as $file) {				
+					foreach ($files as $key => $file) {				
 						$extension = basename($file, '.php');
 						
 						if ($this->config->get('shipping_' . $extension . '_status')) {
 							$this->load->language('extension/shipping/' . $extension, $extension);
 
-							$transactions[$result['custom_field_id']] = array(
+							$transactions[$key][$result['custom_field_id']] = array(
 								'name'      	=> $this->language->get($extension . '_heading_title'),
 								'code'			=> html_entity_decode($extension, ENT_QUOTES, 'UTF-8'),
 							);
@@ -97,21 +90,23 @@ class ControllerExtensionTransactionReturn extends Controller {
 				
 				$deny_info = $this->model_extension_transaction_return->getDeny($result['custom_field_id']);
 				
-				if (!empty($transactions[$result['custom_field_id']])) {
-					$transaction_info = $transactions[$result['custom_field_id']];
-				} else {
-					$transaction_info = array();
-				}
-				
-				if ($transaction_info) {
-					$data['return_custom_fields'][] = array(
-						'name'				=> html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
-						'status'			=> $result['status'],
-						'transaction'		=> $transaction_info,
-						'validate'			=> ($approve_info || $deny_info ? true : false),
-						'approve'       	=> $this->url->link('extension/transaction/return/approve', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . '&code=' . $transaction_info['code']),
-						'deny'          	=> $this->url->link('extension/transaction/return/deny', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . '&code=' . $transaction_info['code']),
-					);
+				if ($transactions) {
+					foreach ($transactions as $key => $custom_fields) {
+						if (!empty($custom_fields) && is_array($custom_fields)) {
+							foreach ($custom_fields as $custom_field => $extension) {
+								if (isset($custom_field['custom_field_id']) && $custom_field['custom_field_id'] == $result['custom_field_id']) {
+									$data['return_custom_fields'][] = array(
+										'name'				=> html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
+										'status'			=> $result['status'],
+										'extension_name'	=> html_entity_decode($extension['name'], ENT_QUOTES, 'UTF-8'),
+										'validate'			=> ($approve_info || $deny_info ? true : false),
+										'approve'       	=> $this->url->link('extension/transaction/return/approve', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . '&code=' . $extension['code']),
+										'deny'          	=> $this->url->link('extension/transaction/return/deny', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . '&code=' . $extension['code']),
+									);
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -146,7 +141,7 @@ class ControllerExtensionTransactionReturn extends Controller {
 		} else {
 			$this->load->model('extension/transaction/return');
 			
-			$this->model_extension_transaction_return->approve($this->request->get['custom_field_id']);
+			$this->model_extension_transaction_return->approve($this->request->get['custom_field_id'], $this->request->get['code']);
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -165,7 +160,7 @@ class ControllerExtensionTransactionReturn extends Controller {
 		} else {
 			$this->load->model('extension/transaction/return');
 			
-			$this->model_extension_transaction_return->deny($this->request->get['custom_field_id']);
+			$this->model_extension_transaction_return->deny($this->request->get['custom_field_id'], $this->request->get['code']);
 					
 			$json['success'] = $this->language->get('text_success');
 		}

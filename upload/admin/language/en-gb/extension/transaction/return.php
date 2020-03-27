@@ -10,6 +10,7 @@ $_['text_status_active']	= 'Active';
 
 // Column
 $_['column_custom_field']	= 'Custom Field';
+$_['column_shipping']		= 'Shipping';
 $_['column_status']			= 'Status';
 $_['column_action']         = 'Action';
 

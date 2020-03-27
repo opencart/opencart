@@ -56,6 +56,16 @@ class ControllerExtensionTransactionReturn extends Controller {
 			'limit'                    	=> $this->config->get('config_pagination')
 		);
 		
+		// Transactions
+		$this->load->model('setting/extension');
+		
+		$extensions = $this->model_setting_extension->getInstalled('shipping');
+
+		$data['transactions'] = array();
+		
+		// Compatibility code for old extension folders
+		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');
+		
 		$this->load->model('extension/transaction/return');
 
 		$this->load->model('customer/custom_field');	
@@ -66,17 +76,43 @@ class ControllerExtensionTransactionReturn extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['location'] == 'return_address') {
+				if ($files) {
+					$transactions = array();
+					
+					foreach ($files as $file) {				
+						$extension = basename($file, '.php');
+						
+						if ($this->config->get('shipping_' . $extension . '_status')) {
+							$this->load->language('extension/shipping/' . $extension, $extension);
+
+							$transactions[$result['custom_field_id']] = array(
+								'name'      	=> $this->language->get($extension . '_heading_title'),
+								'code'			=> html_entity_decode($extension, ENT_QUOTES, 'UTF-8'),
+							);
+						}
+					}
+				}
+				
 				$approve_info = $this->model_extension_transaction_return->getApprove($result['custom_field_id']);
 				
 				$deny_info = $this->model_extension_transaction_return->getDeny($result['custom_field_id']);
 				
-				$data['return_custom_fields'][] = array(
-					'name'				=> html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
-					'status'			=> $result['status'],
-					'validate'			=> ($approve_info || $deny_info ? true : false),
-					'approve'       	=> $this->url->link('extension/transaction/return/approve', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id']),
-					'deny'          	=> $this->url->link('extension/transaction/return/deny', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id']),
-				);
+				if (!empty($transactions[$result['custom_field_id']])) {
+					$transaction_info = $transactions[$result['custom_field_id']];
+				} else {
+					$transaction_info = array();
+				}
+				
+				if ($transaction_info) {
+					$data['return_custom_fields'][] = array(
+						'name'				=> html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
+						'status'			=> $result['status'],
+						'transaction'		=> $transaction_info,
+						'validate'			=> ($approve_info || $deny_info ? true : false),
+						'approve'       	=> $this->url->link('extension/transaction/return/approve', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . '&code=' . $transaction_info['code']),
+						'deny'          	=> $this->url->link('extension/transaction/return/deny', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . '&code=' . $transaction_info['code']),
+					);
+				}
 			}
 		}
 

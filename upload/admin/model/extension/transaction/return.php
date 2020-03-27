@@ -5,7 +5,8 @@ class ModelExtensionTransactionReturn extends Model {
 		
 		$this->db->query("CREATE TABLE `" . DB_PREFIX . "return_transaction` (
 		  `return_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-		  `custom_field_id` int(11) NOT NULL,		  
+		  `custom_field_id` int(11) NOT NULL,
+		  `status` int(1) NOT NULL,
 		  `date_added` DATETIME NOT NULL,
 		  PRIMARY KEY (`return_transaction_id`),
 		  KEY `custom_field_id` (`custom_field_id`)

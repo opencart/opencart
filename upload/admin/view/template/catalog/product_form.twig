@@ -20,7 +20,13 @@
       </div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}
+      	<span>
+        {% for language in languages %}
+        <img src="language/{{ language.code }}/{{ language.code }}.png" />
+	{{ product_description[language.language_id] ? product_description[language.language_id].name }}
+        {% endfor %}
+	</span></div>
       <div class="card-body">
         {% if master_id %}
           <div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> {{ text_variant }}</div>

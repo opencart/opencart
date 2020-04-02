@@ -27,7 +27,6 @@ $_['text_black']			 	 		= 'Black';
 $_['text_pill']			 	 			= 'Pill';
 $_['text_rect']			 	 			= 'Rect';
 $_['text_checkout']			 	 		= 'Checkout';
-$_['text_credit']			 	 		= 'Credit';
 $_['text_pay']			 	 			= 'Pay';
 $_['text_buy_now']			 	 		= 'Buy Now';
 $_['text_pay_pal']			 	 		= 'PayPal';

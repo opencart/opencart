@@ -280,6 +280,10 @@
 	animation-delay: 0s;
 }
 
+#paypal_form .hidden {
+	display: none;
+}
+
 @keyframes lds-spinner {
 	0% {
 		opacity: 1;
@@ -595,15 +599,19 @@ function paypalReady() {
 	}
 }
 
-var script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = 'https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id={{ client_id }}&merchant-id={{ merchant_id }}&currency={{ currency_code }}&intent={{ transaction_method }}{% if (environment == 'sandbox') %}&buyer-country=NL{% endif %}';
-script.setAttribute('data-partner-attribution-id', '{{ partner_id }}');
-script.setAttribute('data-client-token', '{{ client_token }}');
-script.async = false;
-script.onload = paypalReady();
+if (typeof paypal === 'undefined') {
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = 'https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id={{ client_id }}&merchant-id={{ merchant_id }}&currency={{ currency_code }}&intent={{ transaction_method }}{% if (environment == 'sandbox') %}&buyer-country=NL{% endif %}';
+	script.setAttribute('data-partner-attribution-id', '{{ partner_id }}');
+	script.setAttribute('data-client-token', '{{ client_token }}');
+	script.async = false;
+	script.onload = paypalReady();
 	
-var paypal_form = document.querySelector('#paypal_form');
-paypal_form.appendChild(script);
+	var paypal_form = document.querySelector('#paypal_form');
+	paypal_form.appendChild(script);
+} else {
+	setupPayPal();
+}
 
 </script>

@@ -208,10 +208,6 @@ $_['paypal_setting'] = array(
 			'code' => 'checkout',
 			'name' => 'text_checkout'
 		),
-		'credit' => array(
-			'code' => 'credit',
-			'name' => 'text_credit'
-		),
 		'pay' => array(
 			'code' => 'pay',
 			'name' => 'text_pay'

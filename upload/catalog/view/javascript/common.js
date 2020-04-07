@@ -414,31 +414,49 @@ class Chain {
 
 var chain = new Chain();
 
-// Autocomplete */
+// Autocomplete
 (function($) {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
+			var $this = $(this);
+			var $dropdown = $('<div class="dropdown-menu"/>');
+
 			this.timer = null;
-			this.items = new Array();
+			this.items = [];
 
 			$.extend(this, option);
 
-			$(this).attr('autocomplete', 'off');
+			if (!$(this).parent().hasClass('input-group')) {
+				$(this).wrap('<div class="dropdown">');
+			} else {
+				$(this).parent().wrap('<div class="dropdown">');
+			}
+
+			$this.attr('autocomplete', 'off');
+			$this.active = false;
 
 			// Focus
-			$(this).on('focus', function() {
+			$this.on('focus', function() {
 				this.request();
 			});
 
 			// Blur
-			$(this).on('blur', function() {
-				setTimeout(function(object) {
-					object.hide();
-				}, 200, this);
+			$this.on('blur', function(e) {
+				if (!$this.active) {
+					this.hide();
+				}
+			});
+
+			$this.parent().on('mouseover', function(e) {
+				$this.active = true;
+			});
+
+			$this.parent().on('mouseout', function(e) {
+				$this.active = false;
 			});
 
 			// Keydown
-			$(this).on('keydown', function(event) {
+			$this.on('keydown', function(event) {
 				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
@@ -453,29 +471,24 @@ var chain = new Chain();
 			this.click = function(event) {
 				event.preventDefault();
 
-				value = $(event.target).parent().attr('data-value');
+				var value = $(event.target).attr('href');
 
 				if (value && this.items[value]) {
 					this.select(this.items[value]);
+
+					this.hide();
 				}
-			};
+			}
 
 			// Show
 			this.show = function() {
-				var pos = $(this).position();
-
-				$(this).siblings('ul.dropdown-menu').css({
-					top: pos.top + $(this).outerHeight(),
-					left: pos.left
-				});
-
-				$(this).siblings('ul.dropdown-menu').show();
-			};
+				$dropdown.addClass('show');
+			}
 
 			// Hide
 			this.hide = function() {
-				$(this).siblings('ul.dropdown-menu').hide();
-			};
+				$dropdown.removeClass('show');
+			}
 
 			// Request
 			this.request = function() {
@@ -483,44 +496,41 @@ var chain = new Chain();
 
 				this.timer = setTimeout(function(object) {
 					object.source($(object).val(), $.proxy(object.response, object));
-				}, 200, this);
-			};
+				}, 50, this);
+			}
 
 			// Response
 			this.response = function(json) {
-				html = '';
+				var html = '';
+				var category = {};
+				var name;
+				var i = 0, j = 0;
 
 				if (json.length) {
 					for (i = 0; i < json.length; i++) {
+						// update element items
 						this.items[json[i]['value']] = json[i];
-					}
 
-					for (i = 0; i < json.length; i++) {
 						if (!json[i]['category']) {
-							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
-						}
-					}
+							// ungrouped items
+							html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a>';
+						} else {
+							// grouped items
+							name = json[i]['category'];
 
-					// Get all the ones with a categories
-					var category = new Array();
-
-					for (i = 0; i < json.length; i++) {
-						if (json[i]['category']) {
-							if (!category[json[i]['category']]) {
-								category[json[i]['category']] = new Array();
-								category[json[i]['category']]['name'] = json[i]['category'];
-								category[json[i]['category']]['item'] = new Array();
+							if (!category[name]) {
+								category[name] = [];
 							}
 
-							category[json[i]['category']]['item'].push(json[i]);
+							category[name].push(json[i]);
 						}
 					}
 
-					for (i in category) {
-						html += '<li class="dropdown-header">' + category[i]['name'] + '</li>';
+					for (name in category) {
+						html += '<h6 class="dropdown-header">' + name + '</h6>';
 
-						for (j = 0; j < category[i]['item'].length; j++) {
-							html += '<li data-value="' + category[i]['item'][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[i]['item'][j]['label'] + '</a></li>';
+						for (j = 0; j < category[name].length; j++) {
+							html += '<a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a>';
 						}
 					}
 				}
@@ -531,13 +541,14 @@ var chain = new Chain();
 					this.hide();
 				}
 
-				$(this).siblings('ul.dropdown-menu').html(html);
-			};
+				$dropdown.html(html);
+			}
 
-			$(this).after('<ul class="dropdown-menu"></ul>');
-			$(this).siblings('ul.dropdown-menu').delegate('a', 'click', $.proxy(this.click, this));
+			$dropdown.on('click', '> a', $.proxy(this.click, this));
+
+			$this.after($dropdown);
 		});
-	};
+	}
 })(window.jQuery);
 
 +function($) {

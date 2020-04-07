@@ -518,7 +518,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$data['cancel'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		// Affliate
+		// Affiliate
 		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->get['customer_id']);
 		}
@@ -720,7 +720,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['tracking'] = $this->language->get('error_tracking');
 		}
 
-		$affiliate_info = $this->model_marketing_affiliate->getAffliateByTracking($this->request->post['tracking']);
+		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($this->request->post['tracking']);
 
 		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
 			$this->error['tracking'] = $this->language->get('error_exists');

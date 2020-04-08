@@ -979,7 +979,7 @@ class ControllerSaleOrder extends Controller {
 
 			$data['reward'] = $order_info['reward'];
 
-			$data['reward_total'] = $this->model_customer_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
+			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($this->request->get['order_id']);
 
 			$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
 			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
@@ -1314,7 +1314,7 @@ class ControllerSaleOrder extends Controller {
 			if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
 				$this->load->model('customer/customer');
 
-				$reward_total = $this->model_customer_customer->getTotalCustomerRewardsByOrderId($order_id);
+				$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
 
 				if (!$reward_total) {
 					$this->model_customer_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);

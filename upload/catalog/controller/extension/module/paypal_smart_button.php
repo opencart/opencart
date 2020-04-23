@@ -2,6 +2,15 @@
 class ControllerExtensionModulePayPalSmartButton extends Controller {
 	private $error = array();
 	
+	public function __construct($registry) {
+		parent::__construct($registry);
+
+		if (version_compare(phpversion(), '7.1', '>=')) {
+			ini_set('precision', 17);
+			ini_set('serialize_precision', -1);
+		}
+	}
+	
 	public function index() {		
 		if ($this->config->get('payment_paypal_status') && isset($this->request->get['route'])) {						
 			$status = false;
@@ -171,35 +180,43 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 			$paypal->setAccessToken($token_info);
 						
 			$item_info = array();
+			
+			$item_total = 0;
 				
 			foreach ($this->cart->getProducts() as $product) {
+				$product_price = $this->currency->format($product['price'], $currency_code, $currency_value, false);
+				
 				$item_info[] = array(
 					'name' => $product['name'],
 					'sku' => $product['model'],
-					'url' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+					'url' => $this->url->link('product/product', 'product_id=' . $product['product_id'], true),
 					'quantity' => $product['quantity'],
 					'unit_amount' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($product['price'], $currency_code, $currency_value, false)
+						'value' => $product_price
 					)
 				);
+				
+				$item_total += $product_price * $product['quantity'];
 			}
 			
-			$sub_total = $this->cart->getSubTotal();
-			$total = $this->cart->getTotal();
+			$sub_total = $this->currency->format($this->cart->getSubTotal(), $currency_code, $currency_value, false);
+			$total = $this->currency->format($this->cart->getTotal(), $currency_code, $currency_value, false);
 			$tax_total = $total - $sub_total;
+			
+			$order_total = $item_total + $tax_total;
 						
 			$amount_info = array(
 				'currency_code' => $currency_code,
-				'value' => $this->currency->format($total, $currency_code, $currency_value, false),
+				'value' => $order_total,
 				'breakdown' => array(
 					'item_total' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($sub_total, $currency_code, $currency_value, false)
+						'value' => $item_total
 					),
 					'tax_total' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($tax_total, $currency_code, $currency_value, false)
+						'value' => $tax_total
 					)
 				)
 			);
@@ -265,7 +282,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 		if (isset($this->request->post['order_id'])) {
 			$this->session->data['paypal_order_id'] = $this->request->post['order_id'];
 		} else {	
-			$data['url'] = $this->url->link('checkout/cart');
+			$data['url'] = $this->url->link('checkout/cart', '', true);
 			
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
@@ -273,7 +290,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 		
 		// check checkout can continue due to stock checks or vouchers
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$data['url'] = $this->url->link('checkout/cart');
+			$data['url'] = $this->url->link('checkout/cart', '', true);
 			
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
@@ -281,7 +298,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 
 		// if user not logged in check that the guest checkout is allowed
 		if (!$this->customer->isLogged() && (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload() || $this->cart->hasRecurringProducts())) {
-			$data['url'] = $this->url->link('checkout/cart');
+			$data['url'] = $this->url->link('checkout/cart', '', true);
 			
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
@@ -420,7 +437,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 				}
 			}
 
-			$data['url'] = $this->url->link('extension/module/paypal_smart_button/confirmOrder');			
+			$data['url'] = $this->url->link('extension/module/paypal_smart_button/confirmOrder', '', true);			
 		}
 		
 		$data['error'] = $this->error;
@@ -478,18 +495,18 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home'),
-			'text' => $this->language->get('text_home')
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', '', true)
 		);
 		
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_cart'),
-			'href' => $this->url->link('checkout/cart')
+			'href' => $this->url->link('checkout/cart', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/module/paypal_smart_button/confirmOrder'),
-			'text' => $this->language->get('text_title')
+			'text' => $this->language->get('text_title'),
+			'href' => $this->url->link('extension/module/paypal_smart_button/confirmOrder', '', true)
 		);
 
 		$points_total = 0;
@@ -599,7 +616,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 				'price'                 => $price,
 				'total'                 => $total,
-				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id'], true)
 			);
 		}
 
@@ -612,7 +629,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 					'key'         => $key,
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
-					'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)
+					'remove'      => $this->url->link('checkout/cart', 'remove=' . $key, true)
 				);
 			}
 		}
@@ -1221,8 +1238,16 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 				);
 			}
 												
-			$sub_total = $this->cart->getSubTotal();
-			$total = $this->cart->getTotal();
+			$item_total = 0;
+				
+			foreach ($this->cart->getProducts() as $product) {
+				$product_price = $this->currency->format($product['price'], $currency_code, $currency_value, false);
+				
+				$item_total += $product_price * $product['quantity'];
+			}
+												
+			$sub_total = $this->currency->format($this->cart->getSubTotal(), $currency_code, $currency_value, false);
+			$total = $this->currency->format($this->cart->getTotal(), $currency_code, $currency_value, false);
 			$tax_total = $total - $sub_total;
 						
 			$discount_total = 0;
@@ -1230,10 +1255,12 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 			$shipping_total = 0;
 		
 			if (isset($this->session->data['shipping_method'])) {
-				$shipping_total = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id'], $this->config->get('config_tax'));
+				$shipping_total = $this->currency->format($this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $currency_code, $currency_value, false);
 			}
 		
-			$rebate = $sub_total + $tax_total + $shipping_total - $order_data['total'];
+			$order_total = $this->currency->format($order_data['total'], $currency_code, $currency_value, false);
+		
+			$rebate = $item_total + $tax_total + $shipping_total - $order_total;
 		
 			if ($rebate > 0) {
 				$discount_total = $rebate;
@@ -1243,27 +1270,27 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 
 			$amount_info = array(
 				'currency_code' => $currency_code,
-				'value' => $this->currency->format($order_data['total'], $currency_code, $currency_value, false),
+				'value' => $order_total,
 				'breakdown' => array(
 					'item_total' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($sub_total, $currency_code, $currency_value, false)
+						'value' => $item_total
 					),
 					'tax_total' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($tax_total, $currency_code, $currency_value, false)
+						'value' => $tax_total
 					),
 					'shipping' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($shipping_total, $currency_code, $currency_value, false)
+						'value' => $shipping_total
 					),
 					'handling' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($handling_total, $currency_code, $currency_value, false)
+						'value' => $handling_total
 					),
 					'discount' => array(
 						'currency_code' => $currency_code,
-						'value' => $this->currency->format($discount_total, $currency_code, $currency_value, false)
+						'value' => $discount_total
 					)
 				)
 			);
@@ -1378,7 +1405,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 	public function confirmShipping() {
 		$this->validateShipping($this->request->post['shipping_method']);
 
-		$this->response->redirect($this->url->link('extension/module/paypal_smart_button/confirmOrder'));
+		$this->response->redirect($this->url->link('extension/module/paypal_smart_button/confirmOrder', '', true));
 	}
 	
 	public function confirmPaymentAddress() {
@@ -1442,7 +1469,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 				$this->session->data['payment_address']['zone_code'] = '';
 			}
 			
-			$data['url'] = $this->url->link('extension/module/paypal_smart_button/confirmOrder');
+			$data['url'] = $this->url->link('extension/module/paypal_smart_button/confirmOrder', '', true);
 		}
 
 		$data['error'] = $this->error;
@@ -1499,7 +1526,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 				$this->session->data['shipping_address']['custom_field'] = array();
 			}
 			
-			$data['url'] = $this->url->link('extension/module/paypal_smart_button/confirmOrder');
+			$data['url'] = $this->url->link('extension/module/paypal_smart_button/confirmOrder', '', true);
 		}
 		
 		$data['error'] = $this->error;

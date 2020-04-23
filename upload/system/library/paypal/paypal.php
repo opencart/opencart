@@ -276,7 +276,7 @@ class PayPal {
 			$curl_options[CURLOPT_HTTPHEADER][] = 'Accept: application/json';
 			$curl_options[CURLOPT_HTTPHEADER][] = 'Accept-Language: en_US';
 			$curl_options[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
-			$curl_options[CURLOPT_HTTPHEADER][] = 'PayPal-Request-Id: ' . token(50);
+			$curl_options[CURLOPT_HTTPHEADER][] = 'PayPal-Request-Id: ' . $this->token(50);
 			$curl_options[CURLOPT_HTTPHEADER][] = 'PayPal-Partner-Attribution-Id: OPENCARTLIMITED_Cart_OpenCartPCP';
 			
 			if ($this->access_token) {
@@ -410,4 +410,19 @@ class PayPal {
 			return http_build_query($params);
 		}
     }
+	
+	private function token($length = 32) {
+		// Create random token
+		$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	
+		$max = strlen($string) - 1;
+	
+		$token = '';
+	
+		for ($i = 0; $i < $length; $i++) {
+			$token .= $string[mt_rand(0, $max)];
+		}	
+	
+		return $token;
+	}
 }

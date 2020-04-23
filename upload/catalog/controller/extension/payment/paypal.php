@@ -2,6 +2,15 @@
 class ControllerExtensionPaymentPayPal extends Controller {
 	private $error = array();
 	
+	public function __construct($registry) {
+		parent::__construct($registry);
+
+		if (version_compare(phpversion(), '7.1', '>=')) {
+			ini_set('precision', 17);
+			ini_set('serialize_precision', -1);
+		}
+	}
+	
 	public function index() {
 		$this->load->language('extension/payment/paypal');
 		
@@ -153,22 +162,28 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		}
 		
 		$item_info = array();
+		
+		$item_total = 0;
 				
 		foreach ($this->cart->getProducts() as $product) {
+			$product_price = $this->currency->format($product['price'], $currency_code, $currency_value, false);
+				
 			$item_info[] = array(
 				'name' => $product['name'],
 				'sku' => $product['model'],
-				'url' => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'url' => $this->url->link('product/product', 'product_id=' . $product['product_id'], true),
 				'quantity' => $product['quantity'],
 				'unit_amount' => array(
 					'currency_code' => $currency_code,
-					'value' => $this->currency->format($product['price'], $currency_code, $currency_value, false)
+					'value' => $product_price
 				)
 			);
+			
+			$item_total += $product_price * $product['quantity'];
 		}
 				
-		$sub_total = $this->cart->getSubTotal();
-		$total = $this->cart->getTotal();
+		$sub_total = $this->currency->format($this->cart->getSubTotal(), $currency_code, $currency_value, false);
+		$total = $this->currency->format($this->cart->getTotal(), $currency_code, $currency_value, false);
 		$tax_total = $total - $sub_total;
 						
 		$discount_total = 0;
@@ -176,10 +191,12 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$shipping_total = 0;
 		
 		if (isset($this->session->data['shipping_method'])) {
-			$shipping_total = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id'], $this->config->get('config_tax'));
+			$shipping_total = $this->currency->format($this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $currency_code, $currency_value, false);
 		}
 		
-		$rebate = $sub_total + $tax_total + $shipping_total - $order_info['total'];
+		$order_total = $this->currency->format($order_info['total'], $currency_code, $currency_value, false);
+		
+		$rebate = $item_total + $tax_total + $shipping_total - $order_total;
 		
 		if ($rebate > 0) {
 			$discount_total = $rebate;
@@ -189,27 +206,27 @@ class ControllerExtensionPaymentPayPal extends Controller {
 
 		$amount_info = array(
 			'currency_code' => $currency_code,
-			'value' => $this->currency->format($order_info['total'], $currency_code, $currency_value, false),
+			'value' => $order_total,
 			'breakdown' => array(
 				'item_total' => array(
 					'currency_code' => $currency_code,
-					'value' => $this->currency->format($sub_total, $currency_code, $currency_value, false)
+					'value' => $item_total
 				),
 				'tax_total' => array(
 					'currency_code' => $currency_code,
-					'value' => $this->currency->format($tax_total, $currency_code, $currency_value, false)
+					'value' => $tax_total
 				),
 				'shipping' => array(
 					'currency_code' => $currency_code,
-					'value' => $this->currency->format($shipping_total, $currency_code, $currency_value, false)
+					'value' => $shipping_total
 				),
 				'handling' => array(
 					'currency_code' => $currency_code,
-					'value' => $this->currency->format($handling_total, $currency_code, $currency_value, false)
+					'value' => $handling_total
 				),
 				'discount' => array(
 					'currency_code' => $currency_code,
-					'value' => $this->currency->format($discount_total, $currency_code, $currency_value, false)
+					'value' => $discount_total
 				)
 			)
 		);
@@ -294,7 +311,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				}
 		
 				if ($this->error && isset($this->error['warning'])) {
-					$this->error['warning'] .= ' ' . sprintf($this->language->get('error_payment'), $this->url->link('information/contact'));
+					$this->error['warning'] .= ' ' . sprintf($this->language->get('error_payment'), $this->url->link('information/contact', '', true));
 				}
 			}
 		}
@@ -370,7 +387,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				
 				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('config_order_status_id'), $message);
 				
-				$data['success'] = $this->url->link('checkout/success');
+				$data['success'] = $this->url->link('checkout/success', '', true);
 			}
 		}
 		

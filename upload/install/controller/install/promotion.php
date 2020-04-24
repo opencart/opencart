@@ -3,9 +3,7 @@ class ControllerInstallPromotion extends Controller {
 	public function index() {
 		$curl = curl_init();
 
-		//curl_setopt($curl, CURLOPT_URL, 'https://www.opencart.com/index.php?route=api/install');
-
-		curl_setopt($curl, CURLOPT_URL, 'http://localhost/opencart-website/public_html/index.php?route=api/install');
+		curl_setopt($curl, CURLOPT_URL, 'https://www.opencart.com/index.php?route=api/install');
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

@@ -621,7 +621,7 @@ class ControllerProductProduct extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getDescription() {
+	public function getRecurringDescription() {
 		$this->load->language('product/product');
 
 		if (isset($this->request->post['product_id'])) {

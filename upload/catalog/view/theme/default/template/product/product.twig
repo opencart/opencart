@@ -366,7 +366,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'recurring_id\'], input[name="quantity"]').change(function() {
 	$.ajax({
-		url: 'index.php?route=product/product/getDescription',
+		url: 'index.php?route=product/product/getRecurringDescription',
 		type: 'post',
 		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
 		dataType: 'json',

@@ -223,9 +223,9 @@ class Squareup {
             'no_version' => true,
             'parameters' => array(
                 'client_id' => $this->config->get('payment_squareup_client_id'),
-                'client_secret' => $this->config->get('payment_squareup_client_secret'),
+                'code' => $code,
                 'redirect_uri' => $this->session->data['payment_squareup_oauth_redirect'],
-                'code' => $code
+                'grant_type' => 'authorization_code'
             )
         );
 

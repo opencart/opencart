@@ -21,12 +21,6 @@ If you are not sure about your issue, it is always best to ask the community on 
 - If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must contact the extension developer, use the forum or find a commercial partner to resolve a 3rd party code issue.
 - If you would like to report a serious security bug please PM an OpenCart moderator/administrator on the forum. Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it. Please DO NOT post security flaws in a public location.
 
-## Making a suggestion
-
-Please do not create a bug report if you think something needs improving / adding (such as features or change to code standards etc).
-
-We welcome public suggestions on our [User Voice site](https://opencart.uservoice.com).
-
 ## How to contribute
 
 Fork the repository, edit and [submit a pull request](https://github.com/opencart/opencart/wiki/Creating-a-pull-request).

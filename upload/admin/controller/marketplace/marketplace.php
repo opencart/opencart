@@ -159,8 +159,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$response = curl_exec($curl);
 
-		//echo $response;
-
 		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 		curl_close($curl);
@@ -449,7 +447,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'value' => 'rating',
 			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=rating')
 		);
-
 
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_name'),

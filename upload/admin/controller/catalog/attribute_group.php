@@ -304,7 +304,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		if (isset($this->request->post['attribute_group_description'])) {
 			$data['attribute_group_description'] = $this->request->post['attribute_group_description'];
 		} elseif (!empty($attribute_group_info)) {
-			$data['attribute_group_description'] = $this->model_catalog_attribute_group->getAttributeGroupDescriptions($this->request->get['attribute_group_id']);
+			$data['attribute_group_description'] = $this->model_catalog_attribute_group->getDescriptions($this->request->get['attribute_group_id']);
 		} else {
 			$data['attribute_group_description'] = array();
 		}

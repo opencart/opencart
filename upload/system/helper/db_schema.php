@@ -1192,7 +1192,7 @@ function db_schema() {
 			),
 			array(
 				'name' => 'company',
-				'type' => 'varchar(40)',
+				'type' => 'varchar(60)',
 				'not_null' => true
 			),
 			array(

@@ -1667,7 +1667,7 @@ function extractLineClasses(type, output) {
     var prop = lineClass[1] ? "bgClass" : "textClass"
     if (output[prop] == null)
       { output[prop] = lineClass[2] }
-    else if (!(new RegExp("(?:^|\s)" + lineClass[2] + "(?:$|\s)")).test(output[prop]))
+    else if (!(new RegExp("(?:^|\\s)" + lineClass[2] + "(?:$|\\s)")).test(output[prop]))
       { output[prop] += " " + lineClass[2] }
   } }
   return type

@@ -119,9 +119,10 @@
                   <div class="caption">
                     <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
                     <p>{{ product.description }}</p>
+
                     {% if product.price %}
                       <p class="price">
-                        {% if  not product.special %}
+                        {% if not product.special %}
                           {{ product.price }}
                         {% else %}
                           <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
@@ -131,7 +132,8 @@
                         {% endif %}
                       </p>
                     {% endif %}
-                    {% if product.rating %}
+
+                    {% if review_status and product.rating %}
                       <div class="rating">
                         {% for i in 1..5 %}
                           {% if product.rating < i %}
@@ -142,6 +144,7 @@
                         {% endfor %}
                       </div>
                     {% endif %}
+
                   </div>
                   <div class="button-group">
                     <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>

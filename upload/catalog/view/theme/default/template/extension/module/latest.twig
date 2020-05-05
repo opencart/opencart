@@ -7,7 +7,8 @@
         <div class="caption">
           <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
           <p>{{ product.description }}</p>
-          {% if product.rating %}
+
+          {% if review_status and product.rating %}
             <div class="rating">
               {% for i in 1..5 %}
                 {% if product.rating < i %}
@@ -18,6 +19,7 @@
               {% endfor %}
             </div>
           {% endif %}
+
           {% if product.price %}
             <p class="price">
               {% if not product.special %}
@@ -30,6 +32,7 @@
               {% endif %}
             </p>
           {% endif %}
+
         </div>
         <div class="button-group">
           <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>

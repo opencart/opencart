@@ -27,25 +27,18 @@
             </ul>
           {% endif %}
           <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a id="description-tab" class="nav-link active" data-toggle="tab" href="#tab-description" role="tab" aria-controls="tab-description" aria-selected="true">
-                {{ tab_description }}</a></li>
+            <li class="nav-item"><a href="#tab-description" id="description-tab" class="nav-link active" data-toggle="tab">{{ tab_description }}</a></li>
             {% if attribute_groups %}
-              <li class="nav-item">
-                <a id="specification-tab" class="nav-link" data-toggle="tab" href="#tab-specification" role="tab" aria-controls="tab-specification" aria-selected="true">
-                  {{ tab_attribute }}</a></li>
+              <li class="nav-item"><a href="#tab-specification" id="specification-tab" class="nav-link" data-toggle="tab">{{ tab_attribute }}</a></li>
             {% endif %}
             {% if review_status %}
-              <li class="nav-item">
-                <a id="review-tab" class="nav-link" data-toggle="tab" href="#tab-review" role="tab" aria-controls="tab-review" aria-selected="true">
-                  {{ tab_review }}</a></li>
+              <li class="nav-item"><a href="#tab-review" id="review-tab" class="nav-link" data-toggle="tab">{{ tab_review }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
             <div id="tab-description" class="tab-pane fade show active mb-4" role="tabpanel" aria-labelledby="description-tab">
               {{ description }}
             </div>
-
             {% if attribute_groups %}
               <div id="tab-specification" class="tab-pane fade" role="tabpanel" aria-labelledby="specification-tab">
                 <div class="table-responsive">

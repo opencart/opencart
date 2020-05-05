@@ -44,12 +44,6 @@ class ControllerExtensionModuleLatest extends Controller {
 					$tax = false;
 				}
 
-				if ($this->config->get('config_review_status')) {
-					$rating = $result['rating'];
-				} else {
-					$rating = false;
-				}
-
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -59,10 +53,12 @@ class ControllerExtensionModuleLatest extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $rating,
+					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'])
 				);
 			}
+
+			$data['review_status'] = $this->config->get('config_review_status');
 
 			return $this->load->view('extension/module/latest', $data);
 		}

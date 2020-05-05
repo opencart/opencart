@@ -188,12 +188,6 @@ class ControllerProductCategory extends Controller {
 					$tax = false;
 				}
 
-				if ($this->config->get('config_review_status')) {
-					$rating = (int)$result['rating'];
-				} else {
-					$rating = false;
-				}
-
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -350,6 +344,8 @@ class ControllerProductCategory extends Controller {
 			$data['order'] = $order;
 			$data['limit'] = $limit;
 
+			$data['review_status'] = $this->config->get('config_review_status');
+
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -396,8 +392,6 @@ class ControllerProductCategory extends Controller {
 
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
-			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
-
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -405,6 +399,7 @@ class ControllerProductCategory extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
+			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}

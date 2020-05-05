@@ -63,6 +63,7 @@
                   <div class="caption">
                     <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
                     <p>{{ product.description }}</p>
+
                     {% if product.price %}
                       <p class="price">
                         {% if not product.special %}
@@ -74,7 +75,8 @@
                         {% endif %}
                       </p>
                     {% endif %}
-                    {% if product.rating %}
+
+                    {% if review_status and product.rating %}
                       <div class="rating">
                         {% for i in 1..5 %}
                           {% if product.rating < i %}

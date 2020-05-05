@@ -215,12 +215,6 @@ class ControllerProductSearch extends Controller {
 					$tax = false;
 				}
 
-				if ($this->config->get('config_review_status')) {
-					$rating = (int)$result['rating'];
-				} else {
-					$rating = false;
-				}
-
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
@@ -443,6 +437,8 @@ class ControllerProductSearch extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;
+
+		$data['review_status'] = $this->config->get('config_review_status');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

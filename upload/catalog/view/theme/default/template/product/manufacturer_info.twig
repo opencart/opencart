@@ -76,13 +76,15 @@
                         {% endif %}
                       </p>
                     {% endif %}
-                    {% if product.rating %}
+
+                    {% if review_status and product.rating %}
                       <div class="rating">
                         {% for i in 1..5 %}
                           {% if product.rating < i %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span> {% endif %}
                         {% endfor %}
                       </div>
                     {% endif %}
+
                   </div>
                   <div class="button-group">
                     <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>

@@ -1,0 +1,35 @@
+<div class="product-thumb transition">
+  <div class="image"><a href="{{ href }}"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}" class="img-fluid"/></a></div>
+  <div class="caption">
+    <h4><a href="{{ href }}">{{ name }}</a></h4>
+    <p>{{ description }}</p>
+    {% if price %}
+      <div class="price">
+        {% if not special %}
+          {{ price }}
+        {% else %}
+          <span class="price-new">{{ special }}</span> <span class="price-old">{{ price }}</span>
+        {% endif %}
+        {% if product.tax %}
+          <span class="price-tax">{{ text_tax }} {{ tax }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if review_status and rating %}
+      <div class="rating">
+        {% for i in 1..5 %}
+          {% if product.rating < i %}
+            <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span>
+          {% else %}
+            <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="button-group">
+    <button type="button" onclick="cart.add('{{ product_id }}', '{{ minimum }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
+    <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
+    <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
+  </div>
+</div>

@@ -51,7 +51,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 					$tax = false;
 				}
 
-				$data['products'][] = array(
+				$product_data = array(
 					'product_id'  => $product['product_id'],
 					'thumb'       => $image,
 					'name'        => $product['name'],
@@ -63,10 +63,10 @@ class ControllerExtensionModuleFeatured extends Controller {
 					'rating'      => $product['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 				);
+
+				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 		}
-
-		$data['review_status'] = $this->config->get('config_review_status');
 
 		if ($data['products']) {
 			return $this->load->view('extension/module/featured', $data);

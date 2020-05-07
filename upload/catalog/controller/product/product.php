@@ -391,8 +391,6 @@ class ControllerProductProduct extends Controller {
 
 			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->get['product_id']);
 
-			$data['current_link'] = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . $this->request->server['HTTP_HOST'] . $this->request->server['REQUEST_URI'];
-
 			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($this->request->get['product_id']);
 
 			$data['products'] = array();
@@ -424,7 +422,7 @@ class ControllerProductProduct extends Controller {
 					$tax = false;
 				}
 
-				$data['products'][] = array(
+				$product_data = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
@@ -436,6 +434,8 @@ class ControllerProductProduct extends Controller {
 					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'])
 				);
+
+				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 
 			$data['tags'] = array();

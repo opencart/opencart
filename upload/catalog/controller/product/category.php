@@ -188,7 +188,7 @@ class ControllerProductCategory extends Controller {
 					$tax = false;
 				}
 
-				$data['products'][] = array(
+				$product_data = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
@@ -200,6 +200,8 @@ class ControllerProductCategory extends Controller {
 					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
 				);
+
+				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 
 			$url = '';

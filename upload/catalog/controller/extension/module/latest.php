@@ -44,7 +44,7 @@ class ControllerExtensionModuleLatest extends Controller {
 					$tax = false;
 				}
 
-				$data['products'][] = array(
+				$product_data = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
@@ -56,9 +56,9 @@ class ControllerExtensionModuleLatest extends Controller {
 					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'])
 				);
-			}
 
-			$data['review_status'] = $this->config->get('config_review_status');
+				$data['products'][] = $this->load->controller('product/thumb', $product_data);
+			}
 
 			return $this->load->view('extension/module/latest', $data);
 		}

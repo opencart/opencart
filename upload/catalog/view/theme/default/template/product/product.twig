@@ -276,6 +276,7 @@
             {% if minimum > 1 %}
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_minimum }}</div>
             {% endif %}</div>
+
           {% if review_status %}
             <div class="rating">
               <p>{% for i in 1..5 %}
@@ -294,49 +295,8 @@
       {% if products %}
         <h3>{{ text_related }}</h3>
         <div class="row">
-          {% set i = 0 %}
           {% for product in products %}
-            <div class="col">
-              <div class="product-thumb transition">
-                <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid"/></a></div>
-                <div class="caption">
-                  <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-                  <p>{{ product.description }}</p>
-                  {% if product.rating %}
-                    <div class="rating">
-                      {% for j in 1..5 %}
-                        {% if product.rating < j %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="fas fa-star-o fa-stack-1x"></i></span> {% endif %}
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                  {% if product.price %}
-                    <p class="price">
-                      {% if not product.special %}
-                        {{ product.price }}
-                      {% else %}
-                        <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-                      {% endif %}
-                      {% if product.tax %}
-                        <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-                      {% endif %}
-                    </p>
-                  {% endif %}
-                </div>
-                <div class="button-group">
-                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fas fa-heart"></i></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fas fa-exchange-alt"></i></button>
-                </div>
-              </div>
-            </div>
-            {% if column_left and column_right and (i + 1) % 2 == 0 %}
-              <div class="clearfix visible-md visible-sm"></div>
-            {% elseif column_left or column_right and (i + 1) % 3 == 0 %}
-              <div class="clearfix visible-md"></div>
-            {% elseif (i + 1) % 4 == 0 %}
-              <div class="clearfix visible-md"></div>
-            {% endif %}
-            {% set i = i + 1 %}
+            <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-12">{{ product }}</div>
           {% endfor %}
         </div>
       {% endif %}

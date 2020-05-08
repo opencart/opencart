@@ -56,7 +56,7 @@ CKEDITOR.dialog.add("specialchar", function(k) {
 				f.push('\x3ctr role\x3d"presentation"\x3e');
 				for (var l = 0; l < c; l++, d++) {
 					if (h = b[d]) {
-						h instanceof Array ? (e = h[1], h = h[0]) : (e = h.replace("\x26", "").replace(";", "").replace("#", ""), e = n[e] || h);
+						h instanceof Array ? (e = h[1], h = h[0]) : (e = h.replace(/"\x26"/g,"").replace(";", "").replace("#", ""), e = n[e] || h);
 						var m = "cke_specialchar_label_" + d + "_" + CKEDITOR.tools.getNextNumber();
 						f.push('\x3ctd class\x3d"cke_dark_background" style\x3d"cursor: default" role\x3d"presentation"\x3e\x3ca href\x3d"javascript: void(0);" role\x3d"option" aria-posinset\x3d"' + (d + 1) + '"', ' aria-setsize\x3d"' + g + '"', ' aria-labelledby\x3d"' + m + '"', ' class\x3d"cke_specialchar" title\x3d"', CKEDITOR.tools.htmlEncode(e),
 							'" onkeydown\x3d"CKEDITOR.tools.callFunction( ' + q + ', event, this )" onclick\x3d"CKEDITOR.tools.callFunction(' + p + ', this); return false;" tabindex\x3d"-1"\x3e\x3cspan style\x3d"margin: 0 auto;cursor: inherit"\x3e' + h + '\x3c/span\x3e\x3cspan class\x3d"cke_voice_label" id\x3d"' + m + '"\x3e' + e + "\x3c/span\x3e\x3c/a\x3e")

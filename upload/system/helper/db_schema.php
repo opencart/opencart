@@ -5707,6 +5707,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'key',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'regex',
 				'type' => 'varchar(255)',
 				'not_null' => true

@@ -3,7 +3,7 @@ class ControllerStartupMarketing extends Controller {
 	public function index() {
 		// Tracking Code
 		if (isset($this->request->get['tracking'])) {
-			setcookie('tracking', $this->request->get['tracking'], time() + 3600 * 24 * 1000, '/');
+			setcookie('tracking', $this->request->get['tracking'], time() + 3600 * 24 * 1000, '/', true, true);
 
 			$this->load->model('marketing/marketing');
 

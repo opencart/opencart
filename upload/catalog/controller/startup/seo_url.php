@@ -19,7 +19,7 @@ class ControllerStartupSeoUrl extends Controller {
 		//foreach ($results as $result) {
 		//	$this->regex[$result['key']][] = $result;
 		//}
-		/*
+
 		// Decode URL
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);
@@ -46,7 +46,6 @@ class ControllerStartupSeoUrl extends Controller {
 				}
 			}
 		}
-		*/
 	}
 
 	public function rewrite($link) {
@@ -89,7 +88,7 @@ class ControllerStartupSeoUrl extends Controller {
 					$regex = html_entity_decode($result['regex'], ENT_QUOTES, 'UTF-8');
 
 					if (preg_match($regex, $value, $match)) {
-						echo $key;
+						//echo $key;
 
 						$keyword = $this->model_design_seo_url->getKeyword($key, $match[0]);
 

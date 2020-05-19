@@ -30,9 +30,9 @@ $_['help_keyword']         = 'Make sure you only use characters in the a-z or 0-
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify SEO URL!';
-$_['error_exists']         = 'Warning: Combination of store, language key, value already exists!';
+$_['error_exists']         = 'Warning: Combination of store, language key, value, keyword already exists!';
 $_['error_key']            = 'Key must be between 1 and 64 characters!';
 $_['error_value']          = 'Value must be between 1 and 255 characters!';
-
+$_['error_value_exists']   = 'Value is already in use!';
 $_['error_keyword']        = 'Keyword must be between 3 and 64 characters!';
-$_['error_keyword_exists'] = 'Keyword already in use!';
+$_['error_keyword_exists'] = 'Keyword is already in use!';

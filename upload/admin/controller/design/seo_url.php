@@ -598,7 +598,7 @@ class ControllerDesignSeoUrl extends Controller {
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($this->request->post['key'], $this->request->post['value'], $this->request->post['store_id'], $this->request->post['language_id']);
 
 		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != $this->request->get['seo_url_id'])) {
-			$this->error['warning'] = $this->language->get('error_exists');
+			$this->error['value'] = $this->language->get('error_value_exists');
 		}
 
 		if (preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {

@@ -399,14 +399,10 @@ class ControllerCatalogManufacturer extends Controller {
 			foreach ($this->request->post['manufacturer_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if ($keyword) {
-						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
-						
-						foreach ($seo_urls as $seo_url) {
-							if (($seo_url['store_id'] == $store_id) && ($seo_url['language_id'] == $language_id) && (!isset($this->request->get['manufacturer_id']) || (($seo_url['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id'])))) {
-								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
-								break;
-							}
+						if ($seo_url_info && ($seo_url_info['key'] != 'manufacturer_id' || !isset($this->request->get['manufacturer_id']) || $seo_url_info['value'] != $this->request->get['manufacturer_id'])) {
+							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
 						$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_seo');

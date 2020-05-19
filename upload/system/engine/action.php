@@ -40,7 +40,7 @@ class Action {
 	}
 
 	/**
-	 *
+	 * Identify Action
 	 *
 	 * @return    string
 	 *
@@ -50,7 +50,7 @@ class Action {
 	}
 
 	/**
-	 *
+	 * Execute Action
 	 *
 	 * @param    object $registry
 	 * @param    array $args

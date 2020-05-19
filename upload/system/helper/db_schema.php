@@ -5693,10 +5693,10 @@ function db_schema() {
 	);
 
 	$tables[] = array(
-		'name' => 'seo_regex',
+		'name' => 'seo_profile',
 		'field' => array(
 			array(
-				'name' => 'seo_regex_id',
+				'name' => 'seo_profile_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
@@ -5717,19 +5717,29 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'push',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'remove',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
 			)
 		),
 		'primary' => array(
-			'seo_regex_id'
+			'seo_profile_id'
 		),
 		'index' => array(
 			array(
-				'name' => 'regex',
+				'name' => 'key',
 				'key' => array(
-					'regex'
+					'key'
 				)
 			)
 		),
@@ -5763,12 +5773,12 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'query',
-				'type' => 'varchar(255)',
+				'name' => 'key',
+				'type' => 'varchar(64)',
 				'not_null' => true
 			),
 			array(
-				'name' => 'push',
+				'name' => 'value',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			)
@@ -5778,15 +5788,16 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'query',
-				'key' => array(
-					'query'
-				)
-			),
-			array(
 				'name' => 'keyword',
 				'key' => array(
 					'keyword'
+				)
+			),
+			array(
+				'name' => 'query',
+				'key' => array(
+					'key',
+					'value'
 				)
 			)
 		),

@@ -5,7 +5,7 @@
       <div class="float-right">
         <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
         <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-url-alias').submit() : false;"><i class="fas fa-trash-alt"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-seo-url').submit() : false;"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -35,7 +35,10 @@
               <label for="input-keyword" class="col-form-label">{{ entry_keyword }}</label> <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
             </div>
             <div class="form-group">
-              <label for="input-query" class="col-form-label">{{ entry_query }}</label> <input type="text" name="filter_query" value="{{ filter_query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
+              <label for="input-key" class="col-form-label">{{ entry_key }}</label> <input type="text" name="filter_key" value="{{ filter_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label for="input-value" class="col-form-label">{{ entry_value }}</label> <input type="text" name="filter_value" value="{{ filter_value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
             </div>
             <div class="form-group">
               <label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
@@ -76,14 +79,15 @@
         <div class="card">
           <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
           <div class="card-body">
-            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-url-alias">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-seo-url">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
                       <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
-                      <td class="text-left">{% if sort == 'query' %}<a href="{{ sort_query }}" class="{{ order|lower }}">{{ column_query }}</a> {% else %}<a href="{{ sort_query }}">{{ column_query }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'key' %}<a href="{{ sort_key }}" class="{{ order|lower }}">{{ column_key }}</a> {% else %}<a href="{{ sort_key }}">{{ column_key }}</a>{% endif %}</td>
+                      <td class="text-left">{% if sort == 'value' %}<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a> {% else %}<a href="{{ sort_value }}">{{ column_value }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
                       <td class="text-center">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
                       <td class="text-right">{{ column_action }}</td>
@@ -100,7 +104,8 @@
                               <input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/>
                             {% endif %}</td>
                           <td class="text-left">{{ seo_url.keyword }}</td>
-                          <td class="text-left">{{ seo_url.query }}</td>
+                          <td class="text-left">{{ seo_url.key }}</td>
+                          <td class="text-left">{{ seo_url.value }}</td>
                           <td class="text-left">{{ seo_url.store }}</td>
                           <td class="text-center"><img src="language/{{ seo_url.language }}/{{ seo_url.language }}.png" alt="{{ seo_url.language }}" title="{{ seo_url.language }}"></td>
                           <td class="text-right"><a href="{{ seo_url.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
@@ -108,7 +113,7 @@
                       {% endfor %}
                     {% else %}
                       <tr>
-                        <td class="text-center" colspan="6">{{ text_no_results }}</td>
+                        <td class="text-center" colspan="7">{{ text_no_results }}</td>
                       </tr>
                     {% endif %}
                   </tbody>
@@ -135,10 +140,16 @@ $('#button-filter').on('click', function() {
 		url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
 	}
 
-	var filter_query = $('input[name=\'filter_query\']').val();
+	var filter_key = $('input[name=\'filter_key\']').val();
 
-	if (filter_query) {
-		url += '&filter_query=' + encodeURIComponent(filter_query);
+	if (filter_key) {
+		url += '&filter_key=' + encodeURIComponent(filter_key);
+	}
+
+	var filter_value = $('input[name=\'filter_value\']').val();
+
+	if (filter_value) {
+		url += '&filter_value=' + encodeURIComponent(filter_value);
 	}
 
 	var filter_store_id = $('select[name=\'filter_store_id\']').val();

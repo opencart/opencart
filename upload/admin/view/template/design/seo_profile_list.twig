@@ -42,24 +42,24 @@
                 </tr>
               </thead>
               <tbody>
-                {% if seo_regexes %}
-                  {% for seo_regex in seo_regexes %}
+                {% if seo_profiles %}
+                  {% for seo_profile in seo_profiles %}
                     <tr>
-                      <td class="text-center">{% if seo_regex.seo_regex_id in selected %}
-                          <input type="checkbox" name="selected[]" value="{{ seo_regex.seo_regex_id }}" checked="checked"/>
+                      <td class="text-center">{% if seo_profile.seo_regex_id in selected %}
+                          <input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}" checked="checked"/>
                         {% else %}
-                          <input type="checkbox" name="selected[]" value="{{ seo_regex.seo_regex_id }}"/>
+                          <input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}"/>
                         {% endif %}</td>
-                      <td class="text-left">{{ seo_regex.name }}</td>
-                      <td class="text-left">{{ seo_regex.key }}</td>
-                      <td class="text-left">{{ seo_regex.regex }}</td>
-                      <td class="text-right">{{ seo_regex.sort_order }}</td>
-                      <td class="text-right"><a href="{{ seo_regex.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+                      <td class="text-left">{{ seo_profile.name }}</td>
+                      <td class="text-left">{{ seo_profile.key }}</td>
+                      <td class="text-left">{{ seo_profile.regex }}</td>
+                      <td class="text-right">{{ seo_profile.sort_order }}</td>
+                      <td class="text-right"><a href="{{ seo_profile.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                     </tr>
                   {% endfor %}
                 {% else %}
                   <tr>
-                    <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                    <td class="text-center" colspan="6">{{ text_no_results }}</td>
                   </tr>
                 {% endif %}
               </tbody>

@@ -5768,17 +5768,17 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'keyword',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
 				'name' => 'key',
 				'type' => 'varchar(64)',
 				'not_null' => true
 			),
 			array(
 				'name' => 'value',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			)

@@ -15,7 +15,6 @@ class ControllerCommonCurrency extends Controller {
 			$route = $this->config->get('action_default');
 		}
 
-		unset($url_data['_route_']);
 		unset($url_data['route']);
 
 		$data['currencies'] = array();

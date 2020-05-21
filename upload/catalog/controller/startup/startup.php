@@ -147,7 +147,6 @@ class ControllerStartupStartup extends Controller {
 				$route = $this->config->get('action_default');
 			}
 
-			unset($this->request->get['_route_']);
 			unset($this->request->get['route']);
 			unset($this->request->get['language']);
 

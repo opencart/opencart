@@ -16,7 +16,6 @@ class ControllerCommonLanguage extends Controller {
 			$route = $this->config->get('action_default');
 		}
 
-		unset($url_data['_route_']);
 		unset($url_data['route']);
 		unset($url_data['language']);
 

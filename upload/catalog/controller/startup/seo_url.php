@@ -70,17 +70,15 @@ class ControllerStartupSeoUrl extends Controller {
 		parse_str($url_info['query'], $query);
 
 		foreach ($query as $key => $value) {
-			if (!isset($this->profile[$key])) {
-				$this->profile[$key] = $this->model_design_seo_profile->getSeoProfilesByKey($key);
-			}
+			$results = $this->model_design_seo_profile->getSeoProfilesByKey($key);
 
-			foreach ($this->profile[$key] as $result) {
+			foreach ($results as $result) {
 				$match = array();
 
 				$regex = html_entity_decode($result['regex'], ENT_QUOTES, 'UTF-8');
 
 				if (preg_match($regex, $value, $match)) {
-					$keyword = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $match[0]);
+					$keyword = $this->model_design_seo_url->getKeywordByKeyValue($key, $match[0]);
 
 					if ($keyword) {
 						$path_data[] = array(

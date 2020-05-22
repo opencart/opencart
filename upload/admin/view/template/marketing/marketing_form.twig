@@ -59,9 +59,9 @@
               <div class="form-group row">
                 <label for="input-example" class="col-sm-2 col-form-label">{{ entry_example }}</label>
                 <div class="col-sm-10">
-                  <input type="text" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
+                  <input type="text" name="example1" value="" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
                   <br/>
-                  <input type="text" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
+                  <input type="text" name="example2" value="" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
                   <small class="form-text text-muted">{{ help_example }}</small>
                 </div>
               </div>
@@ -79,10 +79,10 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-code').on('keyup', function() {
-	$('#input-example1').val('{{ store }}?tracking=' + $('#input-code').val());
+$('#input-code').on('keyup', function(e) {
+	$('#input-example1').attr('value', '{{ store }}?tracking=' + $('#input-code').val());
 
-	$('#input-example2').val('{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
+	$('#input-example2').attr('value', '{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
 });
 
 $('#input-code').trigger('keyup');

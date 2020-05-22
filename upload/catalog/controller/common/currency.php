@@ -16,6 +16,7 @@ class ControllerCommonCurrency extends Controller {
 		}
 
 		unset($url_data['route']);
+		unset($url_data['_route_']);
 
 		$data['currencies'] = array();
 

@@ -712,7 +712,7 @@ class ControllerMarketingAffiliate extends Controller {
 		// Check to see if customer is already a affiliate
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
 
-		if ($affiliate_info) {
+		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
 			$this->error['warning'] = $this->language->get('error_already');
 		}
 

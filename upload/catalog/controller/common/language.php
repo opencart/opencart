@@ -17,6 +17,7 @@ class ControllerCommonLanguage extends Controller {
 		}
 
 		unset($url_data['route']);
+		unset($url_data['_route_']);
 		unset($url_data['language']);
 
 		$url = '';

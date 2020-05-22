@@ -1,9 +1,5 @@
 <?php
 class ControllerStartupSeoUrl extends Controller {
-	private $profile = array();
-	private $query = array();
-	private $keyword = array();
-
 	public function index() {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
@@ -34,7 +30,7 @@ class ControllerStartupSeoUrl extends Controller {
 						// Push additional query string vars into GET data
 						parse_str(html_entity_decode($result['push'], ENT_QUOTES, 'UTF-8'), $push);
 
-						$this->request->get = array_merge($push, $this->request->get);
+						$this->request->get = array_merge($this->request->get, $push);
 					}
 				}
 			}

@@ -58,7 +58,7 @@ class Url {
 			}
 
 			if (is_array($args)) {
-				$url .= $amp . http_build_query($args, '', $amp);
+				$url .= $amp . str_replace('%2F', '/', http_build_query($args, '', $amp));
 			} else {
 				$url .= str_replace('&', $amp, '&' . ltrim($args, '&'));
 			}

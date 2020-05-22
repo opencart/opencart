@@ -22,7 +22,7 @@ class ControllerStartupSeoUrl extends Controller {
 				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($part);
 
 				if ($seo_url_info) {
-					$this->request->get[$seo_url_info['key']] = $seo_url_info['value'];
+					$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 
 					$results = $this->model_design_seo_profile->getSeoProfilesByKey($seo_url_info['key']);
 
@@ -73,7 +73,7 @@ class ControllerStartupSeoUrl extends Controller {
 
 				$regex = html_entity_decode($result['regex'], ENT_QUOTES, 'UTF-8');
 
-				if (preg_match($regex, $value, $match)) {
+				if (preg_match($regex, html_entity_decode($value, ENT_QUOTES, 'UTF-8'), $match)) {
 					$keyword = $this->model_design_seo_url->getKeywordByKeyValue($key, $match[0]);
 
 					if ($keyword) {
@@ -112,7 +112,7 @@ class ControllerStartupSeoUrl extends Controller {
 
 		// Rebuild the URL query
 		if ($query) {
-			$url .= '?' . http_build_query($query);
+			$url .= '?' . str_replace('%2F', '/', http_build_query($query));
 		}
 
 		return $url;

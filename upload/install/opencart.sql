@@ -1793,9 +1793,7 @@ INSERT INTO `oc_seo_profile` (`seo_profile_id`, `name`, `key`, `regex`, `push`, 
 (7, 'Manufacturer', 'manufacturer_id', '(\\d+)', 'route=product/manufacturer/info', 'route,manufacturer_id', 2),
 (8, 'Language', 'language', '([a-z-]+)', '', 'language', -1),
 (9, 'Product', 'product_id', '(\\d+)', 'route=product/product', 'route,product_id', 100),
-(10, 'Route', 'route', '([a-zA-Z0-9]+)', '', 'route', 0);
-
-
+(10, 'Route', 'route', '([a-zA-Z0-9\/]+)', '', 'route', 0);
 
 -----------------------------------------------------------
 

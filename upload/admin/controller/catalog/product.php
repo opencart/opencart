@@ -1443,12 +1443,144 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		foreach ($this->request->post['product_description'] as $language_id => $value) {
-			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 255)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
-			}
+			$language_info = $this->model_localisation_language->getLanguage($language_id);
+			
+			if (!$language_info) {
+				$this->error['language'] = $this->language->get('error_language');
+			} else {
+				if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 255)) {
+					$this->error['name'][$language_id] = $this->language->get('error_name');
+				}
 
-			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				if ((utf8_strlen($value['meta_title']) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+					$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				}
+				
+				if (!empty($this->request->post['product_recurring'])) {
+					foreach ($this->request->post['product_recurring'] as $product_recurring) {
+						$recurring_description = $this->model_catalog_recurring->getRecurringDescription($product_recurring['recurring_id']);
+						
+						if (empty($recurring_description[$language_id]['name'])) {
+							$this->error['product_recurring_description'] = sprintf($this->language->get('error_product_recurring_description_language'), $language_info['name']);
+							
+							break;
+						}
+					}
+				}
+				
+				if (!empty($this->request->post['stock_status_id'])) {
+					$stock_status_descriptions = $this->model_localisation_stock_status->getStockStatusDescriptions($this->request->post['stock_status_id']);
+				
+					if (empty($stock_status_descriptions[$language_id]['name'])) {
+						$this->error['product_stock_status_description'] = sprintf($this->language->get('error_product_stock_status_description'), $language_info['name']);
+						
+						break;
+					}
+				}
+				
+				if (!empty($this->request->post['product_attribute'])) {
+					foreach ($this->request->post['product_attribute'] as $product_attribute) {
+						$product_attribute_descriptions = $this->model_localisation_catalog_attribute->getAttributeDescriptions($product_attribute['attribute_id']);
+						
+						if (empty($product_attribute_descriptions[$language_id]['name'])) {
+							$this->error['product_attribute_description'] = sprintf($this->language->get('error_product_attribute_description'), $language_info['name']);
+							
+							break;
+						}
+					}
+				}
+				
+				if (!empty($this->request->post['product_filter'])) {
+					foreach ($this->request->post['product_filter'] as $product_filter) {
+						$filter_info = $this->model_catalog_filter->getFilter($product_filter['filter_id']);
+						
+						if (!$filter_info) {
+							$this->error['product_filter'] = $this->language->get('error_product_filter');
+							
+							break;
+						} else {
+							$filter_descriptions = $this->model_catalog_filter->getFilterDescriptions($filter_info['filter_group_id']);
+						
+							if (empty($filter_descriptions[$language_id]['name'])) {
+								$this->error['product_filter_description'] = sprintf($this->language->get('error_product_filter_description'), $language_info['name']);
+							
+								break;
+							}
+						}
+					}
+				}
+				
+				if (!empty($this->request->post['product_option'])) {
+					foreach ($this->request->post['product_option'] as $product_option) {
+						$option_descriptions = $this->model_catalog_option->getOptionDescriptions($product_option['option_id']);
+						
+						if (empty($option_descriptions[$language_id]['name'])) {
+							$this->error['product_option_description'] = sprintf($this->language->get('error_product_option_description'), $language_info['name']);
+							
+							break;
+						}
+						
+						$option_value = $this->model_catalog_option->getOptionValueDescriptions($product_option['option_id']);
+						
+						if (empty($option_value['option_value_description'][$language_id]['name'])) {
+							$this->error['product_option_value_description'] = sprintf($this->language->get('error_product_option_value_description'), $language_info['name']);
+							
+							break;
+						}
+					}
+				}
+				
+				if (!empty($this->request->post['product_reward'])) {
+					foreach ($this->request->post['product_reward'] as $customer_group_id => $product_reward) {
+						$customer_group_descriptions = $this->model_customer_customer_group->getCustomerGroupDescriptions($customer_group_id);
+						
+						if (empty($customer_group_descriptions[$language_id]['name'])) {
+							$this->error['product_reward_description'] = sprintf($this->language->get('error_product_reward_description'), $language_info['name']);
+							
+							break;
+						}
+					}
+				}
+				
+				if (!empty($this->request->post['product_download'])) {
+					foreach ($this->request->post['product_download'] as $product_download) {
+						$product_download_descriptions = $this->model_catalog_download->getDownloadDescriptions($product_download);
+						
+						if (empty($product_download_descriptions[$language_id]['name'])) {
+							$this->error['product_download_description'] = sprintf($this->language->get('error_product_download_description'), $language_info['name']);
+							
+							break;
+						}
+					}
+				}
+				
+				if (!empty($this->request->post['product_layout'])) {
+					foreach ($this->request->post['product_layout'] as $layout_id => $product_layout) {
+						$layout = $this->model_design_layout->getLayout($layout_id);
+						
+						if (!$layout) {
+							$this->error['product_layout'] = $this->language->get('error_product_layout');
+							
+							break;
+						}
+					}
+				}
+				
+				if (isset($this->request->post['product_store'])) {
+					foreach ($this->request->post['product_store'] as $store_id) {
+						if (empty($store_id) || !is_numeric($store_id) || $store_id < 0) {
+							$store_id = 0;
+						}
+						
+						$store = $this->model_setting_store->getStore($store_id);
+						
+						if (!$store) {
+							$this->error['product_store'] = $this->language->get('error_product_store');
+							
+							break;
+						}
+					}
+				}
 			}
 		}
 

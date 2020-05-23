@@ -1441,6 +1441,22 @@ class ControllerCatalogProduct extends Controller {
 		if (!$this->user->hasPermission('modify', 'catalog/product')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
+		
+		$this->load->model('localisation/language');
+		
+		$this->load->model('localisation/layout');
+		
+		$this->load->model('localisation/stock_status');				
+		
+		$this->load->model('catalog/filter');
+		
+		$this->load->model('catalog/attribute');
+		
+		$this->load->model('catalog/option');
+		
+		$this->load->model('catalog/recurring');
+		
+		$this->load->model('catalog/download');		
 
 		foreach ($this->request->post['product_description'] as $language_id => $value) {
 			$language_info = $this->model_localisation_language->getLanguage($language_id);

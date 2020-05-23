@@ -1477,7 +1477,7 @@ class ControllerCatalogProduct extends Controller {
 						$recurring_description = $this->model_catalog_recurring->getRecurringDescription($product_recurring['recurring_id']);
 						
 						if (empty($recurring_description[$language_id]['name'])) {
-							$this->error['product_recurring_description'] = sprintf($this->language->get('error_product_recurring_description_language'), $language_info['name']);
+							$this->error['product_recurring_description'] = sprintf($this->language->get('error_product_recurring_description'), $language_info['name']);
 							
 							break;
 						}

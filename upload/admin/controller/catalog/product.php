@@ -572,6 +572,72 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_keyword'] = '';
 		}
 		
+		if (isset($this->error['product_recurring_description'])) {
+			$data['error_product_recurring_description'] = $this->error['product_recurring_description'];
+		} else {
+			$data['error_product_recurring_description'] = '';
+		}
+		
+		if (isset($this->error['product_stock_status_description'])) {
+			$data['error_product_stock_status_description'] = $this->error['product_stock_status_description'];
+		} else {
+			$data['error_product_stock_status_description'] = '';
+		}
+		
+		if (isset($this->error['product_attribute_description'])) {
+			$data['error_product_attribute_description'] = $this->error['product_attribute_description'];
+		} else {
+			$data['error_product_attribute_description'] = '';
+		}
+		
+		if (isset($this->error['product_filter'])) {
+			$data['error_product_filter'] = $this->error['product_filter'];
+		} else {
+			$data['error_product_filter'] = '';
+		}
+		
+		if (isset($this->error['product_filter_description'])) {
+			$data['error_product_filter_description'] = $this->error['product_filter_description'];
+		} else {
+			$data['error_product_filter_description'] = '';
+		}
+		
+		if (isset($this->error['product_option_description'])) {
+			$data['error_product_option_description'] = $this->error['product_option_description'];
+		} else {
+			$data['error_product_option_description'] = '';
+		}
+		
+		if (isset($this->error['product_option_value_description'])) {
+			$data['error_product_option_value_description'] = $this->error['product_option_value_description'];
+		} else {
+			$data['error_product_option_value_description'] = '';
+		}
+		
+		if (isset($this->error['product_reward_description'])) {
+			$data['error_product_reward_description'] = $this->error['product_reward_description'];
+		} else {
+			$data['error_product_reward_description'] = '';
+		}
+		
+		if (isset($this->error['product_download_description'])) {
+			$data['error_product_download_description'] = $this->error['product_download_description'];
+		} else {
+			$data['error_product_download_description'] = '';
+		}
+		
+		if (isset($this->error['product_layout_description'])) {
+			$data['error_product_layout_description'] = $this->error['product_layout_description'];
+		} else {
+			$data['error_product_layout_description'] = '';
+		}
+		
+		if (isset($this->error['product_store'])) {
+			$data['error_product_store'] = $this->error['product_store'];
+		} else {
+			$data['error_product_store'] = '';
+		}
+		
 		if (isset($this->error['length'])) {
 			$data['error_length'] = $this->error['length'];
 		} else {

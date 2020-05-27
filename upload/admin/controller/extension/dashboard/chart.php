@@ -47,7 +47,7 @@ class ControllerExtensionDashboardChart extends Controller {
 		if (isset($this->request->post['dashboard_chart_width'])) {
 			$data['dashboard_chart_width'] = $this->request->post['dashboard_chart_width'];
 		} else {
-			$data['dashboard_chart_width'] = $this->config->get('dashboardchart_width');
+			$data['dashboard_chart_width'] = $this->config->get('dashboard_chart_width');
 		}
 	
 		$data['columns'] = array();

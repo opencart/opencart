@@ -1794,7 +1794,7 @@ class ControllerSaleOrder extends Controller {
 
 							$product_option_value_info = $this->model_catalog_product->getProductOptionValue($product['product_id'], $option['product_option_value_id']);
 
-							if ($product_option_value_info) {
+							if (!empty($product_option_value_info['weight'])) {
 								if ($product_option_value_info['weight_prefix'] == '+') {
 									$option_weight += $product_option_value_info['weight'];
 								} elseif ($product_option_value_info['weight_prefix'] == '-') {

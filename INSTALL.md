@@ -1,9 +1,11 @@
 # INSTALL
 
-NOTE: THIS IS FOR NEW INSTALL ONLY!
-IF UPGRADING YOUR EXISTING CART, BE SURE TO READ THE [UPGRADE FILE](UPGRADE.md) INSTEAD
+* This is for __new installation only__
+* These instructions are for a manual installation using FTP, cPanel or other web hosting Control Panel.
 
-These instructions are for a manual installation using FTP, cPanel or other web hosting Control Panel.
+
+If you are __upgrading your existing cart__, be sure to read the [upgrade instructions](UPGRADE.md) instead
+
 
 ## Linux Install
 
@@ -17,7 +19,8 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 		If 0755 does not work try 0777.
 
-5. Make sure you have installed a MySQL Database which has a user assigned to it - DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
+5. Make sure you have installed a MySQL Database which has a user assigned to it
+	* do not use your `root` username and root password
 6. Visit the store homepage e.g. http://www.example.com or http://www.example.com/store/
 7. You should be taken to the installer page. Follow the on screen instructions.
 8. After successful install, delete the /install/ directory from ftp.
@@ -33,7 +36,8 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 		config.php
 		admin/config.php
 
-4. Make sure you have installed a MySQL Database which has a user assigned to it - DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
+4. Make sure you have installed a MySQL Database which has a user assigned to it
+	* do not use your `root` username and root password
 5. You should be taken to the installer page. Follow the on screen instructions.
 6. After successful install, delete the /install/ directory.
 

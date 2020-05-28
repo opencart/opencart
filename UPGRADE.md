@@ -1,7 +1,7 @@
 # Upgrading from version 2.x.x
 
 * For existing installs only
-* 
+* Don't use with previous versions
 
 ## For previous versions
 

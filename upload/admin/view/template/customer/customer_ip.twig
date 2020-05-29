@@ -13,7 +13,7 @@
       {% if ips %}
         {% for ip in ips %}
           <tr>
-            <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
+            <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
             <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.account }}</a></td>
             <td class="text-left">{{ ip.store }}</td>
             <td class="text-left">{{ ip.country }}</td>

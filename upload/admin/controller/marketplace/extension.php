@@ -29,7 +29,7 @@ class ControllerMarketplaceExtension extends Controller {
 
 		//$extensions = $this->model_setting_extension->getDownloaded('analytics');
 
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/core');
+		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/core&version=' . VERSION);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -49,15 +49,8 @@ class ControllerMarketplaceExtension extends Controller {
 		//	$this->model_setting_extension->addExtension($extension, '');
 		//}
 
-
-
-
-
-
-
-
-
-		//echo $response;
+		echo VERSION . "\n";
+		echo $response;
 
 		$data['categories'] = array();
 		
@@ -85,4 +78,7 @@ class ControllerMarketplaceExtension extends Controller {
 
 		$this->response->setOutput($this->load->view('marketplace/extension', $data));
 	}
+
+
+
 }

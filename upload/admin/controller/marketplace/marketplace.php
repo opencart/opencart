@@ -773,6 +773,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+
+
+
 		// Check if there is a install zip already there
 		$files = glob(DIR_STORAGE . 'marketplace/*.tmp');
 
@@ -787,6 +790,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 				break;
 			}
 		}
+
+
 
 		// Check for any install directories
 		$directories = glob(DIR_STORAGE . 'marketplace/tmp-*');
@@ -866,6 +871,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$response = curl_exec($curl);
 
 			$response_info = json_decode($response, true);
+
+			print_r($response_info);
 
 			curl_close($curl);
 

@@ -61,7 +61,7 @@ class ControllerMarketplaceInstall extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install']);
+				$zip->extractTo(DIR_STORAGE . 'extension/' . 'tmp-' . $this->session->data['install']);
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -96,7 +96,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 		if (!isset($this->session->data['install'])) {
 			$json['error'] = $this->language->get('error_directory');
-		} elseif (!is_dir(DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/')) {
+		} elseif (!is_dir(DIR_STORAGE . 'marketplace/tmp-' . $this->session->data['install'] . '/')) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -133,6 +133,7 @@ class ControllerMarketplaceInstall extends Controller {
 
 					'system/config/',
 					'system/library/',
+
 					'image/catalog/',
 					'image/payment/'
 				);
@@ -282,22 +283,7 @@ class ControllerMarketplaceInstall extends Controller {
 						} else {
 							$name = '';
 						}
-	
-						$code = $dom->getElementsByTagName('code')->item(0);
-	
-						if ($code) {
-							$code = $code->nodeValue;
-	
-							// Check to see if the modification is already installed or not.
-							$modification_info = $this->model_setting_modification->getModificationByCode($code);
-	
-							if ($modification_info) {
-								$this->model_setting_modification->deleteModification($modification_info['modification_id']);
-							}
-						} else {
-							$json['error'] = $this->language->get('error_code');
-						}
-	
+
 						$author = $dom->getElementsByTagName('author')->item(0);
 	
 						if ($author) {
@@ -326,7 +312,6 @@ class ControllerMarketplaceInstall extends Controller {
 							$modification_data = array(
 								'extension_install_id' => $extension_install_id,
 								'name'                 => $name,
-								'code'                 => $code,
 								'author'               => $author,
 								'version'              => $version,
 								'link'                 => $link,

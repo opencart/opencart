@@ -2142,8 +2142,38 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'extension',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'name',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'image',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'filename',
 				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'version',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'author',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'status',
+				'type' => 'tinyint(1)',
 				'not_null' => true
 			),
 			array(
@@ -2177,11 +2207,6 @@ function db_schema() {
 			array(
 				'name' => 'path',
 				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'date_added',
-				'type' => 'datetime',
 				'not_null' => true
 			)
 		),

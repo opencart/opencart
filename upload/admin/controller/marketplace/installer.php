@@ -26,7 +26,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
-	public function history() {
+	public function extension() {
 		$this->load->language('marketplace/installer');
 		
 		if (isset($this->request->get['page'])) {
@@ -35,32 +35,38 @@ class ControllerMarketplaceInstaller extends Controller {
 			$page = 1;
 		}
 					
-		$data['histories'] = array();
+		$data['extensions'] = array();
 		
 		$this->load->model('setting/extension');
 		
 		$results = $this->model_setting_extension->getInstalls(($page - 1) * 10, 10);
 		
 		foreach ($results as $result) {
-			$data['histories'][] = array(
+			$data['extensions'][] = array(
 				'extension_install_id' => $result['extension_install_id'],
-				'filename'             => $result['filename'],
+				'extension'            => $result['extension'],
+				'name'                 => $result['name'],
+				'image'                => $result['image'],
+				'author'               => $result['author'],
+				'version'              => $result['version'],
+				'status'               => $result['status'],
+				'link'                 => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
 				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			);
 		}
 		
-		$history_total = $this->model_setting_extension->getTotalInstalls();
+		$extension_total = $this->model_setting_extension->getTotalInstalls();
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
-			'total' => $history_total,
+			'total' => $extension_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('marketplace/installer/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($extension_total - 10)) ? $extension_total : ((($page - 1) * 10) + 10), $extension_total, ceil($extension_total / 10));
 				
-		$this->response->setOutput($this->load->view('marketplace/installer_history', $data));
+		$this->response->setOutput($this->load->view('marketplace/installer_extension', $data));
 	}	
 		
 	public function upload() {
@@ -73,7 +79,10 @@ class ControllerMarketplaceInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// Check if there is a install zip already there
+
+
+
+		// Check if there is a install zip already there and delete
 		$files = glob(DIR_STORAGE . 'marketplace/*.tmp');
 
 		foreach ($files as $file) {
@@ -87,6 +96,10 @@ class ControllerMarketplaceInstaller extends Controller {
 				break;
 			}
 		}
+
+
+
+
 
 		// Check for any install directories
 		$directories = glob(DIR_STORAGE . 'marketplace/tmp-*');
@@ -132,7 +145,9 @@ class ControllerMarketplaceInstaller extends Controller {
 				break;
 			}		
 		}
-		
+
+
+
 		if (isset($this->request->files['file']['name'])) {
 			if (substr($this->request->files['file']['name'], -10) != '.ocmod.zip') {
 				$json['error'] = $this->language->get('error_filetype');
@@ -144,6 +159,10 @@ class ControllerMarketplaceInstaller extends Controller {
 		} else {
 			$json['error'] = $this->language->get('error_upload');
 		}
+
+
+
+
 
 		if (!$json) {
 			$this->session->data['install'] = token(10);

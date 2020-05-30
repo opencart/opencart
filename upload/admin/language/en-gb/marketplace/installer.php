@@ -5,14 +5,10 @@ $_['heading_title']     = 'Extension Installer';
 // Text
 $_['text_progress']     = 'Install Progress';
 $_['text_upload']       = 'Upload your extensions';
-$_['text_history']      = 'Install History';
+$_['text_available']    = 'Available Extensions';
 $_['text_success']      = 'Success: The extension has been installed!';
 $_['text_install']      = 'Installing';
-
-// Column
-$_['column_filename']   = 'Filename';
-$_['column_date_added'] = 'Date Added';
-$_['column_action']     = 'Action';
+$_['text_action']       = 'Action';
 
 // Entry
 $_['entry_upload']      = 'Upload File';

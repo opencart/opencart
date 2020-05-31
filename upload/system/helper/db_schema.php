@@ -2142,13 +2142,13 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'extension',
+				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
 			),
 			array(
-				'name' => 'name',
-				'type' => 'varchar(128)',
+				'name' => 'version',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(
@@ -2158,11 +2158,6 @@ function db_schema() {
 			),
 			array(
 				'name' => 'filename',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'version',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),

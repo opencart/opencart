@@ -1,46 +1,61 @@
+{% if extensions %}
+  {% for extension in extensions %}
+    <div class="media">
+      <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="align-self-top mr-3"/>
 
-      {% if extensions %}
-        {% for extension in extensions %}
+      <div class="media-body">
+        <h5 class="mt-0"><a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a></h5>
 
+        <p>Version: {{ extension.version }}</p>
+        <p class="mb-0">Date Added: {{ extension.date_added }}</p>
 
-          <div class="media">
-            <img src="{{ extension.image }}" class="align-self-center mr-3" alt="{{ extension.extension }}">
-            <div class="media-body">
-              <h5 class="mt-0">Center-aligned media</h5>
-              <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-              <p class="mb-0">Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-            </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger">Uninstall</button>
+          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split diabled" data-toggle="dropdown"><i class="fas fa-caret-down fa-fw"></i></button>
+
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Delete</a>
           </div>
 
+        </div>
+
+
+        <!--
+        <div class="btn-group">
+        <button type="button" class="btn btn-outline-danger">Install <i class="fas fa-caret-down fa-fw"></i></button>
+
+          <a href="{{ extension.install }}" class="dropdown-item" href="#">{{ button_install }}</a>
+          <a href="{{ extension.uninstall }}" class="dropdown-item" href="#">{{ button_uninstall }}</a>
 
 
 
-          <tr>
-            <td>{{ extension.filename }}</td>
-            <td>{{ extension.date_added }}</td>
-            <td class="text-right">
-
-              {% if not extension.installed %}
-                <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
-              {% else %}
-                <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
-              {% endif %}
+        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="sr-only"-+</span>
+        </button>
 
 
+        {% if not extension.status %}
+          <a data-toggle="tooltip" title="" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+        {% else %}
+          <a data-toggle="tooltip" title="" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+        {% endif %}
+
+        <button type="button" value="{{ extension.extension_install_id }}" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+        </div>
+//-->
+
+      </div>
 
 
-              <button type="button" value="{{ extension.extension_install_id }}" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+    </div>
 
+  {% endfor %}
 
-            </td>
-          </tr>
-        {% endfor %}
-      {% else %}
+  <div class="row">
+    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-right">{{ results }}</div>
+  </div>
 
-      {% endif %}
-
-
-<div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
-</div>
+{% else %}
+  <p>Not extensions Downloaded</p>
+{% endif %}

@@ -3,19 +3,15 @@
 $_['heading_title']     = 'Extension Installer';
 
 // Text
-$_['text_progress']     = 'Install Progress';
-$_['text_upload']       = 'Upload your extensions';
-$_['text_available']    = 'Available Extensions';
 $_['text_success']      = 'Success: The extension has been installed!';
+$_['text_progress']     = 'Install Progress';
+$_['text_available']    = 'Installed Extensions';
 $_['text_install']      = 'Installing';
 $_['text_action']       = 'Action';
+$_['text_upload']       = 'Requires a modification file with extension \'.ocmod.zip\'.';
 
 // Entry
-$_['entry_upload']      = 'Upload File';
 $_['entry_progress']    = 'Progress';
-
-// Help
-$_['help_upload']       = 'Requires a modification file with extension \'.ocmod.zip\'.';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify extensions!';

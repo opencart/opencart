@@ -44,11 +44,10 @@ class ControllerMarketplaceInstaller extends Controller {
 		foreach ($results as $result) {
 			$data['extensions'][] = array(
 				'extension_install_id' => $result['extension_install_id'],
-				'extension'            => $result['extension'],
 				'name'                 => $result['name'],
+				'version'              => $result['version'],
 				'image'                => $result['image'],
 				'author'               => $result['author'],
-				'version'              => $result['version'],
 				'status'               => $result['status'],
 				'link'                 => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
 				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added']))
@@ -70,14 +69,7 @@ class ControllerMarketplaceInstaller extends Controller {
 	}	
 		
 	public function upload() {
-		$this->load->language('marketplace/installer');
 
-		$json = array();
-
-		// Check user has permission
-		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
 
 
 

@@ -927,7 +927,7 @@ class ControllerSettingSetting extends Controller {
 		} elseif ($this->config->get('config_valide_params')) {
 			$data['config_valide_params'] = $this->config->get('config_valide_params');
 		} else {
-			$data['config_valide_params'] = "tracking\r\nutm_source\r\nutm_campaign\r\nutm_medium\r\ntype\r\nsource\r\nblock\r\nposition\r\nkeyword\r\nyclid\r\ngclid";
+			$data['config_valide_params'] = "frommarket\r\nymclid\r\ntracking\r\nutm_source\r\nutm_campaign\r\nutm_medium\r\ntype\r\nsource\r\nblock\r\nposition\r\nkeyword\r\nyclid\r\ngclid";
 		}
 		
 

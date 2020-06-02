@@ -3,16 +3,9 @@
 /upload/config.php
 /upload/admin/config.php
 
-# Image File
-!/upload/image/no_image.jpg
-
 # Image Cache Files
 /upload/image/cache/*
 !/upload/image/cache/index.html
-
-# Templates Files
-/upload/image/templates/*
-/upload/image/templates/default.jpg
 
 # Backup Files
 /upload/system/storage/backup/*
@@ -30,9 +23,9 @@
 /upload/system/storage/logs/*
 !/upload/system/storage/logs/index.html
 
-# Marketing Files
-/upload/system/storage/marketing/*
-!/upload/system/storage/marketing/index.html
+# Marketplace Files
+/upload/system/storage/marketplace/*
+!/upload/system/storage/marketplace/index.html
 
 # Modification Files
 /upload/system/storage/modification/*
@@ -46,17 +39,8 @@
 /upload/system/storage/upload/*
 !/upload/system/storage/upload/index.html
 
-# Flags 
-# remove sharp char if you want to add flags to gitignore
-# /upload/flags/*
-
 # If you want to ignore install file use following lines [on development mode]
-# /upload/backup.install/*
 # /upload/install/*
-
-/tests/phpunit/vendor/*
-/tests/phpunit/composer.lock
-/tests/phpunit/bootstrap.php
 
 # IDE Project files
 /.idea

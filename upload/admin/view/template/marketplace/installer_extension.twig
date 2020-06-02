@@ -4,58 +4,32 @@
       <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="align-self-top mr-3"/>
 
       <div class="media-body">
+
+        <div class="float-right">
+          <div class="btn-group">
+            {% if not extension.status %}
+              <button type="button" data-toggle="tooltip" title="{{ extension.uninstall }}" class="btn btn-success">{{ button_install }}</button>
+              <button type="button" data-toggle="tooltip" title="{{ extension.extension_install_id }}" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="tooltip"><i class="far fa-trash-alt fa-fw"></i></button>
+            {% else %}
+              <a href="" data-toggle="tooltip" title="{{ extension.install }}" class="btn btn-danger">{{ button_uninstall }}</a>
+              <a href="" data-toggle="tooltip" title="{{ extension.extension_install_id }}" class="btn btn-danger dropdown-toggle dropdown-toggle-split" disabled><i class="far fa-trash-alt fa-fw"></i></a>
+            {% endif %}
+          </div>
+
+        </div>
+
         <h5 class="mt-0"><a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a></h5>
 
         <p>Version: {{ extension.version }}</p>
         <p class="mb-0">Date Added: {{ extension.date_added }}</p>
 
-        <div class="btn-group">
-          <button type="button" class="btn btn-danger">Uninstall</button>
-          <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split diabled" data-toggle="dropdown"><i class="fas fa-caret-down fa-fw"></i></button>
-
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Delete</a>
-          </div>
-
-        </div>
-
-
-        <!--
-        <div class="btn-group">
-        <button type="button" class="btn btn-outline-danger">Install <i class="fas fa-caret-down fa-fw"></i></button>
-
-          <a href="{{ extension.install }}" class="dropdown-item" href="#">{{ button_install }}</a>
-          <a href="{{ extension.uninstall }}" class="dropdown-item" href="#">{{ button_uninstall }}</a>
-
-
-
-        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="sr-only"-+</span>
-        </button>
-
-
-        {% if not extension.status %}
-          <a data-toggle="tooltip" title="" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
-        {% else %}
-          <a data-toggle="tooltip" title="" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
-        {% endif %}
-
-        <button type="button" value="{{ extension.extension_install_id }}" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-        </div>
-//-->
-
       </div>
-
-
     </div>
-
   {% endfor %}
-
   <div class="row">
     <div class="col-sm-6 text-left">{{ pagination }}</div>
     <div class="col-sm-6 text-right">{{ results }}</div>
   </div>
-
 {% else %}
   <p>Not extensions Downloaded</p>
 {% endif %}

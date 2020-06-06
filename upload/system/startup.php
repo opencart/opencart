@@ -45,11 +45,24 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$_SERVER['HTTPS'] = false;
 }
 
-// Autoloader
-if (defined('DIR_STORAGE') && is_file(DIR_STORAGE . 'vendor/autoload.php')) {
-	require_once(DIR_STORAGE . 'vendor/autoload.php');
-}
+// Engine
+require_once(DIR_SYSTEM . 'engine/controller.php');
+require_once(DIR_SYSTEM . 'engine/model.php');
+require_once(DIR_SYSTEM . 'engine/action.php');
+require_once(DIR_SYSTEM . 'engine/event.php');
+require_once(DIR_SYSTEM . 'engine/router.php');
+require_once(DIR_SYSTEM . 'engine/loader.php');
+require_once(DIR_SYSTEM . 'engine/registry.php');
+require_once(DIR_SYSTEM . 'engine/proxy.php');
 
+// Helper
+require_once(DIR_SYSTEM . 'helper/general.php');
+require_once(DIR_SYSTEM . 'helper/utf8.php');
+
+// Vendor Autoloader
+require_once(DIR_STORAGE . 'vendor/autoload.php');
+
+// Library Autoloader
 function library($class) {
 	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
@@ -64,20 +77,6 @@ function library($class) {
 
 spl_autoload_register('library');
 spl_autoload_extensions('.php');
-
-// Engine
-require_once(DIR_SYSTEM . 'engine/controller.php');
-require_once(DIR_SYSTEM . 'engine/model.php');
-require_once(DIR_SYSTEM . 'engine/action.php');
-require_once(DIR_SYSTEM . 'engine/event.php');
-require_once(DIR_SYSTEM . 'engine/router.php');
-require_once(DIR_SYSTEM . 'engine/loader.php');
-require_once(DIR_SYSTEM . 'engine/registry.php');
-require_once(DIR_SYSTEM . 'engine/proxy.php');
-
-// Helper
-require_once(DIR_SYSTEM . 'helper/general.php');
-require_once(DIR_SYSTEM . 'helper/utf8.php');
 
 function start($application_config) {
 	require_once(DIR_SYSTEM . 'framework.php');	

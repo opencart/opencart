@@ -27,10 +27,6 @@
 /upload/system/storage/marketplace/*
 !/upload/system/storage/marketplace/index.html
 
-# Modification Files
-/upload/system/storage/modification/*
-!/upload/system/storage/modification/index.html
-
 # Session Files
 /upload/system/storage/session/*
 !/upload/system/storage/session/index.html

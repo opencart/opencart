@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="button" id="button-upload" data-toggle="tooltip" title="{{ button_upload }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+        <button type="button" id="button-upload" data-toggle="tooltip" title="{{ button_upload }}" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="container-fluid">
-	<div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_upload }}</div>
+    <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_upload }}</div>
     <div class="card">
       <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ heading_title }}</div>
       <div class="card-body">
@@ -47,6 +47,53 @@ $('#extension').on('click', '.pagination a', function(e) {
 
 $('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
 
+$('#button-upload').on('click', function() {
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	if (typeof timer != 'undefined') {
+		clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+
+			$.ajax({
+				url: 'index.php?route=marketplace/uploader&user_token={{ user_token }}',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					$('#button-upload').button('loading');
+				},
+				success: function(json) {
+					if (json['error']) {
+						$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
+
+						$('#button-upload').button('reset');
+					}
+
+					if (json['text']) {
+						$('#progress-bar').css('width', '20%');
+						$('#progress-text').html(json['text']);
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+
+
 // Install
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();
@@ -58,7 +105,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_install_id=' + $(element).attr('value'),
+		url: 'index.php?route=marketplace/installer/uninstall&user_token={{ user_token }}&extension_install_id=' + $(element).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -97,7 +144,7 @@ $('#extension').on('click', '.btn-danger', function(e) {
 	$('#progress-text').html('');
 
 	$.ajax({
-		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_install_id=' + $(element).attr('value'),
+		url: 'index.php?route=marketplace/install/install&user_token={{ user_token }}&extension_install_id=' + $(element).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -117,8 +164,6 @@ $('#extension').on('click', '.btn-danger', function(e) {
 				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
 
 
-
-
 				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
 			}
 		},
@@ -128,52 +173,44 @@ $('#extension').on('click', '.btn-danger', function(e) {
 	});
 });
 
+// Delete
+$('#extension').on('click', '.btn-danger', function(e) {
+	e.preventDefault();
 
-$('#button-upload').on('click', function() {
-	$('#form-upload').remove();
+	var element = this;
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+	if (confirm('{{ text_confirm }}')) {
+		$.ajax({
+			url: 'index.php?route=marketplace/install/delete&user_token={{ user_token }}&extension_install_id=' + $(element).attr('value'),
+			dataType: 'json',
+			beforeSend: function() {
+				$(element).button('loading');
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(json) {
 
-	$('#form-upload input[name=\'file\']').trigger('click');
 
-	if (typeof timer != 'undefined') {
-		clearInterval(timer);
-	}
+				if (json['error']) {
+					$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
-	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);
 
-			$.ajax({
-				url: 'index.php?route=marketplace/installer/upload&user_token={{ user_token }}',
-				type: 'post',
-				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function() {
-					$('#button-upload').button('loading');
-				},
-				success: function(json) {
-					if (json['error']) {
-						$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
-
-						$('#button-upload').button('reset');
-					}
-
-					if (json['text']) {
-						$('#progress-bar').css('width', '20%');
-						$('#progress-text').html(json['text']);
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
-			});
-		}
-	}, 500);
+
+				if (json['success']) {
+
+
+					$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
 });
+
 
 function next(url, i) {
 	i = i + 1;
@@ -197,7 +234,7 @@ function next(url, i) {
 
 				$('#button-upload').button('reset');
 
-				$('#history').load('index.php?route=marketplace/installer/history&user_token={{ user_token }}');
+				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
 			}
 
 			if (json['text']) {
@@ -213,6 +250,9 @@ function next(url, i) {
 		}
 	});
 }
+
+
+
 
 //--></script>
 {{ footer }}

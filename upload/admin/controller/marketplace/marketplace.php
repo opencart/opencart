@@ -617,13 +617,17 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['description'] = $response_info['description'];
 			$data['documentation'] = $response_info['documentation'];
 			$data['price'] = $response_info['price'];
+
 			$data['license'] = $response_info['license'];
 			$data['license_period'] = $response_info['license_period'];
 			$data['purchased'] = $response_info['purchased'];
+
 			$data['rating'] = $response_info['rating'];
 			$data['rating_total'] = $response_info['rating_total'];
+
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];
+
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($response_info['date_modified']));
 
@@ -649,22 +653,35 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			if ($response_info['downloads']) {
 				foreach ($response_info['downloads'] as $result) {
-					$extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($result['extension_download_id']);
+					if (substr($result['filename'], -10) == '.ocmod.zip') {
 
-					if ($extension_install_info) {
-						$extension_install_id = $extension_install_info['extension_install_id'];
-					} else {
-						$extension_install_id = 0;
+
+
+						$extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($result['extension_download_id']);
+
+						if ($extension_install_info) {
+							$extension_install_id = $extension_install_info['extension_install_id'];
+						} else {
+							$extension_install_id = 0;
+						}
+
+						if ($extension_install_id) {
+							$link = $this->url->link('marketplace/marketplace/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id);
+						} else {
+							$link = '';
+						}
+
+						$data['downloads'][] = array(
+							'extension_download_id' => $result['extension_download_id'],
+							'extension_install_id'  => $extension_install_id,
+							'name'                  => $result['name'],
+							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+							'status'                => $result['status'],
+							'href'                  => $link
+						);
+
+
 					}
-
-					$data['downloads'][] = array(
-						'extension_download_id' => $result['extension_download_id'],
-						'extension_install_id'  => $extension_install_id,
-						'name'                  => $result['name'],
-						'filename'              => $result['filename'],
-						'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-						'status'                => $result['status']
-					);
 				}
 			}
 
@@ -752,6 +769,10 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+
+
+
+
 	public function download() {
 		$this->load->language('marketplace/marketplace');
 
@@ -812,7 +833,11 @@ class ControllerMarketplaceMarketplace extends Controller {
 			curl_close($curl);
 
 			if (isset($response_info['download'])) {
+
 				if (substr($response_info['filename'], -10) == '.ocmod.zip') {
+
+
+
 					$this->session->data['install'] = token(10);
 
 					$download = file_get_contents($response_info['download']);
@@ -825,14 +850,21 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 					$this->load->model('setting/extension');
 
-					$json['extension_install_id'] = $this->model_setting_extension->addInstall($response_info['extension'], $extension_id, $extension_download_id);
+					$json['extension_install_id'] = $this->model_setting_extension->addInstall($response_info);
 
 					$json['text'] = $this->language->get('text_install');
 
 					$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $json['extension_install_id']));
+
+
+
 				} else {
 					$json['redirect'] = $response_info['download'];
 				}
+
+
+
+
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];
 			} else {
@@ -843,6 +875,13 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
+
+
+
+
+
 
 	public function addComment() {
 		$this->load->language('marketplace/marketplace');

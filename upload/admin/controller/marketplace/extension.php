@@ -28,7 +28,7 @@ class ControllerMarketplaceExtension extends Controller {
 		//$sdsd = $this->load->controller('');
 
 		//$extensions = $this->model_setting_extension->getDownloaded('analytics');
-
+/*
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/core&version=' . VERSION);
 
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -49,9 +49,9 @@ class ControllerMarketplaceExtension extends Controller {
 		//	$this->model_setting_extension->addExtension($extension, '');
 		//}
 
-		echo VERSION . "\n";
-		echo $response;
-
+		//echo VERSION . "\n";
+		//echo $response;
+*/
 		$data['categories'] = array();
 		
 		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);

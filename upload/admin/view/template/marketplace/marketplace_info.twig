@@ -7,7 +7,9 @@
           <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
         {% else %}
           <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
-        {% endif %} <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+        {% endif %}
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+      </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -45,16 +47,8 @@
               <div id="tab-description" class="tab-pane fade show active">{{ description }}</div>
               <div id="tab-documentation" class="tab-pane fade">{{ documentation }}</div>
               <div id="tab-download" class="tab-pane fade">
-                <fieldset>
-                  <legend>{{ text_progress }}</legend>
-                  <div id="progress">
-                    <div class="progress">
-                      <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-                    </div>
-                    <div id="progress-text"></div>
-                  </div>
-                  <hr/>
-                </fieldset>
+
+
                 <fieldset>
                   <legend>{{ text_available }}</legend>
                   <table class="table table-bordered">
@@ -66,19 +60,28 @@
                     <tbody>
                       {% if downloads %}
                         {% for download in downloads %}
+
                           <tr>
                             <td>{{ download.name }}</td>
                             <td>{{ download.date_added }}</td>
                             <td class="text-right">
-                              {% if download.extension_install_id %}
-                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_uninstall }}</button>
-                              {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
-                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_install }}</button>
+
+
+								download
+								install
+								uninstall
+								delete
+
+
+                              {% if not download.extension_install_id %}
+								  <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
                               {% else %}
-                                <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
+								  <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_delete }}</button>
                               {% endif %}
+
                             </td>
                           </tr>
+
                         {% endfor %}
                       {% else %}
                         <tr>
@@ -88,6 +91,8 @@
                     </tbody>
                   </table>
                 </fieldset>
+
+
               </div>
               <div id="tab-comment" class="tab-pane">
                 <fieldset>
@@ -106,6 +111,7 @@
                 </fieldset>
               </div>
             </div>
+
           </div>
           <div class="col-md-4 col-lg-3">
             <div id="buy" class="card mb-3">
@@ -164,7 +170,7 @@
                   </div>
                 </div>
                 <br/>
-                <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">{{ button_view_all }}</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-outline-secondary btn-lg btn-block">{{ button_get_support }}</a>
+                <a href="{{ filter_member }}" class="btn btn-primary btn-lg btn-block">{{ button_view_all }}</a> <a href="https://www.opencart.com/index.php?route=support/seller&amp;extension_id={{ extension_id }}" target="_blank" class="btn btn-outline-secondary btn-lg btn-block">{{ button_support }}</a>
               </div>
             </div>
           </div>
@@ -203,7 +209,7 @@ $('#button-buy').on('click', function(e) {
 
 	$('#modal-purchase').remove();
 
-	html  = '<div id="modal-purchase" class="modal">';
+	html = '<div id="modal-purchase" class="modal">';
 	html += '  <div class="modal-dialog">';
 	html += '    <div class="modal-content">';
 	html += '      <div class="modal-header">';
@@ -268,16 +274,11 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	});
 });
 
-// Install
+// Download
 $('#tab-download').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
 
 	var element = this;
-
-	// Reset everything
-	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('');
 
 	$.ajax({
 		url: 'index.php?route=marketplace/marketplace/download&user_token={{ user_token }}&extension_id={{ extension_id }}&extension_download_id=' + $(this).attr('data-install'),
@@ -289,27 +290,17 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
 				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 
 				$(element).button('reset');
 			}
 
-			if (json['text']) {
-				$('#progress-bar').css('width', '20%');
-				$('#progress-text').html(json['text']);
+			if (json['success']) {
+				$('#progress-text').html(json['success']);
 			}
 
 			if (json['extension_install_id']) {
 				$(element).attr('data-uninstall', json['extension_install_id']);
-			}
-
-			if (json['next']) {
-				next(json['next'], element, 1);
-			}
-
-			if (json['redirect']) {
-				location = json['redirect'];
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -318,55 +309,14 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 	});
 });
 
-function next(url, element, i) {
-	i = i + 1;
-
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success: function(json) {
-			$('#progress-bar').css('width', (i * 20) + '%');
-
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
-
-				$(element).button('reset');
-			}
-
-			if (json['success']) {
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="' + $(element).attr('data-uninstall') + '" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_uninstall }}</button>');
-			}
-
-			if (json['text']) {
-				$('#progress-text').html(json['text']);
-			}
-
-			if (json['next']) {
-				next(json['next'], element, i);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-}
-
-// Uninstall
+// Delete
 $('#tab-download').on('click', ' .btn-danger', function(e) {
 	e.preventDefault();
 
 	var element = this;
 
-	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('');
-
 	$.ajax({
-		url: 'index.php?route=marketplace/install/uninstall&user_token={{ user_token }}&extension_install_id=' + $(element).attr('data-uninstall'),
+		url: 'index.php?route=marketplace/installer/delete&user_token={{ user_token }}&extension_install_id=' + $(element).attr('data-uninstall'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -375,17 +325,8 @@ $('#tab-download').on('click', ' .btn-danger', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
-			}
-
 			if (json['success']) {
-				$('#progress-bar').css('width', '100%');
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
-
-				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-download"></i> {{ button_install }}</button>');
+				$(element).replaceWith('<button type="button" data-install="' + $(element).attr('data-install') + '" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-download"></i> {{ button_download }}</button>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

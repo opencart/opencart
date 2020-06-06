@@ -15,11 +15,17 @@ $_['text_xml']         = 'Applying modifications!';
 $_['text_clear']       = 'Clearing temporary files!';
 $_['text_progress']    = 'Progress';
 
-
+// Column
+$_['column_image']         = 'Image';
+$_['column_name']          = 'Extension Name';
+$_['column_version']       = 'Version';
+$_['column_status']        = 'Status';
+$_['column_date_added']    = 'Date Added';
+$_['column_action']        = 'Action';
 
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify extensions!';
+$_['error_permission']     = 'Warning: You do not have permission to modify extensions!';
 $_['error_install']    = 'Extension installation taking place please wait a few seconds before trying to install!';
 $_['error_upload']     = 'File could not be uploaded!';
 $_['error_filetype']   = 'Invalid file type!';

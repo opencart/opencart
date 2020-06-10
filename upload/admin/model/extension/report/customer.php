@@ -106,7 +106,7 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_order_status_id'])) {
@@ -148,7 +148,7 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_order_status_id'])) {
@@ -174,7 +174,7 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		$sql .= " GROUP BY cr.customer_id ORDER BY points DESC";
@@ -210,7 +210,7 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if ($implode) {
@@ -236,11 +236,11 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_ip'])) {
-			$implode[] = "ca.ip LIKE '" . $this->db->escape((string)$data['filter_ip']) . "'";
+			$implode[] = "ca.ip LIKE '%" . $this->db->escape((string)$data['filter_ip']) . "%'";
 		}
 
 		if ($implode) {
@@ -280,11 +280,11 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_ip'])) {
-			$implode[] = "ca.ip LIKE '" . $this->db->escape((string)$data['filter_ip']) . "'";
+			$implode[] = "ca.ip LIKE '%" . $this->db->escape((string)$data['filter_ip']) . "%'";
 		}
 
 		if ($implode) {
@@ -310,15 +310,15 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "cs.keyword LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "%'";
+			$implode[] = "cs.keyword LIKE '%" . $this->db->escape((string)$data['filter_keyword']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_ip'])) {
-			$implode[] = "cs.ip LIKE '" . $this->db->escape((string)$data['filter_ip']) . "'";
+			$implode[] = "cs.ip LIKE '%" . $this->db->escape((string)$data['filter_ip']) . "%'";
 		}
 
 		if ($implode) {
@@ -358,15 +358,15 @@ class ModelExtensionReportCustomer extends Model {
 		}
 
 		if (!empty($data['filter_keyword'])) {
-			$implode[] = "cs.keyword LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "%'";
+			$implode[] = "cs.keyword LIKE '%" . $this->db->escape((string)$data['filter_keyword']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_ip'])) {
-			$implode[] = "cs.ip LIKE '" . $this->db->escape((string)$data['filter_ip']) . "'";
+			$implode[] = "cs.ip LIKE '%" . $this->db->escape((string)$data['filter_ip']) . "%'";
 		}
 
 		if ($implode) {

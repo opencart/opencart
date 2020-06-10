@@ -665,6 +665,8 @@ class ControllerMarketplaceMarketplace extends Controller {
 							$extension_install_id = 0;
 						}
 
+
+
 						if ($extension_install_id) {
 							$link = $this->url->link('marketplace/marketplace/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id);
 						} else {
@@ -679,6 +681,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 							'status'                => $result['status'],
 							'href'                  => $link
 						);
+
 
 
 					}
@@ -837,7 +840,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 				if (substr($response_info['filename'], -10) == '.ocmod.zip') {
 
 
-
 					$this->session->data['install'] = token(10);
 
 					$download = file_get_contents($response_info['download']);
@@ -857,13 +859,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 					$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $json['extension_install_id']));
 
 
-
 				} else {
 					$json['redirect'] = $response_info['download'];
 				}
-
-
-
 
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];

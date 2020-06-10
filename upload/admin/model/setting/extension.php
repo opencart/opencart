@@ -26,6 +26,8 @@ class ModelSettingExtension extends Model {
 	}	
 
 
+
+
 	public function addInstall($filename, $extension_id = 0, $extension_download_id = 0) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `filename` = '" . $this->db->escape($filename) . "', `extension_id` = '" . (int)$extension_id . "', `extension_download_id` = '" . (int)$extension_download_id . "', `date_added` = NOW()");
 	
@@ -37,8 +39,15 @@ class ModelSettingExtension extends Model {
 	}
 
 
+	public function getInstall($extension_install_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 
-	public function getInstalls($start = 0, $limit = 10) {
+		return $query->row;
+	}
+
+	public function getInstalls() {
+		$start = 0; $limit = 10;
+
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -63,7 +72,12 @@ class ModelSettingExtension extends Model {
 
 		return $query->row['total'];
 	}
-		
+
+
+
+
+
+
 	public function addPath($extension_install_id, $path) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "', `date_added` = NOW()");
 	}

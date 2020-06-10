@@ -16,28 +16,27 @@ $_['text_clear']       = 'Clearing temporary files!';
 $_['text_progress']    = 'Progress';
 
 // Column
-$_['column_image']         = 'Image';
-$_['column_name']          = 'Extension Name';
-$_['column_version']       = 'Version';
-$_['column_status']        = 'Status';
-$_['column_date_added']    = 'Date Added';
-$_['column_action']        = 'Action';
+$_['column_image']      = 'Image';
+$_['column_name']       = 'Extension Name';
+$_['column_version']    = 'Version';
+$_['column_date_added'] = 'Date Added';
+$_['column_action']     = 'Action';
 
+// Entry
+$_['entry_progress']    = 'Progress';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify extensions!';
-$_['error_install']    = 'Extension installation taking place please wait a few seconds before trying to install!';
-$_['error_upload']     = 'File could not be uploaded!';
-$_['error_filetype']   = 'Invalid file type!';
-$_['error_file']       = 'File could not be found!';
+$_['error_permission']  = 'Warning: You do not have permission to modify extensions!';
+$_['error_install']     = 'Extension installation taking place please wait a few seconds before trying to install!';
+$_['error_upload']      = 'File could not be uploaded!';
 
+$_['error_file']        = 'File could not be found!';
+$_['error_file']        = 'Install file could not be found!';
+$_['error_filetype']    = 'Invalid file type!';
+$_['error_directory']   = 'Install directory could not be found!';
 
-$_['error_permission'] = 'Warning: You do not have permission to modify extensions!';
-$_['error_install']    = 'Extension installation taking place please wait a few seconds before trying to install!';
-$_['error_unzip']      = 'Zip file could not be opened!';
-$_['error_file']       = 'Install file could not be found!';
-$_['error_directory']  = 'Install directory could not be found!';
-$_['error_code']       = 'Unique code is required for modification XML!';
-$_['error_xml']        = 'Modification %s is already being used!';
-$_['error_exists']     = 'The file %s already exists!';
-$_['error_allowed']    = 'The directory %s is not allowed to be written to!';
+$_['error_unzip']       = 'Zip file could not be opened!';
+
+$_['error_code']        = 'Unique code is required for modification XML!';
+$_['error_exists']      = 'The file %s already exists!';
+$_['error_allowed']     = 'The directory %s is not allowed to be written to!';

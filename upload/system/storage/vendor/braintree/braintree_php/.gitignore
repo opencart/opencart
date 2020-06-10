@@ -1,6 +1,0 @@
-/vendor
-/docs
-/tags
-composer.lock
-composer.phar
-*.tgz

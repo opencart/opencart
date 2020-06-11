@@ -10,7 +10,7 @@ Options +FollowSymlinks
 Options -Indexes
 
 # Prevent Direct Access to files
-<FilesMatch "(?i)((\.tpl|.twig|\.ini|\.log|(?<!robots)\.txt))">
+<FilesMatch "(?i)((\.tpl|\.twig|\.ini|\.log|(?<!robots)\.txt))">
  Require all denied
 ## For apache 2.2 and older, replace "Require all denied" with these two lines :
 # Order deny,allow

@@ -5,13 +5,13 @@ $_['heading_title']    = 'Extension Installer';
 // Text
 $_['text_upload']      = 'Requires a modification file with extension \'.ocmod.zip\'.';
 $_['text_success']     = 'Success: The extension has been installed!';
+
 $_['text_progress']    = 'Install Progress';
 $_['text_installed']   = 'Installed Extensions';
 $_['text_install']     = 'Installing';
-$_['text_success']     = 'Success: You have modified extensions!';
+
 $_['text_unzip']       = 'Extracting files!';
 $_['text_move']        = 'Copying files!';
-$_['text_xml']         = 'Applying modifications!';
 $_['text_clear']       = 'Clearing temporary files!';
 $_['text_progress']    = 'Progress';
 

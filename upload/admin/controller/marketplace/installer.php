@@ -144,36 +144,73 @@ class ControllerMarketplaceInstaller extends Controller {
 			$json['error'] = $this->language->get('error_file');
 		}
 
-		if (is_dir(DIR_EXTENSION . $extension_install_info['code'])) {
-			$json['error'] = $this->language->get('error_exists');
+		if (is_dir(DIR_EXTENSION . basename($extension_install_info['filename'], '.ocmod.zip'))) {
+			//$json['error'] = $this->language->get('error_installed');
 		}
 
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
-
 			// Unzip the files
 			$zip = new ZipArchive();
 
+			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
+
 			if ($zip->open($file)) {
-
-				// Extract using the index
 				for ($i = 0; $i < $zip->numFiles; $i++) {
-					
+					$destination = $zip->getNameIndex($i);
 
-					//$zip->extractTo(DIR_EXTENSION . $extension_install_info['code'] . '/', array('upload', 'testfromfile.php');
-					echo $zip->getNameIndex($i);
-					//echo $zip->getFromIndex($i);
+					echo $destination . "\n";
 
-					// Add the new path to the db
-					//$this->model_setting_extension->addPath($extension_install_id, $destination);
-					
+					// Check if the copy location exists or not
+					if (substr($destination, 0, 5) == 'admin') {
+						$destination = DIR_APPLICATION . substr($destination, 6);
+					}
+
+					if (substr($destination, 0, 7) == 'catalog') {
+						$destination = DIR_CATALOG . substr($destination, 8);
+					}
+
+					if (substr($destination, 0, 5) == 'image') {
+						$destination = DIR_IMAGE . substr($destination, 6);
+					}
+
+					if (substr($destination, 0, 6) == 'system') {
+						$destination = DIR_SYSTEM . substr($destination, 7);
+					}
+
+					if (substr($destination, 0, 7) == 'storage') {
+						$destination = DIR_STORAGE . substr($destination, 8);
+					}
+
+					//if () {
+
+
+					//}
 				}
 
-				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
 
+/*
+			if (is_dir($directory)) {
+				$files = array();
+
+				// Get a list of files ready to upload
+				$path = array($directory . 'upload/*');
+
+				while (count($path) != 0) {
+					$next = array_shift($path);
+
+					foreach ((array)glob($next) as $file) {
+						if (is_dir($file)) {
+							$path[] = $file . '/*';
+						}
+
+						$files[] = $file;
+					}
+				}
+			}
+*/
 			//$json['text'] = $this->language->get('text_unzip');
 
 			//$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/unzip', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id));
@@ -183,10 +220,9 @@ class ControllerMarketplaceInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function unzip() {
 
-
-
-
+	}
 
 	public function move() {
 		$this->load->language('marketplace/installer');
@@ -212,6 +248,67 @@ class ControllerMarketplaceInstaller extends Controller {
 		}
 
 		if (!$json) {
+
+
+			/*
+			// Check if the copy location exists or not
+			if (substr($destination, 0, 5) == 'admin') {
+				$destination = DIR_APPLICATION . substr($destination, 6);
+			}
+
+			if (substr($destination, 0, 7) == 'catalog') {
+				$destination = DIR_CATALOG . substr($destination, 8);
+			}
+
+			if (substr($destination, 0, 5) == 'image') {
+				$destination = DIR_IMAGE . substr($destination, 6);
+			}
+
+			if (substr($destination, 0, 6) == 'system') {
+				$destination = DIR_SYSTEM . substr($destination, 7);
+			}
+
+			if (substr($destination, 0, 7) == 'storage') {
+				$destination = DIR_STORAGE . substr($destination, 8);
+			}
+			*/
+
+			// Move Catalog and Admin to the extension folder
+			$extract = array(
+				'upload/catalog',
+				'upload/admin'
+			);
+
+			$zip->extractTo(DIR_EXTENSION . substr($extension_install_info['filename'], 0, 6) . '/', $extract);
+
+			// Move Images
+			$zip->extractTo(DIR_IMAGE, array('upload/image'));
+
+			// Move System folders
+			$extract = array(
+				'upload/system/config',
+				'upload/system/helper',
+				'upload/system/library'
+			);
+
+			$zip->extractTo(DIR_EXTENSION . substr($extension_install_info['filename'], 0, 6) . '/', $extract);
+
+
+			// Move System folders
+			$extract = array(
+				'upload/system/storage/download',
+				'upload/system/storage/upload',
+				'upload/system/storage/vendor',
+			);
+
+			$zip->extractTo(DIR_EXTENSION . substr($extension_install_info['filename'], 0, 6) . '/', $extract);
+
+
+			$zip->close();
+
+
+
+
 			$directory = DIR_EXTENSION . $extension_install_info['code'] . '/';
 
 			if (is_dir($directory)) {
@@ -231,6 +328,8 @@ class ControllerMarketplaceInstaller extends Controller {
 						$files[] = $file;
 					}
 				}
+
+
 
 				// A list of allowed directories to be written to
 				$allowed = array(
@@ -351,11 +450,6 @@ class ControllerMarketplaceInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-
-
-
-
-
 	public function uninstall() {
 		$this->load->language('marketplace/installer');
 
@@ -375,37 +469,11 @@ class ControllerMarketplaceInstaller extends Controller {
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
-		if (!$extension_install_info || !is_file(DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'])) {
+		if (!$extension_install_info || !is_dir(DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'])) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (!$json) {
-
-
-			$files = array();
-
-			$directory = DIR_EXTENSION . $extension_install_info['code'];
-
-			// Get a list of files ready to upload
-			$path = array($directory . '/*');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach ((array)glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-
-					$files[] = $file;
-				}
-			}
-
-
-
-
-
-
 
 
 			$results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
@@ -428,9 +496,21 @@ class ControllerMarketplaceInstaller extends Controller {
 					$source = DIR_IMAGE . substr($result['path'], 6);
 				}
 
+				$allowed = array(
+					'system/config',
+					'system/helper',
+					'system/library',
+				);
+
 				if (substr($result['path'], 0, 14) == 'system/library') {
 					$source = DIR_SYSTEM . 'library/' . substr($result['path'], 15);
 				}
+
+				$allowed = array(
+					'upload/system/storage/download',
+					'upload/system/storage/upload',
+					'upload/system/storage/vendor',
+				);
 
 				if (substr($result['path'], 0, 7) == 'storage') {
 					$source = DIR_STORAGE . substr($result['path'], 8);

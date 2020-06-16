@@ -16,17 +16,8 @@ class ControllerCommonCookie extends Controller {
 		$json = array();
 
 		if (!isset($this->cookie['policy'])) {
-			$option = array(
-				'expires'  => strtotime('+10 years'),
-				'path'     => ini_get('session.cookie_path'),
-				'domain'   => ini_get('session.cookie_domain'),
-				'secure'   => ini_get('session.cookie_secure'),
-				'httponly' => ini_get('session.cookie_httponly'),
-				'SameSite' => 'strict'
-			);
-
 			// Using time as the policy value allows you to see when te policy was agreed.
-			setcookie('policy', date('Y-m-d H:i:s', time()), $option);
+			setcookie('policy', time(), strtotime('+10 years'), ini_get('session.cookie_path') . '; samesite=strict', ini_get('session.cookie_domain'));
 
 			$json['success'] = $this->language->get('text_success');
 		}

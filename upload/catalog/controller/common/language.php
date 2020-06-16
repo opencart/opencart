@@ -55,16 +55,7 @@ class ControllerCommonLanguage extends Controller {
 			$redirect = '';
 		}
 
-		$option = array(
-			'expires'  => time() + 60 * 60 * 24 * 30,
-			'path'     => ini_get('session.cookie_path'),
-			'domain'   => $this->request->server['HTTP_HOST'],
-			'secure'   => 0,
-			'httponly' => 0,
-			'SameSite' => 'strict'
-		);
-
-		setcookie('language', $code, $option);
+		setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/; samesite=strict', $this->request->server['HTTP_HOST']);
 
 		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect($redirect);

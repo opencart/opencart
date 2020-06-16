@@ -161,7 +161,7 @@ class ControllerStartupStartup extends Controller {
 
 		// Set a new language cookie if the code does not match the current one
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/; samesite=strict', $this->request->server['HTTP_HOST']);
 		}
 
 		// Replace the default language object

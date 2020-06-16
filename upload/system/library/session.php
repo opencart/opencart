@@ -39,7 +39,7 @@ class Session {
 	}
 	
 	/**
-	 * 
+	 * Get Session ID
 	 *
 	 * @return	string
  	*/	
@@ -48,7 +48,7 @@ class Session {
 	}
 
 	/**
-	 *
+	 * Start
 	 *
 	 * @param	string	$session_id
 	 *
@@ -75,14 +75,14 @@ class Session {
 	}
 	
 	/**
-	 * 
+	 * Close
  	*/
 	public function close() {
 		$this->adaptor->write($this->session_id, $this->data);
 	}
 	
 	/**
-	 * 
+	 * Destroy
  	*/	
 	public function destroy() {
 		$this->adaptor->destroy($this->session_id);

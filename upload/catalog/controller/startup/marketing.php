@@ -3,7 +3,16 @@ class ControllerStartupMarketing extends Controller {
 	public function index() {
 		// Tracking Code
 		if (isset($this->request->get['tracking'])) {
-			setcookie('tracking', $this->request->get['tracking'], time() + 3600 * 24 * 1000, '/');
+			$option = array(
+				'expires'  => time() + 3600 * 24 * 1000,
+				'path'     => ini_get('session.cookie_path'),
+				'domain'   => ini_get('session.cookie_domain'),
+				'secure'   => ini_get('session.cookie_secure'),
+				'httponly' => ini_get('session.cookie_httponly'),
+				'SameSite' => 'strict'
+			);
+
+			setcookie('tracking', $this->request->get['tracking'], $option);
 
 			$this->load->model('marketing/marketing');
 

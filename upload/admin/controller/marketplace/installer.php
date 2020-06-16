@@ -152,6 +152,9 @@ class ControllerMarketplaceInstaller extends Controller {
 			// Unzip the files
 			$zip = new ZipArchive();
 
+			//admin/config-dist.php
+			//C:/xampp/htdocs/opencart-master/upload/admin/config-dist.php
+
 			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
 
 			if ($zip->open($file)) {
@@ -160,13 +163,16 @@ class ControllerMarketplaceInstaller extends Controller {
 
 					echo $destination . "\n";
 
+
+
+
 					// Check if the copy location exists or not
 					if (substr($destination, 0, 5) == 'admin') {
-						$destination = DIR_APPLICATION . substr($destination, 6);
+						$destination = DIR_EXTENSION . $destination;
 					}
 
 					if (substr($destination, 0, 7) == 'catalog') {
-						$destination = DIR_CATALOG . substr($destination, 8);
+						$destination = DIR_CATALOG . $destination;
 					}
 
 					if (substr($destination, 0, 5) == 'image') {
@@ -181,17 +187,25 @@ class ControllerMarketplaceInstaller extends Controller {
 						$destination = DIR_STORAGE . substr($destination, 8);
 					}
 
-					//if () {
+					echo $destination . "\n\n";
+
+					//echo $destination . "\n";
+
+					//$this->model_setting_extension->addPath($extension_install_id, $destination);
 
 
-					//}
+					if (is_file($destination)) {
+						$json['error'] = $this->language->get('error_unzip');
+					}
+
+					$this->model_setting_extension->getPathByPath($result['extension_path_id']);
 				}
 
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
 
-/*
+			/*
 			if (is_dir($directory)) {
 				$files = array();
 
@@ -210,7 +224,7 @@ class ControllerMarketplaceInstaller extends Controller {
 					}
 				}
 			}
-*/
+			*/
 			//$json['text'] = $this->language->get('text_unzip');
 
 			//$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/unzip', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id));
@@ -305,6 +319,9 @@ class ControllerMarketplaceInstaller extends Controller {
 
 
 			$zip->close();
+
+
+
 
 
 
@@ -449,6 +466,9 @@ class ControllerMarketplaceInstaller extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
+
 
 	public function uninstall() {
 		$this->load->language('marketplace/installer');

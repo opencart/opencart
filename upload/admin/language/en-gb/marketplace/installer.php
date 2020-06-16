@@ -37,6 +37,5 @@ $_['error_directory']   = 'Install directory could not be found!';
 
 $_['error_unzip']       = 'Zip file could not be opened!';
 
-$_['error_code']        = 'Unique code is required for modification XML!';
 $_['error_exists']      = 'The file %s already exists!';
 $_['error_allowed']     = 'The directory %s is not allowed to be written to!';

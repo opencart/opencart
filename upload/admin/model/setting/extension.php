@@ -91,4 +91,10 @@ class ModelSettingExtension extends Model {
 
 		return $query->rows;
 	}
+
+	public function getTotalPathsByPath($path) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
+
+		return $query->rows;
+	}
 }

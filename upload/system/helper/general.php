@@ -9,6 +9,14 @@ function oc_setcookie(string $key, string $value, $option = array()) {
 			$string .= ' expires=' . date('DD-Mon-YYYY HH:MM:SS GMT', $option['expires']) . ';';
 		}
 
+		if (!empty($option['path'])) {
+			$string .= ' path=' . $option['path'] . ';';
+		}
+
+		if (!empty($option['domain'])) {
+			$string .= ' domain=' . $option['domain'] . ';';
+		}
+
 		if (!empty($option['Secure'])) {
 			$string .= ' Secure;';
 		}

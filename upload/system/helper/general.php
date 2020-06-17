@@ -1,4 +1,30 @@
 <?php
+function oc_setcookie(string $key, string $value, $option = array()) {
+	if (version_compare(phpversion(), '7.3.0', '>=')) {
+		setcookie($key, $value, $option);
+	} else {
+		$string = '';
+
+		if (isset($option['expires'])) {
+			$string .= ' expires=' . date('DD-Mon-YYYY HH:MM:SS GMT', $option['expires']) . ';';
+		}
+
+		if (!empty($option['Secure'])) {
+			$string .= ' Secure;';
+		}
+
+		if (!empty($option['HttpOnly'])) {
+			$string .= ' HttpOnly;';
+		}
+
+		if (isset($option['SameSite'])) {
+			$string .= ' SameSite=' . $option['SameSite'] . ';';
+		}
+
+		header('Set-Cookie: ' . $key . '=' . $value . '; ' . $string);
+	}
+}
+
 function token($length = 32) {
 	if (!isset($length) || intval($length) <= 8) {
 		$length = 32;
@@ -42,7 +68,6 @@ if (!function_exists('hash_equals')) {
 		}
 	}
 }
-
 
 function date_added($date) {
 	$second = time() - strtotime($date);

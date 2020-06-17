@@ -58,7 +58,16 @@ class ControllerStartupStartup extends Controller {
 
 			$this->session->start($session_id);
 
-			setcookie($this->config->get('session_name'), $this->session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'). '; samesite=strict', ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
+			$option = array(
+				'expires'  => ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0,
+				'path'     => ini_get('session.cookie_path'),
+				'domain'   => ini_get('session.cookie_domain'),
+				'secure'   => ini_get('session.cookie_secure'),
+				'httponly' => ini_get('session.cookie_httponly'),
+				'SameSite' => 'strict'
+			);
+
+			oc_setcookie($this->config->get('session_name'), $this->session->getId(), $option);
 		}
 
 		// Response output compression level
@@ -161,7 +170,13 @@ class ControllerStartupStartup extends Controller {
 
 		// Set a new language cookie if the code does not match the current one
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/; samesite=strict', $this->request->server['HTTP_HOST']);
+			$option = array(
+				'expires'  => time() + 60 * 60 * 24 * 30,
+				'path'     => '/',
+				'SameSite' => 'lax'
+			);
+
+			oc_setcookie('language', $code, $option);
 		}
 
 		// Replace the default language object
@@ -213,7 +228,13 @@ class ControllerStartupStartup extends Controller {
 
 		// Set a new currency cookie if the code does not match the current one
 		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
-			setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/; samesite=strict', $this->request->server['HTTP_HOST']);
+			$option = array(
+				'expires'  => time() + 60 * 60 * 24 * 30,
+				'path'     => '/',
+				'SameSite' => 'lax'
+			);
+
+			oc_setcookie('currency', $code, $option);
 		}
 
 		$this->registry->set('currency', new Cart\Currency($this->registry));

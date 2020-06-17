@@ -121,7 +121,17 @@ if ($config->get('session_autostart')) {
 
 	$session->start($session_id);
 
-	setcookie($config->get('session_name'), $session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path') . '; samesite=strict', ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
+	// Require higher security for session cookies
+	$option = array(
+		'expires'  => (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0),
+		'path'     => ini_get('session.cookie_path'),
+		'domain'   => $this->request->server['HTTP_HOST'],
+		'secure'   => ini_get('session.cookie_secure'),
+		'httponly' => ini_get('session.cookie_httponly'),
+		'SameSite' => 'strict'
+	);
+
+	oc_setcookie($config->get('session_name'), $session->getId(), $option);
 }
 
 // Cache

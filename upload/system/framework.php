@@ -125,7 +125,7 @@ if ($config->get('session_autostart')) {
 	$option = array(
 		'expires'  => (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0),
 		'path'     => ini_get('session.cookie_path'),
-		'domain'   => $this->request->server['HTTP_HOST'],
+		'domain'   => $_SERVER['HTTP_HOST'],
 		'secure'   => ini_get('session.cookie_secure'),
 		'httponly' => ini_get('session.cookie_httponly'),
 		'SameSite' => 'strict'

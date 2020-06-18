@@ -67,7 +67,7 @@ class ControllerMarketingContact extends Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
-				
+
 				$this->load->model('setting/setting');
 				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
 				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
@@ -170,9 +170,8 @@ class ControllerMarketingContact extends Controller {
 									$emails[] = $affiliate_info['email'];
 								}
 							}
+							$email_total = count($this->request->post['affiliate']);
 						}
-
-						$email_total = count($this->request->post['affiliate']);
 						break;
 					case 'product':
 						if (isset($this->request->post['product'])) {
@@ -190,16 +189,19 @@ class ControllerMarketingContact extends Controller {
 				if ($emails) {
 					$json['success'] = $this->language->get('text_success');
 
-					$start = ($page - 1) * 10;
-					$end = $start + 10;
+					$count = $page * 10;
 
-					$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
+					if ($count - $email_total < 0) {
+						$sent = $count;
 
-					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1)));
+						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true));
 					} else {
+						$sent = $email_total;
+
 						$json['next'] = '';
 					}
+
+					$json['success'] = sprintf($this->language->get('text_sent'), $sent, $email_total);
 
 					$message  = '<html dir="ltr" lang="en">' . "\n";
 					$message .= '  <head>' . "\n";

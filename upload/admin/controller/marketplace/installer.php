@@ -189,10 +189,7 @@ class ControllerMarketplaceInstaller extends Controller {
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$destination = $zip->getNameIndex($i);
 
-					echo $destination . "\n";
-
-
-
+					//echo $destination . "\n";
 
 					// Check if the copy location exists or not
 					if (substr($destination, 0, 5) == 'admin') {
@@ -215,7 +212,7 @@ class ControllerMarketplaceInstaller extends Controller {
 						$destination = DIR_STORAGE . substr($destination, 8);
 					}
 
-					echo $destination . "\n\n";
+					//echo $destination . "\n\n";
 
 					//echo $destination . "\n";
 
@@ -224,9 +221,9 @@ class ControllerMarketplaceInstaller extends Controller {
 
 					if (is_file($destination)) {
 						$json['error'] = $this->language->get('error_unzip');
+					} else {
+						//$this->model_setting_extension->getPathByPath($result['extension_path_id']);
 					}
-
-					$this->model_setting_extension->getPathByPath($result['extension_path_id']);
 				}
 
 			} else {

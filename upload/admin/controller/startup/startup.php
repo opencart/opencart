@@ -31,10 +31,10 @@ class ControllerStartupStartup extends Controller {
 
 		// Require higher security for session cookies
 		$option = array(
-			'expires'  => ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0,
+			'max-age'  => ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0,
 			'path'     => ini_get('session.cookie_path'),
-			'domain'   => ini_get('session.cookie_domain'),
-			'secure'   => ini_get('session.cookie_secure'),
+			'domain'   => $this->request->server['HTTP_HOST'],
+			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => ini_get('session.cookie_httponly'),
 			'SameSite' => 'strict'
 		);

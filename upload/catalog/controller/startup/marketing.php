@@ -4,7 +4,7 @@ class ControllerStartupMarketing extends Controller {
 		// Tracking Code
 		if (isset($this->request->get['tracking'])) {
 			$option = array(
-				'expires'  => time() + 3600 * 24 * 1000,
+				'max-age'  => time() + 3600 * 24 * 1000,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			);

@@ -7,7 +7,7 @@ $config = new Config();
 
 // Load the default config
 $config->load('default');
-$config->load($application_config);
+$config->load($application);
 $registry->set('config', $config);
 
 // Log
@@ -123,10 +123,10 @@ if ($config->get('session_autostart')) {
 
 	// Require higher security for session cookies
 	$option = array(
-		'expires'  => (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0),
+		'max-age'  => (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0),
 		'path'     => ini_get('session.cookie_path'),
 		'domain'   => $this->request->server['HTTP_HOST'],
-		'secure'   => ini_get('session.cookie_secure'),
+		'secure'   => $this->request->server['HTTPS'],
 		'httponly' => ini_get('session.cookie_httponly'),
 		'SameSite' => 'strict'
 	);

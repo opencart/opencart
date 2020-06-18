@@ -59,12 +59,12 @@ class ControllerStartupStartup extends Controller {
 			$this->session->start($session_id);
 
 			$option = array(
-				'expires'  => ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0,
+				'max-age'  => ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0,
 				'path'     => ini_get('session.cookie_path'),
-				'domain'   => ini_get('session.cookie_domain'),
-				'secure'   => ini_get('session.cookie_secure'),
+				'domain'   => $this->request->server['HTTP_HOST'],
+				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => ini_get('session.cookie_httponly'),
-				'SameSite' => 'strict'
+				'SameSite' => 'lax'
 			);
 
 			oc_setcookie($this->config->get('session_name'), $this->session->getId(), $option);
@@ -171,7 +171,7 @@ class ControllerStartupStartup extends Controller {
 		// Set a new language cookie if the code does not match the current one
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
 			$option = array(
-				'expires'  => time() + 60 * 60 * 24 * 30,
+				'max-age'  => time() + 60 * 60 * 24 * 30,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			);
@@ -229,7 +229,7 @@ class ControllerStartupStartup extends Controller {
 		// Set a new currency cookie if the code does not match the current one
 		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
 			$option = array(
-				'expires'  => time() + 60 * 60 * 24 * 30,
+				'max-age'  => time() + 60 * 60 * 24 * 30,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			);

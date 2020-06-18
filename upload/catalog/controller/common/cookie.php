@@ -17,7 +17,7 @@ class ControllerCommonCookie extends Controller {
 
 		if (!isset($this->cookie['policy'])) {
 			$option = array(
-				'expires'  => strtotime('+10 years'),
+				'max-age'  => strtotime('+10 years'),
 				'path'     => '/',
 				'SameSite' => 'lax'
 			);

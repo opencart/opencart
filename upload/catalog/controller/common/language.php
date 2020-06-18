@@ -56,7 +56,7 @@ class ControllerCommonLanguage extends Controller {
 		}
 
 		$option = array(
-			'expires'  => time() + 60 * 60 * 24 * 30,
+			'max-age'  => time() + 60 * 60 * 24 * 30,
 			'path'     => '/',
 			'SameSite' => 'lax'
 		);

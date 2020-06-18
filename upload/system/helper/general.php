@@ -1,36 +1,50 @@
 <?php
+/* Compatibility function Due to PHP 7.3 only being the PHP version to be able to use samesite attribute */
 function oc_setcookie(string $key, string $value, $option = array()) {
-	if (version_compare(phpversion(), '7.3.0', '>=')) {
-		setcookie($key, $value, $option);
-	} else {
+	//if (version_compare(phpversion(), '7.3.0', '>=')) {
+	//	setcookie($key, $value, $option);
+	//} else {
 		$string = '';
 
-		if (isset($option['expires'])) {
-			$string .= ' expires=' . date('DD-Mon-YYYY HH:MM:SS GMT', $option['expires']) . ';';
+		if (isset($option['max-age'])) {
+			$string .= '; max-age=' . $option['max-age'];
+		} else {
+			$string .= '; max-age=0';
 		}
 
 		if (!empty($option['path'])) {
-			$string .= ' path=' . $option['path'] . ';';
+			$string .= '; path=' . $option['path'];
 		}
 
 		if (!empty($option['domain'])) {
-			$string .= ' domain=' . $option['domain'] . ';';
+			$string .= '; domain=' . $option['domain'];
+
+			// Fix the domain to accept domains with and without 'www.'.
+			if (strtolower(substr($domain, 0, 4)) == 'www.') $domain = substr($domain, 4);
+
+			// Add the dot prefix to ensure compatibility with subdomains
+			if (substr($domain, 0, 1) != '.') $domain = '.' . $domain;
+
+			// Remove port information.
+			$port = strpos($domain, ':');
+
+			if ($port !== false) $domain = substr($domain, 0, $port);
 		}
 
 		if (!empty($option['Secure'])) {
-			$string .= ' Secure;';
+			$string .= '; Secure';
 		}
 
 		if (!empty($option['HttpOnly'])) {
-			$string .= ' HttpOnly;';
+			$string .= '; HttpOnly';
 		}
 
 		if (isset($option['SameSite'])) {
-			$string .= ' SameSite=' . $option['SameSite'] . ';';
+			$string .= '; SameSite=' . $option['SameSite'];
 		}
 
-		header('Set-Cookie: ' . $key . '=' . $value . '; ' . $string);
-	}
+		header('Set-Cookie: ' . rawurlencode($key) . '=' . rawurlencode($value) . $string);
+	//}
 }
 
 function token($length = 32) {

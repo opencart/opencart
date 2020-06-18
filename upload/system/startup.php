@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '7.0.0', '<')) {
+if (version_compare(phpversion(), '7.1.0', '<')) {
 	exit('PHP7+ Required');
 }
 
@@ -78,6 +78,6 @@ function library($class) {
 spl_autoload_register('library');
 spl_autoload_extensions('.php');
 
-function start($application_config) {
+function start($application) {
 	require_once(DIR_SYSTEM . 'framework.php');	
 }

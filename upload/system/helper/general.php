@@ -1,9 +1,9 @@
 <?php
 /* Compatibility function Due to PHP 7.3 only being the PHP version to be able to use samesite attribute */
 function oc_setcookie(string $key, string $value, $option = array()) {
-	//if (version_compare(phpversion(), '7.3.0', '>=')) {
-	//	setcookie($key, $value, $option);
-	//} else {
+	if (version_compare(phpversion(), '7.3.0', '>=')) {
+		setcookie($key, $value, $option);
+	} else {
 		$string = '';
 
 		if (isset($option['max-age'])) {
@@ -17,17 +17,6 @@ function oc_setcookie(string $key, string $value, $option = array()) {
 		}
 
 		if (!empty($option['domain'])) {
-			// Fix the domain to accept domains with and without 'www.'.
-			//if (strtolower(substr($option['domain'], 0, 4)) == 'www.') $option['domain'] = substr($option['domain'], 4);
-
-			// Add the dot prefix to ensure compatibility with subdomains
-			//if (substr($option['domain'], 0, 1) != '.') $option['domain'] = '.' . $option['domain'];
-
-			// Remove port information.
-			//	$port = strpos($option['domain'], ':');
-
-			//if ($port !== false) $domain = substr($option['domain'], 0, $port);
-
 			$string .= '; domain=' . $option['domain'];
 		}
 
@@ -35,18 +24,16 @@ function oc_setcookie(string $key, string $value, $option = array()) {
 			$string .= '; HttpOnly';
 		}
 
+		if (!empty($option['Secure'])) {
+			$string .= '; Secure';
+		}
+
 		if (isset($option['SameSite'])) {
 			$string .= '; SameSite=' . $option['SameSite'];
 		}
 
-		if (!empty($option['Secure']) && $option['SameSite'] == '') {
-			$string .= '; Secure';
-		}
-
-		//echo $string;
-
 		header('Set-Cookie: ' . rawurlencode($key) . '=' . rawurlencode($value) . $string);
-	//}
+	}
 }
 
 function token($length = 32) {

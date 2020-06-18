@@ -40,6 +40,7 @@ $_['session_autostart']    = true;
 $_['session_engine']       = 'file';
 $_['session_name']         = 'OCSESSID';
 $_['session_expire']       = 360000;
+$_['session_path']         = '/';
 
 // Template
 $_['template_engine']      = 'twig';

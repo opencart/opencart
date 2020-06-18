@@ -18,15 +18,15 @@ function oc_setcookie(string $key, string $value, $option = array()) {
 
 		if (!empty($option['domain'])) {
 			// Fix the domain to accept domains with and without 'www.'.
-			if (strtolower(substr($option['domain'], 0, 4)) == 'www.') $option['domain'] = substr($option['domain'], 4);
+			//if (strtolower(substr($option['domain'], 0, 4)) == 'www.') $option['domain'] = substr($option['domain'], 4);
 
 			// Add the dot prefix to ensure compatibility with subdomains
-			if (substr($option['domain'], 0, 1) != '.') $option['domain'] = '.' . $option['domain'];
+			//if (substr($option['domain'], 0, 1) != '.') $option['domain'] = '.' . $option['domain'];
 
 			// Remove port information.
-			$port = strpos($option['domain'], ':');
+			//	$port = strpos($option['domain'], ':');
 
-			if ($port !== false) $domain = substr($option['domain'], 0, $port);
+			//if ($port !== false) $domain = substr($option['domain'], 0, $port);
 
 			$string .= '; domain=' . $option['domain'];
 		}
@@ -42,6 +42,8 @@ function oc_setcookie(string $key, string $value, $option = array()) {
 		if (!empty($option['Secure']) && $option['SameSite'] == '') {
 			$string .= '; Secure';
 		}
+
+		//echo $string;
 
 		header('Set-Cookie: ' . rawurlencode($key) . '=' . rawurlencode($value) . $string);
 	//}

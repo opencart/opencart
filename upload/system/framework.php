@@ -79,7 +79,8 @@ $loader = new Loader($registry);
 $registry->set('load', $loader);
 
 // Request
-$registry->set('request', new Request());
+$request = new Request();
+$registry->set('request', $request);
 
 // Response
 $response = new Response();
@@ -123,11 +124,11 @@ if ($config->get('session_autostart')) {
 
 	// Require higher security for session cookies
 	$option = array(
-		'max-age'  => (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0),
-		'path'     => ini_get('session.cookie_path'),
-		'domain'   => $this->request->server['HTTP_HOST'],
-		'secure'   => $this->request->server['HTTPS'],
-		'httponly' => ini_get('session.cookie_httponly'),
+		'max-age'  => time() + $config->get('session_expire'),
+		'path'     => dirname($request->server['PHP_SELF']) . '/',
+		'domain'   => $request->server['HTTP_HOST'],
+		'secure'   => $request->server['HTTPS'],
+		'httponly' => false,
 		'SameSite' => 'strict'
 	);
 

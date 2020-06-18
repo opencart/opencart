@@ -59,12 +59,12 @@ class ControllerStartupStartup extends Controller {
 			$this->session->start($session_id);
 
 			$option = array(
-				'max-age'  => ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0,
-				'path'     => ini_get('session.cookie_path'),
+				'max-age'  => time() + $this->config->get('session_expire'),
+				'path'     => dirname($this->request->server['PHP_SELF']) . '/',
 				'domain'   => $this->request->server['HTTP_HOST'],
 				'secure'   => $this->request->server['HTTPS'],
-				'httponly' => ini_get('session.cookie_httponly'),
-				'SameSite' => 'lax'
+				'httponly' => false,
+				'SameSite' => 'strict'
 			);
 
 			oc_setcookie($this->config->get('session_name'), $this->session->getId(), $option);

@@ -7,7 +7,7 @@ $config = new Config();
 
 // Load the default config
 $config->load('default');
-$config->load($application_config);
+$config->load($application);
 $registry->set('config', $config);
 
 // Log
@@ -79,7 +79,8 @@ $loader = new Loader($registry);
 $registry->set('load', $loader);
 
 // Request
-$registry->set('request', new Request());
+$request = new Request();
+$registry->set('request', $request);
 
 // Response
 $response = new Response();
@@ -121,7 +122,17 @@ if ($config->get('session_autostart')) {
 
 	$session->start($session_id);
 
-	setcookie($config->get('session_name'), $session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
+	// Require higher security for session cookies
+	$option = array(
+		'max-age'  => time() + $config->get('session_expire'),
+		'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
+		'domain'   => $_SERVER['HTTP_HOST'],
+		'secure'   => $_SERVER['HTTPS'],
+		'httponly' => false,
+		'SameSite' => 'strict'
+	);
+
+	oc_setcookie($config->get('session_name'), $session->getId(), $option);
 }
 
 // Cache

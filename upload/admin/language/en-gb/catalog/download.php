@@ -29,6 +29,7 @@ $_['help_filename']     = 'You can upload via the upload button or use FTP to up
 $_['help_mask']         = 'It is recommended that the filename and the mask are different to stop people trying to directly link to your downloads.';
 
 // Error
+$_['error_warning']     = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']  = 'Warning: You do not have permission to modify downloads!';
 $_['error_name']        = 'Download Name must be between 3 and 64 characters!';
 $_['error_upload']      = 'Upload required!';

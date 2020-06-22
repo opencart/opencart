@@ -335,6 +335,10 @@ class ControllerCatalogAttributeGroup extends Controller {
 			}
 		}
 
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+
 		return !$this->error;
 	}
 

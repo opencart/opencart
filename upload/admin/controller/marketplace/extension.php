@@ -51,5 +51,4 @@ class ControllerMarketplaceExtension extends Controller {
 
 		$this->response->setOutput($this->load->view('marketplace/extension', $data));
 	}
-
 }

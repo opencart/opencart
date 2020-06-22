@@ -133,7 +133,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		}
 
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . 'tmp-' . $this->session->data['install'] . '/install.xml';
+			$file = DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '/install.xml';
 
 			if (is_file($file)) {
 				$this->load->model('setting/modification');
@@ -184,8 +184,8 @@ class ControllerMarketplaceInstaller extends Controller {
 								'name'                 => $name,
 								'author'               => $author,
 								'version'              => $version,
+								'filename'             => $filename,
 								'link'                 => $link,
-								'xml'                  => $xml,
 								'status'               => 1
 							);
 

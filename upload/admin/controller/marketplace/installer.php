@@ -150,6 +150,68 @@ class ControllerMarketplaceInstaller extends Controller {
 		$this->response->setOutput($this->load->view('marketplace/installer_extension', $data));
 	}
 
+	public function upload() {
+		// Check for any install directories
+		$directories = glob(DIR_STORAGE . 'marketplace/tmp-*');
+
+		if (isset($this->request->files['file']['name'])) {
+			if (substr($this->request->files['file']['name'], -10) != '.ocmod.zip') {
+				$json['error'] = $this->language->get('error_filetype');
+			}
+
+			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
+				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+			}
+		} else {
+			$json['error'] = $this->language->get('error_upload');
+		}
+
+
+
+
+		if (!$json) {
+
+
+
+
+
+
+
+			$this->session->data['install'] = token(10);
+
+			$file = DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp';
+
+			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
+
+			if (is_file($file)) {
+
+
+
+
+
+
+
+
+
+
+
+				$this->load->model('setting/extension');
+
+				$extension_install_id = $this->model_setting_extension->addInstall($this->request->files['file']['name']);
+
+				$json['text'] = $this->language->get('text_install');
+
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id));
+			} else {
+				$json['error'] = $this->language->get('error_file');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+
 	public function install() {
 		$this->load->language('marketplace/installer');
 
@@ -203,7 +265,9 @@ class ControllerMarketplaceInstaller extends Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if ($extension_install_info) {
-			if (!is_file(DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'])) {
+			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
+
+			if (!is_file($file)) {
 				$json['error'] = $this->language->get('error_file_missing');
 			}
 		} else {
@@ -213,8 +277,6 @@ class ControllerMarketplaceInstaller extends Controller {
 		if (!$json) {
 			// Unzip the files
 			$zip = new ZipArchive();
-
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
 
 			if ($zip->open($file)) {
 				$zip->extractTo(DIR_STORAGE . 'marketplace/' . basename($extension_install_info['filename'], '.ocmod.zip') . '/');
@@ -249,7 +311,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if ($extension_install_info) {
-			$directory = DIR_EXTENSION . basename($extension_install_info['filename'], '.ocmod.zip') . '/';
+			$directory = DIR_STORAGE . 'marketplace/' . basename($extension_install_info['filename'], '.ocmod.zip') . '/';
 
 			if (!is_dir($directory)) {
 				$json['error'] = $this->language->get('error_exists');
@@ -258,55 +320,24 @@ class ControllerMarketplaceInstaller extends Controller {
 			$json['error'] = $this->language->get('error_install');
 		}
 
-
-		$files = array();
-
-		// Get a list of files ready to upload
-		$path = array($directory . 'upload/*');
-
-		while (count($path) != 0) {
-			$next = array_shift($path);
-
-			foreach ((array)glob($next) as $file) {
-				if (is_dir($file)) {
-					$path[] = $file . '/*';
-				}
-
-				$files[] = $file;
-			}
-		}
-
-		// A list of allowed directories to be written to
-		$allowed = array(
-			'admin/',
-			'catalog/',
-			'image/',
-			'system/config/',
-			'system/helper/',
-			'system/library/',
-			'storage/vendor/'
-		);
-
-		// First we need to do some checks
-		foreach ($files as $file) {
-			$destination = str_replace('\\', '/', substr($file, strlen($directory . 'upload/')));
-
-			foreach ($allowed as $value) {
-				if (substr($value, 0, strlen($destination)) == $destination) {
-					$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
-
-					break;
-				}
-
-				if (substr($destination, 0, strlen($value)) == $value) {
-					$json['error'] = sprintf($this->language->get('error_allowed'), $destination);
-
-					break;
-				}
-			}
-		}
-
 		if (!$json) {
+			$files = array();
+
+			// Get a list of files ready to upload
+			$path = array($directory . 'upload/*');
+
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					$files[] = $file;
+				}
+			}
+
 			$this->load->model('setting/extension');
 
 			foreach ($files as $file) {

@@ -45,84 +45,115 @@ $('#extension').on('click', '.pagination a', function(e) {
 
 $('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
 
-// Install
-$('#extension').on('click', '.btn-success', function(e) {
-	e.preventDefault();
+// Upload
+$('#button-upload').on('click', function() {
+	$('#form-upload').remove();
 
-	var element = this;
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
-	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('');
+	$('#form-upload input[name=\'file\']').trigger('click');
 
-	$.ajax({
-		url: $(element).attr('href'),
-		dataType: 'html',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			console.log(json);
+	if (typeof timer != 'undefined') {
+		clearInterval(timer);
+	}
 
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-			}
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
 
-			if (json['success']) {
-				$('#progress-bar').css('width', '100%');
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
+			$.ajax({
+				url: 'index.php?route=marketplace/installer/upload&user_token={{ user_token }}',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					$('#button-upload').button('loading');
+				},
+				success: function(json) {
+					if (json['error']) {
+						alert(json['error']);
 
-				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						$('#button-upload').button('reset');
+					}
+
+					if (json['success']) {
+						alert(json['success']);
+
+						$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
 		}
-	});
+	}, 500);
 });
 
-// Uninstall
-$('#extension').on('click', '.btn-warning', function(e) {
+// Install
+$('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 	e.preventDefault();
 
 	var element = this;
 
-	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	var i = 0;
+
+	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
 	$('#progress-text').html('');
 
-	$.ajax({
-		url: $(element).attr('href'),
-		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-			}
+	var next = $(element).attr('href');
 
-			if (json['success']) {
-				$('#progress-bar').css('width', '100%');
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
+	var call = function() {
+		return $.ajax({
+			url: next,
+			dataType: 'json',
+			beforeSend: function() {
+				$(element).button('loading');
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(json) {
+				console.log(json);
 
-				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+				if (json['error']) {
+					$('#progress-bar').addClass('progress-bar-danger');
+					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				}
+
+				if (json['success']) {
+					$('#progress-bar').addClass('progress-bar-success').css('width', '100%');
+					$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
+
+					$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+				}
+
+				if (json['text']) {
+					$('#progress-text').html(json['text']);
+				}
+
+				if (json['next']) {
+					i = i + 1;
+
+					$('#progress-bar').css('width', (i * 25) + '%');
+
+					next = json['next'];
+
+					chain.attach(call);
+				} else {
+					next = null;
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+		});
+	}
+
+	chain.attach(call);
 });
 
 // Delete
@@ -159,93 +190,6 @@ $('#extension').on('click', '.btn-danger', function(e) {
 			}
 		});
 	}
-});
-
-
-function next(url, i) {
-	i = i + 1;
-
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success: function(json) {
-			$('#progress-bar').css('width', (i * 20) + '%');
-
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-
-				$('#button-upload').button('reset');
-			}
-
-			if (json['success']) {
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-
-				$('#button-upload').button('reset');
-
-				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
-			}
-
-			if (json['text']) {
-				$('#progress-text').html(json['text']);
-			}
-
-			if (json['next']) {
-				next(json['next'], i);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-}
-
-$('#button-upload').on('click', function() {
-	$('#form-upload').remove();
-
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-	$('#form-upload input[name=\'file\']').trigger('click');
-
-	if (typeof timer != 'undefined') {
-		clearInterval(timer);
-	}
-
-	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);
-
-			$.ajax({
-				url: 'index.php?route=marketplace/uploader&user_token={{ user_token }}',
-				type: 'post',
-				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function() {
-					$('#button-upload').button('loading');
-				},
-				success: function(json) {
-					if (json['error']) {
-						alert(json['error']);
-
-						$('#button-upload').button('reset');
-					}
-
-					if (json['success']) {
-						alert(json['success']);
-
-						$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-			});
-		}
-	}, 500);
 });
 //--></script>
 {{ footer }}

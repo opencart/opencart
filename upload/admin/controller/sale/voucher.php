@@ -623,7 +623,9 @@ class ControllerSaleVoucher extends Controller {
 							$mail->send();
 			
 						// If voucher does not belong to an order
-						}  else {
+						} else {
+							$this->language->load('mail/voucher');
+
 							$data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
 			
 							$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));

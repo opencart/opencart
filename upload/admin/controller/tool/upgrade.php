@@ -1,9 +1,8 @@
 <?php
 /*
-
-Installed versionh
-current version
-latest version
+Installed version
+Current version
+Latest version
 
 Preparation
 
@@ -20,7 +19,6 @@ Backup
 5. database
 
 6. image
-
 
 Upgrade
 

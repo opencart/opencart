@@ -38,7 +38,6 @@ class ModelSettingExtension extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
-
 	public function getInstall($extension_install_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 
@@ -68,7 +67,7 @@ class ModelSettingExtension extends Model {
 	}
 		
 	public function getTotalInstalls() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension_install`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`");
 
 		return $query->row['total'];
 	}
@@ -79,7 +78,7 @@ class ModelSettingExtension extends Model {
 
 
 	public function addPath($extension_install_id, $path) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "'");
 	}
 		
 	public function deletePath($extension_path_id) {
@@ -87,7 +86,13 @@ class ModelSettingExtension extends Model {
 	}
 	
 	public function getPathsByExtensionInstallId($extension_install_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `date_added` ASC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `ASC`");
+
+		return $query->rows;
+	}
+
+	public function getPathsByPath($path) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
 		return $query->rows;
 	}

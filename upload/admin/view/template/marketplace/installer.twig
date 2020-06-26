@@ -99,61 +99,39 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 
 	var element = this;
 
-	var i = 0;
-
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
 	$('#progress-text').html('');
 
-	var next = $(element).attr('href');
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			console.log(json);
 
-	var call = function() {
-		return $.ajax({
-			url: next,
-			dataType: 'json',
-			beforeSend: function() {
-				$(element).button('loading');
-			},
-			complete: function() {
-				$(element).button('reset');
-			},
-			success: function(json) {
-				console.log(json);
+			$('.alert-dismissible').remove();
 
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-				}
-
-				if (json['success']) {
-					$('#progress-bar').addClass('progress-bar-success').css('width', '100%');
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
-
-					$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
-				}
-
-				if (json['text']) {
-					$('#progress-text').html(json['text']);
-				}
-
-				if (json['next']) {
-					i = i + 1;
-
-					$('#progress-bar').css('width', (i * 25) + '%');
-
-					next = json['next'];
-
-					chain.attach(call);
-				} else {
-					next = null;
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
-		});
-	}
 
-	chain.attach(call);
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success').css('width', '100%');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
+
+				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 // Delete

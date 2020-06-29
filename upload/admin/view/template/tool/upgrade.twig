@@ -129,8 +129,9 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function() {
-	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+	var i = 0;
+
+	$('#progress-bar').css('width', '0%').removeClass('progress-bar-danger progress-bar-success');
 	$('#progress-text').html('{{ text_download }}');
 	$('#log').append('{{ text_download }}' + "\n");
 
@@ -162,7 +163,6 @@ $('#button-upgrade').on('click', function() {
 
 					$('#button-upgrade').button('reset');
 				}
-
 
 
 				if (json['text']) {

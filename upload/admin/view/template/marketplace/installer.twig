@@ -72,11 +72,12 @@ $('#button-upload').on('click', function() {
 				beforeSend: function() {
 					$('#button-upload').button('loading');
 				},
+				complete: function() {
+					$('#button-upload').button('reset');
+				},
 				success: function(json) {
 					if (json['error']) {
 						alert(json['error']);
-
-						$('#button-upload').button('reset');
 					}
 
 					if (json['success']) {
@@ -104,7 +105,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 
 	$.ajax({
 		url: $(element).attr('href'),
-		dataType: 'html',
+		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
 		},

@@ -170,6 +170,8 @@ final class Loader {
 	 * @param    string $route
 	 */
 	public function helper($route) {
+
+
 		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
 
 		if (is_file($file)) {
@@ -177,6 +179,8 @@ final class Loader {
 		} else {
 			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
+
+
 	}
 
 	/**
@@ -185,11 +189,17 @@ final class Loader {
 	 * @param    string $route
 	 */
 	public function config($route) {
-		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
+
+		// Keep the original trigger
+		$trigger = $route;
+
+		$this->registry->get('event')->trigger('config/' . $trigger . '/before', array(&$route));
 
 		$this->registry->get('config')->load($route);
 
-		$this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
+		$this->registry->get('event')->trigger('config/' . $trigger . '/after', array(&$route));
 	}
 
 	/**

@@ -151,6 +151,8 @@ $('#button-backup').on('click', function() {
 
 // Restore
 $('#history').on('click', '.btn-warning', function() {
+	var element = this;
+
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 

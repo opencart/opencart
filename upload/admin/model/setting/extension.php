@@ -5,7 +5,11 @@ class ModelSettingExtension extends Model {
 	
 		return $this->db->getLastId();
 	}
-	
+
+	public function editStatus($extension_install_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
+	}
+
 	public function deleteInstall($extension_install_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
@@ -53,7 +57,7 @@ class ModelSettingExtension extends Model {
 	}
 	
 	public function getPathsByExtensionInstallId($extension_install_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `ASC`");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `extension_path_id` ASC");
 
 		return $query->rows;
 	}

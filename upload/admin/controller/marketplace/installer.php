@@ -279,7 +279,7 @@ class ControllerMarketplaceInstaller extends Controller {
 
 		$this->load->model('setting/extension');
 
-		$extension_install_info = $this->    model_setting_extension->getInstall($extension_install_id);
+		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if ($extension_install_info) {
 			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
@@ -356,7 +356,6 @@ class ControllerMarketplaceInstaller extends Controller {
 						$base = DIR_STORAGE;
 					}
 
-
 					if ($path) {
 						if (!is_file($base . $path)) {
 							$extract[] = array(
@@ -402,7 +401,7 @@ class ControllerMarketplaceInstaller extends Controller {
 				}
 
 				// If size then we assume entry is a file
-				if (substr($extract['path'], -1) != '/') {
+				if (substr($copy['path'], -1) != '/') {
 					if (copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
 						$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
 					}
@@ -438,9 +437,9 @@ class ControllerMarketplaceInstaller extends Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if ($extension_install_info) {
-			$directory = DIR_EXTENSION . basename($extension_install_info['filename'], '.ocmod.zip') . '/';
+			$directory =  basename($extension_install_info['filename'], '.ocmod.zip') . '/';
 
-			if (!is_dir($directory)) {
+			if (!is_dir(DIR_EXTENSION . $directory)) {
 				$json['error'] = $this->language->get('error_directory');
 			}
 		} else {
@@ -456,33 +455,33 @@ class ControllerMarketplaceInstaller extends Controller {
 				$path = '';
 
 				// Admin
-				if (substr($result['path'], 0, 5) == 'admin') {
-					$path = $directory . $result['path'];
+				if (substr($result['path'], 0, 6) == 'admin/') {
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Catalog
-				if (substr($result['path'], 0, 7) == 'catalog') {
-					$path = $directory . $result['path'];
+				if (substr($result['path'], 0, 8) == 'catalog/') {
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Image
-				if (substr($result['path'], 0, 5) == 'image') {
-					$path = DIR_IMAGE . $result['path'];
+				if (substr($result['path'], 0, 6) == 'image/') {
+					$path = DIR_IMAGE . substr($result['path'], 0, 5);
 				}
 
 				// Config
-				if (substr($result['path'], 0, 13) == 'system/config') {
-					$path = DIR_CONFIG . substr($result['path'], 13);
+				if (substr($result['path'], 0, 14) == 'system/config/') {
+					$path = DIR_CONFIG . substr($result['path'], 14);
 				}
 
 				// Helper
-				if (substr($result['path'], 0, 13) == 'system/helper') {
-					$path = $directory . $result['path'];
+				if (substr($result['path'], 0, 14) == 'system/helper/') {
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Library
-				if (substr($result['path'], 0, 14) == 'system/library/') {
-					$path = $directory . $result['path'];
+				if (substr($result['path'], 0, 15) == 'system/library/') {
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Storage
@@ -497,10 +496,12 @@ class ControllerMarketplaceInstaller extends Controller {
 					rmdir($path);
 				}
 
+				//echo $path;
+
 				$this->model_setting_extension->deletePath($result['extension_path_id']);
 			}
 
-			//$this->model_setting_extension->editStatus($extension_install_id, 0);
+			$this->model_setting_extension->editStatus($extension_install_id, 0);
 
 			$json['success'] = $this->language->get('text_success');
 		}

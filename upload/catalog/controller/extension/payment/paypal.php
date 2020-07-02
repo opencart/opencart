@@ -36,7 +36,12 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$data['locale'] = preg_replace('/-(.+?)+/', '', $this->config->get('config_language')) . '_' . $country['iso_code_2'];
 		$data['currency_code'] = $this->config->get('payment_paypal_currency_code');
 		
-		$data['express_status'] = $setting['checkout']['express']['status'];		
+		$data['express_status'] = $setting['checkout']['express']['status'];
+
+		if (!$setting['currency'][$data['currency_code']]['express_status']) {
+			$data['express_status'] = $setting['currency'][$data['currency_code']]['express_status'];
+		}
+		
 		$data['button_align'] = $setting['checkout']['express']['button_align'];
 		$data['button_size'] = $setting['checkout']['express']['button_size'];
 		$data['button_color'] = $setting['checkout']['express']['button_color'];
@@ -46,6 +51,11 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$data['button_width'] = $setting['button_width'][$data['button_size']];
 						
 		$data['card_status'] = $setting['checkout']['card']['status'];
+		
+		if (!$setting['currency'][$data['currency_code']]['card_status']) {
+			$data['card_status'] = $setting['currency'][$data['currency_code']]['card_status'];
+		}
+		
 		$data['form_align'] = $setting['checkout']['card']['form_align'];
 		$data['form_size'] = $setting['checkout']['card']['form_size'];
 		$data['form_width'] = $setting['form_width'][$data['form_size']];
@@ -121,6 +131,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$transaction_method = $this->config->get('payment_paypal_transaction_method');
 		$currency_code = $this->config->get('payment_paypal_currency_code');
 		$currency_value = $this->config->get('payment_paypal_currency_value');
+		$decimal_place = $setting['currency'][$currency_code]['decimal_place'];
 		
 		require_once DIR_SYSTEM . 'library/paypal/paypal.php';
 		
@@ -170,7 +181,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$item_total = 0;
 				
 		foreach ($this->cart->getProducts() as $product) {
-			$product_price = number_format($this->currency->format($product['price'], $currency_code, $currency_value, false), 2, '.', '');
+			$product_price = number_format($product['price'] * $currency_value, $decimal_place, '.', '');
 				
 			$item_info[] = array(
 				'name' => $product['name'],
@@ -186,22 +197,23 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			$item_total += $product_price * $product['quantity'];
 		}
 				
-		$item_total = number_format($item_total, 2, '.', '');
-		$sub_total = number_format($this->currency->format($this->cart->getSubTotal(), $currency_code, $currency_value, false), 2, '.', '');
-		$total = number_format($this->currency->format($this->cart->getTotal(), $currency_code, $currency_value, false), 2, '.', '');
-		$tax_total = number_format($total - $sub_total, 2, '.', '');
+		$item_total = number_format($item_total, $decimal_place, '.', '');
+		$sub_total = $this->cart->getSubTotal();
+		$total = $this->cart->getTotal();
+		$tax_total = number_format(($total - $sub_total) * $currency_value, $decimal_place, '.', '');
 					
 		$discount_total = 0;
 		$handling_total = 0;
 		$shipping_total = 0;
 		
 		if (isset($this->session->data['shipping_method'])) {
-			$shipping_total = number_format($this->currency->format($this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id'], $this->config->get('config_tax')), $currency_code, $currency_value, false), 2, '.', '');
+			$shipping_total = $this->tax->calculate($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id'], $this->config->get('config_tax'));
+			$shipping_total = number_format($shipping_total * $currency_value, $decimal_place, '.', '');
 		}
 		
-		$order_total = number_format($this->currency->format($order_info['total'], $currency_code, $currency_value, false), 2, '.', '');
+		$order_total = number_format($order_info['total'] * $currency_value, $decimal_place, '.', '');
 		
-		$rebate = number_format($item_total + $tax_total + $shipping_total - $order_total, 2, '.', '');
+		$rebate = number_format($item_total + $tax_total + $shipping_total - $order_total, $decimal_place, '.', '');
 		
 		if ($rebate > 0) {
 			$discount_total = $rebate;

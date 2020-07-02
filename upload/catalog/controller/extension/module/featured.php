@@ -68,6 +68,8 @@ class ControllerExtensionModuleFeatured extends Controller {
 			}
 		}
 
+		$data['review_status'] = $this->config->get('config_review_status');
+
 		if ($data['products']) {
 			return $this->load->view('extension/module/featured', $data);
 		}

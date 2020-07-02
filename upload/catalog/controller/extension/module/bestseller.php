@@ -53,6 +53,8 @@ class ControllerExtensionModuleBestSeller extends Controller {
 				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 
+			$data['review_status'] = $this->config->get('config_review_status');
+
 			return $this->load->view('extension/module/bestseller', $data);
 		}
 	}

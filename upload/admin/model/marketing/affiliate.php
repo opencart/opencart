@@ -47,7 +47,7 @@ class ModelMarketingAffiliate extends Model {
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = " AND DATE(ca.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+			$implode[] = "DATE(ca.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {

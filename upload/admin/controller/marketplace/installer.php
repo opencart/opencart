@@ -157,7 +157,6 @@ class ControllerMarketplaceInstaller extends Controller {
 		if (isset($this->request->files['file']['name'])) {
 
 
-
 			$filename = $this->request->files['file']['name'];
 
 			if (substr($filename, -10) != '.ocmod.zip') {
@@ -168,11 +167,14 @@ class ControllerMarketplaceInstaller extends Controller {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 			}
 
-
-
 		} else {
 			$json['error'] = $this->language->get('error_upload');
 		}
+
+
+
+
+
 
 		if (!$json) {
 			$file = DIR_STORAGE . 'marketplace/' . basename($filename, '.ocmod.zip');
@@ -184,14 +186,12 @@ class ControllerMarketplaceInstaller extends Controller {
 				$zip = new ZipArchive();
 
 				if ($zip->open($file)) {
-					$name = $zip->getNameIndex(1);
+					$xml = $zip->getFromName('install.xml');
 
 					$zip->close();
 				}
 
 				// If xml file just put it straight into the DB
-				$xml = file_get_contents($file);
-
 				if ($xml) {
 					try {
 						$dom = new DOMDocument('1.0', 'UTF-8');
@@ -228,28 +228,24 @@ class ControllerMarketplaceInstaller extends Controller {
 						} else {
 							$link = '';
 						}
-
-						if (!$json) {
-
-						}
 					} catch(Exception $exception) {
 						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
 
-					$extension_data = array(
-						'name'     => $name,
-						'author'   => $author,
-						'version'  => $version,
-						'filename' => $filename,
-						'link'     => $link,
-						'status'   => 1
-					);
+					if (!$json) {
+						$extension_data = array(
+							'name'     => $name,
+							'author'   => $author,
+							'version'  => $version,
+							'filename' => $filename,
+							'link'     => $link,
+							'status'   => 0
+						);
 
-					$this->model_setting_modification->addModification($extension_data);
+						$this->load->model('setting/extension');
 
-					$this->load->model('setting/extension');
-
-					$this->model_setting_extension->addInstall($extension_data);
+						$this->model_setting_extension->addInstall($extension_data);
+					}
 				}
 
 				$json['success'] = $this->language->get('text_success');
@@ -285,13 +281,13 @@ class ControllerMarketplaceInstaller extends Controller {
 			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
 
 			if (!is_file($file)) {
-				$json['error'] = $this->language->get('error_install');
+				$json['error'] = sprintf($this->language->get('error_file_missing'), $extension_install_info['filename']);
 			}
 
 			$directory = basename($extension_install_info['filename'], '.ocmod.zip') . '/';
 
 			if (is_dir(DIR_EXTENSION . $directory)) {
-				$json['error'] = $this->language->get('error_directory');
+				//$json['error'] = sprintf($this->language->get('error_directory_exists'), $directory);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_install');
@@ -350,10 +346,11 @@ class ControllerMarketplaceInstaller extends Controller {
 						$base = DIR_EXTENSION;
 					}
 
+					// Must be substr
 					// system/storage/vendor > system/storage/vendor
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
-						$path = substr($destination, 15);
-						$base = DIR_STORAGE;
+						$path = substr($destination, 22);
+						$base = DIR_STORAGE . 'vendor/';
 					}
 
 					if ($path) {
@@ -380,27 +377,33 @@ class ControllerMarketplaceInstaller extends Controller {
 
 		if (!$json) {
 			foreach ($extract as $copy) {
-				$string = '';
-
-				// If no size then we assume entry is a directory
-				if (substr($copy['path'], -1) != '/') {
-					$parts = explode('/', dirname($copy['path']));
-				} else {
-					$parts = explode('/', trim($copy['path'], '/'));
-				}
+				echo "\n" . '-------------------------------' . "\n";
+				echo 'source: '  . $copy['source'] . "\n";
+				echo 'destination: '  . $copy['destination'] . "\n";
+				echo 'base: '  . $copy['base'] . "\n";
+				echo 'path: '  . $copy['path'] . "\n";
 
 				// Must have a path before directories before files can be moved
-				foreach ($parts as $part) {
-					$string .= $part . '/';
+				if (substr($copy['path'], -1) == '/' && !is_dir($copy['base'] . $copy['path'])) {
+					$string = '';
 
-					if (!is_dir($copy['base'] . $string)) {
-						if (@mkdir($copy['base'] . $string, 0777)) {
-							$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
+					// If no size then we assume entry is a directory
+					$parts = explode('/', trim($copy['path'], '/'));
+
+					foreach ($parts as $part) {
+						$string .= $part . '/';
+
+						if (!is_dir($copy['base'] . $string)) {
+							if (mkdir($copy['base'] . $string, 0777)) {
+								$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
+
+								echo 'string: ' . $string . "\n";
+							}
 						}
 					}
 				}
 
-				// If size then we assume entry is a file
+				// If check if the path is not directory and check there is no existing file
 				if (substr($copy['path'], -1) != '/') {
 					if (copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
 						$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
@@ -440,7 +443,7 @@ class ControllerMarketplaceInstaller extends Controller {
 			$directory =  basename($extension_install_info['filename'], '.ocmod.zip') . '/';
 
 			if (!is_dir(DIR_EXTENSION . $directory)) {
-				$json['error'] = $this->language->get('error_directory');
+				$json['error'] = $this->language->get('error_directory_missing');
 			}
 		} else {
 			$json['error'] = $this->language->get('error_install');
@@ -456,17 +459,17 @@ class ControllerMarketplaceInstaller extends Controller {
 
 				// Admin
 				if (substr($result['path'], 0, 6) == 'admin/') {
-					$path = DIR_EXTENSION . $result['path'];
+					$path = DIR_EXTENSION . $directory . $result['path'];
 				}
 
 				// Catalog
 				if (substr($result['path'], 0, 8) == 'catalog/') {
-					$path = DIR_EXTENSION . $result['path'];
+					$path = DIR_EXTENSION . $directory . $result['path'];
 				}
 
 				// Image
 				if (substr($result['path'], 0, 6) == 'image/') {
-					$path = DIR_IMAGE . substr($result['path'], 0, 5);
+					$path = DIR_IMAGE . substr($result['path'], 6);
 				}
 
 				// Config
@@ -476,17 +479,17 @@ class ControllerMarketplaceInstaller extends Controller {
 
 				// Helper
 				if (substr($result['path'], 0, 14) == 'system/helper/') {
-					$path = DIR_EXTENSION . $result['path'];
+					$path = DIR_EXTENSION . $directory . $result['path'];
 				}
 
 				// Library
 				if (substr($result['path'], 0, 15) == 'system/library/') {
-					$path = DIR_EXTENSION . $result['path'];
+					$path = DIR_EXTENSION . $directory . $result['path'];
 				}
 
 				// Storage
 				if (substr($result['path'], 0, 22) == 'system/storage/vendor/') {
-					$path = DIR_STORAGE . substr($result['path'], 15);
+					$path = DIR_STORAGE . 'vendor/' . substr($result['path'], 22);
 				}
 
 				// Check if the location exists or not
@@ -496,10 +499,12 @@ class ControllerMarketplaceInstaller extends Controller {
 					rmdir($path);
 				}
 
-				//echo $path;
+				//echo $path . "\n";
 
 				$this->model_setting_extension->deletePath($result['extension_path_id']);
 			}
+
+			//rmdir(DIR_EXTENSION . $directory);
 
 			$this->model_setting_extension->editStatus($extension_install_id, 0);
 

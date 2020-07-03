@@ -9,7 +9,7 @@ class ControllerExtensionModuleLatest extends Controller {
 
 		$data['products'] = array();
 
-		$results = $this->model_catalog_product->getLatestProducts($setting['limit']);
+		$results = $this->model_catalog_product->getLatest($setting['limit']);
 
 		if ($results) {
 			foreach ($results as $result) {

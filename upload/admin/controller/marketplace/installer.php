@@ -397,7 +397,7 @@ class ControllerMarketplaceInstaller extends Controller {
 							if (mkdir($copy['base'] . $string, 0777)) {
 								$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
 
-								echo 'string: ' . $string . "\n";
+								echo 'dir added: ' . $copy['base'] . $string . "\n";
 							}
 						}
 					}
@@ -407,6 +407,8 @@ class ControllerMarketplaceInstaller extends Controller {
 				if (substr($copy['path'], -1) != '/') {
 					if (copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
 						$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
+
+						echo 'file added: ' . $copy['base'] . $copy['path'] . "\n";
 					}
 				}
 			}
@@ -492,12 +494,22 @@ class ControllerMarketplaceInstaller extends Controller {
 					$path = DIR_STORAGE . 'vendor/' . substr($result['path'], 22);
 				}
 
+				if (!file_exists($path)) {
+					echo 'Not Found: ' .$path . "\n";
+				}
+
 				// Check if the location exists or not
 				if (is_file($path)) {
 					unlink($path);
+
+					echo 'Deleted File: ' .$path . "\n";
 				} elseif (is_dir($path)) {
 					rmdir($path);
+
+					echo 'Deleted Dir: ' .$path . "\n";
 				}
+
+
 
 				//echo $path . "\n";
 

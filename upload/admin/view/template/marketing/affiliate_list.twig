@@ -132,7 +132,7 @@ $('#button-filter').on('click', function() {
 	var filter_name = $('input[name=\'filter_name\']').val();
 
 	if (filter_name) {
-		url += '&filter_customer=' + encodeURIComponent(filter_name);
+		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
 
 	var filter_tracking = $('input[name=\'filter_tracking\']').val();
@@ -163,7 +163,7 @@ $('#button-filter').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('input[name=\'filter_customer\']').autocomplete({
+$('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -179,7 +179,7 @@ $('input[name=\'filter_customer\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'filter_customer\']').val(item['label']);
+		$('input[name=\'filter_name\']').val(item['label']);
 	}
 });
 //--></script>

@@ -154,7 +154,6 @@ $_['help_customer_group']          = 'Default customer group.';
 $_['help_customer_group_display']  = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
 $_['help_customer_price']          = 'Only show prices when a customer is logged in.';
 $_['help_login_attempts']          = 'Maximum login attempts allowed before the account is locked for 1 hour. Customer and affiliate accounts can be unlocked on the customer or affiliate admin pages.';
-$_['help_login_attempts']          = 'Maximum login attempts allowed before the account is locked for 1 hour. Customer and affiliate accounts can be unlocked on the customer or affiliate admin pages.';
 $_['help_account']                 = 'Forces people to agree to terms before an account can be created.';
 $_['help_invoice_prefix']          = 'Set the invoice prefix (e.g. INV-2011-00). Invoice IDs will start at 1 for each unique prefix.';
 $_['help_cart_weight']             = 'Show the cart weight on the cart page.';

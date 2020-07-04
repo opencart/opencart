@@ -48,7 +48,7 @@
               {% endif %}</div>
           </div>
           <div class="form-group row required">
-            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_rating }}</label>
+            <label for="input-rating" class="col-sm-2 col-form-label">{{ entry_rating }}</label>
             <div class="col-sm-10">
               <label class="form-check form-check-inline">
                 {% if rating == 1 %}
@@ -80,10 +80,10 @@
                   4
                 {% endif %}</label> <label class="form-check form-check-inline">
                 {% if rating == 5 %}
-                  <input type="radio" name="rating" value="5" checked="checked" class="form-check-input"/>
+                  <input type="radio" name="rating" value="5" checked="checked" id="input-rating" class="form-check-input"/>
                   5
                 {% else %}
-                  <input type="radio" name="rating" value="5" class="form-check-input"/>
+                  <input type="radio" name="rating" value="5" id="input-rating" class="form-check-input"/>
                   5
                 {% endif %}
               </label>

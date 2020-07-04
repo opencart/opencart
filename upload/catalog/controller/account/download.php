@@ -40,7 +40,7 @@ class ControllerAccountDownload extends Controller {
 
 		$download_total = $this->model_account_download->getTotalDownloads();
 
-		$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'), $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'));
+		$results = $this->model_account_download->getDownloads(($page - 1) * 10);
 
 		foreach ($results as $result) {
 			if (is_file(DIR_DOWNLOAD . $result['filename'])) {

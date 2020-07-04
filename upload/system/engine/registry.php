@@ -14,7 +14,7 @@ final class Registry {
 	private $data = array();
 
 	/**
-     * 
+     * Get
      *
      * @param	string	$key
 	 * 
@@ -25,7 +25,7 @@ final class Registry {
 	}
 
     /**
-     * 
+     * Set
      *
      * @param	string	$key
 	 * @param	string	$value
@@ -35,7 +35,7 @@ final class Registry {
 	}
 	
     /**
-     * 
+     * Has
      *
      * @param	string	$key
 	 *

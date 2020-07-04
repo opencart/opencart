@@ -154,7 +154,7 @@ class ControllerReportStatistics extends Controller {
 		if ($this->validate()) {	
 			$this->load->model('catalog/review');
 				
-			$this->model_report_statistics->editValue('review', $this->model_catalog_review->getTotalReviews(array('filter_status' => 0)));
+			$this->model_report_statistics->editValue('review', $this->model_catalog_review->getTotalReviewsAwaitingApproval());
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 

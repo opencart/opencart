@@ -30,8 +30,8 @@ class ModelMarketingAffiliate extends Model {
 
 		$implode = array();
 
-		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
+		if (!empty($data['filter_name'])) {
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_tracking'])) {
@@ -47,7 +47,7 @@ class ModelMarketingAffiliate extends Model {
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = " AND DATE(ca.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+			$implode[] = "DATE(ca.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -96,8 +96,8 @@ class ModelMarketingAffiliate extends Model {
 
 		$implode = array();
 
-		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
+		if (!empty($data['filter_name'])) {
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_tracking'])) {

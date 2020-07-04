@@ -9,14 +9,7 @@ class ControllerExtensionModuleLatest extends Controller {
 
 		$data['products'] = array();
 
-		$filter_data = array(
-			'sort'  => 'p.date_added',
-			'order' => 'DESC',
-			'start' => 0,
-			'limit' => $setting['limit']
-		);
-
-		$results = $this->model_catalog_product->getProducts($filter_data);
+		$results = $this->model_catalog_product->getLatest($setting['limit']);
 
 		if ($results) {
 			foreach ($results as $result) {
@@ -59,6 +52,8 @@ class ControllerExtensionModuleLatest extends Controller {
 
 				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
+
+			$data['review_status'] = $this->config->get('config_review_status');
 
 			return $this->load->view('extension/module/latest', $data);
 		}

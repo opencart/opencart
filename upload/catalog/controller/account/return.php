@@ -68,7 +68,7 @@ class ControllerAccountReturn extends Controller {
 			'url'   => $this->url->link('account/return', 'language=' . $this->config->get('config_language') . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')) > ($return_total - $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'))) ? $return_total : ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')) + $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')), $return_total, ceil($return_total / $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($return_total - 10)) ? $return_total : ((($page - 1) * 10) + 10), $return_total, ceil($return_total / 10));
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 

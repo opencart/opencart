@@ -76,67 +76,171 @@ $_['paypal_setting'] = array(
 	'currency' => array(
 		'AUD' => array(
 			'code' => 'AUD',
-			'name' => 'text_currency_aud'
+			'name' => 'text_currency_aud',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
+		),
+		'BRL' => array(
+			'code' => 'BRL',
+			'name' => 'text_currency_brl',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
 		),
 		'CAD' => array(
 			'code' => 'CAD',
-			'name' => 'text_currency_cad'
-		),
-		'CHF' => array(
-			'code' => 'CHF',
-			'name' => 'text_currency_chf'
+			'name' => 'text_currency_cad',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		),
 		'CZK' => array(
 			'code' => 'CZK',
-			'name' => 'text_currency_czk'
+			'name' => 'text_currency_czk',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		),
 		'DKK' => array(
 			'code' => 'DKK',
-			'name' => 'text_currency_dkk'
+			'name' => 'text_currency_dkk',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		),
 		'EUR' => array(
 			'code' => 'EUR',
-			'name' => 'text_currency_eur'
-		),
-		'GBP' => array(
-			'code' => 'GBP',
-			'name' => 'text_currency_gbp'
+			'name' => 'text_currency_eur',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		),
 		'HKD' => array(
 			'code' => 'HKD',
-			'name' => 'text_currency_hkd'
+			'name' => 'text_currency_hkd',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		),
 		'HUF' => array(
 			'code' => 'HUF',
-			'name' => 'text_currency_huf'
+			'name' => 'text_currency_huf',
+			'decimal_place' => 0,
+			'express_status' => true,
+			'card_status' => true
+		),
+		'INR' => array(
+			'code' => 'INR',
+			'name' => 'text_currency_inr',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
+		),
+		'ILS' => array(
+			'code' => 'ILS',
+			'name' => 'text_currency_ils',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
 		),
 		'JPY' => array(
 			'code' => 'JPY',
-			'name' => 'text_currency_jpy'
+			'name' => 'text_currency_jpy',
+			'decimal_place' => 0,
+			'express_status' => true,
+			'card_status' => true
 		),
-		'NOK' => array(
-			'code' => 'NOK',
-			'name' => 'text_currency_nok'
+		'MYR' => array(
+			'code' => 'MYR',
+			'name' => 'text_currency_myr',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
+		),
+		'MXN' => array(
+			'code' => 'MXN',
+			'name' => 'text_currency_mxn',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
+		),
+		'TWD' => array(
+			'code' => 'TWD',
+			'name' => 'text_currency_twd',
+			'decimal_place' => 0,
+			'express_status' => true,
+			'card_status' => false
 		),
 		'NZD' => array(
 			'code' => 'NZD',
-			'name' => 'text_currency_nzd'
+			'name' => 'text_currency_nzd',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
+		),
+		'NOK' => array(
+			'code' => 'NOK',
+			'name' => 'text_currency_nok',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		),
 		'PLN' => array(
 			'code' => 'PLN',
-			'name' => 'text_currency_pln'
+			'name' => 'text_currency_pln',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		),
-		'SEK' => array(
-			'code' => 'SEK',
-			'name' => 'text_currency_sek'
+		'GBP' => array(
+			'code' => 'GBP',
+			'name' => 'text_currency_gbp',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
+		),
+		'RUB' => array(
+			'code' => 'RUB',
+			'name' => 'text_currency_rub',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
 		),
 		'SGD' => array(
 			'code' => 'SGD',
-			'name' => 'text_currency_sgd'
+			'name' => 'text_currency_sgd',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
+		),
+		'SEK' => array(
+			'code' => 'SEK',
+			'name' => 'text_currency_sek',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
+		),
+		'CHF' => array(
+			'code' => 'CHF',
+			'name' => 'text_currency_chf',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
+		),
+		'THB' => array(
+			'code' => 'THB',
+			'name' => 'text_currency_thb',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
 		),
 		'USD' => array(
 			'code' => 'USD',
-			'name' => 'text_currency_usd'
+			'name' => 'text_currency_usd',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => true
 		)
 	),
 	'button_align' => array(

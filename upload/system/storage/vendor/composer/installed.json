@@ -1,8 +1,8 @@
 [
     {
         "name": "braintree/braintree_php",
-        "version": "3.2.0",
-        "version_normalized": "3.2.0.0",
+        "version": "3.40.0",
+        "version_normalized": "3.40.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/braintree/braintree_php.git",

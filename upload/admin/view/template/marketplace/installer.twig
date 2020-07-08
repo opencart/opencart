@@ -105,7 +105,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 
 	$.ajax({
 		url: $(element).attr('href'),
-		dataType: 'html',
+		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
 		},

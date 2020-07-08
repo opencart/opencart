@@ -1,13 +1,9 @@
 <?php
 class ModelSettingExtension extends Model {
-	public function addInstall($filename, $extension_id = 0, $extension_download_id = 0) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `filename` = '" . $this->db->escape($filename) . "', `extension_id` = '" . (int)$extension_id . "', `extension_download_id` = '" . (int)$extension_download_id . "', `date_added` = NOW()");
+	public function addInstall($data) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `version` = '" . $this->db->escape($data['version']) . "', `image` = '" . $this->db->escape($data['image']) . "', `filename` = '" . $this->db->escape($data['filename']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
 	
 		return $this->db->getLastId();
-	}
-
-	public function editStatus($extension_install_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
 	public function deleteInstall($extension_install_id) {
@@ -48,8 +44,9 @@ class ModelSettingExtension extends Model {
 		return $query->row['total'];
 	}
 
-
-
+	public function editStatus($extension_install_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
+	}
 
 
 	public function addPath($extension_install_id, $path) {
@@ -77,9 +74,6 @@ class ModelSettingExtension extends Model {
 
 		return $query->rows;
 	}
-
-
-
 
 
 	public function getInstalled($type) {

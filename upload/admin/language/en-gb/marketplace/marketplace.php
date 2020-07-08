@@ -46,6 +46,9 @@ $_['text_secure']        = 'Do not give your PIN to any one including developers
 $_['text_name']          = 'Download Name';
 $_['text_available']     = 'Available Installs';
 $_['text_action']        = 'Action';
+$_['text_install']       = 'Install';
+$_['text_uninstall']     = 'Uninstall';
+$_['text_delete']        = 'Delete';
 
 // Entry
 $_['entry_pin']          = 'PIN';
@@ -60,7 +63,7 @@ $_['tab_comment']        = 'Comment';
 $_['button_opencart']    = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
 $_['button_view_all']    = 'View all extensions';
-$_['button_support'] = 'Get Support';
+$_['button_support']     = 'Get Support';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
 $_['button_forgot_pin']  = 'Forgot PIN?';

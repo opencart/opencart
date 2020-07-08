@@ -68,17 +68,14 @@ final class Loader {
 	 *
 	 * @param    string $route
 	 */
-	public function model($route, $path = '') {
+	public function model($route) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
-			if (!$path) {
-				$file = DIR_APPLICATION . 'model/' . $route . '.php';
-			} else {
-				$file = $path . $route . '.php';
-			}
 
+
+			$file = DIR_APPLICATION . 'model/' . $route . '.php';
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 
 			if (is_file($file)) {
@@ -107,7 +104,7 @@ final class Loader {
 	 *
 	 * @return   string
 	 */
-	public function view($route, $data = array(), $path = '') {
+	public function view($route, $data = array()) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -170,8 +167,6 @@ final class Loader {
 	 * @param    string $route
 	 */
 	public function helper($route) {
-
-
 		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
 
 		if (is_file($file)) {
@@ -179,8 +174,6 @@ final class Loader {
 		} else {
 			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
-
-
 	}
 
 	/**

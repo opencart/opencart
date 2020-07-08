@@ -2167,6 +2167,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'link',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true

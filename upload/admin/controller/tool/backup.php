@@ -323,9 +323,9 @@ class ControllerToolBackup extends Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-
 			move_uploaded_file($this->request->files['upload']['tmp_name'], DIR_STORAGE . 'backup/' . $filename);
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

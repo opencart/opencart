@@ -1,4 +1,5 @@
 <?php
+
 class ControllerMarketplaceMarketplace extends Controller {
 	public function index() {
 		$this->load->language('marketplace/marketplace');
@@ -98,11 +99,11 @@ class ControllerMarketplaceMarketplace extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
-		
+
 		$time = time();
-		
+
 		// We create a hash from the data in a similar method to how amazon does things.
-		$string  = 'api/marketplace/list' . "\n";
+		$string = 'api/marketplace/list' . "\n";
 		$string .= $this->config->get('opencart_username') . "\n";
 		$string .= $this->request->server['HTTP_HOST'] . "\n";
 		$string .= VERSION . "\n";
@@ -110,7 +111,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
+		$url = '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . urlencode(VERSION);
 		$url .= '&time=' . $time;
@@ -167,7 +168,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$extension_total = $response_info['extension_total'];
 
-		$url  = '';
+		$url = '';
 
 		if (isset($this->request->get['filter_search'])) {
 			$url .= '&filter_search=' . $this->request->get['filter_search'];
@@ -206,14 +207,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if ($response_info['promotions'] && $page == 1) {
 			foreach ($response_info['promotions'] as $result) {
 				$data['promotions'][] = array(
-					'name'         => utf8_decode($result['name']),
-					'description'  => utf8_decode($result['description']),
-					'image'        => $result['image'],
-					'license'      => $result['license'],
-					'price'        => $result['price'],
-					'rating'       => $result['rating'],
+					'name' => utf8_decode($result['name']),
+					'description' => utf8_decode($result['description']),
+					'image' => $result['image'],
+					'license' => $result['license'],
+					'price' => $result['price'],
+					'rating' => $result['rating'],
 					'rating_total' => $result['rating_total'],
-					'href'         => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)
+					'href' => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)
 				);
 			}
 		}
@@ -223,14 +224,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if ($response_info['extensions']) {
 			foreach ($response_info['extensions'] as $result) {
 				$data['extensions'][] = array(
-					'name'         => utf8_decode($result['name']),
-					'description'  => utf8_decode($result['description']),
-					'image'        => $result['image'],
-					'license'      => $result['license'],
-					'price'        => $result['price'],
-					'rating'       => $result['rating'],
+					'name' => utf8_decode($result['name']),
+					'description' => utf8_decode($result['description']),
+					'image' => $result['image'],
+					'license' => $result['license'],
+					'price' => $result['price'],
+					'rating' => $result['rating'],
 					'rating_total' => $result['rating_total'],
-					'href'         => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)
+					'href' => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . $url)
 				);
 			}
 		}
@@ -273,69 +274,69 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['categories'] = array();
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_all'),
+			'text' => $this->language->get('text_all'),
 			'value' => '',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_theme'),
+			'text' => $this->language->get('text_theme'),
 			'value' => 'theme',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=theme' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=theme' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_marketplace'),
+			'text' => $this->language->get('text_marketplace'),
 			'value' => 'marketplace',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=marketplace' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=marketplace' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_language'),
+			'text' => $this->language->get('text_language'),
 			'value' => 'language',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=language' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=language' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_payment'),
+			'text' => $this->language->get('text_payment'),
 			'value' => 'payment',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=payment' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=payment' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_shipping'),
+			'text' => $this->language->get('text_shipping'),
 			'value' => 'shipping',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=shipping' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=shipping' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_module'),
+			'text' => $this->language->get('text_module'),
 			'value' => 'module',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=module' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=module' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_total'),
+			'text' => $this->language->get('text_total'),
 			'value' => 'total',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=total' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=total' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_feed'),
+			'text' => $this->language->get('text_feed'),
 			'value' => 'feed',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=feed' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=feed' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_report'),
+			'text' => $this->language->get('text_report'),
 			'value' => 'report',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=report' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=report' . $url)
 		);
 
 		$data['categories'][] = array(
-			'text'  => $this->language->get('text_other'),
+			'text' => $this->language->get('text_other'),
 			'value' => 'other',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=other' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_category=other' . $url)
 		);
 
 		// Licenses
@@ -372,33 +373,33 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['licenses'] = array();
 
 		$data['licenses'][] = array(
-			'text'  => $this->language->get('text_all'),
+			'text' => $this->language->get('text_all'),
 			'value' => '',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
 		$data['licenses'][] = array(
-			'text'  => $this->language->get('text_recommended'),
+			'text' => $this->language->get('text_recommended'),
 			'value' => 'recommended',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=recommended' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=recommended' . $url)
 		);
 
 		$data['licenses'][] = array(
-			'text'  => $this->language->get('text_free'),
+			'text' => $this->language->get('text_free'),
 			'value' => 'free',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=free' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=free' . $url)
 		);
 
 		$data['licenses'][] = array(
-			'text'  => $this->language->get('text_paid'),
+			'text' => $this->language->get('text_paid'),
 			'value' => 'paid',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=paid' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=paid' . $url)
 		);
 
 		$data['licenses'][] = array(
-			'text'  => $this->language->get('text_purchased'),
+			'text' => $this->language->get('text_purchased'),
 			'value' => 'purchased',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=purchased' . $url)
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_license=purchased' . $url)
 		);
 
 		// Sort
@@ -431,33 +432,33 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$data['sorts'] = array();
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_date_modified'),
+			'text' => $this->language->get('text_date_modified'),
 			'value' => 'date_modified',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_modified')
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_modified')
 		);
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_date_added'),
+			'text' => $this->language->get('text_date_added'),
 			'value' => 'date_added',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_added')
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=date_added')
 		);
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_rating'),
+			'text' => $this->language->get('text_rating'),
 			'value' => 'rating',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=rating')
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=rating')
 		);
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_name'),
+			'text' => $this->language->get('text_name'),
 			'value' => 'name',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=name')
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=name')
 		);
 
 		$data['sorts'][] = array(
-			'text'  => $this->language->get('text_price'),
+			'text' => $this->language->get('text_price'),
 			'value' => 'price',
-			'href'  => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=price')
+			'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&sort=price')
 		);
 
 		// Pagination
@@ -493,9 +494,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $extension_total,
-			'page'  => $page,
+			'page' => $page,
 			'limit' => 12,
-			'url'   => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
 		$data['filter_search'] = $filter_search;
@@ -522,7 +523,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$time = time();
 
 		// We create a hash from the data in a similar method to how amazon does things.
-		$string  = 'api/marketplace/info' . "\n";
+		$string = 'api/marketplace/info' . "\n";
 		$string .= $this->config->get('opencart_username') . "\n";
 		$string .= $this->request->server['HTTP_HOST'] . "\n";
 		$string .= VERSION . "\n";
@@ -531,7 +532,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
+		$url = '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . urlencode(VERSION);
 		$url .= '&extension_id=' . $extension_id;
@@ -563,7 +564,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			if (isset($response_info['error'])) {
 				$data['error_signature'] = $response_info['error'];
 			} else {
-        		$data['error_signature'] = '';
+				$data['error_signature'] = '';
 			}
 
 			$data['user_token'] = $this->session->data['user_token'];
@@ -652,40 +653,10 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$data['downloads'] = array();
 
 			if ($response_info['downloads']) {
-				foreach ($response_info['downloads'] as $result) {
-					if (substr($result['filename'], -10) == '.ocmod.zip') {
-
-
-
-						$extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($result['extension_download_id']);
-
-						if ($extension_install_info) {
-							$extension_install_id = $extension_install_info['extension_install_id'];
-						} else {
-							$extension_install_id = 0;
-						}
-
-
-
-						if ($extension_install_id) {
-							$link = $this->url->link('marketplace/marketplace/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id);
-						} else {
-							$link = '';
-						}
-
-						$data['downloads'][] = array(
-							'extension_download_id' => $result['extension_download_id'],
-							'extension_install_id'  => $extension_install_id,
-							'name'                  => $result['name'],
-							'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-							'status'                => $result['status'],
-							'href'                  => $link
-						);
-
-
-
-					}
-				}
+				$this->session->data['extension_download'][$extension_id] = $response_info['downloads'];
+			} else {
+				$this->session->data['extension_download'][$extension_id] = array();
+				$this->session->data['extension_download'][$extension_id] = array();
 			}
 
 			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');
@@ -699,6 +670,53 @@ class ControllerMarketplaceMarketplace extends Controller {
 		} else {
 			return new Action('error/not_found');
 		}
+	}
+
+	public function extension() {
+		$this->load->language('marketplace/marketplace');
+
+		if (isset($this->request->get['extension_id'])) {
+			$extension_id = $this->request->get['extension_id'];
+		} else {
+			$extension_id = 0;
+		}
+
+		$this->load->model('setting/extension');
+
+		$data['downloads'] = array();
+
+		if (isset($this->session->data['extension_download'][$extension_id])) {
+			$results = $this->session->data['extension_download'][$extension_id];
+
+			foreach ($results as $result) {
+				if (substr($result['filename'], -10) == '.ocmod.zip') {
+					$extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($result['extension_download_id']);
+
+					if ($extension_install_info) {
+						$extension_install_id = $extension_install_info['extension_install_id'];
+						$installed = $extension_install_info['status'];
+					} else {
+						$extension_install_id = 0;
+						$installed = 0;
+					}
+
+					$data['downloads'][] = array(
+						'extension_install_id'  => $extension_install_id,
+						'extension_download_id' => $result['extension_download_id'],
+						'name'                  => $result['name'],
+						'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+						'status'                => $result['status'],
+						'installed'             => $installed,
+						'download'              => $this->url->link('marketplace/marketplace/download', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $result['extension_download_id']),
+						'install'               => $this->url->link('marketplace/installer/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id),
+						'uninstall'             => $this->url->link('marketplace/installer/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id),
+						'delete'                => $this->url->link('marketplace/installer/delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id)
+					);
+				}
+			}
+		}
+
+		$this->response->setOutput($this->load->view('marketplace/marketplace_extension', $data));
 	}
 
 	public function purchase() {
@@ -728,12 +746,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$time = time();
 
 			// We create a hash from the data in a similarsimilar method to how amazon does things.
-			$string  = 'api/marketplace/purchase' . "\n";
+			$string = 'api/marketplace/purchase' . "\n";
 			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
 			$string .= $extension_id . "\n";
-		 	$string .= $this->request->post['pin'] . "\n";
+			$string .= $this->request->post['pin'] . "\n";
 			$string .= $time . "\n";
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
@@ -760,6 +778,15 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$response_info = json_decode($response, true);
 
 			if (isset($response_info['success'])) {
+				// If purchase complete we update the status for all downloads to be available.
+				if (isset($this->session->data['extension_download'][$extension_id])) {
+					$results = $this->session->data['extension_download'][$extension_id];
+
+					foreach (array_keys($results) as $key) {
+						$this->session->data['extension_download'][$extension_id][$key]['status'] = 1;
+					}
+				}
+
 				$json['success'] = $response_info['success'];
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];
@@ -771,10 +798,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-
-
-
 
 	public function download() {
 		$this->load->language('marketplace/marketplace');
@@ -801,7 +824,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
-			$string  = 'api/marketplace/download' . "\n";
+			$string = 'api/marketplace/download' . "\n";
 			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
@@ -811,7 +834,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-			$url  = '&username=' . urlencode($this->config->get('opencart_username'));
+			$url = '&username=' . urlencode($this->config->get('opencart_username'));
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . urlencode(VERSION);
 			$url .= '&extension_id=' . $extension_id;
@@ -831,20 +854,14 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$response_info = json_decode($response, true);
 
-			print_r($response_info);
-
 			curl_close($curl);
 
 			if (isset($response_info['download'])) {
 
 				if (substr($response_info['filename'], -10) == '.ocmod.zip') {
-
-
-					$this->session->data['install'] = token(10);
+					$handle = fopen(DIR_STORAGE . 'marketplace/' . $response_info['filename'], 'w');
 
 					$download = file_get_contents($response_info['download']);
-
-					$handle = fopen(DIR_STORAGE . 'marketplace/' . $this->session->data['install'] . '.tmp', 'w');
 
 					fwrite($handle, $download);
 
@@ -852,16 +869,24 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 					$this->load->model('setting/extension');
 
-					$json['extension_install_id'] = $this->model_setting_extension->addInstall($response_info);
+					$extension_data = array(
+						'extension_id'          => $response_info['extension_id'],
+						'extension_download_id' => $response_info['extension_download_id'],
+						'name'                  => $response_info['name'],
+						'author'                => $response_info['author'],
+						'version'               => $response_info['version'],
+						'filename' => $response_info['filename'],
+						'link' => ''
+					);
 
-					$json['text'] = $this->language->get('text_install');
+					$json['extension_install_id'] = $this->model_setting_extension->addInstall($extension_data);
 
-					$json['next'] = str_replace('&amp;', '&', $this->url->link('marketplace/install/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $json['extension_install_id']));
-
+					$json['success'] = $this->language->get('text_success');
 
 				} else {
 					$json['redirect'] = $response_info['download'];
 				}
+
 
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];
@@ -873,12 +898,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-
-
-
-
-
 
 
 	public function addComment() {
@@ -905,12 +924,12 @@ class ControllerMarketplaceMarketplace extends Controller {
 		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
 			$json['error'] = $this->language->get('error_opencart');
 		}
-					
-		if (!$json) {	
+
+		if (!$json) {
 			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
-			$string  = 'api/marketplace/addcomment' . "\n";
+			$string = 'api/marketplace/addcomment' . "\n";
 			$string .= urlencode($this->config->get('opencart_username')) . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= urlencode(VERSION) . "\n";
@@ -921,7 +940,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-			$url  = '&username=' . $this->config->get('opencart_username');
+			$url = '&username=' . $this->config->get('opencart_username');
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_id=' . $extension_id;
@@ -1006,23 +1025,23 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 				$data['comments'][] = array(
 					'extension_comment_id' => $result['extension_comment_id'],
-					'member'               => $result['member'],
-					'image'                => $result['image'],
-					'comment'              => $result['comment'],
-					'date_added'           => $result['date_added'],
-					'reply'                => $result['reply'],
-					'add'                  => $this->url->link('marketplace/marketplace/addcomment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id']),
-					'refresh'              => $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
-					'next'                 => $next
+					'member' => $result['member'],
+					'image' => $result['image'],
+					'comment' => $result['comment'],
+					'date_added' => $result['date_added'],
+					'reply' => $result['reply'],
+					'add' => $this->url->link('marketplace/marketplace/addcomment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id']),
+					'refresh' => $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
+					'next' => $next
 				);
 			}
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $comment_total,
-			'page'  => $page,
+			'page' => $page,
 			'limit' => 20,
-			'url'   => $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}')
+			'url' => $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}')
 		));
 
 		$data['refresh'] = $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page);
@@ -1073,10 +1092,10 @@ class ControllerMarketplaceMarketplace extends Controller {
 			foreach ($results as $result) {
 				$data['replies'][] = array(
 					'extension_comment_id' => $result['extension_comment_id'],
-					'member'               => $result['member'],
-					'image'                => $result['image'],
-					'comment'              => $result['comment'],
-					'date_added'           => $result['date_added']
+					'member' => $result['member'],
+					'image' => $result['image'],
+					'comment' => $result['comment'],
+					'date_added' => $result['date_added']
 				);
 			}
 		}

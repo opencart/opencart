@@ -313,7 +313,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['error_parent'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -362,7 +362,7 @@ class ControllerCatalogCategory extends Controller {
 			$data['category_description'] = $this->request->post['category_description'];
 		} elseif (!empty($category_info)) {
 			$data['category_description'] = $this->model_catalog_category->getDescriptions($this->request->get['category_id']);
-			$current_language_id = $this->model_localisation_language->getLanguageByCode($this->config->get('config_admin_language'))['language_id'];
+			$current_language_id = $this->model_localisation_language->getLanguageByCode($this->config->get('config_language_id'));
 			$data['text_form'] .= ': ' . $data['category_description'][$current_language_id]['name'];
 		} else {
 			$data['category_description'] = array();
@@ -410,12 +410,12 @@ class ControllerCatalogCategory extends Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = array();
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -482,7 +482,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['status'] = true;
 		}
-		
+
 		if (isset($this->request->post['category_seo_url'])) {
 			$data['category_seo_url'] = $this->request->post['category_seo_url'];
 		} elseif (!empty($category_info)) {
@@ -490,7 +490,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_seo_url'] = array();
 		}
-				
+
 		if (isset($this->request->post['category_layout'])) {
 			$data['category_layout'] = $this->request->post['category_layout'];
 		} elseif (!empty($category_info)) {
@@ -527,11 +527,11 @@ class ControllerCatalogCategory extends Controller {
 
 		if (isset($this->request->get['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getPaths($this->request->post['parent_id']);
-			
+
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->get['category_id']) {
 					$this->error['parent'] = $this->language->get('error_parent');
-					
+
 					break;
 				}
 			}
@@ -558,7 +558,7 @@ class ControllerCatalogCategory extends Controller {
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
-		
+
 		return !$this->error;
 	}
 

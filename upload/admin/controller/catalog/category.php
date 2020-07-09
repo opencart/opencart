@@ -362,8 +362,7 @@ class ControllerCatalogCategory extends Controller {
 			$data['category_description'] = $this->request->post['category_description'];
 		} elseif (!empty($category_info)) {
 			$data['category_description'] = $this->model_catalog_category->getDescriptions($this->request->get['category_id']);
-			$current_language_id = $this->model_localisation_language->getLanguageByCode($this->config->get('config_language_id'));
-			$data['text_form'] .= ': ' . $data['category_description'][$current_language_id]['name'];
+			$data['text_form'] .= ': ' . $data['category_description'][$this->config->get('config_language_id')]['name'];
 		} else {
 			$data['category_description'] = array();
 		}

@@ -39,15 +39,15 @@ $_['action_event']      = array(
 	'controller/*/after' => array(
 		'event/language/after'
 	),
-	'controller/*/before' => array(
+	//'controller/*/before' => array(
 	//	'event/extension/controller'
-	),
-	'model/*/before' => array(
+	//),
+	//'model/*/before' => array(
 	//	'event/extension/model'
-	),
-	'view/*/before' => array(
+	//),
+	//'view/*/before' => array(
 		//	'event/extension/view'
-	),
+	//),
 	'view/*/before' => array(
 		999  => 'event/language'
 	),

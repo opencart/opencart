@@ -136,17 +136,17 @@
     },
     {
         "name": "guzzlehttp/guzzle",
-        "version": "5.3.3",
-        "version_normalized": "5.3.3.0",
+        "version": "5.3.4",
+        "version_normalized": "5.3.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "93bbdb30d59be6cd9839495306c65f2907370eb9"
+            "reference": "b87eda7a7162f95574032da17e9323c9899cb6b2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/93bbdb30d59be6cd9839495306c65f2907370eb9",
-            "reference": "93bbdb30d59be6cd9839495306c65f2907370eb9",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b87eda7a7162f95574032da17e9323c9899cb6b2",
+            "reference": "b87eda7a7162f95574032da17e9323c9899cb6b2",
             "shasum": ""
         },
         "require": {
@@ -158,7 +158,7 @@
             "ext-curl": "*",
             "phpunit/phpunit": "^4.0"
         },
-        "time": "2018-07-31T13:33:10+00:00",
+        "time": "2019-10-30T09:32:00+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -498,31 +498,32 @@
             }
         ],
         "description": "scssphp is a compiler for SCSS written in PHP.",
-        "homepage": "http://leafo.net/scssphp/"
+        "homepage": "http://leafo.net/scssphp/",
+        "abandoned": "scssphp/scssphp"
     },
     {
         "name": "psr/log",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "1.1.3",
+        "version_normalized": "1.1.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/log.git",
-            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
+            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
-            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
+            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2018-11-20T15:27:04+00:00",
+        "time": "2020-03-23T09:12:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.0.x-dev"
+                "dev-master": "1.1.x-dev"
             }
         },
         "installation-source": "dist",
@@ -599,17 +600,17 @@
     },
     {
         "name": "symfony/polyfill-ctype",
-        "version": "v1.11.0",
-        "version_normalized": "1.11.0.0",
+        "version": "v1.15.0",
+        "version_normalized": "1.15.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
-            "reference": "82ebae02209c21113908c229e9883c419720738a"
+            "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
-            "reference": "82ebae02209c21113908c229e9883c419720738a",
+            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
+            "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
             "shasum": ""
         },
         "require": {
@@ -618,11 +619,11 @@
         "suggest": {
             "ext-ctype": "For best performance"
         },
-        "time": "2019-02-06T07:57:58+00:00",
+        "time": "2020-02-27T09:26:54+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.11-dev"
+                "dev-master": "1.15-dev"
             }
         },
         "installation-source": "dist",
@@ -640,12 +641,12 @@
         ],
         "authors": [
             {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
+                "name": "Gert de Pagter",
+                "email": "BackEndTea@gmail.com"
             },
             {
-                "name": "Gert de Pagter",
-                "email": "backendtea@gmail.com"
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
             }
         ],
         "description": "Symfony polyfill for ctype functions",
@@ -659,17 +660,17 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.11.0",
-        "version_normalized": "1.11.0.0",
+        "version": "v1.15.0",
+        "version_normalized": "1.15.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
+            "reference": "81ffd3a9c6d707be22e3012b827de1c9775fc5ac"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
-            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/81ffd3a9c6d707be22e3012b827de1c9775fc5ac",
+            "reference": "81ffd3a9c6d707be22e3012b827de1c9775fc5ac",
             "shasum": ""
         },
         "require": {
@@ -678,11 +679,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2019-02-06T07:57:58+00:00",
+        "time": "2020-03-09T19:04:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.11-dev"
+                "dev-master": "1.15-dev"
             }
         },
         "installation-source": "dist",
@@ -786,8 +787,8 @@
     },
     {
         "name": "symfony/validator",
-        "version": "v2.8.49",
-        "version_normalized": "2.8.49.0",
+        "version": "v2.8.52",
+        "version_normalized": "2.8.52.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/validator.git",
@@ -862,23 +863,26 @@
     },
     {
         "name": "zoujingli/wechat-php-sdk",
-        "version": "v1.3.17",
-        "version_normalized": "1.3.17.0",
+        "version": "v1.3.18",
+        "version_normalized": "1.3.18.0",
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/wechat-php-sdk.git",
-            "reference": "afb0dfd1a0fd71cfe58b6811d559b6b0fc8f9de0"
+            "reference": "d37d0c1919ede2ee54e65100ac3792e947b1e0ef"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/wechat-php-sdk/zipball/afb0dfd1a0fd71cfe58b6811d559b6b0fc8f9de0",
-            "reference": "afb0dfd1a0fd71cfe58b6811d559b6b0fc8f9de0",
+            "url": "https://api.github.com/repos/zoujingli/wechat-php-sdk/zipball/d37d0c1919ede2ee54e65100ac3792e947b1e0ef",
+            "reference": "d37d0c1919ede2ee54e65100ac3792e947b1e0ef",
             "shasum": ""
         },
         "require": {
+            "ext-json": "*",
+            "ext-libxml": "*",
+            "ext-simplexml": "*",
             "php": ">=5.3.3"
         },
-        "time": "2018-10-23T09:57:56+00:00",
+        "time": "2019-10-10T09:42:15+00:00",
         "type": "project",
         "installation-source": "dist",
         "autoload": {

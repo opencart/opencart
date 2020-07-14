@@ -135,11 +135,16 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'customer':
 						if (!empty($this->request->post['customer'])) {
-							foreach ($this->request->post['customer'] as $customer_id) {
-								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+							$start = ($page - 1) * 10;
 
-								if ($customer_info) {
-									$emails[] = $customer_info['email'];
+							for ($i = 0; $i < 10; $i++) {
+								if (isset($this->request->post['customer'][($start + $i)])) {
+									$customer_id = $this->request->post['customer'][($start + $i)];
+									$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+
+									if ($customer_info) {
+										$emails[] = $customer_info['email'];
+									}
 								}
 							}
 
@@ -163,11 +168,16 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'affiliate':
 						if (!empty($this->request->post['affiliate'])) {
-							foreach ($this->request->post['affiliate'] as $affiliate_id) {
-								$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
+							$start = ($page - 1) * 10;
 
-								if ($affiliate_info) {
-									$emails[] = $affiliate_info['email'];
+							for ($i = 0; $i < 10; $i++) {
+								if (isset($this->request->post['affiliate'][($start + $i)])) {
+									$affiliate_id = $this->request->post['affiliate'][($start + $i)];
+									$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
+
+									if ($affiliate_info) {
+										$emails[] = $affiliate_info['email'];
+									}
 								}
 							}
 						}

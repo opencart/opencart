@@ -29,9 +29,9 @@ class ControllerCommonPagination extends Controller {
 		$num_pages = ceil($total / $limit);
 
 		if ($url && $page > 1 && $num_pages < $page) {
-			$back = str_replace('{page}', $page - 1, $url);
+			$back = true;
 		} else {
-			$back = '';
+			$back = false;
 		}
 
 		$data['page'] = $page;

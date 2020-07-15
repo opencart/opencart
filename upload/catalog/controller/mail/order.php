@@ -266,22 +266,24 @@ class ControllerMailOrder extends Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		if ($notify) {
-			$mail = new Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-			$mail->setTo($order_info['email']);
-			$mail->setFrom($from);
-			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
-			$mail->setHtml($this->load->view('mail/order_add', $data));
-			$mail->send();
+		if (!$notify) {
+			return;
 		}
+			
+		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail->parameter = $this->config->get('config_mail_parameter');
+		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+		$mail->setTo($order_info['email']);
+		$mail->setFrom($from);
+		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
+		$mail->setHtml($this->load->view('mail/order_add', $data));
+		$mail->send();
 	}
 
 	public function edit($order_info, $order_status_id, $comment, $notify) {
@@ -324,23 +326,25 @@ class ControllerMailOrder extends Controller {
 		if (!$from) {
 			$from = $this->config->get('config_email');
 		}
-
-		if ($notify) {
-			$mail = new Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-			$mail->setTo($order_info['email']);
-			$mail->setFrom($from);
-			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
-			$mail->setText($this->load->view('mail/order_edit', $data));
-			$mail->send();
+		
+		if (!$notify) {
+			return;
 		}
+
+		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail->parameter = $this->config->get('config_mail_parameter');
+		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+		$mail->setTo($order_info['email']);
+		$mail->setFrom($from);
+		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
+		$mail->setText($this->load->view('mail/order_edit', $data));
+		$mail->send();
 	}
 
 	// catalog/model/checkout/order/addOrderHistory/before

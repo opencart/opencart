@@ -23,7 +23,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../opencart-website/public_html" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -35,11 +35,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1594660211196</updated>
-      <workItem from="1594660212343" duration="3284000" />
+      <workItem from="1594660212343" duration="11670000" />
+      <workItem from="1594733006511" duration="3549000" />
+      <workItem from="1594810020607" duration="2202000" />
+      <workItem from="1594817896064" duration="71000" />
+      <workItem from="1594819897524" duration="599000" />
+      <workItem from="1594879371894" duration="3672000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1847" y="374" key="FileChooserDialogImpl" timestamp="1594737274610">
+      <screen x="0" y="0" width="4551" height="1239" />
+    </state>
+    <state x="1847" y="374" key="FileChooserDialogImpl/0.0.4551.1239@0.0.4551.1239" timestamp="1594737274610" />
   </component>
 </project>

@@ -5,8 +5,6 @@ class ControllerEventTheme extends Controller {
 		if ($template) {
 			// include and register Twig auto-loader
 			include_once(DIR_SYSTEM . 'library/template/Twig/Autoloader.php');
-			
-			Twig_Autoloader::register();
 					
 			// specify where to look for templates
 			$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);		

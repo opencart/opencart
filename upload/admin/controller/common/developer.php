@@ -54,7 +54,7 @@ class ControllerCommonDeveloper extends Controller {
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$directories = glob(DIR_CACHE . '*', GLOB_ONLYDIR);
+			$directories = glob(DIR_CACHE . '/template/*', GLOB_ONLYDIR);
 
 			if ($directories) {
 				foreach ($directories as $directory) {

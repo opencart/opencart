@@ -17,6 +17,10 @@ class ComposerStaticInit4356ab4fdc794d105db4fa48b241456c
         array (
             'Wechat\\' => 7,
         ),
+        'T' => 
+        array (
+            'Twig\\' => 5,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
@@ -54,6 +58,10 @@ class ComposerStaticInit4356ab4fdc794d105db4fa48b241456c
         'Wechat\\' => 
         array (
             0 => __DIR__ . '/..' . '/zoujingli/wechat-php-sdk/Wechat',
+        ),
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
@@ -114,6 +122,13 @@ class ComposerStaticInit4356ab4fdc794d105db4fa48b241456c
     );
 
     public static $prefixesPsr0 = array (
+        'T' => 
+        array (
+            'Twig_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
         'D' => 
         array (
             'Divido' => 

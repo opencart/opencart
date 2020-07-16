@@ -1053,7 +1053,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$check_credentials = true;
 
-		if (version_compare(phpversion(), '5.4.0', '<')) {
+		if (version_compare(phpversion(), '7.3', '<')) {
 			$this->error['warning'] = $this->language->get('error_php_version');
 		}
 

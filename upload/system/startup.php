@@ -3,8 +3,8 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '7.1.0', '<') == true) {
-	exit('PHP7.1+ Required');
+if (version_compare(phpversion(), '7.3.0', '<') == true) {
+	exit('PH7.3+ Required');
 }
 
 if (!ini_get('date.timezone')) {

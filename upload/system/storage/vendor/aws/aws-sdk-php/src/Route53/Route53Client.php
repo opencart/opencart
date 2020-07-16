@@ -88,6 +88,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise listHostedZonesAsync(array $args = [])
  * @method \Aws\Result listHostedZonesByName(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listHostedZonesByNameAsync(array $args = [])
+ * @method \Aws\Result listHostedZonesByVPC(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listHostedZonesByVPCAsync(array $args = [])
  * @method \Aws\Result listQueryLoggingConfigs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listQueryLoggingConfigsAsync(array $args = [])
  * @method \Aws\Result listResourceRecordSets(array $args = [])

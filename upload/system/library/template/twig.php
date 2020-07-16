@@ -39,10 +39,10 @@ final class Twig {
 				'cache'       => DIR_CACHE . 'template/'
 			);
 
-			$loader = new \Twig_Loader_Array(array($filename . '.twig' => $code));
+			$loader = new \Twig\Loader\ArrayLoader(array($filename . '.twig' => $code));
 
 			try {
-				$twig = new \Twig_Environment($loader, $config);
+				$twig = new \Twig\Environment($loader, $config);
 
 				return $twig->render($filename . '.twig', $this->data);
 			} catch (Twig_Error_Syntax $e) {

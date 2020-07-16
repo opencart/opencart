@@ -34,11 +34,10 @@ trait MetadataParserTrait
                 break;
             case 'timestamp':
                 try {
-                    if (!empty($shape['timestampFormat'])
-                        && $shape['timestampFormat'] === 'unixTimestamp') {
-                        $value = DateTimeResult::fromEpoch($value);
-                    }
-                    $value = new DateTimeResult($value);
+                    $value = DateTimeResult::fromTimestamp(
+                        $value,
+                        !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null
+                    );
                     break;
                 } catch (\Exception $e) {
                     // If the value cannot be parsed, then do not add it to the

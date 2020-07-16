@@ -55,6 +55,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listForecastsAsync(array $args = [])
  * @method \Aws\Result listPredictors(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPredictorsAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateDatasetGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDatasetGroupAsync(array $args = [])
  */

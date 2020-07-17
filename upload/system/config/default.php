@@ -35,6 +35,10 @@ $_['mail_parameter']       = '';
 $_['cache_engine']         = 'file'; // apc, file, mem or memcached
 $_['cache_expire']         = 3600;
 
+// Image
+$_['image_engine']         = 'Imagick'; // GD or Imagick
+$_['image_quality']        = 90;
+
 // Session
 $_['session_autostart']    = true;
 $_['session_engine']       = 'file';

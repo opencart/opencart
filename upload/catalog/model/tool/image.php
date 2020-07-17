@@ -1,22 +1,27 @@
 <?php
 class ModelToolImage extends Model {
-	public function resize($filename, $width, $height) {
-		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
+	/**
+	 * @param mixed ...$arguments
+	 *
+	 * @return string|void
+	 */
+	public function resize(...$arguments) {
+		if (!is_file(DIR_IMAGE . $arguments[0]) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $arguments[0])), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
 			return;
 		}
 
-		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		$extension = pathinfo($arguments[0], PATHINFO_EXTENSION);
 
-		$image_old = $filename;
-		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
+		$image_old = $arguments[0];
+		$image_new = 'cache/' . utf8_substr($arguments[0], 0, utf8_strrpos($arguments[0], '.')) . '-' . (int)$arguments[1] . 'x' . (int)$arguments[2] . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
-			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-				 
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
+			[$width_orig, $height_orig, $image_type] = getimagesize(DIR_IMAGE . $image_old);
+
+			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
 				return $this->config->get('config_url') . 'image/' . $image_old;
 			}
-						
+
 			$path = '';
 
 			$directories = explode('/', dirname($image_new));
@@ -29,17 +34,17 @@ class ModelToolImage extends Model {
 				}
 			}
 
-			if ($width_orig != $width || $height_orig != $height) {
-				$image = new Image(DIR_IMAGE . $image_old);
-				$image->resize($width, $height);
-				$image->save(DIR_IMAGE . $image_new);
+			if ($width_orig !== $arguments[1] || $height_orig !== $arguments[2]) {
+				$this->image->set(DIR_IMAGE . $image_old);
+				$this->image->resize($arguments[1], $arguments[2]);
+				$this->image->save(DIR_IMAGE . $image_new, $arguments[3] ?? null);
 			} else {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}
 		}
-		
+
 		$image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
-		
+
 		return $this->config->get('config_url') . 'image/' . $image_new;
 	}
 }

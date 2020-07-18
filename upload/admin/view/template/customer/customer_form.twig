@@ -37,6 +37,23 @@
             <div class="tab-pane active" id="tab-general">
               <fieldset>
                 <legend>{{ text_account }}</legend>
+		{% if multistore > 0 %}
+                <div class="form-group">
+                 <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
+                 <div class="col-sm-10">
+                   <select name="store_id" id="input-store" class="form-control">
+                     {% for store in stores %}
+                       {% if store.store_id == store_id %}
+                         <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                       {% else %}
+                         <option value="{{ store.store_id }}">{{ store.name }}</option>
+                       {% endif %}
+                     {% endfor %}
+                   </select>
+                  </div>
+                </div>
+		{% endif %}
+              <fieldset>
                 <div class="form-group row">
                   <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
                   <div class="col-sm-10">

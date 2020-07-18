@@ -4,6 +4,16 @@
 
 OpenCart is a free open source ecommerce platform for online merchants. OpenCart provides a professional and reliable foundation from which to build a successful online store.
 
+
+## How to install
+
+Please read the [installation instructions](INSTALL.md) included in the repository or download file.
+
+
+## How to upgrade from previous versions
+
+Please read the [upgrading instructions](UPGRADE.md) included in the repository or download file.
+
 ## Reporting a bug
 
 Read the instructions below before you create a bug report.
@@ -53,9 +63,6 @@ If a bug is found in an announced developer release that is significant (such as
 
 To receive developer notifications about release information, sign up to the newsletter on the [OpenCart website](https://www.opencart.com) - located in the footer. Then choose the developer news option.
 
-## How to install
-
-Please read the installation instructions included in the repository or download file.
 
 ## License
 

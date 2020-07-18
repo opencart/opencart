@@ -36,7 +36,7 @@ $_['cache_engine']         = 'file'; // apc, file, mem or memcached
 $_['cache_expire']         = 3600;
 
 // Image
-$_['image_engine']         = 'Imagick'; // GD or Imagick
+$_['image_engine']         = 'GD'; // GD or Imagick
 $_['image_quality']        = 90;
 
 // Session

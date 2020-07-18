@@ -337,10 +337,6 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$this->error['warning'] = $this->language->get('error_default');
 			}
 
-			if ($this->config->get('config_download_status_id') == $order_status_id) {
-				$this->error['warning'] = $this->language->get('error_download');
-			}
-
 			$store_total = $this->model_setting_store->getTotalStoresByOrderStatusId($order_status_id);
 
 			if ($store_total) {

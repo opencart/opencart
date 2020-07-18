@@ -156,8 +156,6 @@ class ControllerDesignTranslation extends Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$this->load->model('localisation/language');
-
 		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -166,7 +164,7 @@ class ControllerDesignTranslation extends Controller {
 		$data['translations'] = array();
 
 		$filter_data = array(
-			'sort' => $sort,
+			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')

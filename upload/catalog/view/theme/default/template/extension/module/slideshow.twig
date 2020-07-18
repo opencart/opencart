@@ -4,7 +4,9 @@
       {% for banner in banners %}
         <div class="swiper-slide text-center">
           {% if banner.link %}
-            <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
+            <a href="{{ banner.link }}">
+              <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
+            </a>
           {% else %}
             <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
           {% endif %}
@@ -27,7 +29,7 @@ $('#slideshow{{ module }}').swiper({
 	nextButton: '.slideshow .swiper-button-next',
 	prevButton: '.slideshow .swiper-button-prev',
 	spaceBetween: 30,
-	autoplay: 2500,
+	autoplay: $('#slideshow{{ module }} img').length > 1 ? 2500 : 0,
 	autoplayDisableOnInteraction: true,
 	loop: true
 });

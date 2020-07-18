@@ -135,17 +135,21 @@ class Image {
 	 *
 	 */
 	protected function angle(float $value) {
-		if ($value === 0 || $value === 180) {
-			return $value;
+		if ($this->adaptor === 'Imagick') {
+			if ($value === 0 || $value === 180) {
+				return $value;
+			}
+
+			if ($value < 0 || $value > 360) {
+				$value = (float)90;
+			}
+
+			$total_degree = 360;
+
+			return $total_degree - $value;
 		}
 
-		if ($value < 0 || $value > 360) {
-			$value = (float)90;
-		}
-
-		$total_degree = 360;
-
-		return ($total_degree - $value);
+		return $value;
 	}
 
 	/**

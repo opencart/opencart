@@ -569,8 +569,6 @@ $('.datetime').datetimepicker({
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
-	console.log('=' + $('#collapse-payment-address select[name=\'country_id\']').val());
-
 	chain.attach(function() {
 		return $.ajax({
 			url: 'index.php?route=checkout/checkout/country&country_id=' + $('#collapse-payment-address select[name=\'country_id\']').val(),

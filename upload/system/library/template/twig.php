@@ -33,6 +33,7 @@ final class Twig {
 		if ($code) {
 			// Initialize Twig environment
 			$config = array(
+				'charset'     => 'utf-8',
 				'autoescape'  => false,
 				'debug'       => false,
 				'auto_reload' => true,

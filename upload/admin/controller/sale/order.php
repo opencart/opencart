@@ -992,8 +992,6 @@ class ControllerSaleOrder extends Controller {
 
 			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 
-			$this->load->model('customer/customer');
-
 			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($this->request->get['order_id']);
 
 			$this->load->model('localisation/order_status');

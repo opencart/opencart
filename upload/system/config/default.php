@@ -11,7 +11,7 @@ $_['date_timezone']        = 'UTC';
 
 // Database
 $_['db_autostart']         = false;
-$_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_engine']            = 'mysqli'; // mysqli, pdo or pgsql
 $_['db_hostname']          = 'localhost';
 $_['db_username']          = 'root';
 $_['db_password']          = '';
@@ -32,7 +32,7 @@ $_['mail_verp']            = false;
 $_['mail_parameter']       = '';
 
 // Cache
-$_['cache_engine']         = 'file'; // apc, file, mem or memcached
+$_['cache_engine']         = 'file'; // apc, file, mem, memcached or redis
 $_['cache_expire']         = 3600;
 
 // Session

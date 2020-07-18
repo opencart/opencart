@@ -6,6 +6,10 @@ use Aws\Crypto\Cipher\Cbc;
 use GuzzleHttp\Psr7\Stream;
 
 /**
+ * Legacy abstract encryption client. New workflows should use
+ * AbstractCryptoClientV2.
+ *
+ * @deprecated
  * @internal
  */
 abstract class AbstractCryptoClient

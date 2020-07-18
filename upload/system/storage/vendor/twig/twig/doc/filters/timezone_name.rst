@@ -1,9 +1,6 @@
 ``timezone_name``
 =================
 
-.. versionadded:: 2.12
-    The ``timezone_name`` filter was added in Twig 2.12.
-
 The ``timezone_name`` filter returns the timezone name given a timezone identifier:
 
 .. code-block:: twig
@@ -31,7 +28,7 @@ By default, the filter uses the current locale. You can pass it explicitly:
         $ composer req twig/intl-extra
 
     Then, use the ``twig/extra-bundle`` on Symfony projects or add the extension
-    explictly on the Twig environment::
+    explicitly on the Twig environment::
 
         use Twig\Extra\Intl\IntlExtension;
 

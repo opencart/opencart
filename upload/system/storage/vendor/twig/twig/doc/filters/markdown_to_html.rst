@@ -1,9 +1,6 @@
 ``markdown_to_html``
 ====================
 
-.. versionadded:: 2.12
-    The ``markdown_to_html`` filter was added in Twig 2.12.
-
 The ``markdown_to_html`` filter converts a block of Markdown to HTML:
 
 .. code-block:: twig
@@ -43,9 +40,9 @@ You can also use the filter on an included file:
         $ composer req twig/markdown-extra
 
     Then, use the ``twig/extra-bundle`` on Symfony projects or add the extension
-    explictly on the Twig environment::
+    explicitly on the Twig environment::
 
-        use Twig\Extra\Markdown\MarkdownMarkdownExtension;
+        use Twig\Extra\Markdown\MarkdownExtension;
 
         $twig = new \Twig\Environment(...);
         $twig->addExtension(new MarkdownExtension());

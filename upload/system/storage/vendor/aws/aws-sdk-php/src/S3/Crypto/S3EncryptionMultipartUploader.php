@@ -11,6 +11,11 @@ use GuzzleHttp\Promise;
 
 /**
  * Encapsulates the execution of a multipart upload of an encrypted object to S3.
+ *
+ * Legacy implementation using older encryption workflow. Use
+ * S3EncryptionMultipartUploaderV2 if possible.
+ *
+ * @deprecated
  */
 class S3EncryptionMultipartUploader extends MultipartUploader
 {

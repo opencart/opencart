@@ -17,6 +17,11 @@ use GuzzleHttp\Psr7;
 /**
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
+ *
+ * Legacy implementation using older encryption workflow. Use
+ * S3EncryptionClientV2 if possible.
+ *
+ * @deprecated
  */
 class S3EncryptionClient extends AbstractCryptoClient
 {

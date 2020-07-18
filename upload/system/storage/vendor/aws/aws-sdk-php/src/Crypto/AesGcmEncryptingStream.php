@@ -11,7 +11,7 @@ use \RuntimeException;
 /**
  * @internal Represents a stream of data to be gcm encrypted.
  */
-class AesGcmEncryptingStream implements AesStreamInterface
+class AesGcmEncryptingStream implements AesStreamInterface, AesStreamInterfaceV2
 {
     use StreamDecoratorTrait;
 
@@ -28,6 +28,17 @@ class AesGcmEncryptingStream implements AesStreamInterface
     private $tag = '';
 
     private $tagLength;
+
+    /**
+     * Same as non-static 'getAesName' method, allowing calls in a static
+     * context.
+     *
+     * @return string
+     */
+    public static function getStaticAesName()
+    {
+        return 'AES/GCM/NoPadding';
+    }
 
     /**
      * @param StreamInterface $plaintext
@@ -59,9 +70,14 @@ class AesGcmEncryptingStream implements AesStreamInterface
         return "aes-{$this->keySize}-gcm";
     }
 
+    /**
+     * Same as static method and retained for backwards compatibility
+     *
+     * @return string
+     */
     public function getAesName()
     {
-        return 'AES/GCM/NoPadding';
+        return self::getStaticAesName();
     }
 
     public function getCurrentIv()

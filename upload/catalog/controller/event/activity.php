@@ -121,7 +121,7 @@ class ControllerEventActivity extends Controller {
 			$this->load->model('account/activity');
 
 			$activity_data = array(
-				'customer_id' => $output,
+				'customer_id' => $args[0],
 				'name'        => $args[1]['firstname'] . ' ' . $args[1]['lastname']
 			);
 
@@ -131,7 +131,7 @@ class ControllerEventActivity extends Controller {
 	
 	// catalog/model/account/affiliate/editAffiliate/after
 	public function editAffiliate(&$route, &$args, &$output) {
-		if ($this->config->get('config_customer_activity') && $output) {
+		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
 
 			$activity_data = array(

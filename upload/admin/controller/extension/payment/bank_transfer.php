@@ -52,7 +52,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		$this->load->model('localisation/language');
 
-		$data['payment_bank_transfer'] = array();
+		$data['payment_bank_transfer_bank'] = array();
 
 		$languages = $this->model_localisation_language->getLanguages();
 		

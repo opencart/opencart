@@ -79,6 +79,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteExperimentAsync(array $args = [])
  * @method \Aws\Result deleteFlowDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteFlowDefinitionAsync(array $args = [])
+ * @method \Aws\Result deleteHumanTaskUi(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteHumanTaskUiAsync(array $args = [])
  * @method \Aws\Result deleteModel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteModelAsync(array $args = [])
  * @method \Aws\Result deleteModelPackage(array $args = [])

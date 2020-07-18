@@ -301,11 +301,13 @@ class ControllerProductProduct extends Controller {
 
 			$data['discounts'] = array();
 
-			foreach ($discounts as $discount) {
-				$data['discounts'][] = array(
-					'quantity' => $discount['quantity'],
-					'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
-				);
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+				foreach ($discounts as $discount) {
+					$data['discounts'][] = array(
+						'quantity' => $discount['quantity'],
+						'price' => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'])
+					);
+				}
 			}
 
 			$data['options'] = array();
@@ -613,7 +615,7 @@ class ControllerProductProduct extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getDescription() {
+	public function getRecurringDescription() {
 		$this->load->language('product/product');
 
 		if (isset($this->request->post['product_id'])) {

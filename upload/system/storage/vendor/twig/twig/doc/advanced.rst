@@ -182,7 +182,7 @@ If you want to access the current environment instance in your filter, set the
 ``needs_environment`` option to ``true``; Twig will pass the current
 environment as the first argument to the filter call::
 
-    $filter = new \Twig\TwigFilter('rot13', function (Twig_Environment $env, $string) {
+    $filter = new \Twig\TwigFilter('rot13', function (\Twig\Environment $env, $string) {
         // get the current charset for instance
         $charset = $env->getCharset();
 
@@ -201,7 +201,7 @@ the first argument to the filter call (or the second one if
         // ...
     }, ['needs_context' => true]);
 
-    $filter = new \Twig\TwigFilter('rot13', function (Twig_Environment $env, $context, $string) {
+    $filter = new \Twig\TwigFilter('rot13', function (\Twig\Environment $env, $context, $string) {
         // ...
     }, ['needs_context' => true, 'needs_environment' => true]);
 
@@ -326,14 +326,20 @@ When creating tests you can use the ``node_class`` option to provide custom test
 compilation. This is useful if your test can be compiled into PHP primitives.
 This is used by many of the tests built into Twig::
 
-    $twig = new \Twig\Environment($loader);
-    $test = new \Twig\TwigTest(
+    namespace App;
+    
+    use Twig\Environment;
+    use Twig\Node\Expression\TestExpression;
+    use Twig\TwigTest;
+    
+    $twig = new Environment($loader);
+    $test = new TwigTest(
         'odd',
         null,
-        ['node_class' => \Twig\Node\Expression\Test\OddTest::class]);
+        ['node_class' => OddTestExpression::class]);
     $twig->addTest($test);
 
-    class Twig_Node_Expression_Test_Odd extends \Twig\Node\Expression\TestExpression
+    class OddTestExpression extends TestExpression
     {
         public function compile(\Twig\Compiler $compiler)
         {
@@ -357,9 +363,6 @@ value that is being tested. When the ``odd`` filter is used in code such as:
 The ``node`` sub-node will contain an expression of ``my_value``. Node-based
 tests also have access to the ``arguments`` node. This node will contain the
 various other arguments that have been provided to your test.
-
-.. versionadded:: 2.6
-    Dynamic tests support was added in Twig 2.6.
 
 If you want to pass a variable number of positional or named arguments to the
 test, set the ``is_variadic`` option to ``true``. Tests support dynamic
@@ -396,11 +399,6 @@ Most of the time though, a tag is not needed:
 
       Much better than creating a tag as you can **compose** filters.
       {% endapply %}
-
- .. note::
-
-      The ``apply`` tag was introduced in Twig 2.9; use the ``filter`` tag with
-      previous versions.
 
 * If your tag does not output anything, but only exists because of a side
   effect, create a **function** that returns nothing and call it via the
@@ -908,5 +906,5 @@ Testing the node visitors can be complex, so extend your test cases from
 `tests/Twig/Node`_ directory.
 
 .. _`rot13`:               https://secure.php.net/manual/en/function.str-rot13.php
-.. _`tests/Twig/Fixtures`: https://github.com/twigphp/Twig/tree/2.x/tests/Fixtures
-.. _`tests/Twig/Node`:     https://github.com/twigphp/Twig/tree/2.x/tests/Node
+.. _`tests/Twig/Fixtures`: https://github.com/twigphp/Twig/tree/3.x/tests/Fixtures
+.. _`tests/Twig/Node`:     https://github.com/twigphp/Twig/tree/3.x/tests/Node

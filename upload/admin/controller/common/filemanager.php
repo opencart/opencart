@@ -29,7 +29,7 @@ class ControllerCommonFileManager extends Controller {
 
 		if ($directories) {
 			// Split the array based on current page number and max number of items per page of 10
-			$images = array_splice($directories, ($page - 1) * 16, 16);
+			$images = array_slice($directories, ($page - 1) * 16, 16);
 
 			foreach ($images as $image) {
 				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
@@ -67,7 +67,7 @@ class ControllerCommonFileManager extends Controller {
 
 		if ($files) {
 			// Split the array based on current page number and max number of items per page of 10
-			$images = array_splice($files, ($page - 1) * 16, 16 - count($data['images']));
+			$images = array_slice($files, ($page - 1) * 16, 16 - count($data['directories']));
 
 			foreach ($images as $image) {
 				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {

@@ -41,5 +41,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateSecretAsync(array $args = [])
  * @method \Aws\Result updateSecretVersionStage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSecretVersionStageAsync(array $args = [])
+ * @method \Aws\Result validateResourcePolicy(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise validateResourcePolicyAsync(array $args = [])
  */
 class SecretsManagerClient extends AwsClient {}

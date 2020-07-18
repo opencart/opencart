@@ -28,6 +28,12 @@ class ControllerCommonPagination extends Controller {
 		$num_links = 8;
 		$num_pages = ceil($total / $limit);
 
+		if ($url && $page > 1 && $num_pages < $page) {
+			$back = true;
+		} else {
+			$back = false;
+		}
+
 		$data['page'] = $page;
 
 		if ($page > 1) {
@@ -80,7 +86,7 @@ class ControllerCommonPagination extends Controller {
 			$data['last'] = '';
 		}
 
-		if ($num_pages > 1) {
+		if ($num_pages > 1 || $back) {
 			return $this->load->view('common/pagination', $data);
 		} else {
 			return '';

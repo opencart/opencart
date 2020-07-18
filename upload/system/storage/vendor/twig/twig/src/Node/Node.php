@@ -40,7 +40,7 @@ class Node implements \Countable, \IteratorAggregate
     {
         foreach ($nodes as $name => $node) {
             if (!$node instanceof self) {
-                throw new \InvalidArgumentException(sprintf('Using "%s" for the value of node "%s" of "%s" is not supported. You must pass a \Twig\Node\Node instance.', \is_object($node) ? \get_class($node) : (null === $node ? 'null' : \gettype($node)), $name, \get_class($this)));
+                throw new \InvalidArgumentException(sprintf('Using "%s" for the value of node "%s" of "%s" is not supported. You must pass a \Twig\Node\Node instance.', \is_object($node) ? \get_class($node) : (null === $node ? 'null' : \gettype($node)), $name, static::class));
             }
         }
         $this->nodes = $nodes;
@@ -56,7 +56,7 @@ class Node implements \Countable, \IteratorAggregate
             $attributes[] = sprintf('%s: %s', $name, str_replace("\n", '', var_export($value, true)));
         }
 
-        $repr = [\get_class($this).'('.implode(', ', $attributes)];
+        $repr = [static::class.'('.implode(', ', $attributes)];
 
         if (\count($this->nodes)) {
             foreach ($this->nodes as $name => $node) {
@@ -77,6 +77,9 @@ class Node implements \Countable, \IteratorAggregate
         return implode("\n", $repr);
     }
 
+    /**
+     * @return void
+     */
     public function compile(Compiler $compiler)
     {
         foreach ($this->nodes as $node) {
@@ -84,76 +87,60 @@ class Node implements \Countable, \IteratorAggregate
         }
     }
 
-    public function getTemplateLine()
+    public function getTemplateLine(): int
     {
         return $this->lineno;
     }
 
-    public function getNodeTag()
+    public function getNodeTag(): ?string
     {
         return $this->tag;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAttribute($name)
+    public function hasAttribute(string $name): bool
     {
         return \array_key_exists($name, $this->attributes);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAttribute($name)
+    public function getAttribute(string $name)
     {
         if (!\array_key_exists($name, $this->attributes)) {
-            throw new \LogicException(sprintf('Attribute "%s" does not exist for Node "%s".', $name, \get_class($this)));
+            throw new \LogicException(sprintf('Attribute "%s" does not exist for Node "%s".', $name, static::class));
         }
 
         return $this->attributes[$name];
     }
 
-    /**
-     * @param string $name
-     * @param mixed  $value
-     */
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, $value): void
     {
         $this->attributes[$name] = $value;
     }
 
-    public function removeAttribute($name)
+    public function removeAttribute(string $name): void
     {
         unset($this->attributes[$name]);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasNode($name)
+    public function hasNode(string $name): bool
     {
         return isset($this->nodes[$name]);
     }
 
-    /**
-     * @return Node
-     */
-    public function getNode($name)
+    public function getNode(string $name): self
     {
         if (!isset($this->nodes[$name])) {
-            throw new \LogicException(sprintf('Node "%s" does not exist for Node "%s".', $name, \get_class($this)));
+            throw new \LogicException(sprintf('Node "%s" does not exist for Node "%s".', $name, static::class));
         }
 
         return $this->nodes[$name];
     }
 
-    public function setNode($name, self $node)
+    public function setNode(string $name, self $node): void
     {
         $this->nodes[$name] = $node;
     }
 
-    public function removeNode($name)
+    public function removeNode(string $name): void
     {
         unset($this->nodes[$name]);
     }
@@ -163,49 +150,26 @@ class Node implements \Countable, \IteratorAggregate
         return \count($this->nodes);
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->nodes);
     }
 
-    /**
-     * @deprecated since 2.8 (to be removed in 3.0)
-     */
-    public function setTemplateName($name/*, $triggerDeprecation = true */)
-    {
-        $triggerDeprecation = 2 > \func_num_args() || \func_get_arg(1);
-        if ($triggerDeprecation) {
-            @trigger_error('The '.__METHOD__.' method is deprecated since version 2.8 and will be removed in 3.0. Use setSourceContext() instead.', E_USER_DEPRECATED);
-        }
-
-        $this->name = $name;
-        foreach ($this->nodes as $node) {
-            $node->setTemplateName($name, $triggerDeprecation);
-        }
-    }
-
-    public function getTemplateName()
+    public function getTemplateName(): ?string
     {
         return $this->sourceContext ? $this->sourceContext->getName() : null;
     }
 
-    public function setSourceContext(Source $source)
+    public function setSourceContext(Source $source): void
     {
         $this->sourceContext = $source;
         foreach ($this->nodes as $node) {
             $node->setSourceContext($source);
         }
-
-        $this->setTemplateName($source->getName(), false);
     }
 
-    public function getSourceContext()
+    public function getSourceContext(): ?Source
     {
         return $this->sourceContext;
     }
 }
-
-class_alias('Twig\Node\Node', 'Twig_Node');
-
-// Ensure that the aliased name is loaded to keep BC for classes implementing the typehint with the old aliased name.
-class_exists('Twig\Compiler');

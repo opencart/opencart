@@ -84,7 +84,9 @@ $registry->set('request', $request);
 
 // Response
 $response = new Response();
-$response->addHeader('Content-Type: text/html; charset=utf-8');
+foreach ($config->get('response_header') as $header) {
+    $response->addHeader($header);
+}
 $response->setCompression($config->get('response_compression'));
 $registry->set('response', $response);
 

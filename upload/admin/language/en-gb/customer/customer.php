@@ -8,6 +8,7 @@ $_['text_list']             = 'Customer List';
 $_['text_add']              = 'Add Customer';
 $_['text_edit']             = 'Edit Customer';
 $_['text_default']          = 'Default';
+$_['text_store']            = 'Store';
 $_['text_account']          = 'Customer Details';
 $_['text_password']         = 'Password';
 $_['text_other']            = 'Other';
@@ -42,6 +43,7 @@ $_['column_action']         = 'Action';
 
 // Entry
 $_['entry_customer_group']  = 'Customer Group';
+$_['entry_store']           = 'Customer Store';
 $_['entry_firstname']       = 'First Name';
 $_['entry_lastname']        = 'Last Name';
 $_['entry_email']           = 'E-Mail';

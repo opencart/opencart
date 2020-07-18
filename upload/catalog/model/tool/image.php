@@ -1,19 +1,22 @@
 <?php
 class ModelToolImage extends Model {
 	/**
-	 * @param mixed ...$arguments
+	 * @param $filename
+	 * @param $width
+	 * @param $height
+	 * @param array $option
 	 *
 	 * @return string|void
 	 */
-	public function resize(...$arguments) {
-		if (!is_file(DIR_IMAGE . $arguments[0]) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $arguments[0])), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
+	public function resize($filename, $width, $height, $option = array()) {
+		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
 			return;
 		}
 
-		$extension = pathinfo($arguments[0], PATHINFO_EXTENSION);
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 
-		$image_old = $arguments[0];
-		$image_new = 'cache/' . utf8_substr($arguments[0], 0, utf8_strrpos($arguments[0], '.')) . '-' . (int)$arguments[1] . 'x' . (int)$arguments[2] . '.' . $extension;
+		$image_old = $filename;
+		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
 			[$width_orig, $height_orig, $image_type] = getimagesize(DIR_IMAGE . $image_old);
@@ -34,10 +37,15 @@ class ModelToolImage extends Model {
 				}
 			}
 
-			if ($width_orig !== $arguments[1] || $height_orig !== $arguments[2]) {
+			if ($width_orig !== $width || $height_orig !== $height) {
 				$this->image->set(DIR_IMAGE . $image_old);
-				$this->image->resize($arguments[1], $arguments[2]);
-				$this->image->save(DIR_IMAGE . $image_new, $arguments[3] ?? null);
+				$this->image->resize($width, $height);
+
+				if (!empty($option['rotate'])) {
+					$this->image->rotate($option['rotate']['degree'], $option['rotate']['color'] ?? '');
+				}
+
+				$this->image->save(DIR_IMAGE . $image_new, $option['quality'] ?? null);
 			} else {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}

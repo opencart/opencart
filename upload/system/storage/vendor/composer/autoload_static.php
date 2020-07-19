@@ -27,6 +27,7 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\Validator\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
+            'ScssPhp\\ScssPhp\\' => 16,
         ),
         'R' => 
         array (
@@ -35,10 +36,6 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         'P' => 
         array (
             'Psr\\Log\\' => 8,
-        ),
-        'L' => 
-        array (
-            'Leafo\\ScssPhp\\' => 14,
         ),
         'G' => 
         array (
@@ -79,6 +76,10 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
+        'ScssPhp\\ScssPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
+        ),
         'React\\Promise\\' => 
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
@@ -86,10 +87,6 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
-        'Leafo\\ScssPhp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/leafo/scssphp/src',
         ),
         'GuzzleHttp\\Subscriber\\Oauth\\' => 
         array (

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-dir=$(cd "${0%[/\\]*}" > /dev/null; cd "../leafo/scssphp/bin" && pwd)
+dir=$(cd "${0%[/\\]*}" > /dev/null; cd "../scssphp/scssphp/bin" && pwd)
 
 if [ -d /proc/cygdrive ]; then
     case $(which php) in

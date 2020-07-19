@@ -22,13 +22,19 @@ function getURLVar(key) {
 	}
 }
 
+function isIE() {
+    if (!!window.ActiveXObject || "ActiveXObject" in window) return true;
+}
+
 $(document).ready(function() {
 	$('form').trigger('reset');
 	
 	//Form Submit for IE Browser
-	$('button[type=\'submit\']').on('click', function() {
-		$('form[id*=\'form-\']').submit();
-	});
+	if (isIE()) {
+		$('button[type=\'submit\']').on('click', function() {
+			$('form[id*=\'form-\']').submit();
+		});
+	}
 
 	// Highlight any found errors
 	$('.invalid-tooltip').each(function() {

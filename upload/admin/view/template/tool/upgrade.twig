@@ -123,7 +123,7 @@
             </fieldset>
           </div>
         </div>
-      </div>
+      </div>22
     </div>
   </div>
 </div>
@@ -157,7 +157,7 @@ $('#button-upgrade').on('click', function() {
 
 				if (json['success']) {
 					$('#progress-bar').addClass('progress-bar-success');
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+					$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 					$('#log').append(json['success'] + "\n");
 
 

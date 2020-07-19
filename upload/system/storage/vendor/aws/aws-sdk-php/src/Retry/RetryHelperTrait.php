@@ -29,9 +29,7 @@ trait RetryHelperTrait
         }
 
         if ($value instanceof AwsException) {
-            $resultStats = isset($value->getTransferInfo('http')[0])
-                ? $value->getTransferInfo('http')[0]
-                : [];
+            $resultStats = $value->getTransferInfo();
             $stats['http'] []= $resultStats;
         } elseif ($value instanceof ResultInterface) {
             $resultStats = isset($value['@metadata']['transferStats']['http'][0])

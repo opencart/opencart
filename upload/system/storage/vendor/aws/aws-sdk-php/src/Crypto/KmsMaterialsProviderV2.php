@@ -59,7 +59,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
      */
     public function getWrapAlgorithmName()
     {
-        return 'kms';
+        return 'kms+context';
     }
 
     /**

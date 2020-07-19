@@ -431,6 +431,7 @@ class ControllerProductSearch extends Controller {
 			}
 		}
 
+		$data['language'] = $this->config->get('config_language');
 		$data['search'] = $search;
 		$data['description'] = $description;
 		$data['category_id'] = $category_id;

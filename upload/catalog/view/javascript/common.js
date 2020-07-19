@@ -51,9 +51,9 @@ $(document).ready(function() {
 		$('#form-currency').submit();
 	});
 
-	/* Search */
+	// Search
 	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
-		var url = $('base').attr('href') + 'index.php?route=product/search';
+		var url = $('base').attr('href') + 'index.php?route=product/search&language=' + $(this).attr('data-lang');
 
 		var value = $('header #search input[name=\'search\']').val();
 

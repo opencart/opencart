@@ -106,7 +106,7 @@ class ControllerAccountDownload extends Controller {
 		$this->load->model('account/download');
 
 		if (isset($this->request->get['download_id'])) {
-			$download_id = $this->request->get['download_id'];
+			$download_id = (int)$this->request->get['download_id'];
 		} else {
 			$download_id = 0;
 		}
@@ -118,7 +118,7 @@ class ControllerAccountDownload extends Controller {
 			$mask = basename($download_info['mask']);
 
 			if (!headers_sent()) {
-				if (file_exists($file)) {
+				if (is_file($file)) {
 					header('Content-Type: application/octet-stream');
 					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
 					header('Expires: 0');

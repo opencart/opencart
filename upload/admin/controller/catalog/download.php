@@ -377,6 +377,10 @@ class ControllerCatalogDownload extends Controller {
 			$this->error['mask'] = $this->language->get('error_mask');
 		}
 
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+
 		return !$this->error;
 	}
 

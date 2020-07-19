@@ -123,7 +123,7 @@ class ModelUserApi extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE api_session_id = '" . (int)$api_session_id . "'");
 	}
 	
-	public function deleteSessionBySessonId($session_id) {
+	public function deleteSessionBySessionId($session_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE session_id = '" . $this->db->escape($session_id) . "'");
 	}		
 }

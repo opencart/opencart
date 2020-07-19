@@ -382,7 +382,7 @@ class ControllerSaleOrder extends Controller {
 
 			$session->start();
 
-			$this->model_user_api->deleteSessionBySessonId($session->getId());
+			$this->model_user_api->deleteSessionBySessionId($session->getId());
 
 			$this->model_user_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
 
@@ -692,7 +692,7 @@ class ControllerSaleOrder extends Controller {
 
 			$session->start();
 
-			$this->model_user_api->deleteSessionBySessonId($session->getId());
+			$this->model_user_api->deleteSessionBySessionId($session->getId());
 
 			$this->model_user_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
 
@@ -1233,7 +1233,7 @@ class ControllerSaleOrder extends Controller {
 
 				$session->start();
 
-				$this->model_user_api->deleteSessionBySessonId($session->getId());
+				$this->model_user_api->deleteSessionBySessionId($session->getId());
 
 				$this->model_user_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
 

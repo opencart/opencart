@@ -3,7 +3,7 @@
     <div id="comment{{ comment.extension_comment_id }}" class="media">
       <img src="{{ comment.image }}" alt="{{ comment.member }}" title="{{ comment.member }}" class="mr-3 rounded-circle"/>
       <div class="media-body">
-        <h5 class="mt-0">{{ comment.member }} <span>{{ comment.date_added }}</h5>
+        <h5 class="mt-0">{{ comment.member }} <span>{{ comment.date_added }}</span></h5>
         <p>{{ comment.comment }}</p>
         <div class="reply">
           <div> {% if comment.reply %}

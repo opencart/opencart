@@ -20,7 +20,7 @@ $_['entry_unit']       = 'Weight Unit';
 $_['entry_value']      = 'Value';
 
 // Help
-$_['help_value']       = 'Set to 1.00000 if this is your default weight.';
+$_['help_value']       = 'The value of your default weight in the current weight unit. Set to 1 for your default weight.';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify weight classes!';

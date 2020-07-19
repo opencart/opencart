@@ -6,6 +6,8 @@ class ControllerExtensionModuleFeatured extends Controller {
 		$this->load->model('catalog/product');
 
 		$this->load->model('tool/image');
+		
+		$data['heading_title'] = $setting['name'];
 
 		$data['products'] = array();
 

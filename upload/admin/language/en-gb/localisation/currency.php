@@ -28,7 +28,7 @@ $_['entry_status']         = 'Status';
 
 // Help
 $_['help_code']            = 'Do not change if this is your default currency.';
-$_['help_value']           = 'Set to 1.00000 if this is your default currency.';
+$_['help_value']           = 'The value of your default currency in the current currency unit. Set to 1 for your default currency.';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify currencies!';

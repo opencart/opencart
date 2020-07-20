@@ -36,7 +36,7 @@ class ControllerMailCustomer extends Controller {
 								
 			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
 				
-			$data['login'] = $store_url . 'index.php?route=account/login';	
+			$data['login'] = $store_url;
 			$data['store'] = $store_name;
 	
 			$mail = new Mail($this->config->get('config_mail_engine'));

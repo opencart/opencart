@@ -148,7 +148,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		}
 
 		if ($json->fraudlabspro_status == 'REJECT') {
-			return $this->config->get('fraudlabspro_reject_status_id');
+			return $this->config->get('fraud_fraudlabspro_reject_status_id');
 		}
 	}
 

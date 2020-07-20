@@ -245,7 +245,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 
 				$data['order_id'] = $this->request->get['order_id'];
 				
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/realex_order', $data);
 			}

@@ -40,7 +40,7 @@
     {% set i = i + 1 %}
     {% endfor %}
     <p>
-      <input type="radio" name="hosteddataid" value="{{ new_hosted_id }}" {% set i == 1 %} checked="checked"{% endif %} />
+      <input type="radio" name="hosteddataid" value="{{ new_hosted_id }}" {% if i == 1 %} checked="checked"{% endif %} />
       Use a new card</p>
     {% else %}
     <input type="hidden" name="hosteddataid" value="{{ new_hosted_id }}" />

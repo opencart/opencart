@@ -168,7 +168,7 @@ class ControllerExtensionPaymentBluepayredirect extends Controller {
 
 				$data['bluepay_redirect_order'] = $bluepay_redirect_order;
 
-				$data['order_id'] = $this->request->get['order_id'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/bluepay_redirect_order', $data);

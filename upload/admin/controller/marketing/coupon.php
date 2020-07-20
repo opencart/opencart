@@ -259,7 +259,7 @@ class ControllerMarketingCoupon extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['coupon_id'])) {
-			$data['coupon_id'] = $this->request->get['coupon_id'];
+			$data['coupon_id'] = (int)$this->request->get['coupon_id'];
 		} else {
 			$data['coupon_id'] = 0;
 		}

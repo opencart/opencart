@@ -84,26 +84,26 @@ class ControllerExtensionPaymentPayPoint extends Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['paypoint_geo_zone_id'])) {
-			$data['paypoint_geo_zone_id'] = $this->request->post['paypoint_geo_zone_id'];
+		if (isset($this->request->post['payment_paypoint_geo_zone_id'])) {
+			$data['payment_paypoint_geo_zone_id'] = $this->request->post['payment_paypoint_geo_zone_id'];
 		} else {
-			$data['paypoint_geo_zone_id'] = $this->config->get('paypoint_geo_zone_id');
+			$data['payment_paypoint_geo_zone_id'] = $this->config->get('payment_paypoint_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['paypoint_status'])) {
-			$data['paypoint_status'] = $this->request->post['paypoint_status'];
+		if (isset($this->request->post['payment_paypoint_status'])) {
+			$data['payment_paypoint_status'] = $this->request->post['payment_paypoint_status'];
 		} else {
-			$data['paypoint_status'] = $this->config->get('paypoint_status');
+			$data['payment_paypoint_status'] = $this->config->get('payment_paypoint_status');
 		}
 
-		if (isset($this->request->post['paypoint_sort_order'])) {
-			$data['paypoint_sort_order'] = $this->request->post['paypoint_sort_order'];
+		if (isset($this->request->post['payment_paypoint_sort_order'])) {
+			$data['payment_paypoint_sort_order'] = $this->request->post['payment_paypoint_sort_order'];
 		} else {
-			$data['paypoint_sort_order'] = $this->config->get('paypoint_sort_order');
+			$data['payment_paypoint_sort_order'] = $this->config->get('payment_paypoint_sort_order');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -183,6 +183,8 @@ class ControllerInformationContact extends Controller {
 			'href' => $this->url->link('information/contact')
 		);
 
+ 		$data['text_message'] = $this->language->get('text_message'); 
+
 		$data['continue'] = $this->url->link('common/home');
 
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -219,7 +219,7 @@ class ControllerExtensionPaymentWorldpay extends Controller {
 
 				$data['worldpay_order'] = $worldpay_order;
 
-				$data['order_id'] = $this->request->get['order_id'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 				
 				$data['user_token'] = $this->session->data['user_token'];
 

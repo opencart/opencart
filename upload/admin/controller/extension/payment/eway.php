@@ -232,7 +232,7 @@ class ControllerExtensionPaymentEway extends Controller {
 
 				$data['eway_order'] = $eway_order;
 				$data['user_token'] = $this->session->data['user_token'];
-				$data['order_id'] = $this->request->get['order_id'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 
 				return $this->load->view('extension/payment/eway_order', $data);
 			}

@@ -176,7 +176,7 @@ class ControllerExtensionPaymentSagepayServer extends Controller {
 
 				$data['auto_settle'] = $sagepay_server_order['settle_type'];
 
-				$data['order_id'] = $this->request->get['order_id'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 				
 				$data['user_token'] = $this->session->data['user_token'];
 

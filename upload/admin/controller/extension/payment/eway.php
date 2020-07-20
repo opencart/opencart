@@ -231,7 +231,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$data['text_empty_capture'] = $this->language->get('text_empty_capture');
 
 				$data['eway_order'] = $eway_order;
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['user_token'] = $this->session->data['user_token'];
 				$data['order_id'] = $this->request->get['order_id'];
 
 				return $this->load->view('extension/payment/eway_order', $data);

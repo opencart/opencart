@@ -306,7 +306,7 @@ class ControllerSaleRecurring extends Controller {
 		
 			$this->document->setTitle($this->language->get('heading_title'));
 
-			$data['user_token'] = $this->request->get['user_token'];
+			$data['user_token'] = $this->session->data['user_token'];
 			
 			$url = '';
 

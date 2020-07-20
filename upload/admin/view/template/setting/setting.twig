@@ -218,6 +218,20 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-timezone">{{ entry_timezone }}</label>
+                <div class="col-sm-10">
+                  <select name="config_timezone" id="input-timezone" class="form-control">
+                    {% for timezone in timezones %}
+                      {% if timezone.value == config_timezone %}
+                        <option value="{{ timezone.value }}" selected="selected">{{ timezone.text }}</option>
+                      {% else %}
+                        <option value="{{ timezone.value }}">{{ timezone.text }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-control">

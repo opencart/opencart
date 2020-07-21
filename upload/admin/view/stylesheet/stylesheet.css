@@ -389,7 +389,7 @@ div.required .col-form-label:not(span):before, td.required:before {
     width: 12rem;
  }
 
-.table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
+.table thead td span[data-toggle="tooltip"]:after, label.col-form-label span:after {
     font-family: 'Font Awesome 5 Free';
     font-weight: 600;
     content: "\f059";
@@ -822,12 +822,4 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .is-invalid ~ .invalid-tooltip, .input-group + .invalid-tooltip, .form-check + .invalid-tooltip {
     position: static !important;
-}
-
-.bootstrap-datetimepicker-widget table th, .bootstrap-datetimepicker-widget table td {
-    border: 0;
-    padding: 1px;
-}
-.bootstrap-datetimepicker-widget table tr:nth-of-type(odd), .bootstrap-datetimepicker-widget table tr:hover {
-    background-color: transparent;
 }

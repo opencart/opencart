@@ -823,3 +823,11 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .is-invalid ~ .invalid-tooltip, .input-group + .invalid-tooltip, .form-check + .invalid-tooltip {
     position: static !important;
 }
+
+.bootstrap-datetimepicker-widget table th, .bootstrap-datetimepicker-widget table td {
+    border: 0;
+    padding: 1px;
+}
+.bootstrap-datetimepicker-widget table tr:nth-of-type(odd), .bootstrap-datetimepicker-widget table tr:hover {
+    background-color: transparent;
+}

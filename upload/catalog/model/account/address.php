@@ -7,6 +7,10 @@ class ModelAccountAddress extends Model {
 
 		if (!empty($data['default'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+
+			if ($address_id !== $this->customer->getAddressId() && $this->config->get('config_tax_customer')) {
+				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $this->getAddress($address_id);
+			}
 		}
 
 		return $address_id;
@@ -17,6 +21,10 @@ class ModelAccountAddress extends Model {
 
 		if (!empty($data['default'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+
+			if ($address_id !== $this->customer->getAddressId() && $this->config->get('config_tax_customer')) {
+				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $this->getAddress($address_id);
+			}
 		}
 	}
 

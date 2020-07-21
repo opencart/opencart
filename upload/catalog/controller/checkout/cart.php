@@ -342,19 +342,29 @@ class ControllerCheckoutCart extends Controller {
 
 		// Update
 		if (!empty($this->request->post['quantity'])) {
-			foreach ($this->request->post['quantity'] as $key => $value) {
-				$this->cart->update($key, $value);
+			// Handles single item update
+			if (!empty($this->request->post['key'])) {
+				$key = $this->request->post['key'];
+				$quantity = (int)$this->request->post['quantity'];
+
+				$this->cart->update($key, $quantity);
+
+				$json['success'] = $this->language->get('text_remove');
+			} else {
+				foreach ($this->request->post['quantity'] as $key => $value) {
+					$this->cart->update($key, $value);
+				}
+
+				$this->session->data['success'] = $this->language->get('text_remove');
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
+				unset($this->session->data['reward']);
+
+				$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 			}
-
-			$this->session->data['success'] = $this->language->get('text_remove');
-
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['reward']);
-
-			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

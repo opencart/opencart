@@ -77,7 +77,11 @@ $registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
-	$registry->set('db', new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+	$db = new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+	$registry->set('db', $db);
+
+	// Sync PHP and DB time zones
+	$db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
 }
 
 // Session

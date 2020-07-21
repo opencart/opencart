@@ -84,7 +84,7 @@ class ControllerExtensionPaymentEway extends Controller {
 			$item->SKU = (string)substr($product['product_id'], 0, 12);
 			$item->Description = (string)substr($product['name'], 0, 26);
 			$item->Quantity = strval($product['quantity']);
-			$item->UnitCost = strval($item_price * 100);
+			$item->UnitCost = $this->lowestDenomination($item_price, $order_info['currency_code']);
 			$item->Total = $this->lowestDenomination($item_total, $order_info['currency_code']);
 
 			$request->Items[] = $item;

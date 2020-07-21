@@ -14,7 +14,7 @@ $_['language_autoload']    = array('en-gb');
 $_['date_timezone']        = 'UTC';
 
 // Database
-$_['db_engine']            = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_engine']            = 'mysqli'; // mpdo, mysqli or postgre
 $_['db_hostname']          = 'localhost';
 $_['db_username']          = 'root';
 $_['db_password']          = '';

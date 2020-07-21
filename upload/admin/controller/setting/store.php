@@ -452,7 +452,7 @@ class ControllerSettingStore extends Controller {
 		if (isset($this->request->post['config_location'])) {
 			$data['config_location'] = $this->request->post['config_location'];
 		} elseif (isset($store_info['config_location'])) {
-			$data['config_location'] = $this->config->get('config_location');
+			$data['config_location'] = $store_info['config_location'];
 		} else {
 			$data['config_location'] = array();
 		}

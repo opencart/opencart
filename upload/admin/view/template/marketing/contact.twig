@@ -141,7 +141,7 @@ $('input[name=\'customers\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'customers\']').val('');
 
-		$('#input-customer' + item['value']).remove();
+		$('#customer' + item['value']).remove();
 
 		$('#input-customer').parent().find('.well').append('<div id="customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
 	}
@@ -173,7 +173,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'affiliates\']').val('');
 
-		$('#input-affiliate' + item['value']).remove();
+		$('#affiliate' + item['value']).remove();
 
 		$('#input-affiliate').parent().find('.well').append('<div id="affiliate' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
 	}
@@ -205,7 +205,7 @@ $('input[name=\'products\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'products\']').val('');
 
-		$('#input-product' + item['value']).remove();
+		$('#product' + item['value']).remove();
 
 		$('#input-product').parent().find('.well').append('<div id="product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
 	}

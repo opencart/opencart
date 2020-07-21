@@ -608,8 +608,6 @@ class ControllerCommonColumnLeft extends Controller {
 		
 			if ($maintenance) {
 				$system[] = array(
-					'id'       => 'menu-maintenance',
-					'icon'	   => 'fa-cog', 
 					'name'	   => $this->language->get('text_maintenance'),
 					'href'     => '',
 					'children' => $maintenance

@@ -1,5 +1,6 @@
 <?php
 class ControllerMailReview extends Controller {
+	// catalog/model/catalog/review/addReview/after
 	public function index(&$route, &$args, &$output) {
 		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/review');

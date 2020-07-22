@@ -47,7 +47,7 @@ class ModelSaleOrder extends Model {
 			foreach ($order_product_query->rows as $product) {
 				$reward += $product['reward'];
 			}
-			
+
 			$this->load->model('customer/customer');
 
 			$affiliate_info = $this->model_customer_customer->getCustomer($order_query->row['affiliate_id']);
@@ -176,6 +176,10 @@ class ModelSaleOrder extends Model {
 			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
+		if (!empty($data['filter_email'])) {
+			$sql .= " AND o.email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
+		}
+
 		if (!empty($data['filter_date_added'])) {
 			$sql .= " AND DATE(o.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
@@ -226,36 +230,36 @@ class ModelSaleOrder extends Model {
 		return $query->rows;
 	}
 
-	public function getOrderProducts($order_id) {
+	public function getProducts($order_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getOrderOptions($order_id, $order_product_id) {
+	public function getOptions($order_id, $order_product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getOrderVouchers($order_id) {
+	public function getVouchers($order_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getOrderVoucherByVoucherId($voucher_id) {
+	public function getVoucherByVoucherId($voucher_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE voucher_id = '" . (int)$voucher_id . "'");
 
 		return $query->row;
 	}
 
-	public function getOrderTotals($order_id) {
+	public function getTotals($order_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order");
 
 		return $query->rows;
 	}
-	
+
 	public function getTotalOrders($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order`";
 
@@ -283,6 +287,10 @@ class ModelSaleOrder extends Model {
 
 		if (!empty($data['filter_customer'])) {
 			$sql .= " AND CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
+		}
+
+		if (!empty($data['filter_email'])) {
+			$sql .= " AND o.email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
@@ -361,7 +369,7 @@ class ModelSaleOrder extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function getTotalSales($data = array()) {
 		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order`";
 
@@ -388,7 +396,11 @@ class ModelSaleOrder extends Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$sql .= " AND CONCAT(firstname, ' ', o.lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
+			$sql .= " AND CONCAT(firstname, ' ', lastname) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";
+		}
+
+		if (!empty($data['filter_email'])) {
+			$sql .= " AND email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
@@ -407,7 +419,7 @@ class ModelSaleOrder extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function createInvoiceNo($order_id) {
 		$order_info = $this->getOrder($order_id);
 
@@ -426,7 +438,7 @@ class ModelSaleOrder extends Model {
 		}
 	}
 
-	public function getOrderHistories($order_id, $start = 0, $limit = 10) {
+	public function getHistories($order_id, $start = 0, $limit = 10) {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -440,18 +452,18 @@ class ModelSaleOrder extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalOrderHistories($order_id) {
+	public function getTotalHistories($order_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_history WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalOrderHistoriesByOrderStatusId($order_status_id) {
+	public function getTotalHistoriesByOrderStatusId($order_status_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_history WHERE order_status_id = '" . (int)$order_status_id . "'");
 
 		return $query->row['total'];
 	}
-	
+
 	public function getEmailsByProductsOrdered($products, $start, $end) {
 		$implode = array();
 

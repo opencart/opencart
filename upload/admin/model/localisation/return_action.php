@@ -80,7 +80,7 @@ class ModelLocalisationReturnAction extends Model {
 		}
 	}
 
-	public function getReturnActionDescriptions($return_action_id) {
+	public function getDescriptions($return_action_id) {
 		$return_action_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_action WHERE return_action_id = '" . (int)$return_action_id . "'");

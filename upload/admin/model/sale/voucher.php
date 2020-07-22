@@ -81,7 +81,7 @@ class ModelSaleVoucher extends Model {
 		return $query->row['total'];
 	}
 
-	public function getVoucherHistories($voucher_id, $start = 0, $limit = 10) {
+	public function getHistories($voucher_id, $start = 0, $limit = 10) {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -95,7 +95,7 @@ class ModelSaleVoucher extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalVoucherHistories($voucher_id) {
+	public function getTotalHistories($voucher_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher_history WHERE voucher_id = '" . (int)$voucher_id . "'");
 
 		return $query->row['total'];

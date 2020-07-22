@@ -112,7 +112,10 @@ class ControllerSettingStore extends Controller {
 
 		$data['stores'] = array();
 
+		$store_total = 0;
+
 		if ($page == 1) {
+			$store_total = 1;
 			$data['stores'][] = array(
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
@@ -122,11 +125,11 @@ class ControllerSettingStore extends Controller {
 		}
 
 		$filter_data = array(
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
-		$store_total = $this->model_setting_store->getTotalStores();
+		$store_total += $this->model_setting_store->getTotalStores();
 
 		$results = $this->model_setting_store->getStores();
 
@@ -162,11 +165,11 @@ class ControllerSettingStore extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $store_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($store_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($store_total - $this->config->get('config_limit_admin'))) ? $store_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $store_total, ceil($store_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($store_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($store_total - $this->config->get('config_pagination'))) ? $store_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $store_total, ceil($store_total / $this->config->get('config_pagination')));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -321,10 +324,10 @@ class ControllerSettingStore extends Controller {
 		}
 
 		$data['themes'] = array();
-		
+
 		// Create a new language container so we don't pollute the current one
 		$language = new Language($this->config->get('config_language'));
-		
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getInstalled('theme');
@@ -334,7 +337,7 @@ class ControllerSettingStore extends Controller {
 				$this->load->language('extension/theme/' . $code, 'extension');
 
 				$data['themes'][] = array(
-					'text'  => $this->language->get('extension')->get('heading_title'),
+					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $code
 				);
 			}
@@ -399,7 +402,7 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_telephone'] = '';
 		}
-		
+
 		if (isset($this->request->post['config_fax'])) {
 			$data['config_fax'] = $this->request->post['config_fax'];
 		} elseif (isset($store_info['config_fax'])) {
@@ -407,7 +410,7 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_fax'] = '';
 		}
-		
+
 		if (isset($this->request->post['config_image'])) {
 			$data['config_image'] = $this->request->post['config_image'];
 		} elseif (isset($store_info['config_image'])) {
@@ -449,7 +452,7 @@ class ControllerSettingStore extends Controller {
 		if (isset($this->request->post['config_location'])) {
 			$data['config_location'] = $this->request->post['config_location'];
 		} elseif (isset($store_info['config_location'])) {
-			$data['config_location'] = $this->config->get('config_location');
+			$data['config_location'] = $store_info['config_location'];
 		} else {
 			$data['config_location'] = array();
 		}
@@ -682,19 +685,19 @@ class ControllerSettingStore extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if ((utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
+		if ((utf8_strlen(trim($this->request->post['config_owner'])) < 3) || (utf8_strlen(trim($this->request->post['config_owner'])) > 64)) {
 			$this->error['owner'] = $this->language->get('error_owner');
 		}
 
-		if ((utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
+		if ((utf8_strlen(trim($this->request->post['config_address'])) < 3) || (utf8_strlen(trim($this->request->post['config_address'])) > 256)) {
 			$this->error['address'] = $this->language->get('error_address');
 		}
 
-		if ((utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
+		if ((utf8_strlen(trim($this->request->post['config_email'])) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
+		if ((utf8_strlen(trim($this->request->post['config_telephone'])) < 3) || (utf8_strlen(trim($this->request->post['config_telephone'])) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 

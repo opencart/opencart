@@ -1,9 +1,8 @@
 <?php
 /*
-
-Installed versionh
-current version
-latest version
+Installed version
+Current version
+Latest version
 
 Preparation
 
@@ -20,7 +19,6 @@ Backup
 5. database
 
 6. image
-
 
 Upgrade
 
@@ -61,7 +59,7 @@ class ControllerToolUpgrade extends Controller {
 
 		$this->load->model('setting/extension');
 
-		$results = $this->model_setting_extension->getExtensionInstalls(0, 1000);
+		$results = $this->model_setting_extension->getInstalls(0, 1000);
 
 		foreach ($results as $result) {
 			if ($result['extension_id']) {

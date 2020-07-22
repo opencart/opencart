@@ -281,15 +281,13 @@ class ControllerToolBackup extends Controller {
 				$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
 
 				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup/restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position));
-
-				fclose($handle);
 			} else {
-				fclose($handle);
-
 				$json['success'] = $this->language->get('text_success');
 
 				$this->cache->delete('*');
 			}
+
+			fclose($handle);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -325,9 +323,9 @@ class ControllerToolBackup extends Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-
 			move_uploaded_file($this->request->files['upload']['tmp_name'], DIR_STORAGE . 'backup/' . $filename);
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -399,9 +397,9 @@ class ControllerToolBackup extends Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
-
 			unlink($file);
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -29,11 +29,11 @@
         {% endfor %}
         {% for voucher in vouchers %}
           <tr>
-            <td class="text-left"><img src="{{ voucher.image }}" alt="{{ voucher.name }}" title="{{ voucher.name }}" class="img-thumbnail" /></td>
             <td class="text-left">{{ voucher.description }}</td>
             <td class="text-left"></td>
             <td class="text-right">1</td>
-            <td class="text-right">{{ voucher.amount }}</td>            
+            <td class="text-right">{{ voucher.amount }}</td>
+            <td class="text-right">{{ voucher.amount }}</td>
           </tr>
         {% endfor %}
       </tbody>

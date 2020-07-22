@@ -11,7 +11,7 @@
       {% if categories %}
         <p><strong>{{ text_index }}</strong>
           {% for category in categories %}
-            &nbsp;&nbsp;&nbsp;<a href="index.php?route=product/manufacturer#{{ category.name }}">{{ category.name }}</a>
+            &nbsp;&nbsp;&nbsp;<a href="{{ category.href }}#{{ category.name }}#{{ category.name }}">{{ category.name }}</a>
           {% endfor %}
         </p>
         {% for category in categories %}

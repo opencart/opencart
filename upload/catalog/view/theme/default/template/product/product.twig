@@ -7,45 +7,40 @@
   </ul>
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
-      <div class="row"> {% if column_left or column_right %}
+      <div class="row">
+        {% if column_left or column_right %}
           {% set class = 'col-sm-6' %}
         {% else %}
           {% set class = 'col-sm-8' %}
         {% endif %}
-        <div class="{{ class }}"> {% if thumb or images %}
+        <div class="{{ class }}">
+          {% if thumb or images %}
             <ul class="thumbnails">
               {% if thumb %}
-                <li class="text-center"><a href="{{ popup }}" title="{{ heading_title }}"> <img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
+                <li class="text-center"><a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
               {% endif %}
               {% if images %}
                 {% for image in images %}
-                  <li class="image-additional"><a href="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
+                  <li class="image-additional"><a href="{{ image.popup }}" title="{{ heading_title }}"><img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-fluid"/></a></li>
                 {% endfor %}
               {% endif %}
             </ul>
           {% endif %}
           <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link active" id="description-tab" data-toggle="tab" href="#tab-description" role="tab" aria-controls="tab-description" aria-selected="true">
-                {{ tab_description }}</a></li>
+            <li class="nav-item"><a href="#tab-description" id="description-tab" class="nav-link active" data-toggle="tab">{{ tab_description }}</a></li>
             {% if attribute_groups %}
-              <li class="nav-item">
-                <a class="nav-link" id="specification-tab" data-toggle="tab" href="#tab-specification" role="tab" aria-controls="tab-specification" aria-selected="true">
-                  {{ tab_attribute }}</a></li>
+              <li class="nav-item"><a href="#tab-specification" id="specification-tab" class="nav-link" data-toggle="tab">{{ tab_attribute }}</a></li>
             {% endif %}
             {% if review_status %}
-              <li class="nav-item">
-                <a class="nav-link" id="review-tab" data-toggle="tab" href="#tab-review" role="tab" aria-controls="tab-review" aria-selected="true">
-                  {{ tab_review }}</a></li>
+              <li class="nav-item"><a href="#tab-review" id="review-tab" class="nav-link" data-toggle="tab">{{ tab_review }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
-            <div class="tab-pane fade show active" id="tab-description" role="tabpanel" aria-labelledby="description-tab">
+            <div id="tab-description" class="tab-pane fade show active mb-4" role="tabpanel" aria-labelledby="description-tab">
               {{ description }}
             </div>
-
             {% if attribute_groups %}
-              <div class="tab-pane fade" id="tab-specification" role="tabpanel" aria-labelledby="specification-tab">
+              <div id="tab-specification" class="tab-pane fade" role="tabpanel" aria-labelledby="specification-tab">
                 <div class="table-responsive">
                   <table class="table table-bordered">
                     {% for attribute_group in attribute_groups %}
@@ -68,16 +63,16 @@
               </div>
             {% endif %}
             {% if review_status %}
-              <div class="tab-pane fade" id="tab-review" role="tabpanel" aria-labelledby="review-tab">
+              <div id="tab-review" class="tab-pane fade" role="tabpanel" aria-labelledby="review-tab">
                 <form id="form-review">
                   <div id="review"></div>
                   <h2>{{ text_write }}</h2>
                   {% if review_guest %}
                     <div class="form-group required">
-                      <label class="col-form-label" for="input-name">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+                      <label for="input-name" class="col-form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
                     </div>
                     <div class="form-group required">
-                      <label class="col-form-label" for="input-review">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
+                      <label for="input-review" class="col-form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
                       <div class="help-block">{{ text_note }}</div>
                     </div>
                     <div class="form-group row required">
@@ -270,21 +265,22 @@
                     <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
                   {% endfor %}
                 </select>
-                <div class="help-block" id="recurring-description"></div>
+                <div id="recurring-description" class="help-block"></div>
               </div>
             {% endif %}
             <div class="form-group">
-              <label class="col-form-label" for="input-quantity">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
+              <label for="input-quantity" class="col-form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
               <br/>
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>
             {% if minimum > 1 %}
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_minimum }}</div>
             {% endif %}</div>
+
           {% if review_status %}
             <div class="rating">
               <p>{% for i in 1..5 %}
-                  {% if rating < i %}<span class="fas fa-stack"><i class="fas fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="fas fa-star-o fa-stack-1x"></i></span>{% endif %}
+                  {% if rating < i %}<span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="far fa-star fa-stack-1x"></i></span>{% endif %}
                 {% endfor %}
                 <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
               <hr/>
@@ -299,49 +295,8 @@
       {% if products %}
         <h3>{{ text_related }}</h3>
         <div class="row">
-          {% set i = 0 %}
           {% for product in products %}
-            <div class="col">
-              <div class="product-thumb transition">
-                <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid"/></a></div>
-                <div class="caption">
-                  <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-                  <p>{{ product.description }}</p>
-                  {% if product.rating %}
-                    <div class="rating">
-                      {% for j in 1..5 %}
-                        {% if product.rating < j %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-1x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="fas fa-star-o fa-stack-1x"></i></span> {% endif %}
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                  {% if product.price %}
-                    <p class="price">
-                      {% if not product.special %}
-                        {{ product.price }}
-                      {% else %}
-                        <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-                      {% endif %}
-                      {% if product.tax %}
-                        <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-                      {% endif %}
-                    </p>
-                  {% endif %}
-                </div>
-                <div class="button-group">
-                  <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fas fa-heart"></i></button>
-                  <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fas fa-exchange-alt"></i></button>
-                </div>
-              </div>
-            </div>
-            {% if column_left and column_right and (i + 1) % 2 == 0 %}
-              <div class="clearfix visible-md visible-sm"></div>
-            {% elseif column_left or column_right and (i + 1) % 3 == 0 %}
-              <div class="clearfix visible-md"></div>
-            {% elseif (i + 1) % 4 == 0 %}
-              <div class="clearfix visible-md"></div>
-            {% endif %}
-            {% set i = i + 1 %}
+            <div class="product-layout product-list col-lg-3 col-md-3 col-sm-6 col-12">{{ product }}</div>
           {% endfor %}
         </div>
       {% endif %}

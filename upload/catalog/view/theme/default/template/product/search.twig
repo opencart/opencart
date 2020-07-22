@@ -9,7 +9,7 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <label class="col-form-label" for="input-search">{{ entry_search }}</label>
+      <label for="input-search" class="col-form-label">{{ entry_search }}</label>
       <div class="row">
         <div class="col-md-4">
           <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control"/>
@@ -49,7 +49,7 @@
                 <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"/>
               {% endif %}
             </div>
-            <label class="form-check-label" for="input-sub-category">{{ text_sub_category }}</label>
+            <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
         {% else %}
           <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"/>
         {% endif %}
-        <label class="form-check-label" for="input-description">{{ entry_description }}</label>
+        <label for="input-description" class="form-check-label">{{ entry_description }}</label>
       </div>
       <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
       <hr/>
@@ -80,7 +80,7 @@
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-sort">{{ text_sort }}</label>
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
               </div>
               <select id="input-sort" class="form-control" onchange="location = this.value;">
                 {% for sorts in sorts %}
@@ -96,7 +96,7 @@
           <div class="col-md-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <label class="input-group-text" for="input-limit">{{ text_limit }}</label>
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
               </div>
               <select id="input-limit" class="form-control" onchange="location = this.value;">
                 {% for limits in limits %}
@@ -112,45 +112,7 @@
         </div>
         <div class="row">
           {% for product in products %}
-            <div class="product-layout product-list col-12">
-              <div class="product-thumb">
-                <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid"/></a></div>
-                <div>
-                  <div class="caption">
-                    <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
-                    <p>{{ product.description }}</p>
-                    {% if product.price %}
-                      <p class="price">
-                        {% if  not product.special %}
-                          {{ product.price }}
-                        {% else %}
-                          <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
-                        {% endif %}
-                        {% if product.tax %}
-                          <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
-                        {% endif %}
-                      </p>
-                    {% endif %}
-                    {% if product.rating %}
-                      <div class="rating">
-                        {% for i in 1..5 %}
-                          {% if product.rating < i %}
-                            <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span>
-                          {% else %}
-                            <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span>
-                          {% endif %}
-                        {% endfor %}
-                      </div>
-                    {% endif %}
-                  </div>
-                  <div class="button-group">
-                    <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fas fa-shopping-cart"></i> <span class="d-none d-lg-inline">{{ button_cart }}</span></button>
-                    <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fas fa-heart"></i></button>
-                    <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fas fa-exchange-alt"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="product-layout product-list col-lg-3 col-md-3 col-sm-6 col-12">{{ product }}</div>
           {% endfor %}
         </div>
         <div class="row">
@@ -167,7 +129,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-search').bind('click', function() {
-	url = 'index.php?route=product/search';
+	url = 'index.php?route=product/search&language={{ language }}';
 
 	var search = $('#content input[name=\'search\']').prop('value');
 

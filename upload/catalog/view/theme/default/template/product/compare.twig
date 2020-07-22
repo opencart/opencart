@@ -25,58 +25,72 @@
               <td>{{ text_name }}</td>
               {% for product in products %}
                 <td><a href="{{ product.href }}"><strong>{{ product.name }}</strong></a></td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             <tr>
               <td>{{ text_image }}</td>
               {% for product in products %}
                 <td class="text-center">{% if product.thumb %} <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/> {% endif %}</td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             <tr>
               <td>{{ text_price }}</td>
               {% for product in products %}
-                <td>{% if product.price %}
-                    {% if not product.special %}
-                      {{ product.price }}
-                    {% else %} <strike>{{ product.price }}</strike> {{ product.special }}
-                    {% endif %}
+                <td>{% if not product.special %}
+                    {{ product.price }}
+                  {% else %}
+                    <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
                   {% endif %}</td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             <tr>
               <td>{{ text_model }}</td>
               {% for product in products %}
                 <td>{{ product.model }}</td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             <tr>
               <td>{{ text_manufacturer }}</td>
               {% for product in products %}
                 <td>{{ product.manufacturer }}</td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             <tr>
               <td>{{ text_availability }}</td>
               {% for product in products %}
                 <td>{{ product.availability }}</td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             {% if review_status %}
               <tr>
                 <td>{{ text_rating }}</td>
                 {% for product in products %}
-                  <td class="rating"> {% for i in 1..5 %}
-                      {% if product.rating < i %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span> {% endif %}
+                  <td class="rating">
+                    {% for i in 1..5 %}
+                      {% if product.rating < i %}
+                        <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span>
+                      {% else %}
+                        <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span>
+                      {% endif %}
                     {% endfor %}
                     <br/>
-                    {{ product.reviews }}</td>
-                {% endfor %} </tr>
+                    {{ product.reviews }}
+                  </td>
+                {% endfor %}
+              </tr>
             {% endif %}
             <tr>
               <td>{{ text_summary }}</td>
               {% for product in products %}
                 <td class="description">{{ product.description }}</td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             <tr>
               <td>{{ text_weight }}</td>
               {% for product in products %}
                 <td>{{ product.weight }}</td>
-              {% endfor %} </tr>
+              {% endfor %}
+            </tr>
             <tr>
               <td>{{ text_dimension }}</td>
               {% for product in products %}
@@ -107,9 +121,9 @@
           <tr>
             <td></td>
             {% for product in products %}
-              <td><button type="button" id="button-confirm" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');" class="btn btn-primary btn-block">{{ button_cart }}</button>
-                <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a></td>
-            {% endfor %} </tr>
+              <td><button type="button" id="button-confirm" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');" class="btn btn-primary btn-block">{{ button_cart }}</button> <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a></td>
+            {% endfor %}
+          </tr>
         </table>
       {% else %}
         <p>{{ text_no_results }}</p>

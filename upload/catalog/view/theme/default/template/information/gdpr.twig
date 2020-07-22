@@ -16,7 +16,7 @@
       <fieldset>
         <legend id="account">{{ text_verification }}</legend>
         <div class="form-group">
-          <p><label class="form-check-label" for="input-email">{{ text_email }}</label></p>
+          <p><label for="input-email" class="form-check-label">{{ text_email }}</label></p>
           <div class="input-group">
             <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
             <div class="input-group-append">
@@ -29,10 +29,10 @@
         <legend id="action">{{ text_action }}</legend>
         <div class="form-group">
           <div class="form-check">
-            <input type="radio" name="action" value="export" id="input-export" checked class="form-check-input"/> <label class="form-check-label" for="input-export"><strong>{{ text_export }}</strong></label>
+            <input type="radio" name="action" value="export" id="input-export" checked class="form-check-input"/> <label for="input-export" class="form-check-label"><strong>{{ text_export }}</strong></label>
           </div>
           <div class="form-check">
-            <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label class="form-check-label" for="input-remove"><strong>{{ text_remove }}</strong></label>
+            <input type="radio" name="action" value="remove" id="input-remove" class="form-check-input"/> <label for="input-remove" class="form-check-label"><strong>{{ text_remove }}</strong></label>
             <div id="collapse-remove" class="alert alert-warning collapse">
               <p><i class="fas fa-exclamation-triangle"></i> {{ text_warning }}</p>
               <ul>

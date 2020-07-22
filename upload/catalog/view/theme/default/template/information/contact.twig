@@ -26,13 +26,13 @@
               {% endif %}
             </div>
             <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
-              <br/>
+              <br>
               {{ telephone }}
               <br/>
               <br/>
               {% if fax %}
                 <strong>{{ text_fax }}</strong>
-                <br/>
+                <br>
                 {{ fax }}
               {% endif %}
             </div>
@@ -58,8 +58,8 @@
         <div id="accordion" class="card-group">
           {% for location in locations %}
             <div class="card">
-              <div class="card-heading">
-                <h4 class="card-title"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
+              <div class="card-header">
+                <h4 class="card-title" style="padding-top: 10px;"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
               </div>
               <div class="card-collapse collapse" id="collapse-location{{ location.location_id }}">
                 <div class="card-body">
@@ -77,13 +77,13 @@
                       {% endif %}
                     </div>
                     <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
-                      <br/>
+                      <br>
                       {{ location.telephone }}
                       <br/>
                       <br/>
                       {% if location.fax %}
                         <strong>{{ text_fax }}</strong>
-                        <br/>
+                        <br>
                         {{ location.fax }}
                       {% endif %}
                     </div>
@@ -93,7 +93,7 @@
                         <br/>
                         {{ location.open }}
                         <br/>
-						<br/>							
+                        <br/>
                       {% endif %}
                       {% if location.comment %}
                         <strong>{{ text_comment }}</strong>
@@ -101,35 +101,13 @@
                         {{ location.comment }}
                       {% endif %}
                     </div>
-					<div class="col-sm-3">
-					  {% if location.custom_field %}
-					    <strong>{{ text_additional }}</strong>							
-					    <br/>
-						<br/>
-						{% set custom_field_row = 0 %}
-						{% for custom_field_type,custom_fields in location.custom_field %}						  
-						  {% if custom_field_type and custom_fields %}
-							{% set custom_field_row = custom_field_row + 1 %}
-						  
-							{{ text_additional_count|format(custom_field_row) }}
-						    <br/>
-							<br/>
-							{% for custom_field in custom_fields %}
-						      <strong>{{ custom_field.value }}</strong>							    
-							  <br/>
-						    {% enfor %}							 
-						  {% endif %}
-						{% endfor %}
-						<br/>
-					  {% endif %}
-					</div>
                   </div>
                 </div>
               </div>
             </div>
           {% endfor %}
         </div>
-      {% endif %}	  
+      {% endif %}
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend>{{ text_contact }}</legend>

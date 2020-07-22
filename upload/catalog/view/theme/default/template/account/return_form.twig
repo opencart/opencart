@@ -7,7 +7,7 @@
   </ul>
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
-  {% endif %}  
+  {% endif %}
   <div class="row">{{ column_left }}
     <div id="content" class="col"> {{ content_top }}
       <h1>{{ heading_title }}</h1>
@@ -117,74 +117,40 @@
                 <div class="text-danger">{{ error_reason }}</div>
               {% endif %}
             </div>
-          </div>          	  
+          </div>
+          <div class="form-group row required">
+            <label class="col-sm-2 col-form-label">{{ entry_opened }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-check-inline">
+                <label>
+                  {% if opened %}
+                    <input type="radio" name="opened" value="1" class="form-check-input" checked="checked"/>
+                  {% else %}
+                    <input type="radio" name="opened" value="1" class="form-check-input"/>
+                  {% endif %}
+                  {{ text_yes }}
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label>
+                  {% if not opened %}
+                    <input type="radio" name="opened" value="0" class="form-check-input" checked="checked"/>
+                  {% else %}
+                    <input type="radio" name="opened" value="0" class="form-check-input"/>
+                  {% endif %}
+                  {{ text_no }}
+                </label>
+              </div>
+            </div>
+          </div>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_fault_detail }}</label>
             <div class="col-sm-10">
               <textarea name="comment" rows="10" placeholder="{{ entry_fault_detail }}" id="input-comment" class="form-control">{{ comment }}</textarea>
             </div>
-          </div>		  
+          </div>
           {{ captcha }}
         </fieldset>
-		<div class="well well-sm">
-			<div class="row">
-				<div class="col-sm-12 text-left">{{ entry_products }}</div>
-			</div>			
-		</div>
-		<div class="table-responsive">
-			<table id="return" class="table table-striped table-bordered table-hover">
-				<thead>
-					<tr>
-						<td class="text-left">{{ column_product }}</td>
-						<td class="text-left">{{ column_model }}</td>
-						<td class="text-left">{{ column_quantity }}</td>
-						<td class="text-left">{{ column_opened }}</td>
-						<td></td>
-                    </tr>
-                </thead>
-                <tbody>
-				{% set return_row = 0 %}
-                {% for result in return_description %}
-					<tr id="return-row{{ return_row }}">
-						<td class="text-left"><input type="text" name="return_description[{{ return_row }}][product]" value="{{ result.product }}" placeholder="{{ entry_product }}" class="form-control" /><input type="hidden" name="return_description[{{ return_row }}][return_id]" value="{{ result.return_id }}" /><input type="hidden" name="return_description[{{ return_row }}][product_id]" value="{{ result.product_id }}" />
-						{% if error_product[return_row] %}
-							<div class="invalid-tooltip">{{ error_product[{{ return_row }}] }}</div>
-						{% endif %}
-						</td>
-						<td class="text-left"><input type="text" name="return_description[{{ return_row }}][model]" value="{{ result.model }}" placeholder="{{ entry_model }}" class="form-control" />
-						{% if error_model[return_row] %}
-							<div class="invalid-tooltip">{{ error_model[{{ return_row }}] }}</div>
-						{% endif %}
-						</td>
-						<td class="text-left"><input type="text" name="return_description[{{ return_row }}][quantity]" value="{{ result.quantity }}" placeholder="{{ entry_quantity }}" class="form-control" />
-						{% if error_quantity[return_row] %}
-							<div class="invalid-tooltip">{{ error_quantity[{{ return_row }}] }}</div>
-						{% endif %}
-						</td>
-						<td class="text-right">
-						<select name="return_description[{{ return_row }}][opened]" id="input-opened{{ return_row }}" class="form-control">
-						  {% if result.opened %}
-							<option value="1" selected="selected">{{ text_opened }}</option>
-							<option value="0">{{ text_unopened }}</option>
-						  {% else %}
-							<option value="1">{{ text_opened }}</option>
-							<option value="0" selected="selected">{{ text_unopened }}</option>
-						  {% endif %}
-						</select>
-						</td>
-                        <td class="text-right"><button type="button" onclick="$('#return-row{{ return_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                    </tr>
-					{% set return_row = return_row + 1 %}
-				{% endfor %}
-                </tbody>
-					<tfoot>
-						<tr>
-							<td colspan="4"></td>
-							<td class="text-right"><button type="button" onclick="addProduct();" data-toggle="tooltip" title="{{ button_product_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
-						</tr>
-					</tfoot>
-			</table>
-        </div>
         {% if text_agree %}
           <div class="d-inline-block pt-2 pd-2 w-100">
             <div class="float-left"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
@@ -204,30 +170,13 @@
               <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
             </div>
           </div>
-        {% endif %}		
+        {% endif %}
       </form>
       {{ content_bottom }}
     </div>
     {{ column_right }}
   </div>
 </div>
-<script type="text/javascript"><!--
-  var return_row = {{ return_row }};
-
-  function addProduct() {
-	  html = '<tr id="return-row' + return_row + '">';
-	  html += '  <td class="text-left"><input type="text" name="return_description[' + return_row + '][product]" value="" placeholder="{{ entry_product }}" class="form-control" /><input type="hidden" name="return_description[' + return_row + '][return_id]" value="" /><input type="hidden" name="return_description[' + return_row + '][product_id]" value="" /></td>';
-	  html += '  <td class="text-left"><input type="text" name="return_description[' + return_row + '][model]" value="" placeholder="{{ entry_model }}" class="form-control" /></td>';
-	  html += '  <td class="text-left"><input type="text" name="return_description[' + return_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
-	  html += '  <td class="text-right"><select name="return_description[{{ return_row }}][opened]" id="input-opened{{ return_row }}" class="form-control">{% if result.opened %}<option value="1" selected="selected">{{ text_opened }}</option><option value="0">{{ text_unopened }}</option>{% else %}<option value="1">{{ text_opened }}</option><option value="0" selected="selected">{{ text_unopened }}</option>{% endif %}</select></td>';	  
-	  html += '  <td class="text-right"><button type="button" onclick="$(\'#return-row' + return_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	  html += '</tr>';
-
-	  $('#return tbody').append(html);
-
-	  return_row++;
-  }
-//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	'format': 'YYYY-MM-DD',

@@ -72,8 +72,8 @@ class ModelUpgrade1010 extends Model {
 		
 		$events[] = array(
 			'code'    => 'activity_order_add', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/before', 
-			'action'  => 'event/activity/addOrderHistory'
+			'trigger' => 'catalog/model/checkout/order/addHistory/before',
+			'action'  => 'event/activity/addHistory'
 		);
 		
 		$events[] = array(
@@ -120,19 +120,19 @@ class ModelUpgrade1010 extends Model {
 			
 		$events[] = array(
 			'code'    => 'mail_voucher', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/after', 
+			'trigger' => 'catalog/model/checkout/order/addHistory/after',
 			'action'  => 'extension/total/voucher/send'
 		);
 			
 		$events[] = array(
 			'code'    => 'mail_order_add', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/before', 
+			'trigger' => 'catalog/model/checkout/order/addHistory/before',
 			'action'  => 'mail/order'
 		);
 			
 		$events[] = array(
 			'code'    => 'mail_order_alert', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/before', 
+			'trigger' => 'catalog/model/checkout/order/addHistory/before',
 			'action'  => 'mail/order/alert'
 		);
 			
@@ -150,8 +150,8 @@ class ModelUpgrade1010 extends Model {
 		
 		$events[] = array(
 			'code'    => 'statistics_order_history', 
-			'trigger' => 'catalog/model/checkout/order/addOrderHistory/after', 
-			'action'  => 'event/statistics/addOrderHistory'
+			'trigger' => 'catalog/model/checkout/order/addHistory/after',
+			'action'  => 'event/statistics/addHistory'
 		);
 		
 		$events[] = array(
@@ -228,7 +228,7 @@ class ModelUpgrade1010 extends Model {
 			}
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/return/addReturnHistory/after' WHERE `code` = 'admin_mail_return'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/return/addHistory/after' WHERE `code` = 'admin_mail_return'");
 
 		// extension_install
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "extension_install' AND COLUMN_NAME = 'extension_id'");
@@ -256,5 +256,7 @@ class ModelUpgrade1010 extends Model {
 		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_pagination' WHERE `key` = 'config_limit_admin'");
 	}
 }

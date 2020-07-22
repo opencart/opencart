@@ -21,7 +21,6 @@ $_['text_time']            = 'Time';
 $_['text_account']         = 'Account';
 $_['text_address']         = 'Address';
 $_['text_affiliate']       = 'Affiliate';
-$_['text_return_address']  = 'Return Address';
 $_['text_regex']           = 'Regex';
 $_['text_custom_field']    = 'Custom Field';
 $_['text_value']           = 'Custom Field Values';

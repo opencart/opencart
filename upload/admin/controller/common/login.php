@@ -21,8 +21,10 @@ class ControllerCommonLogin extends Controller {
 			}
 		}
 
-		if ((isset($this->session->data['user_token']) && !isset($this->request->get['user_token'])) || ((isset($this->request->get['user_token']) && (isset($this->session->data['user_token']) && ($this->request->get['user_token'] != $this->session->data['user_token']))))) {
-			$this->error['warning'] = $this->language->get('error_token');
+		if (isset($this->request->get['user_token']) && !isset($this->session->data['user_token'])) {
+			$data['error_warning'] = $this->language->get('error_token');
+		} elseif (isset($this->request->get['user_token']) && ($this->request->get['user_token'] != $this->session->data['user_token'])) {
+			$data['error_warning'] = $this->language->get('error_token');
 		} elseif (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} elseif (isset($this->session->data['error'])) {

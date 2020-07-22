@@ -155,14 +155,6 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
-			if ($this->user->hasPermission('access', 'marketplace/modification')) {
-				$marketplace[] = array(
-					'name'	   => $this->language->get('text_modification'),
-					'href'     => $this->url->link('marketplace/modification', 'user_token=' . $this->session->data['user_token']),
-					'children' => array()
-				);
-			}
-
 			if ($this->user->hasPermission('access', 'marketplace/event')) {
 				$marketplace[] = array(
 					'name'	   => $this->language->get('text_event'),
@@ -226,10 +218,10 @@ class ControllerCommonColumnLeft extends Controller {
 
 			$seo = array();
 
-			if ($this->user->hasPermission('access', 'design/seo_regex')) {
+			if ($this->user->hasPermission('access', 'design/seo_profile')) {
 				$seo[] = array(
-					'name'	   => $this->language->get('text_seo_regex'),
-					'href'     => $this->url->link('design/seo_regex', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_seo_profile'),
+					'href'     => $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token']),
 					'children' => array()
 				);
 			}
@@ -715,29 +707,29 @@ class ControllerCommonColumnLeft extends Controller {
 			// Stats
 			$this->load->model('sale/order');
 
-			$order_total = $this->model_sale_order->getTotalOrders();
+			$order_total = (float)$this->model_sale_order->getTotalOrders();
 
 			$this->load->model('report/statistics');
 
-			$complete_total = $this->model_report_statistics->getValue('order_complete');
+			$complete_total = (float)$this->model_report_statistics->getValue('order_complete');
 
-			if ((float)$complete_total && $order_total) {
+			if ($complete_total && $order_total) {
 				$data['complete_status'] = round(($complete_total / $order_total) * 100);
 			} else {
 				$data['complete_status'] = 0;
 			}
 
-			$processing_total = $this->model_report_statistics->getValue('order_processing');
+			$processing_total = (float)$this->model_report_statistics->getValue('order_processing');
 
-			if ((float)$processing_total && $order_total) {
+			if ($processing_total && $order_total) {
 				$data['processing_status'] = round(($processing_total / $order_total) * 100);
 			} else {
 				$data['processing_status'] = 0;
 			}
 
-			$other_total = $this->model_report_statistics->getValue('order_other');
+			$other_total = (float)$this->model_report_statistics->getValue('order_other');
 
-			if ((float)$other_total && $order_total) {
+			if ($other_total && $order_total) {
 				$data['other_status'] = round(($other_total / $order_total) * 100);
 			} else {
 				$data['other_status'] = 0;

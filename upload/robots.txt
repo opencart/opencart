@@ -1,0 +1,14 @@
+Disallow: /*?page=$
+Disallow: /*&page=$
+Disallow: /*?sort=
+Disallow: /*&sort=
+Disallow: /*?order=
+Disallow: /*&order=
+Disallow: /*?limit=
+Disallow: /*&limit=
+Disallow: /*?filter_name=
+Disallow: /*&filter_name=
+Disallow: /*?filter_sub_category=
+Disallow: /*&filter_sub_category=
+Disallow: /*?filter_description=
+Disallow: /*&filter_description=

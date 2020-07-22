@@ -6,6 +6,8 @@ class ControllerExtensionModuleFeatured extends Controller {
 		$this->load->model('catalog/product');
 
 		$this->load->model('tool/image');
+		
+		$data['heading_title'] = $setting['name'];
 
 		$data['products'] = array();
 
@@ -51,13 +53,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 					$tax = false;
 				}
 
-				if ($this->config->get('config_review_status')) {
-					$rating = $product['rating'];
-				} else {
-					$rating = false;
-				}
-
-				$data['products'][] = array(
+				$product_data = array(
 					'product_id'  => $product['product_id'],
 					'thumb'       => $image,
 					'name'        => $product['name'],
@@ -66,11 +62,15 @@ class ControllerExtensionModuleFeatured extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $product['minimum'] > 0 ? $product['minimum'] : 1,
-					'rating'      => $rating,
+					'rating'      => $product['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 				);
+
+				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 		}
+
+		$data['review_status'] = $this->config->get('config_review_status');
 
 		if ($data['products']) {
 			return $this->load->view('extension/module/featured', $data);

@@ -16,7 +16,7 @@ class ControllerExtensionModuleSpecial extends Controller {
 			'limit' => $setting['limit']
 		);
 
-		$results = $this->model_catalog_product->getProductSpecials($filter_data);
+		$results = $this->model_catalog_product->getSpecials($filter_data);
 
 		if ($results) {
 			foreach ($results as $result) {
@@ -44,13 +44,7 @@ class ControllerExtensionModuleSpecial extends Controller {
 					$tax = false;
 				}
 
-				if ($this->config->get('config_review_status')) {
-					$rating = $result['rating'];
-				} else {
-					$rating = false;
-				}
-
-				$data['products'][] = array(
+				$product_data = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
@@ -59,10 +53,14 @@ class ControllerExtensionModuleSpecial extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $rating,
+					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'])
 				);
+
+				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
+
+			$data['review_status'] = $this->config->get('config_review_status');
 
 			return $this->load->view('extension/module/special', $data);
 		}

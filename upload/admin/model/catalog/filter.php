@@ -60,13 +60,13 @@ class ModelCatalogFilter extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 	}
 
-	public function getFilterGroup($filter_group_id) {
+	public function getGroup($filter_group_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "filter_group` fg LEFT JOIN " . DB_PREFIX . "filter_group_description fgd ON (fg.filter_group_id = fgd.filter_group_id) WHERE fg.filter_group_id = '" . (int)$filter_group_id . "' AND fgd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getFilterGroups($data = array()) {
+	public function getGroups($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` fg LEFT JOIN " . DB_PREFIX . "filter_group_description fgd ON (fg.filter_group_id = fgd.filter_group_id) WHERE fgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = array(
@@ -103,7 +103,7 @@ class ModelCatalogFilter extends Model {
 		return $query->rows;
 	}
 
-	public function getFilterGroupDescriptions($filter_group_id) {
+	public function getGroupDescriptions($filter_group_id) {
 		$filter_group_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_group_description WHERE filter_group_id = '" . (int)$filter_group_id . "'");
@@ -147,7 +147,7 @@ class ModelCatalogFilter extends Model {
 		return $query->rows;
 	}
 
-	public function getFilterDescriptions($filter_group_id) {
+	public function getDescriptions($filter_group_id) {
 		$filter_data = array();
 
 		$filter_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter WHERE filter_group_id = '" . (int)$filter_group_id . "'");
@@ -171,7 +171,7 @@ class ModelCatalogFilter extends Model {
 		return $filter_data;
 	}
 
-	public function getTotalFilterGroups() {
+	public function getTotalGroups() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "filter_group`");
 
 		return $query->row['total'];

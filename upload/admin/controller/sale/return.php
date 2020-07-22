@@ -347,21 +347,22 @@ class ControllerSaleReturn extends Controller {
 			'filter_date_modified'    => $filter_date_modified,
 			'sort'                    => $sort,
 			'order'                   => $order,
-			'start'                   => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'                   => $this->config->get('config_limit_admin')
+			'start'                   => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'                   => $this->config->get('config_pagination')
 		);
-		
+
 		$return_total = $this->model_sale_return->getTotalReturns($filter_data);
-		
+
 		$results = $this->model_sale_return->getReturns($filter_data);
-		
+
 		foreach ($results as $result) {
 			$data['returns'][] = array(
 				'return_id'     => $result['return_id'],
 				'order_id'      => $result['order_id'],
-				'href'			=> $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id']),				
-				'customer'      => $result['customer'],				
-				'return_status' => $result['return_status'],				
+				'customer'      => $result['customer'],
+				'product'       => $result['product'],
+				'model'         => $result['model'],
+				'return_status' => $result['return_status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'edit'          => $this->url->link('sale/return/edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url)
@@ -440,8 +441,10 @@ class ControllerSaleReturn extends Controller {
 
 		$data['sort_return_id'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.return_id' . $url);
 		$data['sort_order_id'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.order_id' . $url);
-		$data['sort_customer'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);		
-		$data['sort_status'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_customer'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
+		$data['sort_product'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.product' . $url);
+		$data['sort_model'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.model' . $url);
+		$data['sort_status'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=return_status' . $url);
 		$data['sort_date_added'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
 		$data['sort_date_modified'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_modified' . $url);
 
@@ -490,11 +493,11 @@ class ControllerSaleReturn extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $return_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($return_total - $this->config->get('config_limit_admin'))) ? $return_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $return_total, ceil($return_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($return_total - $this->config->get('config_pagination'))) ? $return_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $return_total, ceil($return_total / $this->config->get('config_pagination')));
 
 		$data['filter_return_id'] = $filter_return_id;
 		$data['filter_order_id'] = $filter_order_id;
@@ -569,19 +572,13 @@ class ControllerSaleReturn extends Controller {
 		if (isset($this->error['product'])) {
 			$data['error_product'] = $this->error['product'];
 		} else {
-			$data['error_product'] = array();
+			$data['error_product'] = '';
 		}
 
 		if (isset($this->error['model'])) {
 			$data['error_model'] = $this->error['model'];
 		} else {
-			$data['error_model'] = array();
-		}
-		
-		if (isset($this->error['quantity'])) {
-			$data['error_quantity'] = $this->error['quantity'];
-		} else {
-			$data['error_quantity'] = array();
+			$data['error_model'] = '';
 		}
 
 		$url = '';
@@ -801,15 +798,7 @@ class ControllerSaleReturn extends Controller {
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
-		
-		if (isset($this->request->post['return_description'])) {
-			$data['return_description'] = $this->request->post['return_description'];
-		} elseif (!empty($return_info)) {
-			$data['return_description'] = $this->model_sale_return->getDescriptions($return_info['return_id']);
-		} else {
-			$data['return_description'] = array();
-		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -824,14 +813,6 @@ class ControllerSaleReturn extends Controller {
 
 		if (empty($this->request->post['order_id'])) {
 			$this->error['order_id'] = $this->language->get('error_order_id');
-		} else {
-			$this->load->model('sale/order');
-			
-			$order_info = $this->model_sale_order->getOrder($this->request->post['order_id']);
-			
-			if (!$order_info) {
-				$this->error['order_id'] = $this->language->get('error_valid_order_id');
-			}
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
@@ -850,30 +831,20 @@ class ControllerSaleReturn extends Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
+		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
+			$this->error['product'] = $this->language->get('error_product');
+		}
+
+		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
+			$this->error['model'] = $this->language->get('error_model');
+		}
+
 		if (empty($this->request->post['return_reason_id'])) {
 			$this->error['reason'] = $this->language->get('error_reason');
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
-		}
-		
-		if (!isset($this->request->post['return_description'])) {
-			$this->error['return_description'] = $this->language->get('error_return_description');
-		} else {
-			foreach ($this->request->post['return_description'] as $key => $return_description) {
-				if ((utf8_strlen($return_description['product']) < 1) || (utf8_strlen($return_description['product']) > 255) || !filter_var($return_description['product'], FILTER_VALIDATE_STRING)) {
-					$this->error['product'][$key] = $this->language->get('error_product');
-				}
-				
-				if ((utf8_strlen($return_description['model']) < 1) || (utf8_strlen($return_description['model']) > 255) || !filter_var($return_description['model'], FILTER_VALIDATE_STRING)) {
-					$this->error['model'][$key] = $this->language->get('error_model');
-				}
-				
-				if ($return_description['quantity'] < 1 || !filter_var($return_description['quantity'], FILTER_VALIDATE_INT)) {
-					$this->error['quantity'][$key] = $this->language->get('error_quantity');
-				}
-			}
 		}
 
 		return !$this->error;
@@ -900,7 +871,7 @@ class ControllerSaleReturn extends Controller {
 
 		$data['histories'] = array();
 
-		$results = $this->model_sale_return->getReturnHistories($this->request->get['return_id'], ($page - 1) * 10, 10);
+		$results = $this->model_sale_return->getHistories($this->request->get['return_id'], ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = array(
@@ -911,7 +882,7 @@ class ControllerSaleReturn extends Controller {
 			);
 		}
 
-		$history_total = $this->model_sale_return->getTotalReturnHistories($this->request->get['return_id']);
+		$history_total = $this->model_sale_return->getTotalHistories($this->request->get['return_id']);
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $history_total,
@@ -935,7 +906,7 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$this->load->model('sale/return');
 
-			$this->model_sale_return->addReturnHistory($this->request->get['return_id'], $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+			$this->model_sale_return->addHistory($this->request->get['return_id'], $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

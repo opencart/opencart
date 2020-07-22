@@ -163,8 +163,8 @@ class ControllerSaleVoucher extends Controller {
 		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
 		$voucher_total = $this->model_sale_voucher->getTotalVouchers();
@@ -247,11 +247,11 @@ class ControllerSaleVoucher extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $voucher_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($voucher_total - $this->config->get('config_limit_admin'))) ? $voucher_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $voucher_total, ceil($voucher_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($voucher_total - $this->config->get('config_pagination'))) ? $voucher_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $voucher_total, ceil($voucher_total / $this->config->get('config_pagination')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -487,7 +487,7 @@ class ControllerSaleVoucher extends Controller {
 		$this->load->model('sale/order');
 
 		foreach ($this->request->post['selected'] as $voucher_id) {
-			$order_voucher_info = $this->model_sale_order->getOrderVoucherByVoucherId($voucher_id);
+			$order_voucher_info = $this->model_sale_order->getVoucherByVoucherId($voucher_id);
 
 			if ($order_voucher_info) {
 				$this->error['warning'] = sprintf($this->language->get('error_order'), $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_voucher_info['order_id']));
@@ -519,7 +519,7 @@ class ControllerSaleVoucher extends Controller {
 
 		$data['histories'] = array();
 
-		$results = $this->model_sale_voucher->getVoucherHistories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
+		$results = $this->model_sale_voucher->getHistories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = array(
@@ -530,7 +530,7 @@ class ControllerSaleVoucher extends Controller {
 			);
 		}
 
-		$history_total = $this->model_sale_voucher->getTotalVoucherHistories($this->request->get['voucher_id']);
+		$history_total = $this->model_sale_voucher->getTotalHistories($this->request->get['voucher_id']);
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $history_total,
@@ -565,6 +565,9 @@ class ControllerSaleVoucher extends Controller {
 			}
 
 			if ($vouchers) {
+				$this->load->model('sale/order');
+				$this->load->model('sale/voucher_theme');
+
 				foreach ($vouchers as $voucher_id) {
 					$voucher_info = $this->model_sale_voucher->getVoucher($voucher_id);
 			
@@ -574,8 +577,6 @@ class ControllerSaleVoucher extends Controller {
 						} else {
 							$order_id = 0;
 						}
-			
-						$this->load->model('sale/order');
 			
 						$order_info = $this->model_sale_order->getOrder($order_id);
 			
@@ -593,8 +594,6 @@ class ControllerSaleVoucher extends Controller {
 							$data['text_message'] = $language->get('text_message');
 							$data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher_info['code']);
 							$data['text_footer'] = $language->get('text_footer');
-			
-							$this->load->model('sale/voucher_theme');
 			
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 			
@@ -624,7 +623,9 @@ class ControllerSaleVoucher extends Controller {
 							$mail->send();
 			
 						// If voucher does not belong to an order
-						}  else {
+						} else {
+							$this->language->load('mail/voucher');
+
 							$data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
 			
 							$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));
@@ -632,8 +633,6 @@ class ControllerSaleVoucher extends Controller {
 							$data['text_message'] = $this->language->get('text_message');
 							$data['text_redeem'] = sprintf($this->language->get('text_redeem'), $voucher_info['code']);
 							$data['text_footer'] = $this->language->get('text_footer');
-			
-							$this->load->model('sale/voucher_theme');
 			
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 			

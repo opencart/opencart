@@ -44,9 +44,11 @@ $_['text_purchase']      = 'Please confirm who you are!';
 $_['text_pin']           = 'Please enter your 4 digit PIN number. This PIN number is to protect your account.';
 $_['text_secure']        = 'Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.';
 $_['text_name']          = 'Download Name';
-$_['text_progress']      = 'Progress';
 $_['text_available']     = 'Available Installs';
 $_['text_action']        = 'Action';
+$_['text_install']       = 'Install';
+$_['text_uninstall']     = 'Uninstall';
+$_['text_delete']        = 'Delete';
 
 // Entry
 $_['entry_pin']          = 'PIN';
@@ -61,7 +63,7 @@ $_['tab_comment']        = 'Comment';
 $_['button_opencart']    = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
 $_['button_view_all']    = 'View all extensions';
-$_['button_get_support'] = 'Get Support';
+$_['button_support']     = 'Get Support';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
 $_['button_forgot_pin']  = 'Forgot PIN?';
@@ -69,6 +71,5 @@ $_['button_forgot_pin']  = 'Forgot PIN?';
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';
 $_['error_opencart']     = 'Warning: You must enter your OpenCart API information before you can make any purchases!';
-$_['error_install']      = 'Extension installation taking place please wait a few seconds before trying to install!';
 $_['error_purchase']     = 'Extension could not be purchased!';
 $_['error_download']     = 'Extension could not be downloaded!';

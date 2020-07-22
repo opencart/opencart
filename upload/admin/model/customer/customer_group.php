@@ -74,7 +74,7 @@ class ModelCustomerCustomerGroup extends Model {
 		return $query->rows;
 	}
 
-	public function getCustomerGroupDescriptions($customer_group_id) {
+	public function getDescriptions($customer_group_id) {
 		$customer_group_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_group_description WHERE customer_group_id = '" . (int)$customer_group_id . "'");

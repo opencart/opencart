@@ -47,10 +47,6 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 			}
-			
-			if (isset($this->request->get['filter_type'])) {
-				$url .= '&filter_type=' . $this->request->get['filter_type'];
-			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -112,10 +108,6 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 			}
-			
-			if (isset($this->request->get['filter_type'])) {
-				$url .= '&filter_type=' . $this->request->get['filter_type'];
-			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -169,10 +161,6 @@ class ControllerCatalogProduct extends Controller {
 
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-			}
-			
-			if (isset($this->request->get['filter_type'])) {
-				$url .= '&filter_type=' . $this->request->get['filter_type'];
 			}
 
 			if (isset($this->request->get['filter_status'])) {
@@ -228,10 +216,6 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 			}
-			
-			if (isset($this->request->get['filter_type'])) {
-				$url .= '&filter_type=' . $this->request->get['filter_type'];
-			}
 
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -279,12 +263,6 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$filter_quantity = '';
 		}
-		
-		if (isset($this->request->get['filter_type'])) {
-			$filter_type = $this->request->get['filter_type'];
-		} else {
-			$filter_type = '';
-		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$filter_status = $this->request->get['filter_status'];
@@ -327,10 +305,6 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
-		
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
-		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -363,7 +337,6 @@ class ControllerCatalogProduct extends Controller {
 			'filter_model'    => $filter_model,
 			'filter_price'    => $filter_price,
 			'filter_quantity' => $filter_quantity,
-			'filter_type'	  => $filter_type,
 			'filter_status'   => $filter_status,
 			'sort'            => $sort,
 			'order'           => $order,
@@ -449,10 +422,6 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
-		
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
-		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -487,10 +456,6 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
 		}
-		
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
-		}
 
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
@@ -517,7 +482,6 @@ class ControllerCatalogProduct extends Controller {
 		$data['filter_model'] = $filter_model;
 		$data['filter_price'] = $filter_price;
 		$data['filter_quantity'] = $filter_quantity;
-		$data['filter_type'] = $filter_type;
 		$data['filter_status'] = $filter_status;
 
 		$data['sort'] = $sort;
@@ -569,109 +533,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->error['keyword'])) {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {
-			$data['error_keyword'] = '';
-		}
-		
-		if (isset($this->error['product_recurring_description'])) {
-			$data['error_product_recurring_description'] = $this->error['product_recurring_description'];
-		} else {
-			$data['error_product_recurring_description'] = '';
-		}
-		
-		if (isset($this->error['product_stock_status_description'])) {
-			$data['error_product_stock_status_description'] = $this->error['product_stock_status_description'];
-		} else {
-			$data['error_product_stock_status_description'] = '';
-		}
-		
-		if (isset($this->error['product_attribute_description'])) {
-			$data['error_product_attribute_description'] = $this->error['product_attribute_description'];
-		} else {
-			$data['error_product_attribute_description'] = '';
-		}
-		
-		if (isset($this->error['product_filter'])) {
-			$data['error_product_filter'] = $this->error['product_filter'];
-		} else {
-			$data['error_product_filter'] = '';
-		}
-		
-		if (isset($this->error['product_filter_description'])) {
-			$data['error_product_filter_description'] = $this->error['product_filter_description'];
-		} else {
-			$data['error_product_filter_description'] = '';
-		}
-		
-		if (isset($this->error['product_option_description'])) {
-			$data['error_product_option_description'] = $this->error['product_option_description'];
-		} else {
-			$data['error_product_option_description'] = '';
-		}
-		
-		if (isset($this->error['product_option_value_description'])) {
-			$data['error_product_option_value_description'] = $this->error['product_option_value_description'];
-		} else {
-			$data['error_product_option_value_description'] = '';
-		}
-		
-		if (isset($this->error['product_reward_description'])) {
-			$data['error_product_reward_description'] = $this->error['product_reward_description'];
-		} else {
-			$data['error_product_reward_description'] = '';
-		}
-		
-		if (isset($this->error['product_download_description'])) {
-			$data['error_product_download_description'] = $this->error['product_download_description'];
-		} else {
-			$data['error_product_download_description'] = '';
-		}
-		
-		if (isset($this->error['product_layout_description'])) {
-			$data['error_product_layout_description'] = $this->error['product_layout_description'];
-		} else {
-			$data['error_product_layout_description'] = '';
-		}
-		
-		if (isset($this->error['product_store'])) {
-			$data['error_product_store'] = $this->error['product_store'];
-		} else {
-			$data['error_product_store'] = '';
-		}
-		
-		if (isset($this->error['length'])) {
-			$data['error_length'] = $this->error['length'];
-		} else {
-			$data['error_length'] = '';
-		}
-		
-		if (isset($this->error['width'])) {
-			$data['error_width'] = $this->error['width'];
-		} else {
-			$data['error_width'] = '';
-		}
-		
-		if (isset($this->error['height'])) {
-			$data['error_height'] = $this->error['height'];
-		} else {
-			$data['error_height'] = '';
-		}
-		
-		if (isset($this->error['weight_class'])) {
-			$data['error_weight_class'] = $this->error['weight_class'];
-		} else {
-			$data['error_weight_class'] = '';
-		}
-		
-		if (isset($this->error['length_class'])) {
-			$data['error_length_class'] = $this->error['length_class'];
-		} else {
-			$data['error_length_class'] = '';
-		}
-		
-		if (isset($this->error['product_type'])) {
-			$data['error_product_type'] = $this->error['product_type'];
-		} else {
-			$data['error_product_type'] = '';
+			$data['error_keyword'] = array();
 		}
 
 		$url = '';
@@ -694,10 +556,6 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-		}
-		
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -758,10 +616,6 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-		}
-		
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
 		}
 
 		if (isset($this->request->get['filter_status'])) {
@@ -1452,50 +1306,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_layout'] = array();
 		}
-		
-		// Transactions
-		$data['transactions'] = array();
-		
-		$this->load->model('setting/extension');
-		
-		$extensions = $this->model_setting_extension->getInstalled('transaction');
 
-		$data['transactions'] = array();
-		
-		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/transaction/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {				
-				$extension = basename($file, '.php');
-				
-				if ($this->config->get('transaction_' . $extension . '_status')) {
-					$this->load->language('extension/transaction/' . $extension, $extension);
-
-					$data['transactions'][] = array(
-						'name'      	=> $this->language->get($extension . '_heading_title'),
-						'code'			=> html_entity_decode($extension, ENT_QUOTES, 'UTF-8'),
-					);
-				}
-			}
-		}
-		
-		if (isset($this->request->post['product_return'])) {
-			$data['product_return'] = $this->request->post['product_return'];
-		} elseif (!empty($product_info)) {
-			$data['product_return'] = $product_info['return'];
-		} else {
-			$data['product_return'] = array();
-		}
-		
-		if (isset($this->request->post['product_type'])) {
-			$data['product_type'] = $this->request->post['product_type'];
-		} elseif (!empty($product_info)) {
-			$data['product_type'] = $product_info['type'];
-		} else {
-			$data['product_type'] = array();
-		}
-		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1507,162 +1318,14 @@ class ControllerCatalogProduct extends Controller {
 		if (!$this->user->hasPermission('modify', 'catalog/product')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
-		$this->load->model('localisation/language');
-		
-		$this->load->model('localisation/layout');
-		
-		$this->load->model('localisation/stock_status');				
-		
-		$this->load->model('catalog/filter');
-		
-		$this->load->model('catalog/attribute');
-		
-		$this->load->model('catalog/option');
-		
-		$this->load->model('catalog/recurring');
-		
-		$this->load->model('catalog/download');		
 
 		foreach ($this->request->post['product_description'] as $language_id => $value) {
-			$language_info = $this->model_localisation_language->getLanguage($language_id);
-			
-			if (!$language_info) {
-				$this->error['language'] = $this->language->get('error_language');
-			} else {
-				if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 255)) {
-					$this->error['name'][$language_id] = $this->language->get('error_name');
-				}
+			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 255)) {
+				$this->error['name'][$language_id] = $this->language->get('error_name');
+			}
 
-				if ((utf8_strlen($value['meta_title']) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-					$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
-				}
-				
-				if (!empty($this->request->post['product_recurring'])) {
-					foreach ($this->request->post['product_recurring'] as $product_recurring) {
-						$recurring_description = $this->model_catalog_recurring->getRecurringDescription($product_recurring['recurring_id']);
-						
-						if (empty($recurring_description[$language_id]['name'])) {
-							$this->error['product_recurring_description'] = sprintf($this->language->get('error_product_recurring_description'), $language_info['name']);
-							
-							break;
-						}
-					}
-				}
-				
-				if (!empty($this->request->post['stock_status_id'])) {
-					$stock_status_descriptions = $this->model_localisation_stock_status->getStockStatusDescriptions($this->request->post['stock_status_id']);
-				
-					if (empty($stock_status_descriptions[$language_id]['name'])) {
-						$this->error['product_stock_status_description'] = sprintf($this->language->get('error_product_stock_status_description'), $language_info['name']);
-						
-						break;
-					}
-				}
-				
-				if (!empty($this->request->post['product_attribute'])) {
-					foreach ($this->request->post['product_attribute'] as $product_attribute) {
-						$product_attribute_descriptions = $this->model_localisation_catalog_attribute->getAttributeDescriptions($product_attribute['attribute_id']);
-						
-						if (empty($product_attribute_descriptions[$language_id]['name'])) {
-							$this->error['product_attribute_description'] = sprintf($this->language->get('error_product_attribute_description'), $language_info['name']);
-							
-							break;
-						}
-					}
-				}
-				
-				if (!empty($this->request->post['product_filter'])) {
-					foreach ($this->request->post['product_filter'] as $product_filter) {
-						$filter_info = $this->model_catalog_filter->getFilter($product_filter['filter_id']);
-						
-						if (!$filter_info) {
-							$this->error['product_filter'] = $this->language->get('error_product_filter');
-							
-							break;
-						} else {
-							$filter_descriptions = $this->model_catalog_filter->getFilterDescriptions($filter_info['filter_group_id']);
-						
-							if (empty($filter_descriptions[$language_id]['name'])) {
-								$this->error['product_filter_description'] = sprintf($this->language->get('error_product_filter_description'), $language_info['name']);
-							
-								break;
-							}
-						}
-					}
-				}
-				
-				if (!empty($this->request->post['product_option'])) {
-					foreach ($this->request->post['product_option'] as $product_option) {
-						$option_descriptions = $this->model_catalog_option->getOptionDescriptions($product_option['option_id']);
-						
-						if (empty($option_descriptions[$language_id]['name'])) {
-							$this->error['product_option_description'] = sprintf($this->language->get('error_product_option_description'), $language_info['name']);
-							
-							break;
-						}
-						
-						$option_value = $this->model_catalog_option->getOptionValueDescriptions($product_option['option_id']);
-						
-						if (empty($option_value['option_value_description'][$language_id]['name'])) {
-							$this->error['product_option_value_description'] = sprintf($this->language->get('error_product_option_value_description'), $language_info['name']);
-							
-							break;
-						}
-					}
-				}
-				
-				if (!empty($this->request->post['product_reward'])) {
-					foreach ($this->request->post['product_reward'] as $customer_group_id => $product_reward) {
-						$customer_group_descriptions = $this->model_customer_customer_group->getCustomerGroupDescriptions($customer_group_id);
-						
-						if (empty($customer_group_descriptions[$language_id]['name'])) {
-							$this->error['product_reward_description'] = sprintf($this->language->get('error_product_reward_description'), $language_info['name']);
-							
-							break;
-						}
-					}
-				}
-				
-				if (!empty($this->request->post['product_download'])) {
-					foreach ($this->request->post['product_download'] as $product_download) {
-						$product_download_descriptions = $this->model_catalog_download->getDownloadDescriptions($product_download);
-						
-						if (empty($product_download_descriptions[$language_id]['name'])) {
-							$this->error['product_download_description'] = sprintf($this->language->get('error_product_download_description'), $language_info['name']);
-							
-							break;
-						}
-					}
-				}
-				
-				if (!empty($this->request->post['product_layout'])) {
-					foreach ($this->request->post['product_layout'] as $layout_id => $product_layout) {
-						$layout = $this->model_design_layout->getLayout($layout_id);
-						
-						if (!$layout) {
-							$this->error['product_layout'] = $this->language->get('error_product_layout');
-							
-							break;
-						}
-					}
-				}
-				
-				if (isset($this->request->post['product_store'])) {
-					foreach ($this->request->post['product_store'] as $store_id) {
-						if (empty($store_id) || !is_numeric($store_id) || $store_id < 0) {
-							$store_id = 0;
-						}
-						
-						$store = $this->model_setting_store->getStore($store_id);
-						
-						if (!$store) {
-							$this->error['product_store'] = $this->language->get('error_product_store');
-							
-							break;
-						}
-					}
-				}
+			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
@@ -1688,41 +1351,15 @@ class ControllerCatalogProduct extends Controller {
 			foreach ($this->request->post['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if ($keyword) {
-						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
+						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
-						foreach ($seo_urls as $seo_url) {
-
-							if ($seo_url['store_id'] == $store_id && $seo_url['language_id'] == $language_id) {
-
-								if (!isset($this->request->get['product_id']) || ($seo_url['query'] != 'product_id=' . $this->request->get['product_id'])) {
-									$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
-
-									break;
-								}
-
-							}
+						if ($seo_url_info && ($seo_url_info['key'] != 'product_id' || !isset($this->request->get['product_id']) || $seo_url_info['value'] != $this->request->get['product_id'])) {
+							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
 						$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
-			}
-		}
-		
-		if (!empty($this->request->post['shipping'])) {
-			if (!isset($this->request->post['length']) || !filter_var($this->request->post['length'], FILTER_VALIDATE_FLOAT)) {
-				$this->error['length'] = $this->language->get('error_length');
-			} elseif (!isset($this->request->post['width']) || !filter_var($this->request->post['width'], FILTER_VALIDATE_FLOAT)) {
-				$this->error['width'] = $this->language->get('error_width');
-			} elseif (!isset($this->request->post['height']) || !filter_var($this->request->post['height'], FILTER_VALIDATE_FLOAT)) {
-				$this->error['height'] = $this->language->get('error_height');
-			} elseif (!isset($this->request->post['weight_class_id'])) {
-				$this->error['weight_class'] = $this->language->get('error_weight_class');
-			} elseif (!isset($this->request->post['length_class_id'])) {
-				$this->error['length_class'] = $this->language->get('error_length_class');			
-			// Cannot be set to download
-			} elseif (!isset($this->request->post['product_type']) || $this->request->post['product_type'] < 2) {
-				$this->error['product_type'] = $this->language->get('error_product_type');
 			}
 		}
 

@@ -13,19 +13,12 @@ namespace Twig\Node\Expression;
 
 use Twig\Compiler;
 
-class TempNameExpression extends AbstractExpression
+class VariadicExpression extends ArrayExpression
 {
-    public function __construct(string $name, int $lineno)
-    {
-        parent::__construct([], ['name' => $name], $lineno);
-    }
-
     public function compile(Compiler $compiler): void
     {
-        $compiler
-            ->raw('$_')
-            ->raw($this->getAttribute('name'))
-            ->raw('_')
-        ;
+        $compiler->raw('...');
+
+        parent::compile($compiler);
     }
 }

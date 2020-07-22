@@ -12,20 +12,24 @@
 namespace Twig\Node\Expression;
 
 use Twig\Compiler;
+use Twig\Node\Node;
 
-class TempNameExpression extends AbstractExpression
+/**
+ * @internal
+ */
+final class InlinePrint extends AbstractExpression
 {
-    public function __construct(string $name, int $lineno)
+    public function __construct(Node $node, int $lineno)
     {
-        parent::__construct([], ['name' => $name], $lineno);
+        parent::__construct(['node' => $node], [], $lineno);
     }
 
     public function compile(Compiler $compiler): void
     {
         $compiler
-            ->raw('$_')
-            ->raw($this->getAttribute('name'))
-            ->raw('_')
+            ->raw('print (')
+            ->subcompile($this->getNode('node'))
+            ->raw(')')
         ;
     }
 }

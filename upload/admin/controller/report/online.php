@@ -59,8 +59,8 @@ class ControllerReportOnline extends Controller {
 		$filter_data = array(
 			'filter_ip'       => $filter_ip,
 			'filter_customer' => $filter_customer,
-			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'           => $this->config->get('config_limit_admin')
+			'start'           => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'           => $this->config->get('config_pagination')
 		);
 
 		$customer_total = $this->model_report_online->getTotalOnline($filter_data);
@@ -102,11 +102,11 @@ class ControllerReportOnline extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $customer_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($customer_total - $this->config->get('config_limit_admin'))) ? $customer_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $customer_total, ceil($customer_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));
 
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;

@@ -163,8 +163,8 @@ class ControllerCustomerCustomField extends Controller {
 		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
 		$custom_field_total = $this->model_customer_custom_field->getTotalCustomFields();
@@ -269,11 +269,11 @@ class ControllerCustomerCustomField extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $custom_field_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($custom_field_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($custom_field_total - $this->config->get('config_limit_admin'))) ? $custom_field_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $custom_field_total, ceil($custom_field_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($custom_field_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($custom_field_total - $this->config->get('config_pagination'))) ? $custom_field_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $custom_field_total, ceil($custom_field_total / $this->config->get('config_pagination')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -353,7 +353,7 @@ class ControllerCustomerCustomField extends Controller {
 		if (isset($this->request->post['custom_field_description'])) {
 			$data['custom_field_description'] = $this->request->post['custom_field_description'];
 		} elseif (!empty($custom_field_info)) {
-			$data['custom_field_description'] = $this->model_customer_custom_field->getCustomFieldDescriptions($this->request->get['custom_field_id']);
+			$data['custom_field_description'] = $this->model_customer_custom_field->getDescriptions($this->request->get['custom_field_id']);
 		} else {
 			$data['custom_field_description'] = array();
 		}
@@ -409,7 +409,7 @@ class ControllerCustomerCustomField extends Controller {
 		if (isset($this->request->post['custom_field_value'])) {
 			$custom_field_values = $this->request->post['custom_field_value'];
 		} elseif (!empty($custom_field_info)) {
-			$custom_field_values = $this->model_customer_custom_field->getCustomFieldValueDescriptions($this->request->get['custom_field_id']);
+			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($this->request->get['custom_field_id']);
 		} else {
 			$custom_field_values = array();
 		}
@@ -427,7 +427,7 @@ class ControllerCustomerCustomField extends Controller {
 		if (isset($this->request->post['custom_field_customer_group'])) {
 			$custom_field_customer_groups = $this->request->post['custom_field_customer_group'];
 		} elseif (!empty($custom_field_info)) {
-			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomFieldCustomerGroups($this->request->get['custom_field_id']);
+			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($this->request->get['custom_field_id']);
 		} else {
 			$custom_field_customer_groups = array();
 		}
@@ -435,13 +435,15 @@ class ControllerCustomerCustomField extends Controller {
 		$data['custom_field_customer_group'] = array();
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			$data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
+			if (isset($custom_field_customer_group['customer_group_id'])) {
+				$data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
+			}
 		}
 
 		$data['custom_field_required'] = array();
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if ($custom_field_customer_group['required']) {
+			if (isset($custom_field_customer_group['required']) && $custom_field_customer_group['required'] && isset($custom_field_customer_group['customer_group_id'])) {
 				$data['custom_field_required'][] = $custom_field_customer_group['customer_group_id'];
 			}
 		}

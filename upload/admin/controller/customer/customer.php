@@ -361,8 +361,8 @@ class ControllerCustomerCustomer extends Controller {
 			'filter_ip'                => $filter_ip,
 			'sort'                     => $sort,
 			'order'                    => $order,
-			'start'                    => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'                    => $this->config->get('config_limit_admin')
+			'start'                    => ($page - 1) * $this->config->get('config_pagination'),
+			'limit'                    => $this->config->get('config_pagination')
 		);
 
 		$customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
@@ -381,14 +381,16 @@ class ControllerCustomerCustomer extends Controller {
 			$store_data = array();
 
 			$store_data[] = array(
+				'store_id' => 0,
 				'name' => $this->config->get('config_name'),
 				'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=0')
 			);
 
 			foreach ($stores as $store) {
 				$store_data[] = array(
+					'store_id' => $store['store_id'],
 					'name' => $store['name'],
-					'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $result['store_id'])
+					'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $store['store_id'])
 				);
 			}
 
@@ -396,6 +398,7 @@ class ControllerCustomerCustomer extends Controller {
 				'customer_id'    => $result['customer_id'],
 				'name'           => $result['name'],
 				'email'          => $result['email'],
+				'store_id'       => $result['store_id'],
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -506,11 +509,11 @@ class ControllerCustomerCustomer extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $customer_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($customer_total - $this->config->get('config_limit_admin'))) ? $customer_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $customer_total, ceil($customer_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_email'] = $filter_email;
@@ -572,30 +575,6 @@ class ControllerCustomerCustomer extends Controller {
 			$data['error_telephone'] = $this->error['telephone'];
 		} else {
 			$data['error_telephone'] = '';
-		}
-
-		if (isset($this->error['cheque'])) {
-			$data['error_cheque'] = $this->error['cheque'];
-		} else {
-			$data['error_cheque'] = '';
-		}
-
-		if (isset($this->error['paypal'])) {
-			$data['error_paypal'] = $this->error['paypal'];
-		} else {
-			$data['error_paypal'] = '';
-		}
-
-		if (isset($this->error['bank_account_name'])) {
-			$data['error_bank_account_name'] = $this->error['bank_account_name'];
-		} else {
-			$data['error_bank_account_name'] = '';
-		}
-
-		if (isset($this->error['bank_account_number'])) {
-			$data['error_bank_account_number'] = $this->error['bank_account_number'];
-		} else {
-			$data['error_bank_account_number'] = '';
 		}
 
 		if (isset($this->error['password'])) {
@@ -672,6 +651,35 @@ class ControllerCustomerCustomer extends Controller {
 			'href' => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
+		$this->load->model('setting/store');
+
+		$data['stores'] = array();
+		$data['multistore'] = 0;
+		
+		$data['stores'][] = array(
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		);
+		
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = array(
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			);
+
+			$data['multistore'] = $data['multistore'] + 1;
+		}
+
+		if (isset($this->request->post['store_id'])) {
+			$data['store_id'] = $this->request->post['store_id'];
+		} elseif (!empty($customer_info)) {
+			$data['store_id'] = $customer_info['store_id'];
+		} else {
+			$data['store_id'] = array(0);
+		}
+		
 		if (!isset($this->request->get['customer_id'])) {
 			$data['action'] = $this->url->link('customer/customer/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
@@ -744,7 +752,7 @@ class ControllerCustomerCustomer extends Controller {
 			if ($custom_field['status']) {
 				$data['custom_fields'][] = array(
 					'custom_field_id'    => $custom_field['custom_field_id'],
-					'custom_field_value' => $this->model_customer_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
+					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
 					'name'               => $custom_field['name'],
 					'value'              => $custom_field['value'],
 					'type'               => $custom_field['type'],
@@ -901,16 +909,17 @@ class ControllerCustomerCustomer extends Controller {
 					$this->error['address'][$key]['city'] = $this->language->get('error_city');
 				}
 
-				$this->load->model('localisation/country');
-
-				$country_info = $this->model_localisation_country->getCountry($value['country_id']);
-
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
-					$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
-				}
-
-				if ($value['country_id'] == '') {
+				if (!isset($value['country_id']) || $value['country_id'] == '') {
 					$this->error['address'][$key]['country'] = $this->language->get('error_country');
+				} else {
+					
+					$this->load->model('localisation/country');
+
+					$country_info = $this->model_localisation_country->getCountry($value['country_id']);
+	
+					if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
+						$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
+					}
 				}
 
 				if (!isset($value['zone_id']) || $value['zone_id'] == '') {

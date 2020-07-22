@@ -44,18 +44,6 @@
             <div class="form-group">
               <label for="input-quantity" class="col-form-label">{{ entry_quantity }}</label> <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
             </div>
-			<div class="form-group">
-              <label for="input-type" class="col-form-label">{{ entry_type }}</label> <select name="filter_type" id="input-type" class="form-control">
-                <option value=""></option>
-                {% if filter_type == '2' %}
-                  <option value="1">{{ text_physical }}</option>
-				  <option value="2" selected="selected">{{ text_virtual }}</option>
-                {% elseif filter_type == '1' %}
-                  <option value="1" selected="selected">{{ text_physical }}</option>
-				  <option value="2">{{ text_virtual }}</option>
-                {% endif %}
-              </select>
-            </div>
             <div class="form-group">
               <label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
@@ -191,12 +179,6 @@ $('#button-filter').on('click', function() {
 
 	if (filter_quantity) {
 		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
-	}
-	
-	var filter_type = $('select[name=\'filter_type\']').val();
-
-	if (filter_type !== '') {
-		url += '&filter_type=' + encodeURIComponent(filter_type);
 	}
 
 	var filter_status = $('select[name=\'filter_status\']').val();

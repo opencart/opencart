@@ -1,0 +1,80 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button type="submit" form="form-seo-profile" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-seo-profile">
+          <div class="form-group row required">
+            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              {% if error_name %}
+                <div class="invalid-tooltip">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
+              {% if error_key %}
+                <div class="invalid-tooltip">{{ error_key }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="input-regex" class="col-sm-2 col-form-label">{{ entry_regex }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="regex" value="{{ regex }}" placeholder="{{ entry_regex }}" id="input-regex" class="form-control"/>
+              <small class="form-text text-muted">{{ help_regex }}</small>
+              {% if error_regex %}
+                <div class="invalid-tooltip">{{ error_regex }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="input-push" class="col-sm-2 col-form-label">{{ entry_push }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="push" value="{{ push }}" placeholder="{{ entry_push }}" id="input-push" class="form-control"/>
+              <small class="form-text text-muted">{{ help_push }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="input-remove" class="col-sm-2 col-form-label">{{ entry_remove }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="remove" value="{{ remove }}" placeholder="{{ entry_remove }}" id="input-remove" class="form-control"/>
+              <small class="form-text text-muted">{{ help_remove }}</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+              <small class="form-text text-muted">{{ help_sort_order }}</small>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

@@ -13,7 +13,8 @@
       </ol>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -22,38 +23,8 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-seo-url">
-          <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-query">{{ entry_query }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="query" value="{{ query }}" placeholder="{{ entry_query }}" id="input-query" class="form-control"/>
-              <small class="form-text text-muted">{{ help_query }}</small>
-              {% if error_query %}
-                <div class="invalid-tooltip">{{ error_query }}</div>
-              {% endif %}
-            </div>
-          </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-keyword">{{ entry_keyword }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
-              <small class="form-text text-muted">{{ help_keyword }}</small>
-              {% if error_keyword %}
-                <div class="invalid-tooltip">{{ error_keyword }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-push">{{ entry_push }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="push" value="{{ push }}" placeholder="{{ entry_push }}" id="input-push" class="form-control"/>
-              <small class="form-text text-muted">{{ help_push }}</small>
-              {% if error_push %}
-                <div class="invalid-tooltip">{{ error_push }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
+            <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 {% for store in stores %}
@@ -67,7 +38,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
+            <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
             <div class="col-sm-10">
               <select name="language_id" id="input-language" class="form-control">
                 {% for language in languages %}
@@ -78,6 +49,34 @@
                   {% endif %}
                 {% endfor %}
               </select>
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
+              {% if error_key %}
+                <div class="invalid-tooltip">{{ error_key }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
+              {% if error_value %}
+                <div class="invalid-tooltip">{{ error_value }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="input-keyword" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
+              {% if error_keyword %}
+                <div class="invalid-tooltip">{{ error_keyword }}</div>
+              {% endif %}
+              <small class="form-text text-muted">{{ help_keyword }}</small>
             </div>
           </div>
         </form>

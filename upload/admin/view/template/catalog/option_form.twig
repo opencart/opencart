@@ -41,7 +41,7 @@
                 {% endfor %}</div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
+              <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
               <div class="col-sm-10">
                 <select name="type" id="input-type" class="form-control">
                   <optgroup label="{{ text_choose }}">
@@ -101,7 +101,7 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+              <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
                 <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
               </div>
@@ -134,7 +134,7 @@
                           <div class="invalid-tooltip">{{ error_option_value[option_value_row][language.language_id] }}</div>
                         {% endif %}
                       {% endfor %}</td>
-                    <td class="text-left">
+                    <td class="text-center">
                       <div class="card image">
                         <img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image{{ option_value_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/>
                         <div class="card-body">
@@ -143,7 +143,7 @@
                         </div>
                       </div>
                     </td>
-                    <td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" class="form-control"/></td>
+                    <td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" class="form-control" placeholder="{{ entry_sort_order }}"/></td>
                     <td class="text-right"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                   </tr>
                   {% set option_value_row = option_value_row + 1 %}

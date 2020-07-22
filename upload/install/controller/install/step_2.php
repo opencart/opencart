@@ -57,24 +57,16 @@ class ControllerInstallStep2 extends Controller {
 		// catalog config
 		if (!is_file(DIR_OPENCART . 'config.php')) {
 			$data['error_catalog_config'] = $this->language->get('error_missing');
+		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
+			$data['error_catalog_config'] = $this->language->get('error_unwritable');
 		} else {
 			$data['error_catalog_config'] = '';
-		}
-		
-		if (!is_writable(DIR_OPENCART . 'config.php')) {
-			$data['error_catalog'] = $this->language->get('error_unwritable');
-		} else {
-			$data['error_catalog'] = '';
 		}
 
 		// admin configs
 		if (!is_file(DIR_OPENCART . 'admin/config.php')) {
 			$data['error_admin_config'] = $this->language->get('error_missing');
-		} else {
-			$data['error_admin_config_admin'] = '';
-		}
-		
-		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
+		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
 			$data['error_admin_config'] = $this->language->get('error_unwritable');
 		} else {
 			$data['error_admin_config'] = '';
@@ -97,11 +89,17 @@ class ControllerInstallStep2 extends Controller {
 		} else {
 			$data['error_image_catalog'] = '';
 		}	
-		
-		if (!is_writable(DIR_SYSTEM . 'storage/logs/')) {
-			$data['error_log'] = $this->language->get('error_unwritable');
+
+		if (!is_writable(DIR_SYSTEM . 'storage/cache/')) {
+			$data['error_cache'] = $this->language->get('error_unwritable');
 		} else {
-			$data['error_log'] = '';
+			$data['error_cache'] = '';
+		}
+
+		if (!is_writable(DIR_SYSTEM . 'storage/logs/')) {
+			$data['error_logs'] = $this->language->get('error_unwritable');
+		} else {
+			$data['error_logs'] = '';
 		}		
 			
 		if (!is_writable(DIR_SYSTEM . 'storage/download/')) {

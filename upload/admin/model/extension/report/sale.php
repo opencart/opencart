@@ -144,30 +144,6 @@ class ModelExtensionReportSale extends Model {
 		} else {
 			$sql .= " WHERE o.order_status_id > '0'";
 		}
-  
-		if (!empty($data['filter_payment_country_id'])) {
-			$sql .= " AND o.payment_country_id = '" . (int)$data['filter_payment_country_id'] . "'";
-		}
-		
-		if (!empty($data['filter_payment_zone_id'])) {
-			$sql .= " AND o.payment_zone_id = '" . (int)$data['filter_payment_zone_id'] . "'";
-		}
-		
-		if (!empty($data['filter_payment_city'])) {
-			$sql .= " AND LCASE(TRIM(o.payment_city)) = '" . $this->db->escape(strtolower($data['filter_payment_city'])) . "'";
-		}
-		
-		if (!empty($data['filter_shipping_country_id'])) {
-			$sql .= " AND o.shipping_country_id = '" . (int)$data['filter_shipping_country_id'] . "'";
-		}
-		
-		if (!empty($data['filter_shipping_zone_id'])) {
-			$sql .= " AND o.shipping_zone_id = '" . (int)$data['filter_shipping_zone_id'] . "'";
-		}
-		
-		if (!empty($data['filter_shipping_city'])) {
-			$sql .= " AND LCASE(TRIM(o.shipping_city)) = '" . $this->db->escape(strtolower($data['filter_shipping_city'])) . "'";
-		}
 
 		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
@@ -245,30 +221,6 @@ class ModelExtensionReportSale extends Model {
 			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
 			$sql .= " WHERE order_status_id > '0'";
-		}
-  
-		if (!empty($data['filter_payment_country_id'])) {
-			$sql .= " AND payment_country_id = '" . (int)$data['filter_payment_country_id'] . "'";
-		}
-		
-		if (!empty($data['filter_payment_zone_id'])) {
-			$sql .= " AND payment_zone_id = '" . (int)$data['filter_payment_zone_id'] . "'";
-		}
-		
-		if (!empty($data['filter_payment_city'])) {
-			$sql .= " AND LCASE(TRIM(payment_city)) = '" . $this->db->escape(strtolower($data['filter_payment_city'])) . "'";
-		}
-		
-		if (!empty($data['filter_shipping_country_id'])) {
-			$sql .= " AND shipping_country_id = '" . (int)$data['filter_shipping_country_id'] . "'";
-		}
-		
-		if (!empty($data['filter_shipping_zone_id'])) {
-			$sql .= " AND shipping_zone_id = '" . (int)$data['filter_shipping_zone_id'] . "'";
-		}
-		
-		if (!empty($data['filter_shipping_city'])) {
-			$sql .= " AND LCASE(TRIM(shipping_city)) = '" . $this->db->escape(strtolower($data['filter_shipping_city'])) . "'";
 		}
 
 		if (!empty($data['filter_date_start'])) {

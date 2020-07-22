@@ -40,7 +40,9 @@ final class Twig {
 				'cache'       => DIR_CACHE . 'template/'
 			);
 
-			$loader = new \Twig\Loader\ArrayLoader(array($filename . '.twig' => $code));
+			$loader1 = new \Twig_Loader_Array(array($filename . '.twig' => $code));
+			$loader2 = new \Twig_Loader_Filesystem(array(DIR_TEMPLATE));
+			$loader = new \Twig_Loader_Chain(array($loader1, $loader2));
 
 			try {
 				$twig = new \Twig\Environment($loader, $config);

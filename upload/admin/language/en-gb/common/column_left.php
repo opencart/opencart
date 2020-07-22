@@ -56,6 +56,7 @@ $_['text_return_status']        = 'Return Statuses';
 $_['text_sale']                 = 'Sales';
 $_['text_setting']              = 'Settings';
 $_['text_seo']                  = 'SEO';
+$_['text_seo_profile']          = 'SEO Profile';
 $_['text_seo_regex']            = 'SEO Regex';
 $_['text_seo_url']              = 'SEO URL';
 $_['text_statistics']           = 'Statistics';

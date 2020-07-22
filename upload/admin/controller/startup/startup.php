@@ -2,7 +2,7 @@
 class ControllerStartupStartup extends Controller {
 	public function index() {
 		// Settings
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'"); 
 		
 		foreach ($query->rows as $setting) {
 			if (!$setting['serialized']) {
@@ -29,7 +29,17 @@ class ControllerStartupStartup extends Controller {
 
 		$this->session->start($session_id);
 
-		setcookie($this->config->get('session_name'), $this->session->getId(), (ini_get('session.cookie_lifetime') ? (time() + ini_get('session.cookie_lifetime')) : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'), ini_get('session.cookie_secure'), ini_get('session.cookie_httponly'));
+		// Require higher security for session cookies
+		$option = array(
+			'max-age'  => time() + $this->config->get('session_expire'),
+			'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
+			'domain'   => $this->request->server['HTTP_HOST'],
+			'secure'   => $this->request->server['HTTPS'],
+			'httponly' => false,
+			'SameSite' => 'strict'
+		);
+
+		oc_setcookie($this->config->get('session_name'), $this->session->getId(), $option);
 
 		// Response output compression level
 		if ($this->config->get('config_compression')) {

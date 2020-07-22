@@ -163,8 +163,8 @@ class ControllerDesignBanner extends Controller {
 		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
 		$banner_total = $this->model_design_banner->getTotalBanners();
@@ -228,11 +228,11 @@ class ControllerDesignBanner extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $banner_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($banner_total - $this->config->get('config_limit_admin'))) ? $banner_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $banner_total, ceil($banner_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($banner_total - $this->config->get('config_pagination'))) ? $banner_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $banner_total, ceil($banner_total / $this->config->get('config_pagination')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -330,7 +330,7 @@ class ControllerDesignBanner extends Controller {
 		if (isset($this->request->post['banner_image'])) {
 			$banner_images = $this->request->post['banner_image'];
 		} elseif (!empty($banner_info)) {
-			$banner_images = $this->model_design_banner->getBannerImages($this->request->get['banner_id']);
+			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id']);
 		} else {
 			$banner_images = array();
 		}
@@ -371,14 +371,14 @@ class ControllerDesignBanner extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+		if ((utf8_strlen(trim($this->request->post['name'])) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
 		if (isset($this->request->post['banner_image'])) {
 			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
 				foreach ($banner_image as $key => $value) {
-					if ((utf8_strlen($value['title']) < 2) || (utf8_strlen($value['title']) > 64)) {
+					if ((utf8_strlen(trim($value['title'])) < 2) || (utf8_strlen($value['title']) > 64)) {
 						$this->error['banner_image'][$language_id][$key] = $this->language->get('error_title');
 					}
 				}

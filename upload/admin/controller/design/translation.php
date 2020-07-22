@@ -156,18 +156,18 @@ class ControllerDesignTranslation extends Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$this->load->model('localisation/language');
-
 		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$this->load->model('localisation/language');
 
 		$data['translations'] = array();
 
 		$filter_data = array(
-			'sort' => $sort,
+			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
+			'start' => ($page - 1) * $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination')
 		);
 
 		$translation_total = $this->model_design_translation->getTotalTranslations();
@@ -175,14 +175,22 @@ class ControllerDesignTranslation extends Controller {
 		$results = $this->model_design_translation->getTranslations($filter_data);
 
 		foreach ($results as $result) {
+			$language_info = $this->model_localisation_language->getLanguage($result['language_id']);
+
+			if ($language_info) {
+				$code = $language_info['code'];
+			} else {
+				$code = '';
+			}
+
 			$data['translations'][] = array(
 				'translation_id' => $result['translation_id'],
-				'store' => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
-				'route' => $result['route'],
-				'language' => $result['language'],
-				'key' => $result['key'],
-				'value' => $result['value'],
-				'edit' => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id']),
+				'store'          => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
+				'route'          => $result['route'],
+				'language'       => $code,
+				'key'            => $result['key'],
+				'value'          => $result['value'],
+				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
 			);
 		}
 
@@ -229,11 +237,11 @@ class ControllerDesignTranslation extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $translation_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($translation_total - $this->config->get('config_limit_admin'))) ? $translation_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $translation_total, ceil($translation_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($translation_total - $this->config->get('config_pagination'))) ? $translation_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $translation_total, ceil($translation_total / $this->config->get('config_pagination')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -360,7 +368,7 @@ class ControllerDesignTranslation extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['key']) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
+		if ((utf8_strlen(trim($this->request->post['key'])) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 

@@ -12,8 +12,6 @@ $_['text_month']        = 'Months';
 $_['text_week']         = 'Weeks';
 $_['text_day']          = 'Days';
 $_['text_all_status']   = 'All Statuses';
-$_['text_payment'] 		  = 'Payment';
-$_['text_shipping']		  = 'Shipping';
 
 // Column
 $_['column_date_start'] = 'Date Start';
@@ -28,12 +26,7 @@ $_['entry_date_start']  = 'Date Start';
 $_['entry_date_end']    = 'Date End';
 $_['entry_group']       = 'Group By';
 $_['entry_status']      = 'Order Status';
-$_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';
-$_['entry_region']		  = 'Search regions by';
-$_['entry_country'] 	  = 'Country';
-$_['entry_zone']		    = 'Zone';
-$_['entry_city']		    = 'City';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify sales report!';

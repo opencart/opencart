@@ -1,0 +1,51 @@
+{
+    "name": "scssphp/scssphp",
+    "type": "library",
+    "description": "scssphp is a compiler for SCSS written in PHP.",
+    "keywords": ["css", "stylesheet", "scss", "sass", "less"],
+    "homepage": "http://scssphp.github.io/scssphp/",
+    "license": [
+        "MIT"
+    ],
+    "authors": [
+        {
+            "name": "Anthon Pang",
+            "email": "apang@softwaredevelopment.ca",
+            "homepage": "https://github.com/robocoder"
+        },
+        {
+            "name": "Cédric Morin",
+            "email": "cedric@yterium.com",
+            "homepage": "https://github.com/Cerdic"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "ScssPhp\\ScssPhp\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "ScssPhp\\ScssPhp\\Tests\\": "tests/" }
+    },
+    "require": {
+        "php": ">=5.6.0",
+        "ext-json": "*",
+        "ext-ctype": "*"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "~3.5",
+        "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3",
+        "twbs/bootstrap": "~4.3",
+        "zurb/foundation": "~6.5"
+    },
+    "minimum-stability": "dev",
+    "bin": ["bin/pscss"],
+    "archive": {
+        "exclude": [
+            "/Makefile",
+            "/.gitattributes",
+            "/.gitignore",
+            "/.travis.yml",
+            "/phpunit.xml.dist",
+            "/tests"
+        ]
+    }
+}

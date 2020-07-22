@@ -19,7 +19,7 @@
       <div class="card-body">
         <form>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
+            <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 <option value="0">{{ text_default }}</option>
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="input-to">{{ entry_to }}</label>
+            <label for="input-to" class="col-sm-2 col-form-label">{{ entry_to }}</label>
             <div class="col-sm-10">
               <select name="to" id="input-to" class="form-control">
                 <option value="newsletter">{{ text_newsletter }}</option>
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="form-group row to" id="to-customer-group">
-            <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
+            <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <select name="customer_group_id" id="input-customer-group" class="form-control">
                 {% for customer_group in customer_groups %}
@@ -54,37 +54,43 @@
             </div>
           </div>
           <div class="form-group row to" id="to-customer">
-            <label class="col-sm-2 col-form-label" for="input-customer">{{ entry_customer }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
             <div class="col-sm-10">
               <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-              <div id="mail-customer" class="form-control" style="height: 150px; overflow: auto;"></div>
+              <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                <table id="mail-customer" class="table table-sm m-0"></table>
+              </div>
               <small class="form-text text-muted">{{ help_customer }}</small>
             </div>
           </div>
           <div class="form-group row to" id="to-affiliate">
-            <label class="col-sm-2 col-form-label" for="input-affiliate">{{ entry_affiliate }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
             <div class="col-sm-10">
               <input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
-              <div id="mail-affiliate" class="form-control" style="height: 150px; overflow: auto;"></div>
+              <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                <table id="mail-affiliate" class="table table-sm m-0"></table>
+              </div>
               <small class="form-text text-muted">{{ help_affiliate }}</small>
             </div>
           </div>
           <div class="form-group row to" id="to-product">
-            <label class="col-sm-2 col-form-label" for="input-product">{{ entry_product }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
               <input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-              <div id="mail-product" class="form-control" style="height: 150px; overflow: auto;"></div>
+              <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                <table id="mail-product" class="table table-sm m-0"></table>
+              </div>
               <small class="form-text text-muted">{{ help_product }}</small>
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-subject">{{ entry_subject }}</label>
+            <label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
             <div class="col-sm-10">
               <input type="text" name="subject" value="" placeholder="{{ entry_subject }}" id="input-subject" class="form-control"/>
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-sm-2 col-form-label" for="input-message">{{ entry_message }}</label>
+            <label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
             <div class="col-sm-10">
               <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
             </div>
@@ -130,12 +136,17 @@ $('input[name=\'customers\']').autocomplete({
 
 		$('#mail-customer' + item['value']).remove();
 
-		$('#mail-customer').append('<div id="mail-customer' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
+		html  = '<tr id="mail-customer' + item['value'] + '">';
+		html += '  <td>' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '"/></td>';
+		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+		html += '</tr>';
+
+		$('#mail-customer').append(html);
 	}
 });
 
-$('#mail-customer').on('click', '.fa-minus-circle', function() {
-	$(this).parent().remove();
+$('#mail-customer').on('click', '.btn', function() {
+	$(this).parent().parent().remove();
 });
 
 // Affiliates
@@ -162,12 +173,17 @@ $('input[name=\'affiliates\']').autocomplete({
 
 		$('#mail-affiliate' + item['value']).remove();
 
-		$('#mail-affiliate').append('<div id="mail-affiliate' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
+		html  = '<tr id="mail-affiliate' + item['value'] + '">';
+		html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
+		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+		html += '</tr>';
+
+		$('#mail-affiliate').append(html);
 	}
 });
 
-$('#input-affiliate').on('click', '.fa-minus-circle', function() {
-	$(this).parent().remove();
+$('#input-affiliate').on('click', '.btn', function() {
+	$(this).parent().parent().remove();
 });
 
 // Products
@@ -194,12 +210,17 @@ $('input[name=\'products\']').autocomplete({
 
 		$('#mail-product' + item['value']).remove();
 
-		$('#mail-product').append('<div id="mail-product' + item['value'] + '"><i class="fas fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
+		html  = '<tr id="mail-product' + item['value'] + '">';
+		html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
+		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+		html += '</tr>';
+
+		$('#mail-product').append(html);
 	}
 });
 
-$('#mail-product').on('click', '.fa-minus-circle', function() {
-	$(this).parent().remove();
+$('#mail-product').on('click', '.btn', function() {
+	$(this).parent().parent().remove();
 });
 
 function send(url) {
@@ -256,6 +277,5 @@ function send(url) {
 		}
 	});
 }
-
 //--></script>
 {{ footer }}

@@ -1,0 +1,40 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-center">{{ column_image }}</td>
+        <td class="text-left">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
+        <td class="text-left">{% if sort == 'version' %}<a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>{% else %}<a href="{{ sort_version }}">{{ column_version }}</a>{% endif %}</td>
+        <td class="text-left">{% if sort == 'date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
+        <td class="text-right">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if extensions %}
+        {% for extension in extensions %}
+          <tr>
+            <td class="text-center"><a href="{{ extension.link }}" target="_blank"><img src="https://image.opencart.com/cache/{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-responsive"/></a></td>
+            <td class="text-left align-text-top"><a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a></td>
+            <td class="text-left align-text-top">{{ extension.version }}</td>
+            <td class="text-left align-text-top">{{ extension.date_added }}</td>
+            <td class="text-right align-text-top">{% if not extension.status %}
+                <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+                <a href="{{ extension.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+              {% else %}
+                <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fas fa-minus-circle"></i></a>
+                <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="far fa-trash-alt"></i></button>
+              {% endif %}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="5">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>

@@ -1,0 +1,34 @@
+<table class="table table-bordered">
+  <thead>
+    <td>{{ text_name }}</td>
+    <td>{{ text_date_added }}</td>
+    <td class="text-right">{{ text_action }}</td>
+  </thead>
+  <tbody>
+    {% if downloads %}
+      {% for download in downloads %}
+        <tr>
+          <td>{{ download.name }}</td>
+          <td>{{ download.date_added }}</td>
+          <td class="text-right">
+            <div class="dropdown">
+              <div class="btn-group">
+                <button type="button" value="{{ download.download }}" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.extension_install_id and download.status %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
+                <button type="button" data-toggle="dropdown" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"><i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a href="{{ download.install }}" class="dropdown-item{% if download.extension_install_id and download.installed %} disabled{% endif %}"><i class="fa fa-plus-circle fa-fw"></i> {{ text_install }}</a>
+                  <a href="{{ download.uninstall }}" class="dropdown-item{% if download.extension_install_id and not download.installed %} disabled{% endif %}"><i class="fa fa-minus-circle fa-fw"></i> {{ text_uninstall }}</a>
+                  <a href="{{ download.delete }}" class="dropdown-item{% if download.extension_install_id and download.installed %} disabled{% endif %}"><i class="far fa-trash-alt fa-fw"></i> {{ text_delete }}</a>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="3" class="text-center">{{ text_no_results }}</td>
+      </tr>
+    {% endif %}
+  </tbody>
+</table>

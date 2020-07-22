@@ -32,7 +32,7 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+                <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
                   {% if error_name %}
@@ -41,32 +41,32 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-description">{{ entry_description }}</label>
+                <label for="input-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
                 <div class="col-sm-10">
                   <textarea name="description" rows="5" placeholder="{{ entry_description }}" id="input-description" class="form-control">{{ description }}</textarea>
                 </div>
               </div>
               <div class="form-group row required">
-                <label class="col-sm-2 col-form-label" for="input-code">{{ entry_code }}</label>
+                <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_code }}</small>
                   {% if error_code %}
                     <div class="invalid-tooltip">{{ error_code }}</div>
                   {% endif %}
+                  <small class="form-text text-muted">{{ help_code }}</small>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="input-example">{{ entry_example }}</label>
+                <label for="input-example" class="col-sm-2 col-form-label">{{ entry_example }}</label>
                 <div class="col-sm-10">
-                  <input type="text" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
+                  <input type="text" name="example1" value="" placeholder="{{ entry_example }}" id="input-example1" class="form-control"/>
                   <br/>
-                  <input type="text" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
+                  <input type="text" name="example2" value="" placeholder="{{ entry_example }}" id="input-example2" class="form-control"/>
                   <small class="form-text text-muted">{{ help_example }}</small>
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-report">
+            <div id="tab-report" class="tab-pane">
               <fieldset>
                 <legend>{{ text_report }}</legend>
                 <div id="report"></div>
@@ -79,10 +79,10 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-code').on('keyup', function() {
-	$('#input-example1').val('{{ store }}?tracking=' + $('#input-code').val());
+$('#input-code').on('keyup', function(e) {
+	$('#input-example1').attr('value', '{{ store }}?tracking=' + $('#input-code').val());
 
-	$('#input-example2').val('{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
+	$('#input-example2').attr('value', '{{ store }}index.php?route=common/home&tracking=' + $('#input-code').val());
 });
 
 $('#input-code').trigger('keyup');

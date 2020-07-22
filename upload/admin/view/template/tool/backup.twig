@@ -83,127 +83,145 @@ $('#button-backup').on('click', function() {
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 
-	backup('index.php?route=tool/backup/backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val());
+	var element = this;
+
+	var next = 'index.php?route=tool/backup/backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val();
+
+	var backup = function() {
+		return $.ajax({
+			url: next,
+			type: 'post',
+			data: $('input[name^=\'backup\']:checked'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-backup').button('loading');
+				$('#button-upload, #history .btn').prop('disabled', true);
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
+
+				if (json['error']) {
+					$('#progress-bar').addClass('progress-bar-danger');
+					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+
+					$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
+
+					$('#button-backup').button('reset');
+					$('#button-upload, #history .btn').prop('disabled', false);
+				}
+
+				if (json['success']) {
+					$('#progress-bar').css('width', '100%').addClass('progress-bar-success');
+					$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+
+					$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
+
+					$('#button-backup').button('reset');
+					$('#button-upload, #history .btn').prop('disabled', false);
+				}
+
+				if (json['progress']) {
+					$('#progress-bar').css('width', json['progress'] + '%');
+				}
+
+				if (json['text']) {
+					$('#progress-text').html(json['text']);
+				}
+
+				if (json['next']) {
+					next = json['next'];
+
+					chain.attach(backup);
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+				$('#button-backup').button('reset');
+				$('#button-upload, #history .btn').prop('disabled', false);
+			}
+		});
+	};
+
+	chain.attach(backup);
 });
-
-function backup(url) {
-	$('#progress-bar').css('width', '0%');
-	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
-
-	$.ajax({
-		url: url,
-		type: 'post',
-		data: $('input[name^=\'backup\']:checked'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-backup').button('loading');
-			$('#button-upload, #history .btn').prop('disabled', true);
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
-
-			if (json['progress']) {
-				$('#progress-bar').css('width', json['progress'] + '%');
-			}
-
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
-
-				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
-
-				$('#button-backup').button('reset');
-				$('#button-upload, #history .btn').prop('disabled', false);
-			}
-
-			if (json['success']) {
-				$('#progress-bar').css('width', '100%').addClass('progress-bar-success');
-				$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
-
-				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
-
-				$('#button-backup').button('reset');
-				$('#button-upload, #history .btn').prop('disabled', false);
-			}
-
-			if (json['text']) {
-				$('#progress-text').html(json['text']);
-			}
-
-			if (json['next']) {
-				backup(json['next']);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-			$('#button-backup').button('reset');
-			$('#button-upload, #history .btn').prop('disabled', false);
-		}
-	});
-};
 
 // Restore
 $('#history').on('click', '.btn-warning', function() {
+	var element = this;
+
 	$('#progress-bar').css('width', '0%');
 	$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 
-	restore('index.php?route=tool/backup/restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val(), this));
+	var next = 'index.php?route=tool/backup/restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
+
+	var restore = function(url, element) {
+		return $.ajax({
+			url: next,
+			type: 'post',
+			dataType: 'json',
+			beforeSend: function() {
+				$(element).button('loading');
+
+				$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', true);
+			},
+			complete: function() {
+				$(element).button('reset');
+			},
+			success: function(json) {
+				$('.alert-dismissible').remove();
+
+				if (json['progress']) {
+					$('#progress-bar').css('width', json['progress'] + '%');
+				}
+
+				if (json['error']) {
+					$('#progress-bar').addClass('progress-bar-danger');
+					$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
+
+					$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
+
+					$(element).button('reset');
+					$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
+				}
+
+				if (json['success']) {
+					$('#progress-bar').css('width', '100%').addClass('progress-bar-success');
+					$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+
+					$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
+
+					$(element).button('reset');
+					$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
+				}
+
+				if (json['text']) {
+					$('#progress-text').html(json['text']);
+				}
+
+				if (json['next']) {
+					next = json['next'];
+
+					chain.attach(restore);
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+				$(element).button('reset');
+				$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
+			}
+
+		});
+	}
+
+	chain.attach(restore);
 });
 
-function restore(url, element) {
-	$.ajax({
-		url: url,
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-			$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', true);
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
-
-			if (json['progress']) {
-				$('#progress-bar').css('width', json['progress'] + '%');
-			}
-
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
-
-				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
-
-				$(element).button('reset');
-				$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
-			}
-
-			if (json['success']) {
-				$('#progress-bar').css('width', '100%').addClass('progress-bar-success');
-				$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
-
-				$('#history').load('index.php?route=tool/backup/history&user_token={{ user_token }}');
-
-				$(element).button('reset');
-				$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
-			}
-
-			if (json['text']) {
-				$('#progress-text').html(json['text']);
-			}
-
-			if (json['next']) {
-				restore(json['next'], element);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-			$(element).button('reset');
-			$('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
-		}
-	});
-}
-
+// Upload
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 

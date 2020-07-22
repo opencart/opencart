@@ -1,41 +1,13 @@
 <?php
 class ModelAccountReturn extends Model {
 	public function addReturn($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET order_id = '" . (int)$data['order_id'] . "', customer_id = '" . (int)$data['customer_id'] . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', return_reason_id = '" . (int)$data['return_reason_id'] . "', return_action_id = '" . (int)$data['return_action_id'] . "', return_status_id = '" . (int)$data['return_status_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', date_ordered = '" . $this->db->escape((string)$data['date_ordered']) . "', date_added = NOW(), date_modified = NOW()");
-		
-		$return_id = $this->db->getLastId();
-		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "return_description WHERE return_id = '" . (int)$return_id . "'");
-		
-		if (isset($data['return_description'])) {
-			foreach ($data['return_description'] as $value) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "return_description SET return_id = '" . (int)$return_id . "', `product` = '" . $this->db->escape($value['product']) . "', product_id = '" . (int)$value['product_id'] . "', model = '" . $this->db->escape($value['model']) . "', quantity = '" . (int)$value['quantity'] . "', opened = '" . (int)$value['opened'] . "'");
-			}
-		}
-		
-		return $return_id;
-	}
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET order_id = '" . (int)$data['order_id'] . "', customer_id = '" . (int)$this->customer->getId() . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', product = '" . $this->db->escape((string)$data['product']) . "', model = '" . $this->db->escape((string)$data['model']) . "', quantity = '" . (int)$data['quantity'] . "', opened = '" . (int)$data['opened'] . "', return_reason_id = '" . (int)$data['return_reason_id'] . "', return_status_id = '" . (int)$this->config->get('config_return_status_id') . "', comment = '" . $this->db->escape((string)$data['comment']) . "', date_ordered = '" . $this->db->escape((string)$data['date_ordered']) . "', date_added = NOW(), date_modified = NOW()");
 
-	public function editReturn($return_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET order_id = '" . (int)$data['order_id'] . "', customer_id = '" . (int)$data['customer_id'] . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', return_reason_id = '" . (int)$data['return_reason_id'] . "', return_action_id = '" . (int)$data['return_action_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', date_ordered = '" . $this->db->escape((string)$data['date_ordered']) . "', date_modified = NOW() WHERE return_id = '" . (int)$return_id . "'");
-		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "return_description WHERE return_id = '" . (int)$return_id . "'");
-		
-		if (isset($data['return_description'])) {
-			foreach ($data['return_description'] as $value) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "return_description SET return_id = '" . (int)$return_id . "', `product` = '" . $this->db->escape($value['product']) . "', product_id = '" . (int)$value['product_id'] . "', model = '" . $this->db->escape($value['model']) . "', quantity = '" . (int)$value['quantity'] . "', opened = '" . (int)$value['opened'] . "'");
-			}
-		}
+		return $this->db->getLastId();
 	}
 
 	public function getReturn($return_id) {
 		$query = $this->db->query("SELECT r.return_id, r.order_id, r.firstname, r.lastname, r.email, r.telephone, r.product, r.model, r.quantity, r.opened, (SELECT rr.name FROM " . DB_PREFIX . "return_reason rr WHERE rr.return_reason_id = r.return_reason_id AND rr.language_id = '" . (int)$this->config->get('config_language_id') . "') AS reason, (SELECT ra.name FROM " . DB_PREFIX . "return_action ra WHERE ra.return_action_id = r.return_action_id AND ra.language_id = '" . (int)$this->config->get('config_language_id') . "') AS action, (SELECT rs.name FROM " . DB_PREFIX . "return_status rs WHERE rs.return_status_id = r.return_status_id AND rs.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, r.comment, r.date_ordered, r.date_added, r.date_modified FROM `" . DB_PREFIX . "return` r WHERE r.return_id = '" . (int)$return_id . "' AND r.customer_id = '" . $this->customer->getId() . "'");
-
-		return $query->row;
-	}
-	
-	public function getReturnByOrderId($order_id) {
-		$query = $this->db->query("SELECT r.return_id, r.order_id, r.firstname, r.lastname, r.email, r.telephone, r.product, r.model, r.quantity, r.opened, (SELECT rr.name FROM " . DB_PREFIX . "return_reason rr WHERE rr.return_reason_id = r.return_reason_id AND rr.language_id = '" . (int)$this->config->get('config_language_id') . "') AS reason, (SELECT ra.name FROM " . DB_PREFIX . "return_action ra WHERE ra.return_action_id = r.return_action_id AND ra.language_id = '" . (int)$this->config->get('config_language_id') . "') AS action, (SELECT rs.name FROM " . DB_PREFIX . "return_status rs WHERE rs.return_status_id = r.return_status_id AND rs.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, r.comment, r.date_ordered, r.date_added, r.date_modified FROM `" . DB_PREFIX . "return` r WHERE r.`order_id` = '" . (int)$order_id . "' AND r.customer_id = '" . $this->customer->getId() . "'");
 
 		return $query->row;
 	}
@@ -53,12 +25,6 @@ class ModelAccountReturn extends Model {
 
 		return $query->rows;
 	}
-	
-	public function getDescriptions($return_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_description WHERE return_id = '" . (int)$return_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
-		
-		return $query->rows;
-	}
 
 	public function getTotalReturns() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return`WHERE customer_id = '" . $this->customer->getId() . "'");
@@ -66,7 +32,7 @@ class ModelAccountReturn extends Model {
 		return $query->row['total'];
 	}
 
-	public function getReturnHistories($return_id) {
+	public function getHistories($return_id) {
 		$query = $this->db->query("SELECT rh.date_added, rs.name AS status, rh.comment FROM " . DB_PREFIX . "return_history rh LEFT JOIN " . DB_PREFIX . "return_status rs ON rh.return_status_id = rs.return_status_id WHERE rh.return_id = '" . (int)$return_id . "' AND rs.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY rh.date_added ASC");
 
 		return $query->rows;

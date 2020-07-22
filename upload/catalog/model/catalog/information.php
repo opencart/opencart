@@ -12,7 +12,7 @@ class ModelCatalogInformation extends Model {
 		return $query->rows;
 	}
 
-	public function getInformationLayoutId($information_id) {
+	public function getLayoutId($information_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . (int)$information_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {

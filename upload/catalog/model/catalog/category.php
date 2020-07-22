@@ -12,7 +12,7 @@ class ModelCatalogCategory extends Model {
 		return $query->rows;
 	}
 
-	public function getCategoryFilters($category_id) {
+	public function getFilters($category_id) {
 		$implode = array();
 
 		$query = $this->db->query("SELECT filter_id FROM " . DB_PREFIX . "category_filter WHERE category_id = '" . (int)$category_id . "'");
@@ -51,7 +51,7 @@ class ModelCatalogCategory extends Model {
 		return $filter_group_data;
 	}
 
-	public function getCategoryLayoutId($category_id) {
+	public function getLayoutId($category_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		if ($query->num_rows) {

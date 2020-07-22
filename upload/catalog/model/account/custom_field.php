@@ -6,59 +6,14 @@ class ModelAccountCustomField extends Model {
 		return $query->row;
 	}
 
-	public function getCustomFields($data = array()) {
+	public function getCustomFields($customer_group_id = 0) {
 		$custom_field_data = array();
-		
-		$sql = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id)");
-		
-		if (!empty($data['customer_group_id'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "custom_field_customer_group` cfcg ON (cfcg.custom_field_id = cf.custom_field_id)";
-		}
-		
-		$sql .= " WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND cf.status = '1'";
-		
-		if (!empty($data['customer_group_id'])) {
-			$sql .= " AND cfcg.customer_group_id = '" . (int)$data['customer_group_id'] . "'";
-		}
-		
-		if (!empty($data['custom_field_id'])) {
-			$sql .= " AND cf.custom_field_id = '" . (int)$data['custom_field_id'] . "'";
-		}
-		
-		if (!empty($data['location'])) {
-			if ($data['location'] != 'account') {
-				$sql .= " AND cf.location = '" . $this->db->escape($data['location']) . "'";
-			} else {
-				if ($data['location'] == 'account' && isset($data['affiliate']) && $data['affiliate']) {
-					$sql .= " AND (cf.location = 'account') OR (cf.location = 'affiliate')";
-				} elseif ($data['location'] == 'account' && isset($data['address']) && $data['address']) {
-					$sql .= " AND (cf.location = 'account') OR (cf.location = 'address')";
-				} elseif ($data['location'] != 'account' && isset($data['affiliate']) && $data['affiliate']) {
-					$sql .= " AND cf.location = 'affiliate'";
-				} elseif ($data['location'] == 'account' && !isset($data['affiliate'])) {
-					$sql .= " AND cf.location = 'account'";
-				}
-			}
-		}
-		
-		$sort_data = array(
-			'cf.name',
-			'cf.sort_order'
-		);
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+		if (!$customer_group_id) {
+			$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cf.status = '1' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND cf.status = '1' ORDER BY cf.sort_order ASC");
 		} else {
-			$sql .= " ORDER BY cf.name";
+			$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` cfcg LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfcg.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cf.status = '1' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND cfcg.customer_group_id = '" . (int)$customer_group_id . "' ORDER BY cf.sort_order ASC");
 		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
-
-		$custom_field_query = $this->db->query($sql);
 
 		foreach ($custom_field_query->rows as $custom_field) {
 			$custom_field_value_data = array();

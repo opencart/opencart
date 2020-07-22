@@ -11,28 +11,28 @@ $_['text_filter']          = 'Filter';
 $_['text_default']         = 'Default';
 
 // Column
-$_['column_query']         = 'Query';
+$_['column_key']           = 'Key';
+$_['column_value']         = 'Value';
 $_['column_keyword']       = 'Keyword';
 $_['column_store']         = 'Store';
 $_['column_language']      = 'Language';
 $_['column_action']        = 'Action';
 
 // Entry
-$_['entry_query']          = 'Query';
-$_['entry_keyword']        = 'Keyword';
-$_['entry_push']           = 'Push';
 $_['entry_store']          = 'Store';
 $_['entry_language']       = 'Language';
+$_['entry_key']            = 'Key';
+$_['entry_value']          = 'Value';
+$_['entry_keyword']        = 'Keyword';
 
 // Help
-$_['help_query']           = 'The URL query to replace.';
 $_['help_keyword']         = 'Make sure you only use characters in the a-z or 0-9 use and - or _ for spaces. Leave blank if you just want to remove the perimeter.';
-$_['help_push']            = 'The URL permaters to be pushed into the GET request after being loaded from the keyword used.';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify SEO URL!';
-$_['error_query']          = 'Query must be between 3 and 255 characters!';
-$_['error_query_exists']   = 'Query already in use!';
+$_['error_exists']         = 'Warning: Combination of store, language key, value, keyword already exists!';
+$_['error_key']            = 'Key must be between 1 and 64 characters!';
+$_['error_value']          = 'Value must be between 1 and 255 characters!';
+$_['error_value_exists']   = 'Value is already in use!';
 $_['error_keyword']        = 'Keyword must be between 3 and 64 characters!';
-$_['error_keyword_exists'] = 'Keyword already in use!';
-$_['error_push']           = 'Push permaters required!';
+$_['error_keyword_exists'] = 'Keyword is already in use!';

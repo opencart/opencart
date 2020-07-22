@@ -45,8 +45,6 @@ class ControllerProductCompare extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['review_status'] = $this->config->get('config_review_status');
-
 		$data['products'] = array();
 
 		$data['attribute_groups'] = array();
@@ -83,7 +81,7 @@ class ControllerProductCompare extends Controller {
 
 				$attribute_data = array();
 
-				$attribute_groups = $this->model_catalog_product->getProductAttributes($product_id);
+				$attribute_groups = $this->model_catalog_product->getAttributes($product_id);
 
 				foreach ($attribute_groups as $attribute_group) {
 					foreach ($attribute_group['attribute'] as $attribute) {
@@ -124,6 +122,8 @@ class ControllerProductCompare extends Controller {
 				unset($this->session->data['compare'][$key]);
 			}
 		}
+
+		$data['review_status'] = $this->config->get('config_review_status');
 
 		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 

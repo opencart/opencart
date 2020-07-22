@@ -77,9 +77,6 @@ class ControllerInformationContact extends Controller {
 		$data['fax'] = $this->config->get('config_fax');
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
-		
-		// Custom Fields
-		$this->load->model('account/custom_field');
 
 		$data['locations'] = array();
 
@@ -89,27 +86,6 @@ class ControllerInformationContact extends Controller {
 			$location_info = $this->model_localisation_location->getLocation($location_id);
 
 			if ($location_info) {
-				$custom_field_data = array();
-				
-				$custom_field_values = json_decode($location_info['custom_field'], true);
-				
-				foreach ($custom_field_values as $custom_field_value) {
-					$filter_data = array('customer_group_id'		=> $this->config->get('config_customer_group_id'),
-										 'custom_field_id'			=> $custom_field_value['custom_field_id'],
-										 'location'					=> 'location_address'
-										);
-
-					$custom_fields = $this->model_account_custom_field->getCustomFields($filter_data);
-
-					foreach ($custom_fields as $custom_field) {
-						if ($custom_field['value']) {
-							$custom_field_data[$custom_field['type']][] = array(
-								'value'              => $custom_field['value'],
-							);
-						}
-					}
-				}
-				
 				if (is_file(DIR_IMAGE . html_entity_decode($location_info['image'], ENT_QUOTES, 'UTF-8'))) {
 					$image = $this->model_tool_image->resize(html_entity_decode($location_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_location_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_location_height'));
 				} else {
@@ -117,16 +93,15 @@ class ControllerInformationContact extends Controller {
 				}
 
 				$data['locations'][] = array(
-					'location_id' 	=> $location_info['location_id'],
-					'name'        	=> $location_info['name'],
-					'address'     	=> nl2br($location_info['address']),
-					'geocode'     	=> $location_info['geocode'],
-					'custom_field'	=> $custom_field_data,
-					'telephone'   	=> $location_info['telephone'],
-					'fax'         	=> $location_info['fax'],
-					'image'       	=> $image,
-					'open'        	=> nl2br($location_info['open']),
-					'comment'     	=> $location_info['comment']
+					'location_id' => $location_info['location_id'],
+					'name'        => $location_info['name'],
+					'address'     => nl2br($location_info['address']),
+					'geocode'     => $location_info['geocode'],
+					'telephone'   => $location_info['telephone'],
+					'fax'         => $location_info['fax'],
+					'image'       => $image,
+					'open'        => nl2br($location_info['open']),
+					'comment'     => $location_info['comment']
 				);
 			}
 		}

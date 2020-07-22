@@ -28,7 +28,7 @@ class ControllerProductSpecial extends Controller {
 		if (isset($this->request->get['limit'])) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
+			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination');
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -76,13 +76,13 @@ class ControllerProductSpecial extends Controller {
 			'limit' => $limit
 		);
 
-		$product_total = $this->model_catalog_product->getTotalProductSpecials();
+		$product_total = $this->model_catalog_product->getTotalSpecials();
 
-		$results = $this->model_catalog_product->getProductSpecials($filter_data);
+		$results = $this->model_catalog_product->getSpecials($filter_data);
 
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 			} else {
 				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 			}
@@ -105,13 +105,7 @@ class ControllerProductSpecial extends Controller {
 				$tax = false;
 			}
 
-			if ($this->config->get('config_review_status')) {
-				$rating = (int)$result['rating'];
-			} else {
-				$rating = false;
-			}
-
-			$data['products'][] = array(
+			$product_data = array(
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
@@ -123,6 +117,8 @@ class ControllerProductSpecial extends Controller {
 				'rating'      => $result['rating'],
 				'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id'] . $url)
 			);
+
+			$data['products'][] = $this->load->controller('product/thumb', $product_data);
 		}
 
 		$url = '';
@@ -201,7 +197,7 @@ class ControllerProductSpecial extends Controller {
 
 		$data['limits'] = array();
 
-		$limits = array_unique(array($this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'), 25, 50, 75, 100));
+		$limits = array_unique(array($this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'), 25, 50, 75, 100));
 
 		sort($limits);
 

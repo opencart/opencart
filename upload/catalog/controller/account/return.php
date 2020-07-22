@@ -64,11 +64,11 @@ class ControllerAccountReturn extends Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $return_total,
 			'page'  => $page,
-			'limit' => $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'),
+			'limit' => $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'),
 			'url'   => $this->url->link('account/return', 'language=' . $this->config->get('config_language') . '&page={page}')
 		));
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) > ($return_total - $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'))) ? $return_total : ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) + $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')), $return_total, ceil($return_total / $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($return_total - 10)) ? $return_total : ((($page - 1) * 10) + 10), $return_total, ceil($return_total / 10));
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
@@ -150,7 +150,7 @@ class ControllerAccountReturn extends Controller {
 
 			$data['histories'] = array();
 
-			$results = $this->model_account_return->getReturnHistories($this->request->get['return_id']);
+			$results = $this->model_account_return->getHistories($this->request->get['return_id']);
 
 			foreach ($results as $result) {
 				$data['histories'][] = array(
@@ -421,7 +421,7 @@ class ControllerAccountReturn extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_return_id')), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_return_id')), $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}

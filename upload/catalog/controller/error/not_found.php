@@ -15,8 +15,6 @@ class ControllerErrorNotFound extends Controller {
 		if (isset($this->request->get['route'])) {
 			$url_data = $this->request->get;
 
-			unset($url_data['_route_']);
-
 			$route = $url_data['route'];
 
 			unset($url_data['route']);

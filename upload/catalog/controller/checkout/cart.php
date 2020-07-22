@@ -81,7 +81,7 @@ class ControllerCheckoutCart extends Controller {
 				if ($product['image']) {
 					$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 				} else {
-					$image = '';
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 				}
 
 				$option_data = array();
@@ -153,9 +153,7 @@ class ControllerCheckoutCart extends Controller {
 				foreach ($this->session->data['vouchers'] as $key => $voucher) {
 					$data['vouchers'][] = array(
 						'key'         => $key,
-						'name'		  => html_entity_decode($voucher['name'], ENT_QUOTES, 'UTF-8'),
 						'description' => $voucher['description'],
-						'image'		  => $this->model_tool_image->resize($voucher['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height')),
 						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
 						'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
 					);
@@ -290,7 +288,7 @@ class ControllerCheckoutCart extends Controller {
 				$option[$key] = $value;
 			}
 
-			$product_options = $this->model_catalog_product->getProductOptions($product_id);
+			$product_options = $this->model_catalog_product->getOptions($product_id);
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
@@ -344,19 +342,29 @@ class ControllerCheckoutCart extends Controller {
 
 		// Update
 		if (!empty($this->request->post['quantity'])) {
-			foreach ($this->request->post['quantity'] as $key => $value) {
-				$this->cart->update($key, $value);
+			// Handles single item update
+			if (!empty($this->request->post['key'])) {
+				$key = $this->request->post['key'];
+				$quantity = (int)$this->request->post['quantity'];
+
+				$this->cart->update($key, $quantity);
+
+				$json['success'] = $this->language->get('text_remove');
+			} else {
+				foreach ($this->request->post['quantity'] as $key => $value) {
+					$this->cart->update($key, $value);
+				}
+
+				$this->session->data['success'] = $this->language->get('text_remove');
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
+				unset($this->session->data['reward']);
+
+				$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 			}
-
-			$this->session->data['success'] = $this->language->get('text_remove');
-
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['reward']);
-
-			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

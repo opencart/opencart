@@ -1,5 +1,6 @@
 <?php
 class ControllerMailRegister extends Controller {
+	// catalog/model/account/customer/addCustomer/after
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/register');
 
@@ -54,6 +55,7 @@ class ControllerMailRegister extends Controller {
 		$mail->send();
 	}
 
+	// catalog/model/account/customer/addCustomer/after
 	public function alert(&$route, &$args, &$output) {
 		// Send to main admin email if new account email is enabled
 		if (in_array('account', (array)$this->config->get('config_mail_alert'))) {

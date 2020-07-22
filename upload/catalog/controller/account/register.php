@@ -152,13 +152,12 @@ class ControllerAccountRegister extends Controller {
 		
 		$this->load->model('account/custom_field');
 		
-		$filter_data = array('location'				=> 'account'
-							);
-		
-		$custom_fields = $this->model_account_custom_field->getCustomFields($filter_data);
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
 		
 		foreach ($custom_fields as $custom_field) {
-			$data['custom_fields'][] = $custom_field;
+			if ($custom_field['location'] == 'account') {
+				$data['custom_fields'][] = $custom_field;
+			}
 		}
 
 		if (isset($this->request->post['custom_field']['account'])) {
@@ -252,19 +251,17 @@ class ControllerAccountRegister extends Controller {
 
 		// Custom field validation
 		$this->load->model('account/custom_field');
-		
-		$filter_data = array('customer_group_id'			=> $customer_group_id,
-							 'location'						=> 'account'
-							);
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($filter_data);
+		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-			} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
-				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-			}			
+			if ($custom_field['location'] == 'account') {
+				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				}
+			}
 		}
 
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
@@ -309,11 +306,8 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
-		
-		$filter_data = array('customer_group_id'			=> $customer_group_id
-							);
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($filter_data);
+		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			$json[] = array(

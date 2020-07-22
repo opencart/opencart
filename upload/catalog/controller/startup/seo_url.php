@@ -1,17 +1,13 @@
 <?php
 class ControllerStartupSeoUrl extends Controller {
-	private $regex = array();
-
 	public function index() {
-		// Add rewrite to url class
+		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
 
-		// Load all regexes in the var so we are not accessing the db so much.
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_regex ORDER BY sort_order ASC");
-
-		$this->regex = $query->rows;
+		$this->load->model('design/seo_profile');
+		$this->load->model('design/seo_url');
 
 		// Decode URL
 		if (isset($this->request->get['_route_'])) {
@@ -23,75 +19,102 @@ class ControllerStartupSeoUrl extends Controller {
 			}
 
 			foreach ($parts as $part) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($part);
 
-				if ($query->num_rows) {
-					foreach ($query->rows as $result) {
-						parse_str($result['push'], $data);
+				if ($seo_url_info) {
+					$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 
-						foreach ($data as $key => $value) {
-							$this->request->get[$key] = $value;
-						}
+					$results = $this->model_design_seo_profile->getSeoProfilesByKey($seo_url_info['key']);
+
+					foreach ($results as $result) {
+						// Push additional query string vars into GET data
+						parse_str(html_entity_decode($result['push'], ENT_QUOTES, 'UTF-8'), $push);
+
+						$this->request->get = array_merge($this->request->get, $push);
 					}
-				} else {
-					$this->request->get['route'] = 'error/not_found';
-
-					break;
 				}
 			}
 		}
 	}
 
 	public function rewrite($link) {
-		$url = '';
-
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
-		parse_str($url_info['query'], $data);
+		// Build the url
+		$url = '';
 
-		foreach ($this->regex as $result) {
-			if (preg_match('/' . $result['regex'] . '/', $url_info['query'], $matches)) {
-				array_shift($matches);
+		if ($url_info['scheme']) {
+			$url .= $url_info['scheme'];
+		}
 
-				foreach ($matches as $match) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($match) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$url .= '://';
 
-					if ($query->num_rows) {
-						foreach ($query->rows as $seo) {
-							if (!empty($seo['keyword'])) {
-								$url .= '/' . $seo['keyword'];
-							}
-						}
+		if ($url_info['host']) {
+			$url .= $url_info['host'];
+		}
 
-						parse_str($match, $remove);
+		if (isset($url_info['port'])) {
+			$url .= ':' . $url_info['port'];
+		}
 
-						// Remove all the matched url elements
-						foreach (array_keys($remove) as $key) {
-							if (isset($data[$key])) {
-								unset($data[$key]);
-							}
-						}
+		// Start changing the URL query into a path
+		$path_data = array();
+
+		$query = array();
+
+		// Parse the query into its separate parts
+		parse_str($url_info['query'], $query);
+
+		foreach ($query as $key => $value) {
+			$results = $this->model_design_seo_profile->getSeoProfilesByKey($key);
+
+			foreach ($results as $result) {
+				$match = array();
+
+				$regex = html_entity_decode($result['regex'], ENT_QUOTES, 'UTF-8');
+
+				if (preg_match($regex, html_entity_decode($value, ENT_QUOTES, 'UTF-8'), $match)) {
+					$keyword = $this->model_design_seo_url->getKeywordByKeyValue($key, $match[0]);
+
+					if ($keyword) {
+						$path_data[] = array(
+							'keyword'    => $keyword,
+							'remove'     => $result['remove'],
+							'sort_order' => $result['sort_order']
+						);
 					}
 				}
 			}
 		}
 
-		if ($url) {
-			$query = '';
+		$sort_order = array();
 
-			if ($data) {
-				foreach ($data as $key => $value) {
-					$query .= '&' . rawurlencode((string)$key) . '=' . rawurlencode(is_array($value) ? http_build_query($value) : (string)$value);
-				}
+		foreach ($path_data as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
 
-				if ($query) {
-					$query = '?' . str_replace('&', '&amp;', trim(str_replace('%2F', '/', $query), '&'));
+		array_multisort($sort_order, SORT_ASC, $path_data);
+
+		// Build the path
+		$url .= str_replace('/index.php', '', $url_info['path']);
+
+		foreach ($path_data as $result) {
+			$url .= '/' . $result['keyword'];
+
+			if ($result['remove']) {
+				$keys = explode(',', $result['remove']);
+
+				foreach ($keys as $key) {
+					unset($query[$key]);
 				}
 			}
-
-			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
-		} else {
-			return $link;
 		}
+
+		// Rebuild the URL query
+		if ($query) {
+			$url .= '?' . str_replace('%2F', '/', http_build_query($query));
+		}
+
+		return $url;
 	}
 }

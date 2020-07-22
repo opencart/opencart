@@ -6,20 +6,15 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname(dirname(dirname($vendorDir))));
 
 return array(
-    'Wechat\\' => array($vendorDir . '/zoujingli/wechat-php-sdk/Wechat'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
-    'Symfony\\Component\\Validator\\' => array($vendorDir . '/symfony/validator'),
-    'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
-    'React\\Promise\\' => array($vendorDir . '/react/promise/src'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
-    'Leafo\\ScssPhp\\' => array($vendorDir . '/leafo/scssphp/src'),
-    'GuzzleHttp\\Subscriber\\Oauth\\' => array($vendorDir . '/guzzlehttp/oauth-subscriber/src'),
-    'GuzzleHttp\\Subscriber\\Log\\' => array($vendorDir . '/guzzlehttp/log-subscriber/src'),
-    'GuzzleHttp\\Stream\\' => array($vendorDir . '/guzzlehttp/streams/src'),
-    'GuzzleHttp\\Ring\\' => array($vendorDir . '/guzzlehttp/ringphp/src'),
+    'ScssPhp\\ScssPhp\\' => array($vendorDir . '/scssphp/scssphp/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
+    'JmesPath\\' => array($vendorDir . '/mtdowling/jmespath.php/src'),
+    'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
+    'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
-    'Cardinity\\' => array($vendorDir . '/cardinity/cardinity-sdk-php/src'),
-    '' => array($vendorDir . '/klarna/kco_rest/src'),
+    'Aws\\' => array($vendorDir . '/aws/aws-sdk-php/src'),
 );

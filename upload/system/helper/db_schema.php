@@ -1192,7 +1192,7 @@ function db_schema() {
 			),
 			array(
 				'name' => 'company',
-				'type' => 'varchar(40)',
+				'type' => 'varchar(60)',
 				'not_null' => true
 			),
 			array(
@@ -2142,8 +2142,38 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'name',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'version',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'image',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'filename',
 				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'author',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'link',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'status',
+				'type' => 'tinyint(1)',
 				'not_null' => true
 			),
 			array(
@@ -2177,11 +2207,6 @@ function db_schema() {
 			array(
 				'name' => 'path',
 				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'date_added',
-				'type' => 'datetime',
 				'not_null' => true
 			)
 		),
@@ -2311,7 +2336,8 @@ function db_schema() {
 			array(
 				'name' => 'gdpr_id',
 				'type' => 'int(11)',
-				'not_null' => true
+				'not_null' => true,
+				'auto_increment' => true
 			),
 			array(
 				'name' => 'store_id',
@@ -2772,11 +2798,6 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'custom_field',
-				'type' => 'text',
-				'not_null' => true
-			),
-			array(
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -2945,74 +2966,6 @@ function db_schema() {
 		),
 		'primary' => array(
 			'marketing_report_id'
-		),
-		'engine' => 'MyISAM',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	);
-
-	$tables[] = array(
-		'name' => 'modification',
-		'field' => array(
-			array(
-				'name' => 'modification_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			),
-			array(
-				'name' => 'extension_install_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'extension_download_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'name',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'code',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'author',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'version',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'link',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'xml',
-				'type' => 'mediumtext',
-				'not_null' => true
-			),
-			array(
-				'name' => 'status',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			)
-		),
-		'primary' => array(
-			'modification_id'
 		),
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
@@ -4111,6 +4064,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'override',
+				'type' => 'text',
+				'not_null' => true
+			),
+			array(
 				'name' => 'quantity',
 				'type' => 'int(4)',
 				'not_null' => true,
@@ -4136,16 +4094,6 @@ function db_schema() {
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '1'
-			),
-			array(
-				'name' => 'return',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'type',
-				'type' => 'int(2)',
-				'not_null' => true
 			),
 			array(
 				'name' => 'price',
@@ -4965,7 +4913,12 @@ function db_schema() {
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),			
+			),
+			array(
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			),
 			array(
 				'name' => 'customer_id',
 				'type' => 'int(11)',
@@ -4990,7 +4943,27 @@ function db_schema() {
 				'name' => 'telephone',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),			
+			),
+			array(
+				'name' => 'product',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'model',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'quantity',
+				'type' => 'int(4)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'opened',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			),
 			array(
 				'name' => 'return_reason_id',
 				'type' => 'int(11)',
@@ -5030,63 +5003,6 @@ function db_schema() {
 		),
 		'primary' => array(
 			'return_id'
-		),
-		'engine' => 'MyISAM',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	);
-	
-	$tables[] = array(
-		'name' => 'return_description',
-		'field' => array(
-			array(
-				'name' => 'return_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),			
-			array(
-				'name' => 'product_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			),			
-			array(
-				'name' => 'product',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'model',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'quantity',
-				'type' => 'int(4)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'opened',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			),
-		),
-		'primary' => array(
-			'return_id',
-			'product_id'
-		),
-		'index' => array(
-			array(
-				'name' => 'product',
-				'key' => array(
-					'product'
-				)
-			),
-			array(
-				'name' => 'model',
-				'key' => array(
-					'model'
-				)
-			)
 		),
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
@@ -5734,10 +5650,10 @@ function db_schema() {
 	);
 
 	$tables[] = array(
-		'name' => 'seo_regex',
+		'name' => 'seo_profile',
 		'field' => array(
 			array(
-				'name' => 'seo_regex_id',
+				'name' => 'seo_profile_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
@@ -5748,7 +5664,22 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'key',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'regex',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'push',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'remove',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),
@@ -5759,13 +5690,13 @@ function db_schema() {
 			)
 		),
 		'primary' => array(
-			'seo_regex_id'
+			'seo_profile_id'
 		),
 		'index' => array(
 			array(
-				'name' => 'regex',
+				'name' => 'key',
 				'key' => array(
-					'regex'
+					'key'
 				)
 			)
 		),
@@ -5794,17 +5725,17 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'query',
+				'name' => 'key',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			),
+			array(
+				'name' => 'value',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(
 				'name' => 'keyword',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'push',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			)
@@ -5814,15 +5745,16 @@ function db_schema() {
 		),
 		'index' => array(
 			array(
-				'name' => 'query',
-				'key' => array(
-					'query'
-				)
-			),
-			array(
 				'name' => 'keyword',
 				'key' => array(
 					'keyword'
+				)
+			),
+			array(
+				'name' => 'query',
+				'key' => array(
+					'key',
+					'value'
 				)
 			)
 		),

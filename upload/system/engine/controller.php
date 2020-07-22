@@ -9,15 +9,6 @@
 
 /**
  * Controller class
- *
- * @property Document document
- * @property Loader load
- * @property Request request
- * @property Language language
- * @property Session session
- * @property Response response
- * @property Url url
- * @property Config config
  */
 abstract class Controller {
 	protected $registry;

@@ -73,6 +73,8 @@ final class Loader {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
+
+
 			$file = DIR_APPLICATION . 'model/' . $route . '.php';
 			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
 
@@ -84,9 +86,7 @@ final class Loader {
 				// Overriding models is a little harder so we have to use PHP's magic methods
 				// In future version we can use runkit
 				foreach (get_class_methods($class) as $method) {
-					$function = $this->callback($route . '/' . $method);
-
-					$proxy->attach($method, $function);
+					$proxy->{$method} = $this->callback($route . '/' . $method);
 				}
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
@@ -182,11 +182,17 @@ final class Loader {
 	 * @param    string $route
 	 */
 	public function config($route) {
-		$this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
+
+		// Keep the original trigger
+		$trigger = $route;
+
+		$this->registry->get('event')->trigger('config/' . $trigger . '/before', array(&$route));
 
 		$this->registry->get('config')->load($route);
 
-		$this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
+		$this->registry->get('event')->trigger('config/' . $trigger . '/after', array(&$route));
 	}
 
 	/**
@@ -197,22 +203,22 @@ final class Loader {
 	 *
 	 * @return    array
 	 */
-	public function language($route, $key = '') {
+	public function language($route, $prefix = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$key));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$prefix));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$output = $this->registry->get('language')->load($route, $key);
+			$output = $this->registry->get('language')->load($route, $prefix);
 		}
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$key, &$output));
+		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$prefix, &$output));
 
 		if ($result && !$result instanceof Exception) {
 			$output = $result;

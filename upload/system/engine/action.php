@@ -27,10 +27,12 @@ class Action {
 
 		// Break apart the route
 		while ($parts) {
-			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
+			$path = implode('/', $parts);
+
+			$file = DIR_APPLICATION . 'controller/' . $path . '.php';
 
 			if (is_file($file)) {
-				$this->route = implode('/', $parts);
+				$this->route = $path;
 
 				break;
 			} else {
@@ -40,7 +42,7 @@ class Action {
 	}
 
 	/**
-	 *
+	 * Identify Action
 	 *
 	 * @return    string
 	 *
@@ -50,7 +52,7 @@ class Action {
 	}
 
 	/**
-	 *
+	 * Execute Action
 	 *
 	 * @param    object $registry
 	 * @param    array $args

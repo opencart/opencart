@@ -4,7 +4,7 @@ $_['site_url']          = HTTP_SERVER;
 
 // Database
 $_['db_autostart']      = true;
-$_['db_engine']         = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db_engine']         = DB_DRIVER; // mysqli, pdo or pgsql
 $_['db_hostname']       = DB_HOSTNAME;
 $_['db_username']       = DB_USERNAME;
 $_['db_password']       = DB_PASSWORD;
@@ -39,6 +39,15 @@ $_['action_event']      = array(
 	'controller/*/after' => array(
 		'event/language/after'
 	),
+	//'controller/*/before' => array(
+	//	'event/extension/controller'
+	//),
+	//'model/*/before' => array(
+	//	'event/extension/model'
+	//),
+	//'view/*/before' => array(
+		//	'event/extension/view'
+	//),
 	'view/*/before' => array(
 		999  => 'event/language'
 	),

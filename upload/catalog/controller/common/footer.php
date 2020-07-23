@@ -29,7 +29,12 @@ class ControllerCommonFooter extends Controller {
 		$data['tracking'] = $this->url->link('information/tracking', 'language=' . $this->config->get('config_language'));
 		$data['manufacturer'] = $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'));
 		$data['voucher'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'));
-		$data['affiliate'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
+
+		if ($this->config->get('config_affiliate_status')) {
+			$data['affiliate'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['affiliate'] = false;
+		}
 		$data['special'] = $this->url->link('product/special', 'language=' . $this->config->get('config_language'));
 		$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));

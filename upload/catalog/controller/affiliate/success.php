@@ -1,6 +1,10 @@
 <?php
 class ControllerAffiliateSuccess extends Controller {
 	public function index() {
+		if (!$this->config->get('config_affiliate_status')) {
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+		}
+
 		$this->load->language('affiliate/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -31,7 +35,7 @@ class ControllerAffiliateSuccess extends Controller {
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
-		
+
 		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));

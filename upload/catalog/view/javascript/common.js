@@ -126,10 +126,13 @@ $(document).ready(function() {
 
 	// Product Module on Pages
 	if (cols == 2) {
+		$('#content.col').attr('class', 'col-6');
 		$('#content .product-module').attr('class', 'product-layout product-module col-lg-6 col-md-6 col-sm-12 col-sm-12');
 	} else if (cols == 1) {
+		$('#content.col').attr('class', 'col-9');
 		$('#content .product-module').attr('class', 'product-layout product-module col-lg-4 col-md-4 col-sm-6 col-12');
 	} else {
+		$('#content.col').attr('class', 'col-12');
 		$('#content .product-module').attr('class', 'product-layout product-module col-lg-3 col-md-3 col-sm-6 col-12');
 	}
 

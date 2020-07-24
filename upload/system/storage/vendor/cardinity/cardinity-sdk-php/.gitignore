@@ -1,8 +1,0 @@
-vendor/
-bin/
-build/
-specs/
-phpunit.xml
-phpspec.yml
-tests/info.log
-composer.lock

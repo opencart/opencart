@@ -608,8 +608,6 @@ class ControllerCommonColumnLeft extends Controller {
 		
 			if ($maintenance) {
 				$system[] = array(
-					'id'       => 'menu-maintenance',
-					'icon'	   => 'fa-cog', 
 					'name'	   => $this->language->get('text_maintenance'),
 					'href'     => '',
 					'children' => $maintenance
@@ -664,29 +662,29 @@ class ControllerCommonColumnLeft extends Controller {
 			// Stats
 			$this->load->model('sale/order');
 	
-			$order_total = $this->model_sale_order->getTotalOrders();
+			$order_total = (float)$this->model_sale_order->getTotalOrders();
 			
 			$this->load->model('report/statistics');
 			
-			$complete_total = $this->model_report_statistics->getValue('order_complete');
+			$complete_total = (float)$this->model_report_statistics->getValue('order_complete');
 			
-			if ((float)$complete_total && $order_total) {
+			if ($complete_total && $order_total) {
 				$data['complete_status'] = round(($complete_total / $order_total) * 100);
 			} else {
 				$data['complete_status'] = 0;
 			}
 
-			$processing_total = $this->model_report_statistics->getValue('order_processing');
+			$processing_total = (float)$this->model_report_statistics->getValue('order_processing');
 	
-			if ((float)$processing_total && $order_total) {
+			if ($processing_total && $order_total) {
 				$data['processing_status'] = round(($processing_total / $order_total) * 100);
 			} else {
 				$data['processing_status'] = 0;
 			}
 	
-			$other_total = $this->model_report_statistics->getValue('order_other');
+			$other_total = (float)$this->model_report_statistics->getValue('order_other');
 	
-			if ((float)$other_total && $order_total) {
+			if ($other_total && $order_total) {
 				$data['other_status'] = round(($other_total / $order_total) * 100);
 			} else {
 				$data['other_status'] = 0;

@@ -365,8 +365,6 @@ class ControllerCliInstall extends Controller {
 
 			$db->query("SET CHARACTER SET utf8");
 
-			$db->query("SET @@session.sql_mode = 'MYSQL40'");
-
 			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
 
 			// If cloud we do not need to hash the password as we will be passing the password hash

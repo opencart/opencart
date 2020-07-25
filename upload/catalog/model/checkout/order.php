@@ -357,7 +357,7 @@ class ModelCheckoutOrder extends Model {
 				// Restock
 				$order_products = $this->getProducts($order_id);
 
-				foreach($order_products as $order_product) {
+				foreach ($order_products as $order_product) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
 
 					// Restock the master product stock level if product is a variant

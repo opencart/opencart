@@ -334,7 +334,7 @@ class ControllerSettingSetting extends Controller {
 
 		$timezones = timezone_identifiers_list();
 
-		foreach($timezones as $timezone) {
+		foreach ($timezones as $timezone) {
 			date_default_timezone_set($timezone);
 
 			$hour = ' (' . date('P', $timestamp) . ')';

@@ -57,7 +57,7 @@ class ModelInstallInstall extends Model {
 
 			$start = false;
 
-			foreach($lines as $line) {
+			foreach ($lines as $line) {
 				if (substr($line, 0, 12) == 'INSERT INTO ') {
 					$sql = '';
 

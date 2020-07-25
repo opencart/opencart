@@ -4,7 +4,9 @@
       {% for banner in banners %}
         <div class="swiper-slide text-center">
           {% if banner.link %}
-            <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
+            <a href="{{ banner.link }}">
+                <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
+            </a>
           {% else %}
             <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
           {% endif %}
@@ -27,7 +29,7 @@ $('#carousel{{ module }}').swiper({
 	paginationClickable: true,
 	nextButton: '.carousel .swiper-button-next',
 	prevButton: '.carousel .swiper-button-prev',
-	autoplay: 2500,
+	autoplay: $('#carousel{{ module }} img').length > 5 ? 2500 : 0,
 	loop: true
 });
 --></script>

@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']     = 'General Data Personal Request';
+$_['heading_title']     = 'General Data Protection Regulation';
 
 // Text
 $_['text_account']      = 'Account';

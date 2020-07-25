@@ -314,7 +314,7 @@ class ControllerProductManufacturer extends Controller {
 			}
 
 			if ($page > 1) {
-			    $this->document->addLink($this->url->link('product/manufacturer/info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {

@@ -290,7 +290,7 @@ class ModelSaleOrder extends Model {
 		}
 
 		if (!empty($data['filter_email'])) {
-			$sql .= " AND o.email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
+			$sql .= " AND email LIKE '%" . $this->db->escape((string)$data['filter_email']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {

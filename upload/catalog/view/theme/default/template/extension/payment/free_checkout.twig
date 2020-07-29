@@ -6,17 +6,21 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		type: 'get',
 		url: 'index.php?route=extension/payment/free_checkout/confirm',
-		cache: false,
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},
 		complete: function() {
 			$('#button-confirm').button('reset');
 		},
-		success: function() {
-			location = '{{ continue }}';
+		success: function(json) {
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });

@@ -327,7 +327,7 @@ class ModelExtensionPaymentPPExpress extends Model {
 		mt_srand((float)microtime()*1000000);
 
 		while (strlen($activate_code)<$len+1) {
-			$activate_code .= $base{mt_rand(0, $max)};
+			$activate_code .= $base[mt_rand(0, $max)];
 		}
 
 		return $activate_code;

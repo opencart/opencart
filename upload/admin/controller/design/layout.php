@@ -365,12 +365,9 @@ class ControllerDesignLayout extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($layout_modules as $layout_module) {
 			$part = explode('.', $layout_module['code']);
-		
-			$this->load->language('extension/module/' . $part[0]);
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
-					'name'       => strip_tags($this->language->get('heading_title')),
 					'code'       => $layout_module['code'],
 					'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'], true),
 					'position'   => $layout_module['position'],
@@ -381,7 +378,6 @@ class ControllerDesignLayout extends Controller {
 				
 				if ($module_info) {
 					$data['layout_modules'][] = array(
-						'name'       => strip_tags($module_info['name']),
 						'code'       => $layout_module['code'],
 						'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[1], true),
 						'position'   => $layout_module['position'],

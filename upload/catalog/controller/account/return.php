@@ -324,8 +324,8 @@ class ControllerAccountReturn extends Controller {
 			$data['order_id'] = '';
 		}
 
-		if (isset($this->request->get['product_id'])) {
-			$data['product_id'] = $this->request->get['product_id'];
+		if (isset($this->request->post['product_id'])) {
+			$data['product_id'] = $this->request->post['product_id'];
 		} elseif (!empty($product_info)) {
 			$data['product_id'] = $product_info['product_id'];
 		} else {

@@ -14,6 +14,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('payment_pp_express', $this->request->post);
 
+			// If OC has been upgraded, verify that the module has the new event registered.
+			$this->load->model('setting/event');
+
+			$pp_express_js_event = $this->model_setting_event->getEventByCode("extension_pp_express_checkout_js");
+
+			if (empty($pp_express_js_event)) {
+				// Event is missing, add it
+				$this->model_setting_event->addEvent('extension_pp_express_checkout_js', 'catalog/controller/checkout/checkout/before', 'extension/payment/pp_express/eventLoadCheckoutJs');
+			}
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true));
@@ -124,8 +134,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_sandbox_signature'] = $this->config->get('payment_pp_express_sandbox_signature');
 		}
 
-		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_express/ipn';
-
 		if (isset($this->request->post['payment_pp_express_test'])) {
 			$data['payment_pp_express_test'] = $this->request->post['payment_pp_express_test'];
 		} else {
@@ -138,21 +146,11 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_debug'] = $this->config->get('payment_pp_express_debug');
 		}
 
-		if (isset($this->request->post['payment_pp_express_incontext_disable'])) {
-			$data['payment_pp_express_incontext_disable'] = $this->request->post['payment_pp_express_incontext_disable'];
-		} else {
-			$data['payment_pp_express_incontext_disable'] = $this->config->get('payment_pp_express_incontext_disable');
-		}
-
 		if (isset($this->request->post['payment_pp_express_currency'])) {
 			$data['payment_pp_express_currency'] = $this->request->post['payment_pp_express_currency'];
 		} else {
 			$data['payment_pp_express_currency'] = $this->config->get('payment_pp_express_currency');
 		}
-
-		$this->load->model('extension/payment/pp_express');
-
-		$data['currencies'] = $this->model_extension_payment_pp_express->getCurrencies();
 
 		if (isset($this->request->post['payment_pp_express_recurring_cancel'])) {
 			$data['payment_pp_express_recurring_cancel'] = $this->request->post['payment_pp_express_recurring_cancel'];
@@ -177,10 +175,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		} else {
 			$data['payment_pp_express_geo_zone_id'] = $this->config->get('payment_pp_express_geo_zone_id');
 		}
-
-		$this->load->model('localisation/geo_zone');
-
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		if (isset($this->request->post['payment_pp_express_status'])) {
 			$data['payment_pp_express_status'] = $this->request->post['payment_pp_express_status'];
@@ -254,20 +248,59 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_voided_status_id'] = $this->config->get('payment_pp_express_voided_status_id');
 		}
 
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		if (isset($this->request->post['payment_pp_express_allow_note'])) {
-			$data['payment_pp_express_allow_note'] = $this->request->post['payment_pp_express_allow_note'];
+		if (isset($this->request->post['payment_pp_express_style_layout'])) {
+			$data['payment_pp_express_style_layout'] = $this->request->post['payment_pp_express_style_layout'];
 		} else {
-			$data['payment_pp_express_allow_note'] = $this->config->get('payment_pp_express_allow_note');
+			$data['payment_pp_express_style_layout'] = $this->config->get('payment_pp_express_style_layout');
 		}
 
-		if (isset($this->request->post['payment_pp_express_colour'])) {
-			$data['payment_pp_express_colour'] = str_replace('#', '', $this->request->post['payment_pp_express_colour']);
+		if (isset($this->request->post['payment_pp_express_style_size'])) {
+			$data['payment_pp_express_style_size'] = $this->request->post['payment_pp_express_style_size'];
 		} else {
-			$data['payment_pp_express_colour'] = $this->config->get('payment_pp_express_colour');
+			$data['payment_pp_express_style_size'] = $this->config->get('payment_pp_express_style_size');
+		}
+
+		if (isset($this->request->post['payment_pp_express_style_shape'])) {
+			$data['payment_pp_express_style_shape'] = $this->request->post['payment_pp_express_style_shape'];
+		} else {
+			$data['payment_pp_express_style_shape'] = $this->config->get('payment_pp_express_style_shape');
+		}
+
+		if (isset($this->request->post['payment_pp_express_style_color'])) {
+			$data['payment_pp_express_style_color'] = $this->request->post['payment_pp_express_style_color'];
+		} else {
+			$data['payment_pp_express_style_color'] = $this->config->get('payment_pp_express_style_color');
+		}
+
+		if (isset($this->request->post['payment_pp_express_pp_credit'])) {
+			$data['payment_pp_express_pp_credit'] = $this->request->post['payment_pp_express_pp_credit'];
+		} else {
+			// get the store country id from settings - if it is US then pp_credit is defaulted to on.
+			if ($this->config->get('payment_pp_express_pp_credit') == null) {
+				$this->load->model('localisation/country');
+
+				$store_country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+
+				if (!empty($store_country) && $store_country['iso_code_2'] == "US") {
+					$data['payment_pp_express_pp_credit'] = 1;
+				} else {
+					$data['payment_pp_express_pp_credit'] = 0;
+				}
+			} else {
+				$data['payment_pp_express_pp_credit'] = $this->config->get('payment_pp_express_pp_credit');
+			}
+		}
+
+		if (isset($this->request->post['payment_pp_express_pp_cards'])) {
+			$data['payment_pp_express_pp_cards'] = $this->request->post['payment_pp_express_pp_cards'];
+		} else {
+			$data['payment_pp_express_pp_cards'] = $this->config->get('payment_pp_express_pp_cards');
+		}
+
+		if (isset($this->request->post['payment_pp_express_pp_elv'])) {
+			$data['payment_pp_express_pp_elv'] = $this->request->post['payment_pp_express_pp_elv'];
+		} else {
+			$data['payment_pp_express_pp_elv'] = $this->config->get('payment_pp_express_pp_elv');
 		}
 
 		if (isset($this->request->post['payment_pp_express_logo'])) {
@@ -276,7 +309,16 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_logo'] = $this->config->get('payment_pp_express_logo');
 		}
 
+		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=extension/payment/pp_express/ipn';
+
+		$this->load->model('extension/payment/pp_express');
 		$this->load->model('tool/image');
+		$this->load->model('localisation/geo_zone');
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		$data['currencies'] = $this->model_extension_payment_pp_express->getCurrencies();
+		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		if (isset($this->request->post['payment_pp_express_logo']) && is_file(DIR_IMAGE . $this->request->post['payment_pp_express_logo'])) {
 			$data['thumb'] = $this->model_tool_image->resize($this->request->post['payment_pp_express_logo'], 750, 90);
@@ -593,7 +635,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 					$json['success'] = $this->language->get('text_success');
 				} else {
-					$json['error'] = (isset($response_info['L_SHORTMESSAGE0']) ? $response_info['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
+					$json['error'] = (isset($response['L_SHORTMESSAGE0']) ? $response['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
 				}
 			} else {
 				$json['error'] = $this->language->get('error_not_found');
@@ -707,7 +749,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						'note' => $this->request->post['refund_message'],
 						'msgsubid' => $call_data['MSGSUBID'],
 						'receipt_id' => '',
-						'payment_type' => '',
+						'payment_type' => 'refund',
 						'payment_status' => 'Refunded',
 						'transaction_entity' => 'payment',
 						'pending_reason' => '',
@@ -722,7 +764,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					} else if ($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
 
 						$transaction['transaction_id'] = $result['REFUNDTRANSACTIONID'];
-						$transaction['payment_type'] = $result['REFUNDSTATUS'];
 						$transaction['pending_reason'] = $result['PENDINGREASON'];
 						$transaction['amount'] = '-' . $result['GROSSREFUNDAMT'];
 
@@ -804,7 +845,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 
 				$json['success'] = $this->language->get('text_success');
 			} else {
-				$json['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
+				$json['error'] = (isset($response_info['L_SHORTMESSAGE0']) ? $response_info['L_SHORTMESSAGE0'] : $this->language->get('error_transaction'));
 			}
 		} else {
 			$json['error'] = $this->language->get('error_not_found');
@@ -1273,7 +1314,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		}
 	}
 
-	public function preferredSolution() {
+	public function promotion() {
 		$this->load->language('extension/payment/pp_express');
 
 		$data['connect_link'] = '';
@@ -1295,6 +1336,6 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 			$data['payment_pp_express_status'] = "disabled";
 		}
 
-		return $this->load->view('extension/payment/pp_express_preferred', $data);
+		return $this->load->view('extension/payment/pp_express_promotion', $data);
 	}
 }

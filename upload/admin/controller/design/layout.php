@@ -365,11 +365,8 @@ class ControllerDesignLayout extends Controller {
 		foreach ($layout_modules as $layout_module) {
 			$part = explode('.', $layout_module['code']);
 
-			$this->load->language('extension/module/' . $part[0], $part[0]);
-
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
-					'name'       => strip_tags($this->language->get($part[0] . '_heading_title')),
 					'code'       => $layout_module['code'],
 					'position'   => $layout_module['position'],
 					'sort_order' => $layout_module['sort_order'],
@@ -380,7 +377,6 @@ class ControllerDesignLayout extends Controller {
 
 				if ($module_info) {
 					$data['layout_modules'][] = array(
-						'name'       => strip_tags($module_info['name']),
 						'code'       => $layout_module['code'],
 						'position'   => $layout_module['position'],
 						'sort_order' => $layout_module['sort_order'],

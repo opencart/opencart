@@ -15,6 +15,8 @@ final class DB {
 		$this->db = $registry->get('db');
 		
 		$this->expire = ini_get('session.gc_maxlifetime');
+		
+		$this->gc();
 	}
 	
 	public function read($session_id) {
@@ -56,7 +58,7 @@ final class DB {
 			$gc_probability = 1;
 		}
 
-		if (mt_rand() / mt_getrandmax() > $gc_probability / $gc_divisor) {
+		if (mt_rand() / mt_getrandmax() < $gc_probability / $gc_divisor) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE `expire` < '" . $this->db->escape(date('Y-m-d H:i:s', time())) . "'");
 		}
 

@@ -126,7 +126,7 @@ if ($config->get('session_autostart')) {
 
 	// Require higher security for session cookies
 	$option = array(
-		'max-age'  => time() + $config->get('session_expire'),
+		'expires'  => time() + $config->get('session_expire'),
 		'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 		'domain'   => $_SERVER['HTTP_HOST'],
 		'secure'   => $_SERVER['HTTPS'],
@@ -134,7 +134,7 @@ if ($config->get('session_autostart')) {
 		'SameSite' => 'strict'
 	);
 
-	oc_setcookie($config->get('session_name'), $session->getId(), $option);
+	setcookie($config->get('session_name'), $session->getId(), $option);
 }
 
 // Cache

@@ -54,12 +54,12 @@ class ControllerCommonLanguage extends Controller {
 		}
 
 		$option = array(
-			'max-age'  => time() + 60 * 60 * 24 * 30,
+			'expires'  => time() + 60 * 60 * 24 * 30,
 			'path'     => '/',
 			'SameSite' => 'lax'
 		);
 
-		oc_setcookie('language', $code, $option);
+		setcookie('language', $code, $option);
 
 		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect($redirect);

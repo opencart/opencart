@@ -4,12 +4,12 @@ class ControllerStartupMarketing extends Controller {
 		// Tracking Code
 		if (isset($this->request->get['tracking'])) {
 			$option = array(
-				'max-age'  => time() + 3600 * 24 * 1000,
+				'expires'  => time() + 3600 * 24 * 1000,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			);
 
-			oc_setcookie('tracking', $this->request->get['tracking'], $option);
+			setcookie('tracking', $this->request->get['tracking'], $option);
 
 			$this->load->model('marketing/marketing');
 

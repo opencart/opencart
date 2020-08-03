@@ -41,7 +41,7 @@ final class DB {
 		return true;
 	}
 	
-	public function gc() {
+	public function __destruct() {
 		$gc_divisor = (int)ini_get('session.gc_divisor');
 
 		if ($gc_divisor) {
@@ -56,7 +56,7 @@ final class DB {
 			$gc_probability = 1;
 		}
 
-		if (mt_rand() / mt_getrandmax() > $gc_probability / $gc_divisor) {
+		if (mt_rand() / mt_getrandmax() < $gc_probability / $gc_divisor) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE `expire` < '" . $this->db->escape(date('Y-m-d H:i:s', time())) . "'");
 		}
 

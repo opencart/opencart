@@ -8,7 +8,7 @@ $_['text_success']     = 'Success: You have modified GDPR module!';
 $_['text_edit']        = 'Edit GDPR Module';
 
 // Entry
-$_['entry_policy_url']       = 'Cookie Policy URL';
+$_['entry_policy_url'] = 'Cookie Policy URL';
 $_['entry_status']     = 'Status';
 
 

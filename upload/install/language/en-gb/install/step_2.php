@@ -31,7 +31,7 @@ $_['text_file']              = 'Files';
 $_['text_status']            = 'Status';
 $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';
-$_['text_missing']        	 = 'Missing';
+$_['text_missing']           = 'Missing';
 
 // Error
 $_['error_version']          = 'Warning: You need to use PHP7+ or above for OpenCart to work!';

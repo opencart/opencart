@@ -10,7 +10,7 @@ class ModelUpgrade1006 extends Model {
 
 		// Update the template setting for v1.5.x
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_theme', value = 'default' WHERE `key` = 'config_template' AND `value` = 'default'");
-		
+
 		// update the template setting for v2.x
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET value = 'default' WHERE `key` = 'config_theme'");
 
@@ -50,7 +50,7 @@ class ModelUpgrade1006 extends Model {
 					fclose($handle);
 				}
 			}
-		}			
+		}
 
 		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {
@@ -96,10 +96,10 @@ class ModelUpgrade1006 extends Model {
 			DIR_SYSTEM . 'cache/',
 		);
 
-        $files = array();
+		$files = array();
 
-        foreach ($directories as $dir) {
-			if (is_dir($dir)){
+		foreach ($directories as $dir) {
+			if (is_dir($dir)) {
 				// Make path into an array
 				$path = array($dir . '*');
 
@@ -175,30 +175,30 @@ class ModelUpgrade1006 extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
 	}
 
-	private function recursive_move($src, $dest){
-	    // If source is not a directory stop processing
-	    if (!is_dir($src)) return false;
+	private function recursive_move($src, $dest) {
+		// If source is not a directory stop processing
+		if (!is_dir($src)) return false;
 
-	    // If the destination directory does not exist create it
-	    if (!is_dir($dest)) {
-	        if (!@mkdir($dest)) {
-	            // If the destination directory could not be created stop processing
-	    		return false;
-	        }
-	    }
+		// If the destination directory does not exist create it
+		if (!is_dir($dest)) {
+			if (!@mkdir($dest)) {
+				// If the destination directory could not be created stop processing
+				return false;
+			}
+		}
 
-	    // Open the source directory to read in files
-	    $i = new DirectoryIterator($src);
-	    foreach ($i as $f) {
-	        if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
-	            @rename($f->getRealPath(), "$dest/" . $f->getFilename());
-	        } elseif (!$f->isDot() && $f->isDir()) {
-	            $this->recursive_move($f->getRealPath(), "$dest/$f");
-	            @unlink($f->getRealPath());
-	        }
-	    }
+		// Open the source directory to read in files
+		$i = new DirectoryIterator($src);
+		foreach ($i as $f) {
+			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
+				@rename($f->getRealPath(), "$dest/" . $f->getFilename());
+			} elseif (!$f->isDot() && $f->isDir()) {
+				$this->recursive_move($f->getRealPath(), "$dest/$f");
+				@unlink($f->getRealPath());
+			}
+		}
 
 		// Remove source folder after move
-	    @unlink($src);
+		@unlink($src);
 	}
 }

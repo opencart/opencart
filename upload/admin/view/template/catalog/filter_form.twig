@@ -23,7 +23,7 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-filter">
-          <fieldset id="option-value">
+          <fieldset>
             <legend>{{ text_group }}</legend>
             <div class="form-group row required">
               <label class="col-sm-2 col-form-label">{{ entry_group }}</label>
@@ -48,7 +48,7 @@
               </div>
             </div>
           </fieldset>
-          <fieldset id="option-value">
+          <fieldset>
             <legend>{{ text_value }}</legend>
             <table id="filter" class="table table-bordered table-hover">
               <thead>
@@ -118,4 +118,4 @@ function addFilterRow() {
 }
 
 //--></script>
-{{ footer }} 
+{{ footer }}

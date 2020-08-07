@@ -75,10 +75,10 @@
 					if (data.error == false) {
 						html = '';
 						html += '<tr>';
-						html += '<td class="text-left">'+data.data.transactionid+'</td>';
-						html += '<td class="text-left">'+data.data.created+'</td>';
+						html += '<td class="text-left">' + data.data.transactionid + '</td>';
+						html += '<td class="text-left">' + data.data.created + '</td>';
 						html += '<td class="text-left">refund</td>';
-						html += '<td class="text-left">'+data.data.amount+'</td>';
+						html += '<td class="text-left">' + data.data.amount + '</td>';
 						html += '</tr>';
 						$('#eway-transactions tr:last').after(html);
 
@@ -91,7 +91,7 @@
 						}
 
 						if (data.message != '') {
-							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
+							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.message).fadeIn();
 						}
 					}
 					if (data.error == true) {
@@ -128,10 +128,10 @@
 					if (data.error == false) {
 						html = '';
 						html += '<tr>';
-						html += '<td class="text-left">'+data.data.transactionid+'</td>';
-						html += '<td class="text-left">'+data.data.created+'</td>';
+						html += '<td class="text-left">' + data.data.transactionid + '</td>';
+						html += '<td class="text-left">' + data.data.created + '</td>';
 						html += '<td class="text-left">payment</td>';
-						html += '<td class="text-left">'+data.data.amount+'</td>';
+						html += '<td class="text-left">' + data.data.amount + '</td>';
 						html += '</tr>';
 						$('#eway-transactions tr:last').after(html);
 
@@ -144,7 +144,7 @@
 						}
 
 						if (data.message != '') {
-							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.message).fadeIn();
+							$('#eway-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.message).fadeIn();
 						}
 					}
 					if (data.error == true) {

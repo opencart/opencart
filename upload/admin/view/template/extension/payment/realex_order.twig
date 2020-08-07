@@ -96,7 +96,7 @@
           if (data.error == false) {
             html = '';
             html += '<tr>';
-            html += '<td class="text-left">'+data.data.date_added+'</td>';
+            html += '<td class="text-left">' + data.data.date_added + '</td>';
             html += '<td class="text-left">void</td>';
             html += '<td class="text-left">0.00</td>';
             html += '</tr>';
@@ -107,7 +107,7 @@
             $('#capture-amount').hide();
 
             if (data.msg != '') {
-              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
             }
           }
           if (data.error == true) {
@@ -137,9 +137,9 @@
           if (data.error == false) {
             html = '';
             html += '<tr>';
-            html += '<td class="text-left">'+data.data.date_added+'</td>';
+            html += '<td class="text-left">' + data.data.date_added + '</td>';
             html += '<td class="text-left">payment</td>';
-            html += '<td class="text-left">'+data.data.amount+'</td>';
+            html += '<td class="text-left">' + data.data.amount + '</td>';
             html += '</tr>';
 
             $('#realex-transactions').append(html);
@@ -158,7 +158,7 @@
             }
 
             if (data.msg != '') {
-              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
             }
 
             $('#button-rebate').show();
@@ -192,9 +192,9 @@
           if (data.error == false) {
             html = '';
             html += '<tr>';
-            html += '<td class="text-left">'+data.data.date_added+'</td>';
+            html += '<td class="text-left">' + data.data.date_added + '</td>';
             html += '<td class="text-left">rebate</td>';
-            html += '<td class="text-left">'+data.data.amount+'</td>';
+            html += '<td class="text-left">' + data.data.amount + '</td>';
             html += '</tr>';
 
             $('#realex-transactions').append(html);
@@ -208,7 +208,7 @@
             }
 
             if (data.msg != '') {
-              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
             }
           }
           if (data.error == true) {

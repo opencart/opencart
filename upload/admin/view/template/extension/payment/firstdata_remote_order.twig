@@ -90,7 +90,7 @@ $('#button-void').bind('click', function () {
 				if (data['error'] == false) {
 					html = '';
 					html += '<tr>';
-					html += '<td class="text-left">'+data.data.date_added+'</td>';
+					html += '<td class="text-left">' + data.data.date_added + '</td>';
 					html += '<td class="text-left">void</td>';
 					html += '<td class="text-left">0.00</td>';
 					html += '</tr>';
@@ -134,9 +134,9 @@ $('#button-capture').bind('click', function () {
 		if (data.error == false) {
 		html = '';
 		html += '<tr>';
-		html += '<td class="text-left">'+data.data.date_added+'</td>';
+		html += '<td class="text-left">' + data.data.date_added + '</td>';
 		html += '<td class="text-left">payment</td>';
-		html += '<td class="text-left">'+data.data.amount+'</td>';
+		html += '<td class="text-left">' + data.data.amount + '</td>';
 		html += '</tr>';
 
 		$('#firstdata_transactions').append(html);
@@ -151,7 +151,7 @@ $('#button-capture').bind('click', function () {
 		}
 
 		if (data.msg != '') {
-		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
 		}
 		}
 		if (data.error == true) {
@@ -181,9 +181,9 @@ $('#button-refund').bind('click', function () {
 		if (data.error == false) {
 		html = '';
 		html += '<tr>';
-		html += '<td class="text-left">'+data.data.date_added+'</td>';
+		html += '<td class="text-left">' + data.data.date_added + '</td>';
 		html += '<td class="text-left">refund</td>';
-		html += '<td class="text-left">'+data.data.amount+'</td>';
+		html += '<td class="text-left">' + data.data.amount + '</td>';
 		html += '</tr>';
 
 		$('#firstdata_transactions').append(html);
@@ -196,7 +196,7 @@ $('#button-refund').bind('click', function () {
 		}
 
 		if (data.msg != '') {
-		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data.msg).fadeIn();
 		}
 		}
 		if (data.error == true) {

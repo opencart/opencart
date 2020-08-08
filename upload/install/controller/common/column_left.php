@@ -30,10 +30,15 @@ class ControllerCommonColumnLeft extends Controller {
 
 		$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 
-		foreach ($languages as $language) {
+		foreach ($languages as $code) {
+			$code = basename($code);
+
+			$language = new Language($code);
+			$language->load('common/column_left');
+
 			$data['languages'][] = array(
-				'text'  => $this->language->get('text_name'),
-				'value' => basename($language)
+				'text'  => $language->get('text_name'),
+				'value' => $code
 			);
 		}
 

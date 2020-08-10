@@ -6,7 +6,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 		$this->load->model('catalog/product');
 
 		$this->load->model('tool/image');
-		
+
 		$data['heading_title'] = $setting['name'];
 
 		$data['products'] = array();
@@ -69,8 +69,6 @@ class ControllerExtensionModuleFeatured extends Controller {
 				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 		}
-
-		$data['review_status'] = $this->config->get('config_review_status');
 
 		if ($data['products']) {
 			return $this->load->view('extension/module/featured', $data);

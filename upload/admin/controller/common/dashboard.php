@@ -86,6 +86,12 @@ class ControllerCommonDashboard extends Controller {
 			$data['security'] = '';
 		}
 
+        if ($this->user->hasPermission('access', 'setting/setting')) {
+            $data['setting_status'] = true;
+        } else {
+            $data['setting_status'] = false;
+        }
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

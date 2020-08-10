@@ -465,7 +465,7 @@ class ControllerCatalogOption extends Controller {
 			foreach ($options as $option) {
 				$option_value_data = array();
 
-				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
+				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox') {
 					$option_values = $this->model_catalog_option->getValues($option['option_id']);
 
 					foreach ($option_values as $option_value) {

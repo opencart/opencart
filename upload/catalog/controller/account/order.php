@@ -10,13 +10,13 @@ class ControllerAccountOrder extends Controller {
 		$this->load->language('account/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -28,7 +28,7 @@ class ControllerAccountOrder extends Controller {
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		);
-		
+
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . $url)
@@ -370,7 +370,7 @@ class ControllerAccountOrder extends Controller {
 					$order_options = $this->model_account_order->getOptions($order_product_info['order_id'], $order_product_id);
 
 					foreach ($order_options as $order_option) {
-						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
+						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio') {
 							$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
 						} elseif ($order_option['type'] == 'checkbox') {
 							$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];

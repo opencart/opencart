@@ -38,7 +38,7 @@ class ControllerAccountAddress extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
-			
+
 			$this->session->data['success'] = $this->language->get('text_add');
 
 			$this->response->redirect($this->url->link('account/address', 'language=' . $this->config->get('config_language')));
@@ -64,7 +64,7 @@ class ControllerAccountAddress extends Controller {
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/address');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
 
@@ -297,7 +297,7 @@ class ControllerAccountAddress extends Controller {
 		} else {
 			$data['error_custom_field'] = array();
 		}
-		
+
 		if (!isset($this->request->get['address_id'])) {
 			$data['action'] = $this->url->link('account/address/add', 'language=' . $this->config->get('config_language'));
 		} else {
@@ -386,7 +386,7 @@ class ControllerAccountAddress extends Controller {
 
 		// Custom fields
 		$data['custom_fields'] = array();
-		
+
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
@@ -396,7 +396,7 @@ class ControllerAccountAddress extends Controller {
 				$data['custom_fields'][] = $custom_field;
 			}
 		}
-		
+
 		if (isset($this->request->post['custom_field']['address'])) {
 			$data['address_custom_field'] = $this->request->post['custom_field']['address'];
 		} elseif (isset($address_info)) {
@@ -467,7 +467,7 @@ class ControllerAccountAddress extends Controller {
 			if ($custom_field['location'] == 'address') {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}

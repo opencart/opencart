@@ -960,12 +960,6 @@ class ModelCatalogProduct extends Model {
 		return $query->row;
 	}
 
-	public function getOptionValues($product_option_id) {
-		$query = $this->db->query("SELECT product_option_value_id, option_value_id, quantity, subtract, price, price_prefix, points, points_prefix, weight, weight_prefix FROM " . DB_PREFIX . "product_option_value WHERE product_option_id = '" . (int)$product_option_id . "'");
-
-		return $query->rows;
-	}
-
 	public function getOptionValuesByOptionId($option_id) {
 		$query = $this->db->query("SELECT DISTINCT option_value_id FROM " . DB_PREFIX . "product_option_value WHERE option_id = '" . (int)$option_id . "'");
 
@@ -1162,12 +1156,6 @@ class ModelCatalogProduct extends Model {
 
 	public function getTotalProductsByOptionValueId($option_value_id) {
 		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS `total` FROM " . DB_PREFIX . "product_option_value WHERE `option_value_id` = '" . (int)$option_value_id . "'");
-
-		return $query->row['total'];
-	}
-
-	public function getTotalOptionsByOptionId($option_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM " . DB_PREFIX . "product_option WHERE `option_id` = '" . (int)$option_id . "'");
 
 		return $query->row['total'];
 	}

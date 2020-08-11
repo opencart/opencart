@@ -1,5 +1,4 @@
 <?php
-
 class ControllerDesignTranslation extends Controller {
 	private $error = array();
 

@@ -121,7 +121,7 @@ class ControllerAccountEdit extends Controller {
 
 		// Custom Fields
 		$data['custom_fields'] = array();
-		
+
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
@@ -153,11 +153,11 @@ class ControllerAccountEdit extends Controller {
 	}
 
 	protected function validate() {
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 

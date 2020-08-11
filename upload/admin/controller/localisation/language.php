@@ -238,7 +238,7 @@ class ControllerLocalisationLanguage extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -266,13 +266,13 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['error_code'] = '';
 		}
-		
+
 		if (isset($this->error['locale'])) {
 			$data['error_locale'] = $this->error['locale'];
 		} else {
 			$data['error_locale'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -326,9 +326,9 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['code'] = '';
 		}
-		
+
 		$data['languages'] = array();
-		
+
 		$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 
 		foreach ($folders as $folder) {
@@ -342,7 +342,7 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['locale'] = '';
 		}
-		
+
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($language_info)) {
@@ -371,18 +371,18 @@ class ControllerLocalisationLanguage extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['name'])) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
+		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['code'])) < 2) || (utf8_strlen($this->request->post['code']) > 5)) {
+		if ((utf8_strlen($this->request->post['code']) < 2) || (utf8_strlen($this->request->post['code']) > 5)) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
-		
-		if ((utf8_strlen(trim($this->request->post['locale'])) < 2) || (utf8_strlen($this->request->post['locale']) > 255)) {
+
+		if ((utf8_strlen($this->request->post['locale']) < 2) || (utf8_strlen($this->request->post['locale']) > 255)) {
 			$this->error['locale'] = $this->language->get('error_locale');
 		}
-		
+
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
 
 		if (!isset($this->request->get['language_id'])) {

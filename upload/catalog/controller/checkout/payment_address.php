@@ -31,7 +31,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 
 		// Custom Fields
 		$data['custom_fields'] = array();
-		
+
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
@@ -89,7 +89,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 
 		if (!$json) {
 			$this->load->model('account/address');
-							
+
 			if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
 				if (empty($this->request->post['address_id'])) {
 					$json['error']['warning'] = $this->language->get('error_address');
@@ -104,15 +104,15 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					unset($this->session->data['payment_methods']);
 				}
 			} else {
-				if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+				if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 					$json['error']['lastname'] = $this->language->get('error_lastname');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
+				if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
 					$json['error']['address_1'] = $this->language->get('error_address_1');
 				}
 
@@ -124,7 +124,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 
 				$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
 					$json['error']['postcode'] = $this->language->get('error_postcode');
 				}
 
@@ -159,7 +159,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					// If no default address ID set we use the last address
 					if ($this->customer->isLogged() && !$this->customer->getAddressId()) {
 						$this->load->model('account/customer');
-						
+
 						$this->model_account_customer->editAddressId($this->customer->getId(), $address_id);
 					}
 

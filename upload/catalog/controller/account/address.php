@@ -38,7 +38,7 @@ class ControllerAccountAddress extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
-			
+
 			$this->session->data['success'] = $this->language->get('text_add');
 
 			$this->response->redirect($this->url->link('account/address', 'language=' . $this->config->get('config_language')));
@@ -64,7 +64,7 @@ class ControllerAccountAddress extends Controller {
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/address');
-		
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
 
@@ -297,7 +297,7 @@ class ControllerAccountAddress extends Controller {
 		} else {
 			$data['error_custom_field'] = array();
 		}
-		
+
 		if (!isset($this->request->get['address_id'])) {
 			$data['action'] = $this->url->link('account/address/add', 'language=' . $this->config->get('config_language'));
 		} else {
@@ -386,7 +386,7 @@ class ControllerAccountAddress extends Controller {
 
 		// Custom fields
 		$data['custom_fields'] = array();
-		
+
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
@@ -396,7 +396,7 @@ class ControllerAccountAddress extends Controller {
 				$data['custom_fields'][] = $custom_field;
 			}
 		}
-		
+
 		if (isset($this->request->post['custom_field']['address'])) {
 			$data['address_custom_field'] = $this->request->post['custom_field']['address'];
 		} elseif (isset($address_info)) {
@@ -426,19 +426,19 @@ class ControllerAccountAddress extends Controller {
 	}
 
 	protected function validateForm() {
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
+		if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
 			$this->error['address_1'] = $this->language->get('error_address_1');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
+		if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 128)) {
 			$this->error['city'] = $this->language->get('error_city');
 		}
 
@@ -446,7 +446,7 @@ class ControllerAccountAddress extends Controller {
 
 		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
+		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
 

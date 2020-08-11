@@ -655,12 +655,12 @@ class ControllerCustomerCustomer extends Controller {
 
 		$data['stores'] = array();
 		$data['multistore'] = 0;
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -679,7 +679,7 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['store_id'] = array(0);
 		}
-		
+
 		if (!isset($this->request->get['customer_id'])) {
 			$data['action'] = $this->url->link('customer/customer/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
@@ -838,11 +838,11 @@ class ControllerCustomerCustomer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
@@ -912,11 +912,11 @@ class ControllerCustomerCustomer extends Controller {
 				if (!isset($value['country_id']) || $value['country_id'] == '') {
 					$this->error['address'][$key]['country'] = $this->language->get('error_country');
 				} else {
-					
+
 					$this->load->model('localisation/country');
 
 					$country_info = $this->model_localisation_country->getCountry($value['country_id']);
-	
+
 					if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
 						$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
 					}

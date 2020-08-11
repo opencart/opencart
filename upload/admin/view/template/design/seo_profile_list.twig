@@ -45,7 +45,7 @@
                 {% if seo_profiles %}
                   {% for seo_profile in seo_profiles %}
                     <tr>
-                      <td class="text-center">{% if seo_profile.seo_regex_id in selected %}
+                      <td class="text-center">{% if seo_profile.seo_profile_id in selected %}
                           <input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}" checked="checked"/>
                         {% else %}
                           <input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}"/>

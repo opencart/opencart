@@ -334,7 +334,7 @@ class ControllerSettingSetting extends Controller {
 
 		$timezones = timezone_identifiers_list();
 
-		foreach($timezones as $timezone) {
+		foreach ($timezones as $timezone) {
 			date_default_timezone_set($timezone);
 
 			$hour = ' (' . date('P', $timestamp) . ')';
@@ -638,6 +638,14 @@ class ControllerSettingSetting extends Controller {
 			$data['config_stock_checkout'] = $this->request->post['config_stock_checkout'];
 		} else {
 			$data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
+		}
+
+		if (isset($this->request->post['config_affiliate_status'])) {
+			$data['config_affiliate_status'] = $this->request->post['config_affiliate_status'];
+		} elseif ($this->config->has('config_affiliate_status')) {
+			$data['config_affiliate_status'] = $this->config->get('config_affiliate_status');
+		} else {
+			$data['config_affiliate_status'] = true;
 		}
 
 		if (isset($this->request->post['config_affiliate_group_id'])) {

@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_subject']    = '%s - General Data Personal Request';
+$_['text_subject']    = '%s - GDPR export request completed!';
 $_['text_request']    = 'Export Personal Data';
 $_['text_hello']      = 'Hello <strong>%s</strong>,';
 $_['text_user']       = 'User';

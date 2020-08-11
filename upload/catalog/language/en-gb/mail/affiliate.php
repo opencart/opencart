@@ -16,4 +16,5 @@ $_['text_company']        = 'Company:';
 $_['text_email']          = 'E-Mail:';
 $_['text_telephone']      = 'Telephone:';
 
-$_['button_login']           = 'Login';
+// Button
+$_['button_login']        = 'Login';

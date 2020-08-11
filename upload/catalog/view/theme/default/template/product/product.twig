@@ -296,7 +296,7 @@
         <h3>{{ text_related }}</h3>
         <div class="row">
           {% for product in products %}
-            <div class="product-layout product-list col-lg-3 col-md-3 col-sm-6 col-12">{{ product }}</div>
+            <div class="product-layout product-module col-lg-3 col-md-3 col-sm-6 col-12">{{ product }}</div>
           {% endfor %}
         </div>
       {% endif %}
@@ -350,7 +350,7 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
+			$('.alert-dismissible, .text-danger, #toast').remove();
 			$('.form-control').removeClass('is-invalid');
 
 			if (json['error']) {

@@ -24,7 +24,7 @@ class ControllerDesignTheme extends Controller {
 		$this->load->model('setting/store');
 
 		$results = $this->model_setting_store->getStores();
-		
+
 		foreach ($results as $result) {
 			$data['stores'][] = array(
 				'store_id' => $result['store_id'],
@@ -83,7 +83,7 @@ class ControllerDesignTheme extends Controller {
 			'limit' => 10,
 			'url'   => $this->url->link('design/theme/history', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		));
-		
+
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
 		$this->response->setOutput($this->load->view('design/theme_history', $data));
@@ -122,7 +122,7 @@ class ControllerDesignTheme extends Controller {
 			$files = glob(rtrim(DIR_CATALOG . 'view/theme/{default,' . $theme . '}/template/' . $path, '/') . '/*', GLOB_BRACE);
 
 			if ($files) {
-				foreach($files as $file) {
+				foreach ($files as $file) {
 					if (!in_array(basename($file), $path_data))  {
 						if (is_dir($file)) {
 							$json['directory'][] = array(
@@ -189,8 +189,6 @@ class ControllerDesignTheme extends Controller {
 
 		if ($theme_info) {
 			$json['code'] = html_entity_decode($theme_info['code']);
-		} elseif (is_file(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_MODIFICATION . 'catalog/view')) == DIR_MODIFICATION . 'catalog/view')) {
-			$json['code'] = file_get_contents(DIR_MODIFICATION . 'catalog/view/theme/' . $theme . '/template/' . $path);
 		} elseif (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path) && (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view')) {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/theme/' . $theme . '/template/' . $path);
 		}
@@ -228,11 +226,11 @@ class ControllerDesignTheme extends Controller {
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');
-		} 
+		}
 
 		if (substr($path, -5) != '.twig') {
 			$json['error'] = $this->language->get('error_twig');
-		} 
+		}
 
 		if (!$json) {
 			$this->load->model('design/theme');
@@ -262,7 +260,7 @@ class ControllerDesignTheme extends Controller {
 		$this->load->model('setting/setting');
 
 		$theme = $this->model_setting_setting->getValue('config_theme', $store_id);
-		
+
 		// This is only here for compatibility with old themes.
 		if ($theme == 'theme_default') {
 			$theme = $this->model_setting_setting->getValue('theme_default_directory', $store_id);
@@ -296,7 +294,7 @@ class ControllerDesignTheme extends Controller {
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');
-		} 
+		}
 
 		if (!$json) {
 			$this->load->model('design/theme');

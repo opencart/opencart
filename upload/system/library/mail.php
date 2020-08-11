@@ -19,7 +19,6 @@ class Mail {
 	protected $text;
 	protected $html;
 	protected $attachments = array();
-	public $parameter;
 
 	/**
 	 * Constructor

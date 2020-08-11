@@ -123,8 +123,6 @@ class ControllerProductCompare extends Controller {
 			}
 		}
 
-		$data['review_status'] = $this->config->get('config_review_status');
-
 		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -246,22 +246,26 @@ class ControllerCheckoutConfirm extends Controller {
 			$order_data['comment'] = $this->session->data['comment'];
 			$order_data['total'] = $total;
 
+			$order_data['tracking'] = '';
+			$order_data['affiliate_id'] = 0;
+			$order_data['commission'] = 0;
+			$order_data['marketing_id'] = 0;
+
 			if (isset($this->request->cookie['tracking'])) {
 				$order_data['tracking'] = $this->request->cookie['tracking'];
 
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
-				$this->load->model('account/affiliate');
+				if ($this->config->get('config_affiliate_status')) {
+					$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);
+					$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);
 
-				if ($affiliate_info) {
-					$order_data['affiliate_id'] = $affiliate_info['customer_id'];
-					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
-				} else {
-					$order_data['affiliate_id'] = 0;
-					$order_data['commission'] = 0;
+					if ($affiliate_info) {
+						$order_data['affiliate_id'] = $affiliate_info['customer_id'];
+						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
+					}
 				}
 
 				// Marketing
@@ -271,14 +275,7 @@ class ControllerCheckoutConfirm extends Controller {
 
 				if ($marketing_info) {
 					$order_data['marketing_id'] = $marketing_info['marketing_id'];
-				} else {
-					$order_data['marketing_id'] = 0;
 				}
-			} else {
-				$order_data['affiliate_id'] = 0;
-				$order_data['commission'] = 0;
-				$order_data['marketing_id'] = 0;
-				$order_data['tracking'] = '';
 			}
 
 			$order_data['language_id'] = $this->config->get('config_language_id');

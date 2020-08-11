@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_subject']  = '%s - General Data Personal Request';
+$_['text_subject']  = '%s - GDPR Export/Deletion Request!';
 $_['text_export']   = 'Export Data Request';
 $_['text_remove']   = 'Account Deletion Request';
 $_['text_gdpr']     = 'A GDPR request from this email address, To confirm this action please click on the link below:';

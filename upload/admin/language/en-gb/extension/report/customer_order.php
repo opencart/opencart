@@ -23,8 +23,9 @@ $_['column_action']         = 'Action';
 $_['entry_date_start']      = 'Date Start';
 $_['entry_date_end']        = 'Date End';
 $_['entry_customer']        = 'Customer';
-$_['entry_status']          = 'Order Status';
+$_['entry_order_status']    = 'Order Status';
+$_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify customer orders report!';
+$_['error_permission']      = 'Warning: You do not have permission to modify customer orders report!';

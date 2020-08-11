@@ -9,7 +9,7 @@ $_['language_autoload'] = array('en-gb');
 
 // Session
 $_['session_autostart'] = true;
-$_['session_engine']    = 'file';
+$_['session_engine']    = 'file'; // db or file
 $_['session_name']      = 'OCSESSID';
 
 // Template

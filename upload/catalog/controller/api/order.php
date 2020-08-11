@@ -95,7 +95,7 @@ class ControllerApiOrder extends Controller {
 
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
-				
+
 				$order_data = array();
 
 				// Store Details
@@ -286,7 +286,12 @@ class ControllerApiOrder extends Controller {
 					$order_data['comment'] = '';
 				}
 
-				if (isset($this->request->post['affiliate_id'])) {
+				$order_data['tracking'] = '';
+				$order_data['affiliate_id'] = 0;
+				$order_data['commission'] = 0;
+				$order_data['marketing_id'] = 0;
+
+				if (isset($this->request->post['affiliate_id']) && $this->config->get('config_affiliate_status')) {
 					$subtotal = $this->cart->getSubTotal();
 
 					// Affiliate
@@ -297,19 +302,7 @@ class ControllerApiOrder extends Controller {
 					if ($affiliate_info) {
 						$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
-					} else {
-						$order_data['affiliate_id'] = 0;
-						$order_data['commission'] = 0;
 					}
-
-					// Marketing
-					$order_data['marketing_id'] = 0;
-					$order_data['tracking'] = '';
-				} else {
-					$order_data['affiliate_id'] = 0;
-					$order_data['commission'] = 0;
-					$order_data['marketing_id'] = 0;
-					$order_data['tracking'] = '';
 				}
 
 				$order_data['language_id'] = $this->config->get('config_language_id');
@@ -350,7 +343,7 @@ class ControllerApiOrder extends Controller {
 				}
 
 				$this->model_checkout_order->addHistory($json['order_id'], $order_status_id);
-				
+
 				// clear cart since the order has already been successfully stored.
 				$this->cart->clear();
 			}
@@ -465,7 +458,7 @@ class ControllerApiOrder extends Controller {
 
 				if (!$json) {
 					$json['success'] = $this->language->get('text_success');
-					
+
 					$order_data = array();
 
 					// Store Details
@@ -614,7 +607,7 @@ class ControllerApiOrder extends Controller {
 					$totals = array();
 					$taxes = $this->cart->getTaxes();
 					$total = 0;
-					
+
 					$sort_order = array();
 
 					$results = $this->model_setting_extension->getExtensions('total');
@@ -656,7 +649,10 @@ class ControllerApiOrder extends Controller {
 						$order_data['comment'] = '';
 					}
 
-					if (isset($this->request->post['affiliate_id'])) {
+					$order_data['affiliate_id'] = 0;
+					$order_data['commission'] = 0;
+
+					if (isset($this->request->post['affiliate_id']) && $this->config->get('config_affiliate_status')) {
 						$subtotal = $this->cart->getSubTotal();
 
 						// Affiliate
@@ -667,13 +663,7 @@ class ControllerApiOrder extends Controller {
 						if ($affiliate_info) {
 							$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 							$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
-						} else {
-							$order_data['affiliate_id'] = 0;
-							$order_data['commission'] = 0;
 						}
-					} else {
-						$order_data['affiliate_id'] = 0;
-						$order_data['commission'] = 0;
 					}
 
 					$this->model_checkout_order->editOrder($order_id, $order_data);
@@ -684,8 +674,13 @@ class ControllerApiOrder extends Controller {
 					} else {
 						$order_status_id = $this->config->get('config_order_status_id');
 					}
-					
+
 					$this->model_checkout_order->addHistory($order_id, $order_status_id);
+
+					// When order editing is completed, delete added order status for Void the order first.
+					if ($order_status_id) {
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE order_id = '" . (int)$order_id . "' AND order_status_id = '0'");
+					}
 				}
 			} else {
 				$json['error'] = $this->language->get('error_not_found');
@@ -722,7 +717,7 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

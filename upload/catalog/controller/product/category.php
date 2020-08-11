@@ -292,7 +292,7 @@ class ControllerProductCategory extends Controller {
 
 			sort($limits);
 
-			foreach($limits as $value) {
+			foreach ($limits as $value) {
 				$data['limits'][] = array(
 					'text'  => $value,
 					'value' => $value,
@@ -345,8 +345,6 @@ class ControllerProductCategory extends Controller {
 			$data['sort'] = $sort;
 			$data['order'] = $order;
 			$data['limit'] = $limit;
-
-			$data['review_status'] = $this->config->get('config_review_status');
 
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 

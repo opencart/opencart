@@ -5,8 +5,6 @@ class ControllerProductManufacturer extends Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		$this->load->model('tool/image');
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
@@ -275,7 +273,7 @@ class ControllerProductManufacturer extends Controller {
 
 			sort($limits);
 
-			foreach($limits as $value) {
+			foreach ($limits as $value) {
 				$data['limits'][] = array(
 					'text'  => $value,
 					'value' => $value,
@@ -314,7 +312,7 @@ class ControllerProductManufacturer extends Controller {
 			}
 
 			if ($page > 1) {
-			    $this->document->addLink($this->url->link('product/manufacturer/info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {

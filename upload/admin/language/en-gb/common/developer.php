@@ -4,7 +4,7 @@ $_['heading_title']    = 'Developer Settings';
 
 // Text
 $_['text_success']     = 'Success: You have modified developer settings!';
-$_['text_theme']       = 'theme';
+$_['text_theme']       = 'Theme';
 $_['text_sass']        = 'SASS';
 $_['text_cache']       = 'Success: You have cleared the %s cache!';
 

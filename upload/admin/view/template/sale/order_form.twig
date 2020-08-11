@@ -1556,7 +1556,13 @@ $('#cart').on('click', '.btn-primary', function() {
 });
 
 $('#button-cart').on('click', function() {
-	$('#collapse-payment').collapse('toggle');
+  $('.alert-dismissible').remove();
+
+  if ($('#cart tr td').length < 2) {
+    $('#collapse-cart .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_empty }} <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+  } else {
+    $('#collapse-payment').collapse('toggle');
+  }
 });
 
 // Payment Address

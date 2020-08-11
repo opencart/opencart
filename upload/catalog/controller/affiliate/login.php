@@ -3,7 +3,7 @@ class ControllerAffiliateLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->customer->isLogged()) {
+		if (!$this->config->get('config_affiliate_status') || $this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
@@ -143,7 +143,7 @@ class ControllerAffiliateLogin extends Controller {
 				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			}
 		}
-		
+
 		return !$this->error;
 	}
 }

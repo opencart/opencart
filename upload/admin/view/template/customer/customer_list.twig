@@ -124,7 +124,7 @@
                                 {% else %}
                                   <a href="#" class="dropdown-item disabled"><i class="fas fa-unlock"></i> {{ text_unlock }}</a>
                                 {% endif %}
-                                <div class="divider"></div>
+                                <div class="dropdown-divider"></div>
                                 <h6 class="dropdown-header">{{ text_login }}</h6>
                                 {% for store in customer.store %}
                                   <a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fas fa-lock"></i> {{ store.name }}{% if customer.store_id == store.store_id %}{{ text_default }}{% endif %}</a>
@@ -243,4 +243,4 @@ $('.date').datetimepicker({
 	'allowInputToggle': true
 });
 //--></script>
-{{ footer }} 
+{{ footer }}

@@ -350,7 +350,7 @@ $('#button-cart').on('click', function() {
 			$('#button-cart').button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible, .text-danger').remove();
+			$('.alert-dismissible, .text-danger, #toast').remove();
 			$('.form-control').removeClass('is-invalid');
 
 			if (json['error']) {

@@ -49,6 +49,7 @@ class ModelSettingExtension extends Model {
 	}
 
 
+
 	public function addPath($extension_install_id, $path) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "'");
 	}
@@ -74,6 +75,8 @@ class ModelSettingExtension extends Model {
 
 		return $query->rows;
 	}
+
+
 
 
 	public function getInstalled($type) {

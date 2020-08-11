@@ -873,10 +873,10 @@ class ControllerMarketplaceMarketplace extends Controller {
 						'extension_id'          => $response_info['extension_id'],
 						'extension_download_id' => $response_info['extension_download_id'],
 						'name'                  => $response_info['name'],
+						'code' 				    => basename($response_info['filename'], 'ocmod.zip'),
 						'author'                => $response_info['author'],
 						'version'               => $response_info['version'],
-						'filename' => $response_info['filename'],
-						'link' => ''
+						'link' 					=> ''
 					);
 
 					$json['extension_install_id'] = $this->model_setting_extension->addInstall($extension_data);
@@ -898,7 +898,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
 
 	public function addComment() {
 		$this->load->language('marketplace/marketplace');
@@ -1025,23 +1024,23 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 				$data['comments'][] = array(
 					'extension_comment_id' => $result['extension_comment_id'],
-					'member' => $result['member'],
-					'image' => $result['image'],
-					'comment' => $result['comment'],
-					'date_added' => $result['date_added'],
-					'reply' => $result['reply'],
-					'add' => $this->url->link('marketplace/marketplace/addcomment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id']),
-					'refresh' => $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
-					'next' => $next
+					'member'               => $result['member'],
+					'image'                => $result['image'],
+					'comment'              => $result['comment'],
+					'date_added'           => $result['date_added'],
+					'reply'                => $result['reply'],
+					'add'                  => $this->url->link('marketplace/marketplace/addcomment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id']),
+					'refresh'              => $this->url->link('marketplace/marketplace/reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
+					'next'                 => $next
 				);
 			}
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
 			'total' => $comment_total,
-			'page' => $page,
+			'page'  => $page,
 			'limit' => 20,
-			'url' => $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}')
+			'url'   => $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page={page}')
 		));
 
 		$data['refresh'] = $this->url->link('marketplace/marketplace/comment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&page=' . $page);
@@ -1092,10 +1091,10 @@ class ControllerMarketplaceMarketplace extends Controller {
 			foreach ($results as $result) {
 				$data['replies'][] = array(
 					'extension_comment_id' => $result['extension_comment_id'],
-					'member' => $result['member'],
-					'image' => $result['image'],
-					'comment' => $result['comment'],
-					'date_added' => $result['date_added']
+					'member'               => $result['member'],
+					'image'                => $result['image'],
+					'comment'              => $result['comment'],
+					'date_added'           => $result['date_added']
 				);
 			}
 		}

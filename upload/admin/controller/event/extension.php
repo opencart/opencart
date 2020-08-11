@@ -1,22 +1,21 @@
 <?php
-class ControllerEventExtension {
+class ControllerEventExtension extends Controller {
 	public function controller($route) {
+		/*
 		$position = strpos('/', $route);
 
 		$code = substr($route, 0, $position);
 
-		$extension_install_info = $this->setting_event->getInstallByCode($code);
+		$this->load->model('setting/event');
+
+		$path_info = $this->model_setting_extension->getPathsByCode($route);
 
 		if ($extension_install_info) {
+			$file = DIR_EXTENSION . $route . '.php';
 
-			$path_info = $this->setting_extension->getPath($code . $route);
-
-			if ($extension_install_info) {
-				$file = DIR_EXTENSION . $route . '.php';
-
-				include($file);
-			}
+			include($file);
 		}
+		*/
 	}
 
 	public function model() {

@@ -5,7 +5,7 @@
         <div class="swiper-slide text-center">
           {% if banner.link %}
             <a href="{{ banner.link }}">
-                <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
+              <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
             </a>
           {% else %}
             <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
@@ -32,4 +32,4 @@ $('#carousel{{ module }}').swiper({
 	autoplay: $('#carousel{{ module }} img').length > 5 ? 2500 : 0,
 	loop: true
 });
---></script>
+//--></script>

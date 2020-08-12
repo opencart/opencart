@@ -34,7 +34,7 @@ class ControllerCommonColumnLeft extends Controller {
 					'children' => array()
 				);
 			}
-			
+
 			if ($this->user->hasPermission('access', 'catalog/recurring')) {
 				$catalog[] = array(
 					'name'	   => $this->language->get('text_recurring'),
@@ -734,6 +734,12 @@ class ControllerCommonColumnLeft extends Controller {
 			} else {
 				$data['other_status'] = 0;
 			}
+
+            if ($this->user->hasPermission('access', 'report/statistics')) {
+                $data['statistics_status'] = true;
+            } else {
+                $data['statistics_status'] = false;
+            }
 
 			return $this->load->view('common/column_left', $data);
 		}

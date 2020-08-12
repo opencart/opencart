@@ -16,18 +16,54 @@ class ModelSettingExtension extends Model {
 		return $query->row;
 	}
 
-	public function getInstalls() {
-		$start = 0; $limit = 10;
+	public function getInstallByCode($code) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE code = '" . $code . "'");
 
-		if ($start < 0) {
-			$start = 0;
+		return $query->row;
+	}
+
+	public function editStatus($extension_install_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
+	}
+
+	public function getInstalls($filter_data) {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
+
+		if (!empty($data['filter_extension_download_id'])) {
+			$sql .= " WHERE `extension_download_id` = '" . (int)$data['filter_extension_download_id'] . "'";
 		}
 
-		if ($limit < 1) {
-			$limit = 10;
-		}		
-		
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$sort_data = array(
+			'name',
+			'version',
+			'date_added'
+		);
+
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY `date_added`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
 	
 		return $query->rows;
 	}
@@ -39,15 +75,16 @@ class ModelSettingExtension extends Model {
 	}
 		
 	public function getTotalInstalls() {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`");
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
+
+		if (!empty($data['filter_extension_download_id'])) {
+			$sql .= " WHERE `extension_download_id` = '" . (int)$data['filter_extension_download_id'] . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}
-
-	public function editStatus($extension_install_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
-	}
-
 
 
 	public function addPath($extension_install_id, $path) {
@@ -75,8 +112,6 @@ class ModelSettingExtension extends Model {
 
 		return $query->rows;
 	}
-
-
 
 
 	public function getInstalled($type) {

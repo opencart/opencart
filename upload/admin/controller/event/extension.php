@@ -1,6 +1,6 @@
 <?php
 class ControllerEventExtension extends Controller {
-	public function controller($route) {
+	public function controller(&$route, &$args, &$output) {
 		/*
 		$position = strpos('/', $route);
 

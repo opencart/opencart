@@ -165,10 +165,15 @@ class ControllerMarketplaceInstaller extends Controller {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 
+			if (is_file($filename)) {
+				$json['error'] = $this->language->get('error_exists');
+
+				unset($this->request->files['file']['tmp_name']);
+			}
+
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 			}
-
 		} else {
 			$json['error'] = $this->language->get('error_upload');
 		}
@@ -288,7 +293,7 @@ class ControllerMarketplaceInstaller extends Controller {
 			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
 
 			if (!is_file($file)) {
-				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code']. '.ocmod.zip');
+				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
 			}
 
 			if (is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {

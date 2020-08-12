@@ -886,8 +886,6 @@ class ControllerMarketplaceMarketplace extends Controller {
 				} else {
 					$json['redirect'] = $response_info['download'];
 				}
-
-
 			} elseif (isset($response_info['error'])) {
 				$json['error'] = $response_info['error'];
 			} else {

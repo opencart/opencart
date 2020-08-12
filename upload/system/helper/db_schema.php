@@ -2147,6 +2147,11 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
+				'name' => 'code',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			),
+			array(
 				'name' => 'version',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -2154,11 +2159,6 @@ function db_schema() {
 			array(
 				'name' => 'image',
 				'type' => 'varchar(128)',
-				'not_null' => true
-			),
-			array(
-				'name' => 'filename',
-				'type' => 'varchar(255)',
 				'not_null' => true
 			),
 			array(

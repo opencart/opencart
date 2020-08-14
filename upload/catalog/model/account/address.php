@@ -89,53 +89,14 @@ class ModelAccountAddress extends Model {
 	public function getAddresses() {
 		$address_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT address_id FROM " . DB_PREFIX . "address WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 
 		foreach ($query->rows as $result) {
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$result['country_id'] . "'");
+			$address_info = $this->getAddress($result['address_id']);
 
-			if ($country_query->num_rows) {
-				$country = $country_query->row['name'];
-				$iso_code_2 = $country_query->row['iso_code_2'];
-				$iso_code_3 = $country_query->row['iso_code_3'];
-				$address_format = $country_query->row['address_format'];
-			} else {
-				$country = '';
-				$iso_code_2 = '';
-				$iso_code_3 = '';
-				$address_format = '';
+			if ($address_info) {
+				$address_data[$result['address_id']] = $address_info;
 			}
-
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$result['zone_id'] . "'");
-
-			if ($zone_query->num_rows) {
-				$zone = $zone_query->row['name'];
-				$zone_code = $zone_query->row['code'];
-			} else {
-				$zone = '';
-				$zone_code = '';
-			}
-
-			$address_data[$result['address_id']] = array(
-				'address_id'     => $result['address_id'],
-				'firstname'      => $result['firstname'],
-				'lastname'       => $result['lastname'],
-				'company'        => $result['company'],
-				'address_1'      => $result['address_1'],
-				'address_2'      => $result['address_2'],
-				'postcode'       => $result['postcode'],
-				'city'           => $result['city'],
-				'zone_id'        => $result['zone_id'],
-				'zone'           => $zone,
-				'zone_code'      => $zone_code,
-				'country_id'     => $result['country_id'],
-				'country'        => $country,
-				'iso_code_2'     => $iso_code_2,
-				'iso_code_3'     => $iso_code_3,
-				'address_format' => $address_format,
-				'custom_field'   => json_decode($result['custom_field'], true)
-
-			);
 		}
 
 		return $address_data;

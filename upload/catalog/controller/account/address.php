@@ -37,7 +37,23 @@ class ControllerAccountAddress extends Controller {
 		$this->load->model('account/address');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
+			$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
+            
+			// Default Shipping Address
+			if (empty($this->session->data['shipping_address']['address_id'])) {
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($address_id);
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+			}
+
+			// Default Payment Address
+			if (empty($this->session->data['payment_address']['address_id'])) {
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($address_id);
+
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
+			}
 			
 			$this->session->data['success'] = $this->language->get('text_add');
 

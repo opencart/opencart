@@ -253,6 +253,19 @@ class Image {
 		$image_old = $this->image;
 		$this->image = imagecreatetruecolor($bottom_x - $top_x, $bottom_y - $top_y);
 
+		if ($this->mime == 'image/png') {
+			imagealphablending($this->image, false);
+			imagesavealpha($this->image, true);
+
+			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
+
+			imagecolortransparent($this->image, $background);
+		} else {
+			$background = imagecolorallocate($this->image, 255, 255, 255);
+		}
+
+		imagefilledrectangle($this->image, 0, 0, $this->width, $this->height, $background);
+
 		imagecopy($this->image, $image_old, 0, 0, $top_x, $top_y, $this->width, $this->height);
 		imagedestroy($image_old);
 

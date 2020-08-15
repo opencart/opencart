@@ -47,8 +47,10 @@ class ControllerMailGdpr extends Controller {
 		$language->load($language_code);
 		$language->load('mail/gdpr_export');
 
-		if ($this->config->get('config_logo')) {
-			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+		$this->load->model('tool/image');
+
+		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
 		} else {
 			$data['logo'] = '';
 		}
@@ -216,8 +218,10 @@ class ControllerMailGdpr extends Controller {
 		$language->load($language_code);
 		$language->load('mail/gdpr_approve');
 
-		if ($this->config->get('config_logo')) {
-			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+		$this->load->model('tool/image');
+
+		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
 		} else {
 			$data['logo'] = '';
 		}
@@ -284,8 +288,10 @@ class ControllerMailGdpr extends Controller {
 		$language->load($language_code);
 		$language->load('mail/gdpr_deny');
 
-		if ($this->config->get('config_logo')) {
-			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+		$this->load->model('tool/image');
+
+		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
 		} else {
 			$data['logo'] = '';
 		}
@@ -353,8 +359,10 @@ class ControllerMailGdpr extends Controller {
 		$language->load($language_code);
 		$language->load('mail/gdpr_delete');
 
-		if ($this->config->get('config_logo')) {
-			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+		$this->load->model('tool/image');
+
+		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
 		} else {
 			$data['logo'] = '';
 		}

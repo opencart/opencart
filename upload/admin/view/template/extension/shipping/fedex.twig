@@ -101,10 +101,10 @@
                 <div class="checkbox">
                   <label>
                     {% if service.value in shipping_fedex_service %}
-                    <input type="checkbox" name="fedex_service[]" value="{{ service.value }}" checked="checked" />
+                    <input type="checkbox" name="shipping_fedex_service[]" value="{{ service.value }}" checked="checked" />
                     {{ service.text }}
                     {% else %}
-                    <input type="checkbox" name="fedex_service[]" value="{{ service.value }}" />
+                    <input type="checkbox" name="shipping_fedex_service[]" value="{{ service.value }}" />
                     {{ service.text }}
                     {% endif %}
                   </label>

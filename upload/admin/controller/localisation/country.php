@@ -110,6 +110,76 @@ class ControllerLocalisationCountry extends Controller {
 		$this->getList();
 	}
 
+	public function enable() {
+		$this->load->language('localisation/country');
+		
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('localisation/country');
+		
+		if (isset($this->request->post['selected']) && $this->validateEnable()) {
+			$ids = implode(",", $this->request->post['selected']);
+			$this->model_localisation_country->enableCountries($ids);
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+			
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+			
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->load->language('localisation/country');
+			$this->session->data['success'] = $this->language->get('text_success');
+			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url, true));
+		}
+		
+		$this->getList();
+	}
+	
+	public function disable() {
+		$this->load->language('localisation/country');
+		
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('localisation/country');
+		
+		if (isset($this->request->post['selected']) && $this->validateDisable()) {
+			$ids = implode(",", $this->request->post['selected']);
+			$this->model_localisation_country->disableCountries($ids);
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+			
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+			
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->load->language('localisation/country');
+			$this->session->data['success'] = $this->language->get('text_success');
+			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url, true));
+		}
+		
+		$this->getList();
+	}
+
 	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -157,6 +227,8 @@ class ControllerLocalisationCountry extends Controller {
 
 		$data['add'] = $this->url->link('localisation/country/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/country/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['enable'] = $this->url->link('localisation/country/enable', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		$data['disable'] = $this->url->link('localisation/country/disable', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		$data['countries'] = array();
 
@@ -177,6 +249,7 @@ class ControllerLocalisationCountry extends Controller {
 				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : null),
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
+				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'       => $this->url->link('localisation/country/edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
 			);
 		}
@@ -216,6 +289,7 @@ class ControllerLocalisationCountry extends Controller {
 		$data['sort_name'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_iso_code_2'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
 		$data['sort_iso_code_3'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
+		$data['sort_status'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
 
 		$url = '';
 
@@ -406,6 +480,22 @@ class ControllerLocalisationCountry extends Controller {
 			}
 		}
 
+		return !$this->error;
+	}
+
+	protected function validateEnable() {
+		if (!$this->user->hasPermission('modify', 'localisation/country')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+		
+		return !$this->error;
+	}
+	
+	protected function validateDisable() {
+		if (!$this->user->hasPermission('modify', 'localisation/country')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+		
 		return !$this->error;
 	}
 	

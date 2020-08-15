@@ -2,8 +2,12 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-country').submit() : false;"><i class="fas fa-trash-alt"></i></button>
+      <div class="float-right">
+      <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <button form="form-country" type="submit" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" formaction="{{ delete }}" data-text="{{ text_confirm }}"><i class="fa fa-trash-o"></i></button>
+        <div class="btn-group" role="group" aria-label="enable-disable items">
+          <button form="form-country" type="submit" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success" formaction="{{ enable }}" data-text="{{ text_confirm }}"><i class="fa fa-eye"></i></button>
+          <button form="form-country" type="submit" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-warning" formaction="{{ disable }}" data-text="{{ text_confirm }}"><i class="fa fa-eye-slash"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -48,6 +52,13 @@
                     {% else %}
                       <a href="{{ sort_iso_code_3 }}">{{ column_iso_code_3 }}</a>
                     {% endif %}</td>
+                  <td class="text-left">
+                    {% if sort == 'status' %}
+                      <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                    {% else %}
+                      <a href="{{ sort_status }}">{{ column_status }}</a>
+                    {% endif %}
+                  </td>
                   <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
@@ -62,7 +73,8 @@
                         {% endif %}</td>
                       <td class="text-left">{{ country.name }}</td>
                       <td class="text-left">{{ country.iso_code_2 }}</td>
-                      <td class="text-left">{{ country.iso_code_3 }}</td>
+                      <td class="text-left">{{ country.iso_code_3 }}</td>>
+                      <td class="text-left">{{ country.status }}</td>
                       <td class="text-right"><a href="{{ country.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                     </tr>
                   {% endfor %}
@@ -83,4 +95,13 @@
     </div>
   </div>
 </div>
+<script>
+$('button').on('click', function (event) {
+  if (!confirm($(this).attr('data-text'))) {
+    event.stopImmediatePropagation();
+
+    return false;
+  }
+})
+</script>
 {{ footer }}

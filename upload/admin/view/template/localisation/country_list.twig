@@ -96,7 +96,7 @@
   </div>
 </div>
 <script>
-$('button').on('click', function (event) {
+$('button[type="submit"]').on('click', function (event) {
   if (!confirm($(this).attr('data-text'))) {
     event.stopImmediatePropagation();
 

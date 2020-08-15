@@ -243,6 +243,10 @@ class ModelCustomerCustomer extends Model {
 			$implode[] = "c.customer_group_id = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
 
+		if (!empty($data['filter_affiliate'])) {
+			$implode[] = "ca.status = '" . (int)$data['filter_affiliate'] . "'";
+		}
+
 		if (!empty($data['filter_ip'])) {
 			$implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape((string)$data['filter_ip']) . "')";
 		}

@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 // Check Version
 if (version_compare(phpversion(), '7.3.0', '<')) {
-	exit('PHP7+ Required');
+	exit('PHP7.3+ Required');
 }
 
 if (!ini_get('date.timezone')) {
@@ -50,7 +50,6 @@ require_once(DIR_SYSTEM . 'engine/controller.php');
 require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/action.php');
 require_once(DIR_SYSTEM . 'engine/event.php');
-require_once(DIR_SYSTEM . 'engine/router.php');
 require_once(DIR_SYSTEM . 'engine/loader.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 require_once(DIR_SYSTEM . 'engine/proxy.php');

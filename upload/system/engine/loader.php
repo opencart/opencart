@@ -87,6 +87,8 @@ final class Loader {
 					$proxy->{$method} = $this->callback($route . '/' . $method);
 				}
 
+				include_once($file);
+
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
 				throw new \Exception('Error: Could not load model ' . $route . '!');
@@ -109,31 +111,20 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		// Modified template contents. Not the output!
-		$code = '';
-
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$code));
+		$this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$code));
 
 		// Make sure its only the last event that returns an output if required.
-		if ($result) {
-			$output = $result;
-		} else {
-			$template = new Template($this->registry->get('config')->get('template_engine'));
+		$template = new Template($this->registry->get('config')->get('template_engine'));
 
-			foreach ($data as $key => $value) {
-				$template->set($key, $value);
-			}
-
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
+		foreach ($data as $key => $value) {
+			$template->set($key, $value);
 		}
+
+		$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/after', array(&$route, &$data, &$output));
-
-		if ($result) {
-			$output = $result;
-		}
+		$this->registry->get('event')->trigger('view/' . $trigger . '/after', array(&$route, &$data, &$output));
 
 		return $output;
 	}
@@ -141,9 +132,12 @@ final class Loader {
 	/**
 	 * Library
 	 *
-	 * @param    string $route
+	 * This method is used for loading library classes
+	 *
+	 * @param    string $route	The path to the library file.
+	 * @param    string $args	A list of arguments to pass into the library object being created.
 	 */
-	public function library($route, $config = array()) {
+	public function library($route, &...$args) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -153,7 +147,9 @@ final class Loader {
 		if (is_file($file)) {
 			include_once($file);
 
-			$this->registry->set(basename($route), new $class($this->registry));
+			$reflection = new ReflectionClass($class);
+
+			$this->registry->set($route, $class->newInstanceArgs($args));
 		} else {
 			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
@@ -208,21 +204,13 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$prefix));
+		$this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$prefix));
 
-		if ($result) {
-			$output = $result;
-		} else {
-			$output = $this->registry->get('language')->load($route, $prefix);
-		}
+		$data = $this->registry->get('language')->load($route, $prefix);
 
-		$result = $this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$prefix, &$output));
+		$this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$prefix, &$data));
 
-		if ($result) {
-			$output = $result;
-		}
-
-		return $output;
+		return $data;
 	}
 
 	/**

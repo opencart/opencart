@@ -166,7 +166,7 @@ if ($config->has('language_autoload')) {
 // Helper Autoload
 if ($config->has('helper_autoload')) {
 	foreach ($config->get('helper_autoload') as $value) {
-		$loader->model($value);
+		$loader->helper($value);
 	}
 }
 
@@ -185,17 +185,51 @@ if ($config->has('model_autoload')) {
 }
 
 // Route
-$route = new Router($registry);
+if (!empty($request->get['route'])) {
+	$action = new Action((string)$request->get['route']);
+} else {
+	$action = new Action($config->get('action_default'));
+}
 
 // Pre Actions
-if ($config->has('action_pre_action')) {
-	foreach ($config->get('action_pre_action') as $value) {
-		$route->addPreAction(new Action($value));
+foreach ($config->get('action_pre_action') as $pre_action) {
+	$pre_action = new Action($pre_action);
+
+	$result = $pre_action->execute($registry);
+
+	if ($result instanceof Action) {
+		$action = $result;
+
+		break;
+	}
+
+	if ($result instanceof Exception) {
+		$action = new Action($config->get('action_error'));
+
+		break;
 	}
 }
 
 // Dispatch
-$route->dispatch(new Action($config->get('action_router')), new Action($config->get('action_error')));
+while ($action) {
+	// Keep the original trigger
+	$trigger = $action->getId();
 
+	$event->trigger('controller/' . $trigger . '/before', array(&$route, &$data));
+
+	$result = $action->execute($registry);
+
+	$action = '';
+
+	if ($result instanceof Action) {
+		$action = $result;
+	}
+
+	if ($result instanceof Exception) {
+		$action = new Action($config->get('action_error'));
+	}
+
+	$event->trigger('controller/' . $trigger . '/after', array(&$route, &$data, &$output));
+}
 // Output
 $response->output();

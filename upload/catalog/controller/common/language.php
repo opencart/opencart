@@ -30,11 +30,11 @@ class ControllerCommonLanguage extends Controller {
 		$results = $this->model_localisation_language->getLanguages();
 
 		foreach ($results as $result) {
-            $data['languages'][] = array(
-                'name' => $result['name'],
-                'code' => $result['code'],
-                'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
-            );
+			$data['languages'][] = array(
+				'name' => $result['name'],
+				'code' => $result['code'],
+				'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
+			);
 		}
 
 		return $this->load->view('common/language', $data);

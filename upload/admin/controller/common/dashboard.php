@@ -86,11 +86,11 @@ class ControllerCommonDashboard extends Controller {
 			$data['security'] = '';
 		}
 
-        if ($this->user->hasPermission('access', 'common/developer')) {
-            $data['developer_status'] = true;
-        } else {
-            $data['developer_status'] = false;
-        }
+		if ($this->user->hasPermission('access', 'common/developer')) {
+			$data['developer_status'] = true;
+		} else {
+			$data['developer_status'] = false;
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

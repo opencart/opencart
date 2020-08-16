@@ -58,7 +58,7 @@ class ControllerMailAffiliate extends Controller {
 		$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
 		$mail->setHtml($this->load->view('mail/affiliate', $data));
 		$mail->send();
- 	}
+	}
 
 	public function alert(&$route, &$args, &$output) {
 		// Send to main admin email if new affiliate email is enabled

@@ -16,7 +16,7 @@ class ModelToolImage extends Model {
 			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
 				return HTTP_CATALOG . 'image/' . $image_old;
 			}
- 
+
 			$path = '';
 
 			$directories = explode('/', dirname($image_new));

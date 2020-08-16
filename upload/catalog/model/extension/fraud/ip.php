@@ -1,11 +1,11 @@
 <?php
 class ModelExtensionFraudIp extends Model {
 	public function check($order_info) {
-		$this->load->model('account/customer');
-
 		$status = false;
 
 		if ($order_info['customer_id']) {
+			$this->load->model('account/customer');
+
 			$results = $this->model_account_customer->getIps($order_info['customer_id']);
 
 			foreach ($results as $result) {

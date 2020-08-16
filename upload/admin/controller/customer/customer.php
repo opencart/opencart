@@ -655,12 +655,12 @@ class ControllerCustomerCustomer extends Controller {
 
 		$data['stores'] = array();
 		$data['multistore'] = 0;
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -679,7 +679,7 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['store_id'] = array(0);
 		}
-		
+
 		if (!isset($this->request->get['customer_id'])) {
 			$data['action'] = $this->url->link('customer/customer/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
@@ -875,7 +875,7 @@ class ControllerCustomerCustomer extends Controller {
 			if ($custom_field['status']) {
 				if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+				} elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}
@@ -912,11 +912,11 @@ class ControllerCustomerCustomer extends Controller {
 				if (!isset($value['country_id']) || $value['country_id'] == '') {
 					$this->error['address'][$key]['country'] = $this->language->get('error_country');
 				} else {
-					
+
 					$this->load->model('localisation/country');
 
 					$country_info = $this->model_localisation_country->getCountry($value['country_id']);
-	
+
 					if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
 						$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
 					}

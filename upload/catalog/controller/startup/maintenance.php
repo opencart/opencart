@@ -3,17 +3,17 @@ class ControllerStartupMaintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
 			// Route
-			if (isset($this->request->get['route']) && $this->request->get['route'] != 'startup/router') {
+			if (isset($this->request->get['route'])) {
 				$route = $this->request->get['route'];
 			} else {
 				$route = $this->config->get('action_default');
-			}			
-			
+			}
+
 			$ignore = array(
 				'common/language/language',
 				'common/currency/currency'
 			);
-			
+
 			// Show site if logged in as admin
 			$this->user = new Cart\User($this->registry);
 

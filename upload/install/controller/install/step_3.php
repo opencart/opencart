@@ -285,7 +285,7 @@ class ControllerInstallStep3 extends Controller {
 			$this->error['db_port'] = $this->language->get('error_db_port');
 		}
 
-        if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
+		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
 			$this->error['db_prefix'] = $this->language->get('error_db_prefix');
 		}
 

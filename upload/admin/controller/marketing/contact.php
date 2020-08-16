@@ -132,20 +132,20 @@ class ControllerMarketingContact extends Controller {
 						}
 						break;
 					case 'customer':
-                        if (!empty($this->request->post['customer'])) {
-                            $customers = array_slice($this->request->post['customer'], ($page - 1) * 10, 10);
+						if (!empty($this->request->post['customer'])) {
+							$customers = array_slice($this->request->post['customer'], ($page - 1) * 10, 10);
 
-                            foreach ($customers as $customer_id) {
-                                $customer_info = $this->model_customer_customer->getCustomer($customer_id);
+							foreach ($customers as $customer_id) {
+								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
-                                if ($customer_info) {
-                                    $emails[] = $customer_info['email'];
-                                }
-                            }
+								if ($customer_info) {
+									$emails[] = $customer_info['email'];
+								}
+							}
 
-                            $email_total = count($this->request->post['customer']);
-                        }
-                        break;
+							$email_total = count($this->request->post['customer']);
+						}
+						break;
 					case 'affiliate_all':
 						$affiliate_data = array(
 							'filter_affiliate' => 1,
@@ -162,20 +162,20 @@ class ControllerMarketingContact extends Controller {
 						}
 						break;
 					case 'affiliate':
-                        if (!empty($this->request->post['affiliate'])) {
-                            $affiliates = array_slice($this->request->post['affiliate'], ($page - 1) * 10, 10);
+						if (!empty($this->request->post['affiliate'])) {
+							$affiliates = array_slice($this->request->post['affiliate'], ($page - 1) * 10, 10);
 
-                            foreach ($affiliates as $affiliate_id) {
-                                $affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
+							foreach ($affiliates as $affiliate_id) {
+								$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
 
-                                if ($affiliate_info) {
-                                    $emails[] = $affiliate_info['email'];
-                                }
-                            }
+								if ($affiliate_info) {
+									$emails[] = $affiliate_info['email'];
+								}
+							}
 
-                            $email_total = count($this->request->post['affiliate']);
-                        }
-                        break;
+							$email_total = count($this->request->post['affiliate']);
+						}
+						break;
 					case 'product':
 						if (isset($this->request->post['product'])) {
 							$email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($this->request->post['product']);

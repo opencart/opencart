@@ -70,7 +70,7 @@
             <div class="row">
               {% for extension in promotions %}
                 {% if extension %}
-                  <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <section>
                       <div class="extension-preview text-center"><a href="{{ extension.href }}">
                           <div class="extension-description"></div>
@@ -99,7 +99,7 @@
             <div class="row">
               {% for extension in extensions %}
                 {% if extension %}
-                  <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <section>
                       <div class="extension-preview text-center"><a href="{{ extension.href }}">
                           <div class="extension-description"></div>
@@ -126,7 +126,7 @@
           {% endif %}
         </div>
         <div class="row">
-          <div class="col-sm-12 text-center">{{ pagination }}</div>
+          <div class="col text-center">{{ pagination }}</div>
         </div>
       </div>
     </div>

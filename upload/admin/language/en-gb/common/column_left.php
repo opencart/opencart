@@ -40,7 +40,6 @@ $_['text_manufacturer']      = 'Manufacturers';
 $_['text_marketing']         = 'Marketing';
 $_['text_marketplace']       = 'Marketplace';
 $_['text_menu']              = 'Menu Manager';
-$_['text_modification']      = 'Modifications';
 $_['text_navigation']        = 'Navigation';
 $_['text_online']            = 'Who\'s Online';
 $_['text_option']            = 'Options';

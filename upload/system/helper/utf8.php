@@ -590,3 +590,27 @@ if (extension_loaded('mbstring')) {
 		return $string;
 	}
 }
+
+function utf8_str_split($string, $split_length = 1) {
+    if ($split_length == 1) {
+        return preg_split("//u", $string, -1, PREG_SPLIT_NO_EMPTY);
+    } elseif ($split_length > 1) {
+        $return_value = [];
+        $string_length = utf8_strlen($string);
+        for ($i = 0; $i < $string_length; $i += $split_length) {
+            $return_value[] = utf8_substr($string, $i, $split_length);
+        }
+        return $return_value;
+    } else {
+        return false;
+    }
+}
+
+function utf8_basename($path) {
+    if (preg_match('@^.*[\\\\/]([^\\\\/]+)$@s', $path, $matches)) {
+        return $matches[1];
+    } else if (preg_match('@^([^\\\\/]+)$@s', $path, $matches)) {
+        return $matches[1];
+    }
+    return '';
+}

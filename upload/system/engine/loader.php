@@ -1,9 +1,9 @@
 <?php
 /**
- * @package        OpenCart
- * @author        Daniel Kerr
- * @copyright    Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
- * @license        https://opensource.org/licenses/GPL-3.0
+ * @package     OpenCart
+ * @author      Daniel Kerr
+ * @copyright   Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license     https://opensource.org/licenses/GPL-3.0
  * @link        https://www.opencart.com
  */
 
@@ -30,7 +30,7 @@ final class Loader {
 	 * @param    string $route
 	 * @param    array $data
 	 *
-	 * @return    mixed
+	 * @return   mixed
 	 */
 	//public function controller($route, &...$args) {
 	public function controller($route, ...$args) {
@@ -149,7 +149,7 @@ final class Loader {
 
 			$reflection = new ReflectionClass($class);
 
-			$this->registry->set($route, $class->newInstanceArgs($args));
+			$this->registry->set($route, $reflection->newInstanceArgs($args));
 		} else {
 			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
@@ -195,7 +195,7 @@ final class Loader {
 	 * @param    string $route
 	 * @param    string $key
 	 *
-	 * @return    array
+	 * @return   array
 	 */
 	public function language($route, $prefix = '') {
 		// Sanitize the call

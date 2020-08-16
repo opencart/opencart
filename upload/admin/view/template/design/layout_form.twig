@@ -417,6 +417,8 @@ function addModule(type) {
 
 		$('#module-' + type + ' tbody select[name=\'layout_module[' + module_row + '][code]\']').val($('#module-' + type + ' tfoot select').val());
 
+		$('#module-' + type + ' tfoot select').val('');
+
 		$('#module-' + type + ' select[name*=\'code\']').trigger('change');
 
 		$('#module-' + type + ' tbody input[name*=\'sort_order\']').each(function(i, element) {
@@ -438,7 +440,5 @@ $('#module-column-left, #module-column-right, #module-content-top, #module-conte
 		$(this).parent().find('a').attr('href', 'index.php?route=extension/module/' + part[0] + '&user_token={{ user_token }}&module_id=' + part[1]);
 	}
 });
-
-$('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').trigger('change');
 //--></script>
 {{ footer }}

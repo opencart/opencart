@@ -20,7 +20,6 @@ $_['error_display']     = true;
 
 // Actions
 $_['action_default']    = 'install/step_1';
-$_['action_router']     = 'startup/router';
 $_['action_error']      = 'error/not_found';
 $_['action_pre_action'] = array(
 	'startup/language',

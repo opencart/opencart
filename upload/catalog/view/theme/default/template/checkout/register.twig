@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <fieldset id="account">
       <legend>{{ text_your_details }}</legend>
-      <div class="form-group" style="display: {% if customer_groups|length > 1 %} block {% else %} none {% endif %};">
+      <div class="form-group required{{ customer_groups|length <= 1 ? ' d-none' }}">
         <label class="col-form-label">{{ entry_customer_group }}</label>
         {% for customer_group in customer_groups %}
           {% if customer_group.customer_group_id == customer_group_id %}

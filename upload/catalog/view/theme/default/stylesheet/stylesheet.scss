@@ -88,12 +88,10 @@ div.required .col-form-label:before {
 
   .nav {
     > .list-inline {
-      > .list-inline-item, .list-inline-item a {
+      > .list-inline-item, .list-inline-item > a, .list-inline-item .dropdown > a {
         color: #888;
         text-shadow: 0 1px 0 #FFF;
-
       }
-
     }
   }
 

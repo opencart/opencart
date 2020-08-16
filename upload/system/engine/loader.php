@@ -87,8 +87,6 @@ final class Loader {
 					$proxy->{$method} = $this->callback($route . '/' . $method);
 				}
 
-				include_once($file);
-
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
 				throw new \Exception('Error: Could not load model ' . $route . '!');

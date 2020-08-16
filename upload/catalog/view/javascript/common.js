@@ -100,11 +100,11 @@ $(document).ready(function() {
 	$('#grid-view').click(function() {
 		// What a shame bootstrap does not take into account dynamically loaded columns
 		if (cols == 2) {
-			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-12');
+			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-6 col-md-6');
 		} else if (cols == 1) {
-			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-12');
+			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6');
 		} else {
-			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-12');
+			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-6');
 		}
 
 		$('#list-view').removeClass('active');
@@ -122,18 +122,18 @@ $(document).ready(function() {
 	}
 
 	// Column Left / Right Module
-	$('#column-left .product-module, #column-right .product-module').attr('class', 'product-layout product-module col-12');
+	$('#column-left .product-module, #column-right .product-module').attr('class', 'product-layout product-module');
 
 	// Product Module on Pages
 	if (cols == 2) {
-		$('#content.col').attr('class', 'col-md-6 col-12');
-		$('#content .product-module').attr('class', 'product-layout product-module col-lg-6 col-md-6 col-sm-6 col-12');
+		$('#content.col').attr('class', 'col-md-6');
+		$('#content .product-module').attr('class', 'product-layout product-module col-lg-6 col-md-6 col-sm-6');
 	} else if (cols == 1) {
-		$('#content.col').attr('class', 'col-md-9 col-12');
-		$('#content .product-module').attr('class', 'product-layout product-module col-lg-4 col-md-4 col-sm-6 col-12');
+		$('#content.col').attr('class', 'col-md-9');
+		$('#content .product-module').attr('class', 'product-layout product-module col-lg-4 col-md-4 col-sm-6');
 	} else {
 		$('#content.col').attr('class', 'col-12');
-		$('#content .product-module').attr('class', 'product-layout product-module col-lg-3 col-md-3 col-sm-6 col-12');
+		$('#content .product-module').attr('class', 'product-layout product-module col-lg-3 col-md-3 col-sm-6');
 	}
 
 	// Cookie Policy

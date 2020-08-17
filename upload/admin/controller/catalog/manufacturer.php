@@ -316,12 +316,12 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = array();
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -368,7 +368,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
-		
+
 		if (isset($this->request->post['manufacturer_seo_url'])) {
 			$data['manufacturer_seo_url'] = $this->request->post['manufacturer_seo_url'];
 		} elseif (!empty($manufacturer_info)) {
@@ -376,7 +376,19 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {
 			$data['manufacturer_seo_url'] = array();
 		}
-				
+
+		if (isset($this->request->post['manufacturer_layout'])) {
+			$data['manufacturer_layout'] = $this->request->post['manufacturer_layout'];
+		} elseif (!empty($manufacturer_info)) {
+			$data['manufacturer_layout'] = $this->model_catalog_manufacturer->getLayouts($this->request->get['manufacturer_id']);
+		} else {
+			$data['manufacturer_layout'] = array();
+		}
+
+		$this->load->model('design/layout');
+
+		$data['layouts'] = $this->model_design_layout->getLayouts();
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -395,7 +407,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		if ($this->request->post['manufacturer_seo_url']) {
 			$this->load->model('design/seo_url');
-			
+
 			foreach ($this->request->post['manufacturer_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if ($keyword) {

@@ -364,6 +364,27 @@ class ControllerSettingSetting extends Controller {
 			$data['config_currency'] = $this->config->get('config_currency');
 		}
 
+		$data['currency_engines'] = array();
+
+		$this->load->model('setting/extension');
+
+		$extensions = $this->model_setting_extension->getInstalled('currency');
+		foreach ($extensions as $code) {
+			if ($this->config->get('currency_' . $code . '_status')) {
+				$this->load->language('extension/currency/' . $code, 'extension');
+				$data['currency_engines'][] = array(
+					'text'  => $this->language->get('extension')->get('heading_title'),
+					'value' => $code
+				);
+			}
+		}
+
+		if (isset($this->request->post['config_currency_engine'])) {
+			$data['config_currency_engine'] = $this->request->post['config_currency_engine'];
+		} else {
+			$data['config_currency_engine'] = $this->config->get('config_currency_engine');
+		}
+
 		if (isset($this->request->post['config_currency_auto'])) {
 			$data['config_currency_auto'] = $this->request->post['config_currency_auto'];
 		} else {

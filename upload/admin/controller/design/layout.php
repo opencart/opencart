@@ -413,6 +413,7 @@ class ControllerDesignLayout extends Controller {
 		$this->load->model('setting/store');
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/category');
+		$this->load->model('catalog/manufacturer');
 		$this->load->model('catalog/information');
 
 		foreach ($this->request->post['selected'] as $layout_id) {
@@ -436,6 +437,12 @@ class ControllerDesignLayout extends Controller {
 
 			if ($category_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_category'), $category_total);
+			}
+
+			$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturersByLayoutId($layout_id);
+
+			if ($manufacturer_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_manufacturer'), $manufacturer_total);
 			}
 
 			$information_total = $this->model_catalog_information->getTotalInformationsByLayoutId($layout_id);

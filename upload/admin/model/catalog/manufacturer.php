@@ -14,7 +14,7 @@ class ModelCatalogManufacturer extends Model {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "'");
 			}
 		}
-				
+
 		// SEO URL
 		if (isset($data['manufacturer_seo_url'])) {
 			foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
@@ -25,7 +25,13 @@ class ModelCatalogManufacturer extends Model {
 				}
 			}
 		}
-		
+
+		if (isset($data['manufacturer_layout'])) {
+			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+			}
+		}
+
 		$this->cache->delete('manufacturer');
 
 		return $manufacturer_id;
@@ -58,12 +64,21 @@ class ModelCatalogManufacturer extends Model {
 			}
 		}
 
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+
+		if (isset($data['manufacturer_layout'])) {
+			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_layout` SET `manufacturer_id` = '" . (int)$manufacturer_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
+			}
+		}
+
 		$this->cache->delete('manufacturer');
 	}
 
 	public function deleteManufacturer($manufacturer_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'manufacturer_id' AND `value` = '" . (int)$manufacturer_id . "'");
 
 		$this->cache->delete('manufacturer');
@@ -127,10 +142,10 @@ class ModelCatalogManufacturer extends Model {
 
 		return $manufacturer_store_data;
 	}
-	
+
 	public function getSeoUrls($manufacturer_id) {
 		$manufacturer_seo_url_data = array();
-		
+
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'manufacturer_id' AND `value` = '" . (int)$manufacturer_id . "'");
 
 		foreach ($query->rows as $result) {
@@ -139,9 +154,27 @@ class ModelCatalogManufacturer extends Model {
 
 		return $manufacturer_seo_url_data;
 	}
-	
+
+	public function getLayouts($manufacturer_id) {
+		$manufacturer_layout_data = array();
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
+
+		foreach ($query->rows as $result) {
+			$manufacturer_layout_data[$result['store_id']] = $result['layout_id'];
+		}
+
+		return $manufacturer_layout_data;
+	}
+
 	public function getTotalManufacturers() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "manufacturer`");
+
+		return $query->row['total'];
+	}
+
+	public function getTotalManufacturersByLayoutId($layout_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->row['total'];
 	}

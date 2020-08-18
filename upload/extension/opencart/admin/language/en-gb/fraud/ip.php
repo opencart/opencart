@@ -25,3 +25,5 @@ $_['help_order_status']  = 'Customers that have a banned IP on their accounts wi
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify Anti-Fraud IP!';
+$_['error_required']     = 'IP Address required!';
+$_['error_invalid']      = 'IP Address invalid!';

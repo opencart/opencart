@@ -107,7 +107,7 @@ class ModelUserApi extends Model {
 		if (!$api_ip_query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
 		}
- 		
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_session` SET api_id = '" . (int)$api_id . "', session_id = '" . $this->db->escape($session_id) . "', ip = '" . $this->db->escape($ip) . "', date_added = NOW(), date_modified = NOW()");
 
 		return $this->db->getLastId();

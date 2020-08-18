@@ -336,12 +336,12 @@ class Information extends Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = array();
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -392,7 +392,7 @@ class Information extends Controller {
 		} else {
 			$data['information_seo_url'] = array();
 		}
-		
+
 		if (isset($this->request->post['information_layout'])) {
 			$data['information_layout'] = $this->request->post['information_layout'];
 		} elseif (!empty($information_info)) {
@@ -433,7 +433,7 @@ class Information extends Controller {
 
 		if ($this->request->post['information_seo_url']) {
 			$this->load->model('design/seo_url');
-			
+
 			foreach ($this->request->post['information_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if ($keyword) {

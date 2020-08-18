@@ -33,7 +33,7 @@ Upgrade
 8. Replace the files
 */
 class ControllerToolUpgrade extends Controller {
-    public function index() {
+	public function index() {
 		$this->load->language('tool/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -133,7 +133,7 @@ class ControllerToolUpgrade extends Controller {
 		}
 
 		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
-    	$data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
+		$data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -235,7 +235,7 @@ class ControllerToolUpgrade extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-        if (!$json) {
+		if (!$json) {
 			set_time_limit(0);
 
 			$handle = fopen(DIR_DOWNLOAD . 'opencart-' . $version . '.zip', 'w');
@@ -271,7 +271,7 @@ class ControllerToolUpgrade extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-    public function unzip() {
+	public function unzip() {
 		$this->load->language('tool/upgrade');
 
 		$json = array();

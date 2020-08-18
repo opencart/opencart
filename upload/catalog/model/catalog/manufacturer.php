@@ -57,4 +57,14 @@ class Manufacturer extends \System\Engine\Model {
 			return $manufacturer_data;
 		}
 	}
+
+	public function getLayoutId($manufacturer_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_layout WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		if ($query->num_rows) {
+			return (int)$query->row['layout_id'];
+		} else {
+			return 0;
+		}
+	}
 }

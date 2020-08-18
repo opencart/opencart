@@ -26,6 +26,12 @@ class ContentTop extends Controller {
 			$layout_id = $this->model_catalog_product->getLayoutId($this->request->get['product_id']);
 		}
 
+		if ($route == 'product/manufacturer/info' && isset($this->request->get['manufacturer_id'])) {
+			$this->load->model('catalog/manufacturer');
+
+			$layout_id = $this->model_catalog_manufacturer->getLayoutId($this->request->get['manufacturer_id']);
+		}
+
 		if ($route == 'information/information' && isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
 

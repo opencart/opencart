@@ -89,11 +89,11 @@ class ControllerExtensionFraudIp extends Controller {
 		return !$this->error;
 	}
 
-    public function ip() {
+	public function ip() {
 		$this->load->language('extension/fraud/ip');
 
 		$this->load->model('extension/fraud/ip');
-        $this->load->model('customer/customer');
+		$this->load->model('customer/customer');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -135,6 +135,10 @@ class ControllerExtensionFraudIp extends Controller {
 
 		if (!$this->user->hasPermission('modify', 'extension/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
+		} elseif (empty($this->request->post['ip'])) {
+			$json['error'] = $this->language->get('error_required');
+		} elseif (!filter_var($this->request->post['ip'], FILTER_VALIDATE_IP)) {
+			$json['error'] = $this->language->get('error_invalid');
 		} else {
 			$this->load->model('extension/fraud/ip');
 

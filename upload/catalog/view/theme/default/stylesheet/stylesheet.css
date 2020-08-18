@@ -68,7 +68,7 @@ div.required .col-form-label:before {
   padding: 10px 0;
   margin: 0 0 20px 0;
   min-height: 44px; }
-  #top .nav > .list-inline > .list-inline-item, #top .nav > .list-inline .list-inline-item a {
+  #top .nav > .list-inline > .list-inline-item, #top .nav > .list-inline .list-inline-item > a, #top .nav > .list-inline .list-inline-item .dropdown > a {
     color: #888;
     text-shadow: 0 1px 0 #FFF; }
   #top .btn-link {

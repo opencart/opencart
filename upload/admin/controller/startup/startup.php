@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupStartup extends Controller {
+namespace Catalog\Controller\Startup;
+class Startup extends \System\Engine\Controller {
 	public function index() {
 		// Settings
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'"); 

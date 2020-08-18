@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountTracking extends Controller {
+namespace Catalog\Controller\Account;
+class Tracking extends Controller {
 	public function index() {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));

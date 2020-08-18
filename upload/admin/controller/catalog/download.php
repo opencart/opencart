@@ -1,5 +1,6 @@
 <?php
-class ControllerCatalogDownload extends Controller {
+namespace Admin\Controller\Catalog;
+class Download extends Controller {
 	private $error = array();
 
 	public function index() {

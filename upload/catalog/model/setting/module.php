@@ -1,5 +1,6 @@
 <?php
-class ModelSettingModule extends Model {
+namespace Catalog\Model\Setting;
+class Module extends \System\Engine\Model {
 	public function getModule($module_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "module WHERE module_id = '" . (int)$module_id . "'");
 		

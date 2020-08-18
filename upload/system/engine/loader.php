@@ -10,6 +10,7 @@
 /**
  * Loader class
  */
+namespace System\Engine;
 final class Loader {
 	protected $registry;
 
@@ -18,7 +19,7 @@ final class Loader {
 	 *
 	 * @param    object $registry
 	 */
-	public function __construct($registry) {
+	public function __construct($registry, $directires = array()) {
 		$this->registry = $registry;
 	}
 
@@ -32,8 +33,7 @@ final class Loader {
 	 *
 	 * @return    mixed
 	 */
-	//public function controller($route, &...$args) {
-	public function controller($route, ...$args) {
+	public function controller($route, &...$args) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -72,22 +72,19 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
+		// Check if the requested model is already stored in the registry.
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
-			$file = DIR_APPLICATION . 'model/' . $route . '.php';
-			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
+			$class = '\Catalog\Model\\' . str_replace('/', '\\', $route);
 
-			if (is_file($file)) {
-				include_once($file);
-
+			if (class_exists($class)) {
 				$proxy = new Proxy();
 
-				// Overriding models is a little harder so we have to use PHP's magic methods
-				// In future version we can use runkit
+				// Overriding models is a little harder so we have to use PHP's magic methods.
 				foreach (get_class_methods($class) as $method) {
-					$proxy->{$method} = $this->callback($route . '/' . $method);
+					if (substr() != '__') {
+						$proxy->{$method} = $this->callback($route . '/' . $method);
+					}
 				}
-
-				include_once($file);
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
@@ -98,6 +95,8 @@ final class Loader {
 
 	/**
 	 * View
+	 *
+	 *
 	 *
 	 * @param    string $route
 	 * @param    array $data
@@ -141,18 +140,26 @@ final class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
-		$file = DIR_SYSTEM . 'library/' . $route . '.php';
-		$class = str_replace('/', '\\', $route);
+		// Keep the original trigger
+		$trigger = $route;
 
-		if (is_file($file)) {
-			include_once($file);
+		$this->registry->get('event')->trigger('library/' . $trigger . '/before', array(&$route, &$args));
 
+		$class = 'System\Library\\' . str_replace('/', '\\', $route);
+
+		if (class_exists($class)) {
 			$reflection = new ReflectionClass($class);
 
-			$this->registry->set($route, $class->newInstanceArgs($args));
+			$object = $class->newInstanceArgs($args);
 		} else {
 			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
+
+		$this->registry->get('event')->trigger('library/' . $trigger . '/after', array(&$route, &$args, &$object));
+
+		$this->registry->set($route, $object);
+
+		return $object;
 	}
 
 	/**
@@ -216,6 +223,8 @@ final class Loader {
 	/**
 	 * Callback
 	 *
+	 * https://www.php.net/manual/en/class.closure.php
+	 *
 	 * @param	string $route
 	 *
 	 * @return	closure
@@ -236,7 +245,7 @@ final class Loader {
 			if ($result) {
 				$output = $result;
 			} else {
-				$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
+				$class = 'Catalog\Model\\' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
 
 				// Store the model object
 				$key = substr($route, 0, strrpos($route, '/'));

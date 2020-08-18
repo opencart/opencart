@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupSass extends Controller {
+namespace Catalog\Controller\Startup;
+class Sass extends Controller {
 	public function index() {
 		$files = glob(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/*.scss');
 

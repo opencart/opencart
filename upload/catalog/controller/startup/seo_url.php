@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupSeoUrl extends Controller {
+namespace Catalog\Controller\Startup;
+class SeoUrl extends Controller {
 	public function index() {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {

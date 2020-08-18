@@ -10,6 +10,7 @@
 /**
 * Language class
 */
+namespace System\Library;
 class Language {
 	private $default = 'en-gb';
 	private $directory;

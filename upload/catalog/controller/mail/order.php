@@ -1,5 +1,6 @@
 <?php
-class ControllerMailOrder extends Controller {
+namespace Catalog\Controller\Mail;
+class Order extends Controller {
 	public function index(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];

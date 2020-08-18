@@ -1,6 +1,6 @@
 <?php
-namespace DB;
-final class MySQLi {
+namespace System\Library\DB;
+class MySQLi {
 	private $connection;
 	private $connected;
 

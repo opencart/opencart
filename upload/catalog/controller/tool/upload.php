@@ -1,5 +1,6 @@
 <?php
-class ControllerToolUpload extends Controller {
+namespace Catalog\Controller\Tool;
+class Upload extends Controller {
 	public function index() {
 		$this->load->language('tool/upload');
 

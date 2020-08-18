@@ -27,16 +27,17 @@ class ControllerMarketplaceExtension extends Controller {
 
 		$data['categories'] = array();
 		
-		$files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/*.php', GLOB_BRACE);
 		
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
 
-			// Compatibility code for old extension folders
-			$this->load->language('extension/extension/' . $extension, $extension);
+			$this->load->language('extension/' . $extension, $extension);
 
-			if ($extension != 'promotion' && $this->user->hasPermission('access', 'extension/extension/' . $extension)) {
-				$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
+			if ($extension != 'promotion' && $this->user->hasPermission('access', 'extension/' . $extension)) {
+				//$files = $this->model_setting_extension->getPaths('controller/*/' . $extension);
+
+				//$files = glob(DIR_APPLICATION . 'controller/extension/' . $extension . '/*.php', GLOB_BRACE);
 
 				$data['categories'][] = array(
 					'code' => $extension,

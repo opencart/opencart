@@ -1,5 +1,6 @@
 <?php
-class ModelAccountDownload extends Model {
+namespace Catalog\Model\Account;
+class Download extends \System\Engine\Model {
 	public function getDownload($download_id) {
 		$implode = array();
 

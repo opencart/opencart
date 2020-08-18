@@ -1,5 +1,6 @@
 <?php
-class ControllerProductManufacturer extends Controller {
+namespace Catalog\Controller\Product;
+class Manufacturer extends Controller {
 	public function index() {
 		$this->load->language('product/manufacturer');
 

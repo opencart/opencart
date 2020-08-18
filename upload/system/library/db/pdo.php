@@ -1,5 +1,5 @@
 <?php
-namespace DB;
+namespace System\Library\DB;
 final class PDO {
 	private $connection;
 	private $statement;

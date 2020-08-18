@@ -1,5 +1,6 @@
 <?php
-class ModelDesignSeoProfile extends Model {
+namespace Catalog\Model\Design;
+class Profile extends \System\Engine\Model {
 	public $profile = array();
 
 	public function getSeoProfilesByKey($key) {

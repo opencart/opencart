@@ -10,6 +10,7 @@
 /**
 * Log class
 */
+namespace System\Library;
 class Log {
 	private $handle;
 	

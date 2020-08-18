@@ -1,5 +1,6 @@
 <?php
-class ControllerCatalogAttributeGroup extends Controller {
+namespace Admin\Controller\Catalog;
+class AttributeGroup extends Controller {
 	private $error = array();
 
 	public function index() {

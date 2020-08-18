@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupStartup extends Controller {
+namespace Catalog\Controller\Startup;
+class Startup extends Controller {
 	public function index() {
 		// Store
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/') . "'");

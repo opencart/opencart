@@ -1,5 +1,6 @@
 <?php
-class ControllerEventActivity extends Controller {
+namespace Catalog\Controller\Event;
+class Activity extends Controller {
 	// catalog/model/account/customer/addCustomer/after
 	public function addCustomer(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {

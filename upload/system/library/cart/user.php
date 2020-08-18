@@ -1,5 +1,5 @@
 <?php
-namespace Cart;
+namespace System\Library\Cart;
 class User {
 	private $user_id;
 	private $user_group_id;

@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationReturnReason extends Model {
+namespace Catalog\Model\Localisation;
+class ReturnReason extends \System\Engine\Model {
 	public function getReturnReasons($data = array()) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";

@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupEvent extends Controller {
+namespace Catalog\Controller\Startup;
+class Event extends Controller {
 	public function index() {
 		// Add events from the DB
 		$this->load->model('setting/event');

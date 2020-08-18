@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonFooter extends Controller {
+namespace Catalog\Controller\Common;
+class Footer extends Controller {
 	public function index() {
 		$this->load->language('common/footer');
 

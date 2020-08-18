@@ -34,14 +34,12 @@ $_['action_default']    = 'common/dashboard';
 // Action Events
 $_['action_event']      = array(
 	'controller/*/before' => array(
-		'event/language/before'
+		'event/language/before',
+		'event/extension/controller'
 	),
 	'controller/*/after' => array(
 		'event/language/after'
 	),
-	//'controller/*/before' => array(
-	//	'event/extension/controller'
-	//),
 	//'model/*/before' => array(
 	//	'event/extension/model'
 	//),
@@ -49,7 +47,7 @@ $_['action_event']      = array(
 	//	'event/extension/view'
 	//),
 	'view/*/before' => array(
-		999  => 'event/language'
+		999 => 'event/language'
 	),
 	//'model/*/after' => array(
 	//	'event/debug/before'

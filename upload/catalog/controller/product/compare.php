@@ -1,5 +1,6 @@
 <?php
-class ControllerProductCompare extends Controller {
+namespace Catalog\Controller\Product;
+class Compare extends Controller {
 	public function index() {
 		$this->load->language('product/compare');
 

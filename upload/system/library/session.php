@@ -10,6 +10,7 @@
 /**
 * Session class
 */
+namespace System\Library;
 class Session {
 	protected $adaptor;
 	protected $session_id;
@@ -22,7 +23,7 @@ class Session {
 	 * @param	object	$registry
  	*/
 	public function __construct($adaptor, $registry = '') {
-		$class = 'Session\\' . $adaptor;
+		$class = 'System\Library\Session\\' . $adaptor;
 		
 		if (class_exists($class)) {
 			if ($registry) {

@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountReset extends Controller {
+namespace Catalog\Controller\Account;
+class Reset extends Controller {
 	private $error = array();
 
 	public function index() {

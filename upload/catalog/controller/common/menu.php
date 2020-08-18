@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonMenu extends Controller {
+namespace Catalog\Controller\Common;
+class Menu extends Controller {
 	public function index() {
 		$this->load->language('common/menu');
 

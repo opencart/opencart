@@ -1,5 +1,6 @@
 <?php
-class ControllerApiCurrency extends Controller {
+namespace Catalog\Controller\Api;
+class Currency extends Controller {
 	public function index() {
 		$this->load->language('api/currency');
 

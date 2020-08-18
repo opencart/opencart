@@ -11,6 +11,7 @@
 /**
  * URL class.
  */
+namespace System\Library;
 class Url {
 	/** @var string */
 	private $url;

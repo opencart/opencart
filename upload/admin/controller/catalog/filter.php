@@ -1,5 +1,6 @@
 <?php
-class ControllerCatalogFilter extends Controller {
+namespace Admin\Controller\Catalog;
+class Filter extends Controller {
 	private $error = array();
 
 	public function index() {

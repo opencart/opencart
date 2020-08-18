@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonColumnRight extends Controller {
+namespace Catalog\Controller\Common;
+class ColumnRight extends Controller {
 	public function index() {
 		$this->load->model('design/layout');
 

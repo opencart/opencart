@@ -10,6 +10,7 @@
 /**
 * Document class
 */
+namespace System\Library;
 class Document {
 	private $title;
 	private $description;

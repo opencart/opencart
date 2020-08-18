@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupLogin extends Controller {
+namespace Admin\Controller\Startup;
+class Login extends Controller {
 	public function index() {
 		$route = isset($this->request->get['route']) ? $this->request->get['route'] : '';
 
@@ -29,11 +30,11 @@ class ControllerStartupLogin extends Controller {
 			);
 
 			if (!in_array($route, $ignore) && (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token']))) {
-				return new Action('common/login');
+				return new System\Engine\Action('common/login');
 			}
 		} else {
 			if (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token'])) {
-				return new Action('common/login');
+				return new System\Engine\Action('common/login');
 			}
 		}
 	}

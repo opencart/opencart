@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `session` (
   PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 */
-namespace Session;
+
+namespace System\Library\Session;
 final class DB {
 	public $expire = 3600;
 

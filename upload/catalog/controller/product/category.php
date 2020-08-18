@@ -1,5 +1,6 @@
 <?php
-class ControllerProductCategory extends Controller {
+namespace Catalog\Controller\Product;
+class Category extends Controller {
 	public function index() {
 		$this->load->language('product/category');
 

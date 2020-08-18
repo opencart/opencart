@@ -1,5 +1,6 @@
 <?php
-class ControllerApiOrder extends Controller {
+namespace Catalog\Controller\Api;
+class Order extends Controller {
 	public function add() {
 		$this->load->language('api/order');
 

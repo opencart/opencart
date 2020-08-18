@@ -1,4 +1,5 @@
 <?php
+namespace Catalog\Controller\Information;
 class ControllerInformationGdpr extends Controller {
 	public function index() {
 		$this->load->model('catalog/information');

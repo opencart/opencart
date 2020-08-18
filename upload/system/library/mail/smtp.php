@@ -1,5 +1,5 @@
 <?php
-namespace Mail;
+namespace System\Library\Mail;
 class Smtp {
 	public $smtp_hostname;
 	public $smtp_username;

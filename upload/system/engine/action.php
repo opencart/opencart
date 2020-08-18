@@ -10,9 +10,11 @@
 /**
  * Action class
  */
+namespace System\Engine;
 class Action {
-	private $id;
 	private $route;
+	private $base;
+	private $path;
 	private $method = 'index';
 
 	/**
@@ -21,7 +23,7 @@ class Action {
 	 * @param    string $route
 	 */
 	public function __construct($route) {
-		$this->id = $route;
+		$this->route = $route;
 
 		$parts = explode('/', preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route));
 
@@ -32,7 +34,7 @@ class Action {
 			$file = DIR_APPLICATION . 'controller/' . $path . '.php';
 
 			if (is_file($file)) {
-				$this->route = $path;
+				$this->path = $path;
 
 				break;
 			} else {
@@ -48,7 +50,7 @@ class Action {
 	 *
 	 */
 	public function getId() {
-		return $this->id;
+		return $this->route;
 	}
 
 	/**
@@ -63,26 +65,29 @@ class Action {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
-		$file = DIR_APPLICATION . 'controller/' . $this->route . '.php';
-		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
+		$class = '\Catalog\Controller\\' . str_replace('/', '\\', $this->path);
+
+		//$parts = explode('/', $this->path);
+
+		//foreach ($parts as $part) {
+			//$class .= '\\' . preg_replace('/[^a-zA-Z0-9]/', '', $part);
+		//}
+
+		echo 'Action $class: ' . $class . "\n";
+
+		$controller = new $class($registry);
 
 		// Initialize the class
-		if (is_file($file)) {
-			include_once($file);
-
+		if (class_exists($class)) {
 			$controller = new $class($registry);
 		} else {
 			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
 		}
 
-		//echo $class . '::' . $this->method . "\n";
-
-		//print_r($args);
-
 		$callable = array($controller, $this->method);
 
 		if (is_callable($callable)) {
-			return call_user_func_array(array($controller, $this->method), $args);
+			return call_user_func_array($callable, $args);
 		} else {
 			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
 		}

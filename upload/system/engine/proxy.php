@@ -10,9 +10,10 @@
 /**
  * Proxy class
  */
+namespace System\Engine;
 class Proxy {
 	/**
-	 *
+	 * Magic Method Get
 	 *
 	 * @param	string	$key
 	 */
@@ -21,7 +22,7 @@ class Proxy {
 	}
 
 	/**
-	 *
+	 * Magic Method Set
 	 *
 	 * @param	string	$key
 	 * @param	string	$value

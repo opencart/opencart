@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonCurrency extends Controller {
+namespace Catalog\Controller\Common;
+class Currency extends Controller {
 	public function index() {
 		$this->load->language('common/currency');
 

@@ -1,9 +1,9 @@
 <?php
 // Registry
-$registry = new Registry();
+$registry = new \System\Engine\Registry();
 
 // Config
-$config = new Config();
+$config = new \System\Library\Config();
 
 // Load the default config
 $config->load('default');
@@ -11,7 +11,7 @@ $config->load($application);
 $registry->set('config', $config);
 
 // Log
-$log = new Log($config->get('error_filename'));
+$log = new \System\Library\Log($config->get('error_filename'));
 $registry->set('log', $log);
 
 date_default_timezone_set($config->get('date_timezone'));
@@ -62,28 +62,28 @@ set_exception_handler(function($e) use ($log, $config) {
 });
 
 // Event
-$event = new \Event($registry);
+$event = new \System\Engine\Event($registry);
 $registry->set('event', $event);
 
 // Event Register
 if ($config->has('action_event')) {
 	foreach ($config->get('action_event') as $key => $value) {
 		foreach ($value as $priority => $action) {
-			$event->register($key, new Action($action), $priority);
+			$event->register($key, new \System\Engine\Action($action), $priority);
 		}
 	}
 }
 
 // Loader
-$loader = new Loader($registry);
+$loader = new \System\Engine\Loader($registry);
 $registry->set('load', $loader);
 
 // Request
-$request = new Request();
+$request = new \System\Library\Request();
 $registry->set('request', $request);
 
 // Response
-$response = new Response();
+$response = new \System\Library\Response();
 foreach ($config->get('response_header') as $header) {
     $response->addHeader($header);
 }
@@ -92,7 +92,7 @@ $registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
-	$db = new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+	$db = new \System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
 	$registry->set('db', $db);
 
 	// Sync PHP and DB time zones
@@ -100,7 +100,7 @@ if ($config->get('db_autostart')) {
 }
 
 // Session
-$session = new Session($config->get('session_engine'), $registry);
+$session = new \System\Library\Session($config->get('session_engine'), $registry);
 $registry->set('session', $session);
 
 if ($config->get('session_autostart')) {
@@ -138,16 +138,16 @@ if ($config->get('session_autostart')) {
 }
 
 // Cache
-$registry->set('cache', new Cache($config->get('cache_engine'), $config->get('cache_expire')));
+$registry->set('cache', new \System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Url
-$registry->set('url', new Url($config->get('site_url')));
+$registry->set('url', new \System\Library\Url($config->get('site_url')));
 
 // Language
-$registry->set('language', new Language($config->get('language_directory')));
+$registry->set('language', new \System\Library\Language($config->get('language_directory')));
 
 // Document
-$registry->set('document', new Document());
+$registry->set('document', new \System\Library\Document());
 
 // Config Autoload
 if ($config->has('config_autoload')) {
@@ -186,50 +186,68 @@ if ($config->has('model_autoload')) {
 
 // Route
 if (!empty($request->get['route'])) {
-	$action = new Action((string)$request->get['route']);
+	$action = new \System\Engine\Action((string)$request->get['route']);
 } else {
-	$action = new Action($config->get('action_default'));
+	$action = new \System\Engine\Action($config->get('action_default'));
 }
 
+// Action error object to execute if any other actions can not be executed.
+$error = new \System\Engine\Action($config->get('action_error'));
+
+$pre_actions = $config->get('action_pre_action');
+
+// So the pre-actions can be changed or triggered.
+$event->trigger('pre_action', array(&$pre_actions));
+
 // Pre Actions
-foreach ($config->get('action_pre_action') as $pre_action) {
-	$pre_action = new Action($pre_action);
+foreach ($pre_actions as $pre_action) {
+	$pre_action = new \System\Engine\Action($pre_action);
 
 	$result = $pre_action->execute($registry);
 
-	if ($result instanceof Action) {
+	if ($result instanceof \System\Engine\Action) {
 		$action = $result;
 
 		break;
 	}
 
+	// If action can not be executed then we return an action error object.
 	if ($result instanceof Exception) {
-		$action = new Action($config->get('action_error'));
+		$action = $error;
 
+		$error = '';
 		break;
 	}
 }
 
 // Dispatch
 while ($action) {
-	// Keep the original trigger
+	// Get the route path of the object to be executed.
+	$route = $action->getId();
+
+	// Keep the original trigger.
 	$trigger = $action->getId();
 
-	$event->trigger('controller/' . $trigger . '/before', array(&$route, &$data));
+	$event->trigger('controller/' . $trigger . '/before', array(&$route, &$args, &$action));
 
 	$result = $action->execute($registry);
 
 	$action = '';
 
-	if ($result instanceof Action) {
+	if ($result instanceof \System\Engine\Action) {
 		$action = $result;
 	}
 
+	// If action can not be executed then we return the action error object.
 	if ($result instanceof Exception) {
-		$action = new Action($config->get('action_error'));
+		$action = $error;
+
+		// In case there is an error we don't want to infinitely keep calling the action error object.
+		$error = '';
 	}
 
-	$event->trigger('controller/' . $trigger . '/after', array(&$route, &$data, &$output));
+	$event->trigger('controller/' . $trigger . '/after', array(&$route, &$args, &$output));
 }
+
 // Output
 $response->output();

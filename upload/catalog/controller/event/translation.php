@@ -1,5 +1,6 @@
 <?php
-class ControllerEventTranslation extends Controller {
+namespace Catalog\Controller\Event;
+class Translation extends \System\Engine\Controller {
 	public function index(&$route, &$prefix) {
 		$this->load->model('design/translation');
 

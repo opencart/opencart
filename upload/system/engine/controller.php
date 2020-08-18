@@ -10,7 +10,8 @@
 /**
  * Controller class
  */
-abstract class Controller {
+namespace System\Engine;
+class Controller {
 	protected $registry;
 
 	public function __construct($registry) {

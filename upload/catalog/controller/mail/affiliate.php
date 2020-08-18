@@ -1,5 +1,6 @@
 <?php
-class ControllerMailAffiliate extends Controller {
+namespace Catalog\Controller\Mail;
+class Affiliate extends Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');
 

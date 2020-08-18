@@ -1,5 +1,6 @@
 <?php
-class ControllerEventStatistics extends Controller {
+namespace Catalog\Controller\Event;
+class Statistics extends Controller {
 	// catalog/model/catalog/review/addReview/after
 	public function addReview(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');

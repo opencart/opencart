@@ -167,8 +167,6 @@ class ControllerMarketplaceInstaller extends Controller {
 
 			if (is_file($filename)) {
 				$json['error'] = $this->language->get('error_exists');
-
-				unset($this->request->files['file']['tmp_name']);
 			}
 
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
@@ -215,13 +213,13 @@ class ControllerMarketplaceInstaller extends Controller {
 							$version = '';
 						}
 
-						$image = $dom->getElementsByTagName('image')->item(0);
+						//$image = $dom->getElementsByTagName('image')->item(0);
 
-						if ($image) {
-							$image = $version->nodeValue;
-						} else {
+						//if ($image) {
+							//$image = $version->nodeValue;
+						//} else {
 							$image = '';
-						}
+						//}
 
 						$author = $dom->getElementsByTagName('author')->item(0);
 
@@ -264,6 +262,8 @@ class ControllerMarketplaceInstaller extends Controller {
 			} else {
 				$json['error'] = sprintf($this->language->get('error_file'), $filename);
 			}
+		} else {
+			unset($this->request->files['file']['tmp_name']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

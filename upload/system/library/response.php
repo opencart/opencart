@@ -10,7 +10,10 @@
 /**
 * Response class
  *
+ * Stores the response so the correct headers can go out before the response output is shown.
+ *
 */
+namespace System\Library;
 class Response {
 	private $headers = array();
 	private $level = 0;

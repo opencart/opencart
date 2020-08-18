@@ -10,6 +10,7 @@
 /**
 * Config class
 */
+namespace System\Library;
 class Config {
 	private $data = array();
     

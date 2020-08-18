@@ -1,5 +1,5 @@
 <?php
-namespace Template;
+namespace System\Library\Template;
 final class Template {
 	protected $data = array();
 

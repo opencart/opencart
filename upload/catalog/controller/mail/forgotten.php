@@ -1,5 +1,6 @@
 <?php
-class ControllerMailForgotten extends Controller {
+namespace Catalog\Controller\Mail;
+class Forgotten extends Controller {
 	//catalog/model/account/customer/editCode/after
 	public function index(&$route, &$args, &$output) {
 		if ($args[0] && $args[1]) {

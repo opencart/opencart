@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupMaintenance extends Controller {
+namespace Catalog\Controller\Startup;
+class Maintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
 			// Route

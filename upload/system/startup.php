@@ -62,19 +62,45 @@ require_once(DIR_SYSTEM . 'helper/utf8.php');
 require_once(DIR_STORAGE . 'vendor/autoload.php');
 
 // Library Autoloader
-function library($class) {
-	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
+function autoloader($class) {
+	echo '$class ' . $class . "\n";
+
+	$file = '';
+
+	$path = strtolower(str_replace('\\', '/', $class));
+
+	$type = substr($path, 0, strpos($path, '/'));
+
+	switch ($type) {
+		case 'catalog':
+			$file = DIR_APPLICATION . substr($path, strpos($path, '/') + 1)  . '.php';
+			break;
+		case 'admin':
+			$file = DIR_APPLICATION . substr($path, strpos($path, '/') + 1)  . '.php';
+			break;
+		case 'system':
+			$file = DIR_SYSTEM . substr($path, strpos($path, '/') + 1) . '.php';
+			break;
+	}
+
+	//$file = DIR_SYSTEM . $path . '.php';
+
+
+	echo '$path ' . $path . "\n";
+	echo '$file ' . $file . "\n";
 
 	if (is_file($file)) {
 		include_once($file);
 
 		return true;
 	} else {
+		echo $class;
+
 		return false;
 	}
 }
 
-spl_autoload_register('library');
+spl_autoload_register('autoloader');
 spl_autoload_extensions('.php');
 
 function start($application) {

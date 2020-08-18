@@ -43,7 +43,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=extension/extension/' + $('select[name=\'type\']').val() + '&user_token={{ user_token }}',
+		url: 'index.php?route=extension/' + $('select[name=\'type\']').val() + '&user_token={{ user_token }}',
 		dataType: 'html',
 		beforeSend: function() {
 			$('.fa-filter').addClass('fa-circle-notch fa-spin');

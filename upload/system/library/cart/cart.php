@@ -1,5 +1,5 @@
 <?php
-namespace Cart;
+namespace System\Library\Cart;
 class Cart {
 	private $data = array();
 

@@ -1,5 +1,6 @@
 <?php
-class ModelDesignSeoUrl extends Model {
+namespace Catalog\Model\Design;
+class SeoUrl extends \System\Engine\Model {
 	public $keyword = array();
 
 	public function getSeoUrlByKeyword($keyword) {

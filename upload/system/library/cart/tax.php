@@ -1,5 +1,5 @@
 <?php
-namespace Cart;
+namespace System\Library\Cart;
 final class Tax {
 	private $tax_rates = array();
 

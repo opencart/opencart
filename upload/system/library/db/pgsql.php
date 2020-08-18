@@ -1,5 +1,5 @@
 <?php
-namespace DB;
+namespace System\Library\DB;
 final class PgSQL {
 	private $connection;
 

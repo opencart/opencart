@@ -1,5 +1,6 @@
 <?php
-class ControllerApiCustomer extends Controller {
+namespace Catalog\Controller\Api;
+class Customer extends Controller {
 	public function index() {
 		$this->load->language('api/customer');
 

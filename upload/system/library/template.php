@@ -10,6 +10,7 @@
 /**
 * Template class
 */
+namespace System\Library;
 class Template {
 	private $adaptor;
 

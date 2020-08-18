@@ -1,5 +1,6 @@
 <?php
-class ControllerCheckoutPaymentMethod extends Controller {
+namespace Catalog\Controller\Checkout;
+class PaymentMethod extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 

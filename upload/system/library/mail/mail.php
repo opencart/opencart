@@ -1,5 +1,5 @@
 <?php
-namespace Mail;
+namespace System\Library\Mail;
 class Mail {
 	public $parameter;
 

@@ -1,5 +1,6 @@
 <?php
-class ControllerAffiliateSuccess extends Controller {
+namespace Catalog\Controller\Affiliate;
+class Success extends Controller {
 	public function index() {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));

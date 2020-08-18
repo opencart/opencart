@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupMarketing extends Controller {
+namespace Catalog\Controller\Startup;
+class Marketing extends Controller {
 	public function index() {
 		// Tracking Code
 		if (isset($this->request->get['tracking'])) {

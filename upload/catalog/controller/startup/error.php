@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupError extends Controller {
+namespace Catalog\Controller\Startup;
+class Error extends Controller {
 	public function index() {
 		$this->registry->set('log', new Log($this->config->get('config_error_filename')));
 		

@@ -1,5 +1,6 @@
 <?php
-class ModelSettingStore extends Model {
+namespace Catalog\Model\Setting;
+class Store extends \System\Engine\Model {
 	public function getStores() {
 		$store_data = $this->cache->get('store');
 

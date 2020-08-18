@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountReward extends Controller {
+namespace Catalog\Controller\Account;
+class Reward extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/reward', 'language=' . $this->config->get('config_language'));

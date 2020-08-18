@@ -1,5 +1,6 @@
 <?php
-class ControllerInformationContact extends Controller {
+namespace Catalog\Controller\Information;
+class Contact extends Controller {
 	private $error = array();
 
 	public function index() {

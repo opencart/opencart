@@ -1,5 +1,6 @@
 <?php
-class ControllerMailGdpr extends Controller {
+namespace Catalog\Controller\Mail;
+class Gdpr extends Controller {
 	// catalog/model/account/gdpr/addGdpr
 	public function index(&$route, &$args, &$output) {
 		// $args[0] $code

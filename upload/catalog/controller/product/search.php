@@ -1,5 +1,6 @@
 <?php
-class ControllerProductSearch extends Controller {
+namespace Catalog\Controller\Product;
+class Search extends Controller {
 	public function index() {
 		$this->load->language('product/search');
 

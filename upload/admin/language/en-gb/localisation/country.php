@@ -13,6 +13,7 @@ $_['column_name']             = 'Country Name';
 $_['column_iso_code_2']       = 'ISO Code (2)';
 $_['column_iso_code_3']       = 'ISO Code (3)';
 $_['column_action']           = 'Action';
+$_['column_status']           = 'Status';
 
 // Entry
 $_['entry_name']              = 'Country Name';

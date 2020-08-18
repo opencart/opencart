@@ -20,6 +20,18 @@ class ModelLocalisationCountry extends Model {
 		$this->cache->delete('country');
 	}
 
+	public function enableCountries($ids) {
+		$this->db->query("UPDATE " . DB_PREFIX . "country SET status = 1 WHERE country_id IN (" . $ids . ")");
+
+		$this->cache->delete('country');
+	}
+	
+	public function disableCountries($ids) {
+		$this->db->query("UPDATE " . DB_PREFIX . "country SET status = 0 WHERE country_id IN (" . $ids . ")");
+		
+		$this->cache->delete('country');
+	}
+
 	public function getCountry($country_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id . "'");
 
@@ -33,7 +45,8 @@ class ModelLocalisationCountry extends Model {
 			$sort_data = array(
 				'name',
 				'iso_code_2',
-				'iso_code_3'
+				'iso_code_3',
+				'status'
 			);
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

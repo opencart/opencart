@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionReportCustomer extends Model {
+namespace Extension\OpenCart\Admin\Model\Report;
+class Customer extends \System\Engine\Model {
 	public function getTotalCustomersByDay() {
 		$customer_data = array();
 

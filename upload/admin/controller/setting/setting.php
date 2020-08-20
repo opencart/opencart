@@ -1,5 +1,6 @@
 <?php
-class ControllerSettingSetting extends Controller {
+namespace Application\Controller\Setting;
+class Setting extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

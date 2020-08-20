@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonPagination extends Controller {
+namespace Application\Controller\Common;
+class Pagination extends \System\Engine\Controller {
 	public function index($setting) {
 		if (isset($setting['total'])) {
 			$total = $setting['total'];

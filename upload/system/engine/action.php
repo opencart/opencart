@@ -13,8 +13,7 @@
 namespace System\Engine;
 class Action {
 	private $route;
-	private $base;
-	private $path;
+	private $class;
 	private $method = 'index';
 
 	/**
@@ -23,24 +22,21 @@ class Action {
 	 * @param    string $route
 	 */
 	public function __construct($route) {
-		$this->route = $route;
+		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		$parts = explode('/', preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route));
+		// Converting a route path to a class name
+		$class = '\Application\Controller\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($route, '_/'));
 
-		// Break apart the route
-		while ($parts) {
-			$path = implode('/', $parts);
-
-			$file = DIR_APPLICATION . 'controller/' . $path . '.php';
-
-			if (is_file($file)) {
-				$this->path = $path;
-
-				break;
-			} else {
-				$this->method = array_pop($parts);
-			}
+		if (class_exists($class)) {
+			$this->class = $class;
+		} else {
+			$this->class = substr($class, 0, strrpos($class, '\\'));
+			$this->method = substr($route, strrpos($route, '/') + 1);
 		}
+
+		//echo 'Action' . "\n";
+		//echo '$route ' . $route . "\n";
+		//echo '$class ' . $class . "\n";
 	}
 
 	/**
@@ -65,23 +61,11 @@ class Action {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
-		$class = '\Catalog\Controller\\' . str_replace('/', '\\', $this->path);
-
-		//$parts = explode('/', $this->path);
-
-		//foreach ($parts as $part) {
-			//$class .= '\\' . preg_replace('/[^a-zA-Z0-9]/', '', $part);
-		//}
-
-		echo 'Action $class: ' . $class . "\n";
-
-		$controller = new $class($registry);
-
 		// Initialize the class
-		if (class_exists($class)) {
-			$controller = new $class($registry);
+		if ($this->class) {
+			$controller = new $this->class($registry);
 		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
+			return new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 
 		$callable = array($controller, $this->method);
@@ -89,7 +73,7 @@ class Action {
 		if (is_callable($callable)) {
 			return call_user_func_array($callable, $args);
 		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
+			return new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 	}
 }

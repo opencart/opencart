@@ -1,5 +1,6 @@
 <?php
-class ControllerUserApi extends Controller {
+namespace Catalog\Controller\User;
+class Api extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,6 @@
 <?php
-class ModelSettingSetting extends Model {
+namespace Application\Model\Setting;
+class Setting extends \System\Engine\Model {
 	public function getSetting($code, $store_id = 0) {
 		$setting_data = array();
 

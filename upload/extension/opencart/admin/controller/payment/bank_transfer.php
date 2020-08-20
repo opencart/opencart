@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionPaymentBankTransfer extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Payment;
+class BankTransfer extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

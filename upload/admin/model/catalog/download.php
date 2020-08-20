@@ -1,5 +1,6 @@
 <?php
-class ModelCatalogDownload extends Model {
+namespace Application\Model\Catalog;
+class Download extends \System\Engine\Model {
 	public function addDownload($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape((string)$data['filename']) . "', mask = '" . $this->db->escape((string)$data['mask']) . "', date_added = NOW()");
 

@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountNewsletter extends Controller {
+namespace Admin\Controller\Account;
+class Newsletter extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));

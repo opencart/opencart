@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class Cookie extends Controller {
+namespace Application\Controller\Common;
+class Cookie extends \System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->language('common/cookie');

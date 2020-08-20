@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Tracking extends Controller {
+namespace Application\Controller\Account;
+class Tracking extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
@@ -53,7 +53,7 @@ class Tracking extends Controller {
 
 			$this->response->setOutput($this->load->view('account/tracking', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Engine\Action('error/not_found');
 		}
 	}
 

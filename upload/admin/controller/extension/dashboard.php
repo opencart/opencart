@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionDashboard extends Controller {
+namespace Application\Controller\Extension;
+class Dashboard extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

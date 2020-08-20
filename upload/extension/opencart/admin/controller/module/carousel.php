@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleCarousel extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Module;
+class Carousel extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Api;
-class Login extends Controller {
+namespace Application\Controller\Api;
+class Login extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/login');
 
@@ -28,7 +28,7 @@ class Login extends Controller {
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 
-				$session = new Session($this->config->get('session_engine'), $this->registry);
+				$session = new \System\Library\Session($this->config->get('session_engine'), $this->registry);
 				$session->start();
 				
 				$this->model_account_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);

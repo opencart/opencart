@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketingCoupon extends Controller {
+namespace Application\Controller\Marketing;
+class Coupon extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

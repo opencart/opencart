@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionPaymentFreeCheckout extends Controller {
+namespace Extension\OpenCart\Controller\Payment;
+class FreeCheckout extends \System\Engine\Controller {
 	public function index() {
 		return $this->load->view('extension/payment/free_checkout');
 	}

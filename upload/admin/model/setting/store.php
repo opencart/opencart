@@ -1,5 +1,6 @@
 <?php
-class ModelSettingStore extends Model {
+namespace Application\Model\Setting;
+class Store extends \System\Engine\Model {
 	public function addStore($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "store SET name = '" . $this->db->escape((string)$data['config_name']) . "', `url` = '" . $this->db->escape((string)$data['config_url']) . "'");
 

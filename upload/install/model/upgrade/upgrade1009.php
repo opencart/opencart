@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1009 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1009 extends \System\Engine\Model {
 	public function upgrade() {
 		// Affiliate customer merge code
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate'");

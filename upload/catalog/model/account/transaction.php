@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Account;
+namespace Application\Model\Account;
 class Transaction extends \System\Engine\Model {
 	public function getTransactions($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE customer_id = '" . (int)$this->customer->getId() . "'";

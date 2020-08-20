@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1000 extends Model {
+namespace Install\Model\upgrade;
+class Upgrade1000 extends \System\Engine\Model {
 	public function upgrade() {
 		// This is a generic upgrade script.
 		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema.

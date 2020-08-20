@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Localisation;
+namespace Application\Model\Localisation;
 class ReturnReason extends \System\Engine\Model {
 	public function getReturnReasons($data = array()) {
 		if ($data) {

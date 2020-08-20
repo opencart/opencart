@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketplaceExtension extends Controller {
+namespace Application\Controller\Marketplace;
+class Extension extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/extension');
 

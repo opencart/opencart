@@ -1,5 +1,6 @@
 <?php
-class ModelToolBackup extends Model {
+namespace Application\Model\Tool;
+class Backup extends \System\Engine\Model {
 	public function getTables() {
 		$table_data = array();
 

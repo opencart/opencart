@@ -63,38 +63,45 @@ require_once(DIR_STORAGE . 'vendor/autoload.php');
 
 // Library Autoloader
 function autoloader($class) {
-	echo '$class ' . $class . "\n";
-
 	$file = '';
 
-	$path = strtolower(str_replace('\\', '/', $class));
+	// Converting a class name to a file path
+	$path = strtolower(implode('/', preg_replace('~([a-z])([A-Z])~', '\\1_\\2', explode('\\', $class))));
 
 	$type = substr($path, 0, strpos($path, '/'));
 
+	$path = substr($path, strpos($path, '/') + 1);
+
 	switch ($type) {
+		case 'application':
+			$file = DIR_APPLICATION .  $path  . '.php';
+			break;
 		case 'catalog':
-			$file = DIR_APPLICATION . substr($path, strpos($path, '/') + 1)  . '.php';
+			$file = DIR_CATALOG . $path  . '.php';
 			break;
 		case 'admin':
-			$file = DIR_APPLICATION . substr($path, strpos($path, '/') + 1)  . '.php';
+			$file = DIR_ADMIN . $path . '.php';
+			break;
+		case 'extension':
+			$file = DIR_EXTENSION . $path  . '.php';
 			break;
 		case 'system':
-			$file = DIR_SYSTEM . substr($path, strpos($path, '/') + 1) . '.php';
+			$file = DIR_SYSTEM . $path . '.php';
 			break;
 	}
 
-	//$file = DIR_SYSTEM . $path . '.php';
-
-
-	echo '$path ' . $path . "\n";
-	echo '$file ' . $file . "\n";
+	//echo 'autoloader' . "\n";
+	//echo '$class ' . $class . "\n";
+	//echo '$path ' . $path . "\n";
 
 	if (is_file($file)) {
 		include_once($file);
 
+		//echo '$file ' . $file . "\n\n";
+
 		return true;
 	} else {
-		echo $class;
+		//echo 'Not found: ' . $file . "\n\n";
 
 		return false;
 	}

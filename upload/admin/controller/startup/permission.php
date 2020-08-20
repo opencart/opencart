@@ -1,6 +1,6 @@
 <?php
-namespace Admin\Controller\Startup;
-class Permission extends Controller {
+namespace Application\Controller\Startup;
+class Permission extends \System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
 			$route = '';
@@ -28,7 +28,7 @@ class Permission extends Controller {
 			);
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return new Action('error/permission');
+				return new \System\Library\Action('error/permission');
 			}
 		}
 	}

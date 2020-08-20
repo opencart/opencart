@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Account;
+namespace Application\Model\Account;
 class Reward extends \System\Engine\Model {
 	public function getRewards($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE customer_id = '" . (int)$this->customer->getId() . "'";

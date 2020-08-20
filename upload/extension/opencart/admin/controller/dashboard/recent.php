@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionDashboardRecent extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Dashboard;
+class Recent extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleSlideshow extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Slideshow extends \System\Engine\Controller {
 	public function index($setting) {
 		static $module = 0;
 

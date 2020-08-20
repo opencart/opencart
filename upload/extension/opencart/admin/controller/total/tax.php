@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionTotalTax extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Total;
+class Tax extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

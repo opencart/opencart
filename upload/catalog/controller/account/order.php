@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountOrder extends Controller {
+namespace Admin\Controller\Account;
+class Order extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
@@ -333,7 +334,7 @@ class ControllerAccountOrder extends Controller {
 
 			$this->response->setOutput($this->load->view('account/order_info', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Engine\Action('error/not_found');
 		}
 	}
 

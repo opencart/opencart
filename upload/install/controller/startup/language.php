@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupLanguage extends Controller {
+namespace \Install\Controller\Startup;
+class Language extends \System\Engine\Controller {
 	public function index() {
 		// Default language code
 		$code = $this->config->get('language_default');

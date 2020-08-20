@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionCaptcha extends Controller {
+namespace Application\Controller\Extension;
+class Captcha extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

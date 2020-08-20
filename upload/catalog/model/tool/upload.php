@@ -1,5 +1,6 @@
 <?php
-class ModelToolUpload extends \System\Engine\Model {
+namespace Application\Model\Tool;
+class Upload extends \System\Engine\Model {
 	public function addUpload($name, $filename) {
 		$code = sha1(uniqid(mt_rand(), true));
 

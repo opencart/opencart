@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketplaceApi extends Controller {
+namespace Application\Controller\Marketplace;
+class Api extends \System\Engine\Controller {
 	public function index() {	
 		$this->load->language('marketplace/api');
 			

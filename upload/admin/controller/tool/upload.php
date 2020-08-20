@@ -1,5 +1,6 @@
 <?php
-class ControllerToolUpload extends Controller {
+namespace Catalog\Controller\Tool;
+class Upload extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

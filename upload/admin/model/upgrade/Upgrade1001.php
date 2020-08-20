@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1001 extends Model {
+namespace Application\Model\Upgrade;
+class Upgrade1001 extends \System\Engine\Model {
 	public function upgrade() {
 		// Update events because we moved the affiliate functions out of the customer class
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'catalog/model/account/affiliate/addAffiliate/after' WHERE `code` = 'activity_affiliate_add'");

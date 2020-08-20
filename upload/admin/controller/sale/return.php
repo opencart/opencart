@@ -1,5 +1,6 @@
 <?php
-class ControllerSaleReturn extends Controller {
+namespace Application\Controller\Sale;
+class Returns extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

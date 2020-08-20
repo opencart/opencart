@@ -197,7 +197,7 @@ $error = new \System\Engine\Action($config->get('action_error'));
 $pre_actions = $config->get('action_pre_action');
 
 // So the pre-actions can be changed or triggered.
-$event->trigger('pre_action', array(&$pre_actions));
+//$event->trigger('pre_action', array(&$pre_actions));
 
 // Pre Actions
 foreach ($pre_actions as $pre_action) {

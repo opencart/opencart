@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleFilter extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Filter extends \System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);

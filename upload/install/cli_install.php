@@ -1,4 +1,5 @@
 <?php
+namespace Install\Controller\Cli;
 //
 // Command line tool for installing opencart
 // Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
@@ -77,7 +78,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 	throw new ErrorException($message, 0, $code, $file, $line);
 });
 
-class ControllerCliInstall extends Controller {
+class Install extends \System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
@@ -286,7 +287,7 @@ class ControllerCliInstall extends Controller {
 
 		try {
 			// Database
-			$db = new \DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
+			$db = new \System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
 		} catch (ErrorException $e) {
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
@@ -526,7 +527,7 @@ class ControllerCliInstall extends Controller {
 }
 
 // Controller
-$controller = new ControllerCliInstall($registry);
+$controller = new \Install\Controller\CliInstall($registry);
 $controller->index();
 
 // Output

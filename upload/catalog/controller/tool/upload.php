@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Tool;
-class Upload extends Controller {
+namespace Application\Controller\Tool;
+class Upload extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/upload');
 

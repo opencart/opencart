@@ -1,5 +1,6 @@
 <?php
-class ControllerCustomerGdpr extends Controller {
+namespace Application\Controller\Customer;
+class Gdpr extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('customer/gdpr');
 

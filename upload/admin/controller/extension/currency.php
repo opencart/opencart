@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionCurrency extends Controller {
+namespace Application\Controller\Extension;
+class Currency extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

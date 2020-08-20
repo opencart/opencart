@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonDashboard extends Controller {
+namespace Application\Controller\Common;
+class Dashboard extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/dashboard');
 

@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionPromotion extends Controller {
+namespace Application\Controller\Extension;
+class Promotion extends \System\Engine\Controller {
 	public function index() {
 		$curl = curl_init();
 

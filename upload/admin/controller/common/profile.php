@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonProfile extends Controller {
+namespace Application\Controller\Common;
+class Profile extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

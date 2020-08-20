@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionFraudIp extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Fraud;
+class Ip extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

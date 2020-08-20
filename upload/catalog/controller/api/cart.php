@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Api;
-class Cart extends Controller {
+namespace Application\Controller\Api;
+class Cart extends \System\Engine\Controller {
 	public function add() {
 		$this->load->language('api/cart');
 

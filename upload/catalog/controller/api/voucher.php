@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Api;
-class Voucher extends Controller {
+namespace Application\Controller\Api;
+class Voucher extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/voucher');
 

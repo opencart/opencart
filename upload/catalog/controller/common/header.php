@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class Header extends Controller {
+namespace Application\Controller\Common;
+class Header extends \System\Engine\Controller {
 	public function index() {
 		// Analytics
 		$this->load->model('setting/extension');

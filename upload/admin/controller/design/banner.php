@@ -1,5 +1,6 @@
 <?php
-class ControllerDesignBanner extends Controller {
+namespace Application\Controller\Design;
+class Banner extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

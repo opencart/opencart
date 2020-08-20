@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonColumnLeft extends Controller {
+namespace Install\Controller\Common;
+class ColumnLeft extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/column_left');
 

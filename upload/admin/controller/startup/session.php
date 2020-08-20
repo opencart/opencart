@@ -1,6 +1,6 @@
 <?php
-namespace Admin\Controller\Startup;
-class Session extends Controller {
+namespace Application\Controller\Startup;
+class Session extends \System\Engine\Controller {
 	public function index() {
 		// Session
 		if (isset($this->request->cookie[$this->config->get('session_name')])) {

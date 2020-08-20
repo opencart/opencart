@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleLatest extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Latest extends \System\Engine\Controller {
 	public function index($setting) {
 		$this->load->language('extension/module/latest');
 

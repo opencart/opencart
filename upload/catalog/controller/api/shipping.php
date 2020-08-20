@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Api;
-class Shipping extends Controller {
+namespace Application\Controller\Api;
+class Shipping extends \System\Engine\Controller
 	public function address() {
 		$this->load->language('api/shipping');
 

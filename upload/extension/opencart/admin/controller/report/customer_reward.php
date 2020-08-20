@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionReportCustomerReward extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Report;
+class CustomerReward extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/report/customer_reward');
 

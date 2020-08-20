@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Information;
-class Tracking extends Controller {
+namespace Application\Controller\Information;
+class Tracking extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('information/tracking');
 

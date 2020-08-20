@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleBanner extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Banner extends \System\Engine\Controller {
 	public function index($setting) {
 		static $module = 0;
 

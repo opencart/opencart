@@ -1,5 +1,6 @@
 <?php
-class ControllerCustomerCustomerGroup extends Controller {
+namespace Application\Controller\Customer;
+class CustomerGroup extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

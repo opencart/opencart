@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Design;
+namespace Application\Model\Design;
 class SeoUrl extends \System\Engine\Model {
 	public $keyword = array();
 

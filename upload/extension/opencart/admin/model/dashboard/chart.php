@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionDashboardChart extends Model {
+namespace Extension\OpenCart\Catalog\Model\Dashboard;
+class Chart extends \System\Engine\Model {
 	public function getTotalOrdersByDay() {
 		$implode = array();
 

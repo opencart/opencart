@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionReportSaleCoupon extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Report;
+class SaleCoupon extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/report/sale_coupon');
 

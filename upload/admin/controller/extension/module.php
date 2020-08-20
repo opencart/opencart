@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModule extends Controller {
+namespace Application\Controller\Extension;
+class Module extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

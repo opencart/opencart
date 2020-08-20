@@ -1,5 +1,6 @@
 <?php
-class ControllerReportOnline extends Controller {
+namespace Application\Controller\Report;
+class Online extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('report/online');
 

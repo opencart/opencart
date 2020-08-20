@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Information;
-class ControllerInformationGdpr extends Controller {
+namespace Application\Controller\Information;
+class Gdpr extends \System\Engine\Controller {
 	public function index() {
 		$this->load->model('catalog/information');
 
@@ -42,7 +42,7 @@ class ControllerInformationGdpr extends Controller {
 
 			$this->response->setOutput($this->load->view('information/gdpr', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Library\Action('error/not_found');
 		}
 	}
 
@@ -180,7 +180,7 @@ class ControllerInformationGdpr extends Controller {
 
 			$this->response->setOutput($this->load->view('common/success', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Library\Action('error/not_found');
 		}
 	}
 }

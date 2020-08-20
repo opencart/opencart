@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketplaceCron extends Controller {
+namespace Application\Controller\Marketplace;
+class Cron extends \System\Engine\Controller {
 	private $error = array();
 	
 	public function index() {

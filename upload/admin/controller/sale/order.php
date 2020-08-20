@@ -1,5 +1,6 @@
 <?php
-class ControllerSaleOrder extends Controller {
+namespace Application\Controller\Sale;
+class Order extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {
@@ -378,7 +379,7 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$session = new Session($this->config->get('session_engine'), $this->registry);
+			$session = new \System\Library\Session($this->config->get('session_engine'), $this->registry);
 
 			$session->start();
 
@@ -688,7 +689,7 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$session = new Session($this->config->get('session_engine'), $this->registry);
+			$session = new \System\Library\Session($this->config->get('session_engine'), $this->registry);
 
 			$session->start();
 
@@ -1229,7 +1230,7 @@ class ControllerSaleOrder extends Controller {
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 			if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-				$session = new Session($this->config->get('session_engine'), $this->registry);
+				$session = new \System\Library\Session($this->config->get('session_engine'), $this->registry);
 
 				$session->start();
 
@@ -1250,7 +1251,7 @@ class ControllerSaleOrder extends Controller {
 
 			$this->response->setOutput($this->load->view('sale/order_info', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Engine\Action('error/not_found');
 		}
 	}
 

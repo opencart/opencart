@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionShippingWeight extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Shipping;
+class Weight extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

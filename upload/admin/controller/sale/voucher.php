@@ -1,5 +1,6 @@
 <?php
-class ControllerSaleVoucher extends Controller {
+namespace Application\Controller\Sale;
+class Voucher extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {
@@ -582,7 +583,7 @@ class ControllerSaleVoucher extends Controller {
 			
 						// If voucher belongs to an order
 						if ($order_info) {
-							$language = new Language($order_info['language_code']);
+							$language = new \System\Library\Language($order_info['language_code']);
 							$language->load($order_info['language_code']);
 							$language->load('mail/voucher');
 			
@@ -607,7 +608,7 @@ class ControllerSaleVoucher extends Controller {
 							$data['store_url'] = $order_info['store_url'];
 							$data['message'] = nl2br($voucher_info['message']);
 			
-							$mail = new Mail($this->config->get('config_mail_engine'));
+							$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -646,7 +647,7 @@ class ControllerSaleVoucher extends Controller {
 							$data['store_url'] = HTTP_CATALOG;
 							$data['message'] = nl2br($voucher_info['message']);
 			
-							$mail = new Mail($this->config->get('config_mail_engine'));
+							$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');

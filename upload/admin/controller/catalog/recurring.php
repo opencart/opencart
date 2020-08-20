@@ -1,6 +1,6 @@
 <?php
-namespace Admin\Controller\Catalog;
-class Recurring extends Controller {
+namespace Application\Controller\Catalog;
+class Recurring extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

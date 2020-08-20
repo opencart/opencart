@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionDashboardSale extends Model {
+namespace Extension\OpenCart\Admin\Model\Dashboard;
+class Sale extends \System\Engine\Model {
 	public function getTotalSales($data = array()) {
 		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";
 

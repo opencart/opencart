@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionTotalLowOrderFee extends Model {
+namespace Extension\OpenCart\Catalog\Model\Total;
+class LowOrderFee extends \System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		if ($this->cart->getSubTotal() && ($this->cart->getSubTotal() < $this->config->get('total_low_order_fee_total'))) {
 			$this->load->language('extension/total/low_order_fee');

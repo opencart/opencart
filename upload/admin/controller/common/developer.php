@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonDeveloper extends Controller {
+namespace Application\Controller\Common;
+class Developer extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/developer');
 		

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Api;
-class Reward extends Controller {
+namespace Application\Controller\Api;
+class Reward extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/reward');
 

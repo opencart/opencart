@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountDownload extends Controller {
+namespace Admin\Controller\Account;
+class Download extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));

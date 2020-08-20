@@ -1,5 +1,6 @@
 <?php
-class ControllerMailCustomer extends Controller {
+namespace Application\Controller\Mail;
+class Customer extends \System\Engine\Controller {
 	public function approve(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');
 
@@ -36,7 +37,7 @@ class ControllerMailCustomer extends Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new Language($language_code);
+			$language = new \System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/customer_approve');
 
@@ -53,7 +54,7 @@ class ControllerMailCustomer extends Controller {
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -106,7 +107,7 @@ class ControllerMailCustomer extends Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new Language($language_code);
+			$language = new \System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/customer_deny');
 
@@ -122,7 +123,7 @@ class ControllerMailCustomer extends Controller {
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

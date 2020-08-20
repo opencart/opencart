@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Account extends Controller {
+namespace Application\Controller\Account;
+class Account extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));

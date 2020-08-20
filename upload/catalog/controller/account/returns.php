@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Returns extends Controller {
+namespace Application\Controller\Account;
+class Returns extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

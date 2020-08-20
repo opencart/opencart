@@ -1,6 +1,6 @@
 <?php
 namespace System\Library\Template;
-final class Template {
+class Template {
 	protected $data = array();
 
 	public function set($key, $value) {

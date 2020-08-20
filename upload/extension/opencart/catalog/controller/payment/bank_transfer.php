@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionPaymentBankTransfer extends Controller {
+namespace Extension\OpenCart\Controller\Payment;
+class BankTransfer extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/payment/bank_transfer');
 

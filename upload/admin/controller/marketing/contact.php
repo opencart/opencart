@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketingContact extends Controller {
+namespace Application\Controller\Marketing;
+class Contact extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketing/contact');
 
@@ -213,7 +214,7 @@ class ControllerMarketingContact extends Controller {
 
 					foreach ($emails as $email) {
 						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail = new Mail($this->config->get('config_mail_engine'));
+							$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');

@@ -1,5 +1,6 @@
 <?php
-class ModelToolImage extends Model {
+namespace Application\Model\Tool;
+class Image extends \System\Engine\Model {
 	public function resize($filename, $width, $height) {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
 			return;

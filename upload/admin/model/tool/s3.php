@@ -2,9 +2,8 @@
 /*
 Amazon S3 system wil be used for storing cloud data
 */
-class ModelToolS3 extends Model {
-
-
+namespace Application\Model\Tool;
+class S3 extends \System\Engine\Model {
 	public function addFile($file, $path) {
 		try {
 

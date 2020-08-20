@@ -1,6 +1,6 @@
 <?php
-namespace Admin\Controller\Startup;
-class Sass extends Controller {
+namespace Application\Controller\Startup;
+class Sass extends \System\Engine\Controller {
 	public function index() {
 		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');
 

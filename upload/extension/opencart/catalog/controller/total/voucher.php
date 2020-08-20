@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionTotalVoucher extends Controller {
+namespace Extension\OpenCart\Controller\Total;
+class Voucher extends \System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('total_voucher_status')) {
 			$this->load->language('extension/total/voucher');

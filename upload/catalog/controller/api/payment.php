@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Api;
-class Payment extends Controller {
+namespace Application\Controller\Api;
+class Payment extends \System\Engine\Controller
 	public function address() {
 		$this->load->language('api/payment');
 

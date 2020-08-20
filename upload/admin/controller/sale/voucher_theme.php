@@ -1,5 +1,6 @@
 <?php
-class ControllerSaleVoucherTheme extends Controller {
+namespace Application\Controller\Sale;
+class VoucherTheme extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

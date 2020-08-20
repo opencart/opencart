@@ -1,5 +1,6 @@
 <?php
-class ControllerLocalisationTaxRate extends Controller {
+namespace Application\Controller\Localisation;
+class TaxRate extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

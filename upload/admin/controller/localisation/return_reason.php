@@ -1,5 +1,6 @@
 <?php
-class ControllerLocalisationReturnReason extends Controller {
+namespace Application\Controller\Localisation;
+class ReturnReason extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

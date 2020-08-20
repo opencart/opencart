@@ -1,5 +1,6 @@
 <?php
-class ControllerLocalisationStockStatus extends Controller {
+namespace Application\Controller\Localisation;
+class StockStatus extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

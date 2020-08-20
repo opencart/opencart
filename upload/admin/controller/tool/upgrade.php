@@ -32,7 +32,8 @@ Upgrade
 
 8. Replace the files
 */
-class ControllerToolUpgrade extends Controller {
+namespace Catalog\Controller\Tool;
+class Upgrade extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/upgrade');
 
@@ -294,7 +295,7 @@ class ControllerToolUpgrade extends Controller {
 
 		if (!$json) {
 			// Unzip the files
-			$zip = new ZipArchive();
+			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
 				$zip->extractTo(DIR_DOWNLOAD . 'opencart-' . $version);

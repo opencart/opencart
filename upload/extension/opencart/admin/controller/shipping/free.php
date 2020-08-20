@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionShippingFree extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Shipping;
+class Free extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

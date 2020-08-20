@@ -1,5 +1,6 @@
 <?php
-class ControllerInstallStep2 extends Controller {
+namespace Install\Controller\Install;
+class Step2 extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

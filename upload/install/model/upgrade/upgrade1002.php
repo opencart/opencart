@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1002 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1002 extends \System\Engine\Model {
 	public function upgrade() {
 		// setting
 		$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_product_limit'");

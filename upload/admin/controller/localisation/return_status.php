@@ -1,5 +1,6 @@
 <?php
-class ControllerLocalisationReturnStatus extends Controller {
+namespace Application\Controller\Localisation;
+class ReturnStatus extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

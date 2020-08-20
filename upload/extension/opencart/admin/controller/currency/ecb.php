@@ -1,5 +1,6 @@
 <?php
-class ControllerCurrencyECB extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Currency;
+class ECB extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

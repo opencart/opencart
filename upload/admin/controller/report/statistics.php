@@ -1,5 +1,6 @@
 <?php
-class ControllerReportStatistics extends Controller {
+namespace Application\Controller\Report;
+class Statistics extends \System\Engine\Controller {
 	private $error = array();
 	
 	public function index() {

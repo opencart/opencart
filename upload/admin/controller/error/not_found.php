@@ -1,5 +1,6 @@
 <?php
-class ControllerErrorNotFound extends Controller {
+namespace Application\Controller\Error;
+class NotFound extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('error/not_found');
 		

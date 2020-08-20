@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Reset extends Controller {
+namespace Application\Controller\Account;
+class Reset extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

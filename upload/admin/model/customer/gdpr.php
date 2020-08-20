@@ -1,5 +1,6 @@
 <?php
-class ModelCustomerGdpr extends Model {
+namespace Application\Model\Customer;
+class Gdpr extends \System\Engine\Model {
 	public function deleteGdpr($gdpr_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}

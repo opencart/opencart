@@ -1,5 +1,6 @@
 <?php
-class ControllerSaleRecurring extends Controller {
+namespace Application\Controller\Sale;
+class Recurring extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {
@@ -424,7 +425,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$this->response->setOutput($this->load->view('sale/recurring_info', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Engine\Action('error/not_found');
 		}
 	}
 }

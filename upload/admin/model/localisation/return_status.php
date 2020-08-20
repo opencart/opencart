@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationReturnStatus extends Model {
+namespace Application\Model\Localisation;
+class ReturnStatus extends \System\Engine\Model {
 	public function addReturnStatus($data) {
 		foreach ($data['return_status'] as $language_id => $value) {
 			if (isset($return_status_id)) {

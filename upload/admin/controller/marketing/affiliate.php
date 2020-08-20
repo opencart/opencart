@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketingAffiliate extends Controller {
+namespace Application\Controller\Marketing;
+class Affiliate extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

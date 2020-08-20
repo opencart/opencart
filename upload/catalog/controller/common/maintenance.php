@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class Maintenance extends Controller {
+namespace Application\Controller\Common;
+class Maintenance extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/maintenance');
 

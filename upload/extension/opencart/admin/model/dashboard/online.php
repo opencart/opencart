@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionDashboardOnline extends Model {
+namespace Extension\OpenCart\Admin\Model\Dashboard;
+class Online extends \System\Engine\Model {
 	public function getTotalOnline($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_online` co LEFT JOIN " . DB_PREFIX . "customer c ON (co.customer_id = c.customer_id)";
 

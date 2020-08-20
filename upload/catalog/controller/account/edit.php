@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountEdit extends Controller {
+namespace Admin\Controller\Account;
+class Edit extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

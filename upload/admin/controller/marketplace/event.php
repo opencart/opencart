@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketplaceEvent extends Controller {
+namespace Application\Controller\Marketplace;
+class Event extends \System\Engine\Controller {
 	private $error = array();
 	
 	public function index() {

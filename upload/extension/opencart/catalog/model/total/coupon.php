@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionTotalCoupon extends Model {
+namespace Extension\OpenCart\Catalog\Model\Total;
+class Coupon extends \System\Engine\Model {
 	public function getCoupon($code) {
 		$status = true;
 

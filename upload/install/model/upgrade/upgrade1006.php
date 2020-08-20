@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1006 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1006 extends \System\Engine\Model {
 	public function upgrade() {
 		// Update some language settings
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");

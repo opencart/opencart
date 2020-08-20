@@ -1,6 +1,6 @@
 <?php
 namespace System\Library\Template;
-final class Twig {
+class Twig {
 	protected $data = array();
 
 	public function set($key, $value) {

@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionPaymentFreeCheckout extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Payment;
+class FreeCheckout extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

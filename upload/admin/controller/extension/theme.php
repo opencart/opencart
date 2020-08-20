@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionTheme extends Controller {
+namespace Application\Controller\Extension;
+class Theme extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

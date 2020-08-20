@@ -1,5 +1,6 @@
 <?php
-class ControllerLocalisationCountry extends Controller {
+namespace Application\Controller\Localisation;
+class Country extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

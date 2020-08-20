@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonLogin extends Controller {
+namespace Application\Controller\Common;
+class Login extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

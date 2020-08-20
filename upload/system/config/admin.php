@@ -35,7 +35,7 @@ $_['action_default']    = 'common/dashboard';
 $_['action_event']      = array(
 	'controller/*/before' => array(
 		'event/language/before',
-		'event/extension/controller'
+		//'event/extension/controller'
 	),
 	'controller/*/after' => array(
 		'event/language/after'

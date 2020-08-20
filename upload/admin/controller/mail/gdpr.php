@@ -1,5 +1,6 @@
 <?php
-class ControllerMailGdpr extends Controller {
+namespace Application\Controller\Mail;
+class Gdpr extends \System\Engine\Controller {
 	// admin/model/customer/gdpr/editStatus
 	public function index(&$route, &$args, &$output) {
 		$this->load->model('customer/gdpr');
@@ -43,7 +44,7 @@ class ControllerMailGdpr extends Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new Language($language_code);
+		$language = new \System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_export');
 
@@ -186,7 +187,7 @@ class ControllerMailGdpr extends Controller {
 			$data['store_url'] = HTTPS_CATALOG;
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -214,7 +215,7 @@ class ControllerMailGdpr extends Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new Language($language_code);
+		$language = new \System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_approve');
 
@@ -256,7 +257,7 @@ class ControllerMailGdpr extends Controller {
 			$data['store_url'] = HTTPS_CATALOG;
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -284,7 +285,7 @@ class ControllerMailGdpr extends Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new Language($language_code);
+		$language = new \System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_deny');
 
@@ -327,7 +328,7 @@ class ControllerMailGdpr extends Controller {
 			$data['contact'] = HTTPS_CATALOG . 'index.php?route=information/contact';
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -355,7 +356,7 @@ class ControllerMailGdpr extends Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new Language($language_code);
+		$language = new \System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_delete');
 
@@ -399,7 +400,7 @@ class ControllerMailGdpr extends Controller {
 			$data['contact'] = HTTPS_CATALOG . 'index.php?route=information/contact';
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');

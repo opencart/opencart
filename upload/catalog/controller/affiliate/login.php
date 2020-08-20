@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Affiliate;
-class Login extends Controller {
+namespace Application\Controller\Affiliate;
+class Login extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

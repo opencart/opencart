@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Information;
-class Information extends Controller {
+namespace Application\Controller\Information;
+class Information extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('information/information');
 

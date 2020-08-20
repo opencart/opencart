@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionTotalTotal extends Model {
+namespace Extension\OpenCart\Catalog\Model\Total;
+class Total extends \System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		$this->load->language('extension/total/total');
 

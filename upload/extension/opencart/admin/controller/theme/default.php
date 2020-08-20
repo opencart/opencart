@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionThemeDefault extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Theme;
+class Default extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

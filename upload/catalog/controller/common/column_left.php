@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class ColumnLeft extends Controller {
+namespace Application\Controller\Common;
+class ColumnLeft extends \System\Engine\Controller {
 	public function index() {
 		$this->load->model('design/layout');
 

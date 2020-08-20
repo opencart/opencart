@@ -1,5 +1,6 @@
 <?php
-class ControllerDesignTranslation extends Controller {
+namespace Application\Controller\Design;
+class Translation extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

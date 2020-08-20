@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountLogout extends Controller {
+namespace Admin\Controller\Account;
+class Logout extends \System\Engine\Controller {
 	public function index() {
 		if ($this->customer->isLogged()) {
 			$this->customer->logout();

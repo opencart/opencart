@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionReportMarketing extends Model {
+namespace Extension\OpenCart\Admin\Model\Report;
+class Marketing extends \System\Engine\Model {
 	public function getMarketing($data = array()) {
 		$sql = "SELECT m.marketing_id, m.name AS campaign, m.code, m.clicks AS clicks, (SELECT COUNT(DISTINCT order_id) FROM `" . DB_PREFIX . "order` o1 WHERE o1.marketing_id = m.marketing_id";
 

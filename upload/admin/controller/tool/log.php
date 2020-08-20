@@ -1,5 +1,6 @@
 <?php
-class ControllerToolLog extends Controller {
+namespace Catalog\Controller\Tool;
+class Log extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {		

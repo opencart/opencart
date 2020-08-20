@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Information;
-class Sitemap extends Controller {
+namespace Application\Controller\Information;
+class Sitemap extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('information/sitemap');
 

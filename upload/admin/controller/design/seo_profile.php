@@ -1,5 +1,6 @@
 <?php
-class ControllerDesignSeoProfile extends Controller {
+namespace Application\Controller\Design;
+class SeoProfile extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

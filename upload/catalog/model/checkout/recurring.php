@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Checkout;
+namespace Application\Model\Checkout;
 class Recurring extends \System\Engine\Model {
 	public function addRecurring($order_id, $description, $item) {
 

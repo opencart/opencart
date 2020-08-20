@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonSecurity extends Controller {
+namespace Application\Controller\Common;
+class Security extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/security');
 

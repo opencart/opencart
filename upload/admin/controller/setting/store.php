@@ -1,5 +1,6 @@
 <?php
-class ControllerSettingStore extends Controller {
+namespace Application\Controller\Setting;
+class Store extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {
@@ -326,7 +327,7 @@ class ControllerSettingStore extends Controller {
 		$data['themes'] = array();
 
 		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
+		$language = new \System\Library\Language($this->config->get('config_language'));
 
 		$this->load->model('setting/extension');
 

@@ -1,5 +1,6 @@
 <?php
-class ControllerUserUser extends Controller {
+namespace Catalog\Controller\User;
+class User extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

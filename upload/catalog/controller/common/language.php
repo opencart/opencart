@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class Language extends Controller {
+namespace Application\Controller\Common;
+class Language extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/language');
 

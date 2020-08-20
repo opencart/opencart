@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Localisation;
+namespace Application\Model\Localisation;
 class Country extends \System\Engine\Model {
 	public function getCountry($country_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id . "' AND status = '1'");

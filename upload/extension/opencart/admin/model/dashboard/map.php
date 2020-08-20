@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionDashboardMap extends Model {
+namespace Extension\OpenCart\Admin\Model\Dashboard;
+class Map extends \System\Engine\Model {
 	public function getTotalOrdersByCountry() {
 		$implode = array();
 		

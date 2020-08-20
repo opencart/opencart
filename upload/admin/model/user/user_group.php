@@ -1,5 +1,6 @@
 <?php
-class ModelUserUserGroup extends Model {
+namespace Application\Model\User;
+class UserGroup extends \System\Engine\Model {
 	public function addUserGroup($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape((string)$data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
 	

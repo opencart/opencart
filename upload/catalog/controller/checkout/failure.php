@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Checkout;
-class Failure extends Controller {
+namespace Application\Controller\Checkout;
+class Failure extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/failure');
 

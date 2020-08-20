@@ -1,5 +1,6 @@
 <?php
-class ControllerCurrencyFixer extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Currency;
+class Fixer extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

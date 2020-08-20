@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1010 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1010 extends \System\Engine\Model {
 	public function upgrade() {
 		// Add missing core events
 		$events = array();

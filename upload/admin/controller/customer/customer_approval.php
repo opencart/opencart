@@ -1,5 +1,6 @@
 <?php
-class ControllerCustomerCustomerApproval extends Controller {
+namespace Application\Controller\Customer;
+class CustomerApproval extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('customer/customer_approval');
 

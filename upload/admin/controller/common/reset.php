@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonReset extends Controller {
+namespace Application\Controller\Common;
+class Reset extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

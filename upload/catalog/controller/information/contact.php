@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Information;
-class Contact extends Controller {
+namespace Application\Controller\Information;
+class Contact extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {
@@ -9,7 +9,7 @@ class Contact extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

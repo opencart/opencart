@@ -1,5 +1,6 @@
 <?php
-class ControllerDesignTheme extends Controller {
+namespace Application\Controller\Design;
+class Theme extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('design/theme');
 

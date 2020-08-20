@@ -1,5 +1,6 @@
 <?php
-class ControllerLocalisationOrderStatus extends Controller {
+namespace Application\Controller\Localisation;
+class OrderStatus extends \System\Engine\Controller {
 	private $error = array();
 
 	public function index() {

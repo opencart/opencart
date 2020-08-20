@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleStore extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Store extends \System\Engine\Controller {
 	public function index() {
 		$status = true;
 

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Startup;
-class Startup extends Controller {
+namespace Application\Controller\Startup;
+class Startup extends \System\Engine\Controller {
 	public function index() {
 		// Store
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/') . "'");
@@ -77,7 +77,7 @@ class Startup extends Controller {
 		}
 
 		// Url
-		$this->registry->set('url', new Url($this->config->get('config_url')));
+		$this->registry->set('url', new \System\Library\Url($this->config->get('config_url')));
 
 		// Language
 		$code = '';
@@ -181,7 +181,7 @@ class Startup extends Controller {
 		}
 
 		// Replace the default language object
-		$language = new Language($code);
+		$language = new \System\Library\Language($code);
 		$language->load($code);
 		$this->registry->set('language', $language);
 
@@ -190,7 +190,7 @@ class Startup extends Controller {
 		$this->config->set('config_language', $code);
 
 		// Customer
-		$customer = new Cart\Customer($this->registry);
+		$customer = new \System\Library\Cart\Customer($this->registry);
 		$this->registry->set('customer', $customer);
 
 		// Customer Group
@@ -238,10 +238,10 @@ class Startup extends Controller {
 			oc_setcookie('currency', $code, $option);
 		}
 
-		$this->registry->set('currency', new Cart\Currency($this->registry));
+		$this->registry->set('currency', new \System\Library\Cart\Currency($this->registry));
 
 		// Tax
-		$this->registry->set('tax', new Cart\Tax($this->registry));
+		$this->registry->set('tax', new \System\Library\Cart\Tax($this->registry));
 
 		if (isset($this->session->data['shipping_address'])) {
 			$this->tax->setShippingAddress($this->session->data['shipping_address']['country_id'], $this->session->data['shipping_address']['zone_id']);
@@ -258,15 +258,15 @@ class Startup extends Controller {
 		$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 
 		// Weight
-		$this->registry->set('weight', new Cart\Weight($this->registry));
+		$this->registry->set('weight', new \System\Library\Cart\Weight($this->registry));
 
 		// Length
-		$this->registry->set('length', new Cart\Length($this->registry));
+		$this->registry->set('length', new \System\Library\Cart\Length($this->registry));
 
 		// Cart
-		$this->registry->set('cart', new Cart\Cart($this->registry));
+		$this->registry->set('cart', new \System\Library\Cart\Cart($this->registry));
 
 		// Encryption
-		$this->registry->set('encryption', new Encryption());
+		$this->registry->set('encryption', new \System\Library\Encryption());
 	}
 }

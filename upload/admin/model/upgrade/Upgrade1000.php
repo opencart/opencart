@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1000 extends Model {
+namespace Application\Model\Upgrade;
+class Upgrade1000 extends \System\Engine\Model {
 	public function upgrade() {
 		// Structure
 		$this->load->helper('db_schema');

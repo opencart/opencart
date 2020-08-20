@@ -32,7 +32,7 @@ Upgrade
 
 8. Replace the files
 */
-namespace Catalog\Controller\Tool;
+namespace Application\Controller\Tool;
 class Upgrade extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/upgrade');

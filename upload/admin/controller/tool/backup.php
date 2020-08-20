@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Controller\Tool;
+namespace Application\Controller\Tool;
 class Backup extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/backup');

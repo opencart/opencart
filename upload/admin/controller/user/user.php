@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Controller\User;
+namespace Application\Controller\User;
 class User extends \System\Engine\Controller {
 	private $error = array();
 

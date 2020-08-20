@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Controller\Tool;
+namespace Application\Controller\Tool;
 class Log extends \System\Engine\Controller {
 	private $error = array();
 

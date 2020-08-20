@@ -2581,11 +2581,6 @@ function db_schema() {
 				'not_null' => true
 			),
 			array(
-				'name' => 'image',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			),
-			array(
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,

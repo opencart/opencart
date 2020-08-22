@@ -127,7 +127,7 @@ if ($config->get('session_autostart')) {
 	// Require higher security for session cookies
 	$option = array(
 		'max-age'  => time() + $config->get('session_expire'),
-		'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
+		'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) : '',
 		'domain'   => $_SERVER['HTTP_HOST'],
 		'secure'   => $_SERVER['HTTPS'],
 		'httponly' => false,

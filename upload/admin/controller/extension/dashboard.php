@@ -76,27 +76,29 @@ class Dashboard extends \System\Engine\Controller {
 		}
 
 		$data['extensions'] = [];
-		
+
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/dashboard/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
-				
-				// Compatibility code for old extension folders
-				$this->load->language('extension/dashboard/' . $extension, $extension);
 
-				$data['extensions'][] = array(
-					'name'       => $this->language->get($extension . '_heading_title'),
-					'width'      => $this->config->get('dashboard_' . $extension . '_width'),	
-					'status'     => $this->config->get('dashboard_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),					
-					'sort_order' => $this->config->get('dashboard_' . $extension . '_sort_order'),
-					'install'    => $this->url->link('extension/dashboard/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
-					'uninstall'  => $this->url->link('extension/dashboard/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
-					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('extension/dashboard/' . $extension, 'user_token=' . $this->session->data['user_token'])
-				);
+				if ($this->user->hasPermission('access', 'extension/dashboard/' . $extension)) {
+					// Compatibility code for old extension folders
+					$this->load->language('extension/dashboard/' . $extension, $extension);
+
+					$data['extensions'][] = array(
+						'name'       => $this->language->get($extension . '_heading_title'),
+						'width'      => $this->config->get('dashboard_' . $extension . '_width'),
+						'status'     => $this->config->get('dashboard_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+						'sort_order' => $this->config->get('dashboard_' . $extension . '_sort_order'),
+						'install'    => $this->url->link('extension/dashboard/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
+						'uninstall'  => $this->url->link('extension/dashboard/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
+						'installed'  => in_array($extension, $extensions),
+						'edit'       => $this->url->link('extension/dashboard/' . $extension, 'user_token=' . $this->session->data['user_token'])
+					);
+				}
 			}
 		}
 

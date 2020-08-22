@@ -21,7 +21,7 @@ $_['template_engine']    = 'twig';
 $_['template_directory'] = '';
 
 // Autoload Libraries
-$_['library_autoload']   = array();
+$_['library_autoload']   = [];
 
 // Actions
 $_['action_pre_action']  = array(

@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Catalog;
 class Manufacturer extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('catalog/manufacturer');
@@ -144,7 +144,7 @@ class Manufacturer extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class Manufacturer extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/manufacturer/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/manufacturer/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['manufacturers'] = array();
+		$data['manufacturers'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -198,7 +198,7 @@ class Manufacturer extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -280,7 +280,7 @@ class Manufacturer extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -316,7 +316,7 @@ class Manufacturer extends \System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		$data['stores'] = array();
+		$data['stores'] = [];
 
 		$data['stores'][] = array(
 			'store_id' => 0,
@@ -375,7 +375,7 @@ class Manufacturer extends \System\Engine\Controller {
 		} elseif (!empty($manufacturer_info)) {
 			$data['manufacturer_seo_url'] = $this->model_catalog_manufacturer->getSeoUrls($this->request->get['manufacturer_id']);
 		} else {
-			$data['manufacturer_seo_url'] = array();
+			$data['manufacturer_seo_url'] = [];
 		}
 
 		if (isset($this->request->post['manufacturer_layout'])) {
@@ -383,7 +383,7 @@ class Manufacturer extends \System\Engine\Controller {
 		} elseif (!empty($manufacturer_info)) {
 			$data['manufacturer_layout'] = $this->model_catalog_manufacturer->getLayouts($this->request->get['manufacturer_id']);
 		} else {
-			$data['manufacturer_layout'] = array();
+			$data['manufacturer_layout'] = [];
 		}
 
 		$this->load->model('design/layout');
@@ -450,7 +450,7 @@ class Manufacturer extends \System\Engine\Controller {
 	}
 
 	public function autocomplete() {
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/manufacturer');
@@ -471,7 +471,7 @@ class Manufacturer extends \System\Engine\Controller {
 			}
 		}
 
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($json as $key => $value) {
 			$sort_order[$key] = $value['name'];

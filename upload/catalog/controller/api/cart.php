@@ -4,7 +4,7 @@ class Cart extends \System\Engine\Controller {
 	public function add() {
 		$this->load->language('api/cart');
 
-		$json = array();
+		$json = [];
 			
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
@@ -16,7 +16,7 @@ class Cart extends \System\Engine\Controller {
 					if (isset($product['option'])) {
 						$option = $product['option'];
 					} else {
-						$option = array();
+						$option = [];
 					}
 
 					$this->cart->add($product['product_id'], $product['quantity'], $option);
@@ -43,7 +43,7 @@ class Cart extends \System\Engine\Controller {
 					if (isset($this->request->post['option'])) {
 						$option = array_filter($this->request->post['option']);
 					} else {
-						$option = array();
+						$option = [];
 					}
 
 					$product_options = $this->model_catalog_product->getOptions($this->request->post['product_id']);
@@ -77,7 +77,7 @@ class Cart extends \System\Engine\Controller {
 	public function edit() {
 		$this->load->language('api/cart');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -100,7 +100,7 @@ class Cart extends \System\Engine\Controller {
 	public function remove() {
 		$this->load->language('api/cart');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -128,7 +128,7 @@ class Cart extends \System\Engine\Controller {
 	public function products() {
 		$this->load->language('api/cart');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
@@ -139,7 +139,7 @@ class Cart extends \System\Engine\Controller {
 			}
 
 			// Products
-			$json['products'] = array();
+			$json['products'] = [];
 
 			$products = $this->cart->getProducts();
 
@@ -156,7 +156,7 @@ class Cart extends \System\Engine\Controller {
 					$json['error']['minimum'][] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 				}
 
-				$option_data = array();
+				$option_data = [];
 
 				foreach ($product['option'] as $option) {
 					$option_data[] = array(
@@ -184,7 +184,7 @@ class Cart extends \System\Engine\Controller {
 			}
 
 			// Voucher
-			$json['vouchers'] = array();
+			$json['vouchers'] = [];
 
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $key => $voucher) {
@@ -206,11 +206,11 @@ class Cart extends \System\Engine\Controller {
 			// Totals
 			$this->load->model('setting/extension');
 
-			$totals = array();
+			$totals = [];
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			$sort_order = array();
+			$sort_order = [];
 
 			$results = $this->model_setting_extension->getExtensions('total');
 
@@ -229,7 +229,7 @@ class Cart extends \System\Engine\Controller {
 				}
 			}
 
-			$sort_order = array();
+			$sort_order = [];
 
 			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
@@ -237,7 +237,7 @@ class Cart extends \System\Engine\Controller {
 
 			array_multisort($sort_order, SORT_ASC, $totals);
 
-			$json['totals'] = array();
+			$json['totals'] = [];
 
 			foreach ($totals as $total) {
 				$json['totals'][] = array(

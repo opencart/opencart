@@ -14,7 +14,7 @@ class Maintenance extends \System\Engine\Controller {
 
 		$this->response->addHeader('Retry-After: 3600');
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_maintenance'),

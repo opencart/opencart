@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Catalog;
 class Option extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('catalog/option');
@@ -144,7 +144,7 @@ class Option extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class Option extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['options'] = array();
+		$data['options'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -198,7 +198,7 @@ class Option extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -257,13 +257,13 @@ class Option extends \System\Engine\Controller {
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
-			$data['error_name'] = array();
+			$data['error_name'] = [];
 		}
 
 		if (isset($this->error['option_value'])) {
 			$data['error_option_value'] = $this->error['option_value'];
 		} else {
-			$data['error_option_value'] = array();
+			$data['error_option_value'] = [];
 		}
 
 		$url = '';
@@ -280,7 +280,7 @@ class Option extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -315,7 +315,7 @@ class Option extends \System\Engine\Controller {
 		} elseif (!empty($option_info)) {
 			$data['option_description'] = $this->model_catalog_option->getDescriptions($this->request->get['option_id']);
 		} else {
-			$data['option_description'] = array();
+			$data['option_description'] = [];
 		}
 
 		if (isset($this->request->post['type'])) {
@@ -339,12 +339,12 @@ class Option extends \System\Engine\Controller {
 		} elseif (!empty($option_info)) {
 			$option_values = $this->model_catalog_option->getValueDescriptions($this->request->get['option_id']);
 		} else {
-			$option_values = array();
+			$option_values = [];
 		}
 
 		$this->load->model('tool/image');
 
-		$data['option_values'] = array();
+		$data['option_values'] = [];
 
 		foreach ($option_values as $option_value) {
 			if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -392,7 +392,7 @@ class Option extends \System\Engine\Controller {
 			if (isset($this->request->get['option_id'])) {
 				$this->load->model('catalog/product');
 
-				$option_value_data = array();
+				$option_value_data = [];
 
 				foreach ($this->request->post['option_value'] as $option_value) {
 					if ($option_value['option_value_id']) {
@@ -446,7 +446,7 @@ class Option extends \System\Engine\Controller {
 	}
 
 	public function autocomplete() {
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->language('catalog/option');
@@ -464,7 +464,7 @@ class Option extends \System\Engine\Controller {
 			$options = $this->model_catalog_option->getOptions($filter_data);
 
 			foreach ($options as $option) {
-				$option_value_data = array();
+				$option_value_data = [];
 
 				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
 					$option_values = $this->model_catalog_option->getValues($option['option_id']);
@@ -483,7 +483,7 @@ class Option extends \System\Engine\Controller {
 						);
 					}
 
-					$sort_order = array();
+					$sort_order = [];
 
 					foreach ($option_value_data as $key => $value) {
 						$sort_order[$key] = $value['name'];
@@ -520,7 +520,7 @@ class Option extends \System\Engine\Controller {
 			}
 		}
 
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($json as $key => $value) {
 			$sort_order[$key] = $value['name'];

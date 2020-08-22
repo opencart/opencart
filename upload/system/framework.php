@@ -222,15 +222,18 @@ foreach ($pre_actions as $pre_action) {
 
 // Dispatch
 while ($action) {
+	$args = [];
+
 	// Get the route path of the object to be executed.
 	$route = $action->getId();
 
 	// Keep the original trigger.
 	$trigger = $action->getId();
 
-	$event->trigger('controller/' . $trigger . '/before', array(&$route, &$args, &$action));
+	$event->trigger('controller/' . $trigger . '/before', array(&$route, &$args));
 
-	$result = $action->execute($registry);
+	// Execute the action.
+	$result = $action->execute($registry, $args);
 
 	$action = '';
 

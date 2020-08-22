@@ -11,7 +11,7 @@ use Aws\Exception\AwsException;
 class History implements \Countable, \IteratorAggregate
 {
     private $maxEntries;
-    private $entries = array();
+    private $entries = [];
 
     /**
      * @param int $maxEntries Maximum number of entries to store.

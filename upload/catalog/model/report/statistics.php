@@ -13,7 +13,7 @@ class Statistics extends \System\Engine\Model {
 		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return null;	
+			return '';
 		}
 	}
 	

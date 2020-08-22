@@ -6,7 +6,7 @@ class FreeCheckout extends \System\Engine\Controller {
 	}
 
 	public function confirm() {
-		$json = array();
+		$json = [];
 
 		if ($this->session->data['payment_method']['code'] == 'free_checkout') {
 			$this->load->model('checkout/order');

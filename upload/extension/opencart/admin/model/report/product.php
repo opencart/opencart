@@ -1,7 +1,7 @@
 <?php
 namespace Extension\OpenCart\Admin\Model\Report;
 class Product extends \System\Engine\Model {
-	public function getProductsViewed($data = array()) {
+	public function getProductsViewed($data = []) {
 		$sql = "SELECT pd.name, p.model, p.viewed FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.viewed > 0 ORDER BY p.viewed DESC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
@@ -37,7 +37,7 @@ class Product extends \System\Engine\Model {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = '0'");
 	}
 
-	public function getPurchased($data = array()) {
+	public function getPurchased($data = []) {
 		$sql = "SELECT op.name, op.model, SUM(op.quantity) AS quantity, SUM((op.price + op.tax) * op.quantity) AS total FROM " . DB_PREFIX . "order_product op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id)";
 
 		if (!empty($data['filter_order_status_id'])) {

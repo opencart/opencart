@@ -1,7 +1,7 @@
 <?php
 namespace Extension\OpenCart\Admin\Model\Report;
 class CustomerTransaction extends \System\Engine\Model {
-	public function getTransactions($data = array()) {
+	public function getTransactions($data = []) {
 		$sql = "SELECT ct.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, c.email, cgd.name AS customer_group, c.status, SUM(ct.amount) AS total FROM `" . DB_PREFIX . "customer_transaction` ct LEFT JOIN `" . DB_PREFIX . "customer` c ON (ct.customer_id = c.customer_id) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.customer_group_id = cgd.customer_group_id) WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_date_start'])) {
@@ -35,10 +35,10 @@ class CustomerTransaction extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalTransactions($data = array()) {
+	public function getTotalTransactions($data = []) {
 		$sql = "SELECT COUNT(DISTINCT ct.customer_id) AS total FROM `" . DB_PREFIX . "customer_transaction` ct LEFT JOIN `" . DB_PREFIX . "customer` c ON (ct.customer_id = c.customer_id)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(ct.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";

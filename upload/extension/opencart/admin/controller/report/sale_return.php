@@ -22,7 +22,7 @@ class SaleReturn extends \System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -105,7 +105,7 @@ class SaleReturn extends \System\Engine\Controller {
 		
 		$this->load->model('extension/report/return');
 
-		$data['returns'] = array();
+		$data['returns'] = [];
 
 		$filter_data = array(
 			'filter_date_start'	      => $filter_date_start,
@@ -134,7 +134,7 @@ class SaleReturn extends \System\Engine\Controller {
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
 
-		$data['groups'] = array();
+		$data['groups'] = [];
 
 		$data['groups'][] = array(
 			'text'  => $this->language->get('text_year'),

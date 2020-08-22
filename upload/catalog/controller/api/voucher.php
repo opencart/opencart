@@ -7,7 +7,7 @@ class Voucher extends \System\Engine\Controller {
 		// Delete past voucher in case there is an error
 		unset($this->session->data['voucher']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -38,7 +38,7 @@ class Voucher extends \System\Engine\Controller {
 	public function add() {
 		$this->load->language('api/voucher');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
@@ -61,7 +61,7 @@ class Voucher extends \System\Engine\Controller {
 			}
 
 			if (isset($this->request->post['voucher'])) {
-				$this->session->data['vouchers'] = array();
+				$this->session->data['vouchers'] = [];
 
 				foreach ($this->request->post['voucher'] as $voucher) {
 					if (isset($voucher['code']) && isset($voucher['to_name']) && isset($voucher['to_email']) && isset($voucher['from_name']) && isset($voucher['from_email']) && isset($voucher['voucher_theme_id']) && isset($voucher['message']) && isset($voucher['amount'])) {

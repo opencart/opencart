@@ -1,7 +1,7 @@
 <?php
 namespace Extension\OpenCart\Catalog\Controller\Currency;
 class Fixer extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/currency/fixer');
@@ -30,7 +30,7 @@ class Fixer extends \System\Engine\Controller {
 			$data['error_api'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -101,7 +101,7 @@ class Fixer extends \System\Engine\Controller {
 
 			if (is_array($response_info) && isset($response_info['rates'])) {
 				// Compile all the rates into an array
-				$currencies = array();
+				$currencies = [];
 
 				$currencies['EUR'] = 1.0000;
 

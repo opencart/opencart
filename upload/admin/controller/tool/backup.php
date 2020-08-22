@@ -6,7 +6,7 @@ class Backup extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -27,7 +27,7 @@ class Backup extends \System\Engine\Controller {
 			DB_PREFIX . 'user_group'
 		);
 
-		$data['tables'] = array();
+		$data['tables'] = [];
 
 		$results = $this->model_tool_backup->getTables();
 
@@ -47,7 +47,7 @@ class Backup extends \System\Engine\Controller {
 	public function history() {
 		$this->load->language('tool/backup');
 
-		$data['histories'] = array();
+		$data['histories'] = [];
 
 		$files = glob(DIR_STORAGE . 'backup/*.sql');
 
@@ -88,7 +88,7 @@ class Backup extends \System\Engine\Controller {
 	public function backup() {
 		$this->load->language('tool/backup');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['filename'])) {
 			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
@@ -105,7 +105,7 @@ class Backup extends \System\Engine\Controller {
 		if (isset($this->request->post['backup'])) {
 			$backup = $this->request->post['backup'];
 		} else {
-			$backup = array();
+			$backup = [];
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -205,7 +205,7 @@ class Backup extends \System\Engine\Controller {
 	public function restore() {
 		$this->load->language('tool/backup');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['filename'])) {
 			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
@@ -298,7 +298,7 @@ class Backup extends \System\Engine\Controller {
 	public function upload() {
 		$this->load->language('tool/backup');
 
-		$json = array();
+		$json = [];
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'tool/backup')) {
@@ -336,7 +336,7 @@ class Backup extends \System\Engine\Controller {
 	public function download() {
 		$this->load->language('tool/backup');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['filename'])) {
 			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));
@@ -378,7 +378,7 @@ class Backup extends \System\Engine\Controller {
 	public function delete() {
 		$this->load->language('tool/backup');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['filename'])) {
 			$filename = basename(html_entity_decode($this->request->get['filename'], ENT_QUOTES, 'UTF-8'));

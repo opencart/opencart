@@ -50,7 +50,7 @@ class Pagination extends \System\Engine\Controller {
 			$data['prev'] = '';
 		}
 
-		$data['links'] = array();
+		$data['links'] = [];
 
 		if ($num_pages > 1) {
 			if ($num_pages <= $num_links) {

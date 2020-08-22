@@ -37,7 +37,7 @@ class ShippingAddress extends \System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom Fields
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = [];
 
 		$this->load->model('account/custom_field');
 
@@ -52,7 +52,7 @@ class ShippingAddress extends \System\Engine\Controller {
 		if (isset($this->session->data['shipping_address']['custom_field'])) {
 			$data['shipping_address_custom_field'] = $this->session->data['shipping_address']['custom_field'];
 		} else {
-			$data['shipping_address_custom_field'] = array();
+			$data['shipping_address_custom_field'] = [];
 		}
 
 		$this->response->setOutput($this->load->view('checkout/shipping_address', $data));
@@ -61,7 +61,7 @@ class ShippingAddress extends \System\Engine\Controller {
 	public function save() {
 		$this->load->language('checkout/checkout');
 
-		$json = array();
+		$json = [];
 
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {

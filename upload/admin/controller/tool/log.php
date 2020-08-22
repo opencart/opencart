@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Tool;
 class Log extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {		
 		$this->load->language('tool/log');
@@ -26,7 +26,7 @@ class Log extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

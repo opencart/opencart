@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Account;
 class Affiliate extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function add() {
 		if (!$this->config->get('config_affiliate_status')) {
@@ -65,7 +65,7 @@ class Affiliate extends \System\Engine\Controller {
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -122,7 +122,7 @@ class Affiliate extends \System\Engine\Controller {
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
 		} else {
-			$data['error_custom_field'] = array();
+			$data['error_custom_field'] = [];
 		}
 
 		$data['action'] = $this->url->link($this->request->get['route'], 'language=' . $this->config->get('config_language'));
@@ -235,7 +235,7 @@ class Affiliate extends \System\Engine\Controller {
 		} elseif (isset($affiliate_info)) {
 			$data['affiliate_custom_field'] = json_decode($affiliate_info['custom_field'], true);
 		} else {
-			$data['affiliate_custom_field'] = array();
+			$data['affiliate_custom_field'] = [];
 		}
 
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());

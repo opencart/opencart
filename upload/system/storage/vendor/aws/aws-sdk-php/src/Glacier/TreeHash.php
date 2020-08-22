@@ -95,7 +95,7 @@ class TreeHash implements HashInterface
             $hashes = $this->checksums;
             while (count($hashes) > 1) {
                 $sets = array_chunk($hashes, 2);
-                $hashes = array();
+                $hashes = [];
                 foreach ($sets as $set) {
                     $hashes[] = (count($set) === 1)
                         ? $set[0]

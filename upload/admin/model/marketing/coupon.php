@@ -60,7 +60,7 @@ class Coupon extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getCoupons($data = array()) {
+	public function getCoupons($data = []) {
 		$sql = "SELECT coupon_id, name, code, discount, date_start, date_end, status FROM " . DB_PREFIX . "coupon";
 
 		$sort_data = array(
@@ -102,7 +102,7 @@ class Coupon extends \System\Engine\Model {
 	}
 
 	public function getProducts($coupon_id) {
-		$coupon_product_data = array();
+		$coupon_product_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
 
@@ -114,7 +114,7 @@ class Coupon extends \System\Engine\Model {
 	}
 
 	public function getCategories($coupon_id) {
-		$coupon_category_data = array();
+		$coupon_category_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
 

@@ -77,11 +77,8 @@ final class Loader {
 			// Converting a route path to a class name
 			$class = '\Application\Model\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($route, '_/'));
 
-
-			//echo 'model: ' . $class . "\n";
-
 			if (class_exists($class)) {
-				$proxy = new Proxy();
+				$proxy = new \System\Engine\Proxy();
 
 				// Overriding models is a little harder so we have to use PHP's magic methods.
 				foreach (get_class_methods($class) as $method) {
@@ -107,7 +104,7 @@ final class Loader {
 	 *
 	 * @return   string
 	 */
-	public function view($route, $data = array()) {
+	public function view($route, $data = []) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -152,9 +149,9 @@ final class Loader {
 		$class = 'System\Library\\' . str_replace('/', '\\', $route);
 
 		if (class_exists($class)) {
-			$reflection = new ReflectionClass($class);
+			$reflection = new \ReflectionClass($class);
 
-			$object = $class->newInstanceArgs($args);
+			$object = $reflection->newInstanceArgs($args);
 		} else {
 			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
@@ -224,6 +221,34 @@ final class Loader {
 		return $data;
 	}
 
+	//
+	public function extension($route) {
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
+
+		// Keep the original trigger
+		$trigger = $route;
+
+		$this->registry->get('event')->trigger('extension/' . $trigger . '/before', array(&$route));
+
+		$extension = new \Engine\Loader(DIR_EXTENSION . $route);
+		//\Extension
+		$config = array(
+			'application' => DIR_APPLICATION,
+			'system'
+
+		);
+
+		$loader = new \System\Engine\Loader(DIR_EXTENSION. $route, $this->registry);
+
+		$loader->config($route);
+
+
+		$this->registry->get('event')->trigger('extension/' . $trigger . '/after', array(&$route, &$data));
+
+		return $data;
+	}
+
 	/**
 	 * Callback
 	 *
@@ -255,7 +280,7 @@ final class Loader {
 				// Create the class name from the key
 				$class = '\Application\Model\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($key, '_/'));
 
-				// Create the method to be used
+				// Get the method to be used
 				$method = substr($route, strrpos($route, '/') + 1);
 
 				// Check if the model has already been initialised or not

@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller\Account;
 class Edit extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
@@ -29,7 +29,7 @@ class Edit extends \System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -79,7 +79,7 @@ class Edit extends \System\Engine\Controller {
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
 		} else {
-			$data['error_custom_field'] = array();
+			$data['error_custom_field'] = [];
 		}
 
 		$data['action'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
@@ -121,7 +121,7 @@ class Edit extends \System\Engine\Controller {
 		}
 
 		// Custom Fields
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = [];
 
 		$this->load->model('account/custom_field');
 
@@ -138,7 +138,7 @@ class Edit extends \System\Engine\Controller {
 		} elseif (isset($customer_info)) {
 			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 		} else {
-			$data['account_custom_field'] = array();
+			$data['account_custom_field'] = [];
 		}
 
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));

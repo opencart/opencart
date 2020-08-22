@@ -1,10 +1,10 @@
 <?php
 namespace Extension\OpenCart\Admin\Model\Report;
 class Coupon extends \System\Engine\Model {
-	public function getCoupons($data = array()) {
+	public function getCoupons($data = []) {
 		$sql = "SELECT ch.coupon_id, c.name, c.code, COUNT(DISTINCT ch.order_id) AS `orders`, SUM(ch.amount) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.coupon_id = c.coupon_id)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(ch.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
@@ -37,10 +37,10 @@ class Coupon extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalCoupons($data = array()) {
+	public function getTotalCoupons($data = []) {
 		$sql = "SELECT COUNT(DISTINCT coupon_id) AS total FROM `" . DB_PREFIX . "coupon_history`";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";

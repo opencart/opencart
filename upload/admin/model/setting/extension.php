@@ -33,7 +33,7 @@ class Extension extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getInstalls($filter_data = array()) {
+	public function getInstalls($filter_data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -75,7 +75,7 @@ class Extension extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalInstalls($filter_data = array()) {
+	public function getTotalInstalls($filter_data = []) {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -120,7 +120,7 @@ class Extension extends \System\Engine\Model {
 
 
 	public function getInstalled($type) {
-		$extension_data = array();
+		$extension_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
 

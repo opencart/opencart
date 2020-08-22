@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Localisation;
 class WeightClass extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('localisation/weight_class');
@@ -144,7 +144,7 @@ class WeightClass extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class WeightClass extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('localisation/weight_class/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/weight_class/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['weight_classes'] = array();
+		$data['weight_classes'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -199,7 +199,7 @@ class WeightClass extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -259,13 +259,13 @@ class WeightClass extends \System\Engine\Controller {
 		if (isset($this->error['title'])) {
 			$data['error_title'] = $this->error['title'];
 		} else {
-			$data['error_title'] = array();
+			$data['error_title'] = [];
 		}
 
 		if (isset($this->error['unit'])) {
 			$data['error_unit'] = $this->error['unit'];
 		} else {
-			$data['error_unit'] = array();
+			$data['error_unit'] = [];
 		}
 
 		$url = '';
@@ -282,7 +282,7 @@ class WeightClass extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -315,7 +315,7 @@ class WeightClass extends \System\Engine\Controller {
 		} elseif (!empty($weight_class_info)) {
 			$data['weight_class_description'] = $this->model_localisation_weight_class->getDescriptions($this->request->get['weight_class_id']);
 		} else {
-			$data['weight_class_description'] = array();
+			$data['weight_class_description'] = [];
 		}
 
 		if (isset($this->request->post['value'])) {

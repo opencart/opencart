@@ -18,7 +18,7 @@ class Order extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -41,7 +41,7 @@ class Order extends \System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['orders'] = array();
+		$data['orders'] = [];
 
 		$this->load->model('account/order');
 
@@ -113,7 +113,7 @@ class Order extends \System\Engine\Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
@@ -236,12 +236,12 @@ class Order extends \System\Engine\Controller {
 			$this->load->model('tool/upload');
 
 			// Products
-			$data['products'] = array();
+			$data['products'] = [];
 
 			$products = $this->model_account_order->getProducts($this->request->get['order_id']);
 
 			foreach ($products as $product) {
-				$option_data = array();
+				$option_data = [];
 
 				$options = $this->model_account_order->getOptions($this->request->get['order_id'], $product['order_product_id']);
 
@@ -285,7 +285,7 @@ class Order extends \System\Engine\Controller {
 			}
 
 			// Voucher
-			$data['vouchers'] = array();
+			$data['vouchers'] = [];
 
 			$vouchers = $this->model_account_order->getVouchers($this->request->get['order_id']);
 
@@ -297,7 +297,7 @@ class Order extends \System\Engine\Controller {
 			}
 
 			// Totals
-			$data['totals'] = array();
+			$data['totals'] = [];
 
 			$totals = $this->model_account_order->getTotals($this->request->get['order_id']);
 
@@ -311,7 +311,7 @@ class Order extends \System\Engine\Controller {
 			$data['comment'] = nl2br($order_info['comment']);
 
 			// History
-			$data['histories'] = array();
+			$data['histories'] = [];
 
 			$results = $this->model_account_order->getHistories($this->request->get['order_id']);
 
@@ -366,7 +366,7 @@ class Order extends \System\Engine\Controller {
 				$product_info = $this->model_catalog_product->getProduct($order_product_info['product_id']);
 
 				if ($product_info) {
-					$option_data = array();
+					$option_data = [];
 
 					$order_options = $this->model_account_order->getOptions($order_product_info['order_id'], $order_product_id);
 

@@ -1,7 +1,7 @@
 <?php
 namespace Extension\OpenCart\Catalog\Controller\Currency;
 class ECB extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/currency/ecb');
@@ -24,7 +24,7 @@ class ECB extends \System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -82,12 +82,12 @@ class ECB extends \System\Engine\Controller {
 			curl_close($curl);
 
 			if ($response) {
-				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->loadXml($response);
 
 				$cube = $dom->getElementsByTagName('Cube')->item(0);
 
-				$currencies = array();
+				$currencies = [];
 
 				$currencies['EUR'] = 1.0000;
 

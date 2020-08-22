@@ -4,7 +4,7 @@ class Login extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/login');
 
-		$json = array();
+		$json = [];
 
 		$this->load->model('account/api');
 
@@ -13,7 +13,7 @@ class Login extends \System\Engine\Controller {
 
 		if ($api_info) {
 			// Check if IP is allowed
-			$ip_data = array();
+			$ip_data = [];
 	
 			$results = $this->model_account_api->getIps($api_info['api_id']);
 	

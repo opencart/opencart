@@ -2,7 +2,7 @@
 namespace Extension\OpenCart\Admin\Model\Report;
 class Customer extends \System\Engine\Model {
 	public function getTotalCustomersByDay() {
-		$customer_data = array();
+		$customer_data = [];
 
 		for ($i = 0; $i < 24; $i++) {
 			$customer_data[$i] = array(
@@ -24,7 +24,7 @@ class Customer extends \System\Engine\Model {
 	}
 
 	public function getTotalCustomersByWeek() {
-		$customer_data = array();
+		$customer_data = [];
 
 		$date_start = strtotime('-' . date('w') . ' days');
 
@@ -50,7 +50,7 @@ class Customer extends \System\Engine\Model {
 	}
 
 	public function getTotalCustomersByMonth() {
-		$customer_data = array();
+		$customer_data = [];
 
 		for ($i = 1; $i <= date('t'); $i++) {
 			$date = date('Y') . '-' . date('m') . '-' . $i;
@@ -74,7 +74,7 @@ class Customer extends \System\Engine\Model {
 	}
 
 	public function getTotalCustomersByYear() {
-		$customer_data = array();
+		$customer_data = [];
 
 		for ($i = 1; $i <= 12; $i++) {
 			$customer_data[$i] = array(
@@ -95,7 +95,7 @@ class Customer extends \System\Engine\Model {
 		return $customer_data;
 	}
 
-	public function getOrders($data = array()) {
+	public function getOrders($data = []) {
 		$sql = "SELECT c.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, c.email, cgd.name AS customer_group, c.status, o.order_id, SUM(op.quantity) as products, o.total AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.order_id = op.order_id) LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.customer_id = c.customer_id) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.customer_group_id = cgd.customer_group_id) WHERE o.customer_id > 0 AND cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_date_start'])) {
@@ -137,7 +137,7 @@ class Customer extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalOrders($data = array()) {
+	public function getTotalOrders($data = []) {
 		$sql = "SELECT COUNT(DISTINCT o.customer_id) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.customer_id = c.customer_id) WHERE o.customer_id > '0'";
 
 		if (!empty($data['filter_date_start'])) {
@@ -163,7 +163,7 @@ class Customer extends \System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getRewardPoints($data = array()) {
+	public function getRewardPoints($data = []) {
 		$sql = "SELECT cr.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, c.email, cgd.name AS customer_group, c.status, SUM(cr.points) AS points, COUNT(o.order_id) AS orders, SUM(o.total) AS total FROM " . DB_PREFIX . "customer_reward cr LEFT JOIN `" . DB_PREFIX . "customer` c ON (cr.customer_id = c.customer_id) LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id) LEFT JOIN `" . DB_PREFIX . "order` o ON (cr.order_id = o.order_id) WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_date_start'])) {
@@ -197,10 +197,10 @@ class Customer extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalRewardPoints($data = array()) {
+	public function getTotalRewardPoints($data = []) {
 		$sql = "SELECT COUNT(DISTINCT cr.customer_id) AS total FROM `" . DB_PREFIX . "customer_reward` cr LEFT JOIN `" . DB_PREFIX . "customer` c ON (cr.customer_id = c.customer_id)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(cr.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
@@ -223,10 +223,10 @@ class Customer extends \System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getCustomerActivities($data = array()) {
+	public function getCustomerActivities($data = []) {
 		$sql = "SELECT ca.customer_activity_id, ca.customer_id, ca.key, ca.data, ca.ip, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(ca.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
@@ -267,10 +267,10 @@ class Customer extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalCustomerActivities($data = array()) {
+	public function getTotalCustomerActivities($data = []) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_activity` ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(ca.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
@@ -297,10 +297,10 @@ class Customer extends \System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getCustomerSearches($data = array()) {
+	public function getCustomerSearches($data = []) {
 		$sql = "SELECT cs.customer_id, cs.keyword, cs.category_id, cs.products, cs.ip, cs.date_added, CONCAT(c.firstname, ' ', c.lastname) AS customer FROM " . DB_PREFIX . "customer_search cs LEFT JOIN " . DB_PREFIX . "customer c ON (cs.customer_id = c.customer_id)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(cs.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
@@ -345,10 +345,10 @@ class Customer extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalCustomerSearches($data = array()) {
+	public function getTotalCustomerSearches($data = []) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_search` cs LEFT JOIN " . DB_PREFIX . "customer c ON (cs.customer_id = c.customer_id)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
 			$implode[] = "DATE(cs.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";

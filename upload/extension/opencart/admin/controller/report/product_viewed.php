@@ -22,7 +22,7 @@ class ProductViewed extends \System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -88,7 +88,7 @@ class ProductViewed extends \System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination')
 		);
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$product_viewed_total = $this->model_extension_report_product->getTotalProductViews();
 

@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Common;
 class Reset extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
@@ -54,7 +54,7 @@ class Reset extends \System\Engine\Controller {
 			$this->response->redirect($this->url->link('common/login'));
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

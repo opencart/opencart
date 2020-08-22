@@ -18,7 +18,7 @@ class Voucher extends \System\Engine\Model {
 
 		if ($voucher_query->num_rows) {
 			if ($voucher_query->row['order_id']) {
-				$implode = array();
+				$implode = [];
 
 				foreach ($this->config->get('config_complete_status') as $order_status_id) {
 					$implode[] = "'" . (int)$order_status_id . "'";

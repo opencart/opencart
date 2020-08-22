@@ -2,7 +2,7 @@
 namespace Application\Model\Tool;
 class Backup extends \System\Engine\Model {
 	public function getTables() {
-		$table_data = array();
+		$table_data = [];
 
 		$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 
@@ -29,7 +29,7 @@ class Backup extends \System\Engine\Model {
 		if ($query->num_rows) {
 			return $query->rows;
 		} else {
-			return array();
+			return [];
 		}
 	}
 

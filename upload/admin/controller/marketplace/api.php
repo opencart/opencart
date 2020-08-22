@@ -12,7 +12,7 @@ class Api extends \System\Engine\Controller {
 	public function save() {
 		$this->load->language('marketplace/api');
 
-		$json = array();
+		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'marketplace/api')) {
 			$json['error']['warning'] = $this->language->get('error_permission');

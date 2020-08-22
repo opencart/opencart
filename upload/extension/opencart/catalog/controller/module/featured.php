@@ -8,14 +8,14 @@ class Featured extends \System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		if (!$setting['limit']) {
 			$setting['limit'] = 4;
 		}
 
 		if (!empty($setting['product'])) {
-			$product_data = array();
+			$product_data = [];
 
 			foreach ($setting['product'] as $product_id) {
 				$product_info = $this->model_catalog_product->getProduct($product_id);

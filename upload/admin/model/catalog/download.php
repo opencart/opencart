@@ -34,7 +34,7 @@ class Download extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getDownloads($data = array()) {
+	public function getDownloads($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "download d LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE dd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -76,7 +76,7 @@ class Download extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($download_id) {
-		$download_description_data = array();
+		$download_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 

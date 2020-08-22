@@ -23,7 +23,7 @@ class FileManager extends \System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['directories'] = array();
+		$data['directories'] = [];
 
 		// Get directories
 		$directories = glob($directory . '*', GLOB_ONLYDIR);
@@ -62,7 +62,7 @@ class FileManager extends \System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['images'] = array();
+		$data['images'] = [];
 
 		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
 
@@ -208,7 +208,7 @@ class FileManager extends \System\Engine\Controller {
 	public function upload() {
 		$this->load->language('common/filemanager');
 
-		$json = array();
+		$json = [];
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -229,7 +229,7 @@ class FileManager extends \System\Engine\Controller {
 
 		if (!$json) {
 			// Check if multiple files are uploaded or just one
-			$files = array();
+			$files = [];
 
 			if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
 				foreach (array_keys($this->request->files['file']['name']) as $key) {
@@ -303,7 +303,7 @@ class FileManager extends \System\Engine\Controller {
 	public function folder() {
 		$this->load->language('common/filemanager');
 
-		$json = array();
+		$json = [];
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -353,7 +353,7 @@ class FileManager extends \System\Engine\Controller {
 	public function delete() {
 		$this->load->language('common/filemanager');
 
-		$json = array();
+		$json = [];
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -363,7 +363,7 @@ class FileManager extends \System\Engine\Controller {
 		if (isset($this->request->post['path'])) {
 			$paths = $this->request->post['path'];
 		} else {
-			$paths = array();
+			$paths = [];
 		}
 
 		// Loop through each path to run validations
@@ -390,7 +390,7 @@ class FileManager extends \System\Engine\Controller {
 
 				// If path is a directory begin deleting each file and sub folder
 				} elseif (is_dir($path)) {
-					$files = array();
+					$files = [];
 
 					// Make path into an array
 					$path = array($path);

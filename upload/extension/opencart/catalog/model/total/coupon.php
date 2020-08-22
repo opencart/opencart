@@ -30,7 +30,7 @@ class Coupon extends \System\Engine\Model {
 			}
 
 			// Products
-			$coupon_product_data = array();
+			$coupon_product_data = [];
 
 			$coupon_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_product` WHERE coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
 
@@ -39,7 +39,7 @@ class Coupon extends \System\Engine\Model {
 			}
 
 			// Categories
-			$coupon_category_data = array();
+			$coupon_category_data = [];
 
 			$coupon_category_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon_category` cc LEFT JOIN `" . DB_PREFIX . "category_path` cp ON (cc.category_id = cp.path_id) WHERE cc.coupon_id = '" . (int)$coupon_query->row['coupon_id'] . "'");
 
@@ -47,7 +47,7 @@ class Coupon extends \System\Engine\Model {
 				$coupon_category_data[] = $category['category_id'];
 			}
 
-			$product_data = array();
+			$product_data = [];
 
 			if ($coupon_product_data || $coupon_category_data) {
 				foreach ($this->cart->getProducts() as $product) {

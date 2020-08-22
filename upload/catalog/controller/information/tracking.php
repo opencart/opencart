@@ -4,7 +4,7 @@ class Tracking extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('information/tracking');
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -22,7 +22,7 @@ class Tracking extends \System\Engine\Controller {
 	}
 	
 	public function track() {
-		$json = array();
+		$json = [];
 		
 		$this->load->model('account/shipping');
 		

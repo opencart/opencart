@@ -19,7 +19,7 @@ class SeoProfile extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getSeoProfiles($data = array()) {
+	public function getSeoProfiles($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_profile`";
 
 		$sort_data = array(

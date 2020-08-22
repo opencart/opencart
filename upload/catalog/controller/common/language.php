@@ -24,7 +24,7 @@ class Language extends \System\Engine\Controller {
 			$url = '&' . urldecode(http_build_query($url_data));
 		}
 
-		$data['languages'] = array();
+		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
 

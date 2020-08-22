@@ -1,7 +1,7 @@
 <?php
 namespace System\Library\Cart;
 class Currency {
-	private $currencies = array();
+	private $currencies = [];
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');

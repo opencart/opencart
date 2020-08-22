@@ -6,7 +6,7 @@ class Gdpr extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -66,7 +66,7 @@ class Gdpr extends \System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['gdprs'] = array();
+		$data['gdprs'] = [];
 
 		$filter_data = array(
 			'filter_email'      => $filter_email,
@@ -162,12 +162,12 @@ class Gdpr extends \System\Engine\Controller {
 	public function approve() {
 		$this->load->language('customer/gdpr');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$gdprs = array();
+			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {
 				$gdprs = $this->request->post['selected'];
@@ -203,12 +203,12 @@ class Gdpr extends \System\Engine\Controller {
 	public function deny() {
 		$this->load->language('customer/gdpr');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$gdprs = array();
+			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {
 				$gdprs = $this->request->post['selected'];
@@ -234,12 +234,12 @@ class Gdpr extends \System\Engine\Controller {
 	public function delete() {
 		$this->load->language('customer/gdpr');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$gdprs = array();
+			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {
 				$gdprs = $this->request->post['selected'];

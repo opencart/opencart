@@ -6,7 +6,7 @@ class Dashboard extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -28,7 +28,7 @@ class Dashboard extends \System\Engine\Controller {
 		}
 
 		// Dashboard Extensions
-		$dashboards = array();
+		$dashboards = [];
 
 		$this->load->model('setting/extension');
 
@@ -51,7 +51,7 @@ class Dashboard extends \System\Engine\Controller {
 			}
 		}
 
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($dashboards as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
@@ -61,8 +61,8 @@ class Dashboard extends \System\Engine\Controller {
 
 		// Split the array so the columns width is not more than 12 on each row.
 		$width = 0;
-		$column = array();
-		$data['rows'] = array();
+		$column = [];
+		$data['rows'] = [];
 
 		foreach ($dashboards as $dashboard) {
 			$column[] = $dashboard;
@@ -73,7 +73,7 @@ class Dashboard extends \System\Engine\Controller {
 				$data['rows'][] = $column;
 
 				$width = 0;
-				$column = array();
+				$column = [];
 			}
 		}
 

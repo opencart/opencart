@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Design;
 class Layout extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('design/layout');
@@ -144,7 +144,7 @@ class Layout extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class Layout extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('design/layout/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/layout/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['layouts'] = array();
+		$data['layouts'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -197,7 +197,7 @@ class Layout extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -272,7 +272,7 @@ class Layout extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -315,14 +315,14 @@ class Layout extends \System\Engine\Controller {
 		} elseif (!empty($layout_info)) {
 			$data['layout_routes'] = $this->model_design_layout->getRoutes($this->request->get['layout_id']);
 		} else {
-			$data['layout_routes'] = array();
+			$data['layout_routes'] = [];
 		}
 
 		$this->load->model('setting/extension');
 
 		$this->load->model('setting/module');
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 
 		// Get a list of installed modules
 		$extensions = $this->model_setting_extension->getInstalled('module');
@@ -331,7 +331,7 @@ class Layout extends \System\Engine\Controller {
 		foreach ($extensions as $code) {
 			$this->load->language('extension/module/' . $code, $code);
 
-			$module_data = array();
+			$module_data = [];
 
 			$modules = $this->model_setting_module->getModulesByCode($code);
 
@@ -357,10 +357,10 @@ class Layout extends \System\Engine\Controller {
 		} elseif (!empty($layout_info)) {
 			$layout_modules = $this->model_design_layout->getModules($this->request->get['layout_id']);
 		} else {
-			$layout_modules = array();
+			$layout_modules = [];
 		}
 
-		$data['layout_modules'] = array();
+		$data['layout_modules'] = [];
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($layout_modules as $layout_module) {

@@ -16,7 +16,7 @@ class Url {
 	/** @var string */
 	private $url;
 	/** @var Controller[] */
-	private $rewrite = array();
+	private $rewrite = [];
 
 	/**
 	 * Constructor.

@@ -7,7 +7,7 @@ class Coupon extends \System\Engine\Controller {
 		// Delete past coupon in case there is an error
 		unset($this->session->data['coupon']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');

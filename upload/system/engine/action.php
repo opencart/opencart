@@ -10,7 +10,9 @@
 /**
  * Action class
  */
+
 namespace System\Engine;
+use Application;
 class Action {
 	private $route;
 	private $class;
@@ -21,11 +23,11 @@ class Action {
 	 *
 	 * @param    string $route
 	 */
-	public function __construct($route) {
+	public function __construct(string $route) {
 		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
 		// Converting a route path to a class name
-		$class = '\Application\Controller\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($route, '_/'));
+		$class = 'Application\Controller\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($route, '_/'));
 
 		if (class_exists($class)) {
 			$this->class = $class;
@@ -33,10 +35,6 @@ class Action {
 			$this->class = substr($class, 0, strrpos($class, '\\'));
 			$this->method = substr($route, strrpos($route, '/') + 1);
 		}
-
-		//echo 'Action' . "\n";
-		//echo '$route ' . $route . "\n";
-		//echo '$class ' . $class . "\n";
 	}
 
 	/**
@@ -55,7 +53,7 @@ class Action {
 	 * @param    object $registry
 	 * @param    array $args
 	 */
-	public function execute($registry, array &$args = array()) {
+	public function execute(Registry $registry, array &$args = []) {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');

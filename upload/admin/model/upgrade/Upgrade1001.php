@@ -7,7 +7,7 @@ class Upgrade1001 extends \System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'catalog/model/account/affiliate/editAffiliate/after' WHERE `code` = 'activity_affiliate_edit'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/return/addHistory/after' WHERE `code` = 'admin_mail_return'");
 
-		$events = array();
+		$events = [];
 
 		$events[] = array(
 			'code'    => 'admin_currency_add',

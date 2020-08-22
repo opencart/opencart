@@ -9,14 +9,14 @@ class Menu extends \System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		$data['categories'] = array();
+		$data['categories'] = [];
 
 		$categories = $this->model_catalog_category->getCategories(0);
 
 		foreach ($categories as $category) {
 			if ($category['top']) {
 				// Level 2
-				$children_data = array();
+				$children_data = [];
 
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
 

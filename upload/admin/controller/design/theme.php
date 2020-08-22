@@ -6,7 +6,7 @@ class Theme extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -20,7 +20,7 @@ class Theme extends \System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['stores'] = array();
+		$data['stores'] = [];
 
 		$this->load->model('setting/store');
 
@@ -49,7 +49,7 @@ class Theme extends \System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['histories'] = array();
+		$data['histories'] = [];
 
 		$this->load->model('design/theme');
 		$this->load->model('setting/store');
@@ -93,7 +93,7 @@ class Theme extends \System\Engine\Controller {
 	public function path() {
 		$this->load->language('design/theme');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
 			$store_id = $this->request->get['store_id'];
@@ -117,7 +117,7 @@ class Theme extends \System\Engine\Controller {
 		}
 
 		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/default/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
-			$path_data = array();
+			$path_data = [];
 
 			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.
 			$files = glob(rtrim(DIR_CATALOG . 'view/theme/{default,' . $theme . '}/template/' . $path, '/') . '/*', GLOB_BRACE);
@@ -159,7 +159,7 @@ class Theme extends \System\Engine\Controller {
 	public function template() {
 		$this->load->language('design/theme');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
 			$store_id = $this->request->get['store_id'];
@@ -201,7 +201,7 @@ class Theme extends \System\Engine\Controller {
 	public function save() {
 		$this->load->language('design/theme');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
 			$store_id = $this->request->get['store_id'];
@@ -250,7 +250,7 @@ class Theme extends \System\Engine\Controller {
 	public function reset() {
 		$this->load->language('design/theme');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
 			$store_id = $this->request->get['store_id'];
@@ -284,7 +284,7 @@ class Theme extends \System\Engine\Controller {
 	public function delete() {
 		$this->load->language('design/theme');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['theme_id'])) {
 			$theme_id = $this->request->get['theme_id'];

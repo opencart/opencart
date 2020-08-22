@@ -34,7 +34,7 @@ class Special extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -68,7 +68,7 @@ class Special extends \System\Engine\Controller {
 
 		$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -128,7 +128,7 @@ class Special extends \System\Engine\Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
-		$data['sorts'] = array();
+		$data['sorts'] = [];
 
 		$data['sorts'][] = array(
 			'text'  => $this->language->get('text_default'),
@@ -196,7 +196,7 @@ class Special extends \System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['limits'] = array();
+		$data['limits'] = [];
 
 		$limits = array_unique(array($this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'), 25, 50, 75, 100));
 

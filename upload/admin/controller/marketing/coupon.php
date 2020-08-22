@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Marketing;
 class Coupon extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('marketing/coupon');
@@ -144,7 +144,7 @@ class Coupon extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class Coupon extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('marketing/coupon/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('marketing/coupon/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['coupons'] = array();
+		$data['coupons'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -202,7 +202,7 @@ class Coupon extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -308,7 +308,7 @@ class Coupon extends \System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -393,12 +393,12 @@ class Coupon extends \System\Engine\Controller {
 		} elseif (!empty($coupon_info)) {
 			$products = $this->model_marketing_coupon->getProducts($this->request->get['coupon_id']);
 		} else {
-			$products = array();
+			$products = [];
 		}
 
 		$this->load->model('catalog/product');
 
-		$data['coupon_products'] = array();
+		$data['coupon_products'] = [];
 
 		foreach ($products as $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
@@ -416,12 +416,12 @@ class Coupon extends \System\Engine\Controller {
 		} elseif (!empty($coupon_info)) {
 			$categories = $this->model_marketing_coupon->getCategories($this->request->get['coupon_id']);
 		} else {
-			$categories = array();
+			$categories = [];
 		}
 
 		$this->load->model('catalog/category');
 
-		$data['coupon_categories'] = array();
+		$data['coupon_categories'] = [];
 
 		foreach ($categories as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
@@ -532,7 +532,7 @@ class Coupon extends \System\Engine\Controller {
 
 		$this->load->model('marketing/coupon');
 
-		$data['histories'] = array();
+		$data['histories'] = [];
 
 		$results = $this->model_marketing_coupon->getHistories($coupon_id, ($page - 1) * 10, 10);
 

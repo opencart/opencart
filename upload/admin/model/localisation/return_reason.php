@@ -39,7 +39,7 @@ class ReturnReason extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getReturnReasons($data = array()) {
+	public function getReturnReasons($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -82,7 +82,7 @@ class ReturnReason extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($return_reason_id) {
-		$return_reason_data = array();
+		$return_reason_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
 

@@ -6,7 +6,7 @@ class Installer extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -87,7 +87,7 @@ class Installer extends \System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 		
 		$this->load->model('setting/extension');
 
@@ -152,7 +152,7 @@ class Installer extends \System\Engine\Controller {
 	public function upload() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		// Check for any install directories
 		if (isset($this->request->files['file']['name'])) {
@@ -184,7 +184,7 @@ class Installer extends \System\Engine\Controller {
 
 			if (is_file($file)) {
 				// Unzip the files
-				$zip = new ZipArchive();
+				$zip = new \ZipArchive();
 
 				if ($zip->open($file)) {
 					$xml = $zip->getFromName('install.xml');
@@ -195,7 +195,7 @@ class Installer extends \System\Engine\Controller {
 				// If xml file just put it straight into the DB
 				if ($xml) {
 					try {
-						$dom = new DOMDocument('1.0', 'UTF-8');
+						$dom = new \DOMDocument('1.0', 'UTF-8');
 						$dom->loadXml($xml);
 
 						$name = $dom->getElementsByTagName('name')->item(0);
@@ -274,7 +274,7 @@ class Installer extends \System\Engine\Controller {
 	public function install() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];
@@ -304,11 +304,11 @@ class Installer extends \System\Engine\Controller {
 			$json['error'] = $this->language->get('error_install');
 		}
 
-		$extract = array();
+		$extract = [];
 
 		if (!$json) {
 			// Unzip the files
-			$zip = new ZipArchive();
+			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
 				// Check if any of the files already exist.
@@ -406,7 +406,7 @@ class Installer extends \System\Engine\Controller {
 	public function uninstall() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];
@@ -492,7 +492,7 @@ class Installer extends \System\Engine\Controller {
 	public function delete() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];

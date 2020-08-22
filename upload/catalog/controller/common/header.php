@@ -5,7 +5,7 @@ class Header extends \System\Engine\Controller {
 		// Analytics
 		$this->load->model('setting/extension');
 
-		$data['analytics'] = array();
+		$data['analytics'] = [];
 
 		$analytics = $this->model_setting_extension->getExtensions('analytics');
 

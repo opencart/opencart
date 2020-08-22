@@ -20,7 +20,7 @@ final class PgSQL {
 			if (is_resource($resource)) {
 				$i = 0;
 
-				$data = array();
+				$data = [];
 
 				while ($result = pg_fetch_assoc($resource)) {
 					$data[$i] = $result;
@@ -31,7 +31,7 @@ final class PgSQL {
 				pg_free_result($resource);
 
 				$query = new \stdClass();
-				$query->row = isset($data[0]) ? $data[0] : array();
+				$query->row = isset($data[0]) ? $data[0] : [];
 				$query->rows = $data;
 				$query->num_rows = $i;
 

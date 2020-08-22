@@ -19,10 +19,10 @@ class SeoUrl extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getSeoUrls($data = array()) {
+	public function getSeoUrls($data = []) {
 		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` s WHERE s.`store_id` = su.`store_id`) AS store, (SELECT `name` FROM `" . DB_PREFIX . "language` l WHERE l.`language_id` = su.`language_id`) AS `language` FROM `" . DB_PREFIX . "seo_url` su";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_keyword'])) {
 			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
@@ -85,10 +85,10 @@ class SeoUrl extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalSeoUrls($data = array()) {
+	public function getTotalSeoUrls($data = []) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "seo_url`";
 		
-		$implode = array();
+		$implode = [];
 
 
 		if (!empty($data['filter_keyword'])) {

@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Setting;
 class Store extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('setting/store');
@@ -96,7 +96,7 @@ class Store extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -111,7 +111,7 @@ class Store extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('setting/store/delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['stores'] = array();
+		$data['stores'] = [];
 
 		$store_total = 0;
 
@@ -160,7 +160,7 @@ class Store extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', array(
@@ -236,7 +236,7 @@ class Store extends \System\Engine\Controller {
 			$data['error_customer_group_display'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -324,7 +324,7 @@ class Store extends \System\Engine\Controller {
 			$data['config_theme'] = '';
 		}
 
-		$data['themes'] = array();
+		$data['themes'] = [];
 
 		// Create a new language container so we don't pollute the current one
 		$language = new \System\Library\Language($this->config->get('config_language'));
@@ -455,7 +455,7 @@ class Store extends \System\Engine\Controller {
 		} elseif (isset($store_info['config_location'])) {
 			$data['config_location'] = $store_info['config_location'];
 		} else {
-			$data['config_location'] = array();
+			$data['config_location'] = [];
 		}
 
 		if (isset($this->request->post['config_country_id'])) {
@@ -555,7 +555,7 @@ class Store extends \System\Engine\Controller {
 		} elseif (isset($store_info['config_customer_group_display'])) {
 			$data['config_customer_group_display'] = $store_info['config_customer_group_display'];
 		} else {
-			$data['config_customer_group_display'] = array();
+			$data['config_customer_group_display'] = [];
 		}
 
 		if (isset($this->request->post['config_customer_price'])) {

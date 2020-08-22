@@ -26,7 +26,7 @@ class UserGroup extends \System\Engine\Model {
 		return $user_group;
 	}
 
-	public function getUserGroups($data = array()) {
+	public function getUserGroups($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "user_group";
 
 		$sql .= " ORDER BY name";

@@ -31,7 +31,7 @@ class PaymentAddress extends \System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom Fields
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = [];
 
 		$this->load->model('account/custom_field');
 
@@ -46,7 +46,7 @@ class PaymentAddress extends \System\Engine\Controller {
 		if (isset($this->session->data['payment_address']['custom_field'])) {
 			$data['payment_address_custom_field'] = $this->session->data['payment_address']['custom_field'];
 		} else {
-			$data['payment_address_custom_field'] = array();
+			$data['payment_address_custom_field'] = [];
 		}
 
 		$data['shipping_required'] = $this->cart->hasShipping();
@@ -57,7 +57,7 @@ class PaymentAddress extends \System\Engine\Controller {
 	public function save() {
 		$this->load->language('checkout/checkout');
 
-		$json = array();
+		$json = [];
 
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {

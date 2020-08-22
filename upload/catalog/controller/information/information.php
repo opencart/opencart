@@ -4,7 +4,7 @@ class Information extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('information/information');
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

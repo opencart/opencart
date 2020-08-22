@@ -39,7 +39,7 @@ class ReturnAction extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getReturnActions($data = array()) {
+	public function getReturnActions($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "return_action WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -82,7 +82,7 @@ class ReturnAction extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($return_action_id) {
-		$return_action_data = array();
+		$return_action_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_action WHERE return_action_id = '" . (int)$return_action_id . "'");
 

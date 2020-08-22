@@ -23,7 +23,7 @@ class Install extends \System\Engine\Model {
 			}
 
 			if (isset($table['primary'])) {
-				$primary_data = array();
+				$primary_data = [];
 
 				foreach ($table['primary'] as $primary) {
 					$primary_data[] = "`" . $primary . "`";
@@ -34,7 +34,7 @@ class Install extends \System\Engine\Model {
 
 			if (isset($table['index'])) {
 				foreach ($table['index'] as $index) {
-					$index_data = array();
+					$index_data = [];
 
 					foreach ($index['key'] as $key) {
 						$index_data[] = "`" . $key . "`";

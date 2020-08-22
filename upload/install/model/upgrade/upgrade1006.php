@@ -97,7 +97,7 @@ class Upgrade1006 extends \System\Engine\Model {
 			DIR_SYSTEM . 'cache/',
 		);
 
-		$files = array();
+		$files = [];
 
 		foreach ($directories as $dir) {
 			if (is_dir($dir)) {
@@ -189,7 +189,7 @@ class Upgrade1006 extends \System\Engine\Model {
 		}
 
 		// Open the source directory to read in files
-		$i = new DirectoryIterator($src);
+		$i = new \DirectoryIterator($src);
 		foreach ($i as $f) {
 			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
 				@rename($f->getRealPath(), "$dest/" . $f->getFilename());

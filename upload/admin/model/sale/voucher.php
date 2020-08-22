@@ -28,7 +28,7 @@ class Voucher extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getVouchers($data = array()) {
+	public function getVouchers($data = []) {
 		$sql = "SELECT v.voucher_id, v.order_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, (SELECT vtd.name FROM " . DB_PREFIX . "voucher_theme_description vtd WHERE vtd.voucher_theme_id = v.voucher_theme_id AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS theme, v.amount, v.status, v.date_added FROM " . DB_PREFIX . "voucher v";
 
 		$sort_data = array(

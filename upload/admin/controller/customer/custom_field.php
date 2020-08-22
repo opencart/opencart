@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Customer;
 class CustomField extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('customer/custom_field');
@@ -144,7 +144,7 @@ class CustomField extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class CustomField extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('customer/custom_field/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('customer/custom_field/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -236,7 +236,7 @@ class CustomField extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -298,13 +298,13 @@ class CustomField extends \System\Engine\Controller {
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
-			$data['error_name'] = array();
+			$data['error_name'] = [];
 		}
 
 		if (isset($this->error['custom_field_value'])) {
 			$data['error_custom_field_value'] = $this->error['custom_field_value'];
 		} else {
-			$data['error_custom_field_value'] = array();
+			$data['error_custom_field_value'] = [];
 		}
 
 		$url = '';
@@ -321,7 +321,7 @@ class CustomField extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -356,7 +356,7 @@ class CustomField extends \System\Engine\Controller {
 		} elseif (!empty($custom_field_info)) {
 			$data['custom_field_description'] = $this->model_customer_custom_field->getDescriptions($this->request->get['custom_field_id']);
 		} else {
-			$data['custom_field_description'] = array();
+			$data['custom_field_description'] = [];
 		}
 
 		if (isset($this->request->post['location'])) {
@@ -412,10 +412,10 @@ class CustomField extends \System\Engine\Controller {
 		} elseif (!empty($custom_field_info)) {
 			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($this->request->get['custom_field_id']);
 		} else {
-			$custom_field_values = array();
+			$custom_field_values = [];
 		}
 
-		$data['custom_field_values'] = array();
+		$data['custom_field_values'] = [];
 
 		foreach ($custom_field_values as $custom_field_value) {
 			$data['custom_field_values'][] = array(
@@ -430,10 +430,10 @@ class CustomField extends \System\Engine\Controller {
 		} elseif (!empty($custom_field_info)) {
 			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($this->request->get['custom_field_id']);
 		} else {
-			$custom_field_customer_groups = array();
+			$custom_field_customer_groups = [];
 		}
 
-		$data['custom_field_customer_group'] = array();
+		$data['custom_field_customer_group'] = [];
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
 			if (isset($custom_field_customer_group['customer_group_id'])) {
@@ -441,7 +441,7 @@ class CustomField extends \System\Engine\Controller {
 			}
 		}
 
-		$data['custom_field_required'] = array();
+		$data['custom_field_required'] = [];
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
 			if (isset($custom_field_customer_group['required']) && $custom_field_customer_group['required'] && isset($custom_field_customer_group['customer_group_id'])) {

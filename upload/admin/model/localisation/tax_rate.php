@@ -38,7 +38,7 @@ class TaxRate extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getTaxRates($data = array()) {
+	public function getTaxRates($data = []) {
 		$sql = "SELECT tr.tax_rate_id, tr.name AS name, tr.rate, tr.type, gz.name AS geo_zone, tr.date_added, tr.date_modified FROM " . DB_PREFIX . "tax_rate tr LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr.geo_zone_id = gz.geo_zone_id)";
 
 		$sort_data = array(
@@ -80,7 +80,7 @@ class TaxRate extends \System\Engine\Model {
 	}
 
 	public function getCustomerGroups($tax_rate_id) {
-		$tax_customer_group_data = array();
+		$tax_customer_group_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tax_rate_to_customer_group WHERE tax_rate_id = '" . (int)$tax_rate_id . "'");
 

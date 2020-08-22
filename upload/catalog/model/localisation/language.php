@@ -11,7 +11,7 @@ class Language extends \System\Engine\Model {
 		$language_data = $this->cache->get('catalog.language');
 
 		if (!$language_data) {
-			$language_data = array();
+			$language_data = [];
 
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1' ORDER BY sort_order, name");
 

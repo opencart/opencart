@@ -1,7 +1,8 @@
 <?php
 namespace Application\Controller\Extension;
+use \Extension\Opencart\Admin\Controller\Captcha as Extension;
 class Captcha extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/captcha');
@@ -67,28 +68,39 @@ class Captcha extends \System\Engine\Controller {
 
 		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
+		$loader = $this->load->extension('opencart');
+
+
+		/*
 		foreach ($extensions as $key => $value) {
+			echo $value;
+
 			if (!is_file(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
 				$this->model_setting_extension->uninstall('captcha', $value);
 
 				unset($extensions[$key]);
 			}
 		}
+		*/
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 
 		$results = $this->model_setting_extension->getPaths('admin/controller/captcha/%.php');
 
 		foreach ($results as $result) {
 			$extension = basename($result['path'], '.php');
 
-			$this->load->language('~rtrtrt/captcha/' . $extension, $extension);
+			$this->load->language('extension/opencart/captcha/' . $extension, $extension);
 
-			$file = DIR_EXTENSION . $file;
+			//$file = DIR_EXTENSION . $file;
 		}
 
-		print_r($results);
 
+
+
+		//$controller = new \Extension\Opencart\Admin\Controller\Captcha\Basic($this->registry);
+		//print_r($results);
+		//Extension
 
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
@@ -100,7 +112,7 @@ class Captcha extends \System\Engine\Controller {
 				$this->load->language('extension/captcha/' . $extension, $extension);
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get($extension . '_heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : null),
+					'name'      => $this->language->get($extension . '_heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : ''),
 					'status'    => $this->config->get('captcha_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->link('extension/captcha/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'uninstall' => $this->url->link('extension/captcha/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),

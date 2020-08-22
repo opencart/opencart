@@ -22,7 +22,7 @@ class CustomerSearch extends \System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -112,7 +112,7 @@ class CustomerSearch extends \System\Engine\Controller {
 		$this->load->model('extension/report/customer');
 		$this->load->model('catalog/category');
 
-		$data['searches'] = array();
+		$data['searches'] = [];
 
 		$filter_data = array(
 			'filter_date_start' => $filter_date_start,

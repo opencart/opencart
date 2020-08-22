@@ -7,7 +7,7 @@ class Customer extends \System\Engine\Controller {
 		// Delete past customer in case there is an error
 		unset($this->session->data['customer']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
@@ -85,7 +85,7 @@ class Customer extends \System\Engine\Controller {
 					'lastname'          => $this->request->post['lastname'],
 					'email'             => $this->request->post['email'],
 					'telephone'         => $this->request->post['telephone'],
-					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array()
+					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 				);
 
 				$json['success'] = $this->language->get('text_success');

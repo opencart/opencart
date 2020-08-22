@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Localisation;
 class ReturnAction extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('localisation/return_action');
@@ -144,7 +144,7 @@ class ReturnAction extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class ReturnAction extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('localisation/return_action/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/return_action/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['return_actions'] = array();
+		$data['return_actions'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -197,7 +197,7 @@ class ReturnAction extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -255,7 +255,7 @@ class ReturnAction extends \System\Engine\Controller {
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
-			$data['error_name'] = array();
+			$data['error_name'] = [];
 		}
 
 		$url = '';
@@ -272,7 +272,7 @@ class ReturnAction extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -301,7 +301,7 @@ class ReturnAction extends \System\Engine\Controller {
 		} elseif (isset($this->request->get['return_action_id'])) {
 			$data['return_action'] = $this->model_localisation_return_action->getDescriptions($this->request->get['return_action_id']);
 		} else {
-			$data['return_action'] = array();
+			$data['return_action'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');

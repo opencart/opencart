@@ -99,7 +99,7 @@ class Gdpr extends \System\Engine\Controller {
 		}
 
 		// Addresses
-		$data['addresses'] = array();
+		$data['addresses'] = [];
 
 		if ($customer_info) {
 			$results = $this->model_customer_customer->getAddresses($customer_info['customer_id']);
@@ -162,7 +162,7 @@ class Gdpr extends \System\Engine\Controller {
 		}
 
 		// Ip's
-		$data['ips'] = array();
+		$data['ips'] = [];
 
 		if ($customer_info) {
 			$results = $this->model_customer_customer->getIps($customer_info['customer_id']);

@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Design;
 class SeoUrl extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('design/seo_url');
@@ -254,7 +254,7 @@ class SeoUrl extends \System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -271,7 +271,7 @@ class SeoUrl extends \System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$data['seo_urls'] = array();
+		$data['seo_urls'] = [];
 
 		$filter_data = array(
 			'filter_keyword'     => $filter_keyword,
@@ -328,7 +328,7 @@ class SeoUrl extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -489,7 +489,7 @@ class SeoUrl extends \System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -513,7 +513,7 @@ class SeoUrl extends \System\Engine\Controller {
 			$seo_url_info = $this->model_design_seo_url->getSeoUrl($this->request->get['seo_url_id']);
 		}
 
-		$data['stores'] = array();
+		$data['stores'] = [];
 
 		$data['stores'][] = array(
 			'store_id' => 0,

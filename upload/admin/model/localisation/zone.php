@@ -27,7 +27,7 @@ class Zone extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getZones($data = array()) {
+	public function getZones($data = []) {
 		$sql = "SELECT *, z.name, c.name AS country FROM " . DB_PREFIX . "zone z LEFT JOIN " . DB_PREFIX . "country c ON (z.country_id = c.country_id)";
 
 		$sort_data = array(

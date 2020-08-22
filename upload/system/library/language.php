@@ -14,7 +14,7 @@ namespace System\Library;
 class Language {
 	private $default = 'en-gb';
 	private $directory;
-	public $data = array();
+	public $data = [];
 	
 	/**
 	 * Constructor
@@ -65,7 +65,7 @@ class Language {
 	 * @return	array
      */	
 	public function load($filename, $prefix = '') {
-		$_ = array();
+		$_ = [];
 
 		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
 

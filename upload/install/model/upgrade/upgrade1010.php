@@ -3,7 +3,7 @@ namespace Install\Model\Upgrade;
 class Upgrade1010 extends \System\Engine\Model {
 	public function upgrade() {
 		// Add missing core events
-		$events = array();
+		$events = [];
 
 		$events[] = array(
 			'code'    => 'activity_customer_add',

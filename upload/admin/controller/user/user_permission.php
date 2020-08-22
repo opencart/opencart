@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\User;
 class UserPermission extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('user/user_group');
@@ -144,7 +144,7 @@ class UserPermission extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -159,7 +159,7 @@ class UserPermission extends \System\Engine\Controller {
 		$data['add'] = $this->url->link('user/user_permission/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('user/user_permission/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_groups'] = array();
+		$data['user_groups'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -197,7 +197,7 @@ class UserPermission extends \System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -272,7 +272,7 @@ class UserPermission extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -317,9 +317,9 @@ class UserPermission extends \System\Engine\Controller {
 			'error/permission'
 		);
 
-		$data['permissions'] = array();
+		$data['permissions'] = [];
 
-		$files = array();
+		$files = [];
 
 		// Make path into an array
 		$path = array(DIR_APPLICATION . 'controller/*');
@@ -359,7 +359,7 @@ class UserPermission extends \System\Engine\Controller {
 		} elseif (isset($user_group_info['permission']['access'])) {
 			$data['access'] = $user_group_info['permission']['access'];
 		} else {
-			$data['access'] = array();
+			$data['access'] = [];
 		}
 
 		if (isset($this->request->post['permission']['modify'])) {
@@ -367,7 +367,7 @@ class UserPermission extends \System\Engine\Controller {
 		} elseif (isset($user_group_info['permission']['modify'])) {
 			$data['modify'] = $user_group_info['permission']['modify'];
 		} else {
-			$data['modify'] = array();
+			$data['modify'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -27,7 +27,7 @@ class WishList extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -52,7 +52,7 @@ class WishList extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$results = $this->model_account_wishlist->getWishlist();
 
@@ -118,7 +118,7 @@ class WishList extends \System\Engine\Controller {
 	public function add() {
 		$this->load->language('account/wishlist');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->post['product_id'])) {
 			$product_id = $this->request->post['product_id'];
@@ -142,7 +142,7 @@ class WishList extends \System\Engine\Controller {
 				$json['total'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
 			} else {
 				if (!isset($this->session->data['wishlist'])) {
-					$this->session->data['wishlist'] = array();
+					$this->session->data['wishlist'] = [];
 				}
 
 				$this->session->data['wishlist'][] = $this->request->post['product_id'];

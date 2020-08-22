@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Extension;
 class Module extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/module');
@@ -123,7 +123,7 @@ class Module extends \System\Engine\Controller {
 			}
 		}
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/module/*.php');
@@ -134,7 +134,7 @@ class Module extends \System\Engine\Controller {
 
 				$this->load->language('extension/module/' . $extension, $extension);
 
-				$module_data = array();
+				$module_data = [];
 
 				$modules = $this->model_setting_module->getModulesByCode($extension);
 
@@ -142,7 +142,7 @@ class Module extends \System\Engine\Controller {
 					if ($module['setting']) {
 						$setting_info = json_decode($module['setting'], true);
 					} else {
-						$setting_info = array();
+						$setting_info = [];
 					}
 					
 					$module_data[] = array(
@@ -166,7 +166,7 @@ class Module extends \System\Engine\Controller {
 			}
 		}
 
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($data['extensions'] as $key => $value) {
 			$sort_order[$key] = $value['name'];

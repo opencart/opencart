@@ -40,7 +40,7 @@ class Category extends \System\Engine\Controller {
 			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination');
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -132,7 +132,7 @@ class Category extends \System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
-			$data['categories'] = array();
+			$data['categories'] = [];
 
 			$results = $this->model_catalog_category->getCategories($category_id);
 
@@ -148,7 +148,7 @@ class Category extends \System\Engine\Controller {
 				);
 			}
 
-			$data['products'] = array();
+			$data['products'] = [];
 
 			$filter_data = array(
 				'filter_category_id'  => $category_id,
@@ -215,7 +215,7 @@ class Category extends \System\Engine\Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
-			$data['sorts'] = array();
+			$data['sorts'] = [];
 
 			$data['sorts'][] = array(
 				'text'  => $this->language->get('text_default'),
@@ -287,7 +287,7 @@ class Category extends \System\Engine\Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			$data['limits'] = array();
+			$data['limits'] = [];
 
 			$limits = array_unique(array($this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'), 25, 50, 75, 100));
 

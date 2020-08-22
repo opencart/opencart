@@ -59,9 +59,9 @@ class SeoUrl extends \System\Engine\Controller {
 		}
 
 		// Start changing the URL query into a path
-		$path_data = array();
+		$path_data = [];
 
-		$query = array();
+		$query = [];
 
 		// Parse the query into its separate parts
 		parse_str($url_info['query'], $query);
@@ -70,7 +70,7 @@ class SeoUrl extends \System\Engine\Controller {
 			$results = $this->model_design_seo_profile->getSeoProfilesByKey($key);
 
 			foreach ($results as $result) {
-				$match = array();
+				$match = [];
 
 				$regex = html_entity_decode($result['regex'], ENT_QUOTES, 'UTF-8');
 
@@ -88,7 +88,7 @@ class SeoUrl extends \System\Engine\Controller {
 			}
 		}
 
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($path_data as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];

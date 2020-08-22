@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Extension;
 class Theme extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/theme');
@@ -80,7 +80,7 @@ class Theme extends \System\Engine\Controller {
 
 		$stores = $this->model_setting_store->getStores();
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/theme/*.php');
@@ -91,7 +91,7 @@ class Theme extends \System\Engine\Controller {
 				
 				$this->load->language('extension/theme/' . $extension, $extension);
 					
-				$store_data = array();
+				$store_data = [];
 				
 				$store_data[] = array(
 					'name'   => $this->config->get('config_name'),

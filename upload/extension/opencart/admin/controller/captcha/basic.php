@@ -1,7 +1,7 @@
 <?php
-namespace Extension\OpenCart\Catalog\Controller\Captcha;
+namespace Extension\Opencart\Admin\Controller\Captcha;
 class Basic extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('captcha/basic');
@@ -24,7 +24,7 @@ class Basic extends \System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

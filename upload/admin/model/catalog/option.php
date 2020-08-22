@@ -67,7 +67,7 @@ class Option extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getOptions($data = array()) {
+	public function getOptions($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN `" . DB_PREFIX . "option_description` od ON (o.`option_id` = od.`option_id`) WHERE od.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -110,7 +110,7 @@ class Option extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($option_id) {
-		$option_data = array();
+		$option_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
 
@@ -131,7 +131,7 @@ class Option extends \System\Engine\Model {
 	}
 
 	public function getValues($option_id) {
-		$option_value_data = array();
+		$option_value_data = [];
 
 		$option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` ov LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.`option_value_id` = ovd.`option_value_id`) WHERE ov.`option_id` = '" . (int)$option_id . "' AND ovd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.`sort_order`, ovd.`name`");
 
@@ -148,12 +148,12 @@ class Option extends \System\Engine\Model {
 	}
 
 	public function getValueDescriptions($option_id) {
-		$option_value_data = array();
+		$option_value_data = [];
 
 		$option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "' ORDER BY `sort_order`");
 
 		foreach ($option_value_query->rows as $option_value) {
-			$option_value_description_data = array();
+			$option_value_description_data = [];
 
 			$option_value_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value_description` WHERE `option_value_id` = '" . (int)$option_value['option_value_id'] . "'");
 

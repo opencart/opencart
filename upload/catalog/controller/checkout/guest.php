@@ -4,7 +4,7 @@ class Guest extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 
-		$data['customer_groups'] = array();
+		$data['customer_groups'] = [];
 
 		if (is_array($this->config->get('config_customer_group_display'))) {
 			$this->load->model('account/customer_group');
@@ -109,18 +109,18 @@ class Guest extends \System\Engine\Controller {
 			if (isset($this->session->data['guest']['custom_field'])) {
 				$guest_custom_field = $this->session->data['guest']['custom_field'];
 			} else {
-				$guest_custom_field = array();
+				$guest_custom_field = [];
 			}
 
 			if (isset($this->session->data['payment_address']['custom_field'])) {
 				$address_custom_field = $this->session->data['payment_address']['custom_field'];
 			} else {
-				$address_custom_field = array();
+				$address_custom_field = [];
 			}
 
 			$data['guest_custom_field'] = $guest_custom_field + $address_custom_field;
 		} else {
-			$data['guest_custom_field'] = array();
+			$data['guest_custom_field'] = [];
 		}
 
 		$data['shipping_required'] = $this->cart->hasShipping();
@@ -144,7 +144,7 @@ class Guest extends \System\Engine\Controller {
 	public function save() {
 		$this->load->language('checkout/checkout');
 
-		$json = array();
+		$json = [];
 
 		// Validate if customer is logged in.
 		if ($this->customer->isLogged()) {
@@ -245,7 +245,7 @@ class Guest extends \System\Engine\Controller {
 			if (isset($this->request->post['custom_field']['account'])) {
 				$this->session->data['guest']['custom_field'] = $this->request->post['custom_field']['account'];
 			} else {
-				$this->session->data['guest']['custom_field'] = array();
+				$this->session->data['guest']['custom_field'] = [];
 			}
 
 			$this->session->data['payment_address']['firstname'] = $this->request->post['firstname'];
@@ -277,7 +277,7 @@ class Guest extends \System\Engine\Controller {
 			if (isset($this->request->post['custom_field']['address'])) {
 				$this->session->data['payment_address']['custom_field'] = $this->request->post['custom_field']['address'];
 			} else {
-				$this->session->data['payment_address']['custom_field'] = array();
+				$this->session->data['payment_address']['custom_field'] = [];
 			}
 
 			$this->load->model('localisation/zone');
@@ -332,7 +332,7 @@ class Guest extends \System\Engine\Controller {
 				if (isset($this->request->post['custom_field']['address'])) {
 					$this->session->data['shipping_address']['custom_field'] = $this->request->post['custom_field']['address'];
 				} else {
-					$this->session->data['shipping_address']['custom_field'] = array();
+					$this->session->data['shipping_address']['custom_field'] = [];
 				}
 			}
 

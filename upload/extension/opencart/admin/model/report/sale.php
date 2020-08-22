@@ -1,7 +1,7 @@
 <?php
 namespace Extension\OpenCart\Admin\Model\Report;
 class Sale extends \System\Engine\Model {
-	public function getTotalSales($data = array()) {
+	public function getTotalSales($data = []) {
 		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";
 
 		if (!empty($data['filter_date_added'])) {
@@ -20,13 +20,13 @@ class Sale extends \System\Engine\Model {
 	}
 
 	public function getTotalOrdersByDay() {
-		$implode = array();
+		$implode = [];
 
 		foreach ($this->config->get('config_complete_status') as $order_status_id) {
 			$implode[] = "'" . (int)$order_status_id . "'";
 		}
 
-		$order_data = array();
+		$order_data = [];
 
 		for ($i = 0; $i < 24; $i++) {
 			$order_data[$i] = array(
@@ -48,13 +48,13 @@ class Sale extends \System\Engine\Model {
 	}
 
 	public function getTotalOrdersByWeek() {
-		$implode = array();
+		$implode = [];
 
 		foreach ($this->config->get('config_complete_status') as $order_status_id) {
 			$implode[] = "'" . (int)$order_status_id . "'";
 		}
 
-		$order_data = array();
+		$order_data = [];
 
 		$date_start = strtotime('-' . date('w') . ' days');
 
@@ -80,13 +80,13 @@ class Sale extends \System\Engine\Model {
 	}
 
 	public function getTotalOrdersByMonth() {
-		$implode = array();
+		$implode = [];
 
 		foreach ($this->config->get('config_complete_status') as $order_status_id) {
 			$implode[] = "'" . (int)$order_status_id . "'";
 		}
 
-		$order_data = array();
+		$order_data = [];
 
 		for ($i = 1; $i <= date('t'); $i++) {
 			$date = date('Y') . '-' . date('m') . '-' . $i;
@@ -110,13 +110,13 @@ class Sale extends \System\Engine\Model {
 	}
 
 	public function getTotalOrdersByYear() {
-		$implode = array();
+		$implode = [];
 
 		foreach ($this->config->get('config_complete_status') as $order_status_id) {
 			$implode[] = "'" . (int)$order_status_id . "'";
 		}
 
-		$order_data = array();
+		$order_data = [];
 
 		for ($i = 1; $i <= 12; $i++) {
 			$order_data[$i] = array(
@@ -137,7 +137,7 @@ class Sale extends \System\Engine\Model {
 		return $order_data;
 	}
 
-	public function getOrders($data = array()) {
+	public function getOrders($data = []) {
 		$sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, COUNT(*) AS `orders`, SUM((SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id)) AS products, SUM((SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND ot.code = 'tax' GROUP BY ot.order_id)) AS tax, SUM(o.total) AS `total` FROM `" . DB_PREFIX . "order` o";
 
 		if (!empty($data['filter_order_status_id'])) {
@@ -195,7 +195,7 @@ class Sale extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalOrders($data = array()) {
+	public function getTotalOrders($data = []) {
 		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
@@ -237,7 +237,7 @@ class Sale extends \System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getTaxes($data = array()) {
+	public function getTaxes($data = []) {
 		$sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, ot.title, SUM(ot.value) AS total, COUNT(o.order_id) AS `orders` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (ot.order_id = o.order_id) WHERE ot.code = 'tax'";
 
 		if (!empty($data['filter_order_status_id'])) {
@@ -293,7 +293,7 @@ class Sale extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalTaxes($data = array()) {
+	public function getTotalTaxes($data = []) {
 		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
@@ -337,7 +337,7 @@ class Sale extends \System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getShipping($data = array()) {
+	public function getShipping($data = []) {
 		$sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, ot.title, SUM(ot.value) AS total, COUNT(o.order_id) AS `orders` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (o.order_id = ot.order_id) WHERE ot.code = 'shipping'";
 
 		if (!empty($data['filter_order_status_id'])) {
@@ -393,7 +393,7 @@ class Sale extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalShipping($data = array()) {
+	public function getTotalShipping($data = []) {
 		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {

@@ -51,7 +51,7 @@ if (!function_exists('mb_detect_order')) {
     function mb_detect_order($encodingList = null) { return p\Mbstring::mb_detect_order($encodingList); }
 }
 if (!function_exists('mb_parse_str')) {
-    function mb_parse_str($s, &$result = array()) { parse_str($s, $result); }
+    function mb_parse_str($s, &$result = []) { parse_str($s, $result); }
 }
 if (!function_exists('mb_strlen')) {
     function mb_strlen($s, $enc = null) { return p\Mbstring::mb_strlen($s, $enc); }

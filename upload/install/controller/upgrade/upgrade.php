@@ -37,7 +37,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function next() {
 		$this->load->language('upgrade/upgrade');
 				
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['step'])) {
 			$step = $this->request->get['step'];

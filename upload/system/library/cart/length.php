@@ -1,7 +1,7 @@
 <?php
 namespace System\Library\Cart;
 class Length {
-	private $lengths = array();
+	private $lengths = [];
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');

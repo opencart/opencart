@@ -1,7 +1,7 @@
 <?php
 namespace Extension\OpenCart\Catalog\Controller\Payment;
 class BankTransfer extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/payment/bank_transfer');
@@ -27,10 +27,10 @@ class BankTransfer extends \System\Engine\Controller {
 		if (isset($this->error['bank'])) {
 			$data['error_bank'] = $this->error['bank'];
 		} else {
-			$data['error_bank'] = array();
+			$data['error_bank'] = [];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -53,7 +53,7 @@ class BankTransfer extends \System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$data['payment_bank_transfer_bank'] = array();
+		$data['payment_bank_transfer_bank'] = [];
 
 		$languages = $this->model_localisation_language->getLanguages();
 		

@@ -94,7 +94,7 @@ class Information extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getInformations($data = array()) {
+	public function getInformations($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -146,7 +146,7 @@ class Information extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($information_id) {
-		$information_description_data = array();
+		$information_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
 
@@ -164,7 +164,7 @@ class Information extends \System\Engine\Model {
 	}
 
 	public function getStores($information_id) {
-		$information_store_data = array();
+		$information_store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
 
@@ -176,7 +176,7 @@ class Information extends \System\Engine\Model {
 	}
 
 	public function getSeoUrls($information_id) {
-		$information_seo_url_data = array();
+		$information_seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
 
@@ -188,7 +188,7 @@ class Information extends \System\Engine\Model {
 	}
 
 	public function getLayouts($information_id) {
-		$information_layout_data = array();
+		$information_layout_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_layout` WHERE `information_id` = '" . (int)$information_id . "'");
 

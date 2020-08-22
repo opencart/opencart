@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Common;
 class Login extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('common/login');

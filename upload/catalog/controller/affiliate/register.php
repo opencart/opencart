@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Affiliate;
 class Register extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		if (!$this->config->get('config_affiliate_status') || $this->customer->isLogged()) {
@@ -39,7 +39,7 @@ class Register extends \System\Engine\Controller {
 			$this->response->redirect($this->url->link('affiliate/success', 'language=' . $this->config->get('config_language')));
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -103,7 +103,7 @@ class Register extends \System\Engine\Controller {
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
 		} else {
-			$data['error_custom_field'] = array();
+			$data['error_custom_field'] = [];
 		}
 
 		if (isset($this->error['cheque'])) {
@@ -132,7 +132,7 @@ class Register extends \System\Engine\Controller {
 
 		$data['action'] = $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language'));
 
-		$data['customer_groups'] = array();
+		$data['customer_groups'] = [];
 
 		if (is_array($this->config->get('config_customer_group_display'))) {
 			$this->load->model('account/customer_group');
@@ -183,7 +183,7 @@ class Register extends \System\Engine\Controller {
 		}
 
 		// Custom Fields
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = [];
 
 		$this->load->model('account/custom_field');
 
@@ -199,18 +199,18 @@ class Register extends \System\Engine\Controller {
 			if (isset($this->request->post['custom_field']['account'])) {
 				$account_custom_field = $this->request->post['custom_field']['account'];
 			} else {
-				$account_custom_field = array();
+				$account_custom_field = [];
 			}
 
 			if (isset($this->request->post['custom_field']['affiliate'])) {
 				$affiliate_custom_field = $this->request->post['custom_field']['affiliate'];
 			} else {
-				$affiliate_custom_field = array();
+				$affiliate_custom_field = [];
 			}
 
 			$data['register_custom_field'] = $account_custom_field + $affiliate_custom_field;
 		} else {
-			$data['register_custom_field'] = array();
+			$data['register_custom_field'] = [];
 		}
 
 		if (isset($this->request->post['website'])) {

@@ -1,7 +1,7 @@
 <?php
 namespace System\Library\Cart;
 class Weight {
-	private $weights = array();
+	private $weights = [];
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');

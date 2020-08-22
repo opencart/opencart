@@ -8,7 +8,7 @@ class Special extends \System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$filter_data = array(
 			'sort'  => 'pd.name',

@@ -1,7 +1,7 @@
 <?php
 namespace System\Library\Cart;
 final class Tax {
-	private $tax_rates = array();
+	private $tax_rates = [];
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -9,7 +9,7 @@ final class Tax {
 	}
 
 	public function unsetRates() {
-		$this->tax_rates = array();
+		$this->tax_rates = [];
 	}
 
 	public function setShippingAddress($country_id, $zone_id) {
@@ -97,7 +97,7 @@ final class Tax {
 	}
 
 	public function getRates($value, $tax_class_id) {
-		$tax_rate_data = array();
+		$tax_rate_data = [];
 
 		if (isset($this->tax_rates[$tax_class_id])) {
 			foreach ($this->tax_rates[$tax_class_id] as $tax_rate) {

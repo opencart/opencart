@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Extension;
 class Feed extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/feed');
@@ -75,7 +75,7 @@ class Feed extends \System\Engine\Controller {
 			}
 		}
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/feed/*.php');

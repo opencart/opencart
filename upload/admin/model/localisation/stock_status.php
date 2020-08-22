@@ -39,7 +39,7 @@ class StockStatus extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getStockStatuses($data = array()) {
+	public function getStockStatuses($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "stock_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -82,7 +82,7 @@ class StockStatus extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($stock_status_id) {
-		$stock_status_data = array();
+		$stock_status_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "stock_status WHERE stock_status_id = '" . (int)$stock_status_id . "'");
 

@@ -17,7 +17,7 @@ class LruArrayCache implements CacheInterface, \Countable
     private $maxItems;
 
     /** @var array */
-    private $items = array();
+    private $items = [];
 
     /**
      * @param int $maxItems Maximum number of allowed cache items.

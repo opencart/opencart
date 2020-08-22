@@ -39,7 +39,7 @@ class Store extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getStores($data = array()) {
+	public function getStores($data = []) {
 		$store_data = $this->cache->get('store');
 
 		if (!$store_data) {

@@ -45,15 +45,6 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$_SERVER['HTTPS'] = false;
 }
 
-// Engine
-require_once(DIR_SYSTEM . 'engine/controller.php');
-require_once(DIR_SYSTEM . 'engine/model.php');
-require_once(DIR_SYSTEM . 'engine/action.php');
-require_once(DIR_SYSTEM . 'engine/event.php');
-require_once(DIR_SYSTEM . 'engine/loader.php');
-require_once(DIR_SYSTEM . 'engine/registry.php');
-require_once(DIR_SYSTEM . 'engine/proxy.php');
-
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
@@ -90,19 +81,14 @@ function autoloader($class) {
 			break;
 	}
 
-	//echo 'autoloader' . "\n";
 	//echo '$class ' . $class . "\n";
-	//echo '$path ' . $path . "\n";
+	//echo '$file ' . $file . "\n\n";
 
 	if (is_file($file)) {
 		include_once($file);
 
-		//echo '$file ' . $file . "\n\n";
-
 		return true;
 	} else {
-		//echo 'Not found: ' . $file . "\n\n";
-
 		return false;
 	}
 }

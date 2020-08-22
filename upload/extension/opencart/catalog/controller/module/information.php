@@ -6,7 +6,7 @@ class Information extends \System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		$data['informations'] = array();
+		$data['informations'] = [];
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
 			$data['informations'][] = array(

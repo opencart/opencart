@@ -14,7 +14,7 @@ class Cookie extends \System\Engine\Controller {
 	public function agree() {
 		$this->load->language('common/cookie');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->cookie['policy'])) {
 			$option = array(

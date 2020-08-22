@@ -86,7 +86,7 @@ class CustomField extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getCustomFields($data = array()) {
+	public function getCustomFields($data = []) {
 		if (empty($data['filter_customer_group_id'])) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN " . DB_PREFIX . "custom_field_description cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		} else {
@@ -147,7 +147,7 @@ class CustomField extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($custom_field_id) {
-		$custom_field_data = array();
+		$custom_field_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_description WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
@@ -165,7 +165,7 @@ class CustomField extends \System\Engine\Model {
 	}
 	
 	public function getValues($custom_field_id) {
-		$custom_field_value_data = array();
+		$custom_field_value_data = [];
 
 		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field_id . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cfv.sort_order ASC");
 
@@ -186,12 +186,12 @@ class CustomField extends \System\Engine\Model {
 	}
 
 	public function getValueDescriptions($custom_field_id) {
-		$custom_field_value_data = array();
+		$custom_field_value_data = [];
 
 		$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
 		foreach ($custom_field_value_query->rows as $custom_field_value) {
-			$custom_field_value_description_data = array();
+			$custom_field_value_description_data = [];
 
 			$custom_field_value_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value_description WHERE custom_field_value_id = '" . (int)$custom_field_value['custom_field_value_id'] . "'");
 

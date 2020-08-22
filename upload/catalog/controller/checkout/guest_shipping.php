@@ -76,7 +76,7 @@ class GuestShipping extends \System\Engine\Controller
 		if (isset($this->session->data['shipping_address']['custom_field'])) {
 			$data['address_custom_field'] = $this->session->data['shipping_address']['custom_field'];
 		} else {
-			$data['address_custom_field'] = array();
+			$data['address_custom_field'] = [];
 		}
 
 		$this->response->setOutput($this->load->view('checkout/guest_shipping', $data));
@@ -85,7 +85,7 @@ class GuestShipping extends \System\Engine\Controller
 	public function save() {
 		$this->load->language('checkout/checkout');
 
-		$json = array();
+		$json = [];
 
 		// Validate if customer is logged in.
 		if ($this->customer->isLogged()) {
@@ -193,7 +193,7 @@ class GuestShipping extends \System\Engine\Controller
 			if (isset($this->request->post['custom_field'])) {
 				$this->session->data['shipping_address']['custom_field'] = $this->request->post['custom_field']['address'];
 			} else {
-				$this->session->data['shipping_address']['custom_field'] = array();
+				$this->session->data['shipping_address']['custom_field'] = [];
 			}
 
 			unset($this->session->data['shipping_method']);

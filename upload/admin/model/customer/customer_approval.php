@@ -1,7 +1,7 @@
 <?php
 namespace Application\Model\Customer;
 class CustomerApproval extends \System\Engine\Model {
-	public function getCustomerApprovals($data = array()) {
+	public function getCustomerApprovals($data = []) {
 		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, cgd.`name` AS customer_group, ca.`type` FROM `" . DB_PREFIX . "customer_approval` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_customer'])) {
@@ -49,10 +49,10 @@ class CustomerApproval extends \System\Engine\Model {
 		return $query->row;
 	}
 	
-	public function getTotalCustomerApprovals($data = array()) {
+	public function getTotalCustomerApprovals($data = []) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_approval` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_customer'])) {
 			$implode[] = "CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '%" . $this->db->escape((string)$data['filter_customer']) . "%'";

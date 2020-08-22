@@ -199,10 +199,10 @@ class Order extends \System\Engine\Controller {
 		$this->load->model('tool/upload');
 
 		// Products
-		$data['products'] = array();
+		$data['products'] = [];
 
 		foreach ($order_products as $order_product) {
-			$option_data = array();
+			$option_data = [];
 
 			$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
@@ -236,7 +236,7 @@ class Order extends \System\Engine\Controller {
 		}
 
 		// Vouchers
-		$data['vouchers'] = array();
+		$data['vouchers'] = [];
 
 		$order_vouchers = $this->model_checkout_order->getVouchers($order_info['order_id']);
 
@@ -248,7 +248,7 @@ class Order extends \System\Engine\Controller {
 		}
 
 		// Order Totals
-		$data['totals'] = array();
+		$data['totals'] = [];
 
 		$order_totals = $this->model_checkout_order->getTotals($order_info['order_id']);
 
@@ -404,12 +404,12 @@ class Order extends \System\Engine\Controller {
 
 			$this->load->model('tool/upload');
 
-			$data['products'] = array();
+			$data['products'] = [];
 
 			$order_products = $this->model_checkout_order->getProducts($order_id);
 
 			foreach ($order_products as $order_product) {
-				$option_data = array();
+				$option_data = [];
 
 				$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
@@ -441,7 +441,7 @@ class Order extends \System\Engine\Controller {
 				);
 			}
 
-			$data['vouchers'] = array();
+			$data['vouchers'] = [];
 
 			$order_vouchers = $this->model_checkout_order->getVouchers($order_id);
 
@@ -452,7 +452,7 @@ class Order extends \System\Engine\Controller {
 				);
 			}
 
-			$data['totals'] = array();
+			$data['totals'] = [];
 
 			$order_totals = $this->model_checkout_order->getTotals($order_id);
 

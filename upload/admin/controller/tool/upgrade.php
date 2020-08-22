@@ -39,7 +39,7 @@ class Upgrade extends \System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -56,7 +56,7 @@ class Upgrade extends \System\Engine\Controller {
 		$data['version'] = VERSION;
 		$data['upgrade'] = false;
 
-		$request_data['extension'] = array();
+		$request_data['extension'] = [];
 
 		$this->load->model('setting/extension');
 
@@ -85,7 +85,7 @@ class Upgrade extends \System\Engine\Controller {
 		$response_info = json_decode($response, true);
 
 		// Extension compatibility check
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 
 		if ($response_info) {
 			if (version_compare(VERSION, $response_info['version'], '>=')) {
@@ -146,7 +146,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function modified() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -224,7 +224,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function download() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -275,7 +275,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function unzip() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -316,7 +316,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function move() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -340,7 +340,7 @@ class Upgrade extends \System\Engine\Controller {
 				'admin/config-dist.php'
 			);
 
-			$files = array();
+			$files = [];
 
 			// Get a list of files ready to upload
 			$path = array($directory . '/*');
@@ -408,7 +408,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function remove() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -484,7 +484,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function db() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -521,7 +521,7 @@ class Upgrade extends \System\Engine\Controller {
 	public function clear() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -538,7 +538,7 @@ class Upgrade extends \System\Engine\Controller {
 
 			if (is_dir($directory)) {
 				// Get a list of files ready to upload
-				$files = array();
+				$files = [];
 
 				$path = array($directory);
 

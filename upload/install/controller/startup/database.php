@@ -17,7 +17,7 @@ class Database extends \System\Engine\Controller {
 				$port = ini_get('mysqli.default_port');
 			}
 			
-			$this->registry->set('db', new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port));
+			$this->registry->set('db', new \System\Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port));
 		}
 	}
 }

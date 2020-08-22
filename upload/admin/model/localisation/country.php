@@ -27,7 +27,7 @@ class Country extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getCountries($data = array()) {
+	public function getCountries($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "country";
 

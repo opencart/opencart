@@ -1,7 +1,7 @@
 <?php
 namespace Extension\OpenCart\Catalog\Controller\Fraud;
 class Ip extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/fraud/ip');
@@ -26,7 +26,7 @@ class Ip extends \System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -102,7 +102,7 @@ class Ip extends \System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['ips'] = array();
+		$data['ips'] = [];
 
 		$results = $this->model_extension_fraud_ip->getIps(($page - 1) * 10, 10);
 
@@ -132,7 +132,7 @@ class Ip extends \System\Engine\Controller {
 	public function addIp() {
 		$this->load->language('extension/fraud/ip');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -157,7 +157,7 @@ class Ip extends \System\Engine\Controller {
 	public function removeIp() {
 		$this->load->language('extension/fraud/ip');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');

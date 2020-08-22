@@ -14,7 +14,7 @@ class Item extends \System\Engine\Model {
 			$status = false;
 		}
 
-		$method_data = array();
+		$method_data = [];
 
 		if ($status) {
 			$items = 0;
@@ -25,7 +25,7 @@ class Item extends \System\Engine\Model {
 				}
 			}
 
-			$quote_data = array();
+			$quote_data = [];
 
 			$quote_data['item'] = array(
 				'code'         => 'item.item',

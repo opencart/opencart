@@ -8,7 +8,7 @@ class Latest extends \System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$results = $this->model_catalog_product->getLatest($setting['limit']);
 

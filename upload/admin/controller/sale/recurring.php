@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Sale;
 class Recurring extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		$this->load->language('sale/recurring');
@@ -106,7 +106,7 @@ class Recurring extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -118,7 +118,7 @@ class Recurring extends \System\Engine\Controller {
 			'href' => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . $url)
 		);
 
-		$data['recurrings'] = array();
+		$data['recurrings'] = [];
 
 		$filter_data = array(
 			'filter_order_recurring_id' => $filter_order_recurring_id,
@@ -268,7 +268,7 @@ class Recurring extends \System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		
-		$data['recurring_statuses'] = array();
+		$data['recurring_statuses'] = [];
 		
 		$data['recurring_statuses'][0] = array(
 			'text'  => '',
@@ -345,7 +345,7 @@ class Recurring extends \System\Engine\Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
@@ -405,7 +405,7 @@ class Recurring extends \System\Engine\Controller {
 			$data['quantity'] = $order_recurring_info['product_quantity'];
 
 			// Transactions
-			$data['transactions'] = array();
+			$data['transactions'] = [];
 			
 			$transactions = $this->model_sale_recurring->getRecurringTransactions($order_recurring_info['order_recurring_id']);
 

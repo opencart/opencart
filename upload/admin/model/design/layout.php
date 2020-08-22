@@ -56,7 +56,7 @@ class Layout extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getLayouts($data = array()) {
+	public function getLayouts($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "layout";
 
 		$sort_data = array('name');

@@ -39,7 +39,7 @@ class ReturnStatus extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getReturnStatuses($data = array()) {
+	public function getReturnStatuses($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "return_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -82,7 +82,7 @@ class ReturnStatus extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($return_status_id) {
-		$return_status_data = array();
+		$return_status_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_status WHERE return_status_id = '" . (int)$return_status_id . "'");
 

@@ -88,7 +88,7 @@ class Marketplace extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -202,7 +202,7 @@ class Marketplace extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['promotions'] = array();
+		$data['promotions'] = [];
 
 		if ($response_info['promotions'] && $page == 1) {
 			foreach ($response_info['promotions'] as $result) {
@@ -219,7 +219,7 @@ class Marketplace extends \System\Engine\Controller {
 			}
 		}
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 
 		if ($response_info['extensions']) {
 			foreach ($response_info['extensions'] as $result) {
@@ -271,7 +271,7 @@ class Marketplace extends \System\Engine\Controller {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$data['categories'] = array();
+		$data['categories'] = [];
 
 		$data['categories'][] = array(
 			'text' => $this->language->get('text_all'),
@@ -370,7 +370,7 @@ class Marketplace extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['licenses'] = array();
+		$data['licenses'] = [];
 
 		$data['licenses'][] = array(
 			'text' => $this->language->get('text_all'),
@@ -429,7 +429,7 @@ class Marketplace extends \System\Engine\Controller {
 			$url .= '&filter_member=' . $this->request->get['filter_member'];
 		}
 
-		$data['sorts'] = array();
+		$data['sorts'] = [];
 
 		$data['sorts'][] = array(
 			'text' => $this->language->get('text_date_modified'),
@@ -597,7 +597,7 @@ class Marketplace extends \System\Engine\Controller {
 
 			$data['cancel'] = $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url);
 
-			$data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
@@ -639,7 +639,7 @@ class Marketplace extends \System\Engine\Controller {
 
 			$data['comment_total'] = $response_info['comment_total'];
 
-			$data['images'] = array();
+			$data['images'] = [];
 
 			foreach ($response_info['images'] as $result) {
 				$data['images'][] = array(
@@ -650,13 +650,13 @@ class Marketplace extends \System\Engine\Controller {
 
 			$this->load->model('setting/extension');
 
-			$data['downloads'] = array();
+			$data['downloads'] = [];
 
 			if ($response_info['downloads']) {
 				$this->session->data['extension_download'][$extension_id] = $response_info['downloads'];
 			} else {
-				$this->session->data['extension_download'][$extension_id] = array();
-				$this->session->data['extension_download'][$extension_id] = array();
+				$this->session->data['extension_download'][$extension_id] = [];
+				$this->session->data['extension_download'][$extension_id] = [];
 			}
 
 			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');
@@ -668,7 +668,7 @@ class Marketplace extends \System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('marketplace/marketplace_info', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Engine\Action('error/not_found');
 		}
 	}
 
@@ -683,7 +683,7 @@ class Marketplace extends \System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$data['downloads'] = array();
+		$data['downloads'] = [];
 
 		if (isset($this->session->data['extension_download'][$extension_id])) {
 			$results = $this->session->data['extension_download'][$extension_id];
@@ -722,7 +722,7 @@ class Marketplace extends \System\Engine\Controller {
 	public function purchase() {
 		$this->load->language('marketplace/marketplace');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_id'])) {
 			$extension_id = $this->request->get['extension_id'];
@@ -802,7 +802,7 @@ class Marketplace extends \System\Engine\Controller {
 	public function download() {
 		$this->load->language('marketplace/marketplace');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_id'])) {
 			$extension_id = $this->request->get['extension_id'];
@@ -900,7 +900,7 @@ class Marketplace extends \System\Engine\Controller {
 	public function addComment() {
 		$this->load->language('marketplace/marketplace');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_id'])) {
 			$extension_id = $this->request->get['extension_id'];
@@ -1006,7 +1006,7 @@ class Marketplace extends \System\Engine\Controller {
 
 		$json = json_decode($response, true);
 
-		$data['comments'] = array();
+		$data['comments'] = [];
 
 		$comment_total = $json['comment_total'];
 
@@ -1079,7 +1079,7 @@ class Marketplace extends \System\Engine\Controller {
 
 		$json = json_decode($response, true);
 
-		$data['replies'] = array();
+		$data['replies'] = [];
 
 		$reply_total = $json['reply_total'];
 

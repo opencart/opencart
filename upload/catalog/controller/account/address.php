@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller\Account;
 class Address extends \System\Engine\Controller {
-	private $error = array();
+	private $error = [];
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
@@ -161,7 +161,7 @@ class Address extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$data['addresses'] = array();
+		$data['addresses'] = [];
 
 		$results = $this->model_account_address->getAddresses();
 
@@ -220,7 +220,7 @@ class Address extends \System\Engine\Controller {
 	}
 
 	protected function getForm() {
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -296,7 +296,7 @@ class Address extends \System\Engine\Controller {
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
 		} else {
-			$data['error_custom_field'] = array();
+			$data['error_custom_field'] = [];
 		}
 
 		if (!isset($this->request->get['address_id'])) {
@@ -386,7 +386,7 @@ class Address extends \System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom fields
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = [];
 
 		$this->load->model('account/custom_field');
 
@@ -403,7 +403,7 @@ class Address extends \System\Engine\Controller {
 		} elseif (isset($address_info)) {
 			$data['address_custom_field'] = $address_info['custom_field'];
 		} else {
-			$data['address_custom_field'] = array();
+			$data['address_custom_field'] = [];
 		}
 
 		if (isset($this->request->post['default'])) {

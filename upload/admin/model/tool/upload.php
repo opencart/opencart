@@ -25,10 +25,10 @@ class Upload extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getUploads($data = array()) {
+	public function getUploads($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "upload";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_name'])) {
 			$implode[] = "name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
@@ -81,10 +81,10 @@ class Upload extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalUploads($data = array()) {
+	public function getTotalUploads($data = []) {
 		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "upload";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_name'])) {
 			$implode[] = "name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";

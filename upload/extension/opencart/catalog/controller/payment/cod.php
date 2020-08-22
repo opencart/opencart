@@ -6,7 +6,7 @@ class Cod extends \System\Engine\Controller {
 	}
 
 	public function confirm() {
-		$json = array();
+		$json = [];
 
 		if ($this->session->data['payment_method']['code'] == 'cod') {
 			$this->load->model('checkout/order');

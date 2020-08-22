@@ -12,7 +12,7 @@
 */
 namespace System\Library;
 class Config {
-	private $data = array();
+	private $data = [];
     
 	/**
      * 
@@ -21,8 +21,8 @@ class Config {
 	 * 
 	 * @return	mixed
      */
-	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : null);
+	public function get(string $key)  {
+		return (isset($this->data[$key]) ? $this->data[$key] : '');
 	}
 	
     /**
@@ -31,7 +31,7 @@ class Config {
      * @param	string	$key
 	 * @param	string	$value
      */
-	public function set($key, $value) {
+	public function set(string $key, $value) {
 		$this->data[$key] = $value;
 	}
 
@@ -42,7 +42,7 @@ class Config {
 	 *
 	 * @return	mixed
      */
-	public function has($key) {
+	public function has(string $key) {
 		return isset($this->data[$key]);
 	}
 	
@@ -51,11 +51,11 @@ class Config {
      *
      * @param	string	$filename
      */
-	public function load($filename) {
+	public function load(string $filename) {
 		$file = DIR_CONFIG . $filename . '.php';
 
 		if (file_exists($file)) {
-			$_ = array();
+			$_ = [];
 
 			require($file);
 

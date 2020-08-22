@@ -91,7 +91,7 @@ class Manufacturer extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getManufacturers($data = array()) {
+	public function getManufacturers($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
 
 		if (!empty($data['filter_name'])) {
@@ -133,7 +133,7 @@ class Manufacturer extends \System\Engine\Model {
 	}
 
 	public function getStores($manufacturer_id) {
-		$manufacturer_store_data = array();
+		$manufacturer_store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
@@ -145,7 +145,7 @@ class Manufacturer extends \System\Engine\Model {
 	}
 
 	public function getSeoUrls($manufacturer_id) {
-		$manufacturer_seo_url_data = array();
+		$manufacturer_seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'manufacturer_id' AND `value` = '" . (int)$manufacturer_id . "'");
 
@@ -157,7 +157,7 @@ class Manufacturer extends \System\Engine\Model {
 	}
 
 	public function getLayouts($manufacturer_id) {
-		$manufacturer_layout_data = array();
+		$manufacturer_layout_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 

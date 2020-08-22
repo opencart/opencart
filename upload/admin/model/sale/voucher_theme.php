@@ -40,7 +40,7 @@ class VoucherTheme extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getVoucherThemes($data = array()) {
+	public function getVoucherThemes($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.name";
 
@@ -81,7 +81,7 @@ class VoucherTheme extends \System\Engine\Model {
 	}
 
 	public function getDescriptions($voucher_theme_id) {
-		$voucher_theme_data = array();
+		$voucher_theme_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme_description WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 

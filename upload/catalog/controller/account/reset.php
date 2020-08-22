@@ -1,7 +1,7 @@
 <?php
-namespace Catalog\Controller\Account;
-class Reset extends Controller {
-	private $error = array();
+namespace Application\Controller\Account;
+class Reset extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		if ($this->customer->isLogged()) {
@@ -44,7 +44,7 @@ class Reset extends Controller {
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

@@ -1,6 +1,6 @@
 <?php
 function db_schema() {
-	$tables = array();
+	$tables = [];
 
 	$tables[] = array(
 		'name' => 'address',

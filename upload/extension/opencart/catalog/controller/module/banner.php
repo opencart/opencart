@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleBanner extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Banner extends \System\Engine\Controller {
 	public function index($setting) {
 		static $module = 0;
 
@@ -10,7 +11,7 @@ class ControllerExtensionModuleBanner extends Controller {
 		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
 		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
 
-		$data['banners'] = array();
+		$data['banners'] = [];
 
 		$results = $this->model_design_banner->getBanner($setting['banner_id']);
 

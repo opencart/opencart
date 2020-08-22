@@ -1,7 +1,7 @@
 <?php
-namespace Catalog\Controller\Affiliate;
-class Login extends Controller {
-	private $error = array();
+namespace Application\Controller\Affiliate;
+class Login extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		if (!$this->config->get('config_affiliate_status') || $this->customer->isLogged()) {
@@ -51,7 +51,7 @@ class Login extends Controller {
 			}
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

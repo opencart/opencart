@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionReportProductViewed extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Report;
+class ProductViewed extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/report/product_viewed');
 
@@ -21,7 +22,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -87,7 +88,7 @@ class ControllerExtensionReportProductViewed extends Controller {
 			'limit' => $this->config->get('config_pagination')
 		);
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$product_viewed_total = $this->model_extension_report_product->getTotalProductViews();
 

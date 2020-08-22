@@ -1,5 +1,6 @@
 <?php
-class ControllerInstallStep1 extends Controller {
+namespace \Install\Controller\Install;
+class Step1 extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('install/step_1');
 		

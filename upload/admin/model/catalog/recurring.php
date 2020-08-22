@@ -1,5 +1,6 @@
 <?php
-class ModelCatalogRecurring extends Model {
+namespace Application\Model\Catalog;
+class Recurring extends \System\Engine\Model {
 	public function addRecurring($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "recurring` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "'");
 
@@ -48,7 +49,7 @@ class ModelCatalogRecurring extends Model {
 	}
 
 	public function getDescription($recurring_id) {
-		$recurring_description_data = array();
+		$recurring_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring_description` WHERE `recurring_id` = '" . (int)$recurring_id . "'");
 
@@ -59,7 +60,7 @@ class ModelCatalogRecurring extends Model {
 		return $recurring_description_data;
 	}
 
-	public function getRecurrings($data = array()) {
+	public function getRecurrings($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "recurring` r LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE rd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {

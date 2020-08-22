@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketingContact extends Controller {
+namespace Application\Controller\Marketing;
+class Contact extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketing/contact');
 
@@ -10,7 +11,7 @@ class ControllerMarketingContact extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -42,7 +43,7 @@ class ControllerMarketingContact extends Controller {
 	public function send() {
 		$this->load->language('marketing/contact');
 
-		$json = array();
+		$json = [];
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if (!$this->user->hasPermission('modify', 'marketing/contact')) {
@@ -84,7 +85,7 @@ class ControllerMarketingContact extends Controller {
 
 				$email_total = 0;
 
-				$emails = array();
+				$emails = [];
 
 				switch ($this->request->post['to']) {
 					case 'newsletter':
@@ -213,7 +214,7 @@ class ControllerMarketingContact extends Controller {
 
 					foreach ($emails as $email) {
 						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail = new Mail($this->config->get('config_mail_engine'));
+							$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');

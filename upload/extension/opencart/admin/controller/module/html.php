@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionModuleHTML extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Module;
+class HTML extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/module/html');
@@ -36,7 +37,7 @@ class ControllerExtensionModuleHTML extends Controller {
 			$data['error_name'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -85,7 +86,7 @@ class ControllerExtensionModuleHTML extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['module_description'] = $module_info['module_description'];
 		} else {
-			$data['module_description'] = array();
+			$data['module_description'] = [];
 		}
 
 		$this->load->model('localisation/language');

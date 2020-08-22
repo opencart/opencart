@@ -117,7 +117,7 @@ class Arn implements ArnInterface
         return $this->data['resource'];
     }
 
-    public function toArray()
+    public function to[]
     {
         return $this->data;
     }

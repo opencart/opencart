@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionFraud extends Controller {
-	private $error = array();
+namespace Application\Controller\Extension;
+class Fraud extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/fraud');
@@ -74,7 +75,7 @@ class ControllerExtensionFraud extends Controller {
 			}
 		}
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/fraud/*.php');

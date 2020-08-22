@@ -525,7 +525,7 @@ if (extension_loaded('mbstring')) {
 	}
 
 	function utf8_to_unicode($string) {
-		$unicode = array();
+		$unicode = [];
 
 		for ($i = 0; $i < strlen($string); $i++) {
 			$chr = ord($string[$i]);

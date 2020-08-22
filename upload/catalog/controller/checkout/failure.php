@@ -1,12 +1,12 @@
 <?php
-namespace Catalog\Controller\Checkout;
-class Failure extends Controller {
+namespace Application\Controller\Checkout;
+class Failure extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/failure');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

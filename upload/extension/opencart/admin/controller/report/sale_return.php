@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionReportSaleReturn extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Report;
+class SaleReturn extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/report/sale_return');
 
@@ -21,7 +22,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -104,7 +105,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 		
 		$this->load->model('extension/report/return');
 
-		$data['returns'] = array();
+		$data['returns'] = [];
 
 		$filter_data = array(
 			'filter_date_start'	      => $filter_date_start,
@@ -133,7 +134,7 @@ class ControllerExtensionReportSaleReturn extends Controller {
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
 
-		$data['groups'] = array();
+		$data['groups'] = [];
 
 		$data['groups'][] = array(
 			'text'  => $this->language->get('text_year'),

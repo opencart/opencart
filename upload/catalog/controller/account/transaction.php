@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Transaction extends Controller {
+namespace Application\Controller\Account;
+class Transaction extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
@@ -12,7 +12,7 @@ class Transaction extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -39,7 +39,7 @@ class Transaction extends Controller {
 			$page = 1;
 		}
 
-		$data['transactions'] = array();
+		$data['transactions'] = [];
 
 		$filter_data = array(
 			'sort'  => 'date_added',

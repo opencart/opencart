@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionThemeDefault extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Theme;
+class Default extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/theme/default');
@@ -95,7 +96,7 @@ class ControllerExtensionThemeDefault extends Controller {
 			$data['error_image_location'] = '';
 		}
 		
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -128,7 +129,7 @@ class ControllerExtensionThemeDefault extends Controller {
 			$data['theme_default_directory'] = 'default';
 		}		
 
-		$data['directories'] = array();
+		$data['directories'] = [];
 
 		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
 

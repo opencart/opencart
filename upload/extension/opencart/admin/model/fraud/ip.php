@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionFraudIp extends Model {
+namespace Extension\OpenCart\Admin\Model\Fraud;
+class Ip extends \System\Engine\Model {
 	public function install() {
 		$this->db->query("
 		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fraud_ip` (

@@ -1,6 +1,7 @@
 <?php
-class ControllerCommonProfile extends Controller {
-	private $error = array();
+namespace Application\Controller\Common;
+class Profile extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('common/profile');
@@ -72,7 +73,7 @@ class ControllerCommonProfile extends Controller {
 			$data['error_email'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Checkout;
-class Success extends Controller {
+namespace Application\Controller\Checkout;
+class Success extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/success');
 
@@ -23,7 +23,7 @@ class Success extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

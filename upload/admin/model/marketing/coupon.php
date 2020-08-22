@@ -1,5 +1,6 @@
 <?php
-class ModelMarketingCoupon extends Model {
+namespace Application\Model\Marketing;
+class Coupon extends \System\Engine\Model {
 	public function addCoupon($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "coupon SET name = '" . $this->db->escape((string)$data['name']) . "', code = '" . $this->db->escape((string)$data['code']) . "', discount = '" . (float)$data['discount'] . "', type = '" . $this->db->escape((string)$data['type']) . "', total = '" . (float)$data['total'] . "', logged = '" . (int)$data['logged'] . "', shipping = '" . (int)$data['shipping'] . "', date_start = '" . $this->db->escape((string)$data['date_start']) . "', date_end = '" . $this->db->escape((string)$data['date_end']) . "', uses_total = '" . (int)$data['uses_total'] . "', uses_customer = '" . (int)$data['uses_customer'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 
@@ -59,7 +60,7 @@ class ModelMarketingCoupon extends Model {
 		return $query->row;
 	}
 
-	public function getCoupons($data = array()) {
+	public function getCoupons($data = []) {
 		$sql = "SELECT coupon_id, name, code, discount, date_start, date_end, status FROM " . DB_PREFIX . "coupon";
 
 		$sort_data = array(
@@ -101,7 +102,7 @@ class ModelMarketingCoupon extends Model {
 	}
 
 	public function getProducts($coupon_id) {
-		$coupon_product_data = array();
+		$coupon_product_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
 
@@ -113,7 +114,7 @@ class ModelMarketingCoupon extends Model {
 	}
 
 	public function getCategories($coupon_id) {
-		$coupon_category_data = array();
+		$coupon_category_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
 

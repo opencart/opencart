@@ -1,5 +1,6 @@
 <?php
-class ModelSettingExtension extends Model {
+namespace Application\Model\Setting;
+class Extension extends \System\Engine\Model {
 	public function addInstall($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `image` = '" . $this->db->escape($data['image']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
 	
@@ -32,7 +33,7 @@ class ModelSettingExtension extends Model {
 		return $query->row;
 	}
 
-	public function getInstalls($filter_data = array()) {
+	public function getInstalls($filter_data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -74,7 +75,7 @@ class ModelSettingExtension extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalInstalls($filter_data = array()) {
+	public function getTotalInstalls($filter_data = []) {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -119,7 +120,7 @@ class ModelSettingExtension extends Model {
 
 
 	public function getInstalled($type) {
-		$extension_data = array();
+		$extension_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
 

@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleAccount extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Account extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/module/account');
 

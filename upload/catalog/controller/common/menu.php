@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class Menu extends Controller {
+namespace Application\Controller\Common;
+class Menu extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/menu');
 
@@ -9,14 +9,14 @@ class Menu extends Controller {
 
 		$this->load->model('catalog/product');
 
-		$data['categories'] = array();
+		$data['categories'] = [];
 
 		$categories = $this->model_catalog_category->getCategories(0);
 
 		foreach ($categories as $category) {
 			if ($category['top']) {
 				// Level 2
-				$children_data = array();
+				$children_data = [];
 
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
 

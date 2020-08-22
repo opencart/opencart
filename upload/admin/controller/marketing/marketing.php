@@ -1,6 +1,7 @@
 <?php
-class ControllerMarketingMarketing extends Controller {
-	private $error = array();
+namespace Application\Controller\Marketing;
+class Marketing extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('marketing/marketing');
@@ -213,7 +214,7 @@ class ControllerMarketingMarketing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -228,7 +229,7 @@ class ControllerMarketingMarketing extends Controller {
 		$data['add'] = $this->url->link('marketing/marketing/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('marketing/marketing/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['marketings'] = array();
+		$data['marketings'] = [];
 
 		$filter_data = array(
 			'filter_name'       => $filter_name,
@@ -275,7 +276,7 @@ class ControllerMarketingMarketing extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -406,7 +407,7 @@ class ControllerMarketingMarketing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -510,7 +511,7 @@ class ControllerMarketingMarketing extends Controller {
 			$page = 1;
 		}
 
-		$data['reports'] = array();
+		$data['reports'] = [];
 
 		$this->load->model('marketing/marketing');
 		$this->load->model('customer/customer');

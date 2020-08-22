@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1004 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1004 extends \System\Engine\Model {
 	public function upgrade() {
 		// custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'required'");
@@ -126,7 +127,7 @@ class ModelUpgrade1004 extends Model {
 			if ($result['serialized']) {
 				$value = json_decode($result['value'], true);
 
-				$module_data = array();
+				$module_data = [];
 
 				if (in_array($result['code'], array('latest', 'bestseller', 'special', 'featured'))) {
 					if ($value) {

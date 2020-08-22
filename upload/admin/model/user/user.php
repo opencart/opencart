@@ -1,5 +1,6 @@
 <?php
-class ModelUserUser extends Model {
+namespace Application\Model\User;
+class User extends \System\Engine\Model {
 	public function addUser($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user` SET username = '" . $this->db->escape((string)$data['username']) . "', user_group_id = '" . (int)$data['user_group_id'] . "', salt = '', password = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', image = '" . $this->db->escape((string)$data['image']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 
@@ -50,7 +51,7 @@ class ModelUserUser extends Model {
 		return $query->row;
 	}
 
-	public function getUsers($data = array()) {
+	public function getUsers($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "user`";
 
 		$sort_data = array(

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Event;
-class Theme extends Controller {
+namespace Application\Controller\Event;
+class Theme extends \System\Engine\Controller {
 	public function index(&$route, &$args, &$code) {
 		if (!$this->config->get('theme_' . $this->config->get('config_theme') . '_status')) {
 			exit('Error: A theme has not been assigned to this store!');

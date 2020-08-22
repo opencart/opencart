@@ -19,7 +19,7 @@ final class Loader {
 	 *
 	 * @param    object $registry
 	 */
-	public function __construct($registry, $directires = array()) {
+	public function __construct($registry) {
 		$this->registry = $registry;
 	}
 
@@ -33,7 +33,7 @@ final class Loader {
 	 *
 	 * @return    mixed
 	 */
-	public function controller($route, &...$args) {
+	public function controller($route, ...$args) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -47,7 +47,7 @@ final class Loader {
 		if ($result) {
 			$output = $result;
 		} else {
-			$action = new Action($route);
+			$action = new \System\Engine\Action($route);
 			$output = $action->execute($this->registry, $args);
 		}
 
@@ -74,14 +74,15 @@ final class Loader {
 
 		// Check if the requested model is already stored in the registry.
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
-			$class = '\Catalog\Model\\' . str_replace('/', '\\', $route);
+			// Converting a route path to a class name
+			$class = '\Application\Model\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($route, '_/'));
 
 			if (class_exists($class)) {
-				$proxy = new Proxy();
+				$proxy = new \System\Engine\Proxy();
 
 				// Overriding models is a little harder so we have to use PHP's magic methods.
 				foreach (get_class_methods($class) as $method) {
-					if (substr() != '__') {
+					if (substr($method, 0, 2) != '__') {
 						$proxy->{$method} = $this->callback($route . '/' . $method);
 					}
 				}
@@ -103,7 +104,7 @@ final class Loader {
 	 *
 	 * @return   string
 	 */
-	public function view($route, $data = array()) {
+	public function view($route, $data = []) {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
@@ -114,7 +115,7 @@ final class Loader {
 		$this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$code));
 
 		// Make sure its only the last event that returns an output if required.
-		$template = new Template($this->registry->get('config')->get('template_engine'));
+		$template = new \System\Library\Template($this->registry->get('config')->get('template_engine'));
 
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);
@@ -148,9 +149,9 @@ final class Loader {
 		$class = 'System\Library\\' . str_replace('/', '\\', $route);
 
 		if (class_exists($class)) {
-			$reflection = new ReflectionClass($class);
+			$reflection = new \ReflectionClass($class);
 
-			$object = $class->newInstanceArgs($args);
+			$object = $reflection->newInstanceArgs($args);
 		} else {
 			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
@@ -220,6 +221,34 @@ final class Loader {
 		return $data;
 	}
 
+	//
+	public function extension($route) {
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
+
+		// Keep the original trigger
+		$trigger = $route;
+
+		$this->registry->get('event')->trigger('extension/' . $trigger . '/before', array(&$route));
+
+		$extension = new \Engine\Loader(DIR_EXTENSION . $route);
+		//\Extension
+		$config = array(
+			'application' => DIR_APPLICATION,
+			'system'
+
+		);
+
+		$loader = new \System\Engine\Loader(DIR_EXTENSION. $route, $this->registry);
+
+		$loader->config($route);
+
+
+		$this->registry->get('event')->trigger('extension/' . $trigger . '/after', array(&$route, &$data));
+
+		return $data;
+	}
+
 	/**
 	 * Callback
 	 *
@@ -245,10 +274,14 @@ final class Loader {
 			if ($result) {
 				$output = $result;
 			} else {
-				$class = 'Catalog\Model\\' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
-
-				// Store the model object
+				// Create a key to store the model object
 				$key = substr($route, 0, strrpos($route, '/'));
+
+				// Create the class name from the key
+				$class = '\Application\Model\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($key, '_/'));
+
+				// Get the method to be used
+				$method = substr($route, strrpos($route, '/') + 1);
 
 				// Check if the model has already been initialised or not
 				if (!$this->registry->has($key)) {
@@ -258,8 +291,6 @@ final class Loader {
 				} else {
 					$object = $this->registry->get($key);
 				}
-
-				$method = substr($route, strrpos($route, '/') + 1);
 
 				$callable = array($object, $method);
 

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Mail;
-class Order extends Controller {
+namespace Application\Controller\Mail;
+class Order extends \System\Engine\Controller {
 	public function index(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];
@@ -58,7 +58,7 @@ class Order extends Controller {
 		}
 
 		// Load the language for any mails that might be required to be sent out
-		$language = new Language($order_info['language_code']);
+		$language = new \System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_add');
 
@@ -199,10 +199,10 @@ class Order extends Controller {
 		$this->load->model('tool/upload');
 
 		// Products
-		$data['products'] = array();
+		$data['products'] = [];
 
 		foreach ($order_products as $order_product) {
-			$option_data = array();
+			$option_data = [];
 
 			$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
@@ -236,7 +236,7 @@ class Order extends Controller {
 		}
 
 		// Vouchers
-		$data['vouchers'] = array();
+		$data['vouchers'] = [];
 
 		$order_vouchers = $this->model_checkout_order->getVouchers($order_info['order_id']);
 
@@ -248,7 +248,7 @@ class Order extends Controller {
 		}
 
 		// Order Totals
-		$data['totals'] = array();
+		$data['totals'] = [];
 
 		$order_totals = $this->model_checkout_order->getTotals($order_info['order_id']);
 
@@ -267,7 +267,7 @@ class Order extends Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -284,7 +284,7 @@ class Order extends Controller {
 	}
 
 	public function edit($order_info, $order_status_id, $comment, $notify) {
-		$language = new Language($order_info['language_code']);
+		$language = new \System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_edit');
 
@@ -324,7 +324,7 @@ class Order extends Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -404,12 +404,12 @@ class Order extends Controller {
 
 			$this->load->model('tool/upload');
 
-			$data['products'] = array();
+			$data['products'] = [];
 
 			$order_products = $this->model_checkout_order->getProducts($order_id);
 
 			foreach ($order_products as $order_product) {
-				$option_data = array();
+				$option_data = [];
 
 				$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
@@ -441,7 +441,7 @@ class Order extends Controller {
 				);
 			}
 
-			$data['vouchers'] = array();
+			$data['vouchers'] = [];
 
 			$order_vouchers = $this->model_checkout_order->getVouchers($order_id);
 
@@ -452,7 +452,7 @@ class Order extends Controller {
 				);
 			}
 
-			$data['totals'] = array();
+			$data['totals'] = [];
 
 			$order_totals = $this->model_checkout_order->getTotals($order_id);
 
@@ -465,7 +465,7 @@ class Order extends Controller {
 
 			$data['comment'] = strip_tags($order_info['comment']);
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Recurring extends Controller {
+namespace Application\Controller\Account;
+class Recurring extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
@@ -18,7 +18,7 @@ class Recurring extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -41,7 +41,7 @@ class Recurring extends Controller {
 			$page = 1;
 		}
 
-		$data['recurrings'] = array();
+		$data['recurrings'] = [];
 
 		$this->load->model('account/recurring');
 
@@ -112,7 +112,7 @@ class Recurring extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
@@ -152,7 +152,7 @@ class Recurring extends Controller {
 			$data['reference'] = $recurring_info['reference'];
 
 			// Transactions
-			$data['transactions'] = array();
+			$data['transactions'] = [];
 
 			$results = $this->model_account_recurring->getRecurringTransactions($this->request->get['order_recurring_id']);
 
@@ -180,7 +180,7 @@ class Recurring extends Controller {
 		} else {
 			$this->document->setTitle($this->language->get('text_recurring'));
 
-			$data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),

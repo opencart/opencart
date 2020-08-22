@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionPaymentBankTransfer extends Controller {
+namespace Extension\OpenCart\Controller\Payment;
+class BankTransfer extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/payment/bank_transfer');
 
@@ -9,7 +10,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 	}
 
 	public function confirm() {
-		$json = array();
+		$json = [];
 
 		if ($this->session->data['payment_method']['code'] == 'bank_transfer') {
 			$this->load->language('extension/payment/bank_transfer');

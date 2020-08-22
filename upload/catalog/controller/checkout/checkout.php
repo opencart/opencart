@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Checkout;
-class Checkout extends Controller {
+namespace Application\Controller\Checkout;
+class Checkoutextends \System\Engine\Controller {
 	public function index() {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -33,7 +33,7 @@ class Checkout extends Controller {
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -92,7 +92,7 @@ class Checkout extends Controller {
 	}
 
 	public function country() {
-		$json = array();
+		$json = [];
 
 		$this->load->model('localisation/country');
 
@@ -118,7 +118,7 @@ class Checkout extends Controller {
 	}
 
 	public function customfield() {
-		$json = array();
+		$json = [];
 
 		$this->load->model('account/custom_field');
 

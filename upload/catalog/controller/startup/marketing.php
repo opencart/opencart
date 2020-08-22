@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Startup;
-class Marketing extends Controller {
+namespace Application\Controller\Startup;
+class Marketing extends \System\Engine\Controller {
 	public function index() {
 		// Tracking Code
 		if (isset($this->request->get['tracking'])) {

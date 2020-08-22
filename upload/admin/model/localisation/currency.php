@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationCurrency extends Model {
+namespace Application\Model\Localisation;
+class Currency extends \System\Engine\Model {
 	public function addCurrency($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "currency SET title = '" . $this->db->escape((string)$data['title']) . "', code = '" . $this->db->escape((string)$data['code']) . "', symbol_left = '" . $this->db->escape((string)$data['symbol_left']) . "', symbol_right = '" . $this->db->escape((string)$data['symbol_right']) . "', decimal_place = '" . $this->db->escape((string)$data['decimal_place']) . "', value = '" . (float)$data['value'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW()");
 
@@ -40,7 +41,7 @@ class ModelLocalisationCurrency extends Model {
 		return $query->row;
 	}
 
-	public function getCurrencies($data = array()) {
+	public function getCurrencies($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "currency";
 
@@ -82,7 +83,7 @@ class ModelLocalisationCurrency extends Model {
 			$currency_data = $this->cache->get('currency');
 
 			if (!$currency_data) {
-				$currency_data = array();
+				$currency_data = [];
 
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency ORDER BY title ASC");
 

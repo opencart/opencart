@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Report;
+namespace Application\Model\Report;
 class Statistics extends \System\Engine\Model {
 	public function getStatistics() {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "statistics");
@@ -13,7 +13,7 @@ class Statistics extends \System\Engine\Model {
 		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return null;	
+			return '';
 		}
 	}
 	

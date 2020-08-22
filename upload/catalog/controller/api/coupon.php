@@ -1,13 +1,13 @@
 <?php
-namespace Catalog\Controller\Api;
-class Coupon extends Controller {
+namespace Application\Controller\Api;
+class Coupon extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/coupon');
 
 		// Delete past coupon in case there is an error
 		unset($this->session->data['coupon']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');

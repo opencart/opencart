@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationLengthClass extends Model {
+namespace Application\Model\Localisation;
+class LengthClass extends \System\Engine\Model {
 	public function addLengthClass($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "length_class SET value = '" . (float)$data['value'] . "'");
 
@@ -33,7 +34,7 @@ class ModelLocalisationLengthClass extends Model {
 		$this->cache->delete('length_class');
 	}
 
-	public function getLengthClasses($data = array()) {
+	public function getLengthClasses($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "length_class lc LEFT JOIN " . DB_PREFIX . "length_class_description lcd ON (lc.length_class_id = lcd.length_class_id) WHERE lcd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -98,7 +99,7 @@ class ModelLocalisationLengthClass extends Model {
 	}
 
 	public function getDescriptions($length_class_id) {
-		$length_class_data = array();
+		$length_class_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "length_class_description WHERE length_class_id = '" . (int)$length_class_id . "'");
 

@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Event;
-class Debug extends Controller {
+namespace Application\Controller\Event;
+class Debug extends \System\Engine\Controller {
 	public function before(&$route, &$args) {
 		// add the route you want to test
 		//if ($route == 'common/home') {

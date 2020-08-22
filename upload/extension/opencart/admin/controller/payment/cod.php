@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionPaymentCod extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Payment;
+class Cod extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/payment/cod');
@@ -23,7 +24,7 @@ class ControllerExtensionPaymentCod extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

@@ -1,6 +1,7 @@
 <?php
-class ControllerMarketingAffiliate extends Controller {
-	private $error = array();
+namespace Application\Controller\Marketing;
+class Affiliate extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('marketing/affiliate');
@@ -253,7 +254,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -270,7 +271,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$this->load->model('customer/customer');
 
-		$data['affiliates'] = array();
+		$data['affiliates'] = [];
 
 		$filter_data = array(
 			'filter_name'       => $filter_name,
@@ -321,7 +322,7 @@ class ControllerMarketingAffiliate extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -461,7 +462,7 @@ class ControllerMarketingAffiliate extends Controller {
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
 		} else {
-			$data['error_custom_field'] = array();
+			$data['error_custom_field'] = [];
 		}
 
 		$url = '';
@@ -498,7 +499,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -657,7 +658,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$data['bank_account_number'] = '';
 		}
 
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = [];
 
 		$filter_data = array(
 			'sort'  => 'cf.sort_order',
@@ -686,7 +687,7 @@ class ControllerMarketingAffiliate extends Controller {
 		} elseif (!empty($affiliate_info)) {
 			$data['affiliate_custom_field'] = json_decode($affiliate_info['custom_field'], true);
 		} else {
-			$data['affiliate_custom_field'] = array();
+			$data['affiliate_custom_field'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -786,7 +787,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$page = 1;
 		}
 
-		$data['reports'] = array();
+		$data['reports'] = [];
 
 		$this->load->model('marketing/affiliate');
 		$this->load->model('customer/customer');

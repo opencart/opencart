@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonColumnLeft extends Controller {
+namespace Install\Controller\Common;
+class ColumnLeft extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/column_left');
 
@@ -26,14 +27,14 @@ class ControllerCommonColumnLeft extends Controller {
 			$data['code'] = $this->config->get('language.default');
 		}
 
-		$data['languages'] = array();
+		$data['languages'] = [];
 
 		$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 
 		foreach ($languages as $code) {
 			$code = basename($code);
 
-			$language = new Language($code);
+			$language = new \System\Library\Language($code);
 			$language->load('common/column_left');
 
 			$data['languages'][] = array(

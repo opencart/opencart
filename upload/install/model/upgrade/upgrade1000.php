@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1000 extends Model {
+namespace Install\Model\upgrade;
+class Upgrade1000 extends \System\Engine\Model {
 	public function upgrade() {
 		// This is a generic upgrade script.
 		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema.
@@ -22,7 +23,7 @@ class ModelUpgrade1000 extends Model {
 				}
 
 				if (isset($table['primary'])) {
-					$primary_data = array();
+					$primary_data = [];
 
 					foreach ($table['primary'] as $primary) {
 						$primary_data[] = "`" . $primary . "`";
@@ -33,7 +34,7 @@ class ModelUpgrade1000 extends Model {
 
 				if (isset($table['index'])) {
 					foreach ($table['index'] as $index) {
-						$index_data = array();
+						$index_data = [];
 
 						foreach ($index['key'] as $key) {
 							$index_data[] = "`" . $key . "`";
@@ -79,7 +80,7 @@ class ModelUpgrade1000 extends Model {
 				}
 
 				// Remove all primary keys and indexes
-				$keys = array();
+				$keys = [];
 
 				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
@@ -99,7 +100,7 @@ class ModelUpgrade1000 extends Model {
 
 				// Primary Key
 				if (isset($table['primary'])) {
-					$primary_data = array();
+					$primary_data = [];
 
 					foreach ($table['primary'] as $primary) {
 						$primary_data[] = "`" . $primary . "`";
@@ -117,7 +118,7 @@ class ModelUpgrade1000 extends Model {
 				// Indexes
 				if (isset($table['index'])) {
 					foreach ($table['index'] as $index) {
-						$index_data = array();
+						$index_data = [];
 
 						foreach ($index['key'] as $key) {
 							$index_data[] = "`" . $key . "`";

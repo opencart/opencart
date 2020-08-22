@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Localisation;
+namespace Application\Model\Localisation;
 class Currency extends \System\Engine\Model {
 	public function getCurrencyByCode($currency) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "currency WHERE code = '" . $this->db->escape($currency) . "'");
@@ -11,7 +11,7 @@ class Currency extends \System\Engine\Model {
 		$currency_data = $this->cache->get('currency');
 
 		if (!$currency_data) {
-			$currency_data = array();
+			$currency_data = [];
 
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency ORDER BY title ASC");
 

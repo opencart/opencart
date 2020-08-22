@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionPaymentCheque extends Controller {
+namespace Extension\OpenCart\Controller\Payment;
+class Cheque extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/payment/cheque');
 
@@ -10,7 +11,7 @@ class ControllerExtensionPaymentCheque extends Controller {
 	}
 
 	public function confirm() {
-		$json = array();
+		$json = [];
 
 		if (isset($this->session->data['payment_method']) && $this->session->data['payment_method']['code'] == 'cheque') {
 			$this->load->language('extension/payment/cheque');

@@ -45,15 +45,6 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$_SERVER['HTTPS'] = false;
 }
 
-// Engine
-require_once(DIR_SYSTEM . 'engine/controller.php');
-require_once(DIR_SYSTEM . 'engine/model.php');
-require_once(DIR_SYSTEM . 'engine/action.php');
-require_once(DIR_SYSTEM . 'engine/event.php');
-require_once(DIR_SYSTEM . 'engine/loader.php');
-require_once(DIR_SYSTEM . 'engine/registry.php');
-require_once(DIR_SYSTEM . 'engine/proxy.php');
-
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
@@ -63,39 +54,41 @@ require_once(DIR_STORAGE . 'vendor/autoload.php');
 
 // Library Autoloader
 function autoloader($class) {
-	echo '$class ' . $class . "\n";
-
 	$file = '';
 
-	$path = strtolower(str_replace('\\', '/', $class));
+	// Converting a class name to a file path
+	$path = strtolower(implode('/', preg_replace('~([a-z])([A-Z])~', '\\1_\\2', explode('\\', $class))));
 
 	$type = substr($path, 0, strpos($path, '/'));
 
+	$path = substr($path, strpos($path, '/') + 1);
+
 	switch ($type) {
+		case 'application':
+			$file = DIR_APPLICATION .  $path  . '.php';
+			break;
 		case 'catalog':
-			$file = DIR_APPLICATION . substr($path, strpos($path, '/') + 1)  . '.php';
+			$file = DIR_CATALOG . $path  . '.php';
 			break;
 		case 'admin':
-			$file = DIR_APPLICATION . substr($path, strpos($path, '/') + 1)  . '.php';
+			$file = DIR_ADMIN . $path . '.php';
+			break;
+		case 'extension':
+			$file = DIR_EXTENSION . $path  . '.php';
 			break;
 		case 'system':
-			$file = DIR_SYSTEM . substr($path, strpos($path, '/') + 1) . '.php';
+			$file = DIR_SYSTEM . $path . '.php';
 			break;
 	}
 
-	//$file = DIR_SYSTEM . $path . '.php';
-
-
-	echo '$path ' . $path . "\n";
-	echo '$file ' . $file . "\n";
+	//echo '$class ' . $class . "\n";
+	//echo '$file ' . $file . "\n\n";
 
 	if (is_file($file)) {
 		include_once($file);
 
 		return true;
 	} else {
-		echo $class;
-
 		return false;
 	}
 }

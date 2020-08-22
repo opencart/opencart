@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Setting;
+namespace Application\Model\Setting;
 class Store extends \System\Engine\Model {
 	public function getStores() {
 		$store_data = $this->cache->get('store');

@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionShippingItem extends Model {
+namespace Extension\OpenCart\Catalog\Model\Shipping;
+class Item extends \System\Engine\Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/item');
 
@@ -13,7 +14,7 @@ class ModelExtensionShippingItem extends Model {
 			$status = false;
 		}
 
-		$method_data = array();
+		$method_data = [];
 
 		if ($status) {
 			$items = 0;
@@ -24,7 +25,7 @@ class ModelExtensionShippingItem extends Model {
 				}
 			}
 
-			$quote_data = array();
+			$quote_data = [];
 
 			$quote_data['item'] = array(
 				'code'         => 'item.item',

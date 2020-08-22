@@ -1,5 +1,6 @@
 <?php
-class ControllerReportOnline extends Controller {
+namespace Application\Controller\Report;
+class Online extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('report/online');
 
@@ -37,7 +38,7 @@ class ControllerReportOnline extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 			
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -54,7 +55,7 @@ class ControllerReportOnline extends Controller {
 		$this->load->model('report/online');
 		$this->load->model('customer/customer');		
 
-		$data['customers'] = array();
+		$data['customers'] = [];
 
 		$filter_data = array(
 			'filter_ip'       => $filter_ip,

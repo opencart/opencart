@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonHeader extends Controller {
+namespace Application\Controller\Common;
+class Header extends \System\Engine\Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
 
@@ -48,7 +49,7 @@ class ControllerCommonHeader extends Controller {
 			} 		
 			
 			// Online Stores
-			$data['stores'] = array();
+			$data['stores'] = [];
 
 			$data['stores'][] = array(
 				'name' => $this->config->get('config_name'),

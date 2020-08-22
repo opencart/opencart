@@ -1,7 +1,7 @@
 <?php
-namespace Catalog\Model\Design;
-class Profile extends \System\Engine\Model {
-	public $profile = array();
+namespace Application\Model\Design;
+class SeoProfile extends \System\Engine\Model {
+	public $profile = [];
 
 	public function getSeoProfilesByKey($key) {
 		// Better to cache the data into a variable so the is DB not making to many connections.

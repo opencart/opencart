@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionShipping extends Controller {
-	private $error = array();
+namespace Application\Controller\Extension;
+class Shipping extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/shipping');
@@ -76,7 +77,7 @@ class ControllerExtensionShipping extends Controller {
 			}
 		}
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 		
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/shipping/*.php');

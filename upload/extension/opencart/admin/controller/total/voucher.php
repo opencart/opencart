@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionTotalVoucher extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Total;
+class Voucher extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/total/voucher');
@@ -23,7 +24,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

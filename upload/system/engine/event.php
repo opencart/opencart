@@ -17,7 +17,7 @@
 namespace System\Engine;
 class Event {
 	protected $registry;
-	protected $data = array();
+	protected $data = [];
 	
 	/**
 	 * Constructor
@@ -42,7 +42,7 @@ class Event {
 			'priority' => $priority
 		);
 		
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($this->data as $key => $value) {
 			$sort_order[$key] = $value['priority'];
@@ -57,7 +57,7 @@ class Event {
 	 * @param	string	$event
 	 * @param	array	$args
  	*/		
-	public function trigger($event, array $args = array()) {
+	public function trigger($event, array $args = []) {
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
 				$result = $value['action']->execute($this->registry, $args);

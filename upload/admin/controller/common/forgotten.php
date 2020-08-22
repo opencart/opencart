@@ -1,6 +1,7 @@
 <?php
-class ControllerCommonForgotten extends Controller {
-	private $error = array();
+namespace Application\Controller\Common;
+class Forgotten extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
@@ -31,7 +32,7 @@ class ControllerCommonForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

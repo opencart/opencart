@@ -1,12 +1,12 @@
 <?php
-namespace Catalog\Controller\Account;
-class Success extends Controller {
+namespace Application\Controller\Account;
+class Success extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('account/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

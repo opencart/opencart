@@ -1,5 +1,6 @@
 <?php
-class ControllerUpgradeUpgrade extends Controller {
+namespace \Install\Controller\Upgrade;
+class Upgrade extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('upgrade/upgrade');
 
@@ -36,7 +37,7 @@ class ControllerUpgradeUpgrade extends Controller {
 	public function next() {
 		$this->load->language('upgrade/upgrade');
 				
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['step'])) {
 			$step = $this->request->get['step'];

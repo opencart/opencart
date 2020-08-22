@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionPaymentFreeCheckout extends Model {
+namespace Extension\OpenCart\Catalog\Model\Payment;
+class FreeCheckout extends \System\Engine\Model {
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/free_checkout');
 
@@ -9,7 +10,7 @@ class ModelExtensionPaymentFreeCheckout extends Model {
 			$status = false;
 		}
 
-		$method_data = array();
+		$method_data = [];
 
 		if ($status) {
 			$method_data = array(

@@ -1,11 +1,12 @@
 <?php
-class ControllerExtensionModuleInformation extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Information extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/module/information');
 
 		$this->load->model('catalog/information');
 
-		$data['informations'] = array();
+		$data['informations'] = [];
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
 			$data['informations'][] = array(

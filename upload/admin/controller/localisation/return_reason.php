@@ -1,6 +1,7 @@
 <?php
-class ControllerLocalisationReturnReason extends Controller {
-	private $error = array();
+namespace Application\Controller\Localisation;
+class ReturnReason extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('localisation/return_reason');
@@ -143,7 +144,7 @@ class ControllerLocalisationReturnReason extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -158,7 +159,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		$data['add'] = $this->url->link('localisation/return_reason/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/return_reason/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['return_reasons'] = array();
+		$data['return_reasons'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -196,7 +197,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -254,7 +255,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
-			$data['error_name'] = array();
+			$data['error_name'] = [];
 		}
 
 		$url = '';
@@ -271,7 +272,7 @@ class ControllerLocalisationReturnReason extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -300,7 +301,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		} elseif (isset($this->request->get['return_reason_id'])) {
 			$data['return_reason'] = $this->model_localisation_return_reason->getDescriptions($this->request->get['return_reason_id']);
 		} else {
-			$data['return_reason'] = array();
+			$data['return_reason'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');

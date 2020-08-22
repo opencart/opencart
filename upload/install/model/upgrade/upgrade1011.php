@@ -11,7 +11,8 @@
 * Upgrade file for updating setting table columns
 * 
 */
-class ModelUpgrade1011 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1011 extends \System\Engine\Model {
 	public function upgrade() {
 		//get all setting columns from extension table
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");	

@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1000 extends Model {
+namespace Application\Model\Upgrade;
+class Upgrade1000 extends \System\Engine\Model {
 	public function upgrade() {
 		// Structure
 		$this->load->helper('db_schema');
@@ -17,7 +18,7 @@ class ModelUpgrade1000 extends Model {
 				}
 
 				if (isset($table['primary'])) {
-					$primary_data = array();
+					$primary_data = [];
 
 					foreach ($table['primary'] as $primary) {
 						$primary_data[] = "`" . $primary . "`";
@@ -28,7 +29,7 @@ class ModelUpgrade1000 extends Model {
 
 				if (isset($table['index'])) {
 					foreach ($table['index'] as $index) {
-						$index_data = array();
+						$index_data = [];
 
 						foreach ($index['key'] as $key) {
 							$index_data[] = "`" . $key . "`";
@@ -74,7 +75,7 @@ class ModelUpgrade1000 extends Model {
 				}
 
 				// Remove all primary keys and indexes
-				$keys = array();
+				$keys = [];
 
 				$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
@@ -94,7 +95,7 @@ class ModelUpgrade1000 extends Model {
 
 				// Primary Key
 				if (isset($table['primary'])) {
-					$primary_data = array();
+					$primary_data = [];
 
 					foreach ($table['primary'] as $primary) {
 						$primary_data[] = "`" . $primary . "`";
@@ -106,7 +107,7 @@ class ModelUpgrade1000 extends Model {
 				// Indexes
 				if (isset($table['index'])) {
 					foreach ($table['index'] as $index) {
-						$index_data = array();
+						$index_data = [];
 
 						foreach ($index['key'] as $key) {
 							$index_data[] = "`" . $key . "`";

@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionTotalVoucher extends Controller {
+namespace Extension\OpenCart\Controller\Total;
+class Voucher extends \System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('total_voucher_status')) {
 			$this->load->language('extension/total/voucher');
@@ -17,7 +18,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 	public function voucher() {
 		$this->load->language('extension/total/voucher');
 
-		$json = array();
+		$json = [];
 
 		$this->load->model('extension/total/voucher');
 
@@ -56,13 +57,13 @@ class ControllerExtensionTotalVoucher extends Controller {
 
 			if ($voucher_query->num_rows) {
 				// Send out any gift voucher mails
-				$language = new Language($order_info['language_code']);
+				$language = new \System\Library\Language($order_info['language_code']);
 				$language->load($order_info['language_code']);
 				$language->load('mail/voucher');
 
 				foreach ($voucher_query->rows as $voucher) {
 					// HTML Mail
-					$data = array();
+					$data = [];
 
 					$data['title'] = sprintf($language->get('text_subject'), $voucher['from_name']);
 
@@ -82,7 +83,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 					$data['store_url'] = $order_info['store_url'];
 					$data['message'] = nl2br($voucher['message']);
 
-					$mail = new Mail($this->config->get('config_mail_engine'));
+					$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 					$mail->parameter = $this->config->get('config_mail_parameter');
 					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 					$mail->smtp_username = $this->config->get('config_mail_smtp_username');

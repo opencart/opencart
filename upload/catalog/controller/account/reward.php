@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Reward extends Controller {
+namespace Application\Controller\Account;
+class Reward extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/reward', 'language=' . $this->config->get('config_language'));
@@ -12,7 +12,7 @@ class Reward extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -37,7 +37,7 @@ class Reward extends Controller {
 			$page = 1;
 		}
 
-		$data['rewards'] = array();
+		$data['rewards'] = [];
 
 		$filter_data = array(
 			'sort'  => 'date_added',

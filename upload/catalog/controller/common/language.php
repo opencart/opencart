@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class Language extends Controller {
+namespace Application\Controller\Common;
+class Language extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/language');
 
@@ -24,7 +24,7 @@ class Language extends Controller {
 			$url = '&' . urldecode(http_build_query($url_data));
 		}
 
-		$data['languages'] = array();
+		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
 

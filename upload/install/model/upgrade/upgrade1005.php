@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1005 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1005 extends \System\Engine\Model {
 	public function upgrade() {
 		// customer
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` CHANGE `token` `token` text NOT NULL");

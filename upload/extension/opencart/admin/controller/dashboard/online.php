@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionDashboardOnline extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Dashboard;
+class Online extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/dashboard/online');
@@ -23,7 +24,7 @@ class ControllerExtensionDashboardOnline extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -50,7 +51,7 @@ class ControllerExtensionDashboardOnline extends Controller {
 			$data['dashboard_online_width'] = $this->config->get('dashboard_online_width');
 		}
 	
-		$data['columns'] = array();
+		$data['columns'] = [];
 		
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;

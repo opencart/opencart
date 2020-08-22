@@ -1,6 +1,7 @@
 <?php
-class ControllerDesignSeoProfile extends Controller {
-	private $error = array();
+namespace Application\Controller\Design;
+class SeoProfile extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('design/seo_profile');
@@ -143,7 +144,7 @@ class ControllerDesignSeoProfile extends Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -158,7 +159,7 @@ class ControllerDesignSeoProfile extends Controller {
 		$data['add'] = $this->url->link('design/seo_profile/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/seo_profile/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['seo_profiles'] = array();
+		$data['seo_profiles'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -201,7 +202,7 @@ class ControllerDesignSeoProfile extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -287,7 +288,7 @@ class ControllerDesignSeoProfile extends Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

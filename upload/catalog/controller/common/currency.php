@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class Currency extends Controller {
+namespace Application\Controller\Common;
+class Currency extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/currency');
 
@@ -19,7 +19,7 @@ class Currency extends Controller {
 		unset($url_data['route']);
 		unset($url_data['_route_']);
 
-		$data['currencies'] = array();
+		$data['currencies'] = [];
 
 		$this->load->model('localisation/currency');
 

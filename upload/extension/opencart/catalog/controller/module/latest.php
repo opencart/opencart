@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleLatest extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Latest extends \System\Engine\Controller {
 	public function index($setting) {
 		$this->load->language('extension/module/latest');
 
@@ -7,7 +8,7 @@ class ControllerExtensionModuleLatest extends Controller {
 
 		$this->load->model('tool/image');
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$results = $this->model_catalog_product->getLatest($setting['limit']);
 

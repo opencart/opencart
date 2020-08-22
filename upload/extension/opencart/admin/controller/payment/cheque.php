@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionPaymentCheque extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Payment;
+class Cheque extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/payment/cheque');
@@ -29,7 +30,7 @@ class ControllerExtensionPaymentCheque extends Controller {
 			$data['error_payable'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

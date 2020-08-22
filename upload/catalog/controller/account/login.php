@@ -1,6 +1,7 @@
 <?php
-class ControllerAccountLogin extends Controller {
-	private $error = array();
+namespace Admin\Controller\Account;
+class Login extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		if ($this->customer->isLogged()) {
@@ -50,7 +51,7 @@ class ControllerAccountLogin extends Controller {
 			}
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

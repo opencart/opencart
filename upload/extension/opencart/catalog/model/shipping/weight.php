@@ -1,9 +1,10 @@
 <?php
-class ModelExtensionShippingWeight extends Model {
+namespace Extension\OpenCart\Catalog\Model\Shipping;
+class Weight extends \System\Engine\Model {
 	public function getQuote($address) {
 		$this->load->language('extension/shipping/weight');
 
-		$quote_data = array();
+		$quote_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "geo_zone ORDER BY name");
 
@@ -51,7 +52,7 @@ class ModelExtensionShippingWeight extends Model {
 			}
 		}
 
-		$method_data = array();
+		$method_data = [];
 
 		if ($quote_data) {
 			$method_data = array(

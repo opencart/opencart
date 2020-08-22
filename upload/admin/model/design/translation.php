@@ -1,5 +1,6 @@
 <?php
-class ModelDesignTranslation extends Model {
+namespace Application\Model\Design;
+class Translation extends \System\Engine\Model {
 	public function addTranslation($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `date_added` = NOW()");
 	}
@@ -18,7 +19,7 @@ class ModelDesignTranslation extends Model {
 		return $query->row;
 	}
 	
-	public function getTranslations($data = array()) {
+	public function getTranslations($data = []) {
 		$sql = "SELECT *, (SELECT s.name FROM `" . DB_PREFIX . "store` s WHERE s.store_id = t.store_id) AS store, (SELECT l.name FROM `" . DB_PREFIX . "language` l WHERE l.language_id = t.language_id) AS language FROM `" . DB_PREFIX . "translation` t";
 		
 		$sort_data = array(

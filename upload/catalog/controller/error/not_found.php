@@ -1,12 +1,12 @@
 <?php
-namespace Catalog\Controller\Error;
-class NotFound extends Controller {
+namespace Application\Controller\Error;
+class NotFound extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('error/not_found');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

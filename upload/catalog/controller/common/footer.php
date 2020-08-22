@@ -1,12 +1,12 @@
 <?php
-namespace Catalog\Controller\Common;
-class Footer extends Controller {
+namespace Application\Controller\Common;
+class Footer extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/footer');
 
 		$this->load->model('catalog/information');
 
-		$data['informations'] = array();
+		$data['informations'] = [];
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
 			if ($result['bottom']) {

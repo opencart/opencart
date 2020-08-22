@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Event;
-class Statistics extends Controller {
+namespace Application\Controller\Event;
+class Statistics extends \System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after
 	public function addReview(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');

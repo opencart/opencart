@@ -12,7 +12,7 @@
 */
 namespace System\Engine;
 class Registry {
-	private $data = array();
+	private $data = [];
 
 	/**
      * Get

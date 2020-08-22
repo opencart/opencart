@@ -1,11 +1,12 @@
 <?php
-class ControllerExtensionPaymentCod extends Controller {
+namespace Extension\OpenCart\Controller\Payment;
+class Cod extends \System\Engine\Controller {
 	public function index() {
 		return $this->load->view('extension/payment/cod');
 	}
 
 	public function confirm() {
-		$json = array();
+		$json = [];
 
 		if ($this->session->data['payment_method']['code'] == 'cod') {
 			$this->load->model('checkout/order');

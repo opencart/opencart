@@ -32,13 +32,14 @@ Upgrade
 
 8. Replace the files
 */
-class ControllerToolUpgrade extends Controller {
+namespace Application\Controller\Tool;
+class Upgrade extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -55,7 +56,7 @@ class ControllerToolUpgrade extends Controller {
 		$data['version'] = VERSION;
 		$data['upgrade'] = false;
 
-		$request_data['extension'] = array();
+		$request_data['extension'] = [];
 
 		$this->load->model('setting/extension');
 
@@ -84,7 +85,7 @@ class ControllerToolUpgrade extends Controller {
 		$response_info = json_decode($response, true);
 
 		// Extension compatibility check
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 
 		if ($response_info) {
 			if (version_compare(VERSION, $response_info['version'], '>=')) {
@@ -145,7 +146,7 @@ class ControllerToolUpgrade extends Controller {
 	public function modified() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -223,7 +224,7 @@ class ControllerToolUpgrade extends Controller {
 	public function download() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -274,7 +275,7 @@ class ControllerToolUpgrade extends Controller {
 	public function unzip() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -294,7 +295,7 @@ class ControllerToolUpgrade extends Controller {
 
 		if (!$json) {
 			// Unzip the files
-			$zip = new ZipArchive();
+			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
 				$zip->extractTo(DIR_DOWNLOAD . 'opencart-' . $version);
@@ -315,7 +316,7 @@ class ControllerToolUpgrade extends Controller {
 	public function move() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -339,7 +340,7 @@ class ControllerToolUpgrade extends Controller {
 				'admin/config-dist.php'
 			);
 
-			$files = array();
+			$files = [];
 
 			// Get a list of files ready to upload
 			$path = array($directory . '/*');
@@ -407,7 +408,7 @@ class ControllerToolUpgrade extends Controller {
 	public function remove() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -483,7 +484,7 @@ class ControllerToolUpgrade extends Controller {
 	public function db() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -520,7 +521,7 @@ class ControllerToolUpgrade extends Controller {
 	public function clear() {
 		$this->load->language('tool/upgrade');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
@@ -537,7 +538,7 @@ class ControllerToolUpgrade extends Controller {
 
 			if (is_dir($directory)) {
 				// Get a list of files ready to upload
-				$files = array();
+				$files = [];
 
 				$path = array($directory);
 

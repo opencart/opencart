@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionTotalSubTotal extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Total;
+class SubTotal extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/total/sub_total');
@@ -23,7 +24,7 @@ class ControllerExtensionTotalSubTotal extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

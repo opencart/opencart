@@ -1,6 +1,7 @@
 <?php
-class ControllerSaleVoucher extends Controller {
-	private $error = array();
+namespace Application\Controller\Sale;
+class Voucher extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('sale/voucher');
@@ -143,7 +144,7 @@ class ControllerSaleVoucher extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -158,7 +159,7 @@ class ControllerSaleVoucher extends Controller {
 		$data['add'] = $this->url->link('sale/voucher/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('sale/voucher/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['vouchers'] = array();
+		$data['vouchers'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -211,7 +212,7 @@ class ControllerSaleVoucher extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -328,7 +329,7 @@ class ControllerSaleVoucher extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -517,7 +518,7 @@ class ControllerSaleVoucher extends Controller {
 			$page = 1;
 		}
 
-		$data['histories'] = array();
+		$data['histories'] = [];
 
 		$results = $this->model_sale_voucher->getHistories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
 
@@ -547,7 +548,7 @@ class ControllerSaleVoucher extends Controller {
 	public function send() {
 		$this->load->language('mail/voucher');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -556,7 +557,7 @@ class ControllerSaleVoucher extends Controller {
 		if (!$json) {
 			$this->load->model('sale/voucher');
 
-			$vouchers = array();
+			$vouchers = [];
 
 			if (isset($this->request->post['selected'])) {
 				$vouchers = $this->request->post['selected'];
@@ -582,7 +583,7 @@ class ControllerSaleVoucher extends Controller {
 			
 						// If voucher belongs to an order
 						if ($order_info) {
-							$language = new Language($order_info['language_code']);
+							$language = new \System\Library\Language($order_info['language_code']);
 							$language->load($order_info['language_code']);
 							$language->load('mail/voucher');
 			
@@ -607,7 +608,7 @@ class ControllerSaleVoucher extends Controller {
 							$data['store_url'] = $order_info['store_url'];
 							$data['message'] = nl2br($voucher_info['message']);
 			
-							$mail = new Mail($this->config->get('config_mail_engine'));
+							$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -646,7 +647,7 @@ class ControllerSaleVoucher extends Controller {
 							$data['store_url'] = HTTP_CATALOG;
 							$data['message'] = nl2br($voucher_info['message']);
 			
-							$mail = new Mail($this->config->get('config_mail_engine'));
+							$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');

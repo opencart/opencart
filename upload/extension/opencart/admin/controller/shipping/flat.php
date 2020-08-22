@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionShippingFlat extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Shipping;
+class Flat extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/shipping/flat');
@@ -23,7 +24,7 @@ class ControllerExtensionShippingFlat extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

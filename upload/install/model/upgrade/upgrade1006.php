@@ -1,5 +1,6 @@
 <?php
-class ModelUpgrade1006 extends Model {
+namespace Install\Model\Upgrade;
+class Upgrade1006 extends \System\Engine\Model {
 	public function upgrade() {
 		// Update some language settings
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");
@@ -96,7 +97,7 @@ class ModelUpgrade1006 extends Model {
 			DIR_SYSTEM . 'cache/',
 		);
 
-		$files = array();
+		$files = [];
 
 		foreach ($directories as $dir) {
 			if (is_dir($dir)) {
@@ -188,7 +189,7 @@ class ModelUpgrade1006 extends Model {
 		}
 
 		// Open the source directory to read in files
-		$i = new DirectoryIterator($src);
+		$i = new \DirectoryIterator($src);
 		foreach ($i as $f) {
 			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
 				@rename($f->getRealPath(), "$dest/" . $f->getFilename());

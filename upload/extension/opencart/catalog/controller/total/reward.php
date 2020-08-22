@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionTotalReward extends Controller {
+namespace Extension\OpenCart\Controller\Total;
+class Reward extends \System\Engine\Controller {
 	public function index() {
 		$points = $this->customer->getRewardPoints();
 
@@ -31,7 +32,7 @@ class ControllerExtensionTotalReward extends Controller {
 	public function reward() {
 		$this->load->language('extension/total/reward');
 
-		$json = array();
+		$json = [];
 
 		$points = $this->customer->getRewardPoints();
 

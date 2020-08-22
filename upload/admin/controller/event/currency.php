@@ -1,5 +1,6 @@
 <?php
-class ControllerEventCurrency extends Controller {
+namespace Application\Controller\Event;
+class Currency extends \System\Engine\Controller {
 	// model/setting/setting/editSetting
 	// model/localisation/currency/addCurrency
 	// model/localisation/currency/editCurrency

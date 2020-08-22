@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Setting;
+namespace Application\Model\Setting;
 class Module extends \System\Engine\Model {
 	public function getModule($module_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "module WHERE module_id = '" . (int)$module_id . "'");
@@ -7,7 +7,7 @@ class Module extends \System\Engine\Model {
 		if ($query->row) {
 			return json_decode($query->row['setting'], true);
 		} else {
-			return array();	
+			return [];
 		}
 	}		
 }

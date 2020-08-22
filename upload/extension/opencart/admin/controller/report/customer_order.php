@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionReportCustomerOrder extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Report;
+class CustomerOrder extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/report/customer_order');
 
@@ -21,7 +22,7 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -104,7 +105,7 @@ class ControllerExtensionReportCustomerOrder extends Controller {
 
 		$this->load->model('extension/report/customer');
 
-		$data['customers'] = array();
+		$data['customers'] = [];
 
 		$filter_data = array(
 			'filter_date_start'			=> $filter_date_start,

@@ -1,5 +1,6 @@
 <?php
-class ModelExtensionShippingFlat extends Model {
+namespace Extension\OpenCart\Catalog\Model\Shipping;
+class Flat extends \System\Engine\Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/flat');
 
@@ -13,10 +14,10 @@ class ModelExtensionShippingFlat extends Model {
 			$status = false;
 		}
 
-		$method_data = array();
+		$method_data = [];
 
 		if ($status) {
-			$quote_data = array();
+			$quote_data = [];
 
 			$quote_data['flat'] = array(
 				'code'         => 'flat.flat',

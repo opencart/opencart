@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Affiliate;
-class Success extends Controller {
+namespace Application\Controller\Affiliate;
+class Success extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
@@ -10,7 +10,7 @@ class Success extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

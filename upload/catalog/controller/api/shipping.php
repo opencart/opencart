@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Api;
-class Shipping extends Controller {
+namespace Application\Controller\Api;
+class Shipping extends \System\Engine\Controller
 	public function address() {
 		$this->load->language('api/shipping');
 
@@ -9,7 +9,7 @@ class Shipping extends Controller {
 		unset($this->session->data['shipping_methods']);
 		unset($this->session->data['shipping_method']);
 
-		$json = array();
+		$json = [];
 
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['api_id'])) {
@@ -126,7 +126,7 @@ class Shipping extends Controller {
 						'iso_code_2'     => $iso_code_2,
 						'iso_code_3'     => $iso_code_3,
 						'address_format' => $address_format,
-						'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array()
+						'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 					);
 
 					$json['success'] = $this->language->get('text_address');
@@ -148,7 +148,7 @@ class Shipping extends Controller {
 		unset($this->session->data['shipping_methods']);
 		unset($this->session->data['shipping_method']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -159,7 +159,7 @@ class Shipping extends Controller {
 
 			if (!$json) {
 				// Shipping Methods
-				$json['shipping_methods'] = array();
+				$json['shipping_methods'] = [];
 
 				$this->load->model('setting/extension');
 
@@ -182,7 +182,7 @@ class Shipping extends Controller {
 					}
 				}
 
-				$sort_order = array();
+				$sort_order = [];
 
 				foreach ($json['shipping_methods'] as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
@@ -197,7 +197,7 @@ class Shipping extends Controller {
 				}
 			}
 		} else {
-			$json['shipping_methods'] = array();
+			$json['shipping_methods'] = [];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -210,7 +210,7 @@ class Shipping extends Controller {
 		// Delete old shipping method so not to cause any issues if there is an error
 		unset($this->session->data['shipping_method']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');

@@ -1,5 +1,5 @@
 <?php
-namespace Catalog\Model\Marketing;
+namespace Application\Model\Marketing;
 class Marketing extends \System\Engine\Model {
 	public function getMarketingByCode($code) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "marketing WHERE code = '" . $this->db->escape($code) . "'");

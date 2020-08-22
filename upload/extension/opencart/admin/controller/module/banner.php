@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionModuleBanner extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Module;
+class Banner extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/module/banner');
@@ -45,7 +46,7 @@ class ControllerExtensionModuleBanner extends Controller {
 			$data['error_height'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),

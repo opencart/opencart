@@ -1,7 +1,7 @@
 <?php
 namespace System\Library\Template;
-final class Twig {
-	protected $data = array();
+class Twig {
+	protected $data = [];
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;

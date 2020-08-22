@@ -1,10 +1,11 @@
 <?php
-class ControllerExtensionModuleFilter extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class Filter extends \System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
 		} else {
-			$parts = array();
+			$parts = [];
 		}
 
 		$category_id = end($parts);
@@ -35,18 +36,18 @@ class ControllerExtensionModuleFilter extends Controller {
 			if (isset($this->request->get['filter'])) {
 				$data['filter_category'] = explode(',', $this->request->get['filter']);
 			} else {
-				$data['filter_category'] = array();
+				$data['filter_category'] = [];
 			}
 
 			$this->load->model('catalog/product');
 
-			$data['filter_groups'] = array();
+			$data['filter_groups'] = [];
 
 			$filter_groups = $this->model_catalog_category->getFilters($category_id);
 
 			if ($filter_groups) {
 				foreach ($filter_groups as $filter_group) {
-					$children_data = array();
+					$children_data = [];
 
 					foreach ($filter_group['filter'] as $filter) {
 						$filter_data = array(

@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionReportSaleCoupon extends Controller {
+namespace Extension\OpenCart\Catalog\Controller\Report;
+class SaleCoupon extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/report/sale_coupon');
 
@@ -21,7 +22,7 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -92,7 +93,7 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 
 		$this->load->model('extension/report/coupon');
 
-		$data['coupons'] = array();
+		$data['coupons'] = [];
 
 		$filter_data = array(
 			'filter_date_start'	=> $filter_date_start,

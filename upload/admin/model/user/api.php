@@ -1,5 +1,6 @@
 <?php
-class ModelUserApi extends Model {
+namespace Application\Model\User;
+class Api extends \System\Engine\Model {
 	public function addApi($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
 
@@ -40,7 +41,7 @@ class ModelUserApi extends Model {
 		return $query->row;
 	}
 
-	public function getApis($data = array()) {
+	public function getApis($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "api`";
 
 		$sort_data = array(
@@ -90,7 +91,7 @@ class ModelUserApi extends Model {
 	}
 
 	public function getIps($api_id) {
-		$ip_data = array();
+		$ip_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE api_id = '" . (int)$api_id . "'");
 

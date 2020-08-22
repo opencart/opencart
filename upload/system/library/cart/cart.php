@@ -1,7 +1,7 @@
 <?php
 namespace System\Library\Cart;
 class Cart {
-	private $data = array();
+	private $data = [];
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -44,7 +44,7 @@ class Cart {
 					$option_points = 0;
 					$option_weight = 0;
 
-					$option_data = array();
+					$option_data = [];
 
 					$product_options = (array)json_decode($cart['option'], true);
 
@@ -209,7 +209,7 @@ class Cart {
 					}
 
 					// Downloads
-					$download_data = array();
+					$download_data = [];
 
 					$download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_download p2d LEFT JOIN " . DB_PREFIX . "download d ON (p2d.download_id = d.download_id) LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE p2d.product_id = '" . (int)$cart['product_id'] . "' AND dd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -283,7 +283,7 @@ class Cart {
 		return $this->data;
 	}
 
-	public function add($product_id, $quantity = 1, $option = array(), $recurring_id = 0) {
+	public function add($product_id, $quantity = 1, $option = [], $recurring_id = 0) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id = '" . (int)$product_id . "' AND recurring_id = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 
 		if (!$query->row['total']) {
@@ -292,29 +292,29 @@ class Cart {
 			$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET quantity = (quantity + " . (int)$quantity . ") WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id = '" . (int)$product_id . "' AND recurring_id = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 		}
 
-		$this->data = array();
+		$this->data = [];
 	}
 
 	public function update($cart_id, $quantity) {
 		$this->db->query("UPDATE " . DB_PREFIX . "cart SET quantity = '" . (int)$quantity . "' WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 
-		$this->data = array();
+		$this->data = [];
 	}
 
 	public function remove($cart_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE cart_id = '" . (int)$cart_id . "' AND api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 
-		$this->data = array();
+		$this->data = [];
 	}
 
 	public function clear() {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 
-		$this->data = array();
+		$this->data = [];
 	}
 
 	public function getRecurringProducts() {
-		$product_data = array();
+		$product_data = [];
 
 		foreach ($this->getProducts() as $value) {
 			if ($value['recurring']) {
@@ -348,7 +348,7 @@ class Cart {
 	}
 
 	public function getTaxes() {
-		$tax_data = array();
+		$tax_data = [];
 
 		foreach ($this->getProducts() as $product) {
 			if ($product['tax_class_id']) {

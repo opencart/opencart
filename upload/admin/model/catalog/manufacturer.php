@@ -1,5 +1,6 @@
 <?php
-class ModelCatalogManufacturer extends Model {
+namespace Application\Model\Catalog;
+class Manufacturer extends \System\Engine\Model {
 	public function addManufacturer($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
@@ -90,7 +91,7 @@ class ModelCatalogManufacturer extends Model {
 		return $query->row;
 	}
 
-	public function getManufacturers($data = array()) {
+	public function getManufacturers($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
 
 		if (!empty($data['filter_name'])) {
@@ -132,7 +133,7 @@ class ModelCatalogManufacturer extends Model {
 	}
 
 	public function getStores($manufacturer_id) {
-		$manufacturer_store_data = array();
+		$manufacturer_store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_store` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
@@ -144,7 +145,7 @@ class ModelCatalogManufacturer extends Model {
 	}
 
 	public function getSeoUrls($manufacturer_id) {
-		$manufacturer_seo_url_data = array();
+		$manufacturer_seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'manufacturer_id' AND `value` = '" . (int)$manufacturer_id . "'");
 
@@ -156,7 +157,7 @@ class ModelCatalogManufacturer extends Model {
 	}
 
 	public function getLayouts($manufacturer_id) {
-		$manufacturer_layout_data = array();
+		$manufacturer_layout_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 

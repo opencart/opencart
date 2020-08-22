@@ -1,5 +1,6 @@
 <?php
-class ModelUserUserGroup extends Model {
+namespace Application\Model\User;
+class UserGroup extends \System\Engine\Model {
 	public function addUserGroup($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape((string)$data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
 	
@@ -25,7 +26,7 @@ class ModelUserUserGroup extends Model {
 		return $user_group;
 	}
 
-	public function getUserGroups($data = array()) {
+	public function getUserGroups($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "user_group";
 
 		$sql .= " ORDER BY name";

@@ -1,5 +1,6 @@
 <?php
-class ControllerExtensionModuleBestSeller extends Controller {
+namespace Extension\OpenCart\Controller\Module;
+class BestSeller extends \System\Engine\Controller {
 	public function index($setting) {
 		$this->load->language('extension/module/bestseller');
 
@@ -7,7 +8,7 @@ class ControllerExtensionModuleBestSeller extends Controller {
 
 		$this->load->model('tool/image');
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		$results = $this->model_catalog_product->getBestSeller($setting['limit']);
 

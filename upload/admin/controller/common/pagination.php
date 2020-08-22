@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonPagination extends Controller {
+namespace Application\Controller\Common;
+class Pagination extends \System\Engine\Controller {
 	public function index($setting) {
 		if (isset($setting['total'])) {
 			$total = $setting['total'];
@@ -49,7 +50,7 @@ class ControllerCommonPagination extends Controller {
 			$data['prev'] = '';
 		}
 
-		$data['links'] = array();
+		$data['links'] = [];
 
 		if ($num_pages > 1) {
 			if ($num_pages <= $num_links) {

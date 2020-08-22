@@ -1,5 +1,6 @@
 <?php
-class ModelSettingEvent extends Model {
+namespace Application\Model\Setting;
+class Event extends \System\Engine\Model {
 	public function addEvent($code, $trigger, $action, $status = 1, $sort_order = 0) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
 	
@@ -35,7 +36,7 @@ class ModelSettingEvent extends Model {
 		return $query->row;
 	}
 		
-	public function getEvents($data = array()) {
+	public function getEvents($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "event`";
 
 		$sort_data = array(

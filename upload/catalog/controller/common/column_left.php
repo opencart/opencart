@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Common;
-class ColumnLeft extends Controller {
+namespace Application\Controller\Common;
+class ColumnLeft extends \System\Engine\Controller {
 	public function index() {
 		$this->load->model('design/layout');
 
@@ -48,7 +48,7 @@ class ColumnLeft extends Controller {
 
 		$this->load->model('setting/module');
 
-		$data['modules'] = array();
+		$data['modules'] = [];
 
 		$modules = $this->model_design_layout->getModules($layout_id, 'column_left');
 

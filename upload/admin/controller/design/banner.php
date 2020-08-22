@@ -1,6 +1,7 @@
 <?php
-class ControllerDesignBanner extends Controller {
-	private $error = array();
+namespace Application\Controller\Design;
+class Banner extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('design/banner');
@@ -143,7 +144,7 @@ class ControllerDesignBanner extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -158,7 +159,7 @@ class ControllerDesignBanner extends Controller {
 		$data['add'] = $this->url->link('design/banner/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/banner/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['banners'] = array();
+		$data['banners'] = [];
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -197,7 +198,7 @@ class ControllerDesignBanner extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -262,7 +263,7 @@ class ControllerDesignBanner extends Controller {
 		if (isset($this->error['banner_image'])) {
 			$data['error_banner_image'] = $this->error['banner_image'];
 		} else {
-			$data['error_banner_image'] = array();
+			$data['error_banner_image'] = [];
 		}
 
 		$url = '';
@@ -279,7 +280,7 @@ class ControllerDesignBanner extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -332,10 +333,10 @@ class ControllerDesignBanner extends Controller {
 		} elseif (!empty($banner_info)) {
 			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id']);
 		} else {
-			$banner_images = array();
+			$banner_images = [];
 		}
 
-		$data['banner_images'] = array();
+		$data['banner_images'] = [];
 
 		foreach ($banner_images as $language_id => $banner_image) {
 			foreach ($banner_image as $value) {

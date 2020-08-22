@@ -1,6 +1,6 @@
 <?php
-namespace Catalog\Controller\Account;
-class Account extends Controller {
+namespace Application\Controller\Account;
+class Account extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
@@ -12,7 +12,7 @@ class Account extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -36,7 +36,7 @@ class Account extends Controller {
 		$data['password'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 		$data['address'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
-		$data['credit_cards'] = array();
+		$data['credit_cards'] = [];
 
 		$files = glob(DIR_APPLICATION . 'controller/extension/credit_card/*.php');
 
@@ -99,7 +99,7 @@ class Account extends Controller {
 	}
 
 	public function country() {
-		$json = array();
+		$json = [];
 
 		$this->load->model('localisation/country');
 

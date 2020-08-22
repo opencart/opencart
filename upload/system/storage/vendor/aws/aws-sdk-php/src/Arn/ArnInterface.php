@@ -33,5 +33,5 @@ interface ArnInterface
 
     public function getResource();
 
-    public function toArray();
+    public function to[];
 }

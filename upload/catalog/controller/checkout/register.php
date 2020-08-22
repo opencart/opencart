@@ -1,12 +1,12 @@
 <?php
-namespace Catalog\Controller\Checkout;
-class Register extends Controller {
+namespace Application\Controller\Checkout;
+class Register extends \System\Engine\Controller
 	public function index() {
 		$this->load->language('checkout/checkout');
 
 		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
 
-		$data['customer_groups'] = array();
+		$data['customer_groups'] = [];
 
 		if (is_array($this->config->get('config_customer_group_display'))) {
 			$this->load->model('account/customer_group');
@@ -78,7 +78,7 @@ class Register extends Controller {
 	public function save() {
 		$this->load->language('checkout/checkout');
 
-		$json = array();
+		$json = [];
 
 		// Validate if customer is already logged out.
 		if ($this->customer->isLogged()) {

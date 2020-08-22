@@ -1,6 +1,7 @@
 <?php
-class ControllerExtensionModuleFeatured extends Controller {
-	private $error = array();
+namespace Extension\OpenCart\Catalog\Controller\Module;
+class Featured extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('extension/module/featured');
@@ -45,7 +46,7 @@ class ControllerExtensionModuleFeatured extends Controller {
 			$data['error_height'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -93,14 +94,14 @@ class ControllerExtensionModuleFeatured extends Controller {
 
 		$this->load->model('catalog/product');
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		if (!empty($this->request->post['product'])) {
 			$products = $this->request->post['product'];
 		} elseif (!empty($module_info['product'])) {
 			$products = $module_info['product'];
 		} else {
-			$products = array();
+			$products = [];
 		}
 
 		foreach ($products as $product_id) {

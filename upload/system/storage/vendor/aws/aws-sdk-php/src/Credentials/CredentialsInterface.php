@@ -48,5 +48,5 @@ interface CredentialsInterface
      *
      * @return array
      */
-    public function toArray();
+    public function to[];
 }

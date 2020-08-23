@@ -9,7 +9,7 @@ class Tax extends \System\Engine\Model {
 					'title'      => $this->tax->getRateName($key),
 					'value'      => $value,
 					'sort_order' => $this->config->get('total_tax_sort_order')
-				);
+				];
 
 				$total += $value;
 			}

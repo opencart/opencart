@@ -348,7 +348,7 @@ class Search extends \System\Engine\Controller {
 
 			$data['limits'] = [];
 
-			$limits = array_unique(array($this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'), 25, 50, 75, 100));
+			$limits = array_unique([$this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'), 25, 50, 75, 100]);
 
 			sort($limits);
 

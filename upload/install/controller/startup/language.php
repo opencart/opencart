@@ -21,6 +21,7 @@ class Language extends \System\Engine\Controller {
 			foreach ($browser_languages as $browser_language) {
 				if (in_array($browser_language, $language_data)) {
 					$code = $browser_language;
+
 					break;
 				}
 			}		

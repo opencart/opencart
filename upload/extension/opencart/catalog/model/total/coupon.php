@@ -77,7 +77,7 @@ class Coupon extends \System\Engine\Model {
 		}
 
 		if ($status) {
-			return array(
+			return [
 				'coupon_id'     => $coupon_query->row['coupon_id'],
 				'code'          => $coupon_query->row['code'],
 				'name'          => $coupon_query->row['name'],
@@ -92,7 +92,7 @@ class Coupon extends \System\Engine\Model {
 				'uses_customer' => $coupon_query->row['uses_customer'],
 				'status'        => $coupon_query->row['status'],
 				'date_added'    => $coupon_query->row['date_added']
-			);
+			];
 		}
 	}
 
@@ -176,7 +176,7 @@ class Coupon extends \System\Engine\Model {
 						'title'      => sprintf($this->language->get('coupon_text_coupon'), $this->session->data['coupon']),
 						'value'      => -$discount_total,
 						'sort_order' => $this->config->get('total_coupon_sort_order')
-					);
+					];
 
 					$total -= $discount_total;
 				}

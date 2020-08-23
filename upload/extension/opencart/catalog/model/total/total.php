@@ -9,6 +9,6 @@ class Total extends \System\Engine\Model {
 			'title' => $this->language->get('text_total'),
 			'value' => max(0, $total),
 			'sort_order' => $this->config->get('total_total_sort_order')
-		);
+		];
 	}
 }

@@ -10,7 +10,7 @@ class LowOrderFee extends \System\Engine\Model {
 				'title'      => $this->language->get('text_low_order_fee'),
 				'value'      => $this->config->get('total_low_order_fee_fee'),
 				'sort_order' => $this->config->get('total_low_order_fee_sort_order')
-			);
+			];
 
 			if ($this->config->get('total_low_order_fee_tax_class_id')) {
 				$tax_rates = $this->tax->getRates($this->config->get('total_low_order_fee_fee'), $this->config->get('total_low_order_fee_tax_class_id'));

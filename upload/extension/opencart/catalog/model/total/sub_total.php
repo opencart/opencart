@@ -17,7 +17,7 @@ class SubTotal extends \System\Engine\Model {
 			'title'      => $this->language->get('text_sub_total'),
 			'value'      => $sub_total,
 			'sort_order' => $this->config->get('total_sub_total_sort_order')
-		);
+		];
 
 		$total += $sub_total;
 	}

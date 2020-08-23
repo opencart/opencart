@@ -266,7 +266,7 @@ class Recurring extends \System\Engine\Controller {
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($recurring_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($recurring_total - $this->config->get('config_pagination'))) ? $recurring_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $recurring_total, ceil($recurring_total / $this->config->get('config_pagination')));
 

@@ -32,12 +32,12 @@ class SaleReturn extends \System\Engine\Controller {
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
-		);
+		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/sale_return', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['action'] = $this->url->link('extension/report/sale_return', 'user_token=' . $this->session->data['user_token']);
 
@@ -114,7 +114,7 @@ class SaleReturn extends \System\Engine\Controller {
 			'filter_return_status_id' => $filter_return_status_id,
 			'start'                   => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                   => $this->config->get('config_pagination')
-		);
+		];
 
 		$return_total = $this->model_extension_report_return->getTotalReturns($filter_data);
 
@@ -125,7 +125,7 @@ class SaleReturn extends \System\Engine\Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'returns'    => $result['returns']
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -139,22 +139,22 @@ class SaleReturn extends \System\Engine\Controller {
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_year'),
 			'value' => 'year',
-		);
+		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_month'),
 			'value' => 'month',
-		);
+		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_week'),
 			'value' => 'week',
-		);
+		];
 
 		$data['groups'][] = [
 			'text'  => $this->language->get('text_day'),
 			'value' => 'day',
-		);
+		];
 
 		$url = '';
 
@@ -174,12 +174,12 @@ class SaleReturn extends \System\Engine\Controller {
 			$url .= '&filter_return_status_id=' . $this->request->get['filter_return_status_id'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_return' . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($return_total - $this->config->get('config_pagination'))) ? $return_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $return_total, ceil($return_total / $this->config->get('config_pagination')));
 

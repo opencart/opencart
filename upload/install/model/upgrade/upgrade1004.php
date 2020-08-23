@@ -129,7 +129,7 @@ class Upgrade1004 extends \System\Engine\Model {
 
 				$module_data = [];
 
-				if (in_array($result['code'], array('latest', 'bestseller', 'special', 'featured'))) {
+				if (in_array($result['code'], ['latest', 'bestseller', 'special', 'featured'])) {
 					if ($value) {
 						foreach ($value as $k => $v) {
 
@@ -184,7 +184,7 @@ class Upgrade1004 extends \System\Engine\Model {
 					} else {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 					}
-				} elseif (in_array($result['code'], array('category', 'account', 'affiliate', 'filter'))) {
+				} elseif (in_array($result['code'], ['category', 'account', 'affiliate', 'filter'])) {
 					foreach ($value as $k => $v) {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET store_id = '" . (int)$result['store_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `key` = '" . ($result['code'] . '_status') . "', value = 1");
@@ -193,7 +193,7 @@ class Upgrade1004 extends \System\Engine\Model {
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'])  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
 						}
 					}
-				} elseif (in_array($result['code'], array('banner', 'carousel', 'slideshow'))) {
+				} elseif (in_array($result['code'], ['banner', 'carousel', 'slideshow'])) {
 					if ($value) {
 						foreach ($value as $k => $v) {
 							$module_data['name'] = ($result['key'] . '_' . $k);
@@ -213,7 +213,7 @@ class Upgrade1004 extends \System\Engine\Model {
 					} else {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 					}
-				} elseif (in_array($result['code'], array('welcome'))) {
+				} elseif (in_array($result['code'], ['welcome'])) {
 					if ($value) {
 						// Install HTML module if not already installed
 						$html_query = $this->db->query("SELECT count(*) FROM " . DB_PREFIX . "extension WHERE code = 'html'");

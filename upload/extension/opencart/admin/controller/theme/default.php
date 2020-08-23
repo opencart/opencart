@@ -1,6 +1,6 @@
 <?php
 namespace Extension\OpenCart\Catalog\Controller\Theme;
-class Default extends \System\Engine\Controller {
+class Basic extends \System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
@@ -101,17 +101,17 @@ class Default extends \System\Engine\Controller {
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme')
-		);
+		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/theme/default', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
-		);
+		];
 
 		$data['action'] = $this->url->link('extension/theme/default', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
 

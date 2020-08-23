@@ -75,7 +75,7 @@ final class Loader {
 		// Check if the requested model is already stored in the registry.
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
 			// Converting a route path to a class name
-			$class = '\Application\Model\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($route, '_/'));
+			$class = '\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 			if (class_exists($class)) {
 				$proxy = new \System\Engine\Proxy();

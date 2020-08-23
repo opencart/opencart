@@ -59,7 +59,7 @@ class Event {
  	*/		
 	public function trigger($event, array $args = []) {
 		foreach ($this->data as $value) {
-			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($value['trigger'], '/')) . '/', $event)) {
+			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
 				$result = $value['action']->execute($this->registry, $args);
 
 				if (!is_null($result) && !($result instanceof Exception)) {

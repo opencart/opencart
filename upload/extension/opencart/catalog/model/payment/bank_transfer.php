@@ -24,7 +24,7 @@ class BankTransfer extends \System\Engine\Model {
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
 				'sort_order' => $this->config->get('payment_bank_transfer_sort_order')
-			);
+			];
 		}
 
 		return $method_data;

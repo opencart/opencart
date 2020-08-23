@@ -25,7 +25,7 @@ class Action {
 		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
 		// Converting a route path to a class name
-		$class = 'Application\Controller\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($route, '_/'));
+		$class = 'Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 		if (class_exists($class)) {
 			$this->class = $class;

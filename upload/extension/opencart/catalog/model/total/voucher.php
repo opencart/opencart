@@ -53,7 +53,7 @@ class Voucher extends \System\Engine\Model {
 		}
 
 		if ($status) {
-			return array(
+			return [
 				'voucher_id'       => $voucher_query->row['voucher_id'],
 				'code'             => $voucher_query->row['code'],
 				'from_name'        => $voucher_query->row['from_name'],
@@ -67,7 +67,7 @@ class Voucher extends \System\Engine\Model {
 				'amount'           => $amount,
 				'status'           => $voucher_query->row['status'],
 				'date_added'       => $voucher_query->row['date_added']
-			);
+			];
 		}
 	}
 
@@ -86,7 +86,7 @@ class Voucher extends \System\Engine\Model {
 						'title'      => sprintf($this->language->get('voucher_text_voucher'), $this->session->data['voucher']),
 						'value'      => -$amount,
 						'sort_order' => $this->config->get('total_voucher_sort_order')
-					);
+					];
 
 					$total -= $amount;
 				} else {

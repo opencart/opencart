@@ -21,7 +21,7 @@ class Store extends \System\Engine\Controller {
 				'store_id' => 0,
 				'name'     => $this->language->get('text_default'),
 				'url'      => HTTP_SERVER . 'index.php?route=common/home&session_id=' . $this->session->getId()
-			);
+			];
 
 			$this->load->model('setting/store');
 

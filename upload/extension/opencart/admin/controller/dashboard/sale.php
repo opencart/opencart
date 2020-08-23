@@ -29,17 +29,17 @@ class Sale extends \System\Engine\Controller {
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard')
-		);
+		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/dashboard/sale', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['action'] = $this->url->link('extension/dashboard/sale', 'user_token=' . $this->session->data['user_token']);
 
@@ -91,9 +91,9 @@ class Sale extends \System\Engine\Controller {
 
 		$this->load->model('extension/dashboard/sale');
 
-		$today = $this->model_extension_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$today = $this->model_extension_dashboard_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);
 
-		$yesterday = $this->model_extension_dashboard_sale->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
+		$yesterday = $this->model_extension_dashboard_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-2 day'))]);
 
 		$difference = $today - $yesterday;
 

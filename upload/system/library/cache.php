@@ -21,7 +21,7 @@ class Cache {
 	 * @param	int		$expire		Optional parameters
 	 *
  	*/
-	public function __construct(string $adaptor, int $expire = 3600) {
+	public function __construct(string $adaptor, $expire = 3600) {
 		$class = 'System\Library\Cache\\' . $adaptor;
 
 		if (class_exists($class)) {

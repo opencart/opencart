@@ -29,7 +29,7 @@ class Free extends \System\Engine\Model {
 				'cost'         => 0.00,
 				'tax_class_id' => 0,
 				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
-			);
+			];
 
 			$method_data = [
 				'code'       => 'free',
@@ -37,7 +37,7 @@ class Free extends \System\Engine\Model {
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_free_sort_order'),
 				'error'      => false
-			);
+			];
 		}
 
 		return $method_data;

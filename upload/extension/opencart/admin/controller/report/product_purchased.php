@@ -32,12 +32,12 @@ class ProductPurchased extends \System\Engine\Controller {
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
-		);
+		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/product_purchased', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['action'] = $this->url->link('extension/report/product_purchased', 'user_token=' . $this->session->data['user_token']);
 
@@ -107,7 +107,7 @@ class ProductPurchased extends \System\Engine\Controller {
 			'filter_order_status_id' => $filter_order_status_id,
 			'start'                  => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                  => $this->config->get('config_pagination')
-		);
+		];
 
 		$product_total = $this->model_extension_report_product->getTotalPurchased($filter_data);
 
@@ -119,7 +119,7 @@ class ProductPurchased extends \System\Engine\Controller {
 				'model'    => $result['model'],
 				'quantity' => $result['quantity'],
 				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency'))
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -142,7 +142,7 @@ class ProductPurchased extends \System\Engine\Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),

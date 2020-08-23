@@ -8,7 +8,7 @@ class Shipping extends \System\Engine\Model {
 				'title'      => $this->session->data['shipping_method']['title'],
 				'value'      => $this->session->data['shipping_method']['cost'],
 				'sort_order' => $this->config->get('total_shipping_sort_order')
-			);
+			];
 
 			if ($this->session->data['shipping_method']['tax_class_id']) {
 				$tax_rates = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);

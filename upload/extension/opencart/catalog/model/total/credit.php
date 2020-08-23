@@ -15,7 +15,7 @@ class Credit extends \System\Engine\Model {
 					'title'      => $this->language->get('text_credit'),
 					'value'      => -$credit,
 					'sort_order' => $this->config->get('total_credit_sort_order')
-				);
+				];
 
 				$total -= $credit;
 			}

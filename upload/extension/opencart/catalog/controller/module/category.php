@@ -37,12 +37,12 @@ class Category extends \System\Engine\Controller {
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
 
 				foreach ($children as $child) {
-					$filter_data = ['filter_category_id' => $child['category_id'], 'filter_sub_category' => true);
+					$filter_data = ['filter_category_id' => $child['category_id'], 'filter_sub_category' => true];
 
 					$children_data[] = [
 						'category_id' => $child['category_id'],
-						'name' => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-						'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'] . '_' . $child['category_id'])
+						'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+						'href'        => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'] . '_' . $child['category_id'])
 					];
 				}
 			}
@@ -50,7 +50,7 @@ class Category extends \System\Engine\Controller {
 			$filter_data = [
 				'filter_category_id'  => $category['category_id'],
 				'filter_sub_category' => true
-			);
+			];
 
 			$data['categories'][] = [
 				'category_id' => $category['category_id'],

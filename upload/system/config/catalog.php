@@ -24,7 +24,7 @@ $_['template_directory'] = '';
 $_['library_autoload']   = [];
 
 // Actions
-$_['action_pre_action'] = [
+$_['action_pre_action']  = [
 	'startup/startup',
 	'startup/marketing',
 	'startup/error',
@@ -35,7 +35,7 @@ $_['action_pre_action'] = [
 ];
 
 // Action Events
-$_['action_event'] = [
+$_['action_event']      = [
 	'controller/*/before' => [
 		'event/language/before',
 		//'event/debug/before'

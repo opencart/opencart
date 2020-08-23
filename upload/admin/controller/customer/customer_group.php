@@ -231,7 +231,7 @@ class CustomerGroup extends \System\Engine\Controller {
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_group_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_group_total - $this->config->get('config_pagination'))) ? $customer_group_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_group_total, ceil($customer_group_total / $this->config->get('config_pagination')));
 

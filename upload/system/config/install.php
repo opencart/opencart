@@ -28,4 +28,4 @@ $_['action_pre_action'] = [
 ];
 
 // Action Events
-$_['action_event'] = [];
+$_['action_event']      = [];

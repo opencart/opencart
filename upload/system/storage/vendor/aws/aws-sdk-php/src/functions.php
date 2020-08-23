@@ -330,8 +330,8 @@ function guzzle_major_version()
         if ($version[0] === '5') {
             return $cache = 5;
         }
-    } elseif (method_exists(Client::class, 'sendRequest')) {
-        return $cache = 7;
+    } elseif (defined('\GuzzleHttp\ClientInterface::MAJOR_VERSION')) {
+        return $cache = ClientInterface::MAJOR_VERSION;
     }
 
     throw new \RuntimeException('Unable to determine what Guzzle version is installed.');
@@ -430,6 +430,17 @@ function is_valid_hostname($hostname)
         && preg_match("/^.{1,253}$/", $hostname)
         && preg_match("/^[^\.]{1,63}(\.[^\.]{0,63})*$/", $hostname)
     );
+}
+
+/**
+ * Checks if supplied parameter is a valid host label
+ *
+ * @param $label
+ * @return bool
+ */
+function is_valid_hostlabel($label)
+{
+    return preg_match("/^(?!-)[a-zA-Z0-9-]{1,63}(?<!-)$/", $label);
 }
 
 /**

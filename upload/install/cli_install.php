@@ -107,7 +107,7 @@ class Cli extends \System\Engine\Controller {
 
 	public function install($argv) {
 		// Options
-		$option = array(
+		$option = [
 			'username'    => 'admin',
 			'cloud'       => 0,
 			'db_driver'   => 'mysqli',
@@ -115,7 +115,7 @@ class Cli extends \System\Engine\Controller {
 			'db_password' => '',
 			'db_port'     => '3306',
 			'db_prefix'   => 'oc_'
-		);
+		];
 
 		// Turn args into an array
 		for ($i = 0; $i < count($argv); $i++) {
@@ -143,7 +143,7 @@ class Cli extends \System\Engine\Controller {
 
 		// Cloud Install
 		if (!$cloud) {
-			$required = array(
+			$required = [
 				'username',    // Already set
 				'email',
 				'password',
@@ -156,14 +156,14 @@ class Cli extends \System\Engine\Controller {
 				'db_database',
 				'db_port',     // Already set
 				'db_prefix'    // Already set
-			);
+			];
 		} else {
-			$required = array(
+			$required = [
 				'username', // Already set
 				'email',
 				'password',
 				'cloud'     // Already set
-			);
+			];
 		}
 
 		// Validation
@@ -491,7 +491,7 @@ class Cli extends \System\Engine\Controller {
 	}
 
 	public function usage() {
-		$option = implode(' ', array(
+		$option = implode(' ', [
 			'--username',
 			'admin',
 			'--email',
@@ -516,7 +516,7 @@ class Cli extends \System\Engine\Controller {
 			'3306',
 			'--db_prefix',
 			'oc_'
-		));
+		]);
 
 		$output  = 'Usage:' . "\n";
 		$output .= '======' . "\n\n";

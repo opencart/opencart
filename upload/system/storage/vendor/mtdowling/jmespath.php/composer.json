@@ -13,13 +13,13 @@
   ],
 
   "require": {
-    "php": ">=5.4.0",
-    "symfony/polyfill-mbstring": "^1.4"
+    "php": "^5.4 || ^7.0 || ^8.0",
+    "symfony/polyfill-mbstring": "^1.17"
   },
 
   "require-dev": {
-    "composer/xdebug-handler": "^1.2",
-    "phpunit/phpunit": "^4.8.36|^7.5.15"
+    "composer/xdebug-handler": "^1.4",
+    "phpunit/phpunit": "^4.8.36 || ^7.5.15"
   },
 
   "autoload": {
@@ -33,7 +33,7 @@
 
   "extra": {
     "branch-alias": {
-      "dev-master": "2.5-dev"
+      "dev-master": "2.6-dev"
     }
   }
 }

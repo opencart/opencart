@@ -24,20 +24,20 @@ class ProductViewed extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/product_viewed', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['action'] = $this->url->link('extension/report/product_viewed', 'user_token=' . $this->session->data['user_token']);
 
@@ -83,10 +83,10 @@ class ProductViewed extends \System\Engine\Controller {
 
 		$this->load->model('extension/report/product');
 
-		$filter_data = array(
+		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$data['products'] = [];
 
@@ -103,12 +103,12 @@ class ProductViewed extends \System\Engine\Controller {
 				$percent = 0;
 			}
 
-			$data['products'][] = array(
+			$data['products'][] = [
 				'name'    => $result['name'],
 				'model'   => $result['model'],
 				'viewed'  => $result['viewed'],
 				'percent' => $percent . '%'
-			);
+			];
 		}
 		
 		$data['user_token'] = $this->session->data['user_token'];
@@ -119,12 +119,12 @@ class ProductViewed extends \System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($product_total - $this->config->get('config_pagination'))) ? $product_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $product_total, ceil($product_total / $this->config->get('config_pagination')));
 		

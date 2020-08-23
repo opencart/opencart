@@ -43,7 +43,7 @@ abstract class RestSerializer
     public function __invoke(CommandInterface $command)
     {
         $operation = $this->api->getOperation($command->getName());
-        $args = $command->to[];
+        $args = $command->toArray();
         $opts = $this->serialize($operation, $args);
         $uri = $this->buildEndpoint($operation, $args, $opts);
 

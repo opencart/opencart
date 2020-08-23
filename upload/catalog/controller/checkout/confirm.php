@@ -197,7 +197,7 @@ class Confirm extends \System\Engine\Controller {
 				$option_data = [];
 
 				foreach ($product['option'] as $option) {
-					$option_data[] = array(
+					$option_data[] = [
 						'product_option_id' => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
 						'option_id' => $option['option_id'],
@@ -205,10 +205,10 @@ class Confirm extends \System\Engine\Controller {
 						'name' => $option['name'],
 						'value' => $option['value'],
 						'type' => $option['type']
-					);
+					];
 				}
 
-				$order_data['products'][] = array(
+				$order_data['products'][] = [
 					'product_id' => $product['product_id'],
 					'master_id' => $product['master_id'],
 					'name' => $product['name'],
@@ -221,7 +221,7 @@ class Confirm extends \System\Engine\Controller {
 					'total' => $product['total'],
 					'tax' => $this->tax->getTax($product['price'], $product['tax_class_id']),
 					'reward' => $product['reward']
-				);
+				];
 			}
 
 			// Gift Voucher
@@ -229,7 +229,7 @@ class Confirm extends \System\Engine\Controller {
 
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
-					$order_data['vouchers'][] = array(
+					$order_data['vouchers'][] = [
 						'description' => $voucher['description'],
 						'code' => token(10),
 						'to_name' => $voucher['to_name'],
@@ -239,7 +239,7 @@ class Confirm extends \System\Engine\Controller {
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
 						'message' => $voucher['message'],
 						'amount' => $voucher['amount']
-					);
+					];
 				}
 			}
 
@@ -310,13 +310,13 @@ class Confirm extends \System\Engine\Controller {
 
 			$this->load->model('tool/upload');
 
-			$frequencies = array(
+			$frequencies = [
 				'day' => $this->language->get('text_day'),
 				'week' => $this->language->get('text_week'),
 				'semi_month' => $this->language->get('text_semi_month'),
 				'month' => $this->language->get('text_month'),
 				'year' => $this->language->get('text_year'),
-			);
+			];
 
 			$data['products'] = [];
 
@@ -336,10 +336,10 @@ class Confirm extends \System\Engine\Controller {
 						}
 					}
 
-					$option_data[] = array(
+					$option_data[] = [
 						'name' => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					);
+					];
 				}
 
 				$recurring = '';
@@ -356,7 +356,7 @@ class Confirm extends \System\Engine\Controller {
 					}
 				}
 
-				$data['products'][] = array(
+				$data['products'][] = [
 					'cart_id' => $product['cart_id'],
 					'product_id' => $product['product_id'],
 					'name' => $product['name'],
@@ -368,7 +368,7 @@ class Confirm extends \System\Engine\Controller {
 					'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
 					'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
 					'href' => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-				);
+				];
 			}
 
 			// Gift Voucher
@@ -376,20 +376,20 @@ class Confirm extends \System\Engine\Controller {
 
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
-					$data['vouchers'][] = array(
+					$data['vouchers'][] = [
 						'description' => $voucher['description'],
 						'amount' => $this->currency->format($voucher['amount'], $this->session->data['currency'])
-					);
+					];
 				}
 			}
 
 			$data['totals'] = [];
 
 			foreach ($totals as $total) {
-				$data['totals'][] = array(
+				$data['totals'][] = [
 					'title' => $total['title'],
 					'text' => $this->currency->format($total['value'], $this->session->data['currency'])
-				);
+				];
 			}
 
 			$data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);

@@ -140,20 +140,20 @@ class Setting extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_stores'),
 			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
@@ -205,10 +205,10 @@ class Setting extends \System\Engine\Controller {
 			if ($this->config->get('theme_' . $code . '_status')) {
 				$this->load->language('extension/theme/' . $code, 'extension');
 
-				$data['themes'][] = array(
+				$data['themes'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $code
-				);
+				];
 			}
 		}
 
@@ -340,10 +340,10 @@ class Setting extends \System\Engine\Controller {
 
 			$hour = ' (' . date('P', $timestamp) . ')';
 
-			$data['timezones'][] = array(
+			$data['timezones'][] = [
 				'text'  => $timezone . $hour,
 				'value' => $timezone
-			);
+			];
 		}
 
 		date_default_timezone_set($this->config->get('config_timezone'));
@@ -380,10 +380,10 @@ class Setting extends \System\Engine\Controller {
 			if ($this->config->get('currency_' . $code . '_status')) {
 				$this->load->language('extension/currency/' . $code, 'extension');
 
-				$data['currency_engines'][] = array(
+				$data['currency_engines'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $code
-				);
+				];
 			}
 		}
 
@@ -718,10 +718,10 @@ class Setting extends \System\Engine\Controller {
 			$this->load->language('extension/captcha/' . $code, $code);
 
 			if ($this->config->get('captcha_' . $code . '_status')) {
-				$data['captchas'][] = array(
+				$data['captchas'][] = [
 					'text'  => $this->language->get($code . '_heading_title'),
 					'value' => $code
-				);
+				];
 			}
 		}
 
@@ -735,30 +735,30 @@ class Setting extends \System\Engine\Controller {
 
 		$data['captcha_pages'] = [];
 
-		$data['captcha_pages'][] = array(
+		$data['captcha_pages'][] = [
 			'text'  => $this->language->get('text_register'),
 			'value' => 'register'
-		);
+		];
 
-		$data['captcha_pages'][] = array(
+		$data['captcha_pages'][] = [
 			'text'  => $this->language->get('text_guest'),
 			'value' => 'guest'
-		);
+		];
 
-		$data['captcha_pages'][] = array(
+		$data['captcha_pages'][] = [
 			'text'  => $this->language->get('text_review'),
 			'value' => 'review'
-		);
+		];
 
-		$data['captcha_pages'][] = array(
+		$data['captcha_pages'][] = [
 			'text'  => $this->language->get('text_return'),
 			'value' => 'return'
-		);
+		];
 
-		$data['captcha_pages'][] = array(
+		$data['captcha_pages'][] = [
 			'text'  => $this->language->get('text_contact'),
 			'value' => 'contact'
-		);
+		];
 
 		if (isset($this->request->post['config_logo'])) {
 			$data['config_logo'] = $this->request->post['config_logo'];
@@ -844,25 +844,25 @@ class Setting extends \System\Engine\Controller {
 
 		$data['mail_alerts'] = [];
 
-		$data['mail_alerts'][] = array(
+		$data['mail_alerts'][] = [
 			'text'  => $this->language->get('text_mail_account'),
 			'value' => 'account'
-		);
+		];
 
-		$data['mail_alerts'][] = array(
+		$data['mail_alerts'][] = [
 			'text'  => $this->language->get('text_mail_affiliate'),
 			'value' => 'affiliate'
-		);
+		];
 
-		$data['mail_alerts'][] = array(
+		$data['mail_alerts'][] = [
 			'text'  => $this->language->get('text_mail_order'),
 			'value' => 'order'
-		);
+		];
 
-		$data['mail_alerts'][] = array(
+		$data['mail_alerts'][] = [
 			'text'  => $this->language->get('text_mail_review'),
 			'value' => 'review'
-		);
+		];
 
 		if (isset($this->request->post['config_mail_alert_email'])) {
 			$data['config_mail_alert_email'] = $this->request->post['config_mail_alert_email'];
@@ -1014,11 +1014,11 @@ class Setting extends \System\Engine\Controller {
 			$this->error['complete_status'] = $this->language->get('error_complete_status');
 		}
 
-		$disallowed = array(
+		$disallowed = [
 			'php',
 			'php4',
-			'php3',
-		);
+			'php3'
+		];
 
 		$extensions = explode("\n", $this->request->post['config_file_ext_allowed']);
 
@@ -1030,11 +1030,11 @@ class Setting extends \System\Engine\Controller {
 			}
 		}
 
-		$disallowed = array(
+		$disallowed = [
 			'php',
 			'php4',
-			'php3',
-		);
+			'php3'
+		];
 
 		$mimes = explode("\n", $this->request->post['config_file_mime_allowed']);
 

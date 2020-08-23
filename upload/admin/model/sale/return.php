@@ -63,7 +63,7 @@ class Returns extends \System\Engine\Model {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'r.return_id',
 			'r.order_id',
 			'customer',
@@ -72,7 +72,7 @@ class Returns extends \System\Engine\Model {
 			'return_status',
 			'r.date_added',
 			'r.date_modified'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

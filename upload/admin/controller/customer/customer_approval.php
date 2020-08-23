@@ -8,15 +8,15 @@ class CustomerApproval extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -72,7 +72,7 @@ class CustomerApproval extends \System\Engine\Controller {
 
 		$data['customer_approvals'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_customer'          => $filter_customer,
 			'filter_email'             => $filter_email,
 			'filter_customer_group_id' => $filter_customer_group_id,
@@ -80,7 +80,7 @@ class CustomerApproval extends \System\Engine\Controller {
 			'filter_date_added'        => $filter_date_added,
 			'start'                    => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                    => $this->config->get('config_pagination')
-		);
+		];
 
 		$this->load->model('customer/customer_approval');	
 
@@ -89,7 +89,7 @@ class CustomerApproval extends \System\Engine\Controller {
 		$results = $this->model_customer_customer_approval->getCustomerApprovals($filter_data);
 
 		foreach ($results as $result) {
-			$data['customer_approvals'][] = array(
+			$data['customer_approvals'][] = [
 				'customer_id'    => $result['customer_id'],
 				'customer'       => $result['customer'],
 				'email'          => $result['email'],
@@ -99,7 +99,7 @@ class CustomerApproval extends \System\Engine\Controller {
 				'approve'        => $this->url->link('customer/customer_approval/approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type']),
 				'deny'           => $this->url->link('customer/customer_approval/deny', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type']),
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
-			);
+			];
 		}
 
 		$url = '';
@@ -124,12 +124,12 @@ class CustomerApproval extends \System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_approval_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('customer/customer_approval/customer_approval', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_approval_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_approval_total - $this->config->get('config_pagination'))) ? $customer_approval_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_approval_total, ceil($customer_approval_total / $this->config->get('config_pagination')));
 

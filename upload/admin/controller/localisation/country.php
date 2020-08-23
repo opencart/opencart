@@ -146,40 +146,40 @@ class Country extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('localisation/country/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/country/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['countries'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$country_total = $this->model_localisation_country->getTotalCountries();
 
 		$results = $this->model_localisation_country->getCountries($filter_data);
 
 		foreach ($results as $result) {
-			$data['countries'][] = array(
+			$data['countries'][] = [
 				'country_id' => $result['country_id'],
 				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : null),
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
 				'edit'       => $this->url->link('localisation/country/edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
-			);
+			];
 		}
 
 		if (isset($this->error['warning'])) {
@@ -228,12 +228,12 @@ class Country extends \System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $country_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($country_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($country_total - $this->config->get('config_pagination'))) ? $country_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $country_total, ceil($country_total / $this->config->get('config_pagination')));
 
@@ -278,15 +278,15 @@ class Country extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (!isset($this->request->get['country_id'])) {
 			$data['action'] = $this->url->link('localisation/country/add', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -420,7 +420,7 @@ class Country extends \System\Engine\Controller {
 		if ($country_info) {
 			$this->load->model('localisation/zone');
 
-			$json = array(
+			$json = [
 				'country_id'        => $country_info['country_id'],
 				'name'              => $country_info['name'],
 				'iso_code_2'        => $country_info['iso_code_2'],
@@ -429,7 +429,7 @@ class Country extends \System\Engine\Controller {
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
 				'status'            => $country_info['status']
-			);
+			];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

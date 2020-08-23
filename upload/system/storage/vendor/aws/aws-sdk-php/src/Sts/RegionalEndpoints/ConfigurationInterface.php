@@ -18,5 +18,5 @@ interface ConfigurationInterface
      *
      * @return array
      */
-    public function to[];
+    public function toArray();
 }

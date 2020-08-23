@@ -317,15 +317,15 @@ class Product extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['copy'] = $this->url->link('catalog/product/copy', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -333,7 +333,7 @@ class Product extends \System\Engine\Controller {
 
 		$data['products'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_name'     => $filter_name,
 			'filter_model'    => $filter_model,
 			'filter_price'    => $filter_price,
@@ -343,7 +343,7 @@ class Product extends \System\Engine\Controller {
 			'order'           => $order,
 			'start'           => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'           => $this->config->get('config_pagination')
-		);
+		];
 
 		$this->load->model('tool/image');
 
@@ -370,7 +370,7 @@ class Product extends \System\Engine\Controller {
 				}
 			}
 
-			$data['products'][] = array(
+			$data['products'][] = [
 				'product_id' => $result['product_id'],
 				'image'      => $image,
 				'name'       => $result['name'],
@@ -381,7 +381,7 @@ class Product extends \System\Engine\Controller {
 				'status'     => $result['status'],
 				'edit'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['master_id'] ? '&master_id=' . $result['master_id'] : '') . $url),
 				'variant'    => (!$result['master_id'] ? $this->url->link('catalog/product/add', 'user_token=' . $this->session->data['user_token'] . '&master_id=' . $result['product_id'] . $url) : '')
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -470,12 +470,12 @@ class Product extends \System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($product_total - $this->config->get('config_pagination'))) ? $product_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $product_total, ceil($product_total / $this->config->get('config_pagination')));
 
@@ -577,15 +577,15 @@ class Product extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (isset($this->request->get['master_id'])) {
 			$master = $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['master_id']);
@@ -921,10 +921,10 @@ class Product extends \System\Engine\Controller {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 
 			if ($category_info) {
-				$data['product_categories'][] = array(
+				$data['product_categories'][] = [
 					'category_id' => $category_info['category_id'],
 					'name'        => ($category_info['path']) ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name']
-				);
+				];
 			}
 		}
 
@@ -945,10 +945,10 @@ class Product extends \System\Engine\Controller {
 			$filter_info = $this->model_catalog_filter->getFilter($filter_id);
 
 			if ($filter_info) {
-				$data['product_filters'][] = array(
+				$data['product_filters'][] = [
 					'filter_id' => $filter_info['filter_id'],
 					'name'      => $filter_info['group'] . ' &gt; ' . $filter_info['name']
-				);
+				];
 			}
 		}
 
@@ -957,18 +957,18 @@ class Product extends \System\Engine\Controller {
 
 		$data['stores'] = [];
 
-		$data['stores'][] = array(
+		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
-		);
+		];
 
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
-			$data['stores'][] = array(
+			$data['stores'][] = [
 				'store_id' => $store['store_id'],
 				'name'     => $store['name']
-			);
+			];
 		}
 
 		if (isset($this->request->post['product_store'])) {
@@ -976,7 +976,7 @@ class Product extends \System\Engine\Controller {
 		} elseif (!empty($product_info)) {
 			$data['product_store'] = $this->model_catalog_product->getStores($product_id);
 		} else {
-			$data['product_store'] = array(0);
+			$data['product_store'] = [0];
 		}
 
 		// Downloads
@@ -996,10 +996,10 @@ class Product extends \System\Engine\Controller {
 			$download_info = $this->model_catalog_download->getDownload($download_id);
 
 			if ($download_info) {
-				$data['product_downloads'][] = array(
+				$data['product_downloads'][] = [
 					'download_id' => $download_info['download_id'],
 					'name'        => $download_info['name']
-				);
+				];
 			}
 		}
 
@@ -1018,10 +1018,10 @@ class Product extends \System\Engine\Controller {
 			$related_info = $this->model_catalog_product->getProduct($related_id);
 
 			if ($related_info) {
-				$data['product_relateds'][] = array(
+				$data['product_relateds'][] = [
 					'product_id' => $related_info['product_id'],
 					'name'       => $related_info['name']
-				);
+				];
 			}
 		}
 
@@ -1042,11 +1042,11 @@ class Product extends \System\Engine\Controller {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($product_attribute['attribute_id']);
 
 			if ($attribute_info) {
-				$data['product_attributes'][] = array(
+				$data['product_attributes'][] = [
 					'attribute_id'                  => $product_attribute['attribute_id'],
 					'name'                          => $attribute_info['name'],
 					'product_attribute_description' => $product_attribute['product_attribute_description']
-				);
+				];
 			}
 		}
 
@@ -1075,7 +1075,7 @@ class Product extends \System\Engine\Controller {
 					$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
 
 					if ($option_value_info) {
-						$product_option_value_data[] = array(
+						$product_option_value_data[] = [
 							'product_option_value_id' => $product_option_value['product_option_value_id'],
 							'option_value_id'         => $product_option_value['option_value_id'],
 							'name'                    => $option_value_info['name'],
@@ -1087,12 +1087,12 @@ class Product extends \System\Engine\Controller {
 							'points_prefix'           => $product_option_value['points_prefix'],
 							'weight'                  => round($product_option_value['weight']),
 							'weight_prefix'           => $product_option_value['weight_prefix']
-						);
+						];
 					}
 				}
 			}
 
-			$data['product_options'][] = array(
+			$data['product_options'][] = [
 				'product_option_id'    => $product_option['product_option_id'],
 				'product_option_value' => $product_option_value_data,
 				'option_id'            => $product_option['option_id'],
@@ -1100,7 +1100,7 @@ class Product extends \System\Engine\Controller {
 				'type'                 => $product_option['type'],
 				'value'                => isset($product_option['value']) ? $product_option['value'] : '',
 				'required'             => $product_option['required']
-			);
+			];
 		}
 
 		$data['option_values'] = [];
@@ -1143,19 +1143,19 @@ class Product extends \System\Engine\Controller {
 					$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
 
 					if ($option_value_info) {
-						$product_option_value_data[] = array(
+						$product_option_value_data[] = [
 							'product_option_value_id' => $product_option_value['product_option_value_id'],
 							'option_value_id'         => $product_option_value['option_value_id'],
 							'name'                    => $option_value_info['name'],
 							'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
 							'price_prefix'            => $product_option_value['price_prefix']
-						);
+						];
 					}
 				}
 
 				$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
 
-				$data['options'][] = array(
+				$data['options'][] = [
 					'product_option_id'    => $product_option['product_option_id'],
 					'product_option_value' => $product_option_value_data,
 					'option_id'            => $product_option['option_id'],
@@ -1163,7 +1163,7 @@ class Product extends \System\Engine\Controller {
 					'type'                 => $option_info['type'],
 					'value'                => isset($data['variant'][$product_option['product_option_id']]) ? $data['variant'][$product_option['product_option_id']] : $product_option['value'],
 					'required'             => $product_option['required']
-				);
+				];
 			}
 		}
 
@@ -1192,14 +1192,14 @@ class Product extends \System\Engine\Controller {
 		$data['product_discounts'] = [];
 
 		foreach ($product_discounts as $product_discount) {
-			$data['product_discounts'][] = array(
+			$data['product_discounts'][] = [
 				'customer_group_id' => $product_discount['customer_group_id'],
 				'quantity'          => $product_discount['quantity'],
 				'priority'          => $product_discount['priority'],
 				'price'             => $product_discount['price'],
 				'date_start'        => ($product_discount['date_start'] != '0000-00-00') ? $product_discount['date_start'] : '',
 				'date_end'          => ($product_discount['date_end'] != '0000-00-00') ? $product_discount['date_end'] : ''
-			);
+			];
 		}
 
 		// Special
@@ -1214,13 +1214,13 @@ class Product extends \System\Engine\Controller {
 		$data['product_specials'] = [];
 
 		foreach ($product_specials as $product_special) {
-			$data['product_specials'][] = array(
+			$data['product_specials'][] = [
 				'customer_group_id' => $product_special['customer_group_id'],
 				'priority'          => $product_special['priority'],
 				'price'             => $product_special['price'],
 				'date_start'        => ($product_special['date_start'] != '0000-00-00') ? $product_special['date_start'] : '',
 				'date_end'          => ($product_special['date_end'] != '0000-00-00') ? $product_special['date_end'] : ''
-			);
+			];
 		}
 
 		// Image
@@ -1262,11 +1262,11 @@ class Product extends \System\Engine\Controller {
 				$thumb = 'no_image.png';
 			}
 
-			$data['product_images'][] = array(
+			$data['product_images'][] = [
 				'image'      => $image,
 				'thumb'      => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
 				'sort_order' => $product_image['sort_order']
-			);
+			];
 		}
 
 		// Rewards
@@ -1412,12 +1412,12 @@ class Product extends \System\Engine\Controller {
 			$this->load->model('catalog/product');
 			$this->load->model('catalog/option');
 
-			$filter_data = array(
+			$filter_data = [
 				'filter_name'  => $filter_name,
 				'filter_model' => $filter_model,
 				'start'        => 0,
 				'limit'        => $limit
-			);
+			];
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
 
@@ -1436,17 +1436,17 @@ class Product extends \System\Engine\Controller {
 							$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
 
 							if ($option_value_info) {
-								$product_option_value_data[] = array(
+								$product_option_value_data[] = [
 									'product_option_value_id' => $product_option_value['product_option_value_id'],
 									'option_value_id'         => $product_option_value['option_value_id'],
 									'name'                    => $option_value_info['name'],
 									'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
 									'price_prefix'            => $product_option_value['price_prefix']
-								);
+								];
 							}
 						}
 
-						$option_data[] = array(
+						$option_data[] = [
 							'product_option_id'    => $product_option['product_option_id'],
 							'product_option_value' => $product_option_value_data,
 							'option_id'            => $product_option['option_id'],
@@ -1454,17 +1454,17 @@ class Product extends \System\Engine\Controller {
 							'type'                 => $option_info['type'],
 							'value'                => $product_option['value'],
 							'required'             => $product_option['required']
-						);
+						];
 					}
 				}
 
-				$json[] = array(
+				$json[] = [
 					'product_id' => $result['product_id'],
 					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 					'model'      => $result['model'],
 					'option'     => $option_data,
 					'price'      => $result['price']
-				);
+				];
 			}
 		}
 

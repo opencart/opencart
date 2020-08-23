@@ -9,19 +9,19 @@ class Upgrade1001 extends \System\Engine\Model {
 
 		$events = [];
 
-		$events[] = array(
+		$events[] = [
 			'code'    => 'admin_currency_add',
 			'trigger' => 'admin/model/currency/addCurrency/after',
 			'action'  => 'event/currency'
 		);
 
-		$events[] = array(
+		$events[] = [
 			'code'    => 'admin_currency_edit',
 			'trigger' => 'admin/model/currency/editCurrency/after',
 			'action'  => 'event/currency'
 		);
 
-		$events[] = array(
+		$events[] = [
 			'code'    => 'admin_setting',
 			'trigger' => 'admin/model/setting/setting/editSetting/after',
 			'action'  => 'event/currency'

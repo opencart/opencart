@@ -10,10 +10,10 @@ class Maintenance extends \System\Engine\Controller {
 				$route = $this->config->get('action_default');
 			}
 
-			$ignore = array(
+			$ignore = [
 				'common/language/language',
 				'common/currency/currency'
-			);
+			];
 
 			// Show site if logged in as admin
 			$this->user = new \System\Library\Cart\User($this->registry);

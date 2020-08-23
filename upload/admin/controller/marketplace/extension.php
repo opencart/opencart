@@ -9,15 +9,15 @@ class Extension extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -54,11 +54,11 @@ class Extension extends \System\Engine\Controller {
 			if ($extension != 'promotion' && $this->user->hasPermission('access', 'extension/' . $extension)) {
 				$files = $this->model_setting_extension->getPaths('admin/controller/' . $extension . '/%');
 
-				$data['categories'][] = array(
+				$data['categories'][] = [
 					'code' => $extension,
 					'text' => $this->language->get($extension . '_heading_title') . ' (' . count($files) . ')',
 					'href' => $this->url->link('extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
-				);
+				];
 			}
 		}
 

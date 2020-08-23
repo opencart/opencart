@@ -19,7 +19,12 @@ use GuzzleHttp\Promise;
  */
 class S3EncryptionMultipartUploader extends MultipartUploader
 {
-    use EncryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
+    use CipherBuilderTrait;
+    use CryptoParamsTrait;
+    use EncryptionTrait;
+    use UserAgentTrait;
+
+    const CRYPTO_VERSION = '1n';
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -47,7 +52,8 @@ class S3EncryptionMultipartUploader extends MultipartUploader
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
      *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
+     *            See also: AbstractCryptoClient::$supportedCiphers. Note that
+     *            cbc is deprecated and gcm should be used when possible.
      *       - KeySize: (int) 128|192|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
@@ -101,6 +107,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
         $source,
         array $config = []
     ) {
+        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
         $config['params'] = [];
         if (!empty($config['bucket'])) {

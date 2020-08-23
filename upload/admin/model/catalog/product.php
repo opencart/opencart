@@ -396,13 +396,13 @@ class Product extends \System\Engine\Model {
 				$override = [];
 			}
 
-			$ignore = array(
+			$ignore = [
 				'product_id',
 				'master_id',
 				'quantity',
 				'override',
 				'variant'
-			);
+			];
 
 			foreach ($master_info as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
@@ -526,13 +526,13 @@ class Product extends \System\Engine\Model {
 				$override = [];
 			}
 
-			$ignore = array(
+			$ignore = [
 				'product_id',
 				'master_id',
 				'quantity',
 				'override',
 				'variant'
-			);
+			];
 
 			foreach ($master_info as $key => $value) {
 				// So if key not in override or ignore list we replace with master value
@@ -646,7 +646,7 @@ class Product extends \System\Engine\Model {
 		unset($data['product_option']);
 
 		// If product is master update variants
-		$products = $this->model_catalog_product->getProducts(array('filter_master_id' => $master_id));
+		$products = $this->model_catalog_product->getProducts(['filter_master_id' => $master_id]);
 
 		foreach ($products as $product) {
 			$product_data = [];
@@ -662,13 +662,13 @@ class Product extends \System\Engine\Model {
 				$override = [];
 			}
 
-			$replace = array(
+			$replace = [
 				'product_id',
 				'master_id',
 				'quantity',
 				'override',
 				'variant'
-			);
+			];
 
 			// Now we want to
 			foreach ($product as $key => $value) {
@@ -812,14 +812,14 @@ class Product extends \System\Engine\Model {
 
 		$sql .= " GROUP BY p.product_id";
 
-		$sort_data = array(
+		$sort_data = [
 			'pd.name',
 			'p.model',
 			'p.price',
 			'p.quantity',
 			'p.status',
 			'p.sort_order'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -856,14 +856,14 @@ class Product extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
-			$product_description_data[$result['language_id']] = array(
+			$product_description_data[$result['language_id']] = [
 				'name'             => $result['name'],
 				'description'      => $result['description'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword'],
 				'tag'              => $result['tag']
-			);
+			];
 		}
 
 		return $product_description_data;
@@ -904,13 +904,13 @@ class Product extends \System\Engine\Model {
 			$product_attribute_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "' AND attribute_id = '" . (int)$product_attribute['attribute_id'] . "'");
 
 			foreach ($product_attribute_description_query->rows as $product_attribute_description) {
-				$product_attribute_description_data[$product_attribute_description['language_id']] = array('text' => $product_attribute_description['text']);
+				$product_attribute_description_data[$product_attribute_description['language_id']] = ['text' => $product_attribute_description['text']];
 			}
 
-			$product_attribute_data[] = array(
+			$product_attribute_data[] = [
 				'attribute_id'                  => $product_attribute['attribute_id'],
 				'product_attribute_description' => $product_attribute_description_data
-			);
+			];
 		}
 
 		return $product_attribute_data;
@@ -927,7 +927,7 @@ class Product extends \System\Engine\Model {
 			$product_option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` pov LEFT JOIN `" . DB_PREFIX . "option_value` ov ON (pov.`option_value_id` = ov.`option_value_id`) WHERE pov.`product_option_id` = '" . (int)$product_option['product_option_id'] . "' ORDER BY ov.`sort_order` ASC");
 
 			foreach ($product_option_value_query->rows as $product_option_value) {
-				$product_option_value_data[] = array(
+				$product_option_value_data[] = [
 					'product_option_value_id' => $product_option_value['product_option_value_id'],
 					'option_value_id'         => $product_option_value['option_value_id'],
 					'quantity'                => $product_option_value['quantity'],
@@ -938,10 +938,10 @@ class Product extends \System\Engine\Model {
 					'points_prefix'           => $product_option_value['points_prefix'],
 					'weight'                  => $product_option_value['weight'],
 					'weight_prefix'           => $product_option_value['weight_prefix']
-				);
+				];
 			}
 
-			$product_option_data[] = array(
+			$product_option_data[] = [
 				'product_option_id'    => $product_option['product_option_id'],
 				'product_option_value' => $product_option_value_data,
 				'option_id'            => $product_option['option_id'],
@@ -949,7 +949,7 @@ class Product extends \System\Engine\Model {
 				'type'                 => $product_option['type'],
 				'value'                => $product_option['value'],
 				'required'             => $product_option['required']
-			);
+			];
 		}
 
 		return $product_option_data;
@@ -991,7 +991,7 @@ class Product extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
-			$product_reward_data[$result['customer_group_id']] = array('points' => $result['points']);
+			$product_reward_data[$result['customer_group_id']] = ['points' => $result['points']];
 		}
 
 		return $product_reward_data;

@@ -24,20 +24,20 @@ class CustomerTransaction extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/customer_transaction', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['action'] = $this->url->link('extension/report/customer_transaction', 'user_token=' . $this->session->data['user_token']);
 
@@ -101,27 +101,27 @@ class CustomerTransaction extends \System\Engine\Controller {
 		
 		$data['customers'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_date_start'	=> $filter_date_start,
 			'filter_date_end'	=> $filter_date_end,
 			'filter_customer'	=> $filter_customer,
 			'start'				=> ($page - 1) * $this->config->get('config_pagination'),
 			'limit'				=> $this->config->get('config_pagination')
-		);
+		];
 
 		$customer_total = $this->model_extension_report_customer_transaction->getTotalTransactions($filter_data);
 
 		$results = $this->model_extension_report_customer_transaction->getTransactions($filter_data);
 
 		foreach ($results as $result) {
-			$data['customers'][] = array(
+			$data['customers'][] = [
 				'customer'       => $result['customer'],
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -140,12 +140,12 @@ class CustomerTransaction extends \System\Engine\Controller {
 			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_transaction' . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));
 

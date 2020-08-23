@@ -19,12 +19,12 @@ class BankTransfer extends \System\Engine\Model {
 		$method_data = [];
 
 		if ($status) {
-			$method_data = array(
+			$method_data = [
 				'code'       => 'bank_transfer',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
 				'sort_order' => $this->config->get('payment_bank_transfer_sort_order')
-			);
+			];
 		}
 
 		return $method_data;

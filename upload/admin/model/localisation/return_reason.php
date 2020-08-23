@@ -87,7 +87,7 @@ class ReturnReason extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
 
 		foreach ($query->rows as $result) {
-			$return_reason_data[$result['language_id']] = array('name' => $result['name']);
+			$return_reason_data[$result['language_id']] = ['name' => $result['name']);
 		}
 
 		return $return_reason_data;

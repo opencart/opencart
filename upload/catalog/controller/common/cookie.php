@@ -17,11 +17,11 @@ class Cookie extends \System\Engine\Controller {
 		$json = [];
 
 		if (!isset($this->cookie['policy'])) {
-			$option = array(
+			$option = [
 				'max-age'  => strtotime('+10 years'),
 				'path'     => '/',
 				'SameSite' => 'lax'
-			);
+			];
 
 			// Using time as the policy value allows you to see when te policy was agreed.
 			oc_setcookie('policy', time(), $option);

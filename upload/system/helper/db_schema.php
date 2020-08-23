@@ -2,7 +2,7 @@
 function db_schema() {
 	$tables = [];
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'address',
 		'field' => array(
 			array(
@@ -85,7 +85,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'api',
 		'field' => array(
 			array(
@@ -128,7 +128,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'api_ip',
 		'field' => array(
 			array(
@@ -156,7 +156,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'api_session',
 		'field' => array(
 			array(
@@ -199,7 +199,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'attribute',
 		'field' => array(
 			array(
@@ -227,7 +227,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'attribute_description',
 		'field' => array(
 			array(
@@ -255,7 +255,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'attribute_group',
 		'field' => array(
 			array(
@@ -278,7 +278,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'attribute_group_description',
 		'field' => array(
 			array(
@@ -306,7 +306,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'banner',
 		'field' => array(
 			array(
@@ -334,7 +334,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'banner_image',
 		'field' => array(
 			array(
@@ -383,7 +383,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'cart',
 		'field' => array(
 			array(
@@ -453,7 +453,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'category',
 		'field' => array(
 			array(
@@ -521,7 +521,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'category_description',
 		'field' => array(
 			array(
@@ -577,7 +577,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'category_filter',
 		'field' => array(
 			array(
@@ -600,7 +600,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'category_path',
 		'field' => array(
 			array(
@@ -628,7 +628,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'category_to_layout',
 		'field' => array(
 			array(
@@ -656,7 +656,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'category_to_store',
 		'field' => array(
 			array(
@@ -679,7 +679,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'country',
 		'field' => array(
 			array(
@@ -728,7 +728,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'coupon',
 		'field' => array(
 			array(
@@ -813,7 +813,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'coupon_category',
 		'field' => array(
 			array(
@@ -836,7 +836,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'coupon_history',
 		'field' => array(
 			array(
@@ -879,7 +879,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'coupon_product',
 		'field' => array(
 			array(
@@ -907,7 +907,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'cron',
 		'field' => array(
 			array(
@@ -955,7 +955,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'currency',
 		'field' => array(
 			array(
@@ -1013,7 +1013,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer',
 		'field' => array(
 			array(
@@ -1139,7 +1139,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_activity',
 		'field' => array(
 			array(
@@ -1182,7 +1182,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_affiliate',
 		'field' => array(
 			array(
@@ -1280,7 +1280,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_affiliate_report',
 		'field' => array(
 			array(
@@ -1323,7 +1323,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_approval',
 		'field' => array(
 			array(
@@ -1356,7 +1356,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_group',
 		'field' => array(
 			array(
@@ -1384,7 +1384,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_group_description',
 		'field' => array(
 			array(
@@ -1417,7 +1417,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_history',
 		'field' => array(
 			array(
@@ -1450,7 +1450,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_login',
 		'field' => array(
 			array(
@@ -1507,7 +1507,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_ip',
 		'field' => array(
 			array(
@@ -1558,7 +1558,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_online',
 		'field' => array(
 			array(
@@ -1595,7 +1595,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_reward',
 		'field' => array(
 			array(
@@ -1641,7 +1641,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_transaction',
 		'field' => array(
 			array(
@@ -1684,7 +1684,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_search',
 		'field' => array(
 			array(
@@ -1752,7 +1752,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'customer_wishlist',
 		'field' => array(
 			array(
@@ -1780,7 +1780,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'custom_field',
 		'field' => array(
 			array(
@@ -1828,7 +1828,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'custom_field_customer_group',
 		'field' => array(
 			array(
@@ -1856,7 +1856,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'custom_field_description',
 		'field' => array(
 			array(
@@ -1884,7 +1884,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'custom_field_value',
 		'field' => array(
 			array(
@@ -1912,7 +1912,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'custom_field_value_description',
 		'field' => array(
 			array(
@@ -1945,7 +1945,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'download',
 		'field' => array(
 			array(
@@ -1978,7 +1978,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'download_description',
 		'field' => array(
 			array(
@@ -2006,7 +2006,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'download_report',
 		'field' => array(
 			array(
@@ -2049,7 +2049,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'event',
 		'field' => array(
 			array(
@@ -2094,7 +2094,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'extension',
 		'field' => array(
 			array(
@@ -2122,7 +2122,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'extension_install',
 		'field' => array(
 			array(
@@ -2190,7 +2190,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'extension_path',
 		'field' => array(
 			array(
@@ -2218,7 +2218,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'filter',
 		'field' => array(
 			array(
@@ -2246,7 +2246,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'filter_description',
 		'field' => array(
 			array(
@@ -2279,7 +2279,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'filter_group',
 		'field' => array(
 			array(
@@ -2302,7 +2302,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'filter_group_description',
 		'field' => array(
 			array(
@@ -2330,7 +2330,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'gdpr',
 		'field' => array(
 			array(
@@ -2383,7 +2383,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'geo_zone',
 		'field' => array(
 			array(
@@ -2421,7 +2421,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'information',
 		'field' => array(
 			array(
@@ -2457,7 +2457,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'information_description',
 		'field' => array(
 			array(
@@ -2505,7 +2505,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'information_to_layout',
 		'field' => array(
 			array(
@@ -2533,7 +2533,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'information_to_store',
 		'field' => array(
 			array(
@@ -2556,7 +2556,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'language',
 		'field' => array(
 			array(
@@ -2613,7 +2613,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'layout',
 		'field' => array(
 			array(
@@ -2636,7 +2636,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'layout_module',
 		'field' => array(
 			array(
@@ -2674,7 +2674,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'layout_route',
 		'field' => array(
 			array(
@@ -2707,7 +2707,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'length_class',
 		'field' => array(
 			array(
@@ -2730,7 +2730,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'length_class_description',
 		'field' => array(
 			array(
@@ -2763,7 +2763,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'location',
 		'field' => array(
 			array(
@@ -2829,7 +2829,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'manufacturer',
 		'field' => array(
 			array(
@@ -2862,7 +2862,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'manufacturer_to_layout',
 		'field' => array(
 			array(
@@ -2890,7 +2890,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'manufacturer_to_store',
 		'field' => array(
 			array(
@@ -2913,7 +2913,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'marketing',
 		'field' => array(
 			array(
@@ -2957,7 +2957,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'marketing_report',
 		'field' => array(
 			array(
@@ -3000,7 +3000,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'module',
 		'field' => array(
 			array(
@@ -3033,7 +3033,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'option',
 		'field' => array(
 			array(
@@ -3061,7 +3061,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'option_description',
 		'field' => array(
 			array(
@@ -3089,7 +3089,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'option_value',
 		'field' => array(
 			array(
@@ -3122,7 +3122,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'option_value_description',
 		'field' => array(
 			array(
@@ -3155,7 +3155,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order',
 		'field' => array(
 			array(
@@ -3480,7 +3480,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_history',
 		'field' => array(
 			array(
@@ -3524,7 +3524,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_option',
 		'field' => array(
 			array(
@@ -3578,7 +3578,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_product',
 		'field' => array(
 			array(
@@ -3657,7 +3657,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_recurring',
 		'field' => array(
 			array(
@@ -3770,7 +3770,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_recurring_transaction',
 		'field' => array(
 			array(
@@ -3813,7 +3813,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_shipment',
 		'field' => array(
 			array(
@@ -3851,7 +3851,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'shipping_courier',
 		'field' => array(
 			array(
@@ -3878,7 +3878,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_status',
 		'field' => array(
 			array(
@@ -3907,7 +3907,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_total',
 		'field' => array(
 			array(
@@ -3959,7 +3959,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'order_voucher',
 		'field' => array(
 			array(
@@ -4032,7 +4032,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product',
 		'field' => array(
 			array(
@@ -4231,7 +4231,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_attribute',
 		'field' => array(
 			array(
@@ -4265,7 +4265,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_description',
 		'field' => array(
 			array(
@@ -4326,7 +4326,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_discount',
 		'field' => array(
 			array(
@@ -4392,7 +4392,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_filter',
 		'field' => array(
 			array(
@@ -4415,7 +4415,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_image',
 		'field' => array(
 			array(
@@ -4457,7 +4457,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_option',
 		'field' => array(
 			array(
@@ -4495,7 +4495,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_option_value',
 		'field' => array(
 			array(
@@ -4573,7 +4573,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_recurring',
 		'field' => array(
 			array(
@@ -4602,7 +4602,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_related',
 		'field' => array(
 			array(
@@ -4625,7 +4625,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_reward',
 		'field' => array(
 			array(
@@ -4661,7 +4661,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_special',
 		'field' => array(
 			array(
@@ -4721,7 +4721,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_to_category',
 		'field' => array(
 			array(
@@ -4752,7 +4752,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_to_download',
 		'field' => array(
 			array(
@@ -4775,7 +4775,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_to_layout',
 		'field' => array(
 			array(
@@ -4803,7 +4803,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'product_to_store',
 		'field' => array(
 			array(
@@ -4827,7 +4827,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'recurring',
 		'field' => array(
 			array(
@@ -4900,7 +4900,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'recurring_description',
 		'field' => array(
 			array(
@@ -4928,7 +4928,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'return',
 		'field' => array(
 			array(
@@ -5037,7 +5037,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'return_action',
 		'field' => array(
 			array(
@@ -5067,7 +5067,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'return_history',
 		'field' => array(
 			array(
@@ -5110,7 +5110,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'return_reason',
 		'field' => array(
 			array(
@@ -5140,7 +5140,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'return_status',
 		'field' => array(
 			array(
@@ -5170,7 +5170,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'review',
 		'field' => array(
 			array(
@@ -5237,7 +5237,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'statistics',
 		'field' => array(
 			array(
@@ -5265,7 +5265,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'session',
 		'field' => array(
 			array(
@@ -5292,7 +5292,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'setting',
 		'field' => array(
 			array(
@@ -5336,7 +5336,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'stock_status',
 		'field' => array(
 			array(
@@ -5365,7 +5365,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'store',
 		'field' => array(
 			array(
@@ -5398,7 +5398,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'tax_class',
 		'field' => array(
 			array(
@@ -5436,7 +5436,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'tax_rate',
 		'field' => array(
 			array(
@@ -5486,7 +5486,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'tax_rate_to_customer_group',
 		'field' => array(
 			array(
@@ -5509,7 +5509,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'tax_rule',
 		'field' => array(
 			array(
@@ -5548,7 +5548,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'theme',
 		'field' => array(
 			array(
@@ -5591,7 +5591,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'translation',
 		'field' => array(
 			array(
@@ -5639,7 +5639,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'upload',
 		'field' => array(
 			array(
@@ -5677,7 +5677,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'seo_profile',
 		'field' => array(
 			array(
@@ -5733,7 +5733,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'seo_url',
 		'field' => array(
 			array(
@@ -5791,7 +5791,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'user',
 		'field' => array(
 			array(
@@ -5869,7 +5869,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'user_group',
 		'field' => array(
 			array(
@@ -5897,7 +5897,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'voucher',
 		'field' => array(
 			array(
@@ -5970,7 +5970,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'voucher_history',
 		'field' => array(
 			array(
@@ -6008,7 +6008,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'voucher_theme',
 		'field' => array(
 			array(
@@ -6031,7 +6031,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'voucher_theme_description',
 		'field' => array(
 			array(
@@ -6059,7 +6059,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'weight_class',
 		'field' => array(
 			array(
@@ -6083,7 +6083,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'weight_class_description',
 		'field' => array(
 			array(
@@ -6116,7 +6116,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'zone',
 		'field' => array(
 			array(
@@ -6155,7 +6155,7 @@ function db_schema() {
 		'collate' => 'utf8_general_ci'
 	);
 
-	$tables[] = array(
+	$tables[] = [
 		'name' => 'zone_to_geo_zone',
 		'field' => array(
 			array(

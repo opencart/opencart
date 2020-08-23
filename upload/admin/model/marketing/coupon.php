@@ -63,14 +63,14 @@ class Coupon extends \System\Engine\Model {
 	public function getCoupons($data = []) {
 		$sql = "SELECT coupon_id, name, code, discount, date_start, date_end, status FROM " . DB_PREFIX . "coupon";
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'code',
 			'discount',
 			'date_start',
 			'date_end',
 			'status'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

@@ -71,7 +71,7 @@ class Security extends \System\Engine\Controller {
 				$files = [];
 
 				// Make path into an array
-				$source = array(DIR_SYSTEM . 'storage/');
+				$source = [DIR_SYSTEM . 'storage/'];
 
 				// While the path array is still populated keep looping through
 				while (count($source) != 0) {
@@ -107,10 +107,10 @@ class Security extends \System\Engine\Controller {
 				}
 
 				// Modify the config files
-				$files = array(
+				$files = [
 					DIR_APPLICATION . 'config.php',
 					realpath(DIR_APPLICATION . '/../') . '/config.php'
-				);
+				];
 
 				foreach ($files as $file) {
 					$output = '';

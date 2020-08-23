@@ -45,10 +45,10 @@ class Banner extends \System\Engine\Model {
 	public function getBanners($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "banner";
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'status'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -85,12 +85,12 @@ class Banner extends \System\Engine\Model {
 		$banner_image_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner_id . "' ORDER BY sort_order ASC");
 
 		foreach ($banner_image_query->rows as $banner_image) {
-			$banner_image_data[$banner_image['language_id']][] = array(
+			$banner_image_data[$banner_image['language_id']][] = [
 				'title'      => $banner_image['title'],
 				'link'       => $banner_image['link'],
 				'image'      => $banner_image['image'],
 				'sort_order' => $banner_image['sort_order']
-			);
+			];
 		}
 
 		return $banner_image_data;

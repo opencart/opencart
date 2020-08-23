@@ -125,7 +125,7 @@ class Order extends \System\Engine\Model {
 			$this->load->model('localisation/country');
 			$this->load->model('localisation/zone');
 
-			foreach (array('payment', 'shipping') as $column) {
+			foreach (['payment', 'shipping'] as $column) {
 				$country_info = $this->model_localisation_country->getCountry($order_query->row[$column . '_country_id']);
 
 				if ($country_info) {

@@ -232,10 +232,10 @@ class Category extends \System\Engine\Model {
 
 		$sql .= " GROUP BY cp.`category_id`";
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'sort_order'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -272,13 +272,13 @@ class Category extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		foreach ($query->rows as $result) {
-			$category_description_data[$result['language_id']] = array(
+			$category_description_data[$result['language_id']] = [
 				'name'             => $result['name'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword'],
 				'description'      => $result['description']
-			);
+			];
 		}
 
 		return $category_description_data;

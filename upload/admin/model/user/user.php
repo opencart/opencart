@@ -54,11 +54,11 @@ class User extends \System\Engine\Model {
 	public function getUsers($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "user`";
 
-		$sort_data = array(
+		$sort_data = [
 			'username',
 			'status',
 			'date_added'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

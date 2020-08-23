@@ -31,14 +31,14 @@ class Startup extends \System\Engine\Controller {
 		$this->session->start($session_id);
 
 		// Require higher security for session cookies
-		$option = array(
+		$option = [
 			'max-age'  => time() + $this->config->get('session_expire'),
 			'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 			'domain'   => $this->request->server['HTTP_HOST'],
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,
 			'SameSite' => 'strict'
-		);
+		];
 
 		oc_setcookie($this->config->get('session_name'), $this->session->getId(), $option);
 

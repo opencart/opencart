@@ -7,6 +7,12 @@ use \LogicException;
 /**
  * An implementation of the CBC cipher for use with an AesEncryptingStream or
  * AesDecrypting stream.
+ *
+ * This cipher method is deprecated and in maintenance mode - no new updates will be
+ * released. Please see https://docs.aws.amazon.com/general/latest/gr/aws_sdk_cryptography.html
+ * for more information.
+ *
+ * @deprecated
  */
 class Cbc implements CipherMethod
 {

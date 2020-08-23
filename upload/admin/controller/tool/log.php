@@ -28,15 +28,15 @@ class Log extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['download'] = $this->url->link('tool/log/download', 'user_token=' . $this->session->data['user_token']);
 		$data['clear'] = $this->url->link('tool/log/clear', 'user_token=' . $this->session->data['user_token']);
@@ -49,7 +49,7 @@ class Log extends \System\Engine\Controller {
 			$size = filesize($file);
 
 			if ($size >= 3145728) {
-				$suffix = array(
+				$suffix = [
 					'B',
 					'KB',
 					'MB',
@@ -59,7 +59,7 @@ class Log extends \System\Engine\Controller {
 					'EB',
 					'ZB',
 					'YB'
-				);
+				];
 
 				$i = 0;
 

@@ -1,10 +1,11 @@
 <?php
 namespace Aws\S3\Crypto;
 
+use Aws\Crypto\DecryptionTraitV2;
+use Aws\Exception\CryptoException;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClientV2;
-use Aws\Crypto\DecryptionTraitV2;
 use Aws\Crypto\EncryptionTraitV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MaterialsProvider;
@@ -18,17 +19,79 @@ use GuzzleHttp\Psr7;
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
  *
+ * AWS strongly recommends the upgrade to the S3EncryptionClientV2 (over the
+ * S3EncryptionClient), as it offers updated data security best practices to our
+ * customers who upgrade. S3EncryptionClientV2 contains breaking changes, so this
+ * will require planning by engineering teams to migrate. New workflows should
+ * just start with S3EncryptionClientV2.
+ *
  * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
  * for encryption since there is no native PHP support. The performance for large
  * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
  * environments may be necessary to use this effectively.
+ *
+ * Example write path:
+ *
+ * <code>
+ * use Aws\Crypto\KmsMaterialsProviderV2;
+ * use Aws\S3\Crypto\S3EncryptionClientV2;
+ * use Aws\S3\S3Client;
+ *
+ * $encryptionClient = new S3EncryptionClientV2(
+ *     new S3Client([
+ *         'region' => 'us-west-2',
+ *         'version' => 'latest'
+ *     ])
+ * );
+ * $materialsProvider = new KmsMaterialsProviderV2(
+ *     new KmsClient([
+ *         'profile' => 'default',
+ *         'region' => 'us-east-1',
+ *         'version' => 'latest',
+ *     ],
+ *    'your-kms-key-id'
+ * );
+ *
+ * $encryptionClient->putObject([
+ *     '@MaterialsProvider' => $materialsProvider,
+ *     '@CipherOptions' => [
+ *         'Cipher' => 'gcm',
+ *         'KeySize' => 256,
+ *     ],
+ *     '@KmsEncryptionContext' => ['foo' => 'bar'],
+ *     'Bucket' => 'your-bucket',
+ *     'Key' => 'your-key',
+ *     'Body' => 'your-encrypted-data',
+ * ]);
+ * </code>
+ *
+ * Example read call (using objects from previous example):
+ *
+ * <code>
+ * $encryptionClient->getObject([
+ *     '@MaterialsProvider' => $materialsProvider,
+ *     '@CipherOptions' => [
+ *         'Cipher' => 'gcm',
+ *         'KeySize' => 256,
+ *     ],
+ *     'Bucket' => 'your-bucket',
+ *     'Key' => 'your-key',
+ * ]);
+ * </code>
  */
 class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
-    use EncryptionTraitV2, DecryptionTraitV2, CipherBuilderTrait, CryptoParamsTraitV2;
+    use CipherBuilderTrait;
+    use CryptoParamsTraitV2;
+    use DecryptionTraitV2;
+    use EncryptionTraitV2;
+    use UserAgentTrait;
+
+    const CRYPTO_VERSION = '2.1';
 
     private $client;
     private $instructionFileSuffix;
+    private $legacyWarningCount;
 
     /**
      * @param S3Client $client The S3Client to be used for true uploading and
@@ -42,8 +105,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         S3Client $client,
         $instructionFileSuffix = null
     ) {
+        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
+        $this->legacyWarningCount = 0;
     }
 
     private static function getDefaultStrategy()
@@ -75,8 +140,13 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
-     *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            passed directly to OpenSSL when using gcm. Note if you pass in
+     *            Aad, the PHP SDK will be able to decrypt the resulting object,
+     *            but other AWS SDKs may not be able to do so.
+     * - @KmsEncryptionContext: (array) Only required if using
+     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   pairs to be added to the encryption context for KMS key encryption. An
+     *   empty array may be passed if no additional context is desired.
      *
      * The optional configuration arguments are as follows:
      *
@@ -108,7 +178,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 
         return Promise\promise_for($this->encrypt(
             Psr7\stream_for($args['Body']),
-            $args['@CipherOptions'] ?: [],
+            $args,
             $provider,
             $envelope
         ))->then(
@@ -171,8 +241,13 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
-     *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            passed directly to OpenSSL when using gcm. Note if you pass in
+     *            Aad, the PHP SDK will be able to decrypt the resulting object,
+     *            but other AWS SDKs may not be able to do so.
+     * - @KmsEncryptionContext: (array) Only required if using
+     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   pairs to be added to the encryption context for KMS key encryption. An
+     *   empty array may be passed if no additional context is desired.
      *
      * The optional configuration arguments are as follows:
      *
@@ -208,6 +283,12 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
+     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
+     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
+     *        content encryption and key wrap schemas are able to be decrypted.
+     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV2 and older legacy encryption clients are able
+     *        to be decrypted.
      *
      * The optional configuration arguments are as follows:
      *
@@ -226,6 +307,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
+     * - @KmsAllowDecryptWithAnyCmk: (bool) This allows decryption with
+     *   KMS materials for any KMS key ID, instead of needing the KMS key ID to
+     *   be specified and provided to the decrypt operation. Ignored for non-KMS
+     *   materials providers. Defaults to false.
      *
      * @return PromiseInterface
      *
@@ -242,6 +327,27 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 
         $strategy = $this->getMetadataStrategy($args, $instructionFileSuffix);
         unset($args['@MetadataStrategy']);
+
+        if (!isset($args['@SecurityProfile'])
+            || !in_array($args['@SecurityProfile'], self::$supportedSecurityProfiles)
+        ) {
+            throw new CryptoException("@SecurityProfile is required and must be"
+                . " set to 'V2' or 'V2_AND_LEGACY'");
+        }
+
+        // Only throw this legacy warning once per client
+        if (in_array($args['@SecurityProfile'], self::$legacySecurityProfiles)
+            && $this->legacyWarningCount < 1
+        ) {
+            $this->legacyWarningCount++;
+            trigger_error(
+                "This S3 Encryption Client operation is configured to"
+                    . " read encrypted data with legacy encryption modes. If you"
+                    . " don't have objects encrypted with these legacy modes,"
+                    . " you should disable support for them to enhance security. ",
+                E_USER_WARNING
+            );
+        }
 
         $saveAs = null;
         if (!empty($args['SaveAs'])) {
@@ -267,15 +373,11 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
                         'Metadata' => $result['Metadata']
                     ]);
 
-                    $provider = $provider->fromDecryptionEnvelope($envelope);
-
                     $result['Body'] = $this->decrypt(
                         $result['Body'],
                         $provider,
                         $envelope,
-                        isset($args['@CipherOptions'])
-                            ? $args['@CipherOptions']
-                            : []
+                        $args
                     );
                     return $result;
                 }
@@ -306,6 +408,12 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
+     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
+     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
+     *        content encryption and key wrap schemas are able to be decrypted.
+     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV2 and older legacy encryption clients are able
+     *        to be decrypted.
      *
      * The optional configuration arguments are as follows:
      *
@@ -319,6 +427,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
+     * - @KmsAllowDecryptWithAnyCmk: (bool) This allows decryption with
+     *   KMS materials for any KMS key ID, instead of needing the KMS key ID to
+     *   be specified and provided to the decrypt operation. Ignored for non-KMS
+     *   materials providers. Defaults to false.
      *
      * @return \Aws\Result GetObject call result with the 'Body' field
      *                     wrapped in a decryption stream with its metadata

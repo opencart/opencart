@@ -38,11 +38,11 @@ class LengthClass extends \System\Engine\Model {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "length_class lc LEFT JOIN " . DB_PREFIX . "length_class_description lcd ON (lc.length_class_id = lcd.length_class_id) WHERE lcd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sort_data = array(
+			$sort_data = [
 				'title',
 				'unit',
 				'value'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];
@@ -104,10 +104,10 @@ class LengthClass extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "length_class_description WHERE length_class_id = '" . (int)$length_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$length_class_data[$result['language_id']] = array(
+			$length_class_data[$result['language_id']] = [
 				'title' => $result['title'],
 				'unit'  => $result['unit']
-			);
+			];
 		}
 
 		return $length_class_data;

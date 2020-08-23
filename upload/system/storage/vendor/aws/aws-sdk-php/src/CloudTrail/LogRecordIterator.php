@@ -101,7 +101,7 @@ class LogRecordIterator implements \OuterIterator
     ) {
         $this->logFileReader = $logFileReader;
         $this->logFileIterator = $logFileIterator;
-        $this->records = [];
+        $this->records = array();
         $this->recordIndex = 0;
     }
 
@@ -172,7 +172,7 @@ class LogRecordIterator implements \OuterIterator
     private function loadRecordsFromCurrentLogFile()
     {
         $this->recordIndex = 0;
-        $this->records = [];
+        $this->records = array();
 
         $logFile = $this->logFileIterator->current();
         if ($logFile && isset($logFile['Bucket']) && isset($logFile['Key'])) {

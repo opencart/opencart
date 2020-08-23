@@ -183,7 +183,7 @@ class Step3 extends \System\Engine\Controller {
 
 		$data['action'] = $this->url->link('install/step_3');
 
-		$db_drivers = array(
+		$db_drivers = [
 			'mysqli',
 			'pdo',
 			'pgsql'
@@ -193,10 +193,10 @@ class Step3 extends \System\Engine\Controller {
 
 		foreach ($db_drivers as $db_driver) {
 			if (extension_loaded($db_driver)) {
-				$data['drivers'][] = array(
+				$data['drivers'][] = [
 					'text'  => $this->language->get('text_' . $db_driver),
 					'value' => $db_driver
-				);
+				];
 			}
 		}
 
@@ -290,7 +290,7 @@ class Step3 extends \System\Engine\Controller {
 			$this->error['db_prefix'] = $this->language->get('error_db_prefix');
 		}
 
-		$db_drivers = array(
+		$db_drivers = [
 			'mysqli',
 			'pdo',
 			'pgsql'

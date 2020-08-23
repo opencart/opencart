@@ -33,18 +33,18 @@ class Category extends \System\Engine\Model {
 				$filter_query = $this->db->query("SELECT DISTINCT f.filter_id, fd.name FROM " . DB_PREFIX . "filter f LEFT JOIN " . DB_PREFIX . "filter_description fd ON (f.filter_id = fd.filter_id) WHERE f.filter_id IN (" . implode(',', $implode) . ") AND f.filter_group_id = '" . (int)$filter_group['filter_group_id'] . "' AND fd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY f.sort_order, LCASE(fd.name)");
 
 				foreach ($filter_query->rows as $filter) {
-					$filter_data[] = array(
+					$filter_data[] = [
 						'filter_id' => $filter['filter_id'],
 						'name'      => $filter['name']
-					);
+					];
 				}
 
 				if ($filter_data) {
-					$filter_group_data[] = array(
+					$filter_group_data[] = [
 						'filter_group_id' => $filter_group['filter_group_id'],
 						'name'            => $filter_group['name'],
 						'filter'          => $filter_data
-					);
+					];
 				}
 			}
 		}

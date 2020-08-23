@@ -21,12 +21,12 @@ class COD extends \System\Engine\Model {
 		$method_data = [];
 
 		if ($status) {
-			$method_data = array(
+			$method_data = [
 				'code'       => 'cod',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
 				'sort_order' => $this->config->get('payment_cod_sort_order')
-			);
+			];
 		}
 
 		return $method_data;

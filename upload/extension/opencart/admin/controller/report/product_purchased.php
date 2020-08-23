@@ -24,20 +24,20 @@ class ProductPurchased extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/product_purchased', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['action'] = $this->url->link('extension/report/product_purchased', 'user_token=' . $this->session->data['user_token']);
 
@@ -101,25 +101,25 @@ class ProductPurchased extends \System\Engine\Controller {
 
 		$data['products'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_date_start'	     => $filter_date_start,
 			'filter_date_end'	     => $filter_date_end,
 			'filter_order_status_id' => $filter_order_status_id,
 			'start'                  => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                  => $this->config->get('config_pagination')
-		);
+		];
 
 		$product_total = $this->model_extension_report_product->getTotalPurchased($filter_data);
 
 		$results = $this->model_extension_report_product->getPurchased($filter_data);
 
 		foreach ($results as $result) {
-			$data['products'][] = array(
+			$data['products'][] = [
 				'name'     => $result['name'],
 				'model'    => $result['model'],
 				'quantity' => $result['quantity'],
 				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency'))
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -142,7 +142,7 @@ class ProductPurchased extends \System\Engine\Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),

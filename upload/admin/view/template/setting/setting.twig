@@ -401,7 +401,7 @@
                   <div class="form-group row required">
                     <label for="input-voucher-min" class="col-sm-2 col-form-label">{{ entry_voucher_min }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>  
+                      <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>
                       {% if error_voucher_min %}
                         <div class="invalid-tooltip">{{ error_voucher_min }}</div>
                       {% endif %}
@@ -849,6 +849,21 @@
               <fieldset>
                 <legend><a href="#collapse-affiliate" data-toggle="collapse">{{ text_affiliate }}</a></legend>
                 <div id="collapse-affiliate" class="collapse" data-parent="#tab-option">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_affiliate_status }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_affiliate_status %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_affiliate_status" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_affiliate_status" value="0"/> {{ text_no }}</label>
+                        {% else %}
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_affiliate_status" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_affiliate_status" value="0" checked="checked"/> {{ text_no }}</label>
+                        {% endif %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_affiliate_status }}</small>
+                    </div>
+                  </div>
                   <div class="form-group row">
                     <label for="input-affiliate-group" class="col-sm-2 col-form-label">{{ entry_affiliate_group }}</label>
                     <div class="col-sm-10">

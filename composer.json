@@ -22,7 +22,7 @@
     "vendor-dir": "./upload/system/storage/vendor/"
   },
   "require": {
-    "leafo/scssphp": "0.7.7",
+    "scssphp/scssphp": "1.1.1",
     "php": ">=7.1.0",
     "twig/twig": "^3.0",
     "aws/aws-sdk-php": "^3.142.1"

@@ -1,5 +1,6 @@
 <?php
-class ModelUserUserGroup extends Model {
+namespace Application\Model\User;
+class UserGroup extends \System\Engine\Model {
 	public function addUserGroup($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape((string)$data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
 	
@@ -17,15 +18,15 @@ class ModelUserUserGroup extends Model {
 	public function getUserGroup($user_group_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
-		$user_group = array(
+		$user_group = [
 			'name'       => $query->row['name'],
 			'permission' => json_decode($query->row['permission'], true)
-		);
+		];
 
 		return $user_group;
 	}
 
-	public function getUserGroups($data = array()) {
+	public function getUserGroups($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "user_group";
 
 		$sql .= " ORDER BY name";
@@ -67,19 +68,19 @@ class ModelUserUserGroup extends Model {
 
 			$data[$type][] = $route;
 
-			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(json_encode($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode($data)) . "' WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 		}
 	}
 
 	public function removePermission($user_group_id, $type, $route) {
-		$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
+		$user_group_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
 		if ($user_group_query->num_rows) {
 			$data = json_decode($user_group_query->row['permission'], true);
 
-			$data[$type] = array_diff($data[$type], array($route));
+			$data[$type] = array_diff($data[$type], [$route]);
 
-			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(json_encode($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode($data)) . "' WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 		}
 	}
 }

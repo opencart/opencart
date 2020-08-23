@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonLanguage extends Controller {
+namespace Application\Controller\Common;
+class Language extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/language');
 
@@ -23,20 +24,18 @@ class ControllerCommonLanguage extends Controller {
 			$url = '&' . urldecode(http_build_query($url_data));
 		}
 
-		$data['languages'] = array();
+		$data['languages'] = [];
 
 		$this->load->model('localisation/language');
 
 		$results = $this->model_localisation_language->getLanguages();
 
 		foreach ($results as $result) {
-			if ($result['status']) {
-				$data['languages'][] = array(
-					'name' => $result['name'],
-					'code' => $result['code'],
-					'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
-				);
-			}
+			$data['languages'][] = [
+				'name' => $result['name'],
+				'code' => $result['code'],
+				'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
+			];
 		}
 
 		return $this->load->view('common/language', $data);
@@ -50,16 +49,16 @@ class ControllerCommonLanguage extends Controller {
 		}
 
 		if (isset($this->request->get['redirect'])) {
-			$redirect = $this->request->get['redirect'];
+			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT, 'UTF-8');
 		} else {
 			$redirect = '';
 		}
 
-		$option = array(
+		$option = [
 			'max-age'  => time() + 60 * 60 * 24 * 30,
 			'path'     => '/',
 			'SameSite' => 'lax'
-		);
+		];
 
 		oc_setcookie('language', $code, $option);
 

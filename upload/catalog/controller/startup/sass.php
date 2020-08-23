@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupSass extends Controller {
+namespace Application\Controller\Startup;
+class Sass extends \System\Engine\Controller {
 	public function index() {
 		$files = glob(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/*.scss');
 
@@ -11,7 +12,7 @@ class ControllerStartupSass extends Controller {
 				$stylesheet = DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/' . $filename . '.css';
 
 				if (!is_file($stylesheet) || !$this->config->get('developer_sass')) {
-					$scss = new \Leafo\ScssPhp\Compiler();
+					$scss = new \ScssPhp\ScssPhp\Compiler();
 					$scss->setImportPaths(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_theme') . '/stylesheet/');
 
 					$output = $scss->compile('@import "' . $filename . '.scss"');

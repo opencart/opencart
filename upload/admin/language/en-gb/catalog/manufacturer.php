@@ -23,11 +23,12 @@ $_['entry_store']       = 'Stores';
 $_['entry_keyword']     = 'Keyword';
 $_['entry_image']       = 'Image';
 $_['entry_sort_order']  = 'Sort Order';
-$_['entry_type']        = 'Type';
+$_['entry_layout']      = 'Layout Override';
 
 // Error
+$_['error_warning']     = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']  = 'Warning: You do not have permission to modify manufacturers!';
 $_['error_name']        = 'Manufacturer Name must be between 1 and 64 characters!';
-$_['error_seo']              = 'SEO URL keyword required!';
-$_['error_keyword']          = 'SEO URL must be unique!';
+$_['error_seo']         = 'SEO URL keyword required!';
+$_['error_keyword']     = 'SEO URL must be unique!';
 $_['error_product']     = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s products!';

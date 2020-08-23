@@ -1,5 +1,6 @@
 <?php
-class ModelDesignTheme extends Model {
+namespace Application\Model\Design;
+class Theme extends \System\Engine\Model {
 	public function editTheme($store_id, $theme, $route, $code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE store_id = '" . (int)$store_id . "' AND theme = '" . $this->db->escape($theme) . "' AND route = '" . $this->db->escape($route) . "'");
 		

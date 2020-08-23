@@ -1,6 +1,6 @@
 <?php
-namespace DB;
-final class MySQLi {
+namespace System\Library\DB;
+class MySQLi {
 	private $connection;
 	private $connected;
 
@@ -22,7 +22,7 @@ final class MySQLi {
 
 		if (!$this->connection->errno) {
 			if ($query instanceof \mysqli_result) {
-				$data = array();
+				$data = [];
 
 				while ($row = $query->fetch_assoc()) {
 					$data[] = $row;
@@ -30,7 +30,7 @@ final class MySQLi {
 
 				$result = new \stdClass();
 				$result->num_rows = $query->num_rows;
-				$result->row = isset($data[0]) ? $data[0] : array();
+				$result->row = isset($data[0]) ? $data[0] : [];
 				$result->rows = $data;
 
 				$query->close();

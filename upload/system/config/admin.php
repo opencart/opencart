@@ -13,48 +13,48 @@ $_['db_port']           = DB_PORT;
 
 // Session
 $_['session_autostart'] = false;
-$_['session_engine']    = 'db';
+$_['session_engine']    = 'db'; // db or file
 
 // Error
 $_['error_display']     = true;
 
 // Actions
-$_['action_pre_action'] = array(
+$_['action_pre_action'] = [
 	'startup/startup',
 	'startup/error',
 	'startup/event',
 	'startup/sass',
 	'startup/login',
 	'startup/permission'
-);
+];
 
 // Actions
 $_['action_default']    = 'common/dashboard';
 
 // Action Events
-$_['action_event']      = array(
-	'controller/*/before' => array(
+$_['action_event']      = [
+	'controller/*/before' => [
 		'event/language/before'
-	),
-	'controller/*/after' => array(
+	],
+	'controller/*/after' => [
 		'event/language/after'
-	),
-	//'controller/*/before' => array(
-	//	'event/extension/controller'
-	//),
-	//'model/*/before' => array(
+	],
+	//'extension/opencart/controller/after' => [
+	//	'event/language/after'
+	//],
+	//'model/*/before' => [
 	//	'event/extension/model'
-	//),
-	//'view/*/before' => array(
-		//	'event/extension/view'
-	//),
-	'view/*/before' => array(
-		999  => 'event/language'
-	),
-	//'model/*/after' => array(
+	//],
+	//'view/*/before' => [
+	//	'event/extension/view'
+	//],
+	'view/*/before' => [
+		999 => 'event/language'
+	]
+	//'model/*/after' => [
 	//	'event/debug/before'
-	//),
-	//'model/*/after'  => array(
+	//],
+	//'model/*/after' => [
 	//	'event/debug/after'
-	//)
-);
+	//]
+];

@@ -1,26 +1,27 @@
 <?php
-class ControllerAccountSuccess extends Controller {
+namespace Application\Controller\Account;
+class Success extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('account/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/success', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		if ($this->customer->isLogged()) {
 			$data['text_message'] = sprintf($this->language->get('text_success'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));

@@ -1,0 +1,27 @@
+<div class="d-inline-block pt-2 pd-2 w-100">
+  <div class="float-right">
+    <button type="button" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/payment/free_checkout/confirm',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-confirm').button('loading');
+		},
+		complete: function() {
+			$('#button-confirm').button('reset');
+		},
+		success: function(json) {
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>

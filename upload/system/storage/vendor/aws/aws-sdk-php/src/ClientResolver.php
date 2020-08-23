@@ -13,6 +13,7 @@ use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
+use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
@@ -216,6 +217,12 @@ class ClientResolver
             'doc'       => 'Set to false to disable SDK to populate parameters that enabled \'idempotencyToken\' trait with a random UUID v4 value on your behalf. Using default value \'true\' still allows parameter value to be overwritten when provided. Note: auto-fill only works when cryptographically secure random bytes generator functions(random_bytes, openssl_random_pseudo_bytes or mcrypt_create_iv) can be found. You may also provide a callable source of random bytes.',
             'default'   => true,
             'fn'        => [__CLASS__, '_apply_idempotency_auto_fill']
+        ],
+        'use_aws_shared_config_files' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.',
+            'default'   => true,
         ],
     ];
 
@@ -529,6 +536,13 @@ class ClientResolver
             $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
                 ? $args['api']['metadata']['endpointPrefix']
                 : $args['service'];
+
+            // Check region is a valid host label when it is being used to
+            // generate an endpoint
+            if (!self::isValidRegion($args['region'])) {
+                throw new InvalidRegionException('Region must be a valid RFC'
+                    . ' host label.');
+            }
 
             // Invoke the endpoint provider and throw if it does not resolve.
             $result = EndpointProvider::resolve($value, [
@@ -850,5 +864,16 @@ EOT;
             }
         }
         return $options;
+    }
+
+    /**
+     * Validates a region to be used for endpoint construction
+     *
+     * @param $region
+     * @return bool
+     */
+    private static function isValidRegion($region)
+    {
+        return is_valid_hostlabel($region);
     }
 }

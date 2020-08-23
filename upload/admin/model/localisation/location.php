@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationLocation extends Model {
+namespace Application\Model\Localisation;
+class Location extends \System\Engine\Model {
 	public function addLocation($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "location SET name = '" . $this->db->escape((string)$data['name']) . "', address = '" . $this->db->escape((string)$data['address']) . "', geocode = '" . $this->db->escape((string)$data['geocode']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', fax = '" . $this->db->escape((string)$data['fax']) . "', image = '" . $this->db->escape((string)$data['image']) . "', open = '" . $this->db->escape((string)$data['open']) . "', comment = '" . $this->db->escape((string)$data['comment']) . "'");
 	
@@ -20,13 +21,13 @@ class ModelLocalisationLocation extends Model {
 		return $query->row;
 	}
 
-	public function getLocations($data = array()) {
+	public function getLocations($data = []) {
 		$sql = "SELECT location_id, name, address FROM " . DB_PREFIX . "location";
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'address',
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

@@ -17,7 +17,7 @@ $_['text_review']           = 'Pending Reviews';
 
 // Column
 $_['column_name']           = 'Statistics Name';
-$_['column_value']	        = 'Value';
+$_['column_value']          = 'Value';
 $_['column_action']         = 'Action';
 
 // Error

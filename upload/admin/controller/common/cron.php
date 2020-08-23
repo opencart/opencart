@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonCron extends Controller {
+namespace Application\Controller\Common;
+class Cron extends \System\Engine\Controller {
 	public function index() {
 		$time = time();
 

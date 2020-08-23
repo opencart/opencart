@@ -1,5 +1,7 @@
 <?php
-class ControllerMailRegister extends Controller {
+namespace Application\Controller\Mail;
+class Register extends \System\Engine\Controller {
+	// catalog/model/account/customer/addCustomer/after
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/register');
 
@@ -38,7 +40,7 @@ class ControllerMailRegister extends Controller {
 		$data['store_url'] = $this->config->get('config_url');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -54,6 +56,7 @@ class ControllerMailRegister extends Controller {
 		$mail->send();
 	}
 
+	// catalog/model/account/customer/addCustomer/after
 	public function alert(&$route, &$args, &$output) {
 		// Send to main admin email if new account email is enabled
 		if (in_array('account', (array)$this->config->get('config_mail_alert'))) {
@@ -100,7 +103,7 @@ class ControllerMailRegister extends Controller {
 			$data['email'] = $args[0]['email'];
 			$data['telephone'] = $args[0]['telephone'];
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

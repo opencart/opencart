@@ -49,15 +49,15 @@ $_['text_transaction_expired']             = 'Expired';
 $_['text_cancelled']                       = 'Recurring payment has been cancelled';
 
 // Column
-$_['column_order_recurring_id']             = 'Recurring ID';
-$_['column_order_id']                       = 'Order ID';
-$_['column_reference']                      = 'Payment Reference';
-$_['column_customer']                       = 'Customer';
-$_['column_date_added']                     = 'Date Added';
-$_['column_status']                         = 'Status';
-$_['column_amount']                         = 'Amount';
-$_['column_type']                           = 'Type';
-$_['column_action']                         = 'Action';
+$_['column_order_recurring_id']            = 'Recurring ID';
+$_['column_order_id']                      = 'Order ID';
+$_['column_reference']                     = 'Payment Reference';
+$_['column_customer']                      = 'Customer';
+$_['column_date_added']                    = 'Date Added';
+$_['column_status']                        = 'Status';
+$_['column_amount']                        = 'Amount';
+$_['column_type']                          = 'Type';
+$_['column_action']                        = 'Action';
 
 // Entry
 $_['entry_order_recurring_id']             = 'Recurring ID';

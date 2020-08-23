@@ -10,6 +10,7 @@
 /**
 * Template class
 */
+namespace System\Library;
 class Template {
 	private $adaptor;
 
@@ -20,7 +21,7 @@ class Template {
 	 *
 	 */
 	public function __construct($adaptor) {
-		$class = 'Template\\' . $adaptor;
+		$class = '\System\Library\Template\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class();

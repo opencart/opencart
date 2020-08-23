@@ -853,7 +853,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 (39, 'report', 'customer_activity'),
 (40, 'report', 'customer_order'),
 (41, 'report', 'customer_reward'),
-(42, 'currency', 'fixer');
+(42, 'currency', 'ecb');
 
 -----------------------------------------------------------
 
@@ -899,8 +899,7 @@ INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
 (1, 0),
 (2, 0),
 (3, 0),
-(4, 0),
-(5, 0);
+(4, 0);
 
 -----------------------------------------------------------
 
@@ -1116,20 +1115,6 @@ INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `op
 (48, 1, 11, 'Large'),
 (47, 1, 11, 'Medium'),
 (46, 1, 11, 'Small');
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_shipping_courier`
---
-
-INSERT INTO `oc_shipping_courier` (`shipping_courier_id`, `shipping_courier_code`, `shipping_courier_name`) VALUES
-  (1, 'dhl', 'DHL'),
-  (2, 'fedex', 'Fedex'),
-  (3, 'ups', 'UPS'),
-  (4, 'royal-mail', 'Royal Mail'),
-  (5, 'usps', 'United States Postal Service'),
-  (6, 'auspost', 'Australia Post');
 
 -----------------------------------------------------------
 
@@ -1497,21 +1482,6 @@ INSERT INTO `oc_return_status` (`return_status_id`, `language_id`, `name`) VALUE
 -----------------------------------------------------------
 
 --
--- Dumping data for table `oc_statistics`
---
-
-INSERT INTO `oc_statistics` (`statistics_id`, `code`, `value`) VALUES
-(1, 'order_sale', 0),
-(2, 'order_processing', 0),
-(3, 'order_complete', 0),
-(4, 'order_other', 0),
-(5, 'return', 0),
-(6, 'product', 0),
-(7, 'review', 0);
-
------------------------------------------------------------
-
---
 -- Dumping data for table `oc_setting`
 --
 
@@ -1519,12 +1489,6 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_robots', 'abot\r\ndbot\r\nebot\r\nhbot\r\nkbot\r\nlbot\r\nmbot\r\nnbot\r\nobot\r\npbot\r\nrbot\r\nsbot\r\ntbot\r\nvbot\r\nybot\r\nzbot\r\nbot.\r\nbot/\r\n_bot\r\n.bot\r\n/bot\r\n-bot\r\n:bot\r\n(bot\r\ncrawl\r\nslurp\r\nspider\r\nseek\r\naccoona\r\nacoon\r\nadressendeutschland\r\nah-ha.com\r\nahoy\r\naltavista\r\nananzi\r\nanthill\r\nappie\r\narachnophilia\r\narale\r\naraneo\r\naranha\r\narchitext\r\naretha\r\narks\r\nasterias\r\natlocal\r\natn\r\natomz\r\naugurfind\r\nbackrub\r\nbannana_bot\r\nbaypup\r\nbdfetch\r\nbig brother\r\nbiglotron\r\nbjaaland\r\nblackwidow\r\nblaiz\r\nblog\r\nblo.\r\nbloodhound\r\nboitho\r\nbooch\r\nbradley\r\nbutterfly\r\ncalif\r\ncassandra\r\nccubee\r\ncfetch\r\ncharlotte\r\nchurl\r\ncienciaficcion\r\ncmc\r\ncollective\r\ncomagent\r\ncombine\r\ncomputingsite\r\ncsci\r\ncurl\r\ncusco\r\ndaumoa\r\ndeepindex\r\ndelorie\r\ndepspid\r\ndeweb\r\ndie blinde kuh\r\ndigger\r\nditto\r\ndmoz\r\ndocomo\r\ndownload express\r\ndtaagent\r\ndwcp\r\nebiness\r\nebingbong\r\ne-collector\r\nejupiter\r\nemacs-w3 search engine\r\nesther\r\nevliya celebi\r\nezresult\r\nfalcon\r\nfelix ide\r\nferret\r\nfetchrover\r\nfido\r\nfindlinks\r\nfireball\r\nfish search\r\nfouineur\r\nfunnelweb\r\ngazz\r\ngcreep\r\ngenieknows\r\ngetterroboplus\r\ngeturl\r\nglx\r\ngoforit\r\ngolem\r\ngrabber\r\ngrapnel\r\ngralon\r\ngriffon\r\ngromit\r\ngrub\r\ngulliver\r\nhamahakki\r\nharvest\r\nhavindex\r\nhelix\r\nheritrix\r\nhku www octopus\r\nhomerweb\r\nhtdig\r\nhtml index\r\nhtml_analyzer\r\nhtmlgobble\r\nhubater\r\nhyper-decontextualizer\r\nia_archiver\r\nibm_planetwide\r\nichiro\r\niconsurf\r\niltrovatore\r\nimage.kapsi.net\r\nimagelock\r\nincywincy\r\nindexer\r\ninfobee\r\ninformant\r\ningrid\r\ninktomisearch.com\r\ninspector web\r\nintelliagent\r\ninternet shinchakubin\r\nip3000\r\niron33\r\nisraeli-search\r\nivia\r\njack\r\njakarta\r\njavabee\r\njetbot\r\njumpstation\r\nkatipo\r\nkdd-explorer\r\nkilroy\r\nknowledge\r\nkototoi\r\nkretrieve\r\nlabelgrabber\r\nlachesis\r\nlarbin\r\nlegs\r\nlibwww\r\nlinkalarm\r\nlink validator\r\nlinkscan\r\nlockon\r\nlwp\r\nlycos\r\nmagpie\r\nmantraagent\r\nmapoftheinternet\r\nmarvin/\r\nmattie\r\nmediafox\r\nmediapartners\r\nmercator\r\nmerzscope\r\nmicrosoft url control\r\nminirank\r\nmiva\r\nmj12\r\nmnogosearch\r\nmoget\r\nmonster\r\nmoose\r\nmotor\r\nmultitext\r\nmuncher\r\nmuscatferret\r\nmwd.search\r\nmyweb\r\nnajdi\r\nnameprotect\r\nnationaldirectory\r\nnazilla\r\nncsa beta\r\nnec-meshexplorer\r\nnederland.zoek\r\nnetcarta webmap engine\r\nnetmechanic\r\nnetresearchserver\r\nnetscoop\r\nnewscan-online\r\nnhse\r\nnokia6682/\r\nnomad\r\nnoyona\r\nnutch\r\nnzexplorer\r\nobjectssearch\r\noccam\r\nomni\r\nopen text\r\nopenfind\r\nopenintelligencedata\r\norb search\r\nosis-project\r\npack rat\r\npageboy\r\npagebull\r\npage_verifier\r\npanscient\r\nparasite\r\npartnersite\r\npatric\r\npear.\r\npegasus\r\nperegrinator\r\npgp key agent\r\nphantom\r\nphpdig\r\npicosearch\r\npiltdownman\r\npimptrain\r\npinpoint\r\npioneer\r\npiranha\r\nplumtreewebaccessor\r\npogodak\r\npoirot\r\npompos\r\npoppelsdorf\r\npoppi\r\npopular iconoclast\r\npsycheclone\r\npublisher\r\npython\r\nrambler\r\nraven search\r\nroach\r\nroad runner\r\nroadhouse\r\nrobbie\r\nrobofox\r\nrobozilla\r\nrules\r\nsalty\r\nsbider\r\nscooter\r\nscoutjet\r\nscrubby\r\nsearch.\r\nsearchprocess\r\nsemanticdiscovery\r\nsenrigan\r\nsg-scout\r\nshai''hulud\r\nshark\r\nshopwiki\r\nsidewinder\r\nsift\r\nsilk\r\nsimmany\r\nsite searcher\r\nsite valet\r\nsitetech-rover\r\nskymob.com\r\nsleek\r\nsmartwit\r\nsna-\r\nsnappy\r\nsnooper\r\nsohu\r\nspeedfind\r\nsphere\r\nsphider\r\nspinner\r\nspyder\r\nsteeler/\r\nsuke\r\nsuntek\r\nsupersnooper\r\nsurfnomore\r\nsven\r\nsygol\r\nszukacz\r\ntach black widow\r\ntarantula\r\ntempleton\r\n/teoma\r\nt-h-u-n-d-e-r-s-t-o-n-e\r\ntheophrastus\r\ntitan\r\ntitin\r\ntkwww\r\ntoutatis\r\nt-rex\r\ntutorgig\r\ntwiceler\r\ntwisted\r\nucsd\r\nudmsearch\r\nurl check\r\nupdated\r\nvagabondo\r\nvalkyrie\r\nverticrawl\r\nvictoria\r\nvision-search\r\nvolcano\r\nvoyager/\r\nvoyager-hc\r\nw3c_validator\r\nw3m2\r\nw3mir\r\nwalker\r\nwallpaper\r\nwanderer\r\nwauuu\r\nwavefire\r\nweb core\r\nweb hopper\r\nweb wombat\r\nwebbandit\r\nwebcatcher\r\nwebcopy\r\nwebfoot\r\nweblayers\r\nweblinker\r\nweblog monitor\r\nwebmirror\r\nwebmonkey\r\nwebquest\r\nwebreaper\r\nwebsitepulse\r\nwebsnarf\r\nwebstolperer\r\nwebvac\r\nwebwalk\r\nwebwatch\r\nwebwombat\r\nwebzinger\r\nwhizbang\r\nwhowhere\r\nwild ferret\r\nworldlight\r\nwwwc\r\nwwwster\r\nxenu\r\nxget\r\nxift\r\nxirq\r\nyandex\r\nyanga\r\nyeti\r\nyodao\r\nzao\r\nzippp\r\nzyborg', 0),
 (0, 'config', 'config_shared', '0', 0),
 (0, 'config', 'config_fraud_detection', '0', 0),
-(0, 'config', 'config_ftp_status', '0', 0),
-(0, 'config', 'config_ftp_root', '', 0),
-(0, 'config', 'config_ftp_password', '', 0),
-(0, 'config', 'config_ftp_username', '', 0),
-(0, 'config', 'config_ftp_port', '21', 0),
-(0, 'config', 'config_ftp_hostname', '', 0),
 (0, 'config', 'config_meta_title', 'Your Store', 0),
 (0, 'config', 'config_meta_description', 'My Store', 0),
 (0, 'config', 'config_meta_keyword', '', 0),
@@ -1537,7 +1501,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_admin_language', 'en-gb', 0),
 (0, 'config', 'config_currency', 'USD', 0),
 (0, 'config', 'config_currency_auto', '1', 0),
-(0, 'config', 'config_currency_engine', 'fixer', 0),
+(0, 'config', 'config_currency_engine', 'ecb', 0),
 (0, 'config', 'config_length_class_id', '1', 0),
 (0, 'config', 'config_weight_class_id', '1', 0),
 (0, 'config', 'config_product_count', '1', 0),
@@ -1546,7 +1510,6 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_review_guest', '1', 0),
 (0, 'config', 'config_voucher_min', '1', 0),
 (0, 'config', 'config_voucher_max', '1000', 0),
-(0, 'config', 'config_tax', '1', 0),
 (0, 'config', 'config_cookie_id', '0', 0),
 (0, 'config', 'config_gdpr_id', '0', 0),
 (0, 'config', 'config_gdpr_limit', '180', 0),
@@ -1572,6 +1535,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_stock_display', '0', 0),
 (0, 'config', 'config_stock_warning', '0', 0),
 (0, 'config', 'config_stock_checkout', '0', 0),
+(0, 'config', 'config_affiliate_status', '1', 0),
 (0, 'config', 'config_affiliate_approval', '0', 0),
 (0, 'config', 'config_affiliate_auto', '0', 0),
 (0, 'config', 'config_affiliate_commission', '5', 0),
@@ -1615,7 +1579,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
 (0, 'config', 'config_login_attempts', '5', 0),
 (0, 'developer', 'developer_sass', '1', 0),
-(0, 'currency_fixer', 'currency_fixer_status', '1', 0),
+(0, 'currency_ecb', 'currency_ecb_status', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_status', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_order_status_id', '1', 0),
 (0, 'payment_free_checkout', 'payment_free_checkout_sort_order', '1', 0),
@@ -1632,10 +1596,10 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'total_shipping', 'total_shipping_sort_order', '3', 0),
 (0, 'total_sub_total', 'total_sub_total_sort_order', '1', 0),
 (0, 'total_sub_total', 'total_sub_total_status', '1', 0),
+(0, 'total_tax', 'total_tax_sort_order', '5', 0),
 (0, 'total_tax', 'total_tax_status', '1', 0),
 (0, 'total_total', 'total_total_sort_order', '9', 0),
 (0, 'total_total', 'total_total_status', '1', 0),
-(0, 'total_tax', 'total_tax_sort_order', '5', 0),
 (0, 'total_credit', 'total_credit_sort_order', '7', 0),
 (0, 'total_credit', 'total_credit_status', '1', 0),
 (0, 'total_reward', 'total_reward_sort_order', '2', 0),
@@ -1650,18 +1614,18 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'module_account', 'module_account_status', '1', 0),
 (0, 'theme_default', 'theme_default_pagination', '15', 0),
 (0, 'theme_default', 'theme_default_product_description_length', '100', 0),
-(0, 'theme_default', 'theme_default_image_thumb_width', '228', 0),
-(0, 'theme_default', 'theme_default_image_thumb_height', '228', 0),
-(0, 'theme_default', 'theme_default_image_popup_width', '500', 0),
-(0, 'theme_default', 'theme_default_image_popup_height', '500', 0),
+(0, 'theme_default', 'theme_default_image_thumb_width', '500', 0),
+(0, 'theme_default', 'theme_default_image_thumb_height', '500', 0),
+(0, 'theme_default', 'theme_default_image_popup_width', '800', 0),
+(0, 'theme_default', 'theme_default_image_popup_height', '800', 0),
 (0, 'theme_default', 'theme_default_image_category_width', '80', 0),
 (0, 'theme_default', 'theme_default_image_category_height', '80', 0),
-(0, 'theme_default', 'theme_default_image_product_width', '228', 0),
-(0, 'theme_default', 'theme_default_image_product_height', '228', 0),
+(0, 'theme_default', 'theme_default_image_product_width', '250', 0),
+(0, 'theme_default', 'theme_default_image_product_height', '250', 0),
 (0, 'theme_default', 'theme_default_image_additional_width', '74', 0),
 (0, 'theme_default', 'theme_default_image_additional_height', '74', 0),
-(0, 'theme_default', 'theme_default_image_related_width', '200', 0),
-(0, 'theme_default', 'theme_default_image_related_height', '200', 0),
+(0, 'theme_default', 'theme_default_image_related_width', '250', 0),
+(0, 'theme_default', 'theme_default_image_related_height', '250', 0),
 (0, 'theme_default', 'theme_default_image_compare_width', '90', 0),
 (0, 'theme_default', 'theme_default_image_compare_height', '90', 0),
 (0, 'theme_default', 'theme_default_image_wishlist_width', '47', 0),
@@ -1722,60 +1686,6 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'report_product_purchased', 'report_product_purchased_sort_order', '11', 0),
 (0, 'report_marketing', 'report_marketing_status', '1', 0),
 (0, 'report_marketing', 'report_marketing_sort_order', '12', 0);
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_stock_status`
---
-
-INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
-(7, 1, 'In Stock'),
-(8, 1, 'Pre-Order'),
-(5, 1, 'Out Of Stock'),
-(6, 1, '2-3 Days');
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_tax_class`
---
-
-INSERT INTO `oc_tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
-(9, 'Taxable Goods', 'Taxed goods', '2009-01-06 23:21:53', '2011-09-23 14:07:50'),
-(10, 'Downloadable Products', 'Downloadable', '2011-09-21 22:19:39', '2011-09-22 10:27:36');
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_tax_rate`
---
-
-INSERT INTO `oc_tax_rate` (`tax_rate_id`, `geo_zone_id`, `name`, `rate`, `type`, `date_added`, `date_modified`) VALUES
-(86, 3, 'VAT (20%)', '20.0000', 'P', '2011-03-09 21:17:10', '2011-09-22 22:24:29'),
-(87, 3, 'Eco Tax (-2.00)', '2.0000', 'F', '2011-09-21 21:49:23', '2011-09-23 00:40:19');
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_tax_rate_to_customer_group`
---
-
-INSERT INTO `oc_tax_rate_to_customer_group` (`tax_rate_id`, `customer_group_id`) VALUES
-(86, 1),
-(87, 1);
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_tax_rule`
---
-
-INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`, `priority`) VALUES
-(121, 10, 86, 'payment', 1),
-(120, 10, 87, 'store', 0),
-(128, 9, 86, 'shipping', 1),
-(127, 9, 87, 'shipping', 2);
 
 -----------------------------------------------------------
 
@@ -1870,6 +1780,89 @@ INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `key`, `value
 (106, 0, 1, 'path', '33', 'cameras'),
 (90, 0, 1, 'product_id', '42', 'cvcvc'),
 (102, 0, 1, 'manufacturer_id', '8', 'apple');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_shipping_courier`
+--
+
+INSERT INTO `oc_shipping_courier` (`shipping_courier_id`, `shipping_courier_code`, `shipping_courier_name`) VALUES
+  (1, 'dhl', 'DHL'),
+  (2, 'fedex', 'Fedex'),
+  (3, 'ups', 'UPS'),
+  (4, 'royal-mail', 'Royal Mail'),
+  (5, 'usps', 'United States Postal Service'),
+  (6, 'auspost', 'Australia Post');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_statistics`
+--
+
+INSERT INTO `oc_statistics` (`statistics_id`, `code`, `value`) VALUES
+(1, 'order_sale', 0),
+(2, 'order_processing', 0),
+(3, 'order_complete', 0),
+(4, 'order_other', 0),
+(5, 'return', 0),
+(6, 'product', 0),
+(7, 'review', 0);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_stock_status`
+--
+
+INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
+(7, 1, 'In Stock'),
+(8, 1, 'Pre-Order'),
+(5, 1, 'Out Of Stock'),
+(6, 1, '2-3 Days');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_tax_class`
+--
+
+INSERT INTO `oc_tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
+(9, 'Taxable Goods', 'Taxed goods', '2009-01-06 23:21:53', '2011-09-23 14:07:50'),
+(10, 'Downloadable Products', 'Downloadable', '2011-09-21 22:19:39', '2011-09-22 10:27:36');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_tax_rate`
+--
+
+INSERT INTO `oc_tax_rate` (`tax_rate_id`, `geo_zone_id`, `name`, `rate`, `type`, `date_added`, `date_modified`) VALUES
+(86, 3, 'VAT (20%)', '20.0000', 'P', '2011-03-09 21:17:10', '2011-09-22 22:24:29'),
+(87, 3, 'Eco Tax (-2.00)', '2.0000', 'F', '2011-09-21 21:49:23', '2011-09-23 00:40:19');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_tax_rate_to_customer_group`
+--
+
+INSERT INTO `oc_tax_rate_to_customer_group` (`tax_rate_id`, `customer_group_id`) VALUES
+(86, 1),
+(87, 1);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_tax_rule`
+--
+
+INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`, `priority`) VALUES
+(121, 10, 86, 'payment', 1),
+(120, 10, 87, 'store', 0),
+(128, 9, 86, 'shipping', 1),
+(127, 9, 87, 'shipping', 2);
 
 -----------------------------------------------------------
 

@@ -2,13 +2,12 @@
 /*
 Amazon S3 system wil be used for storing cloud data
 */
-class ModelToolS3 extends Model {
-
-
+namespace Application\Model\Tool;
+class S3 extends \System\Engine\Model {
 	public function addFile($file, $path) {
 		try {
 
-			$option = array(
+			$option = [
 				'version'     => 'latest',
 				'region'      => 'us-west-2',
 				'credentials' => false
@@ -26,7 +25,7 @@ class ModelToolS3 extends Model {
 	public function getFile($file, $file) {
 		try {
 
-			$option = array(
+			$option = [
 				'version'     => 'latest',
 				'region'      => 'us-west-2',
 				'credentials' => false

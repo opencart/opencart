@@ -171,6 +171,10 @@ class AwsClient implements AwsClientInterface
      *   signature version to use with a service (e.g., v4). Note that
      *   per/operation signature version MAY override this requested signature
      *   version.
+     * - use_aws_shared_config_files: (bool, default=bool(true)) Set to false to
+     *   disable checking for shared config file in '~/.aws/config' and
+     *   '~/.aws/credentials'.  This will override the AWS_CONFIG_FILE
+     *   environment variable.
      * - validate: (bool, default=bool(true)) Set to false to disable
      *   client-side parameter validation.
      * - version: (string, required) The version of the webservice to

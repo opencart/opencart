@@ -83,9 +83,17 @@ class CredentialProvider
         $defaultChain = [
             'env' => self::env(),
             'web_identity' => self::assumeRoleWithWebIdentityCredentialProvider($config),
-            'ini' => self::ini(),
-            'ini_config' => self::ini('profile default', self::getHomeDir() . '/.aws/config'),
         ];
+        if (
+            !isset($config['use_aws_shared_config_files'])
+            || $config['use_aws_shared_config_files'] !== false
+        ) {
+            $defaultChain['ini'] = self::ini();
+            $defaultChain['ini_config'] = self::ini(
+                'profile default',
+                self::getHomeDir() . '/.aws/config'
+            );
+        }
 
         if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
@@ -107,7 +115,7 @@ class CredentialProvider
                         $config['credentials'],
                         'aws_cached_' . $provider . '_credentials'
                     );
-                };
+                }
             }
         }
 

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8d10059ae8f16b34d2ba0c61bb5fff36
+class ComposerStaticInitb8087c6fdb3e9aae2ddcf0093a45c39c
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -26,15 +26,12 @@ class ComposerStaticInit8d10059ae8f16b34d2ba0c61bb5fff36
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'ScssPhp\\ScssPhp\\' => 16,
         ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
-        ),
-        'L' => 
-        array (
-            'Leafo\\ScssPhp\\' => 14,
         ),
         'J' => 
         array (
@@ -65,6 +62,10 @@ class ComposerStaticInit8d10059ae8f16b34d2ba0c61bb5fff36
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'ScssPhp\\ScssPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
@@ -72,10 +73,6 @@ class ComposerStaticInit8d10059ae8f16b34d2ba0c61bb5fff36
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
-        ),
-        'Leafo\\ScssPhp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/leafo/scssphp/src',
         ),
         'JmesPath\\' => 
         array (
@@ -102,8 +99,8 @@ class ComposerStaticInit8d10059ae8f16b34d2ba0c61bb5fff36
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8d10059ae8f16b34d2ba0c61bb5fff36::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8d10059ae8f16b34d2ba0c61bb5fff36::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb8087c6fdb3e9aae2ddcf0093a45c39c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb8087c6fdb3e9aae2ddcf0093a45c39c::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

@@ -10,9 +10,10 @@
 /**
  * Action class
  */
+namespace System\Engine;
 class Action {
-	private $id;
 	private $route;
+	private $class;
 	private $method = 'index';
 
 	/**
@@ -20,24 +21,17 @@ class Action {
 	 *
 	 * @param    string $route
 	 */
-	public function __construct($route) {
-		$this->id = $route;
+	public function __construct(string $route) {
+		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		$parts = explode('/', preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route));
+		// Converting a route path to a class name
+		$class = 'Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
-		// Break apart the route
-		while ($parts) {
-			$path = implode('/', $parts);
-
-			$file = DIR_APPLICATION . 'controller/' . $path . '.php';
-
-			if (is_file($file)) {
-				$this->route = $path;
-
-				break;
-			} else {
-				$this->method = array_pop($parts);
-			}
+		if (class_exists($class)) {
+			$this->class = $class;
+		} else {
+			$this->class = substr($class, 0, strrpos($class, '\\'));
+			$this->method = substr($route, strrpos($route, '/') + 1);
 		}
 	}
 
@@ -48,7 +42,7 @@ class Action {
 	 *
 	 */
 	public function getId() {
-		return $this->id;
+		return $this->route;
 	}
 
 	/**
@@ -57,30 +51,25 @@ class Action {
 	 * @param    object $registry
 	 * @param    array $args
 	 */
-	public function execute($registry, array &$args = array()) {
+	public function execute(Registry $registry, array &$args = []) {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
-		$file = DIR_APPLICATION . 'controller/' . $this->route . '.php';
-		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
-
 		// Initialize the class
-		if (is_file($file)) {
-			include_once($file);
-
-			$controller = new $class($registry);
+		if ($this->class) {
+			$controller = new $this->class($registry);
 		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
+			return new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 
-		$reflection = new ReflectionClass($class);
+		$callable = [$controller, $this->method];
 
-		if ($reflection->hasMethod($this->method) && $reflection->getMethod($this->method)->getNumberOfRequiredParameters() <= count($args)) {
-			return call_user_func_array(array($controller, $this->method), $args);
+		if (is_callable($callable)) {
+			return call_user_func_array($callable, $args);
 		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '/' . $this->method . '!');
+			return new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 	}
 }

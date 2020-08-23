@@ -10,8 +10,9 @@
 /**
 * Registry class
 */
-final class Registry {
-	private $data = array();
+namespace System\Engine;
+class Registry {
+	private $data = [];
 
 	/**
      * Get

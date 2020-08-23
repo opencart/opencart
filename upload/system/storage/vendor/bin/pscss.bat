@@ -1,4 +1,4 @@
 @ECHO OFF
 setlocal DISABLEDELAYEDEXPANSION
-SET BIN_TARGET=%~dp0/../leafo/scssphp/bin/pscss
+SET BIN_TARGET=%~dp0/../scssphp/scssphp/bin/pscss
 php "%BIN_TARGET%" %*

@@ -1,6 +1,7 @@
 <?php
-class ControllerDesignSeoUrl extends Controller {
-	private $error = array();
+namespace Application\Controller\Design;
+class SeoUrl extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('design/seo_url');
@@ -253,26 +254,26 @@ class ControllerDesignSeoUrl extends Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('design/seo_url/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/seo_url/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
 
-		$data['seo_urls'] = array();
+		$data['seo_urls'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_keyword'     => $filter_keyword,
 			'filter_key'         => $filter_key,
 			'filter_value'       => $filter_value,
@@ -282,7 +283,7 @@ class ControllerDesignSeoUrl extends Controller {
 			'order'              => $order,
 			'start'              => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'              => $this->config->get('config_pagination')
-		);
+		];
 
 		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
@@ -297,7 +298,7 @@ class ControllerDesignSeoUrl extends Controller {
 				$code = '';
 			}
 
-			$data['seo_urls'][] = array(
+			$data['seo_urls'][] = [
 				'seo_url_id' => $result['seo_url_id'],
 				'keyword'    => $result['keyword'],
 				'key'        => $result['key'],
@@ -305,7 +306,7 @@ class ControllerDesignSeoUrl extends Controller {
 				'store'      => $result['store_id'] ? $result['store'] : $this->language->get('text_default'),
 				'language'   => $code,
 				'edit'       => $this->url->link('design/seo_url/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $result['seo_url_id'] . $url)
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -327,7 +328,7 @@ class ControllerDesignSeoUrl extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -394,12 +395,12 @@ class ControllerDesignSeoUrl extends Controller {
 			$url .= '&order=' . (string)$this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $seo_url_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($seo_url_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($seo_url_total - $this->config->get('config_pagination'))) ? $seo_url_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $seo_url_total, ceil($seo_url_total / $this->config->get('config_pagination')));
 
@@ -488,17 +489,17 @@ class ControllerDesignSeoUrl extends Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (!isset($this->request->get['seo_url_id'])) {
 			$data['action'] = $this->url->link('design/seo_url/add', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -512,22 +513,22 @@ class ControllerDesignSeoUrl extends Controller {
 			$seo_url_info = $this->model_design_seo_url->getSeoUrl($this->request->get['seo_url_id']);
 		}
 
-		$data['stores'] = array();
+		$data['stores'] = [];
 
-		$data['stores'][] = array(
+		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
-		);
+		];
 
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
-			$data['stores'][] = array(
+			$data['stores'][] = [
 				'store_id' => $store['store_id'],
 				'name'     => $store['name']
-			);
+			];
 		}
 
 		if (isset($this->request->post['store_id'])) {

@@ -1,6 +1,7 @@
 <?php
-class ControllerCommonProfile extends Controller {
-	private $error = array();
+namespace Application\Controller\Common;
+class Profile extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('common/profile');
@@ -10,10 +11,10 @@ class ControllerCommonProfile extends Controller {
 		$this->load->model('user/user');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$user_data = array_merge($this->request->post, array(
+			$user_data = array_merge($this->request->post, [
 				'user_group_id' => $this->user->getGroupId(),
 				'status'        => 1,
-			));
+			]);
 			
 			$this->model_user_user->editUser($this->user->getId(), $user_data);
 
@@ -72,17 +73,17 @@ class ControllerCommonProfile extends Controller {
 			$data['error_email'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['action'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
 

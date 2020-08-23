@@ -1,5 +1,6 @@
 <?php
-class ModelToolUpload extends Model {
+namespace Application\Model\Tool;
+class Upload extends \System\Engine\Model {
 	public function addUpload($name, $filename) {
 		$code = sha1(uniqid(mt_rand(), true));
 
@@ -24,10 +25,10 @@ class ModelToolUpload extends Model {
 		return $query->row;
 	}
 
-	public function getUploads($data = array()) {
+	public function getUploads($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "upload";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_name'])) {
 			$implode[] = "name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
@@ -45,11 +46,11 @@ class ModelToolUpload extends Model {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'filename',
 			'date_added'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -80,10 +81,10 @@ class ModelToolUpload extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalUploads($data = array()) {
+	public function getTotalUploads($data = []) {
 		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "upload";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_name'])) {
 			$implode[] = "name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";

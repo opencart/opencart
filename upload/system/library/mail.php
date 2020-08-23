@@ -10,6 +10,7 @@
 /**
 * Mail class
 */
+namespace System\Library;
 class Mail {
 	protected $to;
 	protected $from;
@@ -18,8 +19,7 @@ class Mail {
 	protected $subject;
 	protected $text;
 	protected $html;
-	protected $attachments = array();
-	public $parameter;
+	protected $attachments = [];
 
 	/**
 	 * Constructor

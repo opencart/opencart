@@ -10,20 +10,21 @@
 /**
 * Document class
 */
+namespace System\Library;
 class Document {
 	private $title;
 	private $description;
 	private $keywords;
-	private $links = array();
-	private $styles = array();
-	private $scripts = array();
+	private $links = [];
+	private $styles = [];
+	private $scripts = [];
 
 	/**
      *
      *
      * @param	string	$title
      */
-	public function setTitle($title) {
+	public function setTitle(string $title) {
 		$this->title = $title;
 	}
 
@@ -41,7 +42,7 @@ class Document {
      *
      * @param	string	$description
      */
-	public function setDescription($description) {
+	public function setDescription(string $description) {
 		$this->description = $description;
 	}
 
@@ -61,7 +62,7 @@ class Document {
      *
      * @param	string	$keywords
      */
-	public function setKeywords($keywords) {
+	public function setKeywords(string $keywords) {
 		$this->keywords = $keywords;
 	}
 
@@ -80,11 +81,11 @@ class Document {
      * @param	string	$href
 	 * @param	string	$rel
      */
-	public function addLink($href, $rel) {
-		$this->links[$href] = array(
+	public function addLink(string $href, string $rel) {
+		$this->links[$href] = [
 			'href' => $href,
 			'rel'  => $rel
-		);
+		];
 	}
 
 	/**
@@ -103,12 +104,12 @@ class Document {
 	 * @param	string	$rel
 	 * @param	string	$media
      */
-	public function addStyle($href, $rel = 'stylesheet', $media = 'screen') {
-		$this->styles[$href] = array(
+	public function addStyle(string $href, $rel = 'stylesheet', $media = 'screen') {
+		$this->styles[$href] = [
 			'href'  => $href,
 			'rel'   => $rel,
 			'media' => $media
-		);
+		];
 	}
 
 	/**
@@ -126,7 +127,7 @@ class Document {
      * @param	string	$href
 	 * @param	string	$position
      */
-	public function addScript($href, $position = 'header') {
+	public function addScript(string $href, string $position = 'header') {
 		$this->scripts[$position][$href] = $href;
 	}
 
@@ -137,11 +138,11 @@ class Document {
 	 *
 	 * @return	array
      */
-	public function getScripts($position = 'header') {
+	public function getScripts(string $position = 'header') {
 		if (isset($this->scripts[$position])) {
 			return $this->scripts[$position];
 		} else {
-			return array();
+			return [];
 		}
 	}
 }

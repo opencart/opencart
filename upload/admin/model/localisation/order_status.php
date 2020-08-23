@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationOrderStatus extends Model {
+namespace Application\Model\Localisation;
+class OrderStatus extends \System\Engine\Model {
 	public function addOrderStatus($data) {
 		foreach ($data['order_status'] as $language_id => $value) {
 			if (isset($order_status_id)) {
@@ -38,7 +39,7 @@ class ModelLocalisationOrderStatus extends Model {
 		return $query->row;
 	}
 
-	public function getOrderStatuses($data = array()) {
+	public function getOrderStatuses($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -81,12 +82,12 @@ class ModelLocalisationOrderStatus extends Model {
 	}
 
 	public function getDescriptions($order_status_id) {
-		$order_status_data = array();
+		$order_status_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$order_status_data[$result['language_id']] = array('name' => $result['name']);
+			$order_status_data[$result['language_id']] = ['name' => $result['name']);
 		}
 
 		return $order_status_data;

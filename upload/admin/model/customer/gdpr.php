@@ -1,13 +1,14 @@
 <?php
-class ModelCustomerGdpr extends Model {
+namespace Application\Model\Customer;
+class Gdpr extends \System\Engine\Model {
 	public function deleteGdpr($gdpr_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE gdpr_id = '" . (int)$gdpr_id . "'");
 	}
 
-	public function getGdprs($data = array()) {
+	public function getGdprs($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "gdpr`";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_email'])) {
 			$implode[] = "`email` LIKE '" . $this->db->escape((string)$data['filter_email']) . "'";
@@ -54,10 +55,10 @@ class ModelCustomerGdpr extends Model {
 		return $query->row;
 	}
 
-	public function getTotalGdprs($data = array()) {
+	public function getTotalGdprs($data = []) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "gdpr`";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_email'])) {
 			$implode[] = "`email` LIKE '" . $this->db->escape((string)$data['filter_email']) . "'";

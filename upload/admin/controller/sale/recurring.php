@@ -1,6 +1,7 @@
 <?php
-class ControllerSaleRecurring extends Controller {
-	private $error = array();
+namespace Application\Controller\Sale;
+class Recurring extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('sale/recurring');
@@ -105,21 +106,21 @@ class ControllerSaleRecurring extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
-		$data['recurrings'] = array();
+		$data['recurrings'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_order_recurring_id' => $filter_order_recurring_id,
 			'filter_order_id'           => $filter_order_id,
 			'filter_reference'          => $filter_reference,
@@ -130,7 +131,7 @@ class ControllerSaleRecurring extends Controller {
 			'sort'                      => $sort,
 			'start'                     => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                     => $this->config->get('config_pagination')
-		);
+		];
 
 		$recurrings_total = $this->model_sale_recurring->getTotalRecurrings($filter_data);
 
@@ -143,7 +144,7 @@ class ControllerSaleRecurring extends Controller {
 				$status = '';
 			}
 			
-			$data['recurrings'][] = array(
+			$data['recurrings'][] = [
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id'           => $result['order_id'],
 				'reference'          => $result['reference'],
@@ -152,7 +153,7 @@ class ControllerSaleRecurring extends Controller {
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'view'               => $this->url->link('sale/recurring/info', 'user_token=' . $this->session->data['user_token'] . '&order_recurring_id=' . $result['order_recurring_id'] . $url),
 				'order'              => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'])
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -248,12 +249,12 @@ class ControllerSaleRecurring extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 		
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $recurrings_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($recurrings_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($recurrings_total - $this->config->get('config_pagination'))) ? $recurrings_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $recurrings_total, ceil($recurrings_total / $this->config->get('config_pagination')));
 
@@ -267,18 +268,18 @@ class ControllerSaleRecurring extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		
-		$data['recurring_statuses'] = array();
+		$data['recurring_statuses'] = [];
 		
-		$data['recurring_statuses'][0] = array(
+		$data['recurring_statuses'][0] = [
 			'text'  => '',
 			'value' => 0
-		);
+		];
 			
 		for ($i = 1; $i <= 6; $i++) {
-			$data['recurring_statuses'][$i] = array(
+			$data['recurring_statuses'][$i] = [
 				'text'  => $this->language->get('text_status_' . $i),
 				'value' => 1
-			);		
+			];
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -344,17 +345,17 @@ class ControllerSaleRecurring extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = [];
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-			);
+			$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . $url)
-			);
+			];
 
 			$data['cancel'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . $url);
 			
@@ -404,16 +405,16 @@ class ControllerSaleRecurring extends Controller {
 			$data['quantity'] = $order_recurring_info['product_quantity'];
 
 			// Transactions
-			$data['transactions'] = array();
+			$data['transactions'] = [];
 			
 			$transactions = $this->model_sale_recurring->getRecurringTransactions($order_recurring_info['order_recurring_id']);
 
 			foreach ($transactions as $transaction) {
-				$data['transactions'][] = array(
+				$data['transactions'][] = [
 					'date_added' => $transaction['date_added'],
 					'type'       => $transaction['type'],
 					'amount'     => $this->currency->format($transaction['amount'], $order_info['currency_code'], $order_info['currency_value'])
-				);
+				];
 			}
 
 			$data['buttons'] = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/recurringButtons');
@@ -424,7 +425,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$this->response->setOutput($this->load->view('sale/recurring_info', $data));
 		} else {
-			return new Action('error/not_found');
+			return new \System\Engine\Action('error/not_found');
 		}
 	}
 }

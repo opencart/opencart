@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonColumnRight extends Controller {
+namespace Application\Controller\Common;
+class ColumnRight extends \System\Engine\Controller
 	public function index() {
 		$this->load->model('design/layout');
 
@@ -25,6 +26,12 @@ class ControllerCommonColumnRight extends Controller {
 			$layout_id = $this->model_catalog_product->getLayoutId($this->request->get['product_id']);
 		}
 
+		if ($route == 'product/manufacturer/info' && isset($this->request->get['manufacturer_id'])) {
+			$this->load->model('catalog/manufacturer');
+
+			$layout_id = $this->model_catalog_manufacturer->getLayoutId($this->request->get['manufacturer_id']);
+		}
+
 		if ($route == 'information/information' && isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
 
@@ -41,7 +48,7 @@ class ControllerCommonColumnRight extends Controller {
 
 		$this->load->model('setting/module');
 
-		$data['modules'] = array();
+		$data['modules'] = [];
 
 		$modules = $this->model_design_layout->getModules($layout_id, 'column_right');
 

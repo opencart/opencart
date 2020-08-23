@@ -1,6 +1,7 @@
 <?php
-class ControllerCatalogOption extends Controller {
-	private $error = array();
+namespace Application\Controller\Catalog;
+class Option extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('catalog/option');
@@ -143,41 +144,41 @@ class ControllerCatalogOption extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/option/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['options'] = array();
+		$data['options'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$option_total = $this->model_catalog_option->getTotalOptions();
 
 		$results = $this->model_catalog_option->getOptions($filter_data);
 
 		foreach ($results as $result) {
-			$data['options'][] = array(
+			$data['options'][] = [
 				'option_id'  => $result['option_id'],
 				'name'       => $result['name'],
 				'sort_order' => $result['sort_order'],
 				'edit'       => $this->url->link('catalog/option/edit', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)
-			);
+			];
 		}
 
 		if (isset($this->error['warning'])) {
@@ -197,7 +198,7 @@ class ControllerCatalogOption extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -225,12 +226,12 @@ class ControllerCatalogOption extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $option_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($option_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($option_total - $this->config->get('config_pagination'))) ? $option_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $option_total, ceil($option_total / $this->config->get('config_pagination')));
 
@@ -256,13 +257,13 @@ class ControllerCatalogOption extends Controller {
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
-			$data['error_name'] = array();
+			$data['error_name'] = [];
 		}
 
 		if (isset($this->error['option_value'])) {
 			$data['error_option_value'] = $this->error['option_value'];
 		} else {
-			$data['error_option_value'] = array();
+			$data['error_option_value'] = [];
 		}
 
 		$url = '';
@@ -279,17 +280,17 @@ class ControllerCatalogOption extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (!isset($this->request->get['option_id'])) {
 			$data['action'] = $this->url->link('catalog/option/add', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -314,7 +315,7 @@ class ControllerCatalogOption extends Controller {
 		} elseif (!empty($option_info)) {
 			$data['option_description'] = $this->model_catalog_option->getDescriptions($this->request->get['option_id']);
 		} else {
-			$data['option_description'] = array();
+			$data['option_description'] = [];
 		}
 
 		if (isset($this->request->post['type'])) {
@@ -338,12 +339,12 @@ class ControllerCatalogOption extends Controller {
 		} elseif (!empty($option_info)) {
 			$option_values = $this->model_catalog_option->getValueDescriptions($this->request->get['option_id']);
 		} else {
-			$option_values = array();
+			$option_values = [];
 		}
 
 		$this->load->model('tool/image');
 
-		$data['option_values'] = array();
+		$data['option_values'] = [];
 
 		foreach ($option_values as $option_value) {
 			if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -354,13 +355,13 @@ class ControllerCatalogOption extends Controller {
 				$thumb = 'no_image.png';
 			}
 
-			$data['option_values'][] = array(
+			$data['option_values'][] = [
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
 				'thumb'                    => $this->model_tool_image->resize(html_entity_decode($thumb, ENT_QUOTES, 'UTF-8'), 100, 100),
 				'sort_order'               => $option_value['sort_order']
-			);
+			];
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
@@ -391,7 +392,7 @@ class ControllerCatalogOption extends Controller {
 			if (isset($this->request->get['option_id'])) {
 				$this->load->model('catalog/product');
 
-				$option_value_data = array();
+				$option_value_data = [];
 
 				foreach ($this->request->post['option_value'] as $option_value) {
 					if ($option_value['option_value_id']) {
@@ -419,6 +420,10 @@ class ControllerCatalogOption extends Controller {
 			}
 		}
 
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+
 		return !$this->error;
 	}
 
@@ -441,7 +446,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function autocomplete() {
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->language('catalog/option');
@@ -450,16 +455,16 @@ class ControllerCatalogOption extends Controller {
 
 			$this->load->model('tool/image');
 
-			$filter_data = array(
+			$filter_data = [
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
 				'limit'       => 5
-			);
+			];
 
 			$options = $this->model_catalog_option->getOptions($filter_data);
 
 			foreach ($options as $option) {
-				$option_value_data = array();
+				$option_value_data = [];
 
 				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
 					$option_values = $this->model_catalog_option->getValues($option['option_id']);
@@ -471,14 +476,14 @@ class ControllerCatalogOption extends Controller {
 							$image = $this->model_tool_image->resize('no_image.png', 50, 50);
 						}
 
-						$option_value_data[] = array(
+						$option_value_data[] = [
 							'option_value_id' => $option_value['option_value_id'],
 							'name'            => strip_tags(html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8')),
 							'image'           => $image
-						);
+						];
 					}
 
-					$sort_order = array();
+					$sort_order = [];
 
 					foreach ($option_value_data as $key => $value) {
 						$sort_order[$key] = $value['name'];
@@ -505,17 +510,17 @@ class ControllerCatalogOption extends Controller {
 					$type = $this->language->get('text_date');
 				}
 
-				$json[] = array(
+				$json[] = [
 					'option_id'    => $option['option_id'],
 					'name'         => strip_tags(html_entity_decode($option['name'], ENT_QUOTES, 'UTF-8')),
 					'category'     => $type,
 					'type'         => $option['type'],
 					'option_value' => $option_value_data
-				);
+				];
 			}
 		}
 
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($json as $key => $value) {
 			$sort_order[$key] = $value['name'];

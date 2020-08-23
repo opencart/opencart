@@ -12,4 +12,4 @@ $_['entry_generator']  = 'Tracking Link Generator';
 $_['entry_link']       = 'Tracking Link';
 
 // Help
-$_['help_generator']  = 'Type in the name of a product you would like to link to';
+$_['help_generator']   = 'Type in the name of a product you would like to link to';

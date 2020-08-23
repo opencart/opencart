@@ -1,9 +1,10 @@
 <?php
-class ControllerAffiliateLogin extends Controller {
-	private $error = array();
+namespace Application\Controller\Affiliate;
+class Login extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
-		if ($this->customer->isLogged()) {
+		if (!$this->config->get('config_affiliate_status') || $this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
@@ -50,22 +51,22 @@ class ControllerAffiliateLogin extends Controller {
 			}
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_login'),
 			'href' => $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_affiliate_commission') . '%');
 
@@ -143,7 +144,7 @@ class ControllerAffiliateLogin extends Controller {
 				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			}
 		}
-		
+
 		return !$this->error;
 	}
 }

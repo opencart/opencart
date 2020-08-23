@@ -1,5 +1,6 @@
 <?php
-class ControllerInstallPromotion extends Controller {
+namespace Install\Controller\Install;
+class Promotion extends \System\Engine\Controller {
 	public function index() {
 		$curl = curl_init();
 

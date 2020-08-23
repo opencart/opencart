@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonDeveloper extends Controller {
+namespace Application\Controller\Common;
+class Developer extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/developer');
 		
@@ -13,7 +14,7 @@ class ControllerCommonDeveloper extends Controller {
 	public function edit() {
 		$this->load->language('common/developer');
 
-		$json = array();
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -32,7 +33,7 @@ class ControllerCommonDeveloper extends Controller {
 	public function theme() {
 		$this->load->language('common/developer');
 		
-		$json = array();
+		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -65,7 +66,7 @@ class ControllerCommonDeveloper extends Controller {
 	public function sass() {
 		$this->load->language('common/developer');
 		
-		$json = array();
+		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -73,20 +74,30 @@ class ControllerCommonDeveloper extends Controller {
 			// Before we delete we need to make sure there is a sass file to regenerate the css
 			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
 			
-			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/sass/_bootstrap.scss')) {
+			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/scss/bootstrap.scss')) {
 				unlink($file);
 			}
 			 
-			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/sass/_bootstrap.scss');
+			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/scss/bootstrap.scss');
 			 
 			foreach ($files as $file) {
-				$file = substr($file, 0, -21) . '/bootstrap.css';
+				$file = substr($file, 0, -20) . '/bootstrap.css';
 				
 				if (is_file($file)) {
 					unlink($file);
 				}
 			}
-			
+
+			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/stylesheet.scss');
+			 
+			foreach ($files as $file) {
+				$file = substr($file, 0, -16) . '/stylesheet.css';
+				
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
+
 			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_sass'));
 		}	
 		

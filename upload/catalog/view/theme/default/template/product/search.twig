@@ -112,7 +112,7 @@
         </div>
         <div class="row">
           {% for product in products %}
-            <div class="product-layout product-list col-lg-3 col-md-3 col-sm-6 col-12">{{ product }}</div>
+            <div class="product-layout product-list col-12">{{ product }}</div>
           {% endfor %}
         </div>
         <div class="row">
@@ -129,7 +129,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-search').bind('click', function() {
-	url = 'index.php?route=product/search';
+	url = 'index.php?route=product/search&language={{ language }}';
 
 	var search = $('#content input[name=\'search\']').prop('value');
 

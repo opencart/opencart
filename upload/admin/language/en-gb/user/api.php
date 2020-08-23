@@ -16,7 +16,6 @@ $_['column_token']         = 'Token';
 $_['column_ip']            = 'IP';
 $_['column_date_added']    = 'Date Added';
 $_['column_date_modified'] = 'Date Modified';
-
 $_['column_action']        = 'Action';
 
 // Entry

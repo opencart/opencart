@@ -124,7 +124,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 
 			if (json['success']) {
 				$('#progress-bar').addClass('progress-bar-success').css('width', '100%');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</div>');
+				$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
 				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
 			}

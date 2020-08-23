@@ -5,4 +5,5 @@ $_['text_greeting'] = 'A new password was requested for <strong>%s</strong> cust
 $_['text_change']   = 'To reset your password click on the link below:';
 $_['text_ip']       = 'The IP used to make this request was:';
 
-$_['button_reset']       = 'Reset Password';
+// Button
+$_['button_reset']  = 'Reset Password';

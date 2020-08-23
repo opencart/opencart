@@ -107,7 +107,7 @@ class Cli extends \System\Engine\Controller {
 
 	public function install($argv) {
 		// Options
-		$option = array(
+		$option = [
 			'username'    => 'admin',
 			'cloud'       => 0,
 			'db_driver'   => 'mysqli',
@@ -143,7 +143,7 @@ class Cli extends \System\Engine\Controller {
 
 		// Cloud Install
 		if (!$cloud) {
-			$required = array(
+			$required = [
 				'username',    // Already set
 				'email',
 				'password',
@@ -158,7 +158,7 @@ class Cli extends \System\Engine\Controller {
 				'db_prefix'    // Already set
 			);
 		} else {
-			$required = array(
+			$required = [
 				'username', // Already set
 				'email',
 				'password',

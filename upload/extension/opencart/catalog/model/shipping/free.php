@@ -23,7 +23,7 @@ class Free extends \System\Engine\Model {
 		if ($status) {
 			$quote_data = [];
 
-			$quote_data['free'] = array(
+			$quote_data['free'] = [
 				'code'         => 'free.free',
 				'title'        => $this->language->get('text_description'),
 				'cost'         => 0.00,
@@ -31,7 +31,7 @@ class Free extends \System\Engine\Model {
 				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
 			);
 
-			$method_data = array(
+			$method_data = [
 				'code'       => 'free',
 				'title'      => $this->language->get('text_title'),
 				'quote'      => $quote_data,

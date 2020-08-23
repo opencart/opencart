@@ -171,7 +171,7 @@ class Coupon extends \System\Engine\Model {
 				}
 
 				if ($discount_total > 0) {
-					$totals[] = array(
+					$totals[] = [
 						'code'       => 'coupon',
 						'title'      => sprintf($this->language->get('coupon_text_coupon'), $this->session->data['coupon']),
 						'value'      => -$discount_total,

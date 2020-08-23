@@ -24,17 +24,17 @@ class SaleTax extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/sale_tax', 'user_token=' . $this->session->data['user_token'])
 		);
@@ -107,7 +107,7 @@ class SaleTax extends \System\Engine\Controller {
 
 		$data['orders'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_date_start'	     => $filter_date_start,
 			'filter_date_end'	     => $filter_date_end,
 			'filter_group'           => $filter_group,
@@ -123,7 +123,7 @@ class SaleTax extends \System\Engine\Controller {
 		$results = $this->model_extension_report_sale->getTaxes($filter_data);
 
 		foreach ($results as $result) {
-			$data['orders'][] = array(
+			$data['orders'][] = [
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'title'      => $result['title'],
@@ -140,22 +140,22 @@ class SaleTax extends \System\Engine\Controller {
 
 		$data['groups'] = [];
 
-		$data['groups'][] = array(
+		$data['groups'][] = [
 			'text'  => $this->language->get('text_year'),
 			'value' => 'year',
 		);
 
-		$data['groups'][] = array(
+		$data['groups'][] = [
 			'text'  => $this->language->get('text_month'),
 			'value' => 'month',
 		);
 
-		$data['groups'][] = array(
+		$data['groups'][] = [
 			'text'  => $this->language->get('text_week'),
 			'value' => 'week',
 		);
 
-		$data['groups'][] = array(
+		$data['groups'][] = [
 			'text'  => $this->language->get('text_day'),
 			'value' => 'day',
 		);

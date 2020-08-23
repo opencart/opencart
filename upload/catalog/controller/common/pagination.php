@@ -72,10 +72,10 @@ class Pagination extends \System\Engine\Controller {
 			}
 
 			for ($i = $start; $i <= $end; $i++) {
-				$data['links'][] = array(
+				$data['links'][] = [
 					'page' => $i,
 					'href' => str_replace('{page}', $i, $url)
-				);
+				];
 			}
 		}
 

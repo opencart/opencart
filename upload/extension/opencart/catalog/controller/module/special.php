@@ -10,7 +10,7 @@ class Special extends \System\Engine\Controller {
 
 		$data['products'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => 'pd.name',
 			'order' => 'ASC',
 			'start' => 0,
@@ -45,7 +45,7 @@ class Special extends \System\Engine\Controller {
 					$tax = false;
 				}
 
-				$product_data = array(
+				$product_data = [
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],

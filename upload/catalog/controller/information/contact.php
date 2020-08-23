@@ -30,15 +30,15 @@ class Contact extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('information/contact', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
@@ -93,7 +93,7 @@ class Contact extends \System\Engine\Controller {
 					$image = '';
 				}
 
-				$data['locations'][] = array(
+				$data['locations'][] = [
 					'location_id' => $location_info['location_id'],
 					'name'        => $location_info['name'],
 					'address'     => nl2br($location_info['address']),
@@ -103,7 +103,7 @@ class Contact extends \System\Engine\Controller {
 					'image'       => $image,
 					'open'        => nl2br($location_info['open']),
 					'comment'     => $location_info['comment']
-				);
+				];
 			}
 		}
 
@@ -174,15 +174,15 @@ class Contact extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('information/contact', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		$data['text_message'] = $this->language->get('text_message');
 

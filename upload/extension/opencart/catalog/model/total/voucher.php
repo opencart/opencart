@@ -81,7 +81,7 @@ class Voucher extends \System\Engine\Model {
 				$amount = min($voucher_info['amount'], $total);
 				
 				if ($amount > 0) {
-					$totals[] = array(
+					$totals[] = [
 						'code'       => 'voucher',
 						'title'      => sprintf($this->language->get('voucher_text_voucher'), $this->session->data['voucher']),
 						'value'      => -$amount,

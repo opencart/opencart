@@ -4,7 +4,7 @@ class Total extends \System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		$this->load->language('extension/total/total');
 
-		$totals[] = array(
+		$totals[] = [
 			'code' => 'total',
 			'title' => $this->language->get('text_total'),
 			'value' => max(0, $total),

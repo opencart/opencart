@@ -5,7 +5,7 @@ class LowOrderFee extends \System\Engine\Model {
 		if ($this->cart->getSubTotal() && ($this->cart->getSubTotal() < $this->config->get('total_low_order_fee_total'))) {
 			$this->load->language('extension/total/low_order_fee');
 
-			$totals[] = array(
+			$totals[] = [
 				'code'       => 'low_order_fee',
 				'title'      => $this->language->get('text_low_order_fee'),
 				'value'      => $this->config->get('total_low_order_fee_fee'),

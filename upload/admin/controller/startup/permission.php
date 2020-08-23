@@ -16,7 +16,7 @@ class Permission extends \System\Engine\Controller {
 			}
 
 			// We want to ingore some pages from having its permission checked.
-			$ignore = array(
+			$ignore = [
 				'common/dashboard',
 				'common/login',
 				'common/logout',
@@ -25,7 +25,7 @@ class Permission extends \System\Engine\Controller {
 				'common/cron',
 				'error/not_found',
 				'error/permission'
-			);
+			];
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
 				return new \System\Library\Action('error/permission');

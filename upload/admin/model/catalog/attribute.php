@@ -45,11 +45,11 @@ class Attribute extends \System\Engine\Model {
 			$sql .= " AND a.attribute_group_id = '" . (int)$data['filter_attribute_group_id'] . "'";
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'ad.name',
 			'attribute_group',
 			'a.sort_order'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -86,7 +86,7 @@ class Attribute extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "attribute_description WHERE attribute_id = '" . (int)$attribute_id . "'");
 
 		foreach ($query->rows as $result) {
-			$attribute_data[$result['language_id']] = array('name' => $result['name']);
+			$attribute_data[$result['language_id']] = ['name' => $result['name']];
 		}
 
 		return $attribute_data;

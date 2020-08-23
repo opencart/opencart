@@ -146,15 +146,15 @@ class Translation extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -163,12 +163,12 @@ class Translation extends \System\Engine\Controller {
 
 		$data['translations'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$translation_total = $this->model_design_translation->getTotalTranslations();
 
@@ -183,7 +183,7 @@ class Translation extends \System\Engine\Controller {
 				$code = '';
 			}
 
-			$data['translations'][] = array(
+			$data['translations'][] = [
 				'translation_id' => $result['translation_id'],
 				'store'          => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
 				'route'          => $result['route'],
@@ -191,7 +191,7 @@ class Translation extends \System\Engine\Controller {
 				'key'            => $result['key'],
 				'value'          => $result['value'],
 				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -234,12 +234,12 @@ class Translation extends \System\Engine\Controller {
 		$data['sort_key'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
 		$data['sort_value'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $translation_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($translation_total - $this->config->get('config_pagination'))) ? $translation_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $translation_total, ceil($translation_total / $this->config->get('config_pagination')));
 
@@ -284,15 +284,15 @@ class Translation extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (!isset($this->request->get['translation_id'])) {
 			$data['action'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -455,10 +455,10 @@ class Translation extends \System\Engine\Controller {
 			include($directory . $language_info['code'] . '/' . $route . '.php');
 
 			foreach ($_ as $key => $value) {
-				$json[] = array(
+				$json[] = [
 					'key'   => $key,
 					'value' => $value
-				);
+				];
 			}
 		}
 

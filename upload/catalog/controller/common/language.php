@@ -31,11 +31,11 @@ class Language extends \System\Engine\Controller {
 		$results = $this->model_localisation_language->getLanguages();
 
 		foreach ($results as $result) {
-			$data['languages'][] = array(
+			$data['languages'][] = [
 				'name' => $result['name'],
 				'code' => $result['code'],
 				'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
-			);
+			];
 		}
 
 		return $this->load->view('common/language', $data);
@@ -54,11 +54,11 @@ class Language extends \System\Engine\Controller {
 			$redirect = '';
 		}
 
-		$option = array(
+		$option = [
 			'max-age'  => time() + 60 * 60 * 24 * 30,
 			'path'     => '/',
 			'SameSite' => 'lax'
-		);
+		];
 
 		oc_setcookie('language', $code, $option);
 

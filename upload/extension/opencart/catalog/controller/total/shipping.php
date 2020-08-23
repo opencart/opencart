@@ -93,7 +93,7 @@ class Shipping extends \System\Engine\Controller {
 				$zone_code = '';
 			}
 
-			$this->session->data['shipping_address'] = array(
+			$this->session->data['shipping_address'] = [
 				'firstname'      => '',
 				'lastname'       => '',
 				'company'        => '',
@@ -124,12 +124,12 @@ class Shipping extends \System\Engine\Controller {
 					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
 					if ($quote) {
-						$quote_data[$result['code']] = array(
+						$quote_data[$result['code']] = [
 							'title'      => $quote['title'],
 							'quote'      => $quote['quote'],
 							'sort_order' => $quote['sort_order'],
 							'error'      => $quote['error']
-						);
+						];
 					}
 				}
 			}
@@ -194,7 +194,7 @@ class Shipping extends \System\Engine\Controller {
 		if ($country_info) {
 			$this->load->model('localisation/zone');
 
-			$json = array(
+			$json = [
 				'country_id'        => $country_info['country_id'],
 				'name'              => $country_info['name'],
 				'iso_code_2'        => $country_info['iso_code_2'],

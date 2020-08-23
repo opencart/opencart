@@ -48,13 +48,13 @@ class SeoUrl extends \System\Engine\Model {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}	
 		
-		$sort_data = array(
+		$sort_data = [
 			'keyword',
 			'key',
 			'value',
 			'store_id',
 			'language_id'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY `" . $data['sort'] . "`";

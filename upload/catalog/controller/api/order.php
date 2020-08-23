@@ -193,7 +193,7 @@ class Order extends \System\Engine\Controller {
 					$option_data = [];
 
 					foreach ($product['option'] as $option) {
-						$option_data[] = array(
+						$option_data[] = [
 							'product_option_id'       => $option['product_option_id'],
 							'product_option_value_id' => $option['product_option_value_id'],
 							'option_id'               => $option['option_id'],
@@ -201,10 +201,10 @@ class Order extends \System\Engine\Controller {
 							'name'                    => $option['name'],
 							'value'                   => $option['value'],
 							'type'                    => $option['type']
-						);
+						];
 					}
 
-					$order_data['products'][] = array(
+					$order_data['products'][] = [
 						'product_id' => $product['product_id'],
 						'master_id'  => $product['master_id'],
 						'name'       => $product['name'],
@@ -217,7 +217,7 @@ class Order extends \System\Engine\Controller {
 						'total'      => $product['total'],
 						'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 						'reward'     => $product['reward']
-					);
+					];
 				}
 
 				// Gift Voucher
@@ -225,7 +225,7 @@ class Order extends \System\Engine\Controller {
 
 				if (!empty($this->session->data['vouchers'])) {
 					foreach ($this->session->data['vouchers'] as $voucher) {
-						$order_data['vouchers'][] = array(
+						$order_data['vouchers'][] = [
 							'description'      => $voucher['description'],
 							'code'             => token(10),
 							'to_name'          => $voucher['to_name'],
@@ -235,7 +235,7 @@ class Order extends \System\Engine\Controller {
 							'voucher_theme_id' => $voucher['voucher_theme_id'],
 							'message'          => $voucher['message'],
 							'amount'           => $voucher['amount']
-						);
+						];
 					}
 				}
 
@@ -273,11 +273,11 @@ class Order extends \System\Engine\Controller {
 
 				array_multisort($sort_order, SORT_ASC, $totals);
 
-				$total_data = array(
+				$total_data = [
 					'totals' => $totals,
 					'taxes'  => $taxes,
 					'total'  => $total
-				);
+				];
 
 				$order_data = array_merge($order_data, $total_data);
 
@@ -556,7 +556,7 @@ class Order extends \System\Engine\Controller {
 						$option_data = [];
 
 						foreach ($product['option'] as $option) {
-							$option_data[] = array(
+							$option_data[] = [
 								'product_option_id'       => $option['product_option_id'],
 								'product_option_value_id' => $option['product_option_value_id'],
 								'option_id'               => $option['option_id'],
@@ -564,10 +564,10 @@ class Order extends \System\Engine\Controller {
 								'name'                    => $option['name'],
 								'value'                   => $option['value'],
 								'type'                    => $option['type']
-							);
+							];
 						}
 
-						$order_data['products'][] = array(
+						$order_data['products'][] = [
 							'product_id' => $product['product_id'],
 							'master_id'  => $product['master_id'],
 							'name'       => $product['name'],
@@ -580,7 +580,7 @@ class Order extends \System\Engine\Controller {
 							'total'      => $product['total'],
 							'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 							'reward'     => $product['reward']
-						);
+						];
 					}
 
 					// Gift Voucher
@@ -588,7 +588,7 @@ class Order extends \System\Engine\Controller {
 
 					if (!empty($this->session->data['vouchers'])) {
 						foreach ($this->session->data['vouchers'] as $voucher) {
-							$order_data['vouchers'][] = array(
+							$order_data['vouchers'][] = [
 								'description'      => $voucher['description'],
 								'code'             => token(10),
 								'to_name'          => $voucher['to_name'],
@@ -598,7 +598,7 @@ class Order extends \System\Engine\Controller {
 								'voucher_theme_id' => $voucher['voucher_theme_id'],
 								'message'          => $voucher['message'],
 								'amount'           => $voucher['amount']
-							);
+							];
 						}
 					}
 
@@ -636,11 +636,11 @@ class Order extends \System\Engine\Controller {
 
 					array_multisort($sort_order, SORT_ASC, $totals);
 
-					$total_data = array(
+					$total_data = [
 						'totals' => $totals,
 						'taxes'  => $taxes,
 						'total'  => $total
-					);
+					];
 
 					$order_data = array_merge($order_data, $total_data);
 
@@ -763,12 +763,12 @@ class Order extends \System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			// Add keys for missing post vars
-			$keys = array(
+			$keys = [
 				'order_status_id',
 				'notify',
 				'override',
 				'comment'
-			);
+			];
 
 			foreach ($keys as $key) {
 				if (!isset($this->request->post[$key])) {

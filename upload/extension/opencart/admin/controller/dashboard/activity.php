@@ -26,17 +26,17 @@ class Activity extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard')
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/dashboard/activity', 'user_token=' . $this->session->data['user_token'])
 		);
@@ -98,19 +98,19 @@ class Activity extends \System\Engine\Controller {
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));
 
-			$find = array(
+			$find = [
 				'customer_id=',
 				'order_id=',
 				'return_id='
 			);
 
-			$replace = array(
+			$replace = [
 				$this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
 				$this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id='),
 				$this->url->link('sale/return/edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=')
 			);
 
-			$data['activities'][] = array(
+			$data['activities'][] = [
 				'comment'    => str_replace($find, $replace, $comment),
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);

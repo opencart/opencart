@@ -4,7 +4,7 @@ class Tax extends \System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		foreach ($taxes as $key => $value) {
 			if ($value > 0) {
-				$totals[] = array(
+				$totals[] = [
 					'code'       => 'tax',
 					'title'      => $this->tax->getRateName($key),
 					'value'      => $value,

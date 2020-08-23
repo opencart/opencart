@@ -59,14 +59,14 @@ class Startup extends \System\Engine\Controller {
 
 			$this->session->start($session_id);
 
-			$option = array(
+			$option = [
 				'max-age'  => time() + $this->config->get('session_expire'),
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 				'domain'   => $this->request->server['HTTP_HOST'],
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
 				'SameSite' => 'strict'
-			);
+			];
 
 			oc_setcookie($this->config->get('session_name'), $this->session->getId(), $option);
 		}
@@ -171,11 +171,11 @@ class Startup extends \System\Engine\Controller {
 
 		// Set a new language cookie if the code does not match the current one
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-			$option = array(
+			$option = [
 				'max-age'  => time() + 60 * 60 * 24 * 30,
 				'path'     => '/',
 				'SameSite' => 'lax'
-			);
+			];
 
 			oc_setcookie('language', $code, $option);
 		}
@@ -229,11 +229,11 @@ class Startup extends \System\Engine\Controller {
 
 		// Set a new currency cookie if the code does not match the current one
 		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
-			$option = array(
+			$option = [
 				'max-age'  => time() + 60 * 60 * 24 * 30,
 				'path'     => '/',
 				'SameSite' => 'lax'
-			);
+			];
 
 			oc_setcookie('currency', $code, $option);
 		}

@@ -1,11 +1,11 @@
 <?php
 namespace Aws\S3\Crypto;
 
+use Aws\Crypto\DecryptionTrait;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClient;
 use Aws\Crypto\EncryptionTrait;
-use Aws\Crypto\DecryptionTrait;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\Cipher\CipherBuilderTrait;
@@ -18,14 +18,25 @@ use GuzzleHttp\Psr7;
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
  *
- * Legacy implementation using older encryption workflow. Use
- * S3EncryptionClientV2 if possible.
+ * Legacy implementation using older encryption workflow.
+ *
+ * AWS strongly recommends the upgrade to the S3EncryptionClientV2 (over the
+ * S3EncryptionClient), as it offers updated data security best practices to our
+ * customers who upgrade. S3EncryptionClientV2 contains breaking changes, so this
+ * will require planning by engineering teams to migrate. New workflows should
+ * just start with S3EncryptionClientV2.
  *
  * @deprecated
  */
 class S3EncryptionClient extends AbstractCryptoClient
 {
-    use EncryptionTrait, DecryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
+    use CipherBuilderTrait;
+    use CryptoParamsTrait;
+    use DecryptionTrait;
+    use EncryptionTrait;
+    use UserAgentTrait;
+
+    const CRYPTO_VERSION = '1n';
 
     private $client;
     private $instructionFileSuffix;
@@ -42,6 +53,7 @@ class S3EncryptionClient extends AbstractCryptoClient
         S3Client $client,
         $instructionFileSuffix = null
     ) {
+        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
     }
@@ -65,12 +77,15 @@ class S3EncryptionClient extends AbstractCryptoClient
      * - @CipherOptions: (array) Cipher options for encrypting data. Only the
      *   Cipher option is required. Accepts the following:
      *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
+     *            See also: AbstractCryptoClient::$supportedCiphers. Note that
+     *            cbc is deprecated and gcm should be used when possible.
      *       - KeySize: (int) 128|192|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            using cbc. Note if you pass in Aad for gcm encryption, the
+     *            PHP SDK will be able to decrypt the resulting object, but other
+     *            AWS SDKs may not be able to do so.
      *
      * The optional configuration arguments are as follows:
      *
@@ -155,12 +170,15 @@ class S3EncryptionClient extends AbstractCryptoClient
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
      *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
+     *            See also: AbstractCryptoClient::$supportedCiphers. Note that
+     *            cbc is deprecated and gcm should be used when possible.
      *       - KeySize: (int) 128|192|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            using cbc. Note if you pass in Aad for gcm encryption, the
+     *            PHP SDK will be able to decrypt the resulting object, but other
+     *            AWS SDKs may not be able to do so.
      *
      * The optional configuration arguments are as follows:
      *

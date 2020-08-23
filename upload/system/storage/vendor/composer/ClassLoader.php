@@ -43,18 +43,18 @@ namespace Composer\Autoload;
 class ClassLoader
 {
     // PSR-4
-    private $prefixLengthsPsr4 = [];
-    private $prefixDirsPsr4 = [];
-    private $fallbackDirsPsr4 = [];
+    private $prefixLengthsPsr4 = array();
+    private $prefixDirsPsr4 = array();
+    private $fallbackDirsPsr4 = array();
 
     // PSR-0
-    private $prefixesPsr0 = [];
-    private $fallbackDirsPsr0 = [];
+    private $prefixesPsr0 = array();
+    private $fallbackDirsPsr0 = array();
 
     private $useIncludePath = false;
-    private $classMap = [];
+    private $classMap = array();
     private $classMapAuthoritative = false;
-    private $missingClasses = [];
+    private $missingClasses = array();
     private $apcuPrefix;
 
     public function getPrefixes()
@@ -63,7 +63,7 @@ class ClassLoader
             return call_user_func_array('array_merge', $this->prefixesPsr0);
         }
 
-        return [];
+        return array();
     }
 
     public function getPrefixesPsr4()

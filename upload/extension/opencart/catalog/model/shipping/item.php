@@ -27,7 +27,7 @@ class Item extends \System\Engine\Model {
 
 			$quote_data = [];
 
-			$quote_data['item'] = array(
+			$quote_data['item'] = [
 				'code'         => 'item.item',
 				'title'        => $this->language->get('text_description'),
 				'cost'         => $this->config->get('shipping_item_cost') * $items,
@@ -35,7 +35,7 @@ class Item extends \System\Engine\Model {
 				'text'         => $this->currency->format($this->tax->calculate($this->config->get('shipping_item_cost') * $items, $this->config->get('shipping_item_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
 			);
 
-			$method_data = array(
+			$method_data = [
 				'code'       => 'item',
 				'title'      => $this->language->get('text_title'),
 				'quote'      => $quote_data,

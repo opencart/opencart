@@ -70,10 +70,10 @@ class Filter extends \System\Engine\Model {
 	public function getGroups($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` fg LEFT JOIN " . DB_PREFIX . "filter_group_description fgd ON (fg.filter_group_id = fgd.filter_group_id) WHERE fgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-		$sort_data = array(
+		$sort_data = [
 			'fgd.name',
 			'fg.sort_order'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -110,7 +110,7 @@ class Filter extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_group_description WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 
 		foreach ($query->rows as $result) {
-			$filter_group_data[$result['language_id']] = array('name' => $result['name']);
+			$filter_group_data[$result['language_id']] = ['name' => $result['name']];
 		}
 
 		return $filter_group_data;
@@ -159,14 +159,14 @@ class Filter extends \System\Engine\Model {
 			$filter_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "filter_description WHERE filter_id = '" . (int)$filter['filter_id'] . "'");
 
 			foreach ($filter_description_query->rows as $filter_description) {
-				$filter_description_data[$filter_description['language_id']] = array('name' => $filter_description['name']);
+				$filter_description_data[$filter_description['language_id']] = ['name' => $filter_description['name']];
 			}
 
-			$filter_data[] = array(
+			$filter_data[] = [
 				'filter_id'          => $filter['filter_id'],
 				'filter_description' => $filter_description_data,
 				'sort_order'         => $filter['sort_order']
-			);
+			];
 		}
 
 		return $filter_data;

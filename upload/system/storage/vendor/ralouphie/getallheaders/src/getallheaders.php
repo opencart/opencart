@@ -9,7 +9,7 @@ if (!function_exists('getallheaders')) {
      */
     function getallheaders()
     {
-        $headers = [];
+        $headers = array();
 
         $copy_server = array(
             'CONTENT_TYPE'   => 'Content-Type',

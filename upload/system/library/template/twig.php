@@ -32,15 +32,15 @@ class Twig {
 		// render from modified template code
 		if ($code) {
 			// Initialize Twig environment
-			$config = array(
+			$config = [
 				'charset'     => 'utf-8',
 				'autoescape'  => false,
 				'debug'       => false,
 				'auto_reload' => true,
 				'cache'       => DIR_CACHE . 'template/'
-			);
+			];
 
-			$loader = new \Twig\Loader\ArrayLoader(array($filename . '.twig' => $code));
+			$loader = new \Twig\Loader\ArrayLoader([$filename . '.twig' => $code]);
 
 			try {
 				$twig = new \Twig\Environment($loader, $config);

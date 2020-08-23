@@ -22,12 +22,12 @@ class SeoProfile extends \System\Engine\Model {
 	public function getSeoProfiles($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_profile`";
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'key',
 			'regex',
 			'sort_order'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

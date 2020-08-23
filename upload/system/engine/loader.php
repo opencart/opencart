@@ -41,7 +41,7 @@ final class Loader {
 		$trigger = $route;
 
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', array(&$route, &$args));
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 		// Make sure its only the last event that returns an output if required.
 		if ($result) {
@@ -52,7 +52,7 @@ final class Loader {
 		}
 
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', array(&$route, &$args, &$output));
+		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
 		if ($result) {
 			$output = $result;
@@ -112,7 +112,7 @@ final class Loader {
 		$trigger = $route;
 
 		// Trigger the pre events
-		$this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$code));
+		$this->registry->get('event')->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code]);
 
 		// Make sure its only the last event that returns an output if required.
 		$template = new \System\Library\Template($this->registry->get('config')->get('template_engine'));
@@ -124,7 +124,7 @@ final class Loader {
 		$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 
 		// Trigger the post events
-		$this->registry->get('event')->trigger('view/' . $trigger . '/after', array(&$route, &$data, &$output));
+		$this->registry->get('event')->trigger('view/' . $trigger . '/after', [&$route, &$data, &$output]);
 
 		return $output;
 	}
@@ -144,7 +144,7 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->registry->get('event')->trigger('library/' . $trigger . '/before', array(&$route, &$args));
+		$this->registry->get('event')->trigger('library/' . $trigger . '/before', [&$route, &$args]);
 
 		$class = 'System\Library\\' . str_replace('/', '\\', $route);
 
@@ -156,7 +156,7 @@ final class Loader {
 			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
 
-		$this->registry->get('event')->trigger('library/' . $trigger . '/after', array(&$route, &$args, &$object));
+		$this->registry->get('event')->trigger('library/' . $trigger . '/after', [&$route, &$args, &$object]);
 
 		$this->registry->set($route, $object);
 
@@ -190,11 +190,11 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->registry->get('event')->trigger('config/' . $trigger . '/before', array(&$route));
+		$this->registry->get('event')->trigger('config/' . $trigger . '/before', [&$route]);
 
 		$this->registry->get('config')->load($route);
 
-		$this->registry->get('event')->trigger('config/' . $trigger . '/after', array(&$route));
+		$this->registry->get('event')->trigger('config/' . $trigger . '/after', [&$route]);
 	}
 
 	/**
@@ -212,11 +212,11 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->registry->get('event')->trigger('language/' . $trigger . '/before', array(&$route, &$prefix));
+		$this->registry->get('event')->trigger('language/' . $trigger . '/before', [&$route, &$prefix]);
 
 		$data = $this->registry->get('language')->load($route, $prefix);
 
-		$this->registry->get('event')->trigger('language/' . $trigger . '/after', array(&$route, &$prefix, &$data));
+		$this->registry->get('event')->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
 
 		return $data;
 	}
@@ -229,22 +229,21 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->registry->get('event')->trigger('extension/' . $trigger . '/before', array(&$route));
+		$this->registry->get('event')->trigger('extension/' . $trigger . '/before', [&$route]);
 
 		$extension = new \Engine\Loader(DIR_EXTENSION . $route);
 		//\Extension
-		$config = array(
+		$config = [
 			'application' => DIR_APPLICATION,
 			'system'
-
-		);
+		];
 
 		$loader = new \System\Engine\Loader(DIR_EXTENSION. $route, $this->registry);
 
 		$loader->config($route);
 
 
-		$this->registry->get('event')->trigger('extension/' . $trigger . '/after', array(&$route, &$data));
+		$this->registry->get('event')->trigger('extension/' . $trigger . '/after', [&$route, &$data]);
 
 		return $data;
 	}
@@ -269,7 +268,7 @@ final class Loader {
 			$trigger = $route;
 
 			// Trigger the pre events
-			$result = $this->registry->get('event')->trigger('model/' . $trigger . '/before', array(&$route, &$args));
+			$result = $this->registry->get('event')->trigger('model/' . $trigger . '/before', [&$route, &$args]);
 
 			if ($result) {
 				$output = $result;
@@ -278,7 +277,7 @@ final class Loader {
 				$key = substr($route, 0, strrpos($route, '/'));
 
 				// Create the class name from the key
-				$class = '\Application\Model\\' . str_replace(array('_', '/'), array('', '\\'), ucwords($key, '_/'));
+				$class = '\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
 
 				// Get the method to be used
 				$method = substr($route, strrpos($route, '/') + 1);
@@ -292,7 +291,7 @@ final class Loader {
 					$object = $this->registry->get($key);
 				}
 
-				$callable = array($object, $method);
+				$callable = [$object, $method];
 
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);
@@ -302,7 +301,7 @@ final class Loader {
 			}
 
 			// Trigger the post events
-			$result = $this->registry->get('event')->trigger('model/' . $trigger . '/after', array(&$route, &$args, &$output));
+			$result = $this->registry->get('event')->trigger('model/' . $trigger . '/after',[&$route, &$args, &$output]);
 
 			if ($result) {
 				$output = $result;

@@ -44,17 +44,17 @@ class Api extends \System\Engine\Model {
 	public function getApis($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "api`";
 
-		$sort_data = array(
+		$sort_data = [
 			'username',
 			'status',
 			'date_added',
 			'date_modified'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY username";
+			$sql .= " ORDER BY `username`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -87,7 +87,7 @@ class Api extends \System\Engine\Model {
 	}
 
 	public function addIp($api_id, $ip) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
 	}
 
 	public function getIps($api_id) {

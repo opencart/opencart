@@ -37,7 +37,7 @@ class ColumnLeft extends \System\Engine\Controller {
 			$language = new \System\Library\Language($code);
 			$language->load('common/column_left');
 
-			$data['languages'][] = array(
+			$data['languages'][] = [
 				'text'  => $language->get('text_name'),
 				'value' => $code
 			);

@@ -24,17 +24,17 @@ class CustomerActivity extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/customer_activity', 'user_token=' . $this->session->data['user_token'])
 		);
@@ -107,7 +107,7 @@ class CustomerActivity extends \System\Engine\Controller {
 
 		$data['activities'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_customer'   => $filter_customer,
 			'filter_ip'         => $filter_ip,
 			'filter_date_start'	=> $filter_date_start,
@@ -123,17 +123,17 @@ class CustomerActivity extends \System\Engine\Controller {
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));
 
-			$find = array(
+			$find = [
 				'customer_id=',
 				'order_id='
 			);
 
-			$replace = array(
+			$replace = [
 				$this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
 				$this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=')
 			);
 
-			$data['activities'][] = array(
+			$data['activities'][] = [
 				'comment'    => str_replace($find, $replace, $comment),
 				'ip'         => $result['ip'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))

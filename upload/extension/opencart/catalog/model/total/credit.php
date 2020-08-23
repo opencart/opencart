@@ -10,7 +10,7 @@ class Credit extends \System\Engine\Model {
 			$credit = min($balance, $total);
 
 			if ((float)$credit > 0) {
-				$totals[] = array(
+				$totals[] = [
 					'code'       => 'credit',
 					'title'      => $this->language->get('text_credit'),
 					'value'      => -$credit,

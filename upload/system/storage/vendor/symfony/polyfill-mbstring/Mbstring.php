@@ -555,7 +555,7 @@ final class Mbstring
             return preg_split($rx, $string, null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         }
 
-        $result = [];
+        $result = array();
         $length = mb_strlen($string, $encoding);
 
         for ($i = 0; $i < $length; $i += $split_length) {

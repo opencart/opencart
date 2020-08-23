@@ -23,7 +23,7 @@ class Statistics extends \System\Engine\Controller {
 		if ($this->validate()) {
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(array('filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status'))))));		
+			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))]));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -43,7 +43,7 @@ class Statistics extends \System\Engine\Controller {
 		if ($this->validate()) {
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_processing', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_processing_status')))));		
+			$this->model_report_statistics->editValue('order_processing', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $this->config->get('config_processing_status'))]));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -63,7 +63,7 @@ class Statistics extends \System\Engine\Controller {
 		if ($this->validate()) {
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_complete', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status')))));		
+			$this->model_report_statistics->editValue('order_complete', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $this->config->get('config_complete_status'))]));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -95,7 +95,7 @@ class Statistics extends \System\Engine\Controller {
 			
 			$this->load->model('sale/order');
 			
-			$this->model_report_statistics->editValue('order_other', $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $order_status_data))));
+			$this->model_report_statistics->editValue('order_other', $this->model_sale_order->getTotalOrders(['filter_order_status' => implode(',', $order_status_data)]));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 			
@@ -105,7 +105,7 @@ class Statistics extends \System\Engine\Controller {
 		$this->getList();	
 	}
 
-	public function return() {
+	public function returns() {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));	
@@ -115,7 +115,7 @@ class Statistics extends \System\Engine\Controller {
 		if ($this->validate()) {
 			$this->load->model('sale/return');
 			
-			$this->model_report_statistics->editValue('return', $this->model_sale_return->getTotalReturns(array('filter_return_status_id' => $this->config->get('config_return_status_id'))));
+			$this->model_report_statistics->editValue('return', $this->model_sale_return->getTotalReturns(['filter_return_status_id' => $this->config->get('config_return_status_id')]));
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -135,7 +135,7 @@ class Statistics extends \System\Engine\Controller {
 		if ($this->validate()) {		
 			$this->load->model('catalog/product');
 			
-			$this->model_report_statistics->editValue('product', $this->model_catalog_product->getTotalProducts(array('filter_quantity' => 0)));
+			$this->model_report_statistics->editValue('product', $this->model_catalog_product->getTotalProducts(['filter_quantity' => 0]));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -168,15 +168,15 @@ class Statistics extends \System\Engine\Controller {
 	public function getList() {
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('report/statistics', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['statistics'] = [];
 		
@@ -185,11 +185,11 @@ class Statistics extends \System\Engine\Controller {
 		$results = $this->model_report_statistics->getStatistics();
 		
 		foreach ($results as $result) {
-			$data['statistics'][] = array(
+			$data['statistics'][] = [
 				'name'  => $this->language->get('text_' . $result['code']),
 				'value' => $result['value'],
 				'href'  => $this->url->link('report/statistics/' . str_replace('_', '', $result['code']), 'user_token=' . $this->session->data['user_token'])
-			);
+			];
 		}
 				
 		if (isset($this->error['warning'])) {

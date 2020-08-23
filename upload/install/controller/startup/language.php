@@ -1,5 +1,5 @@
 <?php
-namespace \Install\Controller\Startup;
+namespace Install\Controller\Startup;
 class Language extends \System\Engine\Controller {
 	public function index() {
 		// Default language code

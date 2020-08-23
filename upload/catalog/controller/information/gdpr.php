@@ -13,15 +13,15 @@ class Gdpr extends \System\Engine\Controller {
 
 			$data['breadcrumbs'] = [];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-			);
+			];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
-			);
+			];
 
 			$data['title'] = $information_info['title'];
 
@@ -92,10 +92,10 @@ class Gdpr extends \System\Engine\Controller {
 		}
 
 		// Validate Action
-		$allowed = array(
+		$allowed = [
 			'export',
 			'remove'
-		);
+		];
 
 		if (!in_array($action, $allowed)) {
 			$json['error']['action'] = $this->language->get('error_action');
@@ -146,20 +146,20 @@ class Gdpr extends \System\Engine\Controller {
 
 			$data['breadcrumbs'] = [];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-			);
+			];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_account'),
 				'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
-			);
+			];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('information/gdpr/success', 'language=' . $this->config->get('config_language'))
-			);
+			];
 
 			if ($gdpr_info['status'] == 0) {
 				$this->model_account_gdpr->editStatus($code, 1);

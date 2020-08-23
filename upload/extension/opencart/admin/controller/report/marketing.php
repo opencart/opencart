@@ -24,17 +24,17 @@ class Marketing extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/marketing', 'user_token=' . $this->session->data['user_token'])
 		);
@@ -101,7 +101,7 @@ class Marketing extends \System\Engine\Controller {
 
 		$data['marketings'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_date_start'	     => $filter_date_start,
 			'filter_date_end'	     => $filter_date_end,
 			'filter_order_status_id' => $filter_order_status_id,
@@ -114,7 +114,7 @@ class Marketing extends \System\Engine\Controller {
 		$results = $this->model_extension_report_marketing->getMarketing($filter_data);
 
 		foreach ($results as $result) {
-			$data['marketings'][] = array(
+			$data['marketings'][] = [
 				'campaign' => $result['campaign'],
 				'code'     => $result['code'],
 				'clicks'   => $result['clicks'],

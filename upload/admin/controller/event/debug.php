@@ -10,10 +10,10 @@ class Debug extends \System\Engine\Controller {
 	public function after($route, &$args, &$output) {
 		if ($route == 'common/home') { // add the route you want to test
 			if (isset($this->session->data['debug'][$route])) {
-				$log_data = array(
+				$log_data = [
 					'route' => $route,
 					'time'  => microtime() - $this->session->data['debug'][$route]
-				);
+				];
 				
 				$this->log->write($route);
 			}

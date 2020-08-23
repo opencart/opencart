@@ -50,22 +50,22 @@ class Filter extends \System\Engine\Controller {
 					$children_data = [];
 
 					foreach ($filter_group['filter'] as $filter) {
-						$filter_data = array(
+						$filter_data = [
 							'filter_category_id' => $category_id,
 							'filter_filter'      => $filter['filter_id']
-						);
+						];
 
-						$children_data[] = array(
+						$children_data[] = [
 							'filter_id' => $filter['filter_id'],
 							'name'      => $filter['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '')
-						);
+						];
 					}
 
-					$data['filter_groups'][] = array(
+					$data['filter_groups'][] = [
 						'filter_group_id' => $filter_group['filter_group_id'],
 						'name'            => $filter_group['name'],
 						'filter'          => $children_data
-					);
+					];
 				}
 
 				return $this->load->view('extension/module/filter', $data);

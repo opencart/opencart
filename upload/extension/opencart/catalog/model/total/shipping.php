@@ -3,7 +3,7 @@ namespace Extension\OpenCart\Catalog\Model\Total;
 class Shipping extends \System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		if ($this->cart->hasShipping() && isset($this->session->data['shipping_method'])) {
-			$totals[] = array(
+			$totals[] = [
 				'code'       => 'shipping',
 				'title'      => $this->session->data['shipping_method']['title'],
 				'value'      => $this->session->data['shipping_method']['cost'],

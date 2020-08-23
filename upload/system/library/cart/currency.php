@@ -10,14 +10,14 @@ class Currency {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
 
 		foreach ($query->rows as $result) {
-			$this->currencies[$result['code']] = array(
+			$this->currencies[$result['code']] = [
 				'currency_id'   => $result['currency_id'],
 				'title'         => $result['title'],
 				'symbol_left'   => $result['symbol_left'],
 				'symbol_right'  => $result['symbol_right'],
 				'decimal_place' => $result['decimal_place'],
 				'value'         => $result['value']
-			);
+			];
 		}
 	}
 

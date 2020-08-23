@@ -96,7 +96,7 @@ class Payment extends \System\Engine\Controller {
 					$link = '';
 				}
 
-				$data['extensions'][] = array(
+				$data['extensions'][] = [
 					'name'       => $this->language->get($extension . '_heading_title'),
 					'link'       => $link,
 					'status'     => $this->config->get('payment_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
@@ -105,7 +105,7 @@ class Payment extends \System\Engine\Controller {
 					'uninstall'  => $this->url->link('extension/payment/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('extension/payment/' . $extension, 'user_token=' . $this->session->data['user_token'])
-				);
+				];
 			}
 		}
 

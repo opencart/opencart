@@ -36,11 +36,11 @@ class Event {
 	 * @param	int		$priority
  	*/	
 	public function register($trigger, Action $action, $priority = 0) {
-		$this->data[] = array(
+		$this->data[] = [
 			'trigger'  => $trigger,
 			'action'   => $action,
 			'priority' => $priority
-		);
+		];
 		
 		$sort_order = [];
 

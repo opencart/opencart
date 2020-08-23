@@ -9,7 +9,7 @@ class Information extends \System\Engine\Controller {
 		$data['informations'] = [];
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
-			$data['informations'][] = array(
+			$data['informations'][] = [
 				'title' => $result['title'],
 				'href'  => $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $result['information_id'])
 			);

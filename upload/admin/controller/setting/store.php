@@ -98,15 +98,15 @@ class Store extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['add'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('setting/store/delete', 'user_token=' . $this->session->data['user_token']);
@@ -117,30 +117,30 @@ class Store extends \System\Engine\Controller {
 
 		if ($page == 1) {
 			$store_total = 1;
-			$data['stores'][] = array(
+			$data['stores'][] = [
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
 				'url'      => HTTP_CATALOG,
 				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
-			);
+			];
 		}
 
-		$filter_data = array(
+		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$store_total += $this->model_setting_store->getTotalStores();
 
 		$results = $this->model_setting_store->getStores();
 
 		foreach ($results as $result) {
-			$data['stores'][] = array(
+			$data['stores'][] = [
 				'store_id' => $result['store_id'],
 				'name'     => $result['name'],
 				'url'      => $result['url'],
 				'edit'     => $this->url->link('setting/store/edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
-			);
+			];
 		}
 
 		if (isset($this->error['warning'])) {
@@ -163,7 +163,7 @@ class Store extends \System\Engine\Controller {
 			$data['selected'] = [];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $store_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
@@ -238,26 +238,26 @@ class Store extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		if (!isset($this->request->get['store_id'])) {
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
 				'href' => $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token'])
-			);
+			];
 		} else {
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
 				'href' => $this->url->link('setting/store/edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
-			);
+			];
 		}
 
 		if (isset($this->session->data['success'])) {
@@ -337,10 +337,10 @@ class Store extends \System\Engine\Controller {
 			if ($this->config->get('theme_' . $code . '_status')) {
 				$this->load->language('extension/theme/' . $code, 'extension');
 
-				$data['themes'][] = array(
+				$data['themes'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $code
-				);
+				];
 			}
 		}
 

@@ -8,15 +8,15 @@ class Installer extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -91,20 +91,20 @@ class Installer extends \System\Engine\Controller {
 		
 		$this->load->model('setting/extension');
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_extension_download_id' => $filter_extension_download_id,
 			'sort'                         => $sort,
 			'order'                        => $order,
 			'start'                        => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                        => $this->config->get('config_pagination')
-		);
+		];
 
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
 		$results = $this->model_setting_extension->getInstalls($filter_data);
 		
 		foreach ($results as $result) {
-			$data['extensions'][] = array(
+			$data['extensions'][] = [
 				'name'       => $result['name'],
 				'version'    => $result['version'],
 				'image'      => $result['image'],
@@ -115,7 +115,7 @@ class Installer extends \System\Engine\Controller {
 				'install'    => $this->url->link('marketplace/installer/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
 				'uninstall'  => $this->url->link('marketplace/installer/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
 				'delete'     => $this->url->link('marketplace/installer/delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
-			);
+			];
 		}
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($extension_total - 10)) ? $extension_total : ((($page - 1) * 10) + 10), $extension_total, ceil($extension_total / 10));
@@ -136,12 +136,12 @@ class Installer extends \System\Engine\Controller {
 		$data['sort_version'] = $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
 		$data['sort_date_added'] = $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_date_added' . $url);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,
 			'limit' => 10,
 			'url'   => $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
-		));
+		]);
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -242,7 +242,7 @@ class Installer extends \System\Engine\Controller {
 					}
 
 					if (!$json) {
-						$extension_data = array(
+						$extension_data = [
 							'extension_id'          => 0,
 							'extension_download_id' => 0,
 							'name'                  => $name,
@@ -251,7 +251,7 @@ class Installer extends \System\Engine\Controller {
 							'image'                 => $image,
 							'author'                => $author,
 							'link'                  => $link
-						);
+						];
 
 						$this->load->model('setting/extension');
 
@@ -358,12 +358,12 @@ class Installer extends \System\Engine\Controller {
 
 					if ($path) {
 						if (!is_file($base . $path)) {
-							$extract[] = array(
+							$extract[] = [
 								'source'      => $source,
 								'destination' => $destination,
 								'base'        => $base,
 								'path'        => $path
-							);
+							];
 						} else {
 							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
 

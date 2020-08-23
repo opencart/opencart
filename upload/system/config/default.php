@@ -4,7 +4,7 @@ $_['site_url']             = '';
 
 // Language
 $_['language_directory']   = 'en-gb';
-$_['language_autoload']    = array('en-gb');
+$_['language_autoload']    = ['en-gb'];
 
 // Date
 $_['date_timezone']        = 'UTC';
@@ -52,7 +52,7 @@ $_['error_log']            = true;
 $_['error_filename']       = 'error.log';
 
 // Response
-$_['response_header']      = array('Content-Type: text/html; charset=utf-8');
+$_['response_header']      = ['Content-Type: text/html; charset=utf-8'];
 $_['response_compression'] = 0;
 
 // Autoload Configs

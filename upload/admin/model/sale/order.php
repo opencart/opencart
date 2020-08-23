@@ -71,7 +71,7 @@ class Order extends \System\Engine\Model {
 				$language_code = $this->config->get('config_language');
 			}
 
-			return array(
+			return [
 				'order_id'                => $order_query->row['order_id'],
 				'invoice_no'              => $order_query->row['invoice_no'],
 				'invoice_prefix'          => $order_query->row['invoice_prefix'],
@@ -142,7 +142,7 @@ class Order extends \System\Engine\Model {
 				'accept_language'         => $order_query->row['accept_language'],
 				'date_added'              => $order_query->row['date_added'],
 				'date_modified'           => $order_query->row['date_modified']
-			);
+			];
 		} else {
 			return;
 		}
@@ -193,14 +193,14 @@ class Order extends \System\Engine\Model {
 			$sql .= " AND o.total = '" . (float)$data['filter_total'] . "'";
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'o.order_id',
 			'customer',
 			'order_status',
 			'o.date_added',
 			'o.date_modified',
 			'o.total'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

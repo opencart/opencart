@@ -127,6 +127,31 @@ class Utils
     }
 
     /**
+     * Safely add together two values.
+     *
+     * @param mixed $a First value to add
+     * @param mixed $b Second value to add
+     *
+     * @return int|float
+     */
+    public static function add($a, $b)
+    {
+        if (is_numeric($a)) {
+            if (is_numeric($b)) {
+                return $a + $b;
+            } else {
+                return $a;
+            }
+        } else {
+            if (is_numeric($b)) {
+                return $b;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    /**
      * JMESPath requires a stable sorting algorithm, so here we'll implement
      * a simple Schwartzian transform that uses array index positions as tie
      * breakers.

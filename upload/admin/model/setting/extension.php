@@ -40,11 +40,11 @@ class Extension extends \System\Engine\Model {
 			$sql .= " WHERE `extension_download_id` = '" . (int)$data['filter_extension_download_id'] . "'";
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'version',
 			'date_added'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

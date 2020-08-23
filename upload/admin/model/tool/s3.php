@@ -7,7 +7,7 @@ class S3 extends \System\Engine\Model {
 	public function addFile($file, $path) {
 		try {
 
-			$option = array(
+			$option = [
 				'version'     => 'latest',
 				'region'      => 'us-west-2',
 				'credentials' => false
@@ -25,7 +25,7 @@ class S3 extends \System\Engine\Model {
 	public function getFile($file, $file) {
 		try {
 
-			$option = array(
+			$option = [
 				'version'     => 'latest',
 				'region'      => 'us-west-2',
 				'credentials' => false

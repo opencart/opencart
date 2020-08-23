@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeInputAsync(array $args = [])
  * @method \Aws\Result describeInputDevice(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeInputDeviceAsync(array $args = [])
+ * @method \Aws\Result describeInputDeviceThumbnail(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeInputDeviceThumbnailAsync(array $args = [])
  * @method \Aws\Result describeInputSecurityGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeInputSecurityGroupAsync(array $args = [])
  * @method \Aws\Result describeMultiplex(array $args = [])

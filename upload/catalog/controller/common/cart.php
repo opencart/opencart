@@ -1,6 +1,6 @@
 <?php
 namespace Application\Controller\Common;
-class Cart extends \System\Engine\Controller
+class Cart extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/cart');
 
@@ -70,11 +70,11 @@ class Cart extends \System\Engine\Controller
 					}
 				}
 
-				$option_data[] = array(
+				$option_data[] = [
 					'name'  => $option['name'],
 					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value),
 					'type'  => $option['type']
-				);
+				];
 			}
 
 			// Display prices
@@ -88,7 +88,7 @@ class Cart extends \System\Engine\Controller
 				$total = false;
 			}
 
-			$data['products'][] = array(
+			$data['products'][] = [
 				'cart_id'   => $product['cart_id'],
 				'thumb'     => $image,
 				'name'      => $product['name'],
@@ -99,7 +99,7 @@ class Cart extends \System\Engine\Controller
 				'price'     => $price,
 				'total'     => $total,
 				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-			);
+			];
 		}
 
 		// Gift Voucher
@@ -107,21 +107,21 @@ class Cart extends \System\Engine\Controller
 
 		if (!empty($this->session->data['vouchers'])) {
 			foreach ($this->session->data['vouchers'] as $key => $voucher) {
-				$data['vouchers'][] = array(
+				$data['vouchers'][] = [
 					'key'         => $key,
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
-				);
+				];
 			}
 		}
 
 		$data['totals'] = [];
 
 		foreach ($totals as $total) {
-			$data['totals'][] = array(
+			$data['totals'][] = [
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency']),
-			);
+			];
 		}
 
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));

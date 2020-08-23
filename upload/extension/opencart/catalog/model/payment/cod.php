@@ -21,7 +21,7 @@ class COD extends \System\Engine\Model {
 		$method_data = [];
 
 		if ($status) {
-			$method_data = array(
+			$method_data = [
 				'code'       => 'cod',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',

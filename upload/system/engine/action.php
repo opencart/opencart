@@ -10,9 +10,7 @@
 /**
  * Action class
  */
-
 namespace System\Engine;
-use Application;
 class Action {
 	private $route;
 	private $class;
@@ -66,7 +64,7 @@ class Action {
 			return new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 
-		$callable = array($controller, $this->method);
+		$callable = [$controller, $this->method];
 
 		if (is_callable($callable)) {
 			return call_user_func_array($callable, $args);

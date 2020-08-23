@@ -1,6 +1,6 @@
 <?php
 namespace Application\Controller\Checkout;
-class Cartextends \System\Engine\Controller {
+class Cart extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/cart');
 
@@ -8,15 +8,15 @@ class Cartextends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
@@ -54,13 +54,13 @@ class Cartextends \System\Engine\Controller {
 			$this->load->model('tool/image');
 			$this->load->model('tool/upload');
 
-			$frequencies = array(
+			$frequencies = [
 				'day'        => $this->language->get('text_day'),
 				'week'       => $this->language->get('text_week'),
 				'semi_month' => $this->language->get('text_semi_month'),
 				'month'      => $this->language->get('text_month'),
 				'year'       => $this->language->get('text_year')
-			);
+			];
 
 			$data['products'] = [];
 
@@ -100,10 +100,10 @@ class Cartextends \System\Engine\Controller {
 						}
 					}
 
-					$option_data[] = array(
+					$option_data[] = [
 						'name'  => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					);
+					];
 				}
 
 				// Display prices
@@ -131,7 +131,7 @@ class Cartextends \System\Engine\Controller {
 					}
 				}
 
-				$data['products'][] = array(
+				$data['products'][] = [
 					'cart_id'   => $product['cart_id'],
 					'thumb'     => $image,
 					'name'      => $product['name'],
@@ -144,7 +144,7 @@ class Cartextends \System\Engine\Controller {
 					'price'     => $price,
 					'total'     => $total,
 					'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-				);
+				];
 			}
 
 			// Gift Voucher
@@ -152,12 +152,12 @@ class Cartextends \System\Engine\Controller {
 
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $key => $voucher) {
-					$data['vouchers'][] = array(
+					$data['vouchers'][] = [
 						'key'         => $key,
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
 						'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
-					);
+					];
 				}
 			}
 
@@ -201,10 +201,10 @@ class Cartextends \System\Engine\Controller {
 			$data['totals'] = [];
 
 			foreach ($totals as $total) {
-				$data['totals'][] = array(
+				$data['totals'][] = [
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-				);
+				];
 			}
 
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));

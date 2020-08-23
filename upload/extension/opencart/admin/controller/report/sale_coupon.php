@@ -24,17 +24,17 @@ class SaleCoupon extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/sale_coupon', 'user_token=' . $this->session->data['user_token'])
 		);
@@ -95,7 +95,7 @@ class SaleCoupon extends \System\Engine\Controller {
 
 		$data['coupons'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_date_start'	=> $filter_date_start,
 			'filter_date_end'	=> $filter_date_end,
 			'start'             => ($page - 1) * $this->config->get('config_pagination'),
@@ -107,7 +107,7 @@ class SaleCoupon extends \System\Engine\Controller {
 		$results = $this->model_extension_report_coupon->getCoupons($filter_data);
 
 		foreach ($results as $result) {
-			$data['coupons'][] = array(
+			$data['coupons'][] = [
 				'name'   => $result['name'],
 				'code'   => $result['code'],
 				'orders' => $result['orders'],

@@ -24,17 +24,17 @@ class CustomerTransaction extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/customer_transaction', 'user_token=' . $this->session->data['user_token'])
 		);
@@ -101,7 +101,7 @@ class CustomerTransaction extends \System\Engine\Controller {
 		
 		$data['customers'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_date_start'	=> $filter_date_start,
 			'filter_date_end'	=> $filter_date_end,
 			'filter_customer'	=> $filter_customer,
@@ -114,7 +114,7 @@ class CustomerTransaction extends \System\Engine\Controller {
 		$results = $this->model_extension_report_customer_transaction->getTransactions($filter_data);
 
 		foreach ($results as $result) {
-			$data['customers'][] = array(
+			$data['customers'][] = [
 				'customer'       => $result['customer'],
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],

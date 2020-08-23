@@ -8,15 +8,15 @@ class Gdpr extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('customer/gdpr', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
 
@@ -68,14 +68,14 @@ class Gdpr extends \System\Engine\Controller {
 
 		$data['gdprs'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_email'      => $filter_email,
 			'filter_action'     => $filter_action,
 			'filter_status'     => $filter_status,
 			'filter_date_added' => $filter_date_added,
 			'start'             => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'             => $this->config->get('config_pagination')
-		);
+		];
 
 		$this->load->model('customer/gdpr');
 		$this->load->model('customer/customer');
@@ -93,7 +93,7 @@ class Gdpr extends \System\Engine\Controller {
 				$edit = '';
 			}
 
-			$data['gdprs'][] = array(
+			$data['gdprs'][] = [
 				'gdpr_id'    => $result['gdpr_id'],
 				'email'      => $result['email'],
 				'action'     => $this->language->get('text_' . $result['action']),
@@ -103,7 +103,7 @@ class Gdpr extends \System\Engine\Controller {
 				'deny'       => $this->url->link('customer/gdpr/deny', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
 				'edit'       => $edit,
 				'delete'     => $this->url->link('customer/gdpr/delete', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'])
-			);
+			];
 		}
 
 		$url = '';
@@ -124,7 +124,7 @@ class Gdpr extends \System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $gdpr_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),

@@ -12,7 +12,7 @@ class SubTotal extends \System\Engine\Model {
 			}
 		}
 
-		$totals[] = array(
+		$totals[] = [
 			'code'       => 'sub_total',
 			'title'      => $this->language->get('text_sub_total'),
 			'value'      => $sub_total,

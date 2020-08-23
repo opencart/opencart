@@ -26,7 +26,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function to[]
+    public function toArray()
     {
         return [
             'endpoints_type' => $this->getEndpointsType()

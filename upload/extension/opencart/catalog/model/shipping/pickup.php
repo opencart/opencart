@@ -19,7 +19,7 @@ class Pickup extends \System\Engine\Model {
 		if ($status) {
 			$quote_data = [];
 
-			$quote_data['pickup'] = array(
+			$quote_data['pickup'] = [
 				'code'         => 'pickup.pickup',
 				'title'        => $this->language->get('text_description'),
 				'cost'         => 0.00,
@@ -27,7 +27,7 @@ class Pickup extends \System\Engine\Model {
 				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
 			);
 
-			$method_data = array(
+			$method_data = [
 				'code'       => 'pickup',
 				'title'      => $this->language->get('text_title'),
 				'quote'      => $quote_data,

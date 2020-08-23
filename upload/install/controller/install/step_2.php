@@ -68,7 +68,7 @@ class Step2 extends \System\Engine\Controller {
 		$data['file_uploads'] = ini_get('file_uploads');
 		$data['session_auto_start'] = ini_get('session_auto_start');
 
-		$db = array(
+		$db = [
 			'mysqli',
 			'pgsql',
 			'pdo'
@@ -134,7 +134,7 @@ class Step2 extends \System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_session');
 		}
 
-		$db = array(
+		$db = [
 			'mysqli',
 			'pdo',
 			'pgsql'

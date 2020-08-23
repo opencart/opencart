@@ -24,17 +24,17 @@ class ProductViewed extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report')
 		);
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/report/product_viewed', 'user_token=' . $this->session->data['user_token'])
 		);
@@ -83,10 +83,10 @@ class ProductViewed extends \System\Engine\Controller {
 
 		$this->load->model('extension/report/product');
 
-		$filter_data = array(
+		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$data['products'] = [];
 
@@ -103,7 +103,7 @@ class ProductViewed extends \System\Engine\Controller {
 				$percent = 0;
 			}
 
-			$data['products'][] = array(
+			$data['products'][] = [
 				'name'    => $result['name'],
 				'model'   => $result['model'],
 				'viewed'  => $result['viewed'],

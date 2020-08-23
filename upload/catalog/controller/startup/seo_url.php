@@ -78,11 +78,11 @@ class SeoUrl extends \System\Engine\Controller {
 					$keyword = $this->model_design_seo_url->getKeywordByKeyValue($key, $match[0]);
 
 					if ($keyword) {
-						$path_data[] = array(
+						$path_data[] = [
 							'keyword'    => $keyword,
 							'remove'     => $result['remove'],
 							'sort_order' => $result['sort_order']
-						);
+						];
 					}
 				}
 			}

@@ -2,6 +2,7 @@
 /**
  * Image class
  */
+namespace System\Library;
 class Image {
 	private $adaptor;
 	private $quality;
@@ -14,7 +15,7 @@ class Image {
 	 * @param int $quality
 	 */
 	public function __construct(string $adaptor, int $quality) {
-		$class = 'Image\\' . $adaptor;
+		$class = 'System\Library\Image\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class();

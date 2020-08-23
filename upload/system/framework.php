@@ -141,7 +141,7 @@ if ($config->get('session_autostart')) {
 $registry->set('cache', new \System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Image
-$registry->set('image', new Image($config->get('image_engine'), $config->get('image_quality')));
+$registry->set('image', new \System\Library\Image($config->get('image_engine'), $config->get('image_quality')));
 
 // Url
 $registry->set('url', new \System\Library\Url($config->get('site_url')));

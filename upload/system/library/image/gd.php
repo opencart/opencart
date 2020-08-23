@@ -1,5 +1,4 @@
 <?php
-namespace Image;
 /**
  * @package		OpenCart
  * @author		Daniel Kerr
@@ -11,6 +10,7 @@ namespace Image;
 /**
  * GD class
  */
+namespace System\Library\Image;
 class GD {
 	private $file;
 	private $image;
@@ -29,7 +29,7 @@ class GD {
 		}
 	}
 
-	public function set($file): void {
+	public function set($file) {
 		if (file_exists($file)) {
 			$this->file = $file;
 
@@ -112,7 +112,7 @@ class GD {
 	 * @param	string	$file
 	 * @param	int		$quality
 	 */
-	public function save(string $file, int $quality = 90): void {
+	public function save(string $file, int $quality = 90) {
 		$info = pathinfo($file);
 
 		$extension = strtolower($info['extension']);
@@ -137,7 +137,7 @@ class GD {
 	 * @param	int	$height
 	 * @param	string	$default
 	 */
-	public function resize($width = 0, $height = 0, $default = ''): void {
+	public function resize($width = 0, $height = 0, $default = '') {
 		if (!$this->width || !$this->height) {
 			return;
 		}
@@ -267,7 +267,7 @@ class GD {
 	 * @param	int		$degree
 	 * @param	string	$color
 	 */
-	public function rotate($degree, $color = 'FFFFFF'): void {
+	public function rotate($degree, $color = 'FFFFFF') {
 		$rgb = $this->html2rgb($color);
 
 		$this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
@@ -326,9 +326,9 @@ class GD {
 		}
 
 		if (strlen($color) === 6) {
-			list($r, $g, $b) = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);
+			[$r, $g, $b] = [$color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]];
 		} elseif (strlen($color) === 3) {
-			list($r, $g, $b) = array($color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]);
+			[$r, $g, $b] = [$color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]];
 		} else {
 			return false;
 		}
@@ -337,7 +337,7 @@ class GD {
 		$g = hexdec($g);
 		$b = hexdec($b);
 
-		return array($r, $g, $b);
+		return [$r, $g, $b];
 	}
 
 	public function destroy() {

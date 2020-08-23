@@ -1,5 +1,5 @@
 <?php
-namespace Image;
+namespace System\Library\Image;
 class Imagick {
 	private $file;
 	private $image;
@@ -14,7 +14,7 @@ class Imagick {
 		}
 	}
 
-	public function set(string $file): void {
+	public function set(string $file) {
 		if (file_exists($file)) {
 			$this->image = new \Imagick();
 			$this->image->setBackgroundColor(new \ImagickPixel('transparent'));

@@ -1,5 +1,6 @@
 <?php
-class ModelToolImage extends Model {
+namespace Application\Model\Tool;
+class Image extends \System\Engine\Model {
 	/**
 	 * @param $filename
 	 * @param $width
@@ -20,7 +21,7 @@ class ModelToolImage extends Model {
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
 			[$width_orig, $height_orig, $image_type] = getimagesize(DIR_IMAGE . $image_old);
 
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
+			if (!in_array($image_type, [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF], true)) {
 				return $this->config->get('config_url') . 'image/' . $image_old;
 			}
 
@@ -29,7 +30,7 @@ class ModelToolImage extends Model {
 			$directories = explode('/', dirname($image_new));
 
 			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
+				$path .= '/' . $directory;
 
 				if (!is_dir(DIR_IMAGE . $path)) {
 					@mkdir(DIR_IMAGE . $path, 0777);

@@ -4,11 +4,10 @@ class ModelToolImage extends Model {
 	 * @param $filename
 	 * @param $width
 	 * @param $height
-	 * @param array $option
 	 *
 	 * @return string|void
 	 */
-	public function resize($filename, $width, $height, $option = array()) {
+	public function resize($filename, $width, $height) {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
 			return;
 		}
@@ -40,12 +39,7 @@ class ModelToolImage extends Model {
 			if ($width_orig !== $width || $height_orig !== $height) {
 				$this->image->set(DIR_IMAGE . $image_old);
 				$this->image->resize($width, $height);
-
-				if (!empty($option['rotate'])) {
-					$this->image->rotate($option['rotate']['degree'], $option['rotate']['color'] ?? '');
-				}
-
-				$this->image->save(DIR_IMAGE . $image_new, $option['quality'] ?? null);
+				$this->image->save(DIR_IMAGE . $image_new);
 			} else {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}

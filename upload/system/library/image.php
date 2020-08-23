@@ -104,10 +104,9 @@ class Image {
 	 * Save image file
 	 *
 	 * @param string $file The image file
-	 * @param int $quality
 	 */
-	public function save(string $file, int $quality = null) {
-		$this->adaptor->save($file, $quality ? : $this->quality);
+	public function save(string $file) {
+		$this->adaptor->save($file, $this->quality);
 	}
 
 	/**

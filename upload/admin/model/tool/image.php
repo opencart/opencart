@@ -1,6 +1,13 @@
 <?php
 namespace Application\Model\Tool;
 class Image extends \System\Engine\Model {
+	/**
+	 * @param $filename
+	 * @param $width
+	 * @param $height
+	 *
+	 * @return string|void
+	 */
 	public function resize($filename, $width, $height) {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
 			return;
@@ -12,9 +19,9 @@ class Image extends \System\Engine\Model {
 		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
-			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-				 
-			if (!in_array($image_type, [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF])) {
+			[$width_orig, $height_orig, $image_type] = getimagesize(DIR_IMAGE . $image_old);
+
+			if (!in_array($image_type, [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF], true)) {
 				return HTTP_CATALOG . 'image/' . $image_old;
 			}
 
@@ -23,17 +30,17 @@ class Image extends \System\Engine\Model {
 			$directories = explode('/', dirname($image_new));
 
 			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
+				$path .= '/' . $directory;
 
 				if (!is_dir(DIR_IMAGE . $path)) {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}
 			}
 
-			if ($width_orig != $width || $height_orig != $height) {
-				$image = new \System\library\Image(DIR_IMAGE . $image_old);
-				$image->resize($width, $height);
-				$image->save(DIR_IMAGE . $image_new);
+			if ($width_orig !== $width || $height_orig !== $height) {
+				$this->image->set(DIR_IMAGE . $image_old);
+				$this->image->resize($width, $height);
+				$this->image->save(DIR_IMAGE . $image_new);
 			} else {
 				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
 			}

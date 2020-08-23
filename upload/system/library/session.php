@@ -32,7 +32,7 @@ class Session {
 				$this->adaptor = new $class();
 			}	
 			
-			register_shutdown_function(array($this, 'close'));
+			register_shutdown_function([$this, 'close']);
 		} else {
 			trigger_error('Error: Could not load cache adaptor ' . $adaptor . ' session!');
 			exit();

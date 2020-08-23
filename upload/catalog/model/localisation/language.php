@@ -16,7 +16,7 @@ class Language extends \System\Engine\Model {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1' ORDER BY sort_order, name");
 
 			foreach ($query->rows as $result) {
-				$language_data[] = array(
+				$language_data[] = [
 					'language_id' => $result['language_id'],
 					'name'        => $result['name'],
 					'code'        => $result['code'],
@@ -24,7 +24,7 @@ class Language extends \System\Engine\Model {
 					'image'       => $result['image'],
 					'sort_order'  => $result['sort_order'],
 					'status'      => $result['status']
-				);
+				];
 			}
 
 			$this->cache->set('catalog.language', $language_data);

@@ -38,11 +38,11 @@ class WeightClass extends \System\Engine\Model {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "weight_class wc LEFT JOIN " . DB_PREFIX . "weight_class_description wcd ON (wc.weight_class_id = wcd.weight_class_id) WHERE wcd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sort_data = array(
+			$sort_data = [
 				'title',
 				'unit',
 				'value'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];
@@ -104,10 +104,10 @@ class WeightClass extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE weight_class_id = '" . (int)$weight_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$weight_class_data[$result['language_id']] = array(
+			$weight_class_data[$result['language_id']] = [
 				'title' => $result['title'],
 				'unit'  => $result['unit']
-			);
+			];
 		}
 
 		return $weight_class_data;

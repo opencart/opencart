@@ -52,7 +52,7 @@ class Featured extends \System\Engine\Controller {
 					$tax = false;
 				}
 
-				$product_data = array(
+				$product_data = [
 					'product_id'  => $product['product_id'],
 					'thumb'       => $image,
 					'name'        => $product['name'],
@@ -63,7 +63,7 @@ class Featured extends \System\Engine\Controller {
 					'minimum'     => $product['minimum'] > 0 ? $product['minimum'] : 1,
 					'rating'      => $product['rating'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-				);
+				];
 
 				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}

@@ -20,7 +20,7 @@ final class Env
      * @param string $expression JMESPath expression to evaluate
      * @param mixed  $data       JSON-like data to search
      *
-     * @return mixed|null Returns the matching data or null
+     * @return mixed Returns the matching data or null
      */
     public static function search($expression, $data)
     {

@@ -16,10 +16,10 @@ class Maintenance extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_maintenance'),
 			'href' => $this->url->link('common/maintenance', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		$data['message'] = $this->language->get('text_message');
 

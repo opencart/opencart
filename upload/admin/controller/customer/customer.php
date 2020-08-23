@@ -334,15 +334,15 @@ class Customer extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('customer/customer/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('customer/customer/delete', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -353,7 +353,7 @@ class Customer extends \System\Engine\Controller {
 
 		$data['customers'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_name'              => $filter_name,
 			'filter_email'             => $filter_email,
 			'filter_customer_group_id' => $filter_customer_group_id,
@@ -364,7 +364,7 @@ class Customer extends \System\Engine\Controller {
 			'order'                    => $order,
 			'start'                    => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                    => $this->config->get('config_pagination')
-		);
+		];
 
 		$customer_total = $this->model_customer_customer->getTotalCustomers($filter_data);
 
@@ -381,21 +381,21 @@ class Customer extends \System\Engine\Controller {
 
 			$store_data = [];
 
-			$store_data[] = array(
+			$store_data[] = [
 				'store_id' => 0,
 				'name' => $this->config->get('config_name'),
 				'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=0')
-			);
+			];
 
 			foreach ($stores as $store) {
-				$store_data[] = array(
+				$store_data[] = [
 					'store_id' => $store['store_id'],
 					'name' => $store['name'],
 					'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $store['store_id'])
-				);
+				];
 			}
 
-			$data['customers'][] = array(
+			$data['customers'][] = [
 				'customer_id'    => $result['customer_id'],
 				'name'           => $result['name'],
 				'email'          => $result['email'],
@@ -406,7 +406,7 @@ class Customer extends \System\Engine\Controller {
 				'unlock'         => $unlock,
 				'store'          => $store_data,
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url)
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -507,12 +507,12 @@ class Customer extends \System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));
 
@@ -642,33 +642,33 @@ class Customer extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$this->load->model('setting/store');
 
 		$data['stores'] = [];
 		$data['multistore'] = 0;
 
-		$data['stores'][] = array(
+		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
-		);
+		];
 
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
-			$data['stores'][] = array(
+			$data['stores'][] = [
 				'store_id' => $store['store_id'],
 				'name'     => $store['name']
-			);
+			];
 
 			$data['multistore'] = $data['multistore'] + 1;
 		}
@@ -678,7 +678,7 @@ class Customer extends \System\Engine\Controller {
 		} elseif (!empty($customer_info)) {
 			$data['store_id'] = $customer_info['store_id'];
 		} else {
-			$data['store_id'] = array(0);
+			$data['store_id'] = [0];
 		}
 
 		if (!isset($this->request->get['customer_id'])) {
@@ -742,16 +742,16 @@ class Customer extends \System\Engine\Controller {
 
 		$data['custom_fields'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => 'cf.sort_order',
 			'order' => 'ASC'
-		);
+		];
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
-				$data['custom_fields'][] = array(
+				$data['custom_fields'][] = [
 					'custom_field_id'    => $custom_field['custom_field_id'],
 					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
 					'name'               => $custom_field['name'],
@@ -759,7 +759,7 @@ class Customer extends \System\Engine\Controller {
 					'type'               => $custom_field['type'],
 					'location'           => $custom_field['location'],
 					'sort_order'         => $custom_field['sort_order']
-				);
+				];
 			}
 		}
 
@@ -870,13 +870,13 @@ class Customer extends \System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('customer/custom_field');
 
-		$custom_fields = $this->model_customer_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id']));
+		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $this->request->post['customer_group_id']]);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
 				if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+				} elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}
@@ -930,7 +930,7 @@ class Customer extends \System\Engine\Controller {
 				foreach ($custom_fields as $custom_field) {
 					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($value['custom_field'][$custom_field['custom_field_id']])) {
 						$this->error['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['location'] == 'address') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($value['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+					} elseif (($custom_field['location'] == 'address') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($value['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
 						$this->error['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					}
 				}
@@ -1001,15 +1001,15 @@ class Customer extends \System\Engine\Controller {
 
 			$data['breadcrumbs'] = [];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-			);
+			];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'])
-			);
+			];
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -1041,20 +1041,20 @@ class Customer extends \System\Engine\Controller {
 		$results = $this->model_customer_customer->getHistories($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$data['histories'][] = array(
+			$data['histories'][] = [
 				'comment'    => $result['comment'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			);
+			];
 		}
 
 		$history_total = $this->model_customer_customer->getTotalHistories($customer_id);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => 10,
 			'url'   => $this->url->link('customer/customer/history', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
@@ -1108,23 +1108,23 @@ class Customer extends \System\Engine\Controller {
 		$results = $this->model_customer_customer->getTransactions($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$data['transactions'][] = array(
+			$data['transactions'][] = [
 				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'description' => $result['description'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			);
+			];
 		}
 
 		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency'));
 
 		$transaction_total = $this->model_customer_customer->getTotalTransactions($customer_id);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $transaction_total,
 			'page'  => $page,
 			'limit' => 10,
 			'url'   => $this->url->link('customer/customer/transaction', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
@@ -1178,23 +1178,23 @@ class Customer extends \System\Engine\Controller {
 		$results = $this->model_customer_customer->getRewards($customer_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$data['rewards'][] = array(
+			$data['rewards'][] = [
 				'points'      => $result['points'],
 				'description' => $result['description'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			);
+			];
 		}
 
 		$data['balance'] = $this->model_customer_customer->getRewardTotal($customer_id);
 
 		$reward_total = $this->model_customer_customer->getTotalRewards($customer_id);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $reward_total,
 			'page'  => $page,
 			'limit' => 10,
 			'url'   => $this->url->link('customer/customer/reward', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($reward_total - 10)) ? $reward_total : ((($page - 1) * 10) + 10), $reward_total, ceil($reward_total / 10));
 
@@ -1259,24 +1259,24 @@ class Customer extends \System\Engine\Controller {
 				$store = '';
 			}
 
-			$data['ips'][] = array(
+			$data['ips'][] = [
 				'ip'         => $result['ip'],
 				'account'    => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'store'      => $store,
 				'country'    => $result['country'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'filter_ip'  => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&filter_ip=' . $result['ip'])
-			);
+			];
 		}
 
 		$ip_total = $this->model_customer_customer->getTotalIps($customer_id);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $ip_total,
 			'page'  => $page,
 			'limit' => 10,
 			'url'   => $this->url->link('customer/customer/ip', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
 
@@ -1307,18 +1307,18 @@ class Customer extends \System\Engine\Controller {
 
 			$this->load->model('customer/customer');
 
-			$filter_data = array(
+			$filter_data = [
 				'filter_name'      => $filter_name,
 				'filter_email'     => $filter_email,
 				'filter_affiliate' => $filter_affiliate,
 				'start'            => 0,
 				'limit'            => 5
-			);
+			];
 
 			$results = $this->model_customer_customer->getCustomers($filter_data);
 
 			foreach ($results as $result) {
-				$json[] = array(
+				$json[] = [
 					'customer_id'       => $result['customer_id'],
 					'customer_group_id' => $result['customer_group_id'],
 					'name'              => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
@@ -1329,7 +1329,7 @@ class Customer extends \System\Engine\Controller {
 					'telephone'         => $result['telephone'],
 					'custom_field'      => json_decode($result['custom_field'], true),
 					'address'           => $this->model_customer_customer->getAddresses($result['customer_id'])
-				);
+				];
 			}
 		}
 
@@ -1357,13 +1357,13 @@ class Customer extends \System\Engine\Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		$custom_fields = $this->model_customer_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
+		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_id]);
 
 		foreach ($custom_fields as $custom_field) {
-			$json[] = array(
+			$json[] = [
 				'custom_field_id' => $custom_field['custom_field_id'],
 				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
-			);
+			];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

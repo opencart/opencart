@@ -41,15 +41,15 @@ class Upgrade extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -70,7 +70,6 @@ class Upgrade extends \System\Engine\Controller {
 
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade');
 
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
@@ -119,12 +118,12 @@ class Upgrade extends \System\Engine\Controller {
 								}
 							}
 
-							$data['extensions'][] = array(
+							$data['extensions'][] = [
 								'name'       => $extension['name'],
 								'link'       => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
 								'compatible' => $compatible,
 								'available'  => $available
-							);
+							];
 						}
 					}
 				}
@@ -157,7 +156,6 @@ class Upgrade extends \System\Engine\Controller {
 
 			$curl = curl_init('https://www.opencart.com/index.php?route=api/modified/' . VERSION);
 
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
@@ -244,7 +242,6 @@ class Upgrade extends \System\Engine\Controller {
 			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
@@ -335,15 +332,15 @@ class Upgrade extends \System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$ignore = array(
+			$ignore = [
 				'config-dist.php',
 				'admin/config-dist.php'
-			);
+			];
 
 			$files = [];
 
 			// Get a list of files ready to upload
-			$path = array($directory . '/*');
+			$path = [$directory . '/*'];
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
@@ -423,7 +420,6 @@ class Upgrade extends \System\Engine\Controller {
 		if (!$json) {
 			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade/remove&version=' . VERSION);
 
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
@@ -540,13 +536,13 @@ class Upgrade extends \System\Engine\Controller {
 				// Get a list of files ready to upload
 				$files = [];
 
-				$path = array($directory);
+				$path = [$directory];
 
 				while (count($path) != 0) {
 					$next = array_shift($path);
 
 					// We have to use scandir function because glob will not pick up dot files.
-					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+					foreach (array_diff(scandir($next), ['.', '..']) as $file) {
 						$file = $next . '/' . $file;
 
 						if (is_dir($file)) {

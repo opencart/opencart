@@ -105,7 +105,7 @@ class Gdpr extends \System\Engine\Controller {
 			$results = $this->model_customer_customer->getAddresses($customer_info['customer_id']);
 
 			foreach ($results as $result) {
-				$address = array(
+				$address = [
 					'firstname' => $result['firstname'],
 					'lastname'  => $result['lastname'],
 					'address_1' => $result['address_1'],
@@ -114,7 +114,7 @@ class Gdpr extends \System\Engine\Controller {
 					'postcode'  => $result['postcode'],
 					'country'   => $result['country'],
 					'zone'      => $result['zone']
-				);
+				];
 
 				if (!in_array($address, $data['addresses'])) {
 					$data['addresses'][] = $address;
@@ -125,12 +125,12 @@ class Gdpr extends \System\Engine\Controller {
 		// Order Addresses
 		$this->load->model('sale/order');
 
-		$results = $this->model_sale_order->getOrders(array('filter_email' => $gdpr_info['email']));
+		$results = $this->model_sale_order->getOrders(['filter_email' => $gdpr_info['email']]);
 
 		foreach ($results as $result) {
 			$order_info = $this->model_sale_order->getOrder($result['order_id']);
 
-			$address = array(
+			$address = [
 				'firstname' => $order_info['payment_firstname'],
 				'lastname'  => $order_info['payment_lastname'],
 				'address_1' => $order_info['payment_address_1'],
@@ -139,13 +139,13 @@ class Gdpr extends \System\Engine\Controller {
 				'postcode'  => $order_info['payment_postcode'],
 				'country'   => $order_info['payment_country'],
 				'zone'      => $order_info['payment_zone']
-			);
+			];
 
 			if (!in_array($address, $data['addresses'])) {
 				$data['addresses'][] = $address;
 			}
 
-			$address = array(
+			$address = [
 				'firstname' => $order_info['shipping_firstname'],
 				'lastname'  => $order_info['shipping_lastname'],
 				'address_1' => $order_info['shipping_address_1'],
@@ -154,7 +154,7 @@ class Gdpr extends \System\Engine\Controller {
 				'postcode'  => $order_info['shipping_postcode'],
 				'country'   => $order_info['shipping_country'],
 				'zone'      => $order_info['shipping_zone']
-			);
+			];
 
 			if (!in_array($address, $data['addresses'])) {
 				$data['addresses'][] = $address;
@@ -168,10 +168,10 @@ class Gdpr extends \System\Engine\Controller {
 			$results = $this->model_customer_customer->getIps($customer_info['customer_id']);
 
 			foreach ($results as $result) {
-				$data['ips'][] = array(
+				$data['ips'][] = [
 					'ip'         => $result['ip'],
 					'date_added' => date($language->get('datetime_format'), strtotime($result['date_added']))
-				);
+				];
 			}
 		}
 

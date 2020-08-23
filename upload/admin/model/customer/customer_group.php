@@ -41,10 +41,10 @@ class CustomerGroup extends \System\Engine\Model {
 	public function getCustomerGroups($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "customer_group cg LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (cg.customer_group_id = cgd.customer_group_id) WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-		$sort_data = array(
+		$sort_data = [
 			'cgd.name',
 			'cg.sort_order'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -81,10 +81,10 @@ class CustomerGroup extends \System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_group_description WHERE customer_group_id = '" . (int)$customer_group_id . "'");
 
 		foreach ($query->rows as $result) {
-			$customer_group_data[$result['language_id']] = array(
+			$customer_group_data[$result['language_id']] = [
 				'name'        => $result['name'],
 				'description' => $result['description']
-			);
+			];
 		}
 
 		return $customer_group_data;

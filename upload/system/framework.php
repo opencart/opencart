@@ -125,14 +125,14 @@ if ($config->get('session_autostart')) {
 	$session->start($session_id);
 
 	// Require higher security for session cookies
-	$option = array(
+	$option = [
 		'max-age'  => time() + $config->get('session_expire'),
 		'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 		'domain'   => $_SERVER['HTTP_HOST'],
 		'secure'   => $_SERVER['HTTPS'],
 		'httponly' => false,
 		'SameSite' => 'strict'
-	);
+	];
 
 	oc_setcookie($config->get('session_name'), $session->getId(), $option);
 }
@@ -230,7 +230,7 @@ while ($action) {
 	// Keep the original trigger.
 	$trigger = $action->getId();
 
-	$event->trigger('controller/' . $trigger . '/before', array(&$route, &$args));
+	$event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 	// Execute the action.
 	$result = $action->execute($registry, $args);
@@ -249,7 +249,7 @@ while ($action) {
 		$error = '';
 	}
 
-	$event->trigger('controller/' . $trigger . '/after', array(&$route, &$args, &$output));
+	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 }
 
 // Output

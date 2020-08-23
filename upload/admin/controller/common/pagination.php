@@ -38,10 +38,10 @@ class Pagination extends \System\Engine\Controller {
 		$data['page'] = $page;
 
 		if ($page > 1) {
-			$data['first'] = str_replace(array('&amp;page={page}', '?page={page}', '&page={page}'), '', $url);
+			$data['first'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
 
 			if ($page - 1 === 1) {
-				$data['prev'] = str_replace(array('&amp;page={page}', '?page={page}', '&page={page}'), '', $url);
+				$data['prev'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
 			} else {
 				$data['prev'] = str_replace('{page}', $page - 1, $url);
 			}
@@ -72,10 +72,10 @@ class Pagination extends \System\Engine\Controller {
 			}
 
 			for ($i = $start; $i <= $end; $i++) {
-				$data['links'][] = array(
+				$data['links'][] = [
 					'page' => $i,
 					'href' => str_replace('{page}', $i, $url)
-				);
+				];
 			}
 		}
 

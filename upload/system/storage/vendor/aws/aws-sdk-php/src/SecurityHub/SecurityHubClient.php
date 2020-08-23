@@ -87,6 +87,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateFindingsAsync(array $args = [])
  * @method \Aws\Result updateInsight(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInsightAsync(array $args = [])
+ * @method \Aws\Result updateSecurityHubConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSecurityHubConfigurationAsync(array $args = [])
  * @method \Aws\Result updateStandardsControl(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStandardsControlAsync(array $args = [])
  */

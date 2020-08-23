@@ -190,15 +190,15 @@ class Order extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['invoice'] = $this->url->link('sale/order/invoice', 'user_token=' . $this->session->data['user_token']);
 		$data['shipping'] = $this->url->link('sale/order/shipping', 'user_token=' . $this->session->data['user_token']);
@@ -207,7 +207,7 @@ class Order extends \System\Engine\Controller {
 
 		$data['orders'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_order_id' => $filter_order_id,
 			'filter_customer' => $filter_customer,
 			'filter_order_status' => $filter_order_status,
@@ -219,14 +219,14 @@ class Order extends \System\Engine\Controller {
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
 		$results = $this->model_sale_order->getOrders($filter_data);
 
 		foreach ($results as $result) {
-			$data['orders'][] = array(
+			$data['orders'][] = [
 				'order_id' => $result['order_id'],
 				'customer' => $result['customer'],
 				'order_status' => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
@@ -236,7 +236,7 @@ class Order extends \System\Engine\Controller {
 				'shipping_code' => $result['shipping_code'],
 				'view' => $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url),
 				'edit' => $this->url->link('sale/order/edit', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -346,12 +346,12 @@ class Order extends \System\Engine\Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
 			'page' => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($order_total - $this->config->get('config_pagination'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $order_total, ceil($order_total / $this->config->get('config_pagination')));
 
@@ -448,15 +448,15 @@ class Order extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['cancel'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -516,7 +516,7 @@ class Order extends \System\Engine\Controller {
 			$products = $this->model_sale_order->getProducts($this->request->get['order_id']);
 
 			foreach ($products as $product) {
-				$data['order_products'][] = array(
+				$data['order_products'][] = [
 					'product_id' => $product['product_id'],
 					'name' => $product['name'],
 					'model' => $product['model'],
@@ -525,7 +525,7 @@ class Order extends \System\Engine\Controller {
 					'price' => $product['price'],
 					'total' => $product['total'],
 					'reward' => $product['reward']
-				);
+				];
 			}
 
 			// Vouchers
@@ -616,18 +616,18 @@ class Order extends \System\Engine\Controller {
 
 		$data['stores'] = [];
 
-		$data['stores'][] = array(
+		$data['stores'][] = [
 			'store_id' => 0,
 			'name' => $this->language->get('text_default')
-		);
+		];
 
 		$results = $this->model_setting_store->getStores();
 
 		foreach ($results as $result) {
-			$data['stores'][] = array(
+			$data['stores'][] = [
 				'store_id' => $result['store_id'],
 				'name' => $result['name']
-			);
+			];
 		}
 
 		// Customer Groups
@@ -640,17 +640,17 @@ class Order extends \System\Engine\Controller {
 
 		$data['custom_fields'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_status' => 1,
 			'sort' => 'cf.sort_order',
 			'order' => 'ASC'
-		);
+		];
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
-				$data['custom_fields'][] = array(
+				$data['custom_fields'][] = [
 					'custom_field_id' => $custom_field['custom_field_id'],
 					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
 					'name' => $custom_field['name'],
@@ -658,7 +658,7 @@ class Order extends \System\Engine\Controller {
 					'type' => $custom_field['type'],
 					'location' => $custom_field['location'],
 					'sort_order' => $custom_field['sort_order']
-				);
+				];
 			}
 		}
 
@@ -774,15 +774,15 @@ class Order extends \System\Engine\Controller {
 
 			$data['breadcrumbs'] = [];
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-			);
+			$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
 
-			$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
-			);
+			];
 
 			$data['shipping'] = $this->url->link('sale/order/shipping', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . (int)$this->request->get['order_id']);
 			$data['invoice'] = $this->url->link('sale/order/invoice', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . (int)$this->request->get['order_id']);
@@ -842,7 +842,7 @@ class Order extends \System\Engine\Controller {
 				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 			}
 
-			$find = array(
+			$find = [
 				'{firstname}',
 				'{lastname}',
 				'{company}',
@@ -853,9 +853,9 @@ class Order extends \System\Engine\Controller {
 				'{zone}',
 				'{zone_code}',
 				'{country}'
-			);
+			];
 
-			$replace = array(
+			$replace = [
 				'firstname' => $order_info['payment_firstname'],
 				'lastname' => $order_info['payment_lastname'],
 				'company' => $order_info['payment_company'],
@@ -866,9 +866,9 @@ class Order extends \System\Engine\Controller {
 				'zone' => $order_info['payment_zone'],
 				'zone_code' => $order_info['payment_zone_code'],
 				'country' => $order_info['payment_country']
-			);
+			];
 
-			$data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
 
 			// Shipping Address
 			if ($order_info['shipping_address_format']) {
@@ -877,7 +877,7 @@ class Order extends \System\Engine\Controller {
 				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 			}
 
-			$find = array(
+			$find = [
 				'{firstname}',
 				'{lastname}',
 				'{company}',
@@ -888,22 +888,22 @@ class Order extends \System\Engine\Controller {
 				'{zone}',
 				'{zone_code}',
 				'{country}'
-			);
+			];
 
-			$replace = array(
+			$replace = [
 				'firstname' => $order_info['shipping_firstname'],
-				'lastname' => $order_info['shipping_lastname'],
-				'company' => $order_info['shipping_company'],
+				'lastname'  => $order_info['shipping_lastname'],
+				'company'   => $order_info['shipping_company'],
 				'address_1' => $order_info['shipping_address_1'],
 				'address_2' => $order_info['shipping_address_2'],
-				'city' => $order_info['shipping_city'],
-				'postcode' => $order_info['shipping_postcode'],
-				'zone' => $order_info['shipping_zone'],
+				'city'      => $order_info['shipping_city'],
+				'postcode'  => $order_info['shipping_postcode'],
+				'zone'      => $order_info['shipping_zone'],
 				'zone_code' => $order_info['shipping_zone_code'],
-				'country' => $order_info['shipping_country']
-			);
+				'country'   => $order_info['shipping_country']
+			];
 
-			$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
 
 			// Uploaded files
 			$this->load->model('tool/upload');
@@ -919,36 +919,36 @@ class Order extends \System\Engine\Controller {
 
 				foreach ($options as $option) {
 					if ($option['type'] != 'file') {
-						$option_data[] = array(
-							'name' => $option['name'],
+						$option_data[] = [
+							'name'  => $option['name'],
 							'value' => $option['value'],
-							'type' => $option['type']
-						);
+							'type'  => $option['type']
+						];
 					} else {
 						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
 						if ($upload_info) {
-							$option_data[] = array(
-								'name' => $option['name'],
+							$option_data[] = [
+								'name'  => $option['name'],
 								'value' => $upload_info['name'],
-								'type' => $option['type'],
-								'href' => $this->url->link('tool/upload/download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
-							);
+								'type'  => $option['type'],
+								'href'  => $this->url->link('tool/upload/download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+							];
 						}
 					}
 				}
 
-				$data['products'][] = array(
+				$data['products'][] = [
 					'order_product_id' => $product['order_product_id'],
 					'product_id' => $product['product_id'],
-					'name' => $product['name'],
-					'model' => $product['model'],
-					'option' => $option_data,
-					'quantity' => $product['quantity'],
-					'price' => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total' => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'href' => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
-				);
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $option_data,
+					'quantity'   => $product['quantity'],
+					'price'      => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'      => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'href'       => $this->url->link('catalog/product/edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+				];
 			}
 
 			$data['vouchers'] = [];
@@ -956,11 +956,11 @@ class Order extends \System\Engine\Controller {
 			$vouchers = $this->model_sale_order->getVouchers($this->request->get['order_id']);
 
 			foreach ($vouchers as $voucher) {
-				$data['vouchers'][] = array(
+				$data['vouchers'][] = [
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
 					'href'        => $this->url->link('sale/voucher/edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
-				);
+				];
 			}
 
 			$data['totals'] = [];
@@ -968,10 +968,10 @@ class Order extends \System\Engine\Controller {
 			$totals = $this->model_sale_order->getTotals($this->request->get['order_id']);
 
 			foreach ($totals as $total) {
-				$data['totals'][] = array(
+				$data['totals'][] = [
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
-				);
+				];
 			}
 
 			$data['comment'] = nl2br($order_info['comment']);
@@ -1016,10 +1016,10 @@ class Order extends \System\Engine\Controller {
 
 			$data['account_custom_fields'] = [];
 
-			$filter_data = array(
-				'sort' => 'cf.sort_order',
+			$filter_data = [
+				'sort'  => 'cf.sort_order',
 				'order' => 'ASC'
-			);
+			];
 
 			$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
@@ -1029,10 +1029,10 @@ class Order extends \System\Engine\Controller {
 						$custom_field_value_info = $this->model_customer_custom_field->getValue($order_info['custom_field'][$custom_field['custom_field_id']]);
 
 						if ($custom_field_value_info) {
-							$data['account_custom_fields'][] = array(
+							$data['account_custom_fields'][] = [
 								'name'  => $custom_field['name'],
 								'value' => $custom_field_value_info['name']
-							);
+							];
 						}
 					}
 
@@ -1041,29 +1041,29 @@ class Order extends \System\Engine\Controller {
 							$custom_field_value_info = $this->model_customer_custom_field->getValue($custom_field_value_id);
 
 							if ($custom_field_value_info) {
-								$data['account_custom_fields'][] = array(
+								$data['account_custom_fields'][] = [
 									'name'  => $custom_field['name'],
 									'value' => $custom_field_value_info['name']
-								);
+								];
 							}
 						}
 					}
 
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
-						$data['account_custom_fields'][] = array(
+						$data['account_custom_fields'][] = [
 							'name'  => $custom_field['name'],
 							'value' => $order_info['custom_field'][$custom_field['custom_field_id']]
-						);
+						];
 					}
 
 					if ($custom_field['type'] == 'file') {
 						$upload_info = $this->model_tool_upload->getUploadByCode($order_info['custom_field'][$custom_field['custom_field_id']]);
 
 						if ($upload_info) {
-							$data['account_custom_fields'][] = array(
+							$data['account_custom_fields'][] = [
 								'name'  => $custom_field['name'],
 								'value' => $upload_info['name']
-							);
+							];
 						}
 					}
 				}
@@ -1078,11 +1078,11 @@ class Order extends \System\Engine\Controller {
 						$custom_field_value_info = $this->model_customer_custom_field->getValue($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
 
 						if ($custom_field_value_info) {
-							$data['payment_custom_fields'][] = array(
+							$data['payment_custom_fields'][] = [
 								'name'       => $custom_field['name'],
 								'value'      => $custom_field_value_info['name'],
 								'sort_order' => $custom_field['sort_order']
-							);
+							];
 						}
 					}
 
@@ -1091,32 +1091,32 @@ class Order extends \System\Engine\Controller {
 							$custom_field_value_info = $this->model_customer_custom_field->getValue($custom_field_value_id);
 
 							if ($custom_field_value_info) {
-								$data['payment_custom_fields'][] = array(
-									'name' => $custom_field['name'],
-									'value' => $custom_field_value_info['name'],
+								$data['payment_custom_fields'][] = [
+									'name'       => $custom_field['name'],
+									'value'      => $custom_field_value_info['name'],
 									'sort_order' => $custom_field['sort_order']
-								);
+								];
 							}
 						}
 					}
 
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
-						$data['payment_custom_fields'][] = array(
-							'name' => $custom_field['name'],
-							'value' => $order_info['payment_custom_field'][$custom_field['custom_field_id']],
+						$data['payment_custom_fields'][] = [
+							'name'       => $custom_field['name'],
+							'value'      => $order_info['payment_custom_field'][$custom_field['custom_field_id']],
 							'sort_order' => $custom_field['sort_order']
-						);
+						];
 					}
 
 					if ($custom_field['type'] == 'file') {
 						$upload_info = $this->model_tool_upload->getUploadByCode($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
 
 						if ($upload_info) {
-							$data['payment_custom_fields'][] = array(
-								'name' => $custom_field['name'],
-								'value' => $upload_info['name'],
+							$data['payment_custom_fields'][] = [
+								'name'       => $custom_field['name'],
+								'value'      => $upload_info['name'],
 								'sort_order' => $custom_field['sort_order']
-							);
+							];
 						}
 					}
 				}
@@ -1131,11 +1131,11 @@ class Order extends \System\Engine\Controller {
 						$custom_field_value_info = $this->model_customer_custom_field->getValue($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
 
 						if ($custom_field_value_info) {
-							$data['shipping_custom_fields'][] = array(
-								'name' => $custom_field['name'],
-								'value' => $custom_field_value_info['name'],
+							$data['shipping_custom_fields'][] = [
+								'name'       => $custom_field['name'],
+								'value'      => $custom_field_value_info['name'],
 								'sort_order' => $custom_field['sort_order']
-							);
+							];
 						}
 					}
 
@@ -1144,32 +1144,32 @@ class Order extends \System\Engine\Controller {
 							$custom_field_value_info = $this->model_customer_custom_field->getValue($custom_field_value_id);
 
 							if ($custom_field_value_info) {
-								$data['shipping_custom_fields'][] = array(
-									'name' => $custom_field['name'],
-									'value' => $custom_field_value_info['name'],
+								$data['shipping_custom_fields'][] = [
+									'name'       => $custom_field['name'],
+									'value'      => $custom_field_value_info['name'],
 									'sort_order' => $custom_field['sort_order']
-								);
+								];
 							}
 						}
 					}
 
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
-						$data['shipping_custom_fields'][] = array(
-							'name' => $custom_field['name'],
-							'value' => $order_info['shipping_custom_field'][$custom_field['custom_field_id']],
+						$data['shipping_custom_fields'][] = [
+							'name'       => $custom_field['name'],
+							'value'      => $order_info['shipping_custom_field'][$custom_field['custom_field_id']],
 							'sort_order' => $custom_field['sort_order']
-						);
+						];
 					}
 
 					if ($custom_field['type'] == 'file') {
 						$upload_info = $this->model_tool_upload->getUploadByCode($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
 
 						if ($upload_info) {
-							$data['shipping_custom_fields'][] = array(
-								'name' => $custom_field['name'],
-								'value' => $upload_info['name'],
+							$data['shipping_custom_fields'][] = [
+								'name'       => $custom_field['name'],
+								'value'      => $upload_info['name'],
 								'sort_order' => $custom_field['sort_order']
-							);
+							];
 						}
 					}
 				}
@@ -1193,11 +1193,11 @@ class Order extends \System\Engine\Controller {
 				if ($content) {
 					$this->load->language('extension/payment/' . $order_info['payment_code']);
 
-					$data['tabs'][] = array(
-						'code' => $order_info['payment_code'],
-						'title' => $this->language->get('heading_title'),
+					$data['tabs'][] = [
+						'code'    => $order_info['payment_code'],
+						'title'   => $this->language->get('heading_title'),
 						'content' => $content
-					);
+					];
 				}
 			}
 
@@ -1212,11 +1212,11 @@ class Order extends \System\Engine\Controller {
 					$content = $this->load->controller('extension/fraud/' . $extension . '/order');
 
 					if ($content) {
-						$data['tabs'][] = array(
-							'code' => $extension,
-							'title' => $this->language->get('extension')->get('heading_title'),
+						$data['tabs'][] = [
+							'code'    => $extension,
+							'title'   => $this->language->get('extension')->get('heading_title'),
 							'content' => $content
-						);
+						];
 					}
 				}
 			}
@@ -1446,22 +1446,22 @@ class Order extends \System\Engine\Controller {
 		$results = $this->model_sale_order->getHistories($order_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$data['histories'][] = array(
+			$data['histories'][] = [
 				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
 				'status'     => $result['status'],
 				'comment'    => nl2br($result['comment']),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			);
+			];
 		}
 
 		$history_total = $this->model_sale_order->getTotalHistories($order_id);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => 10,
 			'url'   => $this->url->link('sale/order/history', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
@@ -1521,7 +1521,7 @@ class Order extends \System\Engine\Controller {
 					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 				}
 
-				$find = array(
+				$find = [
 					'{firstname}',
 					'{lastname}',
 					'{company}',
@@ -1532,9 +1532,9 @@ class Order extends \System\Engine\Controller {
 					'{zone}',
 					'{zone_code}',
 					'{country}'
-				);
+				];
 
-				$replace = array(
+				$replace = [
 					'firstname' => $order_info['payment_firstname'],
 					'lastname'  => $order_info['payment_lastname'],
 					'company'   => $order_info['payment_company'],
@@ -1545,9 +1545,9 @@ class Order extends \System\Engine\Controller {
 					'zone'      => $order_info['payment_zone'],
 					'zone_code' => $order_info['payment_zone_code'],
 					'country'   => $order_info['payment_country']
-				);
+				];
 
-				$payment_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+				$payment_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
 
 				if ($order_info['shipping_address_format']) {
 					$format = $order_info['shipping_address_format'];
@@ -1555,7 +1555,7 @@ class Order extends \System\Engine\Controller {
 					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 				}
 
-				$find = array(
+				$find = [
 					'{firstname}',
 					'{lastname}',
 					'{company}',
@@ -1566,9 +1566,9 @@ class Order extends \System\Engine\Controller {
 					'{zone}',
 					'{zone_code}',
 					'{country}'
-				);
+				];
 
-				$replace = array(
+				$replace = [
 					'firstname' => $order_info['shipping_firstname'],
 					'lastname'  => $order_info['shipping_lastname'],
 					'company'   => $order_info['shipping_company'],
@@ -1579,9 +1579,9 @@ class Order extends \System\Engine\Controller {
 					'zone'      => $order_info['shipping_zone'],
 					'zone_code' => $order_info['shipping_zone_code'],
 					'country'   => $order_info['shipping_country']
-				);
+				];
 
-				$shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
 
 				$this->load->model('tool/upload');
 
@@ -1607,20 +1607,20 @@ class Order extends \System\Engine\Controller {
 							}
 						}
 
-						$option_data[] = array(
+						$option_data[] = [
 							'name' => $option['name'],
 							'value' => $value
-						);
+						];
 					}
 
-					$product_data[] = array(
+					$product_data[] = [
 						'name'     => $product['name'],
 						'model'    => $product['model'],
 						'option'   => $option_data,
 						'quantity' => $product['quantity'],
 						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
-					);
+					];
 				}
 
 				$voucher_data = [];
@@ -1628,10 +1628,10 @@ class Order extends \System\Engine\Controller {
 				$vouchers = $this->model_sale_order->getVouchers($order_id);
 
 				foreach ($vouchers as $voucher) {
-					$voucher_data[] = array(
+					$voucher_data[] = [
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
-					);
+					];
 				}
 
 				$total_data = [];
@@ -1639,13 +1639,13 @@ class Order extends \System\Engine\Controller {
 				$totals = $this->model_sale_order->getTotals($order_id);
 
 				foreach ($totals as $total) {
-					$total_data[] = array(
+					$total_data[] = [
 						'title' => $total['title'],
 						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
-					);
+					];
 				}
 
-				$data['orders'][] = array(
+				$data['orders'][] = [
 					'order_id'         => $order_id,
 					'invoice_no'       => $invoice_no,
 					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
@@ -1665,7 +1665,7 @@ class Order extends \System\Engine\Controller {
 					'voucher'          => $voucher_data,
 					'total'            => $total_data,
 					'comment'          => nl2br($order_info['comment'])
-				);
+				];
 			}
 		}
 
@@ -1726,7 +1726,7 @@ class Order extends \System\Engine\Controller {
 					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 				}
 
-				$find = array(
+				$find = [
 					'{firstname}',
 					'{lastname}',
 					'{company}',
@@ -1737,9 +1737,9 @@ class Order extends \System\Engine\Controller {
 					'{zone}',
 					'{zone_code}',
 					'{country}'
-				);
+				];
 
-				$replace = array(
+				$replace = [
 					'firstname' => $order_info['shipping_firstname'],
 					'lastname'  => $order_info['shipping_lastname'],
 					'company'   => $order_info['shipping_company'],
@@ -1750,9 +1750,9 @@ class Order extends \System\Engine\Controller {
 					'zone'      => $order_info['shipping_zone'],
 					'zone_code' => $order_info['shipping_zone_code'],
 					'country'   => $order_info['shipping_country']
-				);
+				];
 
-				$shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
 
 				$this->load->model('tool/upload');
 
@@ -1783,10 +1783,10 @@ class Order extends \System\Engine\Controller {
 								}
 							}
 
-							$option_data[] = array(
+							$option_data[] = [
 								'name'  => $option['name'],
 								'value' => $value
-							);
+							];
 
 							$product_option_value_info = $this->model_catalog_product->getProductOptionValue($product['product_id'], $option['product_option_value_id']);
 
@@ -1799,7 +1799,7 @@ class Order extends \System\Engine\Controller {
 							}
 						}
 
-						$product_data[] = array(
+						$product_data[] = [
 							'name'     => $product_info['name'],
 							'model'    => $product_info['model'],
 							'option'   => $option_data,
@@ -1812,11 +1812,11 @@ class Order extends \System\Engine\Controller {
 							'isbn'     => $product_info['isbn'],
 							'mpn'      => $product_info['mpn'],
 							'weight'   => $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
-						);
+						];
 					}
 				}
 
-				$data['orders'][] = array(
+				$data['orders'][] = [
 					'order_id'         => $order_id,
 					'invoice_no'       => $invoice_no,
 					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
@@ -1831,7 +1831,7 @@ class Order extends \System\Engine\Controller {
 					'shipping_method'  => $order_info['shipping_method'],
 					'product'          => $product_data,
 					'comment'          => nl2br($order_info['comment'])
-				);
+				];
 			}
 		}
 

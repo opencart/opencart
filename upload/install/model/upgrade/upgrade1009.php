@@ -128,11 +128,11 @@ class Upgrade1009 extends \System\Engine\Model {
 	
 			for ($i = 0; $i < count($lines); $i++) { 
 				if ((strpos($lines[$i], 'DIR_IMAGE') !== false) && (strpos($lines[$i + 1], 'DIR_STORAGE') === false)) {
-					array_splice($lines, $i + 1, 0, array('define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');'));
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');']);
 				}
 
 				if ((strpos($lines[$i], 'DIR_MODIFICATION') !== false) && (strpos($lines[$i + 1], 'DIR_SESSION') === false)) {
-					array_splice($lines, $i + 1, 0, array('define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');'));
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');']);
 				}
 
 				if (strpos($lines[$i], 'DIR_CACHE') !== false) {

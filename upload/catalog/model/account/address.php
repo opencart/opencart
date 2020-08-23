@@ -61,7 +61,7 @@ class Address extends \System\Engine\Model {
 				$zone_code = '';
 			}
 
-			$address_data = array(
+			$address_data = [
 				'address_id'     => $address_query->row['address_id'],
 				'firstname'      => $address_query->row['firstname'],
 				'lastname'       => $address_query->row['lastname'],

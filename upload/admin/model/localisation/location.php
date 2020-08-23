@@ -24,10 +24,10 @@ class Location extends \System\Engine\Model {
 	public function getLocations($data = []) {
 		$sql = "SELECT location_id, name, address FROM " . DB_PREFIX . "location";
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'address',
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

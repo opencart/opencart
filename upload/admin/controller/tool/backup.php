@@ -8,24 +8,24 @@ class Backup extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('tool/backup');
 
-		$ignore = array(
+		$ignore = [
 			DB_PREFIX . 'user',
 			DB_PREFIX . 'user_group'
-		);
+		];
 
 		$data['tables'] = [];
 
@@ -56,7 +56,7 @@ class Backup extends \System\Engine\Controller {
 
 			$i = 0;
 
-			$suffix = array(
+			$suffix = [
 				'B',
 				'KB',
 				'MB',
@@ -66,7 +66,7 @@ class Backup extends \System\Engine\Controller {
 				'EB',
 				'ZB',
 				'YB'
-			);
+			];
 
 			while (($size / 1024) > 1) {
 				$size = $size / 1024;
@@ -74,12 +74,12 @@ class Backup extends \System\Engine\Controller {
 				$i++;
 			}
 
-			$data['histories'][] = array(
+			$data['histories'][] = [
 				'filename'   => basename($file),
 				'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
 				'date_added' => date($this->language->get('datetime_format'), filemtime($file)),
 				'download'   => $this->url->link('tool/backup/download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode(basename($file))),
-			);
+			];
 		}
 
 		$this->response->setOutput($this->load->view('tool/backup_history', $data));
@@ -147,8 +147,8 @@ class Backup extends \System\Engine\Controller {
 				$values = '';
 
 				foreach (array_values($result) as $value) {
-					$value = str_replace(array("\x00", "\x0a", "\x0d", "\x1a"), array('\0', '\n', '\r', '\Z'), $value);
-					$value = str_replace(array("\n", "\r", "\t"), array('\n', '\r', '\t'), $value);
+					$value = str_replace(["\x00", "\x0a", "\x0d", "\x1a"], ['\0', '\n', '\r', '\Z'], $value);
+					$value = str_replace(["\n", "\r", "\t"], ['\n', '\r', '\t'], $value);
 					$value = str_replace('\\', '\\\\', $value);
 					$value = str_replace('\'', '\\\'', $value);
 					$value = str_replace('\\\n', '\n', $value);

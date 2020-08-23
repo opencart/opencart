@@ -1,5 +1,5 @@
 <?php
-namespace \Install\Controller\Startup;
+namespace Install\Controller\Startup;
 class Language extends \System\Engine\Controller {
 	public function index() {
 		// Default language code
@@ -21,6 +21,7 @@ class Language extends \System\Engine\Controller {
 			foreach ($browser_languages as $browser_language) {
 				if (in_array($browser_language, $language_data)) {
 					$code = $browser_language;
+
 					break;
 				}
 			}		

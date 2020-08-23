@@ -16,7 +16,7 @@ class Currency extends \System\Engine\Model {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency ORDER BY title ASC");
 
 			foreach ($query->rows as $result) {
-				$currency_data[$result['code']] = array(
+				$currency_data[$result['code']] = [
 					'currency_id'   => $result['currency_id'],
 					'title'         => $result['title'],
 					'code'          => $result['code'],
@@ -26,7 +26,7 @@ class Currency extends \System\Engine\Model {
 					'value'         => $result['value'],
 					'status'        => $result['status'],
 					'date_modified' => $result['date_modified']
-				);
+				];
 			}
 
 			$this->cache->set('currency', $currency_data);

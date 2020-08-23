@@ -14,20 +14,20 @@ class Download extends \System\Engine\Controller {
 
 		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_downloads'),
 			'href' => $this->url->link('account/download', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		$this->load->model('account/download');
 
@@ -49,7 +49,7 @@ class Download extends \System\Engine\Controller {
 
 				$i = 0;
 
-				$suffix = array(
+				$suffix = [
 					'B',
 					'KB',
 					'MB',
@@ -59,29 +59,29 @@ class Download extends \System\Engine\Controller {
 					'EB',
 					'ZB',
 					'YB'
-				);
+				];
 
 				while (($size / 1024) > 1) {
 					$size = $size / 1024;
 					$i++;
 				}
 
-				$data['downloads'][] = array(
+				$data['downloads'][] = [
 					'order_id'   => $result['order_id'],
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'name'       => $result['name'],
 					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
 					'href'       => $this->url->link('account/download/download', 'language=' . $this->config->get('config_language') . '&download_id=' . $result['download_id'])
-				);
+				];
 			}
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $download_total,
 			'page'  => $page,
 			'limit' => $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'),
 			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($download_total - 10)) ? $download_total : ((($page - 1) * 10) + 10), $download_total, ceil($download_total / 10));
 		

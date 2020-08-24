@@ -1,6 +1,6 @@
 <?php
 namespace Application\Controller\Common;
-class ColumnRight extends \System\Engine\Controller
+class ColumnRight extends \System\Engine\Controller {
 	public function index() {
 		$this->load->model('design/layout');
 

@@ -1,5 +1,5 @@
 <?php
-namespace \Install\Controller\Upgrade;
+namespace Application\Controller\Upgrade;
 class Upgrade extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('upgrade/upgrade');

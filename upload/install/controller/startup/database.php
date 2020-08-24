@@ -1,5 +1,5 @@
 <?php
-namespace \Install\Controller\Startup;
+namespace Application\Controller\Startup;
 class Database extends \System\Engine\Controller {
 	public function index() {
 		if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {

@@ -16,12 +16,12 @@ class VoucherTheme extends \System\Engine\Model {
 	}
 
 	public function editVoucherTheme($voucher_theme_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape((string)$data['image']) . "' WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape((string)$data['image']) . "' WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme_description WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme_description WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
 		foreach ($data['voucher_theme_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme_description SET voucher_theme_id = '" . (int)$voucher_theme_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_theme_description` SET `voucher_theme_id` = '" . (int)$voucher_theme_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
 		}
 
 		$this->cache->delete('voucher_theme');
@@ -35,14 +35,14 @@ class VoucherTheme extends \System\Engine\Model {
 	}
 
 	public function getVoucherTheme($voucher_theme_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vt.voucher_theme_id = '" . (int)$voucher_theme_id . "' AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme` vt LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE vt.`voucher_theme_id` = '" . (int)$voucher_theme_id . "' AND vtd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
 	public function getVoucherThemes($data = []) {
 		if ($data) {
-			$sql = "SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.name";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "voucher_theme` vt LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE vtd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.`name`";
 
 			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
@@ -69,7 +69,7 @@ class VoucherTheme extends \System\Engine\Model {
 			$voucher_theme_data = $this->cache->get('voucher_theme.' . (int)$this->config->get('config_language_id'));
 
 			if (!$voucher_theme_data) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme vt LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE vtd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.name");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme` vt LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE vtd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.`name`");
 
 				$voucher_theme_data = $query->rows;
 
@@ -83,17 +83,17 @@ class VoucherTheme extends \System\Engine\Model {
 	public function getDescriptions($voucher_theme_id) {
 		$voucher_theme_data = [];
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme_description WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
 		foreach ($query->rows as $result) {
-			$voucher_theme_data[$result['language_id']] = ['name' => $result['name']);
+			$voucher_theme_data[$result['language_id']] = ['name' => $result['name']];
 		}
 
 		return $voucher_theme_data;
 	}
 
 	public function getTotalVoucherThemes() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher_theme");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "voucher_theme`");
 
 		return $query->row['total'];
 	}

@@ -52,12 +52,12 @@ require_once(DIR_SYSTEM . 'helper/utf8.php');
 // Vendor Autoloader
 require_once(DIR_STORAGE . 'vendor/autoload.php');
 
-// Library Autoloader
+// Autoloader
 function autoloader($class) {
 	$file = '';
 
 	// Converting a class name to a file path
-	$path = strtolower(implode('/', preg_replace('~([a-z])([A-Z])~', '\\1_\\2', explode('\\', $class))));
+	$path = strtolower(implode('/', preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', explode('\\', $class))));
 
 	$type = substr($path, 0, strpos($path, '/'));
 

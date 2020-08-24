@@ -1,5 +1,5 @@
 <?php
-namespace Install\Controller\Install;
+namespace Application\Controller\Install;
 class Step2 extends \System\Engine\Controller {
 	private $error = [];
 
@@ -72,7 +72,7 @@ class Step2 extends \System\Engine\Controller {
 			'mysqli',
 			'pgsql',
 			'pdo'
-		);
+		];
 
 		if (!array_filter($db, 'extension_loaded')) {
 			$data['db'] = false;
@@ -138,7 +138,7 @@ class Step2 extends \System\Engine\Controller {
 			'mysqli',
 			'pdo',
 			'pgsql'
-		);
+		];
 
 		if (!array_filter($db, 'extension_loaded')) {
 			$this->error['warning'] = $this->language->get('error_db');

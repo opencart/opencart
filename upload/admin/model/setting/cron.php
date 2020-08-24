@@ -16,11 +16,11 @@ class Cron extends \System\Engine\Model {
 	}
 
 	public function editCron($cron_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
 	public function editStatus($cron_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE cron_id = '" . (int)$cron_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
 	public function getCron($cron_id) {

@@ -4,6200 +4,6200 @@ function db_schema() {
 
 	$tables[] = [
 		'name' => 'address',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'address_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'lastname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'company',
 				'type' => 'varchar(60)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'address_1',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'address_2',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'city',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'postcode',
 				'type' => 'varchar(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'country_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'zone_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'address_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'customer_id',
-				'key' => array(
+				'key' => [
 					'customer_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'api',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'api_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'username',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'key',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'api_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'api_ip',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'api_ip_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'api_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'api_ip_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'api_session',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'api_session_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'api_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'session_id',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'api_session_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'attribute',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'attribute_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'attribute_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'attribute_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'attribute_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'attribute_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'attribute_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'attribute_group',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'attribute_group_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'attribute_group_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'attribute_group_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'attribute_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'attribute_group_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'banner',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'banner_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'banner_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'banner_image',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'banner_image_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'banner_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'title',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'link',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,
 				'default' => '0'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'banner_image_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'cart',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'cart_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'api_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'session_id',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'option',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'quantity',
 				'type' => 'int(5)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'cart_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'cart_id',
-				'key' => array(
+				'key' => [
 					'api_id',
 					'customer_id',
 					'session_id',
 					'product_id',
 					'recurring_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'category',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'parent_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'top',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'column',
 				'type' => 'int(3)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'category_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'parent_id',
-				'key' => array(
+				'key' => [
 					'parent_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'category_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_title',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_description',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'category_id',
 			'language_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'name',
-				'key' => array(
+				'key' => [
 					'name'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'category_filter',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'filter_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'category_id',
 			'filter_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'category_path',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'path_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'level',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'category_id',
 			'path_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'category_to_layout',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'layout_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'category_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'category_to_store',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'category_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'country',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'country_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'iso_code_2',
 				'type' => 'varchar(2)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'iso_code_3',
 				'type' => 'varchar(3)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'address_format',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'postcode_required',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '1'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'country_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'coupon',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'coupon_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(20)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'char(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'discount',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'logged',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'total',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_start',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			),
-			array(
+			],
+			[
 				'name' => 'date_end',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			),
-			array(
+			],
+			[
 				'name' => 'uses_total',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'uses_customer',
 				'type' => 'varchar(11)',
 				'not_null' => true
-			),
-			array(
-				'name' => 'status',
-				'type' => 'tinyint(1)',
+			],
+			[
+				'name'     => 'status',
+				'type'     => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
-				'name' => 'date_added',
-				'type' => 'datetime',
+			],
+			[
+				'name'     => 'date_added',
+				'type'     => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'coupon_id'
-		),
-		'engine' => 'MyISAM',
+		],
+		'engine'  => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'coupon_category',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'coupon_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'coupon_id',
 			'category_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'coupon_history',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'coupon_history_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'coupon_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'amount',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'coupon_history_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'coupon_product',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'coupon_product_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'coupon_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'coupon_product_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'cron',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'cron_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'cycle',
 				'type' => 'varchar(12)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'action',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'cron_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'currency',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'currency_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'title',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(3)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'symbol_left',
 				'type' => 'varchar(12)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'symbol_right',
 				'type' => 'varchar(12)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'decimal_place',
 				'type' => 'char(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'double(15,8)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'currency_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'lastname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'telephone',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'fax',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'password',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'salt',
 				'type' => 'varchar(9)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'cart',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'wishlist',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'newsletter',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'address_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'safe',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'token',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_activity',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_activity_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'key',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'data',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_activity_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_affiliate',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'company',
 				'type' => 'varchar(60)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'website',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'tracking',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'commission',
 				'type' => 'decimal(4,2)',
 				'not_null' => true,
 				'default' => '0.00'
-			),
-			array(
+			],
+			[
 				'name' => 'tax',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment',
 				'type' => 'varchar(6)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'cheque',
 				'type' => 'varchar(100)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'paypal',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'bank_name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'bank_branch_number',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'bank_swift_code',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'bank_account_name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'bank_account_number',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_affiliate_report',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_affiliate_report_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'country',
 				'type' => 'varchar(2)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_affiliate_report_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_approval',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_approval_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'varchar(9)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_approval_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_group',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'approval',
 				'type' => 'int(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_group_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_group_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'text',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_group_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_history',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_history_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'comment',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_history_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_login',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_login_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'total',
 				'type' => 'int(4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_login_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'email',
-				'key' => array(
+				'key' => [
 					'email'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'name' => 'ip',
-				'key' => array(
+				'key' => [
 					'ip'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_ip',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_ip_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'country',
 				'type' => 'varchar(2)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_ip_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'ip',
-				'key' => array(
+				'key' => [
 					'ip'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_online',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'url',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'referer',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'ip'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_reward',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_reward_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'points',
 				'type' => 'int(8)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_reward_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_transaction',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_transaction_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'amount',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_transaction_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_search',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_search_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sub_category',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'products',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_search_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'customer_wishlist',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'customer_id',
 			'product_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'custom_field',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'custom_field_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'validation',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'location',
 				'type' => 'varchar(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'custom_field_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'custom_field_customer_group',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'custom_field_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'required',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'custom_field_id',
 			'customer_group_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'custom_field_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'custom_field_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'custom_field_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'custom_field_value',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'custom_field_value_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'custom_field_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'custom_field_value_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'custom_field_value_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'custom_field_value_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'custom_field_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'custom_field_value_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'download',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'download_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'filename',
 				'type' => 'varchar(160)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'mask',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'download_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'download_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'download_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'download_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'download_report',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'download_report_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'download_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'country',
 				'type' => 'varchar(2)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'download_report_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'event',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'event_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trigger',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'action',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,
 				'default' => '1'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'event_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'extension',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'extension_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'extension_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'extension_install',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'extension_install_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'extension_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'extension_download_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'version',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'author',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'link',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'extension_install_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'extension_path',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'extension_path_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'extension_install_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'path',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'extension_path_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'filter',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'filter_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'filter_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'filter_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'filter_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'filter_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'filter_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'filter_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'filter_group',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'filter_group_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'filter_group_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'filter_group_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'filter_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'filter_group_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'gdpr',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'gdpr_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'action',
 				'type' => 'varchar(6)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'gdpr_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'geo_zone',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'geo_zone_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'geo_zone_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'information',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'information_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'bottom',
 				'type' => 'int(1)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '1'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'information_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'information_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'information_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'title',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'mediumtext',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_title',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_description',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'information_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'information_to_layout',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'information_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'layout_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'information_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'information_to_store',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'information_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'information_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'language',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(5)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'locale',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'language_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'name',
-				'key' => array(
+				'key' => [
 					'name'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'layout',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'layout_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'layout_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'layout_module',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'layout_module_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'layout_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'position',
 				'type' => 'varchar(14)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'layout_module_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'layout_route',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'layout_route_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'layout_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'route',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'layout_route_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'length_class',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'length_class_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'decimal(15,8)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'length_class_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'length_class_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'length_class_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'title',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'unit',
 				'type' => 'varchar(4)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'length_class_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'location',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'location_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'address',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'telephone',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'fax',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'geocode',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'open',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'comment',
 				'type' => 'text',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'location_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'name',
-				'key' => array(
+				'key' => [
 					'name'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'manufacturer',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'manufacturer_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'manufacturer_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'manufacturer_to_layout',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'manufacturer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'layout_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'manufacturer_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'manufacturer_to_store',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'manufacturer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'manufacturer_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'marketing',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'marketing_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'clicks',
 				'type' => 'int(5)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'marketing_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'marketing_report',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'marketing_report_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'marketing_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'country',
 				'type' => 'varchar(2)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'marketing_report_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'module',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'module_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'setting',
 				'type' => 'text',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'module_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'option',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'option_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'option_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'option_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'option_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'option_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'option_value',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'option_value_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'option_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'option_value_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'option_value_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'option_value_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'option_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'option_value_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'invoice_no',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'invoice_prefix',
 				'type' => 'varchar(26)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'store_name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_url',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'lastname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'telephone',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'fax',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_lastname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_company',
 				'type' => 'varchar(60)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_address_1',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_address_2',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_city',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_postcode',
 				'type' => 'varchar(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_country',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_country_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_zone',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_zone_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_address_format',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_custom_field',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_method',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'payment_code',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_lastname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_company',
 				'type' => 'varchar(60)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_address_1',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_address_2',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_city',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_postcode',
 				'type' => 'varchar(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_country',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_country_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_zone',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_zone_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_address_format',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_custom_field',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_method',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_code',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'comment',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'total',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'order_status_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'affiliate_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'commission',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'marketing_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'tracking',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'currency_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'currency_code',
 				'type' => 'varchar(3)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'currency_value',
 				'type' => 'decimal(15,8)',
 				'not_null' => true,
 				'default' => '1.00000000'
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'forwarded_ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'user_agent',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'accept_language',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_history',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_history_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_status_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'notify',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'comment',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_history_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_option',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_option_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_option_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_option_value_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_option_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_product',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_product_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'master_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'model',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'quantity',
 				'type' => 'int(4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'total',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'tax',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'reward',
 				'type' => 'int(8)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_product_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'order_id',
-				'key' => array(
+				'key' => [
 					'order_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_recurring',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_recurring_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'reference',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_quantity',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_description',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_frequency',
 				'type' => 'varchar(25)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_cycle',
 				'type' => 'smallint(6)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_duration',
 				'type' => 'smallint(6)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_price',
 				'type' => 'decimal(10,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_frequency',
 				'type' => 'varchar(25)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_cycle',
 				'type' => 'smallint(6)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_duration',
 				'type' => 'smallint(6)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_price',
 				'type' => 'decimal(10,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_recurring_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_recurring_transaction',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_recurring_transaction_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_recurring_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'reference',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'amount',
 				'type' => 'decimal(10,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_recurring_transaction_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_shipment',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_shipment_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_courier_id',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'tracking_number',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_shipment_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'shipping_courier',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'shipping_courier_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_courier_code',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping_courier_name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'shipping_courier_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_status',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_status_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_status_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_total',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_total_id',
 				'type' => 'int(10)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'title',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_total_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'order_id',
-				'key' => array(
+				'key' => [
 					'order_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'order_voucher',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'order_voucher_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'voucher_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'from_name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'from_email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'to_name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'to_email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'voucher_theme_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'message',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'amount',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'order_voucher_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'master_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'model',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sku',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'upc',
 				'type' => 'varchar(12)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ean',
 				'type' => 'varchar(14)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'jan',
 				'type' => 'varchar(13)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'isbn',
 				'type' => 'varchar(17)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'mpn',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'location',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'variant',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'override',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'quantity',
 				'type' => 'int(4)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'stock_status_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'manufacturer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'shipping',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '1'
-			),
-			array(
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'points',
 				'type' => 'int(8)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'tax_class_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_available',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			),
-			array(
+			],
+			[
 				'name' => 'weight',
 				'type' => 'decimal(15,8)',
 				'not_null' => true,
 				'default' => '0.00000000'
-			),
-			array(
+			],
+			[
 				'name' => 'weight_class_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'length',
 				'type' => 'decimal(15,8)',
 				'not_null' => true,
 				'default' => '0.00000000'
-			),
-			array(
+			],
+			[
 				'name' => 'width',
 				'type' => 'decimal(15,8)',
 				'not_null' => true,
 				'default' => '0.00000000'
-			),
-			array(
+			],
+			[
 				'name' => 'height',
 				'type' => 'decimal(15,8)',
 				'not_null' => true,
 				'default' => '0.00000000'
-			),
-			array(
+			],
+			[
 				'name' => 'length_class_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'subtract',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '1'
-			),
-			array(
+			],
+			[
 				'name' => 'minimum',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '1'
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'viewed',
 				'type' => 'int(5)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_attribute',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'attribute_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'text',
 				'type' => 'text',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'attribute_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'tag',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_title',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_description',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'meta_keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'language_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'name',
-				'key' => array(
+				'key' => [
 					'name'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_discount',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_discount_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'quantity',
 				'type' => 'int(4)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'priority',
 				'type' => 'int(5)',
 				'not_null' => true,
 				'default' => '1'
-			),
-			array(
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'date_start',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			),
-			array(
+			],
+			[
 				'name' => 'date_end',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_discount_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'product_id',
-				'key' => array(
+				'key' => [
 					'product_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_filter',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'filter_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'filter_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_image',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_image_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true,
 				'default' => '0'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_image_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'product_id',
-				'key' => array(
+				'key' => [
 					'product_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_option',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_option_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'option_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'required',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_option_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_option_value',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_option_value_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_option_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'option_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'option_value_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'quantity',
 				'type' => 'int(3)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'subtract',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'price_prefix',
 				'type' => 'varchar(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'points',
 				'type' => 'int(8)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'points_prefix',
 				'type' => 'varchar(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'weight',
 				'type' => 'decimal(15,8)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'weight_prefix',
 				'type' => 'varchar(1)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_option_value_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_recurring',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'recurring_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'recurring_id',
 			'customer_group_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_related',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'related_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'related_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_reward',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_reward_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => 0
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'points',
 				'type' => 'int(8)',
 				'not_null' => true,
 				'default' => '0'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_reward_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_special',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_special_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'priority',
 				'type' => 'int(5)',
 				'not_null' => true,
 				'default' => '1'
-			),
-			array(
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'date_start',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			),
-			array(
+			],
+			[
 				'name' => 'date_end',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_special_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'product_id',
-				'key' => array(
+				'key' => [
 					'product_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_to_category',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'category_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'category_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'category_id',
-				'key' => array(
+				'key' => [
 					'category_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_to_download',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'download_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'download_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_to_layout',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'layout_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'product_to_store',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'product_id',
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'recurring',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'recurring_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'price',
 				'type' => 'decimal(10,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'frequency',
 				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'duration',
 				'type' => 'int(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'cycle',
 				'type' => 'int(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_status',
 				'type' => 'tinyint(4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_price',
 				'type' => 'decimal(10,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_frequency',
 				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_duration',
 				'type' => 'int(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'trial_cycle',
 				'type' => 'int(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'recurring_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'recurring_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'recurring_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'recurring_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'return',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'return_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'lastname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'telephone',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'model',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'quantity',
 				'type' => 'int(4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'opened',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'return_reason_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'return_action_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'return_status_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'comment',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_ordered',
 				'type' => 'date',
 				'not_null' => true,
 				'default' => '0000-00-00'
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'return_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'return_action',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'return_action_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'return_action_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'return_history',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'return_history_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'return_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'return_status_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'notify',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'comment',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'return_history_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'return_reason',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'return_reason_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'return_reason_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'return_status',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'return_status_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'return_status_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'review',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'review_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'author',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'text',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'rating',
 				'type' => 'int(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'review_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'product_id',
-				'key' => array(
+				'key' => [
 					'product_id'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'statistics',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'statistics_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'statistics_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'session',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'session_id',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'data',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'expire',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'session_id'
-		),
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'setting',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'setting_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'key',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'serialized',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'setting_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'stock_status',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'stock_status_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'stock_status_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'store',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'url',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ssl',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'store_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'tax_class',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'tax_class_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'title',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'description',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'tax_class_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'tax_rate',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'tax_rate_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'geo_zone_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'rate',
 				'type' => 'decimal(15,4)',
 				'not_null' => true,
 				'default' => '0.0000'
-			),
-			array(
+			],
+			[
 				'name' => 'type',
 				'type' => 'char(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'tax_rate_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'tax_rate_to_customer_group',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'tax_rate_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'tax_rate_id',
 			'customer_group_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'tax_rule',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'tax_rule_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'tax_class_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'tax_rate_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'based',
 				'type' => 'varchar(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'priority',
 				'type' => 'int(5)',
 				'not_null' => true,
 				'default' => '1'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'tax_rule_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'theme',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'theme_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'theme',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'route',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'mediumtext',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'theme_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'translation',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'translation_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'route',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'key',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'translation_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'upload',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'upload_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'filename',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'upload_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'seo_profile',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'seo_profile_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'key',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'regex',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'push',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'remove',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(3)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'seo_profile_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'key',
-				'key' => array(
+				'key' => [
 					'key'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'seo_url',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'seo_url_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'key',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'seo_url_id'
-		),
-		'index' => array(
-			array(
+		],
+		'index' => [
+			[
 				'name' => 'keyword',
-				'key' => array(
+				'key' => [
 					'keyword'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'name' => 'query',
-				'key' => array(
+				'key' => [
 					'key',
 					'value'
-				)
-			)
-		),
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'user',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'user_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'user_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'username',
 				'type' => 'varchar(20)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'password',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'salt',
 				'type' => 'varchar(9)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'lastname',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'user_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'user_group',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'user_group_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'permission',
 				'type' => 'text',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'user_group_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'voucher',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'voucher_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(10)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'from_name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'from_email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'to_name',
 				'type' => 'varchar(64)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'to_email',
 				'type' => 'varchar(96)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'voucher_theme_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'message',
 				'type' => 'text',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'amount',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'voucher_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'voucher_history',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'voucher_history_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'voucher_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'amount',
 				'type' => 'decimal(15,4)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'voucher_history_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'voucher_theme',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'voucher_theme_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'voucher_theme_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'voucher_theme_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'voucher_theme_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'voucher_theme_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'weight_class',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'weight_class_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'value',
 				'type' => 'decimal(15,8)',
 				'not_null' => true,
 				'default' => '0.00000000'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'weight_class_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'weight_class_description',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'weight_class_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'title',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'unit',
 				'type' => 'varchar(4)',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'weight_class_id',
 			'language_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'zone',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'zone_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'country_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(128)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '1'
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'zone_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	$tables[] = [
 		'name' => 'zone_to_geo_zone',
-		'field' => array(
-			array(
+		'field' => [
+			[
 				'name' => 'zone_to_geo_zone_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			),
-			array(
+			],
+			[
 				'name' => 'country_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'zone_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'default' => '0'
-			),
-			array(
+			],
+			[
 				'name' => 'geo_zone_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
-			),
-			array(
+			],
+			[
 				'name' => 'date_modified',
 				'type' => 'datetime',
 				'not_null' => true
-			)
-		),
-		'primary' => array(
+			]
+		],
+		'primary' => [
 			'zone_to_geo_zone_id'
-		),
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
-	);
+	];
 
 	return $tables;
 }

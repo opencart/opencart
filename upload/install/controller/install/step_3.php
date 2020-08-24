@@ -1,5 +1,5 @@
 <?php
-namespace Install\Controller\Install;
+namespace Application\Controller\Install;
 class Step3 extends \System\Engine\Controller {
 	private $error = [];
 
@@ -187,7 +187,7 @@ class Step3 extends \System\Engine\Controller {
 			'mysqli',
 			'pdo',
 			'pgsql'
-		);
+		];
 
 		$data['drivers'] = [];
 
@@ -294,7 +294,7 @@ class Step3 extends \System\Engine\Controller {
 			'mysqli',
 			'pdo',
 			'pgsql'
-		);
+		];
 
 		if (!in_array($this->request->post['db_driver'], $db_drivers)) {
 			$this->error['db_driver'] = $this->language->get('error_db_driver');

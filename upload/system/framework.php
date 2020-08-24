@@ -222,10 +222,10 @@ foreach ($pre_actions as $pre_action) {
 
 // Dispatch
 while ($action) {
-	$args = [];
-
 	// Get the route path of the object to be executed.
 	$route = $action->getId();
+
+	$args = [];
 
 	// Keep the original trigger.
 	$trigger = $action->getId();

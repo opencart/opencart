@@ -1,5 +1,5 @@
 <?php
-namespace Install\Controller\Common;
+namespace Application\Controller\Common;
 class ColumnLeft extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/column_left');
@@ -40,7 +40,7 @@ class ColumnLeft extends \System\Engine\Controller {
 			$data['languages'][] = [
 				'text'  => $language->get('text_name'),
 				'value' => $code
-			);
+			];
 		}
 
 		if (!isset($this->request->get['route'])) {

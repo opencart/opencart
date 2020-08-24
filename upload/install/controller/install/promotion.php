@@ -1,5 +1,5 @@
 <?php
-namespace Install\Controller\Install;
+namespace Application\Controller\Install;
 class Promotion extends \System\Engine\Controller {
 	public function index() {
 		$curl = curl_init();

@@ -22,7 +22,7 @@ class Registry {
 	 * @return	mixed
      */
 	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : null);
+		return (isset($this->data[$key]) ? $this->data[$key] : '');
 	}
 
     /**

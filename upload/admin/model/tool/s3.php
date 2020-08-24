@@ -11,7 +11,7 @@ class S3 extends \System\Engine\Model {
 				'version'     => 'latest',
 				'region'      => 'us-west-2',
 				'credentials' => false
-			);
+			];
 
 			$s3 = new Aws\S3\S3Client($option);
 			$s3->completeMultipartUpload($option);
@@ -29,7 +29,7 @@ class S3 extends \System\Engine\Model {
 				'version'     => 'latest',
 				'region'      => 'us-west-2',
 				'credentials' => false
-			);
+			];
 
 			$s3 = new Aws\S3\S3Client($option);
 			$s3->completeMultipartUpload($option);

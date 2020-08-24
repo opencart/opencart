@@ -1,5 +1,5 @@
 <?php
-namespace Install\Controller\Common;
+namespace Application\Controller\Common;
 class Header extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/header');

@@ -1,8 +1,7 @@
 <?php
-namespace Install\Controller\Error;
+namespace Application\Controller\Error;
 class NotFound extends \System\Engine\Controller {
 	public function index() {
-		/*
 		$this->load->language('error/not_found');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -21,6 +20,5 @@ class NotFound extends \System\Engine\Controller {
 		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 
 		$this->response->setOutput($this->load->view('error/not_found', $data));
-		*/
 	}
 }

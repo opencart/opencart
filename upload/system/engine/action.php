@@ -1,9 +1,9 @@
 <?php
 /**
- * @package        OpenCart
- * @author        Daniel Kerr
- * @copyright    Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
- * @license        https://opensource.org/licenses/GPL-3.0
+ * @package     OpenCart
+ * @author      Daniel Kerr
+ * @copyright   Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license     https://opensource.org/licenses/GPL-3.0
  * @link        https://www.opencart.com
  */
 
@@ -24,8 +24,11 @@ class Action {
 	public function __construct(string $route) {
 		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		// Converting a route path to a class name
+		// Converting a route to a class name
 		$class = 'Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+
+		//echo '$route ' . $route . "\n";
+		//echo '$class ' . $class . "\n\n";
 
 		if (class_exists($class)) {
 			$this->class = $class;
@@ -50,6 +53,8 @@ class Action {
 	 *
 	 * @param    object $registry
 	 * @param    array $args
+	 *
+	 * @return	mixed
 	 */
 	public function execute(Registry $registry, array &$args = []) {
 		// Stop any magical methods being called

@@ -1,5 +1,5 @@
 <?php
-namespace \Install\Controller\Startup;
+namespace Application\Controller\Startup;
 class Upgrade extends \System\Engine\Controller {
 	public function index() {
 		$upgrade = false;

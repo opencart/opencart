@@ -89,6 +89,8 @@ class Information extends \System\Engine\Controller {
 			$output .= html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8') . "\n";
 		}
 
+		$this->response->addHeader('X-Robots-Tag: noindex');
+
 		$this->response->setOutput($output);
 	}
 }

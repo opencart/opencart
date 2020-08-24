@@ -34,12 +34,18 @@ class Cart {
 		if (!$this->data) {
 			$cart_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 
+			$products_query = array_reduce(
+				$this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_store p2s LEFT JOIN " . DB_PREFIX . "product p ON (p2s.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND p2s.product_id IN (" . array_column($cart_query->rows, 'product_id') . ") AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.date_available <= NOW() AND p.status = '1'")->rows,
+				function($products, $product) {
+					return array_merge($products, [$product['product_id'] => $product]);
+				},
+				[]
+			);
+			
 			foreach ($cart_query->rows as $cart) {
-				$stock = true;
-
-				$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_store p2s LEFT JOIN " . DB_PREFIX . "product p ON (p2s.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND p2s.product_id = '" . (int)$cart['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.date_available <= NOW() AND p.status = '1'");
-
-				if ($product_query->num_rows && ($cart['quantity'] > 0)) {
+				if (isset($products_query[$cart['product_id']]) && ($cart['quantity'] > 0)) {
+					$stock = true;
+					
 					$option_price = 0;
 					$option_points = 0;
 					$option_weight = 0;
@@ -49,15 +55,15 @@ class Cart {
 					$product_options = (array)json_decode($cart['option'], true);
 
 					// Merge variant code with options
-					foreach ((array)json_decode($product_query->row['variant'], true) as $key => $value) {
+					foreach ((array)json_decode($products_query[$cart['product_id']]['variant'], true) as $key => $value) {
 						$product_options[$key] = $value;
 					}
 
 					foreach ($product_options as $product_option_id => $value) {
-						if (!$product_query->row['master_id']) {
+						if (!$products_query[$cart['product_id']]['master_id']) {
 							$product_id = $cart['product_id'];
 						} else {
-							$product_id = $product_query->row['master_id'];
+							$product_id = $products_query[$cart['product_id']]['master_id'];
 						}
 
 						$option_query = $this->db->query("SELECT po.product_option_id, po.option_id, od.name, o.type FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_option_id = '" . (int)$product_option_id . "' AND po.product_id = '" . (int)$product_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -175,7 +181,7 @@ class Cart {
 						}
 					}
 
-					$price = $product_query->row['price'];
+					$price = $products_query[$cart['product_id']]['price'];
 
 					// Product Discounts
 					$discount_quantity = 0;
@@ -223,7 +229,7 @@ class Cart {
 					}
 
 					// Stock
-					if (!$product_query->row['quantity'] || ($product_query->row['quantity'] < $cart['quantity'])) {
+					if (!$products_query[$cart['product_id']]['quantity'] || ($products_query[$cart['product_id']]['quantity'] < $cart['quantity'])) {
 						$stock = false;
 					}
 
@@ -249,29 +255,29 @@ class Cart {
 
 					$this->data[] = [
 						'cart_id'         => $cart['cart_id'],
-						'product_id'      => $product_query->row['product_id'],
-						'master_id'       => $product_query->row['master_id'],
-						'name'            => $product_query->row['name'],
-						'model'           => $product_query->row['model'],
-						'shipping'        => $product_query->row['shipping'],
-						'image'           => $product_query->row['image'],
+						'product_id'      => $products_query[$cart['product_id']]['product_id'],
+						'master_id'       => $products_query[$cart['product_id']]['master_id'],
+						'name'            => $products_query[$cart['product_id']]['name'],
+						'model'           => $products_query[$cart['product_id']]['model'],
+						'shipping'        => $products_query[$cart['product_id']]['shipping'],
+						'image'           => $products_query[$cart['product_id']]['image'],
 						'option'          => $option_data,
 						'download'        => $download_data,
 						'quantity'        => $cart['quantity'],
-						'minimum'         => $product_query->row['minimum'],
-						'subtract'        => $product_query->row['subtract'],
+						'minimum'         => $products_query[$cart['product_id']]['minimum'],
+						'subtract'        => $products_query[$cart['product_id']]['subtract'],
 						'stock'           => $stock,
 						'price'           => ($price + $option_price),
 						'total'           => ($price + $option_price) * $cart['quantity'],
 						'reward'          => $reward * $cart['quantity'],
-						'points'          => ($product_query->row['points'] ? ($product_query->row['points'] + $option_points) * $cart['quantity'] : 0),
-						'tax_class_id'    => $product_query->row['tax_class_id'],
-						'weight'          => ($product_query->row['weight'] + $option_weight) * $cart['quantity'],
-						'weight_class_id' => $product_query->row['weight_class_id'],
-						'length'          => $product_query->row['length'],
-						'width'           => $product_query->row['width'],
-						'height'          => $product_query->row['height'],
-						'length_class_id' => $product_query->row['length_class_id'],
+						'points'          => ($products_query[$cart['product_id']]['points'] ? ($products_query[$cart['product_id']]['points'] + $option_points) * $cart['quantity'] : 0),
+						'tax_class_id'    => $products_query[$cart['product_id']]['tax_class_id'],
+						'weight'          => ($products_query[$cart['product_id']]['weight'] + $option_weight) * $cart['quantity'],
+						'weight_class_id' => $products_query[$cart['product_id']]['weight_class_id'],
+						'length'          => $products_query[$cart['product_id']]['length'],
+						'width'           => $products_query[$cart['product_id']]['width'],
+						'height'          => $products_query[$cart['product_id']]['height'],
+						'length_class_id' => $products_query[$cart['product_id']]['length_class_id'],
 						'recurring'       => $recurring
 					];
 				} else {

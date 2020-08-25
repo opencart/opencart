@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 // Check Version
 if (version_compare(phpversion(), '7.3.0', '<')) {
-	exit('PHP7.3+ Required');
+	exit('PHP 7.3+ Required');
 }
 
 if (!ini_get('date.timezone')) {

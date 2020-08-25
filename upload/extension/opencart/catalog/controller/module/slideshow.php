@@ -10,13 +10,13 @@ class Slideshow extends \System\Engine\Controller {
 		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
 		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
 		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
-		
+
 		$data['banners'] = [];
 
 		$results = $this->model_design_banner->getBanner($setting['banner_id']);
 
 		foreach ($results as $result) {
-			if (is_file(DIR_IMAGE . $result['image'])) {
+			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 				$data['banners'][] = [
 					'title' => $result['title'],
 					'link'  => $result['link'],

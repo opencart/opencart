@@ -16,7 +16,7 @@ class Banner extends \System\Engine\Controller {
 		$results = $this->model_design_banner->getBanner($setting['banner_id']);
 
 		foreach ($results as $result) {
-			if (is_file(DIR_IMAGE . $result['image'])) {
+			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 				$data['banners'][] = [
 					'title' => $result['title'],
 					'link'  => $result['link'],

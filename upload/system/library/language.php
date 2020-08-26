@@ -12,7 +12,7 @@
 */
 namespace System\Library;
 class Language {
-	private $default = 'en-gb';
+	const DEFAULT = 'en-gb';
 	private $directory;
 	public $data = [];
 	
@@ -67,7 +67,7 @@ class Language {
 	public function load($filename, $prefix = '') {
 		$_ = [];
 
-		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+		$file = DIR_LANGUAGE . self::DEFAULT . '/' . $filename . '.php';
 
 		if (is_file($file)) {
 			require($file);

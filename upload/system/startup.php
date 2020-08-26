@@ -81,9 +81,6 @@ function autoloader($class) {
 			break;
 	}
 
-	//echo '$class ' . $class . "\n";
-	//echo '$file ' . $file . "\n\n";
-
 	if (is_file($file)) {
 		include_once($file);
 

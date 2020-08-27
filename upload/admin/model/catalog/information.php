@@ -1,5 +1,6 @@
 <?php
-class ModelCatalogInformation extends Model {
+namespace Application\Model\Catalog;
+class Information extends \System\Engine\Model {
 	public function addInformation($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (int)$data['status'] . "'");
 
@@ -25,7 +26,7 @@ class ModelCatalogInformation extends Model {
 				}
 			}
 		}
-		
+
 		if (isset($data['information_layout'])) {
 			foreach ($data['information_layout'] as $store_id => $layout_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "information_to_layout` SET `information_id` = '" . (int)$information_id . "', `store_id` = '" . (int)$store_id . "', `layout_id` = '" . (int)$layout_id . "'");
@@ -93,14 +94,14 @@ class ModelCatalogInformation extends Model {
 		return $query->row;
 	}
 
-	public function getInformations($data = array()) {
+	public function getInformations($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sort_data = array(
+			$sort_data = [
 				'id.title',
 				'i.sort_order'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];
@@ -145,25 +146,25 @@ class ModelCatalogInformation extends Model {
 	}
 
 	public function getDescriptions($information_id) {
-		$information_description_data = array();
+		$information_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
 
 		foreach ($query->rows as $result) {
-			$information_description_data[$result['language_id']] = array(
+			$information_description_data[$result['language_id']] = [
 				'title'            => $result['title'],
 				'description'      => $result['description'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword']
-			);
+			];
 		}
 
 		return $information_description_data;
 	}
 
 	public function getStores($information_id) {
-		$information_store_data = array();
+		$information_store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
 
@@ -175,8 +176,8 @@ class ModelCatalogInformation extends Model {
 	}
 
 	public function getSeoUrls($information_id) {
-		$information_seo_url_data = array();
-		
+		$information_seo_url_data = [];
+
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
 
 		foreach ($query->rows as $result) {
@@ -187,7 +188,7 @@ class ModelCatalogInformation extends Model {
 	}
 
 	public function getLayouts($information_id) {
-		$information_layout_data = array();
+		$information_layout_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_layout` WHERE `information_id` = '" . (int)$information_id . "'");
 

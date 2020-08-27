@@ -1,5 +1,6 @@
 <?php
-class ControllerApiPayment extends Controller {
+namespace Application\Controller\Api;
+class Payment extends \System\Engine\Controller {
 	public function address() {
 		$this->load->language('api/payment');
 
@@ -8,13 +9,13 @@ class ControllerApiPayment extends Controller {
 		unset($this->session->data['payment_methods']);
 		unset($this->session->data['payment_method']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {
 			// Add keys for missing post vars
-			$keys = array(
+			$keys = [
 				'firstname',
 				'lastname',
 				'company',
@@ -24,7 +25,7 @@ class ControllerApiPayment extends Controller {
 				'city',
 				'zone_id',
 				'country_id'
-			);
+			];
 
 			foreach ($keys as $key) {
 				if (!isset($this->request->post[$key])) {
@@ -73,7 +74,7 @@ class ControllerApiPayment extends Controller {
 				if ($custom_field['location'] == 'address') {
 					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					}
 				}
@@ -108,7 +109,7 @@ class ControllerApiPayment extends Controller {
 					$zone_code = '';
 				}
 
-				$this->session->data['payment_address'] = array(
+				$this->session->data['payment_address'] = [
 					'firstname'      => $this->request->post['firstname'],
 					'lastname'       => $this->request->post['lastname'],
 					'company'        => $this->request->post['company'],
@@ -124,11 +125,11 @@ class ControllerApiPayment extends Controller {
 					'iso_code_2'     => $iso_code_2,
 					'iso_code_3'     => $iso_code_3,
 					'address_format' => $address_format,
-					'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array()
-				);
+					'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				];
 
 				$json['success'] = $this->language->get('text_address');
-				
+
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 			}
@@ -140,12 +141,12 @@ class ControllerApiPayment extends Controller {
 
 	public function methods() {
 		$this->load->language('api/payment');
-		
+
 		// Delete past shipping methods and method just in case there is an error
 		unset($this->session->data['payment_methods']);
 		unset($this->session->data['payment_method']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -154,16 +155,16 @@ class ControllerApiPayment extends Controller {
 			if (!isset($this->session->data['payment_address'])) {
 				$json['error'] = $this->language->get('error_address');
 			}
-			
+
 			if (!$json) {
 				// Totals
-				$totals = array();
+				$totals = [];
 				$taxes = $this->cart->getTaxes();
 				$total = 0;
 
 				$this->load->model('setting/extension');
 
-				$sort_order = array();
+				$sort_order = [];
 
 				$results = $this->model_setting_extension->getExtensions('total');
 
@@ -183,7 +184,7 @@ class ControllerApiPayment extends Controller {
 				}
 
 				// Payment Methods
-				$json['payment_methods'] = array();
+				$json['payment_methods'] = [];
 
 				$this->load->model('setting/extension');
 
@@ -209,7 +210,7 @@ class ControllerApiPayment extends Controller {
 					}
 				}
 
-				$sort_order = array();
+				$sort_order = [];
 
 				foreach ($json['payment_methods'] as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
@@ -235,7 +236,7 @@ class ControllerApiPayment extends Controller {
 		// Delete old payment method so not to cause any issues if there is an error
 		unset($this->session->data['payment_method']);
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');

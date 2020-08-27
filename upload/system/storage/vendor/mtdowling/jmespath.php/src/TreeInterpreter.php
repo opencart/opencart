@@ -10,9 +10,9 @@ class TreeInterpreter
     private $fnDispatcher;
 
     /**
-     * @param callable $fnDispatcher Function dispatching function that accepts
-     *                               a function name argument and an array of
-     *                               function arguments and returns the result.
+     * @param callable|null $fnDispatcher Function dispatching function that accepts
+     *                                    a function name argument and an array of
+     *                                    function arguments and returns the result.
      */
     public function __construct(callable $fnDispatcher = null)
     {

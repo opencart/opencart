@@ -1,5 +1,6 @@
 <?php
-class ModelCatalogAttribute extends Model {
+namespace Application\Model\Catalog;
+class Attribute extends \System\Engine\Model {
 	public function addAttribute($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute SET attribute_group_id = '" . (int)$data['attribute_group_id'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 
@@ -33,7 +34,7 @@ class ModelCatalogAttribute extends Model {
 		return $query->row;
 	}
 
-	public function getAttributes($data = array()) {
+	public function getAttributes($data = []) {
 		$sql = "SELECT *, (SELECT agd.name FROM " . DB_PREFIX . "attribute_group_description agd WHERE agd.attribute_group_id = a.attribute_group_id AND agd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS attribute_group FROM " . DB_PREFIX . "attribute a LEFT JOIN " . DB_PREFIX . "attribute_description ad ON (a.attribute_id = ad.attribute_id) WHERE ad.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -44,11 +45,11 @@ class ModelCatalogAttribute extends Model {
 			$sql .= " AND a.attribute_group_id = '" . (int)$data['filter_attribute_group_id'] . "'";
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'ad.name',
 			'attribute_group',
 			'a.sort_order'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -80,12 +81,12 @@ class ModelCatalogAttribute extends Model {
 	}
 
 	public function getDescriptions($attribute_id) {
-		$attribute_data = array();
+		$attribute_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "attribute_description WHERE attribute_id = '" . (int)$attribute_id . "'");
 
 		foreach ($query->rows as $result) {
-			$attribute_data[$result['language_id']] = array('name' => $result['name']);
+			$attribute_data[$result['language_id']] = ['name' => $result['name']];
 		}
 
 		return $attribute_data;

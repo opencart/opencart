@@ -1,10 +1,11 @@
 <?php
-class ControllerStartupLanguage extends Controller {
+namespace Application\Controller\Startup;
+class Language extends \System\Engine\Controller {
 	public function index() {
 		// Default language code
 		$code = $this->config->get('language_default');
 
-		$language_data = array();
+		$language_data = [];
 
 		$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 
@@ -20,6 +21,7 @@ class ControllerStartupLanguage extends Controller {
 			foreach ($browser_languages as $browser_language) {
 				if (in_array($browser_language, $language_data)) {
 					$code = $browser_language;
+
 					break;
 				}
 			}		
@@ -30,8 +32,8 @@ class ControllerStartupLanguage extends Controller {
 		}
 		
 		// Language
-		$language = new Language($this->session->data['language']);
+		$language = new \System\Library\Language($this->session->data['language']);
 		$language->load($this->session->data['language']);
-		$this->registry->set('language', $language);	
+		$this->registry->set('language', $language);
 	}
 }

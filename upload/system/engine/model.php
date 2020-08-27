@@ -10,7 +10,8 @@
 /**
 * Model class
 */
-abstract class Model {
+namespace System\Engine;
+class Model {
 	protected $registry;
 
 	public function __construct($registry) {

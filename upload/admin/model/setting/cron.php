@@ -1,5 +1,6 @@
 <?php
-class ModelSettingCron extends Model {
+namespace Application\Model\Setting;
+class Cron extends \System\Engine\Model {
 	public function addCron($code, $cycle = 'day', $action, $status) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
 
@@ -15,11 +16,11 @@ class ModelSettingCron extends Model {
 	}
 
 	public function editCron($cron_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
 	public function editStatus($cron_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE cron_id = '" . (int)$cron_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
 	public function getCron($cron_id) {
@@ -34,17 +35,17 @@ class ModelSettingCron extends Model {
 		return $query->row;
 	}
 		
-	public function getCrons($data = array()) {
+	public function getCrons($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
 
-		$sort_data = array(
+		$sort_data = [
 			'code',
 			'cycle',
 			'action',
 			'status',
 			'date_added',
 			'date_modified'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY `" . $data['sort'] . "`";

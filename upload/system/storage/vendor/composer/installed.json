@@ -1,17 +1,17 @@
 [
     {
         "name": "aws/aws-sdk-php",
-        "version": "3.147.0",
-        "version_normalized": "3.147.0.0",
+        "version": "3.150.2",
+        "version_normalized": "3.150.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/aws/aws-sdk-php.git",
-            "reference": "e63974c002c0f6520da597d44a3f83ce46d7a612"
+            "reference": "1aef7e270f15347df82279f05d85f551f85c8b87"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e63974c002c0f6520da597d44a3f83ce46d7a612",
-            "reference": "e63974c002c0f6520da597d44a3f83ce46d7a612",
+            "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1aef7e270f15347df82279f05d85f551f85c8b87",
+            "reference": "1aef7e270f15347df82279f05d85f551f85c8b87",
             "shasum": ""
         },
         "require": {
@@ -47,7 +47,7 @@
             "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
             "ext-sockets": "To use client-side monitoring"
         },
-        "time": "2020-07-17T18:14:13+00:00",
+        "time": "2020-08-20T18:12:35+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -297,35 +297,35 @@
     },
     {
         "name": "mtdowling/jmespath.php",
-        "version": "2.5.0",
-        "version_normalized": "2.5.0.0",
+        "version": "2.6.0",
+        "version_normalized": "2.6.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/jmespath/jmespath.php.git",
-            "reference": "52168cb9472de06979613d365c7f1ab8798be895"
+            "reference": "42dae2cbd13154083ca6d70099692fef8ca84bfb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/jmespath/jmespath.php/zipball/52168cb9472de06979613d365c7f1ab8798be895",
-            "reference": "52168cb9472de06979613d365c7f1ab8798be895",
+            "url": "https://api.github.com/repos/jmespath/jmespath.php/zipball/42dae2cbd13154083ca6d70099692fef8ca84bfb",
+            "reference": "42dae2cbd13154083ca6d70099692fef8ca84bfb",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.4.0",
-            "symfony/polyfill-mbstring": "^1.4"
+            "php": "^5.4 || ^7.0 || ^8.0",
+            "symfony/polyfill-mbstring": "^1.17"
         },
         "require-dev": {
-            "composer/xdebug-handler": "^1.2",
-            "phpunit/phpunit": "^4.8.36|^7.5.15"
+            "composer/xdebug-handler": "^1.4",
+            "phpunit/phpunit": "^4.8.36 || ^7.5.15"
         },
-        "time": "2019-12-30T18:03:34+00:00",
+        "time": "2020-07-31T21:01:56+00:00",
         "bin": [
             "bin/jp.php"
         ],
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.5-dev"
+                "dev-master": "2.6-dev"
             }
         },
         "installation-source": "dist",
@@ -564,8 +564,8 @@
     },
     {
         "name": "symfony/polyfill-ctype",
-        "version": "v1.18.0",
-        "version_normalized": "1.18.0.0",
+        "version": "v1.18.1",
+        "version_normalized": "1.18.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -642,8 +642,8 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.18.0",
-        "version_normalized": "1.18.0.0",
+        "version": "v1.18.1",
+        "version_normalized": "1.18.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -721,17 +721,17 @@
     },
     {
         "name": "twig/twig",
-        "version": "v3.0.4",
-        "version_normalized": "3.0.4.0",
+        "version": "v3.0.5",
+        "version_normalized": "3.0.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "582bdbdc173027ebfba3c93dc750a40b8f9ebc02"
+            "reference": "9b76b1535483cdf4edf01bb787b0217b62bd68a5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/582bdbdc173027ebfba3c93dc750a40b8f9ebc02",
-            "reference": "582bdbdc173027ebfba3c93dc750a40b8f9ebc02",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/9b76b1535483cdf4edf01bb787b0217b62bd68a5",
+            "reference": "9b76b1535483cdf4edf01bb787b0217b62bd68a5",
             "shasum": ""
         },
         "require": {
@@ -743,7 +743,7 @@
             "psr/container": "^1.0",
             "symfony/phpunit-bridge": "^4.4.9|^5.0.9"
         },
-        "time": "2020-07-05T13:18:14+00:00",
+        "time": "2020-08-05T15:13:19+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -783,18 +783,6 @@
             "templating"
         ],
         "funding": [
-            {
-                "url": "https://certification.symfony.com/",
-                "type": "custom"
-            },
-            {
-                "url": "https://live.symfony.com/",
-                "type": "custom"
-            },
-            {
-                "url": "https://symfony.com/cloud/",
-                "type": "custom"
-            },
             {
                 "url": "https://github.com/fabpot",
                 "type": "github"

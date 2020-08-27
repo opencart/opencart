@@ -1,7 +1,8 @@
 <?php
-class ModelSettingSetting extends Model {
+namespace Application\Model\Setting;
+class Setting extends \System\Engine\Model {
 	public function getSetting($code, $store_id = 0) {
-		$setting_data = array();
+		$setting_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 
@@ -22,7 +23,7 @@ class ModelSettingSetting extends Model {
 		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return null;	
+			return '';
 		}
 	}	
 }

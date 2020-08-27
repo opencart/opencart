@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonMaintenance extends Controller {
+namespace Application\Controller\Common;
+class Maintenance extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/maintenance');
 
@@ -13,12 +14,12 @@ class ControllerCommonMaintenance extends Controller {
 
 		$this->response->addHeader('Retry-After: 3600');
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_maintenance'),
 			'href' => $this->url->link('common/maintenance', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		$data['message'] = $this->language->get('text_message');
 

@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationLanguage extends Model {
+namespace Application\Model\Localisation;
+class Language extends \System\Engine\Model {
 	public function addLanguage($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "language SET name = '" . $this->db->escape((string)$data['name']) . "', code = '" . $this->db->escape((string)$data['code']) . "', locale = '" . $this->db->escape((string)$data['locale']) . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "'");
 
@@ -233,15 +234,15 @@ class ModelLocalisationLanguage extends Model {
 		return $query->row;
 	}
 
-	public function getLanguages($data = array()) {
+	public function getLanguages($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "language";
 
-			$sort_data = array(
+			$sort_data = [
 				'name',
 				'code',
 				'sort_order'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];
@@ -274,12 +275,12 @@ class ModelLocalisationLanguage extends Model {
 			$language_data = $this->cache->get('admin.language');
 
 			if (!$language_data) {
-				$language_data = array();
+				$language_data = [];
 
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language ORDER BY sort_order, name");
 
 				foreach ($query->rows as $result) {
-					$language_data[$result['code']] = array(
+					$language_data[$result['code']] = [
 						'language_id' => $result['language_id'],
 						'name'        => $result['name'],
 						'code'        => $result['code'],
@@ -287,7 +288,7 @@ class ModelLocalisationLanguage extends Model {
 						'image'       => $result['image'],
 						'sort_order'  => $result['sort_order'],
 						'status'      => $result['status']
-					);
+					];
 				}
 
 				$this->cache->set('admin.language', $language_data);

@@ -1,5 +1,6 @@
 <?php
-class ModelAccountWishlist extends Model {
+namespace Application\Model\Account;
+class Wishlist extends \System\Engine\Model {
 	public function addWishlist($product_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
 
@@ -11,7 +12,7 @@ class ModelAccountWishlist extends Model {
 	}
 
 	public function getWishlist() {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 
 		return $query->rows;
 	}

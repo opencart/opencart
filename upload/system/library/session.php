@@ -10,10 +10,11 @@
 /**
 * Session class
 */
+namespace System\Library;
 class Session {
 	protected $adaptor;
 	protected $session_id;
-	public $data = array();
+	public $data = [];
 
 	/**
 	 * Constructor
@@ -22,7 +23,7 @@ class Session {
 	 * @param	object	$registry
  	*/
 	public function __construct($adaptor, $registry = '') {
-		$class = 'Session\\' . $adaptor;
+		$class = '\System\Library\Session\\' . $adaptor;
 		
 		if (class_exists($class)) {
 			if ($registry) {
@@ -31,7 +32,7 @@ class Session {
 				$this->adaptor = new $class();
 			}	
 			
-			register_shutdown_function(array($this, 'close'));
+			register_shutdown_function([$this, 'close']);
 		} else {
 			trigger_error('Error: Could not load cache adaptor ' . $adaptor . ' session!');
 			exit();

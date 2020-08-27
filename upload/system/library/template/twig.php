@@ -1,7 +1,7 @@
 <?php
-namespace Template;
-final class Twig {
-	protected $data = array();
+namespace System\Library\Template;
+class Twig {
+	protected $data = [];
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;
@@ -32,15 +32,15 @@ final class Twig {
 		// render from modified template code
 		if ($code) {
 			// Initialize Twig environment
-			$config = array(
+			$config = [
 				'charset'     => 'utf-8',
 				'autoescape'  => false,
 				'debug'       => false,
 				'auto_reload' => true,
 				'cache'       => DIR_CACHE . 'template/'
-			);
+			];
 
-			$loader_array = new \Twig_Loader_Array(array($filename . '.twig' => $code));
+			$loader_array = new \Twig_Loader_Array([$filename . '.twig' => $code]);
 			$loader_filesystem = new \Twig_Loader_Filesystem(DIR_TEMPLATE);
 			$loader = new \Twig_Loader_Chain(array($loader_array, $loader_filesystem));
 

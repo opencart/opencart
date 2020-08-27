@@ -10,8 +10,9 @@
 /**
 * Registry class
 */
-final class Registry {
-	private $data = array();
+namespace System\Engine;
+class Registry {
+	private $data = [];
 
 	/**
      * Get
@@ -21,7 +22,7 @@ final class Registry {
 	 * @return	mixed
      */
 	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : null);
+		return (isset($this->data[$key]) ? $this->data[$key] : '');
 	}
 
     /**

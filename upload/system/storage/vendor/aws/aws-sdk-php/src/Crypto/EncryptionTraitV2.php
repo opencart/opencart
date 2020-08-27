@@ -39,34 +39,35 @@ trait EncryptionTraitV2
      *
      * @param Stream $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
-     * @param array $cipherOptions Options for use in determining the cipher to
-     *                             be used for encrypting data.
+     * @param array $options    Options for use in encryption, including cipher
+     *                          options, and encryption context.
      * @param MaterialsProviderV2 $provider A provider to supply and encrypt
-     *                                    materials used in encryption.
+     *                                      materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be added to.
      *
      * @return StreamInterface
      *
-     * @throws \InvalidArgumentException Thrown when a value in $cipherOptions
+     * @throws \InvalidArgumentException Thrown when a value in $options['@CipherOptions']
      *                                   is not valid.
-     *
+     *s
      * @internal
      */
     public function encrypt(
         Stream $plaintext,
-        array $cipherOptions,
+        array $options,
         MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     ) {
+        $options = array_change_key_case($options);
         $cipherOptions = array_intersect_key(
-            $cipherOptions,
+            $options['@cipheroptions'],
             self::$allowedOptions
         );
 
         if (empty($cipherOptions['Cipher'])) {
             throw new \InvalidArgumentException('An encryption cipher must be'
-                . ' specified in the "cipher_options".');
+                . ' specified in @CipherOptions["Cipher"].');
         }
 
         $cipherOptions['Cipher'] = strtolower($cipherOptions['Cipher']);
@@ -104,8 +105,14 @@ trait EncryptionTraitV2
 
         $keys = $provider->generateCek(
             $cipherOptions['KeySize'],
-            $materialsDescription
+            $materialsDescription,
+            $options
         );
+
+        // Some providers modify materials description based on options
+        if (isset($keys['UpdatedContext'])) {
+            $materialsDescription = $keys['UpdatedContext'];
+        }
 
         $encryptingStream = $this->getEncryptingStream(
             $plaintext,
@@ -169,6 +176,14 @@ trait EncryptionTraitV2
                     $cipherOptions['TagLength'],
                     $cipherOptions['KeySize']
                 );
+
+                if (!empty($cipherOptions['Aad'])) {
+                    trigger_error("'Aad' has been supplied for content encryption"
+                        . " with " . $cipherTextStream->getAesName() . ". The"
+                        . " PHP SDK encryption client can decrypt an object"
+                        . " encrypted in this way, but other AWS SDKs may not be"
+                        . " able to.", E_USER_WARNING);
+                }
 
                 $appendStream = new AppendStream([
                     $cipherTextStream->createStream()

@@ -1,5 +1,6 @@
 <?php
-class ControllerMailOrder extends Controller {
+namespace Application\Controller\Mail;
+class Order extends \System\Engine\Controller {
 	public function index(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];
@@ -57,7 +58,7 @@ class ControllerMailOrder extends Controller {
 		}
 
 		// Load the language for any mails that might be required to be sent out
-		$language = new Language($order_info['language_code']);
+		$language = new \System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_add');
 
@@ -133,7 +134,7 @@ class ControllerMailOrder extends Controller {
 			$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}
 
-		$find = array(
+		$find = [
 			'{firstname}',
 			'{lastname}',
 			'{company}',
@@ -144,9 +145,9 @@ class ControllerMailOrder extends Controller {
 			'{zone}',
 			'{zone_code}',
 			'{country}'
-		);
+		];
 
-		$replace = array(
+		$replace = [
 			'firstname' => $order_info['payment_firstname'],
 			'lastname'  => $order_info['payment_lastname'],
 			'company'   => $order_info['payment_company'],
@@ -157,9 +158,9 @@ class ControllerMailOrder extends Controller {
 			'zone'      => $order_info['payment_zone'],
 			'zone_code' => $order_info['payment_zone_code'],
 			'country'   => $order_info['payment_country']
-		);
+		];
 
-		$data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+		$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
 
 		if ($order_info['shipping_address_format']) {
 			$format = $order_info['shipping_address_format'];
@@ -167,7 +168,7 @@ class ControllerMailOrder extends Controller {
 			$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}
 
-		$find = array(
+		$find = [
 			'{firstname}',
 			'{lastname}',
 			'{company}',
@@ -178,9 +179,9 @@ class ControllerMailOrder extends Controller {
 			'{zone}',
 			'{zone_code}',
 			'{country}'
-		);
+		];
 
-		$replace = array(
+		$replace = [
 			'firstname' => $order_info['shipping_firstname'],
 			'lastname'  => $order_info['shipping_lastname'],
 			'company'   => $order_info['shipping_company'],
@@ -191,17 +192,17 @@ class ControllerMailOrder extends Controller {
 			'zone'      => $order_info['shipping_zone'],
 			'zone_code' => $order_info['shipping_zone_code'],
 			'country'   => $order_info['shipping_country']
-		);
+		];
 
-		$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+		$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
 
 		$this->load->model('tool/upload');
 
 		// Products
-		$data['products'] = array();
+		$data['products'] = [];
 
 		foreach ($order_products as $order_product) {
-			$option_data = array();
+			$option_data = [];
 
 			$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
@@ -218,44 +219,44 @@ class ControllerMailOrder extends Controller {
 					}
 				}
 
-				$option_data[] = array(
+				$option_data[] = [
 					'name'  => $order_option['name'],
 					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-				);
+				];
 			}
 
-			$data['products'][] = array(
+			$data['products'][] = [
 				'name'     => $order_product['name'],
 				'model'    => $order_product['model'],
 				'option'   => $option_data,
 				'quantity' => $order_product['quantity'],
 				'price'    => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'total'    => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
-			);
+			];
 		}
 
 		// Vouchers
-		$data['vouchers'] = array();
+		$data['vouchers'] = [];
 
 		$order_vouchers = $this->model_checkout_order->getVouchers($order_info['order_id']);
 
 		foreach ($order_vouchers as $order_voucher) {
-			$data['vouchers'][] = array(
+			$data['vouchers'][] = [
 				'description' => $order_voucher['description'],
 				'amount'      => $this->currency->format($order_voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-			);
+			];
 		}
 
 		// Order Totals
-		$data['totals'] = array();
+		$data['totals'] = [];
 
 		$order_totals = $this->model_checkout_order->getTotals($order_info['order_id']);
 
 		foreach ($order_totals as $order_total) {
-			$data['totals'][] = array(
+			$data['totals'][] = [
 				'title' => $order_total['title'],
 				'text'  => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
-			);
+			];
 		}
 
 		$this->load->model('setting/setting');
@@ -266,7 +267,7 @@ class ControllerMailOrder extends Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -283,7 +284,7 @@ class ControllerMailOrder extends Controller {
 	}
 
 	public function edit($order_info, $order_status_id, $comment, $notify) {
-		$language = new Language($order_info['language_code']);
+		$language = new \System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_edit');
 
@@ -323,7 +324,7 @@ class ControllerMailOrder extends Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -403,12 +404,12 @@ class ControllerMailOrder extends Controller {
 
 			$this->load->model('tool/upload');
 
-			$data['products'] = array();
+			$data['products'] = [];
 
 			$order_products = $this->model_checkout_order->getProducts($order_id);
 
 			foreach ($order_products as $order_product) {
-				$option_data = array();
+				$option_data = [];
 
 				$order_options = $this->model_checkout_order->getOptions($order_info['order_id'], $order_product['order_product_id']);
 
@@ -425,46 +426,46 @@ class ControllerMailOrder extends Controller {
 						}
 					}
 
-					$option_data[] = array(
+					$option_data[] = [
 						'name'  => $order_option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					);
+					];
 				}
 
-				$data['products'][] = array(
+				$data['products'][] = [
 					'name'     => $order_product['name'],
 					'model'    => $order_product['model'],
 					'quantity' => $order_product['quantity'],
 					'option'   => $option_data,
 					'total'    => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-				);
+				];
 			}
 
-			$data['vouchers'] = array();
+			$data['vouchers'] = [];
 
 			$order_vouchers = $this->model_checkout_order->getVouchers($order_id);
 
 			foreach ($order_vouchers as $order_voucher) {
-				$data['vouchers'][] = array(
+				$data['vouchers'][] = [
 					'description' => $order_voucher['description'],
 					'amount'      => html_entity_decode($this->currency->format($order_voucher['amount'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-				);
+				];
 			}
 
-			$data['totals'] = array();
+			$data['totals'] = [];
 
 			$order_totals = $this->model_checkout_order->getTotals($order_id);
 
 			foreach ($order_totals as $order_total) {
-				$data['totals'][] = array(
+				$data['totals'][] = [
 					'title' => $order_total['title'],
 					'value' => html_entity_decode($this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
-				);
+				];
 			}
 
 			$data['comment'] = strip_tags($order_info['comment']);
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

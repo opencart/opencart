@@ -1,5 +1,5 @@
 <?php
-namespace DB;
+namespace System\Library\DB;
 final class PDO {
 	private $connection;
 	private $statement;
@@ -20,14 +20,14 @@ final class PDO {
 	public function execute() {
 		try {
 			if ($this->statement && $this->statement->execute()) {
-				$data = array();
+				$data = [];
 
 				while ($row = $this->statement->fetch(\PDO::FETCH_ASSOC)) {
 					$data[] = $row;
 				}
 
 				$result = new \stdClass();
-				$result->row = (isset($data[0])) ? $data[0] : array();
+				$result->row = (isset($data[0])) ? $data[0] : [];
 				$result->rows = $data;
 				$result->num_rows = $this->statement->rowCount();
 			}
@@ -36,21 +36,21 @@ final class PDO {
 		}
 	}
 
-	public function query($sql, $params = array()) {
+	public function query($sql, $params = []) {
 		$this->statement = $this->connection->prepare($sql);
 
 		$result = false;
 
 		try {
 			if ($this->statement && $this->statement->execute($params)) {
-				$data = array();
+				$data = [];
 
 				while ($row = $this->statement->fetch(\PDO::FETCH_ASSOC)) {
 					$data[] = $row;
 				}
 
 				$result = new \stdClass();
-				$result->row = (isset($data[0]) ? $data[0] : array());
+				$result->row = (isset($data[0]) ? $data[0] : []);
 				$result->rows = $data;
 				$result->num_rows = $this->statement->rowCount();
 			}
@@ -62,8 +62,8 @@ final class PDO {
 			return $result;
 		} else {
 			$result = new \stdClass();
-			$result->row = array();
-			$result->rows = array();
+			$result->row = [];
+			$result->rows = [];
 			$result->num_rows = 0;
 
 			return $result;
@@ -83,7 +83,7 @@ final class PDO {
 	}
 
 	public function escape($value) {
-		return str_replace(array("\\", "\0", "\n", "\r", "\x1a", "'", '"'), array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"'), $value);
+		return str_replace(["\\", "\0", "\n", "\r", "\x1a", "'", '"'], ["\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"'], $value);
 	}
 
 	public function countAffected() {

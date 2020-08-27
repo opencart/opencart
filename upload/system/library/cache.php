@@ -10,6 +10,7 @@
 /**
 * Cache class
 */
+namespace System\Library;
 class Cache {
 	private $adaptor;
 	
@@ -20,8 +21,8 @@ class Cache {
 	 * @param	int		$expire		Optional parameters
 	 *
  	*/
-	public function __construct($adaptor, $expire = 3600) {
-		$class = 'Cache\\' . $adaptor;
+	public function __construct(string $adaptor, $expire = 3600) {
+		$class = 'System\Library\Cache\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class($expire);
@@ -37,7 +38,7 @@ class Cache {
      *
      * @return	string
      */
-	public function get($key) {
+	public function get(string $key) {
 		return $this->adaptor->get($key);
 	}
 	
@@ -49,7 +50,7 @@ class Cache {
 	 * 
 	 * @return	string
      */
-	public function set($key, $value) {
+	public function set(string $key, array $value) {
 		return $this->adaptor->set($key, $value);
 	}
    
@@ -58,7 +59,7 @@ class Cache {
      *
      * @param	string	$key	The cache key
      */
-	public function delete($key) {
+	public function delete(string $key) {
 		return $this->adaptor->delete($key);
 	}
 }

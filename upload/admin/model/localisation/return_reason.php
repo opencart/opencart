@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationReturnReason extends Model {
+namespace Application\Model\Localisation;
+class ReturnReason extends \System\Engine\Model {
 	public function addReturnReason($data) {
 		foreach ($data['return_reason'] as $language_id => $value) {
 			if (isset($return_reason_id)) {
@@ -38,7 +39,7 @@ class ModelLocalisationReturnReason extends Model {
 		return $query->row;
 	}
 
-	public function getReturnReasons($data = array()) {
+	public function getReturnReasons($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -81,12 +82,12 @@ class ModelLocalisationReturnReason extends Model {
 	}
 
 	public function getDescriptions($return_reason_id) {
-		$return_reason_data = array();
+		$return_reason_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
 
 		foreach ($query->rows as $result) {
-			$return_reason_data[$result['language_id']] = array('name' => $result['name']);
+			$return_reason_data[$result['language_id']] = ['name' => $result['name']);
 		}
 
 		return $return_reason_data;

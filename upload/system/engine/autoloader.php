@@ -17,9 +17,11 @@ class Autoloader {
 		$parts = explode('\\', $class);
 
 		foreach ($parts as $part) {
-			$namespace .= '\\' . $part;
-
-			$namespace = trim($namespace, '\\');
+			if (!$namespace) {
+				$namespace .= $part;
+			} else {
+				$namespace .= '\\' . $part;
+			}
 
 			if (isset($this->data[$namespace])) {
 				$file = $this->data[$namespace] . strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', substr($class, strlen($namespace)))) . '.php';

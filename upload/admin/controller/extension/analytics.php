@@ -85,9 +85,7 @@ class Analytics extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		$files = $this->model_setting_extension->getPaths('admin/controller/analytics/*.php');
-
-		print_r($files);
-
+		/*
 		// Compatibility code for old extension folders
 		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
 
@@ -123,7 +121,7 @@ class Analytics extends \System\Engine\Controller {
 				];
 			}
 		}
-
+		*/
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
 		$this->response->setOutput($this->load->view('extension/analytics', $data));

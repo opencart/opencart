@@ -1,6 +1,6 @@
 <?php
 namespace Application\Controller\Marketplace;
-use \Extension\Opencart\Admin\Controller\Captcha as Captcha;
+//use \Extension\Opencart\Admin\Controller\Captcha as Captcha;
 class Extension extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/extension');
@@ -27,32 +27,19 @@ class Extension extends \System\Engine\Controller {
 			$data['type'] = '';
 		}
 
-		$loader = $this->load->extension('opencart', new \System\Engine\Registry());
-
-		$loader->language->load('captcha/basic');
-
-		$loader->language->get('captcha/basic');
-
-
-		//echo $controller->index();
-
-		//echo $this->load->controller('captcha/basic', 'extension\opencart');
-
-		//print_r($results);
-
-		$data['categories'] = [];
+		$data['categories'] = array();
 
 		$this->load->model('setting/extension');
 
 		$files = glob(DIR_APPLICATION . 'controller/extension/*.php', GLOB_BRACE);
-		
+
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
 
 			$this->load->language('extension/' . $extension, $extension);
 
 			if ($extension != 'promotion' && $this->user->hasPermission('access', 'extension/' . $extension)) {
-				$files = $this->model_setting_extension->getPaths('admin/controller/' . $extension . '/%');
+				$files = $this->model_setting_extension->getPaths('%/admin/controller/' . $extension . '/%');
 
 				$data['categories'][] = [
 					'code' => $extension,

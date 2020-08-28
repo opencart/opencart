@@ -10,7 +10,7 @@
 /**
 * Event class
 *
-* Event System Userguide
+* Event System
 * 
 * https://github.com/opencart/opencart/wiki/Events-(script-notifications)-2.2.x.x
 */

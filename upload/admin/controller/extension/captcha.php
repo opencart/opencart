@@ -68,9 +68,6 @@ class Captcha extends \System\Engine\Controller {
 
 		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
-		$loader = $this->load->extension('opencart');
-
-
 		/*
 		foreach ($extensions as $key => $value) {
 			echo $value;
@@ -83,9 +80,9 @@ class Captcha extends \System\Engine\Controller {
 		}
 		*/
 
-		$data['extensions'] = [];
+		//$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
 
-		$results = $this->model_setting_extension->getPaths('admin/controller/captcha/%.php');
+
 
 		foreach ($results as $result) {
 			$extension = basename($result['path'], '.php');
@@ -95,21 +92,20 @@ class Captcha extends \System\Engine\Controller {
 			//$file = DIR_EXTENSION . $file;
 		}
 
+		print_r($results);
 
-
-
-		//$controller = new \Extension\Opencart\Admin\Controller\Captcha\Basic($this->registry);
-		//print_r($results);
-		//Extension
+		$data['extensions'] = [];
 
 		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/captcha/%.php');
 
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
+		if ($results) {
+			foreach ($results as $result) {
+				$code = substr($result['path'], 0, strpos('/'));
 
-				$this->load->language('extension/captcha/' . $extension, $extension);
+				$extension = basename($result['path'], '.php');
+
+				$this->load->language('extension/' . $code . 'captcha/' . $extension, $extension);
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($extension . '_heading_title') . (($extension == $this->config->get('config_captcha')) ? $this->language->get('text_default') : ''),

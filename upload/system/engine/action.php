@@ -11,6 +11,7 @@
  * Action class
  */
 namespace System\Engine;
+use Application\Controller as Controller;
 class Action {
 	private $route;
 	private $class;
@@ -24,11 +25,7 @@ class Action {
 	public function __construct(string $route) {
 		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		// Converting a route to a class name
 		$class = 'Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
-
-		//echo '$route ' . $route . "\n";
-		//echo '$class ' . $class . "\n\n";
 
 		if (class_exists($class)) {
 			$this->class = $class;
@@ -49,6 +46,7 @@ class Action {
 	}
 
 	/**
+	 *
 	 * Execute Action
 	 *
 	 * @param    object $registry
@@ -63,18 +61,14 @@ class Action {
 		}
 
 		// Initialize the class
-		if ($this->class) {
-			$controller = new $this->class($registry);
-		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '!');
-		}
+		$controller = new $this->class($registry);
 
 		$callable = [$controller, $this->method];
 
 		if (is_callable($callable)) {
 			return call_user_func_array($callable, $args);
 		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '!');
+			throw new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 	}
 }

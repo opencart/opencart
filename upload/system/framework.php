@@ -1,6 +1,22 @@
 <?php
+// Autoloader
+$autoloader = new Autoloader();
+$autoloader->register('Application', DIR_APPLICATION);
+$autoloader->register('Extension', DIR_EXTENSION);
+$autoloader->register('Catalog', DIR_CATALOG);
+$autoloader->register('Admin', DIR_ADMIN);
+$autoloader->register('System', DIR_SYSTEM);
+$autoloader->register('Application\Controller\Extension\Opencart', DIR_EXTENSION . 'opencart/catalog/controller/');
+$autoloader->register('Application\Model\Extension\Opencart', DIR_EXTENSION . 'opencart/catalog/model/');
+$autoloader->register('System\Extension\Opencart', DIR_EXTENSION . 'opencart/system/');
+
+//$autoloader->register('Application\Controller\Extension\OpenCart', DIR_EXTENSION . 'opencart/admin/controller/');
+//$autoloader->register('Application\Model\Extension\OpenCart', DIR_EXTENSION . 'opencart/catalog/model/');
+///Application/Model/Extension/total/sub_total
+
 // Registry
 $registry = new \System\Engine\Registry();
+$registry->set('autoloader', $autoloader);
 
 // Config
 $config = new \System\Library\Config();

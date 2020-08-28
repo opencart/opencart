@@ -67,11 +67,11 @@ class ColumnRight extends \System\Engine\Controller {
 				$setting_info = $this->model_setting_module->getModule($part[1]);
 
 				if ($setting_info && $setting_info['status']) {
-					$output = $this->load->controller('extension/module/' . $part[0], $setting_info);
+					//$output = $this->load->controller('extension/module/' . $part[0], $setting_info);
 
-					if ($output) {
-						$data['modules'][] = $output;
-					}
+					//if ($output) {
+					//	$data['modules'][] = $output;
+					//}
 				}
 			}
 		}

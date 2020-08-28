@@ -1,6 +1,4 @@
 <?php
-//namespace Catalog;
-
 // Version
 define('VERSION', '3.1.0.0_b');
 

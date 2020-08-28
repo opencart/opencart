@@ -52,49 +52,8 @@ require_once(DIR_SYSTEM . 'helper/utf8.php');
 // Vendor Autoloader
 require_once(DIR_STORAGE . 'vendor/autoload.php');
 
-// Autoloader
-function autoloader($class) {
-	$file = '';
-
-	// Converting a class name to a file path
-	$path = strtolower(implode('/', preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', explode('\\', $class))));
-
-	$type = substr($path, 0, strpos($path, '/'));
-
-	$path = substr($path, strpos($path, '/') + 1);
-
-	switch ($type) {
-		case 'application':
-			$file = DIR_APPLICATION .  $path  . '.php';
-			break;
-		case 'catalog':
-			$file = DIR_CATALOG . $path  . '.php';
-			break;
-		case 'admin':
-			$file = DIR_ADMIN . $path . '.php';
-			break;
-		case 'extension':
-			$file = DIR_EXTENSION . $path  . '.php';
-			break;
-		case 'system':
-			$file = DIR_SYSTEM . $path . '.php';
-			break;
-	}
-
-	//echo '$class ' . $class . "\n";
-	//echo '$file ' . $file . "\n\n";
-
-	if (is_file($file)) {
-		include_once($file);
-
-		return true;
-	} else {
-		return false;
-	}
-}
-
-spl_autoload_register('autoloader');
-spl_autoload_extensions('.php');
+// OpenCart Autoloader
+require_once(DIR_SYSTEM . 'engine/autoloader.php');
 
 function start($application) {
 	require_once(DIR_SYSTEM . 'framework.php');	

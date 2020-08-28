@@ -11,6 +11,8 @@
  * Loader class
  */
 namespace System\Engine;
+use \Application\Controller as Controller;
+use \Application\Model as Model;
 final class Loader {
 	protected $registry;
 
@@ -75,7 +77,7 @@ final class Loader {
 		// Check if the requested model is already stored in the registry.
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
 			// Converting a route path to a class name
-			$class = '\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+			$class = 'Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 			if (class_exists($class)) {
 				$proxy = new \System\Engine\Proxy();
@@ -89,7 +91,7 @@ final class Loader {
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
-				throw new \Exception('Error: Could not load model ' . $route . '!');
+				throw new \Exception('Error: Could not load model ' . $class . '!');
 			}
 		}
 	}
@@ -97,7 +99,7 @@ final class Loader {
 	/**
 	 * View
 	 *
-	 *
+	 * Loads the template file and generates the html code.
 	 *
 	 * @param    string $route
 	 * @param    array $data
@@ -110,6 +112,8 @@ final class Loader {
 
 		// Keep the original trigger
 		$trigger = $route;
+
+		$code = '';
 
 		// Trigger the pre events
 		$this->registry->get('event')->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code]);
@@ -132,7 +136,7 @@ final class Loader {
 	/**
 	 * Library
 	 *
-	 * This method is used for loading library classes
+	 * Loads library classes
 	 *
 	 * @param    string $route	The path to the library file.
 	 * @param    string $args	A list of arguments to pass into the library object being created.
@@ -146,7 +150,7 @@ final class Loader {
 
 		$this->registry->get('event')->trigger('library/' . $trigger . '/before', [&$route, &$args]);
 
-		$class = 'System\Library\\' . str_replace('/', '\\', $route);
+		$class = '\System\Library\\' . str_replace('/', '\\', $route);
 
 		if (class_exists($class)) {
 			$reflection = new \ReflectionClass($class);
@@ -195,6 +199,8 @@ final class Loader {
 		$this->registry->get('config')->load($route);
 
 		$this->registry->get('event')->trigger('config/' . $trigger . '/after', [&$route]);
+
+		//return $data;
 	}
 
 	/**
@@ -217,33 +223,6 @@ final class Loader {
 		$data = $this->registry->get('language')->load($route, $prefix);
 
 		$this->registry->get('event')->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
-
-		return $data;
-	}
-
-	//
-	public function extension($route) {
-		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
-
-		// Keep the original trigger
-		$trigger = $route;
-
-		$this->registry->get('event')->trigger('extension/' . $trigger . '/before', [&$route]);
-
-		$extension = new \Engine\Loader(DIR_EXTENSION . $route);
-		//\Extension
-		$config = [
-			'application' => DIR_APPLICATION,
-			'system'
-		];
-
-		$loader = new \System\Engine\Loader(DIR_EXTENSION. $route, $this->registry);
-
-		$loader->config($route);
-
-
-		$this->registry->get('event')->trigger('extension/' . $trigger . '/after', [&$route, &$data]);
 
 		return $data;
 	}
@@ -276,22 +255,22 @@ final class Loader {
 				// Create a key to store the model object
 				$key = substr($route, 0, strrpos($route, '/'));
 
-				// Create the class name from the key
-				$class = '\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
+				// Check if the model has already been initialised or not
+				if (!$this->registry->has($key)) {
+					// Create the class name from the key
+					$class = 'Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
+
+					$model = new $class($this->registry);
+
+					$this->registry->set($key, $model);
+				} else {
+					$model = $this->registry->get($key);
+				}
 
 				// Get the method to be used
 				$method = substr($route, strrpos($route, '/') + 1);
 
-				// Check if the model has already been initialised or not
-				if (!$this->registry->has($key)) {
-					$object = new $class($this->registry);
-
-					$this->registry->set($key, $object);
-				} else {
-					$object = $this->registry->get($key);
-				}
-
-				$callable = [$object, $method];
+				$callable = [$model, $method];
 
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);

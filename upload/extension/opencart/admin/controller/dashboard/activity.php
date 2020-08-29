@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Catalog\Controller\Dashboard;
+namespace Application\Controller\Extension\Opencart\Dashboard;
 class Activity extends \System\Engine\Controller {
 	private $error = [];
 

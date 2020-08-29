@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Controller\Account;
+namespace Application\Controller\Account;
 class Edit extends \System\Engine\Controller {
 	private $error = [];
 

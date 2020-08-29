@@ -21,8 +21,8 @@ class Analytics extends \System\Engine\Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/analytics/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/analytics/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/opencart/analytics/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/opencart/analytics/' . $this->request->get['extension']);
 
 			// Call install method if it exists
 			$this->load->controller('extension/analytics/' . $this->request->get['extension'] . '/install');
@@ -65,10 +65,19 @@ class Analytics extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
+		// Compatibility code for old extension folders
+		$installed = array();
+
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/analytics/%.php');
+
+		foreach ($results as $result) {
+			$installed[] = substr($result['path'], 0, strpos('/'));
+		}
+
 		$extensions = $this->model_setting_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/analytics/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/analytics/' . $value . '.php')) {
+			if (in_array($value)) {
 				$this->model_setting_extension->uninstall('analytics', $value);
 
 				unset($extensions[$key]);
@@ -84,14 +93,9 @@ class Analytics extends \System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$files = $this->model_setting_extension->getPaths('admin/controller/analytics/*.php');
-		/*
-		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/analytics/*.php');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
+		if ($results) {
+			foreach ($results as $result) {
+				$extension = basename($result['path'], '.php');
 				
 				// Compatibility code for old extension folders
 				$this->load->language('extension/analytics/' . $extension, $extension);
@@ -121,7 +125,7 @@ class Analytics extends \System\Engine\Controller {
 				];
 			}
 		}
-		*/
+
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
 		$this->response->setOutput($this->load->view('extension/analytics', $data));

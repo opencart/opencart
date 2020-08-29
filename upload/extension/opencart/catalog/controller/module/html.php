@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Controller\Module;
+namespace Application\Controller\Extension\Opencart\Module;
 class HTML extends \System\Engine\Controller {
 	public function index($setting) {
 		if (isset($setting['module_description'][$this->config->get('config_language_id')])) {

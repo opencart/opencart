@@ -1,6 +1,6 @@
 <?php
 class Autoloader {
-	private $data = array();
+	private $path = array();
 
 	public function __construct() {
 		spl_autoload_register([$this, 'load']);
@@ -8,7 +8,7 @@ class Autoloader {
 	}
 
 	public function register($namespace, $directory) {
-		$this->data[$namespace] = $directory;
+		$this->path[$namespace] = $directory;
 	}
 
 	public function load($class) {
@@ -23,8 +23,8 @@ class Autoloader {
 				$namespace .= '\\' . $part;
 			}
 
-			if (isset($this->data[$namespace])) {
-				$file = $this->data[$namespace] . strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', substr($class, strlen($namespace)))) . '.php';
+			if (isset($this->path[$namespace])) {
+				$file = $this->path[$namespace] . strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', substr($class, strlen($namespace)))) . '.php';
 			}
 		}
 

@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Controller\Account;
+namespace Application\Controller\Account;
 class Password extends \System\Engine\Controller {
 	private $error = [];
 

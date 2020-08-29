@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Catalog\Controller\Theme;
+namespace Application\Controller\Extension\Opencart\Theme;
 class Basic extends \System\Engine\Controller {
 	private $error = [];
 

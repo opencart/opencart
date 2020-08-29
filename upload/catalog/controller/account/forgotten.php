@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Controller\Account;
+namespace Application\Controller\Account;
 class Forgotten extends \System\Engine\Controller {
 	private $error = [];
 

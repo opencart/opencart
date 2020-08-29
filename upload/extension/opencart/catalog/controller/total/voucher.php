@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Controller\Total;
+namespace Application\Controller\Extension\Opencart\Total;
 class Voucher extends \System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('total_voucher_status')) {

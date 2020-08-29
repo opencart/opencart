@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Controller\Captcha;
+namespace Application\Controller\Extension\Opencart\Captcha;
 class Basic extends \System\Engine\Controller {
 	public function index($error = []) {
 		$this->load->language('extension/captcha/basic');

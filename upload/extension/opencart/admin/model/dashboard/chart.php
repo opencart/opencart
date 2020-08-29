@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Catalog\Model\Dashboard;
+namespace Application\Model\Extension\Opencart\Dashboard;
 class Chart extends \System\Engine\Model {
 	public function getTotalOrdersByDay() {
 		$implode = [];

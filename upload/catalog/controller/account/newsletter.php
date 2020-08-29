@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Controller\Account;
+namespace Application\Controller\Account;
 class Newsletter extends \System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {

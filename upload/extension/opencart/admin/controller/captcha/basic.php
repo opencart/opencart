@@ -1,5 +1,5 @@
 <?php
-namespace Extension\Opencart\Admin\Controller\Captcha;
+namespace Application\Controller\Extension\Opencart\Captcha;
 class Basic extends \System\Engine\Controller {
 	private $error = [];
 

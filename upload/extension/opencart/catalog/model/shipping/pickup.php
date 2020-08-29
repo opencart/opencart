@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Catalog\Model\Shipping;
+namespace Application\Model\Extension\Opencart\Shipping;
 class Pickup extends \System\Engine\Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/pickup');

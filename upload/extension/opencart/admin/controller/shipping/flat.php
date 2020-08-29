@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Catalog\Controller\Shipping;
+namespace Application\Controller\Extension\Opencart\Shipping;
 class Flat extends \System\Engine\Controller {
 	private $error = [];
 

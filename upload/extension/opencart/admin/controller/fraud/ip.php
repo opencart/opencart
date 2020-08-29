@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Catalog\Controller\Fraud;
+namespace Application\Controller\Extension\Opencart\Fraud;
 class Ip extends \System\Engine\Controller {
 	private $error = [];
 

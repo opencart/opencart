@@ -18,15 +18,18 @@ class Reward extends \System\Engine\Controller {
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		];
-$data['breadcrumbs'][] = [
+
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		];
-$data['breadcrumbs'][] = [
+
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_reward'),
 			'href' => $this->url->link('account/reward', 'language=' . $this->config->get('config_language'))
 		];
-$this->load->model('account/reward');
+
+		$this->load->model('account/reward');
 
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -42,7 +45,8 @@ $this->load->model('account/reward');
 			'start' => ($page - 1) * 10,
 			'limit' => 10
 		];
-$reward_total = $this->model_account_reward->getTotalRewards();
+
+		$reward_total = $this->model_account_reward->getTotalRewards();
 
 		$results = $this->model_account_reward->getRewards($filter_data);
 

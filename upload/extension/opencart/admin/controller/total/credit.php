@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Catalog\Controller\Total;
+namespace Application\Controller\Extension\Opencart\Total;
 class Credit extends \System\Engine\Controller {
 	private $error = [];
 

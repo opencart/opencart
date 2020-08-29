@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Admin\Model\Fraud;
+namespace Application\Model\Extension\Opencart\Fraud;
 class Ip extends \System\Engine\Model {
 	public function install() {
 		$this->db->query("

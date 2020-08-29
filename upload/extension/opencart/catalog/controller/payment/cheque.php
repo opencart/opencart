@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Controller\Payment;
+namespace Application\Controller\Extension\Opencart\Payment;
 class Cheque extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/payment/cheque');

@@ -66,23 +66,29 @@ class Captcha extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
+
+		// Compatibility code for old extension folders
+		$installed = array();
+
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/captcha/%.php');
+
+		foreach ($results as $result) {
+			$installed = substr($result['path'], 0, strpos('/'));
+		}
+
 		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
-		/*
 		foreach ($extensions as $key => $value) {
 			echo $value;
 
-			if (!is_file(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/captcha/' . $value . '.php')) {
+			if (!is_file(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php')) {
 				$this->model_setting_extension->uninstall('captcha', $value);
 
 				unset($extensions[$key]);
 			}
 		}
-		*/
 
 		//$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
-
-
 
 		foreach ($results as $result) {
 			$extension = basename($result['path'], '.php');

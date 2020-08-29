@@ -1,5 +1,5 @@
 <?php
-namespace Extension\OpenCart\Controller\Module;
+namespace Application\Controller\Extension\Opencart\Module;
 class Carousel extends \System\Engine\Controller {
 	public function index($setting) {
 		static $module = 0;

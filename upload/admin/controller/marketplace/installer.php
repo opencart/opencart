@@ -323,14 +323,15 @@ class Installer extends \System\Engine\Controller {
 
 					// admin > extension/{directory}/admin
 					if (substr($destination, 0, 6) == 'admin/') {
-						$path = $destination;
-						$base = DIR_EXTENSION . $extension_install_info['code'] . '/';
+
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
 					// catalog > extension/{directory}/catalog
 					if (substr($destination, 0, 8) == 'catalog/') {
-						$path = $destination;
-						$base = DIR_EXTENSION . $extension_install_info['code'] . '/';
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
 					// image > image
@@ -340,12 +341,15 @@ class Installer extends \System\Engine\Controller {
 					}
 
 					if (substr($destination, 0, 7) == 'system/') {
-						$path = $destination;
-						$base = DIR_EXTENSION . $extension_install_info['code'] . '/';
+
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
 					// system/config > system/config
 					if (substr($destination, 0, 14) == 'system/config/') {
+
+
 						$path = substr($destination, 14);
 						$base = DIR_CONFIG;
 					}
@@ -422,11 +426,7 @@ class Installer extends \System\Engine\Controller {
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
-		if ($extension_install_info) {
-			if (!is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
-			}
-		} else {
+		if (!$extension_install_info) {
 			$json['error'] = $this->language->get('error_install');
 		}
 
@@ -440,12 +440,12 @@ class Installer extends \System\Engine\Controller {
 
 				// admin > extension/{directory}/admin
 				if (substr($result['path'], 0, 6) == 'admin/') {
-					$path = DIR_EXTENSION . $extension_install_info['code'] . '/' . $result['path'];
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// catalog > extension/{directory}/catalog
 				if (substr($result['path'], 0, 8) == 'catalog/') {
-					$path = DIR_EXTENSION . $extension_install_info['code'] . '/' . $result['path'];
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Image
@@ -454,7 +454,7 @@ class Installer extends \System\Engine\Controller {
 				}
 
 				if (substr($result['path'], 0, 7) == 'system/') {
-					$path = DIR_EXTENSION . $extension_install_info['code'] . '/' . $result['path'];
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Config

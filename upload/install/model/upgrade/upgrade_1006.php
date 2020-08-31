@@ -87,7 +87,7 @@ class Upgrade1006 extends \System\Engine\Model {
 		}
 
 		// Disable any existing ocmods
-		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET status = 0");
+		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET `status` = 0");
 
 		// Cleanup files in old directories
 		$directories = [
@@ -95,14 +95,14 @@ class Upgrade1006 extends \System\Engine\Model {
 			DIR_SYSTEM . 'storage/modification/',
 			DIR_SYSTEM . 'logs/',
 			DIR_SYSTEM . 'cache/',
-		);
+		];
 
 		$files = [];
 
 		foreach ($directories as $dir) {
 			if (is_dir($dir)) {
 				// Make path into an array
-				$path = [$dir . '*');
+				$path = [$dir . '*'];
 
 				// While the path array is still populated keep looping through
 				while (count($path) != 0) {

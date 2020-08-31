@@ -13,19 +13,19 @@ class Upgrade1001 extends \System\Engine\Model {
 			'code'    => 'admin_currency_add',
 			'trigger' => 'admin/model/currency/addCurrency/after',
 			'action'  => 'event/currency'
-		);
+		];
 
 		$events[] = [
 			'code'    => 'admin_currency_edit',
 			'trigger' => 'admin/model/currency/editCurrency/after',
 			'action'  => 'event/currency'
-		);
+		];
 
 		$events[] = [
 			'code'    => 'admin_setting',
 			'trigger' => 'admin/model/setting/setting/editSetting/after',
 			'action'  => 'event/currency'
-		);
+		];
 
 		foreach ($events as $event) {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "'");

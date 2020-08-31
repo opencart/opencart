@@ -55,6 +55,5 @@ require_once(DIR_STORAGE . 'vendor/autoload.php');
 // OpenCart Autoloader
 require_once(DIR_SYSTEM . 'engine/autoloader.php');
 
-function start($application) {
-	require_once(DIR_SYSTEM . 'framework.php');	
-}
+// Framework
+require_once(DIR_SYSTEM . 'framework.php');

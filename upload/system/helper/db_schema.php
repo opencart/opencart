@@ -2213,6 +2213,14 @@ function db_schema() {
 		'primary' => [
 			'extension_path_id'
 		],
+		'index' => [
+			[
+				'name' => 'path',
+				'key' => [
+					'path'
+				]
+			]
+		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'

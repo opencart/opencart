@@ -175,7 +175,7 @@ class LengthClass extends \System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['length_classes'][] = [
 				'length_class_id' => $result['length_class_id'],
-				'title'           => $result['title'] . (($result['length_class_id'] == $this->config->get('config_length_class_id')) ? $this->language->get('text_default') : null),
+				'title'           => $result['title'] . (($result['length_class_id'] == $this->config->get('config_length_class_id')) ? $this->language->get('text_default') : ''),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
 				'edit'            => $this->url->link('localisation/length_class/edit', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $result['length_class_id'] . $url)

@@ -208,7 +208,7 @@ class Currency extends \System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['currencies'][] = [
 				'currency_id'   => $result['currency_id'],
-				'title'         => $result['title'] . (($result['code'] == $this->config->get('config_currency')) ? $this->language->get('text_default') : null),
+				'title'         => $result['title'] . (($result['code'] == $this->config->get('config_currency')) ? $this->language->get('text_default') : ''),
 				'code'          => $result['code'],
 				'value'         => $result['value'],
 				'status'        => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),

@@ -111,26 +111,33 @@ class Module extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
+		$installed = [];
+
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/module/%.php');
+
+		foreach ($results as $result) {
+			$installed[] = basename($result['path'], '.php');
+		}
+
 		$extensions = $this->model_setting_extension->getInstalled('module');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/module/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
+			if (!in_array($value, $extensions)) {
 				$this->model_setting_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);
-				
+
 				$this->model_setting_module->deleteModulesByCode($value);
 			}
 		}
 
 		$data['extensions'] = [];
 
-		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/module/*.php');
+		if ($results) {
+			foreach ($results as $result) {
+				$code = substr($result['path'], 0, strpos('/'));
 
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
+				$extension = basename($result['path'], '.php');
 
 				$this->load->language('extension/module/' . $extension, $extension);
 

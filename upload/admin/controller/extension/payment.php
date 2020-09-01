@@ -65,12 +65,18 @@ class Payment extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('setting/extension');
+		$installed = [];
+
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/payment/%.php');
+
+		foreach ($results as $result) {
+			$installed[] = basename($result['path'], '.php');
+		}
 
 		$extensions = $this->model_setting_extension->getInstalled('payment');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/payment/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
+			if (!in_array($value, $extensions)) {
 				$this->model_setting_extension->uninstall('payment', $value);
 
 				unset($extensions[$key]);
@@ -78,13 +84,12 @@ class Payment extends \System\Engine\Controller {
 		}
 
 		$data['extensions'] = [];
-		
-		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/payment/*.php');
 
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
+		if ($results) {
+			foreach ($results as $result) {
+				$code = substr($result['path'], 0, strpos('/'));
+
+				$extension = basename($result['path'], '.php');
 
 				$this->load->language('extension/payment/' . $extension, $extension);
 

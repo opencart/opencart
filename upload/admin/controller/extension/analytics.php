@@ -65,19 +65,19 @@ class Analytics extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		// Compatibility code for old extension folders
-		$installed = array();
+		$installed = [];
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/analytics/%.php');
 
 		foreach ($results as $result) {
-			$installed[] = substr($result['path'], 0, strpos('/'));
+			$installed[] = basename($result['path'], '.php');
 		}
 
+		// Uninstall any missing extensions
 		$extensions = $this->model_setting_extension->getInstalled('analytics');
 
 		foreach ($extensions as $key => $value) {
-			if (in_array($value)) {
+			if (!in_array($value, $extensions)) {
 				$this->model_setting_extension->uninstall('analytics', $value);
 
 				unset($extensions[$key]);
@@ -95,23 +95,24 @@ class Analytics extends \System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
+				$path = substr($result['path'], 0, strpos('/'));
+
 				$extension = basename($result['path'], '.php');
-				
-				// Compatibility code for old extension folders
-				$this->load->language('extension/analytics/' . $extension, $extension);
+
+				$this->load->language('extension/' . $path . '/analytics/' . $extension, $extension);
 				
 				$store_data = [];
 
 				$store_data[] = [
 					'name'   => $this->config->get('config_name'),
-					'edit'   => $this->url->link('extension/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
+					'edit'   => $this->url->link('extension/' . $path . '/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
 					'status' => $this->config->get('analytics_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				];
 				
 				foreach ($stores as $store) {
 					$store_data[] = [
 						'name'   => $store['name'],
-						'edit'   => $this->url->link('extension/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
+						'edit'   => $this->url->link('extension/' . $path . '/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
 						'status' => $this->model_setting_setting->getValue('analytics_' . $extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					];
 				}

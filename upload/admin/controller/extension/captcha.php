@@ -1,6 +1,5 @@
 <?php
 namespace Application\Controller\Extension;
-use \Extension\Opencart\Admin\Controller\Captcha as Extension;
 class Captcha extends \System\Engine\Controller {
 	private $error = [];
 
@@ -66,44 +65,25 @@ class Captcha extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-
-		// Compatibility code for old extension folders
-		$installed = array();
+		$installed = [];
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/captcha/%.php');
 
 		foreach ($results as $result) {
-			$installed = substr($result['path'], 0, strpos('/'));
+			$installed[] = basename($result['path'], '.php');
 		}
 
 		$extensions = $this->model_setting_extension->getInstalled('captcha');
 
 		foreach ($extensions as $key => $value) {
-			echo $value;
-
-			if (!is_file(DIR_APPLICATION . 'controller/extension/captcha/' . $value . '.php')) {
+			if (!in_array($value, $extensions)) {
 				$this->model_setting_extension->uninstall('captcha', $value);
 
 				unset($extensions[$key]);
 			}
 		}
 
-		//$files = glob(DIR_APPLICATION . 'controller/extension/captcha/*.php');
-
-		foreach ($results as $result) {
-			$extension = basename($result['path'], '.php');
-
-			$this->load->language('extension/opencart/captcha/' . $extension, $extension);
-
-			//$file = DIR_EXTENSION . $file;
-		}
-
-		print_r($results);
-
 		$data['extensions'] = [];
-
-		// Compatibility code for old extension folders
-		$results = $this->model_setting_extension->getPaths('%/admin/controller/captcha/%.php');
 
 		if ($results) {
 			foreach ($results as $result) {

@@ -65,10 +65,18 @@ class Theme extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
+		$installed = [];
+
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/theme/%.php');
+
+		foreach ($results as $result) {
+			$installed[] = basename($result['path'], '.php');
+		}
+
 		$extensions = $this->model_setting_extension->getInstalled('theme');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/theme/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/theme/' . $value . '.php')) {
+			if (!in_array($value, $extensions)) {
 				$this->model_setting_extension->uninstall('theme', $value);
 
 				unset($extensions[$key]);
@@ -81,24 +89,23 @@ class Theme extends \System\Engine\Controller {
 		$stores = $this->model_setting_store->getStores();
 
 		$data['extensions'] = [];
-		
-		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/theme/*.php');
 
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
-				
+		if ($results) {
+			foreach ($results as $result) {
+				$code = substr($result['path'], 0, strpos('/'));
+
+				$extension = basename($result['path'], '.php');
+
 				$this->load->language('extension/theme/' . $extension, $extension);
-					
+
 				$store_data = [];
-				
+
 				$store_data[] = [
 					'name'   => $this->config->get('config_name'),
 					'edit'   => $this->url->link('extension/theme/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
 					'status' => $this->config->get('theme_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				];
-									
+
 				foreach ($stores as $store) {
 					$store_data[] = [
 						'name'   => $store['name'],
@@ -106,7 +113,7 @@ class Theme extends \System\Engine\Controller {
 						'status' => $this->model_setting_setting->getValue('theme_' . $extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					];
 				}
-				
+
 				$data['extensions'][] = [
 					'name'      => $this->language->get($extension . '_heading_title'),
 					'install'   => $this->url->link('extension/theme/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),

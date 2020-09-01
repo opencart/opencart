@@ -65,10 +65,18 @@ class Currency extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
+		$installed = [];
+
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/currency/%.php');
+
+		foreach ($results as $result) {
+			$installed[] = basename($result['path'], '.php');
+		}
+
 		$extensions = $this->model_setting_extension->getInstalled('currency');
 
 		foreach ($extensions as $key => $value) {
-			if (!is_file(DIR_APPLICATION . 'controller/extension/currency/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/currency/' . $value . '.php')) {
+			if (!in_array($value, $extensions)) {
 				$this->model_setting_extension->uninstall('currency', $value);
 
 				unset($extensions[$key]);
@@ -77,17 +85,16 @@ class Currency extends \System\Engine\Controller {
 
 		$data['extensions'] = [];
 
-		// Compatibility code for old extension folders
-		$files = glob(DIR_APPLICATION . 'controller/extension/currency/*.php');
+		if ($results) {
+			foreach ($results as $result) {
+				$code = substr($result['path'], 0, strpos('/'));
 
-		if ($files) {
-			foreach ($files as $file) {
-				$extension = basename($file, '.php');
+				$extension = basename($result['path'], '.php');
 
 				$this->load->language('extension/currency/' . $extension, $extension);
 
 				$data['extensions'][] = [
-					'name'      => $this->language->get($extension . '_heading_title') . (($extension == $this->config->get('config_currency')) ? $this->language->get('text_default') : null),
+					'name'      => $this->language->get($extension . '_heading_title') . (($extension == $this->config->get('config_currency')) ? $this->language->get('text_default') : ''),
 					'status'    => $this->config->get('currency_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->link('extension/currency/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'uninstall' => $this->url->link('extension/currency/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),

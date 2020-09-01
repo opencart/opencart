@@ -28,35 +28,35 @@ class Returns extends \System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_return_id'])) {
-			$implode[] = "r.return_id = '" . (int)$data['filter_return_id'] . "'";
+			$implode[] = "r.`return_id` = '" . (int)$data['filter_return_id'] . "'";
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$implode[] = "r.order_id = '" . (int)$data['filter_order_id'] . "'";
+			$implode[] = "r.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "CONCAT(r.firstname, ' ', r.lastname) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
+			$implode[] = "CONCAT(r.`firstname`, ' ', r.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
 		if (!empty($data['filter_product'])) {
-			$implode[] = "r.product = '" . $this->db->escape((string)$data['filter_product']) . "'";
+			$implode[] = "r.`product` = '" . $this->db->escape((string)$data['filter_product']) . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
-			$implode[] = "r.model = '" . $this->db->escape((string)$data['filter_model']) . "'";
+			$implode[] = "r.`model` = '" . $this->db->escape((string)$data['filter_model']) . "'";
 		}
 
 		if (!empty($data['filter_return_status_id'])) {
-			$implode[] = "r.return_status_id = '" . (int)$data['filter_return_status_id'] . "'";
+			$implode[] = "r.`return_status_id` = '" . (int)$data['filter_return_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(r.date_added) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+			$implode[] = "DATE(r.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if (!empty($data['filter_date_modified'])) {
-			$implode[] = "DATE(r.date_modified) = DATE('" . $this->db->escape((string)$data['filter_date_modified']) . "')";
+			$implode[] = "DATE(r.`date_modified`) = DATE('" . $this->db->escape((string)$data['filter_date_modified']) . "')";
 		}
 
 		if ($implode) {
@@ -150,26 +150,26 @@ class Returns extends \System\Engine\Model {
 	}
 
 	public function getTotalReturnsByReturnStatusId($return_status_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return` WHERE return_status_id = '" . (int)$return_status_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalReturnsByReturnReasonId($return_reason_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return` WHERE return_reason_id = '" . (int)$return_reason_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return` WHERE `return_reason_id` = '" . (int)$return_reason_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalReturnsByReturnActionId($return_action_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return` WHERE return_action_id = '" . (int)$return_action_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
 
 		return $query->row['total'];
 	}
 	
 	public function addHistory($return_id, $return_status_id, $comment, $notify) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET `return_status_id` = '" . (int)$return_status_id . "', date_modified = NOW() WHERE return_id = '" . (int)$return_id . "'");
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_history` SET `return_id` = '" . (int)$return_id . "', return_status_id = '" . (int)$return_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape(strip_tags($comment)) . "', date_added = NOW()");
+		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET `return_status_id` = '" . (int)$return_status_id . "', `date_modified` = NOW() WHERE return_id = '" . (int)$return_id . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "return_history` SET `return_id` = '" . (int)$return_id . "', `return_status_id` = '" . (int)$return_status_id . "', `notify` = '" . (int)$notify . "', `comment` = '" . $this->db->escape(strip_tags($comment)) . "', `date_added` = NOW()");
 	}
 
 	public function getHistories($return_id, $start = 0, $limit = 10) {

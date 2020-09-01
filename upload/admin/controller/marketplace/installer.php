@@ -104,13 +104,21 @@ class Installer extends \System\Engine\Controller {
 		$results = $this->model_setting_extension->getInstalls($filter_data);
 		
 		foreach ($results as $result) {
+			if ($result['extension_id']) {
+				$link = $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']);
+			} elseif ($result['link']) {
+				$link = $result['link'];
+			} else {
+				$link = '';
+			}
+
 			$data['extensions'][] = [
 				'name'       => $result['name'],
 				'version'    => $result['version'],
 				'image'      => $result['image'],
 				'author'     => $result['author'],
 				'status'     => $result['status'],
-				'link'       => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
+				'link'       => $link,
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'install'    => $this->url->link('marketplace/installer/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
 				'uninstall'  => $this->url->link('marketplace/installer/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
@@ -118,7 +126,7 @@ class Installer extends \System\Engine\Controller {
 			];
 		}
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($extension_total - 10)) ? $extension_total : ((($page - 1) * 10) + 10), $extension_total, ceil($extension_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($extension_total - $this->config->get('config_pagination'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $extension_total, ceil($extension_total / $this->config->get('config_pagination')));
 
 		$url = '';
 
@@ -139,7 +147,7 @@ class Installer extends \System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
@@ -214,14 +222,6 @@ class Installer extends \System\Engine\Controller {
 							$version = '';
 						}
 
-						//$image = $dom->getElementsByTagName('image')->item(0);
-
-						//if ($image) {
-							//$image = $version->nodeValue;
-						//} else {
-							$image = '';
-						//}
-
 						$author = $dom->getElementsByTagName('author')->item(0);
 
 						if ($author) {
@@ -248,7 +248,6 @@ class Installer extends \System\Engine\Controller {
 							'name'                  => $name,
 							'code'              	=> basename($filename, '.ocmod.zip'),
 							'version'               => $version,
-							'image'                 => $image,
 							'author'                => $author,
 							'link'                  => $link
 						];
@@ -323,7 +322,6 @@ class Installer extends \System\Engine\Controller {
 
 					// admin > extension/{directory}/admin
 					if (substr($destination, 0, 6) == 'admin/') {
-
 						$path = $extension_install_info['code'] . '/' . $destination;
 						$base = DIR_EXTENSION;
 					}
@@ -341,15 +339,12 @@ class Installer extends \System\Engine\Controller {
 					}
 
 					if (substr($destination, 0, 7) == 'system/') {
-
 						$path = $extension_install_info['code'] . '/' . $destination;
 						$base = DIR_EXTENSION;
 					}
 
 					// system/config > system/config
 					if (substr($destination, 0, 14) == 'system/config/') {
-
-
 						$path = substr($destination, 14);
 						$base = DIR_CONFIG;
 					}
@@ -389,12 +384,12 @@ class Installer extends \System\Engine\Controller {
 			foreach ($extract as $copy) {
 				// Must not have a path before files and directories can be moved
 				if (substr($copy['path'], -1) == '/' && mkdir($copy['base'] . $copy['path'], 0777)) {
-					$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
+					$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
 				}
 
 				// If check if the path is not directory and check there is no existing file
 				if (substr($copy['path'], -1) != '/' && copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
-					$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
+					$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
 				}
 			}
 
@@ -439,22 +434,13 @@ class Installer extends \System\Engine\Controller {
 				$path = '';
 
 				// admin > extension/{directory}/admin
-				if (substr($result['path'], 0, 6) == 'admin/') {
-					$path = DIR_EXTENSION . $result['path'];
-				}
-
-				// catalog > extension/{directory}/catalog
-				if (substr($result['path'], 0, 8) == 'catalog/') {
+				if (substr($result['path'], 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
 					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Image
 				if (substr($result['path'], 0, 6) == 'image/') {
 					$path = DIR_IMAGE . substr($result['path'], 6);
-				}
-
-				if (substr($result['path'], 0, 7) == 'system/') {
-					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Config

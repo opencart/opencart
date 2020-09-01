@@ -43,22 +43,14 @@ final class Loader {
 		$trigger = $route;
 
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+		$this->registry->get('event')->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 		// Make sure its only the last event that returns an output if required.
-		if ($result) {
-			$output = $result;
-		} else {
-			$action = new \System\Engine\Action($route);
-			$output = $action->execute($this->registry, $args);
-		}
+		$action = new \System\Engine\Action($route);
+		$output = $action->execute($this->registry, $args);
 
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
-
-		if ($result) {
-			$output = $result;
-		}
+		$this->registry->get('event')->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
 		if (!$output instanceof Exception) {
 			return $output;
@@ -91,7 +83,7 @@ final class Loader {
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
-				throw new \Exception('Error: Could not load model ' . $class . '!');
+				error_log('Error: Could not load model ' . $class . '!');
 			}
 		}
 	}
@@ -155,16 +147,17 @@ final class Loader {
 		if (class_exists($class)) {
 			$reflection = new \ReflectionClass($class);
 
-			$object = $reflection->newInstanceArgs($args);
+			$library = $reflection->newInstanceArgs($args);
+
+			// Create a key to store the library object
+			$this->registry->set(str_replace('/', '_', (string)$route), $library);
 		} else {
-			throw new \Exception('Error: Could not load library ' . $route . '!');
+			error_log('Error: Could not load library ' . $route . '!');
 		}
 
-		$this->registry->get('event')->trigger('library/' . $trigger . '/after', [&$route, &$args, &$object]);
+		$this->registry->get('event')->trigger('library/' . $trigger . '/after', [&$route, &$args, &$library]);
 
-		$this->registry->set($route, $object);
-
-		return $object;
+		return $library;
 	}
 
 	/**

@@ -127,7 +127,7 @@ class Document {
      * @param	string	$href
 	 * @param	string	$position
      */
-	public function addScript(string $href, string $position = 'header') {
+	public function addScript(string $href, $position = 'header') {
 		$this->scripts[$position][$href] = $href;
 	}
 
@@ -138,7 +138,7 @@ class Document {
 	 *
 	 * @return	array
      */
-	public function getScripts(string $position = 'header') {
+	public function getScripts($position = 'header') {
 		if (isset($this->scripts[$position])) {
 			return $this->scripts[$position];
 		} else {

@@ -95,24 +95,24 @@ class Analytics extends \System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				$path = substr($result['path'], 0, strpos('/'));
+				$code = substr($result['path'], 0, strpos('/'));
 
 				$extension = basename($result['path'], '.php');
 
-				$this->load->language('extension/' . $path . '/analytics/' . $extension, $extension);
+				$this->load->language('extension/' . $code . '/analytics/' . $extension, $extension);
 				
 				$store_data = [];
 
 				$store_data[] = [
 					'name'   => $this->config->get('config_name'),
-					'edit'   => $this->url->link('extension/' . $path . '/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
+					'edit'   => $this->url->link('extension/' . $code . '/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
 					'status' => $this->config->get('analytics_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				];
 				
 				foreach ($stores as $store) {
 					$store_data[] = [
 						'name'   => $store['name'],
-						'edit'   => $this->url->link('extension/' . $path . '/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
+						'edit'   => $this->url->link('extension/' . $code . '/analytics/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
 						'status' => $this->model_setting_setting->getValue('analytics_' . $extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					];
 				}

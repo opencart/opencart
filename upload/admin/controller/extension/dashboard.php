@@ -101,7 +101,7 @@ class Dashboard extends \System\Engine\Controller {
 					'install'    => $this->url->link('extension/dashboard/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'uninstall'  => $this->url->link('extension/dashboard/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
 					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('extension/dashboard/' . $extension, 'user_token=' . $this->session->data['user_token'])
+					'edit'       => $this->url->link('extension/' . $code . '/dashboard/' . $extension, 'user_token=' . $this->session->data['user_token'])
 				];
 			}
 		}

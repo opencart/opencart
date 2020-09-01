@@ -2157,11 +2157,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'image',
-				'type' => 'varchar(128)',
-				'not_null' => true
-			],
-			[
 				'name' => 'author',
 				'type' => 'varchar(255)',
 				'not_null' => true

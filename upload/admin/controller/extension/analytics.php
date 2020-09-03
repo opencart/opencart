@@ -17,7 +17,7 @@ class Analytics extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->install('analytics', $this->request->get['extension']);
+			$this->model_setting_extension->install('analytics', $this->request->get['extension'], $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 

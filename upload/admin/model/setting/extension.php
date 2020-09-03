@@ -7,12 +7,12 @@ class Extension extends \System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function editStatus($extension_install_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
-	}
-
 	public function deleteInstall($extension_install_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
+	}
+
+	public function editStatus($extension_install_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
 	public function getInstall($extension_install_id) {
@@ -120,22 +120,16 @@ class Extension extends \System\Engine\Model {
 
 
 	public function getInstalled($type) {
-		$extension_data = [];
-
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
 
-		foreach ($query->rows as $result) {
-			$extension_data[] = $result['code'];
-		}
-
-		return $extension_data;
+		return $query->rows;
 	}
 
-	public function install($type, $code) {
+	public function install($type, $code, $extension) {
 		$extensions = $this->getInstalled($type);
 
 		if (!in_array($code, $extensions)) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = '" . $this->db->escape($extension) . "', `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
 		}
 	}
 

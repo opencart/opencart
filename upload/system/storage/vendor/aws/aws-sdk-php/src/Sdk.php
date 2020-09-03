@@ -46,6 +46,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBackup(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
+ * @method \Aws\Braket\BraketClient createBraket(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionBraket(array $args = [])
  * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
  * @method \Aws\Chime\ChimeClient createChime(array $args = [])
@@ -208,6 +210,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIVS(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIam(array $args = [])
+ * @method \Aws\IdentityStore\IdentityStoreClient createIdentityStore(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionIdentityStore(array $args = [])
  * @method \Aws\ImportExport\ImportExportClient createImportExport(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionImportExport(array $args = [])
  * @method \Aws\Inspector\InspectorClient createInspector(array $args = [])
@@ -455,7 +459,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.147.0';
+    const VERSION = '3.150.2';
 
     /** @var array Arguments for creating clients */
     private $args;

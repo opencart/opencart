@@ -1,6 +1,7 @@
 <?php
-class ControllerToolLog extends Controller {
-	private $error = array();
+namespace Application\Controller\Tool;
+class Log extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {		
 		$this->load->language('tool/log');
@@ -25,17 +26,17 @@ class ControllerToolLog extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['download'] = $this->url->link('tool/log/download', 'user_token=' . $this->session->data['user_token']);
 		$data['clear'] = $this->url->link('tool/log/clear', 'user_token=' . $this->session->data['user_token']);
@@ -48,7 +49,7 @@ class ControllerToolLog extends Controller {
 			$size = filesize($file);
 
 			if ($size >= 3145728) {
-				$suffix = array(
+				$suffix = [
 					'B',
 					'KB',
 					'MB',
@@ -58,7 +59,7 @@ class ControllerToolLog extends Controller {
 					'EB',
 					'ZB',
 					'YB'
-				);
+				];
 
 				$i = 0;
 

@@ -1,21 +1,22 @@
 <?php
-class ControllerCommonDashboard extends Controller {
+namespace Application\Controller\Common;
+class Dashboard extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/dashboard');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -27,7 +28,7 @@ class ControllerCommonDashboard extends Controller {
 		}
 
 		// Dashboard Extensions
-		$dashboards = array();
+		$dashboards = [];
 
 		$this->load->model('setting/extension');
 
@@ -37,20 +38,20 @@ class ControllerCommonDashboard extends Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			if ($this->config->get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extension/dashboard/' . $code)) {
-				$output = $this->load->controller('extension/dashboard/' . $code . '/dashboard');
+				$output = $this->load->controller('extension/' . '/dashboard/' . $code . '/dashboard');
 
 				if ($output) {
-					$dashboards[] = array(
+					$dashboards[] = [
 						'code'       => $code,
 						'width'      => $this->config->get('dashboard_' . $code . '_width'),
 						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
 						'output'     => $output
-					);
+					];
 				}
 			}
 		}
 
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($dashboards as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
@@ -60,8 +61,8 @@ class ControllerCommonDashboard extends Controller {
 
 		// Split the array so the columns width is not more than 12 on each row.
 		$width = 0;
-		$column = array();
-		$data['rows'] = array();
+		$column = [];
+		$data['rows'] = [];
 
 		foreach ($dashboards as $dashboard) {
 			$column[] = $dashboard;
@@ -72,7 +73,7 @@ class ControllerCommonDashboard extends Controller {
 				$data['rows'][] = $column;
 
 				$width = 0;
-				$column = array();
+				$column = [];
 			}
 		}
 
@@ -84,6 +85,12 @@ class ControllerCommonDashboard extends Controller {
 			$data['security'] = $this->load->controller('common/security');
 		} else {
 			$data['security'] = '';
+		}
+
+		if ($this->user->hasPermission('access', 'common/developer')) {
+			$data['developer_status'] = true;
+		} else {
+			$data['developer_status'] = false;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

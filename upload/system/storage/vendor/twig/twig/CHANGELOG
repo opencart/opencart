@@ -1,3 +1,11 @@
+# 3.0.5 (2020-05-08)
+
+ * Fix twig_compare w.r.t. whitespace trimming
+ * Fix sandbox not disabled if syntax error occurs within {% sandbox %} tag
+ * Fix a regression when not using a space before an operator
+ * Restrict callables to closures in filters
+ * Allow trailing commas in argument lists (in calls as well as definitions)
+
 # 3.0.4 (2020-07-05)
 
  * Fix comparison operators
@@ -44,9 +52,16 @@
  * bumped minimum PHP version to 7.2
  * removed PSR-0 classes
 
-# 2.13.1 (2020-XX-XX)
+# 2.13.2 (2020-XX-XX)
 
  * n/a
+
+# 2.13.1 (2020-05-08)
+
+ * Fix sandbox not disabled if syntax error occurs within {% sandbox %} tag
+ * Fix a regression when not using a space before an operator
+ * Restrict callables to closures in filters
+ * Allow trailing commas in argument lists (in calls as well as definitions)
 
 # 2.13.0 (2020-07-05)
 
@@ -360,9 +375,16 @@
  * improved the performance of the filesystem loader
  * removed features that were deprecated in 1.x
 
-# 1.43.1 (2020-XX-XX)
+# 1.43.2 (2020-XX-XX)
 
  * n/a
+
+# 1.43.1 (2020-08-05)
+
+ * Fix sandbox not disabled if syntax error occurs within {% sandbox %} tag
+ * Fix a regression when not using a space before an operator
+ * Restrict callables to closures in filters
+ * Allow trailing commas in argument lists (in calls as well as definitions)
 
 # 1.43.0 (2020-07-05)
 
@@ -371,6 +393,7 @@
  * Fix PHP 8 compatibility
  * Drop PHP 5.5 5.6, and 7.0 support
  * Fix ambiguous syntax parsing
+ * In sandbox, the `filter`, `map` and `reduce` filters require Closures in `arrow` parameter
 
 # 1.42.5 (2020-02-11)
 

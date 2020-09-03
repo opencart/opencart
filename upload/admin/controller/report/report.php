@@ -1,21 +1,22 @@
 <?php
-class ControllerReportReport extends Controller {
+namespace Application\Controller\Report;
+class Report extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('report/report');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -26,7 +27,7 @@ class ControllerReportReport extends Controller {
 		}
 
 		// Reports
-		$data['reports'] = array();
+		$data['reports'] = [];
 
 		$this->load->model('setting/extension');
 
@@ -38,16 +39,16 @@ class ControllerReportReport extends Controller {
 			if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
 				$this->load->language('extension/report/' . $code, $code);
 				
-				$data['reports'][] = array(
+				$data['reports'][] = [
 					'text'       => $this->language->get($code . '_heading_title'),
 					'code'       => $code,
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
 					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code)
-				);
+				];
 			}
 		}
 		
-		$sort_order = array();
+		$sort_order = [];
 
 		foreach ($data['reports'] as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];

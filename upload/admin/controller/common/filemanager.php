@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonFileManager extends Controller {
+namespace Application\Controller\Common;
+class FileManager extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
 
@@ -22,7 +23,7 @@ class ControllerCommonFileManager extends Controller {
 			$page = 1;
 		}
 
-		$data['directories'] = array();
+		$data['directories'] = [];
 
 		// Get directories
 		$directories = glob($directory . '*', GLOB_ONLYDIR);
@@ -49,19 +50,19 @@ class ControllerCommonFileManager extends Controller {
 						$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 					}
 
-					$data['directories'][] = array(
+					$data['directories'][] = [
 						'name' => $name,
 						'path' => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 						'type' => 'directory',
 						'href' => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url)
-					);
+					];
 				}
 			}
 		}
 
 		$this->load->model('tool/image');
 
-		$data['images'] = array();
+		$data['images'] = [];
 
 		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
 
@@ -73,12 +74,12 @@ class ControllerCommonFileManager extends Controller {
 				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 					$name = basename($image);
 
-					$data['images'][] = array(
+					$data['images'][] = [
 						'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 136, 136),
 						'name'  => $name,
 						'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 						'href'  => HTTP_CATALOG . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
-					);
+					];
 				}
 			}
 		}
@@ -194,12 +195,12 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		// Get total number of files and directories
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => count(array_merge((array)$directories, (array)$files)),
 			'page'  => $page,
 			'limit' => 16,
 			'url'   => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
@@ -207,7 +208,7 @@ class ControllerCommonFileManager extends Controller {
 	public function upload() {
 		$this->load->language('common/filemanager');
 
-		$json = array();
+		$json = [];
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -228,17 +229,17 @@ class ControllerCommonFileManager extends Controller {
 
 		if (!$json) {
 			// Check if multiple files are uploaded or just one
-			$files = array();
+			$files = [];
 
 			if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
 				foreach (array_keys($this->request->files['file']['name']) as $key) {
-					$files[] = array(
+					$files[] = [
 						'name'     => $this->request->files['file']['name'][$key],
 						'type'     => $this->request->files['file']['type'][$key],
 						'tmp_name' => $this->request->files['file']['tmp_name'][$key],
 						'error'    => $this->request->files['file']['error'][$key],
 						'size'     => $this->request->files['file']['size'][$key]
-					);
+					];
 				}
 			}
 
@@ -253,25 +254,25 @@ class ControllerCommonFileManager extends Controller {
 					}
 
 					// Allowed file extension types
-					$allowed = array(
+					$allowed = [
 						'jpg',
 						'jpeg',
 						'gif',
 						'png'
-					);
+					];
 
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}
 
 					// Allowed file mime types
-					$allowed = array(
+					$allowed = [
 						'image/jpeg',
 						'image/pjpeg',
 						'image/png',
 						'image/x-png',
 						'image/gif'
-					);
+					];
 
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
@@ -302,7 +303,7 @@ class ControllerCommonFileManager extends Controller {
 	public function folder() {
 		$this->load->language('common/filemanager');
 
-		$json = array();
+		$json = [];
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -352,7 +353,7 @@ class ControllerCommonFileManager extends Controller {
 	public function delete() {
 		$this->load->language('common/filemanager');
 
-		$json = array();
+		$json = [];
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
@@ -362,7 +363,7 @@ class ControllerCommonFileManager extends Controller {
 		if (isset($this->request->post['path'])) {
 			$paths = $this->request->post['path'];
 		} else {
-			$paths = array();
+			$paths = [];
 		}
 
 		// Loop through each path to run validations
@@ -389,10 +390,10 @@ class ControllerCommonFileManager extends Controller {
 
 				// If path is a directory begin deleting each file and sub folder
 				} elseif (is_dir($path)) {
-					$files = array();
+					$files = [];
 
 					// Make path into an array
-					$path = array($path);
+					$path = [$path];
 
 					// While the path array is still populated keep looping through
 					while (count($path) != 0) {

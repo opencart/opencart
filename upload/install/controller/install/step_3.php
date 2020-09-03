@@ -1,6 +1,7 @@
 <?php
-class ControllerInstallStep3 extends Controller {
-	private $error = array();
+namespace Application\Controller\Install;
+class Step3 extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('install/step_3');
@@ -63,8 +64,8 @@ class ControllerInstallStep3 extends Controller {
 			$output .= 'define(\'DIR_EXTENSION\', \'' . addslashes(DIR_OPENCART) . 'extension/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . addslashes(DIR_OPENCART) . 'image/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
-			$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			$output .= 'define(\'DIR_CATALOG\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
+			$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
 			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/template/\');' . "\n";
 			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
@@ -182,20 +183,20 @@ class ControllerInstallStep3 extends Controller {
 
 		$data['action'] = $this->url->link('install/step_3');
 
-		$db_drivers = array(
+		$db_drivers = [
 			'mysqli',
 			'pdo',
 			'pgsql'
-		);
+		];
 
-		$data['drivers'] = array();
+		$data['drivers'] = [];
 
 		foreach ($db_drivers as $db_driver) {
 			if (extension_loaded($db_driver)) {
-				$data['drivers'][] = array(
+				$data['drivers'][] = [
 					'text'  => $this->language->get('text_' . $db_driver),
 					'value' => $db_driver
-				);
+				];
 			}
 		}
 
@@ -285,21 +286,21 @@ class ControllerInstallStep3 extends Controller {
 			$this->error['db_port'] = $this->language->get('error_db_port');
 		}
 
-        if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
+		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
 			$this->error['db_prefix'] = $this->language->get('error_db_prefix');
 		}
 
-		$db_drivers = array(
+		$db_drivers = [
 			'mysqli',
 			'pdo',
 			'pgsql'
-		);
+		];
 
 		if (!in_array($this->request->post['db_driver'], $db_drivers)) {
 			$this->error['db_driver'] = $this->language->get('error_db_driver');
 		} else {
 			try {
-				$db = new \DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port']);
+				$db = new \System\Library\DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port']);
 			} catch(Exception $e) {
 				$this->error['warning'] = $e->getMessage();
 			}

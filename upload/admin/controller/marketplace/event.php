@@ -1,6 +1,7 @@
 <?php
-class ControllerMarketplaceEvent extends Controller {
-	private $error = array();
+namespace Application\Controller\Marketplace;
+class Event extends \System\Engine\Controller {
+	private $error = [];
 	
 	public function index() {
 		$this->load->language('marketplace/event');
@@ -79,35 +80,35 @@ class ControllerMarketplaceEvent extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['delete'] = $this->url->link('marketplace/event/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['events'] = array();
+		$data['events'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$event_total = $this->model_setting_event->getTotalEvents();
 
 		$results = $this->model_setting_event->getEvents($filter_data);
 
 		foreach ($results as $result) {
-			$data['events'][] = array(
+			$data['events'][] = [
 				'event_id'   => $result['event_id'],
 				'code'       => $result['code'],
 				'trigger'    => $result['trigger'],
@@ -115,7 +116,7 @@ class ControllerMarketplaceEvent extends Controller {
 				'sort_order' => $result['sort_order'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'enabled'    => $result['status']
-			);
+			];
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -137,7 +138,7 @@ class ControllerMarketplaceEvent extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -166,12 +167,12 @@ class ControllerMarketplaceEvent extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $event_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($event_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($event_total - $this->config->get('config_pagination'))) ? $event_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $event_total, ceil($event_total / $this->config->get('config_pagination')));
 
@@ -196,7 +197,7 @@ class ControllerMarketplaceEvent extends Controller {
 	public function enable() {
 		$this->load->language('marketplace/event');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['event_id'])) {
 			$event_id = $this->request->get['event_id'];
@@ -221,7 +222,7 @@ class ControllerMarketplaceEvent extends Controller {
 	public function disable() {
 		$this->load->language('marketplace/event');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['event_id'])) {
 			$event_id = $this->request->get['event_id'];

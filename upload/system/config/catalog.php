@@ -21,10 +21,10 @@ $_['template_engine']    = 'twig';
 $_['template_directory'] = '';
 
 // Autoload Libraries
-$_['library_autoload']   = array();
+$_['library_autoload']   = [];
 
 // Actions
-$_['action_pre_action']  = array(
+$_['action_pre_action']  = [
 	'startup/startup',
 	'startup/marketing',
 	'startup/error',
@@ -32,23 +32,23 @@ $_['action_pre_action']  = array(
 	'startup/sass',
 	'startup/maintenance',
 	'startup/seo_url'
-);
+];
 
 // Action Events
-$_['action_event']      = array(
-	'controller/*/before' => array(
+$_['action_event']      = [
+	'controller/*/before' => [
 		'event/language/before',
 		//'event/debug/before'
-	),
-	'controller/*/after' => array(
+	],
+	'controller/*/after' => [
 		'event/language/after',
 		//'event/debug/after'
-	),
-	'view/*/before' => array(
+	],
+	'view/*/before' => [
 		500 => 'event/theme',
 		998 => 'event/language'
-	),
-	'language/*/after' => array(
+	],
+	'language/*/after' => [
 		'event/translation'
-	)
-);
+	]
+];

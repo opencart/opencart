@@ -29,7 +29,7 @@ class AstRuntime
      *                           is similar to data returned from json_decode
      *                           using associative arrays rather than objects.
      *
-     * @return mixed|null Returns the matching data or null
+     * @return mixed Returns the matching data or null
      */
     public function __invoke($expression, $data)
     {

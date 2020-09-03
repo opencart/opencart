@@ -7,7 +7,7 @@ use \Aws\Crypto\MetadataEnvelope;
 class HeadersMetadataStrategy implements MetadataStrategyInterface
 {
     /**
-     * Places the information in the MetadataEnvelope in to the Meatadata for
+     * Places the information in the MetadataEnvelope in to the metadata for
      * the PutObject request of the encrypted object.
      *
      * @param MetadataEnvelope $envelope Encryption data to save according to
@@ -27,7 +27,7 @@ class HeadersMetadataStrategy implements MetadataStrategyInterface
     }
 
     /**
-     * Generates a MetadataEnvelope according to the Metadata headers from the
+     * Generates a MetadataEnvelope according to the metadata headers from the
      * GetObject result.
      *
      * @param array $args Arguments from Command and Result that contains

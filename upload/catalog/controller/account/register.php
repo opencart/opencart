@@ -1,6 +1,7 @@
 <?php
-class ControllerAccountRegister extends Controller {
-	private $error = array();
+namespace Application\Controller\Account;
+class Register extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		if ($this->customer->isLogged()) {
@@ -34,22 +35,22 @@ class ControllerAccountRegister extends Controller {
 			$this->response->redirect($this->url->link('account/success', 'language=' . $this->config->get('config_language')));
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_register'),
 			'href' => $this->url->link('account/register', 'language=' . $this->config->get('config_language'))
-		);
+		];
 
 		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 
@@ -86,7 +87,7 @@ class ControllerAccountRegister extends Controller {
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
 		} else {
-			$data['error_custom_field'] = array();
+			$data['error_custom_field'] = [];
 		}
 
 		if (isset($this->error['password'])) {
@@ -103,7 +104,7 @@ class ControllerAccountRegister extends Controller {
 
 		$data['action'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'));
 
-		$data['customer_groups'] = array();
+		$data['customer_groups'] = [];
 
 		if (is_array($this->config->get('config_customer_group_display'))) {
 			$this->load->model('account/customer_group');
@@ -148,12 +149,12 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		// Custom Fields
-		$data['custom_fields'] = array();
-		
+		$data['custom_fields'] = [];
+
 		$this->load->model('account/custom_field');
-		
+
 		$custom_fields = $this->model_account_custom_field->getCustomFields();
-		
+
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {
 				$data['custom_fields'][] = $custom_field;
@@ -163,7 +164,7 @@ class ControllerAccountRegister extends Controller {
 		if (isset($this->request->post['custom_field']['account'])) {
 			$data['register_custom_field'] = $this->request->post['custom_field']['account'];
 		} else {
-			$data['register_custom_field'] = array();
+			$data['register_custom_field'] = [];
 		}
 
 		if (isset($this->request->post['password'])) {
@@ -258,7 +259,7 @@ class ControllerAccountRegister extends Controller {
 			if ($custom_field['location'] == 'account') {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/')))) {
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}
@@ -291,12 +292,12 @@ class ControllerAccountRegister extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
-		
+
 		return !$this->error;
 	}
 
 	public function customfield() {
-		$json = array();
+		$json = [];
 
 		$this->load->model('account/custom_field');
 
@@ -310,10 +311,10 @@ class ControllerAccountRegister extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
-			$json[] = array(
+			$json[] = [
 				'custom_field_id' => $custom_field['custom_field_id'],
 				'required'        => $custom_field['required']
-			);
+			];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

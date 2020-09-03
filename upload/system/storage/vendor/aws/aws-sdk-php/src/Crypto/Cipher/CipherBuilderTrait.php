@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Crypto\Cipher;
 
+use Aws\Exception\CryptoException;
+
 trait CipherBuilderTrait
 {
     /**
@@ -63,7 +65,7 @@ trait CipherBuilderTrait
             case 'AES/CBC/PKCS5Padding':
                 return 'cbc';
             default:
-                throw new \RuntimeException('Unrecognized or unsupported'
+                throw new CryptoException('Unrecognized or unsupported'
                     . ' AESName for reverse lookup.');
         }
     }

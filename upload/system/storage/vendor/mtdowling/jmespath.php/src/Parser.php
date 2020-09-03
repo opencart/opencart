@@ -55,7 +55,7 @@ class Parser
     ];
 
     /**
-     * @param Lexer $lexer Lexer used to tokenize expressions
+     * @param Lexer|null $lexer Lexer used to tokenize expressions
      */
     public function __construct(Lexer $lexer = null)
     {

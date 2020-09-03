@@ -7,7 +7,7 @@ namespace JmesPath;
  * @param string $expression Expression to search.
  * @param mixed $data Data to search.
  *
- * @return mixed|null
+ * @return mixed
  */
 if (!function_exists(__NAMESPACE__ . '\search')) {
     function search($expression, $data)

@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonHeader extends Controller {
+namespace Application\Controller\Common;
+class Header extends \System\Engine\Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
 
@@ -48,22 +49,22 @@ class ControllerCommonHeader extends Controller {
 			} 		
 			
 			// Online Stores
-			$data['stores'] = array();
+			$data['stores'] = [];
 
-			$data['stores'][] = array(
+			$data['stores'][] = [
 				'name' => $this->config->get('config_name'),
 				'href' => HTTP_CATALOG
-			);
+			];
 
 			$this->load->model('setting/store');
 
 			$results = $this->model_setting_store->getStores();
 
 			foreach ($results as $result) {
-				$data['stores'][] = array(
+				$data['stores'][] = [
 					'name' => $result['name'],
 					'href' => $result['url']
-				);
+				];
 			}
 		}
 

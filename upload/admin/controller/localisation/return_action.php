@@ -1,6 +1,7 @@
 <?php
-class ControllerLocalisationReturnAction extends Controller {
-	private $error = array();
+namespace Application\Controller\Localisation;
+class ReturnAction extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('localisation/return_action');
@@ -143,40 +144,40 @@ class ControllerLocalisationReturnAction extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('localisation/return_action/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/return_action/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['return_actions'] = array();
+		$data['return_actions'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
 
 		$results = $this->model_localisation_return_action->getReturnActions($filter_data);
 
 		foreach ($results as $result) {
-			$data['return_actions'][] = array(
+			$data['return_actions'][] = [
 				'return_action_id' => $result['return_action_id'],
 				'name'             => $result['name'],
 				'edit'             => $this->url->link('localisation/return_action/edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)
-			);
+			];
 		}
 
 		if (isset($this->error['warning'])) {
@@ -196,7 +197,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -223,12 +224,12 @@ class ControllerLocalisationReturnAction extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_action_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_action_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($return_action_total - $this->config->get('config_pagination'))) ? $return_action_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $return_action_total, ceil($return_action_total / $this->config->get('config_pagination')));
 
@@ -254,7 +255,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
-			$data['error_name'] = array();
+			$data['error_name'] = [];
 		}
 
 		$url = '';
@@ -271,17 +272,17 @@ class ControllerLocalisationReturnAction extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (!isset($this->request->get['return_action_id'])) {
 			$data['action'] = $this->url->link('localisation/return_action/add', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -300,7 +301,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		} elseif (isset($this->request->get['return_action_id'])) {
 			$data['return_action'] = $this->model_localisation_return_action->getDescriptions($this->request->get['return_action_id']);
 		} else {
-			$data['return_action'] = array();
+			$data['return_action'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');

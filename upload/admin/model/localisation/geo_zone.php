@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationGeoZone extends Model {
+namespace Application\Model\Localisation;
+class GeoZone extends \System\Engine\Model {
 	public function addGeoZone($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "geo_zone SET name = '" . $this->db->escape((string)$data['name']) . "', description = '" . $this->db->escape((string)$data['description']) . "', date_added = NOW()");
 
@@ -47,14 +48,14 @@ class ModelLocalisationGeoZone extends Model {
 		return $query->row;
 	}
 
-	public function getGeoZones($data = array()) {
+	public function getGeoZones($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "geo_zone";
 
-			$sort_data = array(
+			$sort_data = [
 				'name',
 				'description'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];

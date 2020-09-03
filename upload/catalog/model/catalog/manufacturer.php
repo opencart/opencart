@@ -1,19 +1,20 @@
 <?php
-class ModelCatalogManufacturer extends Model {
+namespace Application\Model\Catalog;
+class Manufacturer extends \System\Engine\Model {
 	public function getManufacturer($manufacturer_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_to_store m2s ON (m.manufacturer_id = m2s.manufacturer_id) WHERE m.manufacturer_id = '" . (int)$manufacturer_id . "' AND m2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getManufacturers($data = array()) {
+	public function getManufacturers($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_to_store m2s ON (m.manufacturer_id = m2s.manufacturer_id) WHERE m2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
-			$sort_data = array(
+			$sort_data = [
 				'name',
 				'sort_order'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];
@@ -54,6 +55,16 @@ class ModelCatalogManufacturer extends Model {
 			}
 
 			return $manufacturer_data;
+		}
+	}
+
+	public function getLayoutId($manufacturer_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_layout WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		if ($query->num_rows) {
+			return (int)$query->row['layout_id'];
+		} else {
+			return 0;
 		}
 	}
 }

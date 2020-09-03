@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationCountry extends Model {
+namespace Application\Model\Localisation;
+class Country extends \System\Engine\Model {
 	public function addCountry($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "country SET name = '" . $this->db->escape((string)$data['name']) . "', iso_code_2 = '" . $this->db->escape((string)$data['iso_code_2']) . "', iso_code_3 = '" . $this->db->escape((string)$data['iso_code_3']) . "', address_format = '" . $this->db->escape((string)$data['address_format']) . "', postcode_required = '" . (int)$data['postcode_required'] . "', status = '" . (int)$data['status'] . "'");
 
@@ -26,15 +27,15 @@ class ModelLocalisationCountry extends Model {
 		return $query->row;
 	}
 
-	public function getCountries($data = array()) {
+	public function getCountries($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "country";
 
-			$sort_data = array(
+			$sort_data = [
 				'name',
 				'iso_code_2',
 				'iso_code_3'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];

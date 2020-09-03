@@ -1,12 +1,13 @@
 <?php
-class ModelSettingModule extends Model {
+namespace Application\Model\Setting;
+class Module extends \System\Engine\Model {
 	public function getModule($module_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "module WHERE module_id = '" . (int)$module_id . "'");
 		
 		if ($query->row) {
 			return json_decode($query->row['setting'], true);
 		} else {
-			return array();	
+			return [];
 		}
 	}		
 }

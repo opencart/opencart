@@ -1,5 +1,6 @@
 <?php
-class ModelLocalisationWeightClass extends Model {
+namespace Application\Model\Localisation;
+class WeightClass extends \System\Engine\Model {
 	public function addWeightClass($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class SET value = '" . (float)$data['value'] . "'");
 
@@ -33,15 +34,15 @@ class ModelLocalisationWeightClass extends Model {
 		$this->cache->delete('weight_class');
 	}
 
-	public function getWeightClasses($data = array()) {
+	public function getWeightClasses($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "weight_class wc LEFT JOIN " . DB_PREFIX . "weight_class_description wcd ON (wc.weight_class_id = wcd.weight_class_id) WHERE wcd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sort_data = array(
+			$sort_data = [
 				'title',
 				'unit',
 				'value'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];
@@ -98,15 +99,15 @@ class ModelLocalisationWeightClass extends Model {
 	}
 
 	public function getDescriptions($weight_class_id) {
-		$weight_class_data = array();
+		$weight_class_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE weight_class_id = '" . (int)$weight_class_id . "'");
 
 		foreach ($query->rows as $result) {
-			$weight_class_data[$result['language_id']] = array(
+			$weight_class_data[$result['language_id']] = [
 				'title' => $result['title'],
 				'unit'  => $result['unit']
-			);
+			];
 		}
 
 		return $weight_class_data;

@@ -1,9 +1,10 @@
 <?php
-class ControllerApiOrder extends Controller {
+namespace Application\Controller\Api;
+class Order extends \System\Engine\Controller {
 	public function add() {
 		$this->load->language('api/order');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -96,7 +97,7 @@ class ControllerApiOrder extends Controller {
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 
-				$order_data = array();
+				$order_data = [];
 
 				// Store Details
 				$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
@@ -126,7 +127,7 @@ class ControllerApiOrder extends Controller {
 				$order_data['payment_country'] = $this->session->data['payment_address']['country'];
 				$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
 				$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
-				$order_data['payment_custom_field'] = (isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : array());
+				$order_data['payment_custom_field'] = (isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : []);
 
 				if (isset($this->session->data['payment_method']['title'])) {
 					$order_data['payment_method'] = $this->session->data['payment_method']['title'];
@@ -154,7 +155,7 @@ class ControllerApiOrder extends Controller {
 					$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
 					$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 					$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
-					$order_data['shipping_custom_field'] = (isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : array());
+					$order_data['shipping_custom_field'] = (isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : []);
 
 					if (isset($this->session->data['shipping_method']['title'])) {
 						$order_data['shipping_method'] = $this->session->data['shipping_method']['title'];
@@ -180,19 +181,19 @@ class ControllerApiOrder extends Controller {
 					$order_data['shipping_country'] = '';
 					$order_data['shipping_country_id'] = '';
 					$order_data['shipping_address_format'] = '';
-					$order_data['shipping_custom_field'] = array();
+					$order_data['shipping_custom_field'] = [];
 					$order_data['shipping_method'] = '';
 					$order_data['shipping_code'] = '';
 				}
 
 				// Products
-				$order_data['products'] = array();
+				$order_data['products'] = [];
 
 				foreach ($this->cart->getProducts() as $product) {
-					$option_data = array();
+					$option_data = [];
 
 					foreach ($product['option'] as $option) {
-						$option_data[] = array(
+						$option_data[] = [
 							'product_option_id'       => $option['product_option_id'],
 							'product_option_value_id' => $option['product_option_value_id'],
 							'option_id'               => $option['option_id'],
@@ -200,10 +201,10 @@ class ControllerApiOrder extends Controller {
 							'name'                    => $option['name'],
 							'value'                   => $option['value'],
 							'type'                    => $option['type']
-						);
+						];
 					}
 
-					$order_data['products'][] = array(
+					$order_data['products'][] = [
 						'product_id' => $product['product_id'],
 						'master_id'  => $product['master_id'],
 						'name'       => $product['name'],
@@ -216,15 +217,15 @@ class ControllerApiOrder extends Controller {
 						'total'      => $product['total'],
 						'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 						'reward'     => $product['reward']
-					);
+					];
 				}
 
 				// Gift Voucher
-				$order_data['vouchers'] = array();
+				$order_data['vouchers'] = [];
 
 				if (!empty($this->session->data['vouchers'])) {
 					foreach ($this->session->data['vouchers'] as $voucher) {
-						$order_data['vouchers'][] = array(
+						$order_data['vouchers'][] = [
 							'description'      => $voucher['description'],
 							'code'             => token(10),
 							'to_name'          => $voucher['to_name'],
@@ -234,18 +235,18 @@ class ControllerApiOrder extends Controller {
 							'voucher_theme_id' => $voucher['voucher_theme_id'],
 							'message'          => $voucher['message'],
 							'amount'           => $voucher['amount']
-						);
+						];
 					}
 				}
 
 				// Order Totals
 				$this->load->model('setting/extension');
 
-				$totals = array();
+				$totals = [];
 				$taxes = $this->cart->getTaxes();
 				$total = 0;
 
-				$sort_order = array();
+				$sort_order = [];
 
 				$results = $this->model_setting_extension->getExtensions('total');
 
@@ -264,7 +265,7 @@ class ControllerApiOrder extends Controller {
 					}
 				}
 
-				$sort_order = array();
+				$sort_order = [];
 
 				foreach ($totals as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
@@ -272,11 +273,11 @@ class ControllerApiOrder extends Controller {
 
 				array_multisort($sort_order, SORT_ASC, $totals);
 
-				$total_data = array(
+				$total_data = [
 					'totals' => $totals,
 					'taxes'  => $taxes,
 					'total'  => $total
-				);
+				];
 
 				$order_data = array_merge($order_data, $total_data);
 
@@ -356,7 +357,7 @@ class ControllerApiOrder extends Controller {
 	public function edit() {
 		$this->load->language('api/order');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -459,7 +460,7 @@ class ControllerApiOrder extends Controller {
 				if (!$json) {
 					$json['success'] = $this->language->get('text_success');
 
-					$order_data = array();
+					$order_data = [];
 
 					// Store Details
 					$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
@@ -543,19 +544,19 @@ class ControllerApiOrder extends Controller {
 						$order_data['shipping_country'] = '';
 						$order_data['shipping_country_id'] = '';
 						$order_data['shipping_address_format'] = '';
-						$order_data['shipping_custom_field'] = array();
+						$order_data['shipping_custom_field'] = [];
 						$order_data['shipping_method'] = '';
 						$order_data['shipping_code'] = '';
 					}
 
 					// Products
-					$order_data['products'] = array();
+					$order_data['products'] = [];
 
 					foreach ($this->cart->getProducts() as $product) {
-						$option_data = array();
+						$option_data = [];
 
 						foreach ($product['option'] as $option) {
-							$option_data[] = array(
+							$option_data[] = [
 								'product_option_id'       => $option['product_option_id'],
 								'product_option_value_id' => $option['product_option_value_id'],
 								'option_id'               => $option['option_id'],
@@ -563,10 +564,10 @@ class ControllerApiOrder extends Controller {
 								'name'                    => $option['name'],
 								'value'                   => $option['value'],
 								'type'                    => $option['type']
-							);
+							];
 						}
 
-						$order_data['products'][] = array(
+						$order_data['products'][] = [
 							'product_id' => $product['product_id'],
 							'master_id'  => $product['master_id'],
 							'name'       => $product['name'],
@@ -579,15 +580,15 @@ class ControllerApiOrder extends Controller {
 							'total'      => $product['total'],
 							'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 							'reward'     => $product['reward']
-						);
+						];
 					}
 
 					// Gift Voucher
-					$order_data['vouchers'] = array();
+					$order_data['vouchers'] = [];
 
 					if (!empty($this->session->data['vouchers'])) {
 						foreach ($this->session->data['vouchers'] as $voucher) {
-							$order_data['vouchers'][] = array(
+							$order_data['vouchers'][] = [
 								'description'      => $voucher['description'],
 								'code'             => token(10),
 								'to_name'          => $voucher['to_name'],
@@ -597,18 +598,18 @@ class ControllerApiOrder extends Controller {
 								'voucher_theme_id' => $voucher['voucher_theme_id'],
 								'message'          => $voucher['message'],
 								'amount'           => $voucher['amount']
-							);
+							];
 						}
 					}
 
 					// Order Totals
 					$this->load->model('setting/extension');
 
-					$totals = array();
+					$totals = [];
 					$taxes = $this->cart->getTaxes();
 					$total = 0;
 
-					$sort_order = array();
+					$sort_order = [];
 
 					$results = $this->model_setting_extension->getExtensions('total');
 
@@ -627,7 +628,7 @@ class ControllerApiOrder extends Controller {
 						}
 					}
 
-					$sort_order = array();
+					$sort_order = [];
 
 					foreach ($totals as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
@@ -635,11 +636,11 @@ class ControllerApiOrder extends Controller {
 
 					array_multisort($sort_order, SORT_ASC, $totals);
 
-					$total_data = array(
+					$total_data = [
 						'totals' => $totals,
 						'taxes'  => $taxes,
 						'total'  => $total
-					);
+					];
 
 					$order_data = array_merge($order_data, $total_data);
 
@@ -694,7 +695,7 @@ class ControllerApiOrder extends Controller {
 	public function delete() {
 		$this->load->language('api/order');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -725,7 +726,7 @@ class ControllerApiOrder extends Controller {
 	public function info() {
 		$this->load->language('api/order');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
@@ -756,18 +757,18 @@ class ControllerApiOrder extends Controller {
 	public function history() {
 		$this->load->language('api/order');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
 			// Add keys for missing post vars
-			$keys = array(
+			$keys = [
 				'order_status_id',
 				'notify',
 				'override',
 				'comment'
-			);
+			];
 
 			foreach ($keys as $key) {
 				if (!isset($this->request->post[$key])) {

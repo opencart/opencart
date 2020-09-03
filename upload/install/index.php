@@ -33,4 +33,9 @@ define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+// Autoloader
+$autoloader = new Autoloader();
+$autoloader->register('Application', DIR_APPLICATION);
+$autoloader->register('System', DIR_SYSTEM);
+
 start('install');

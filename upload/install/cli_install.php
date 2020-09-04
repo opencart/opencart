@@ -288,7 +288,7 @@ class Cli extends \System\Engine\Controller {
 		try {
 			// Database
 			$db = new \System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
-		} catch (ErrorException $e) {
+		} catch (\ErrorException $e) {
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
 

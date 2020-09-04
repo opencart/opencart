@@ -1,6 +1,6 @@
 <?php
 namespace Application\Controller\Checkout;
-class Register extends \System\Engine\Controller
+class Register extends \System\Engine\Controller{
 	public function index() {
 		$this->load->language('checkout/checkout');
 

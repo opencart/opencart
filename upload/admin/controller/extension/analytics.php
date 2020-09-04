@@ -95,7 +95,7 @@ class Analytics extends \System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				$code = substr($result['path'], 0, strpos('/'));
+				$code = substr($result['path'], 0, strpos($result['path'], '/'));
 
 				$extension = basename($result['path'], '.php');
 

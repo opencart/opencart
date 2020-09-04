@@ -113,8 +113,6 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {

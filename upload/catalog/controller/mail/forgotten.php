@@ -1,5 +1,6 @@
 <?php
-class ControllerMailForgotten extends Controller {
+namespace Application\Controller\Mail;
+class Forgotten extends \System\Engine\Controller {
 	//catalog/model/account/customer/editCode/after
 	public function index(&$route, &$args, &$output) {
 		if ($args[0] && $args[1]) {
@@ -28,7 +29,7 @@ class ControllerMailForgotten extends Controller {
 				$data['store_url'] = $this->config->get('config_url');
 				$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-				$mail = new Mail($this->config->get('config_mail_engine'));
+				$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 				$mail->smtp_username = $this->config->get('config_mail_smtp_username');

@@ -4,7 +4,7 @@
       <div id="category" class="d-block d-sm-block d-lg-none">{{ text_category }}</div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#narbar-menu"><i class="fas fa-bars"></i></button>
       <div class="collapse navbar-collapse" id="narbar-menu">
-        <ul class="navbar-nav">
+        <ul class="nav navbar-nav">
           {% for category in categories %}
             {% if category.children %}
               <li class="nav-item dropdown"><a href="{{ category.href }}" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a>

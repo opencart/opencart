@@ -10,7 +10,8 @@
 /**
 * Encryption class
 */
-final class Encryption {
+namespace System\Library;
+class Encryption {
 	private $cipher = 'aes-256-ctr';
 	private $digest = 'sha256';
 	

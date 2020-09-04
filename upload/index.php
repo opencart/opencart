@@ -16,4 +16,15 @@ if (!defined('DIR_APPLICATION')) {
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+// Autoloader
+$autoloader = new Autoloader();
+$autoloader->register('Application', DIR_APPLICATION);
+$autoloader->register('Extension', DIR_EXTENSION);
+$autoloader->register('Catalog', DIR_CATALOG);
+$autoloader->register('Admin', DIR_ADMIN);
+$autoloader->register('System', DIR_SYSTEM);
+$autoloader->register('Application\Controller\Extension\Opencart', DIR_EXTENSION . 'opencart/catalog/controller/');
+$autoloader->register('Application\Model\Extension\Opencart', DIR_EXTENSION . 'opencart/catalog/model/');
+$autoloader->register('System\Extension\Opencart', DIR_EXTENSION . 'opencart/system/');
+
 start('catalog');

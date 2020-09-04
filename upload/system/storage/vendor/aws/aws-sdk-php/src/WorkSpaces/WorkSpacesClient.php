@@ -40,6 +40,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeWorkspaceBundlesAsync(array $args = [])
  * @method \Aws\Result describeWorkspaceDirectories(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeWorkspaceDirectoriesAsync(array $args = [])
+ * @method \Aws\Result describeWorkspaceImagePermissions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeWorkspaceImagePermissionsAsync(array $args = [])
  * @method \Aws\Result describeWorkspaceImages(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeWorkspaceImagesAsync(array $args = [])
  * @method \Aws\Result describeWorkspaceSnapshots(array $args = [])
@@ -88,5 +90,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise terminateWorkspacesAsync(array $args = [])
  * @method \Aws\Result updateRulesOfIpGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRulesOfIpGroupAsync(array $args = [])
+ * @method \Aws\Result updateWorkspaceImagePermission(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateWorkspaceImagePermissionAsync(array $args = [])
  */
 class WorkSpacesClient extends AwsClient {}

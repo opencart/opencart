@@ -1,5 +1,6 @@
 <?php
-class ModelCatalogDownload extends Model {
+namespace Application\Model\Catalog;
+class Download extends \System\Engine\Model {
 	public function addDownload($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape((string)$data['filename']) . "', mask = '" . $this->db->escape((string)$data['mask']) . "', date_added = NOW()");
 
@@ -33,17 +34,17 @@ class ModelCatalogDownload extends Model {
 		return $query->row;
 	}
 
-	public function getDownloads($data = array()) {
+	public function getDownloads($data = []) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "download d LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE dd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND dd.name LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'dd.name',
 			'd.date_added'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -75,12 +76,12 @@ class ModelCatalogDownload extends Model {
 	}
 
 	public function getDescriptions($download_id) {
-		$download_description_data = array();
+		$download_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
 		foreach ($query->rows as $result) {
-			$download_description_data[$result['language_id']] = array('name' => $result['name']);
+			$download_description_data[$result['language_id']] = ['name' => $result['name']];
 		}
 
 		return $download_description_data;

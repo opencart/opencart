@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonCookie extends Controller {
+namespace Application\Controller\Common;
+class Cookie extends \System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->language('common/cookie');
@@ -13,14 +14,14 @@ class ControllerCommonCookie extends Controller {
 	public function agree() {
 		$this->load->language('common/cookie');
 
-		$json = array();
+		$json = [];
 
 		if (!isset($this->cookie['policy'])) {
-			$option = array(
+			$option = [
 				'max-age'  => strtotime('+10 years'),
 				'path'     => '/',
 				'SameSite' => 'lax'
-			);
+			];
 
 			// Using time as the policy value allows you to see when te policy was agreed.
 			oc_setcookie('policy', time(), $option);

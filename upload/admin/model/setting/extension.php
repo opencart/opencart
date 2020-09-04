@@ -1,7 +1,8 @@
 <?php
-class ModelSettingExtension extends Model {
+namespace Application\Model\Setting;
+class Extension extends \System\Engine\Model {
 	public function addInstall($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `version` = '" . $this->db->escape($data['version']) . "', `image` = '" . $this->db->escape($data['image']) . "', `filename` = '" . $this->db->escape($data['filename']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `image` = '" . $this->db->escape($data['image']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
 	
 		return $this->db->getLastId();
 	}
@@ -10,26 +11,14 @@ class ModelSettingExtension extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
+	public function editStatus($extension_install_id, $status) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
+	}
+
 	public function getInstall($extension_install_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 
 		return $query->row;
-	}
-
-	public function getInstalls() {
-		$start = 0; $limit = 10;
-
-		if ($start < 0) {
-			$start = 0;
-		}
-
-		if ($limit < 1) {
-			$limit = 10;
-		}		
-		
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
-	
-		return $query->rows;
 	}
 
 	public function getInstallByExtensionDownloadId($extension_download_id) {
@@ -37,16 +26,68 @@ class ModelSettingExtension extends Model {
 
 		return $query->row;
 	}
-		
-	public function getTotalInstalls() {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`");
+
+	public function getInstallByCode($code) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `code` = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
+	public function getInstalls($filter_data = []) {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
+
+		if (!empty($data['filter_extension_download_id'])) {
+			$sql .= " WHERE `extension_download_id` = '" . (int)$data['filter_extension_download_id'] . "'";
+		}
+
+		$sort_data = [
+			'name',
+			'version',
+			'date_added'
+		];
+
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY `date_added`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+	
+		return $query->rows;
+	}
+
+	public function getTotalInstalls($filter_data = []) {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
+
+		if (!empty($data['filter_extension_download_id'])) {
+			$sql .= " WHERE `extension_download_id` = '" . (int)$data['filter_extension_download_id'] . "'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}
 
-	public function editStatus($extension_install_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
-	}
+
 
 
 	public function addPath($extension_install_id, $path) {
@@ -63,36 +104,32 @@ class ModelSettingExtension extends Model {
 		return $query->rows;
 	}
 
-	public function getPathsByPath($path) {
+	public function getPaths($path) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "' ORDER BY `path` ASC");
+
+		return $query->rows;
+	}
+
+	public function getTotalPaths($path) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
 		return $query->rows;
 	}
 
-	public function getTotalPathsByPath($path) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
-		return $query->rows;
-	}
 
 
 	public function getInstalled($type) {
-		$extension_data = array();
-
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
 
-		foreach ($query->rows as $result) {
-			$extension_data[] = $result['code'];
-		}
-
-		return $extension_data;
+		return $query->rows;
 	}
 
-	public function install($type, $code) {
+	public function install($type, $code, $extension) {
 		$extensions = $this->getInstalled($type);
 
 		if (!in_array($code, $extensions)) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = '" . $this->db->escape($extension) . "', `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
 		}
 	}
 
@@ -100,4 +137,5 @@ class ModelSettingExtension extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
 	}
+
 }

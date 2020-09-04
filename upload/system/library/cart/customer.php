@@ -1,5 +1,5 @@
 <?php
-namespace Cart;
+namespace System\Library\Cart;
 class Customer {
 	private $customer_id;
 	private $firstname;
@@ -36,8 +36,8 @@ class Customer {
 		}
 	}
 
-  public function login($email, $password, $override = false) {
-	  $customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1'");
+	public function login($email, $password, $override = false) {
+		$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1'");
 
 		if ($customer_query->row) {
 			if (!$override) {

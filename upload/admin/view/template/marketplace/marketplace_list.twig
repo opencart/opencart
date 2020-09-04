@@ -44,12 +44,12 @@
         </div>
         <br>
         <div class="row mb-4">
-          <div class="col-sm-9 col-xs-7">
+          <div class="col-sm-auto mr-sm-auto mb-2 mb-lg-0">
             <div class="btn-group">{% for license in licenses %}
                 {% if license.value == filter_license %}<a href="{{ license.href }}" class="btn btn-light active">{{ license.text }}</a>{% else %}<a href="{{ license.href }}" class="btn btn-light">{{ license.text }}</a>{% endif %}
               {% endfor %}</div>
           </div>
-          <div class="col-sm-3 col-xs-5">
+          <div class="col-xl-3 col-lg-5 col-sm-auto">
             <div class="input-group float-right">
               <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-sort-amount-down"></i></span></div>
               <select onchange="location = this.value;" class="form-control">
@@ -66,7 +66,7 @@
         </div>
         <div id="extension-list">
           {% if promotions %}
-            <h3>Featured</h3>
+            <h3>{{ text_featured }}</h3>
             <div class="row">
               {% for extension in promotions %}
                 {% if extension %}
@@ -80,10 +80,10 @@
                         {{ extension.price }}</div>
                       <div class="extension-rate">
                         <div class="row">
-                          <div class="col-xs-6">{% for i in 1..5 %}
+                          <div class="col-6">{% for i in 1..5 %}
                               {% if extension.rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
                             {% endfor %}</div>
-                          <div class="col-xs-6">
+                          <div class="col-6">
                             <div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
                           </div>
                         </div>

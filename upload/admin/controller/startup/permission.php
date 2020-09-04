@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupPermission extends Controller {
+namespace Application\Controller\Startup;
+class Permission extends \System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
 			$route = '';
@@ -14,30 +15,8 @@ class ControllerStartupPermission extends Controller {
 				$route .= '/' . $part[1];
 			}
 
-			// If a 3rd part is found we need to check if its under one of the extension folders.
-			$extension = array(
-				'extension/dashboard',
-				'extension/analytics',
-				'extension/captcha',
-				'extension/currency',
-				'extension/extension',
-				'extension/feed',
-				'extension/menu',
-				'extension/fraud',
-				'extension/module',
-				'extension/payment',
-				'extension/shipping',
-				'extension/theme',
-				'extension/total',
-				'extension/report'
-			);
-
-			if (isset($part[2]) && in_array($route, $extension)) {
-				$route .= '/' . $part[2];
-			}
-
 			// We want to ingore some pages from having its permission checked.
-			$ignore = array(
+			$ignore = [
 				'common/dashboard',
 				'common/login',
 				'common/logout',
@@ -46,10 +25,10 @@ class ControllerStartupPermission extends Controller {
 				'common/cron',
 				'error/not_found',
 				'error/permission'
-			);
+			];
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return new Action('error/permission');
+				return new \System\Library\Action('error/permission');
 			}
 		}
 	}

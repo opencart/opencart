@@ -1,5 +1,6 @@
 <?php
-class ControllerCheckoutLogin extends Controller {
+namespace Application\Controller\Checkout;
+class Login extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 
@@ -19,7 +20,7 @@ class ControllerCheckoutLogin extends Controller {
 	public function save() {
 		$this->load->language('checkout/checkout');
 
-		$json = array();
+		$json = [];
 
 		if ($this->customer->isLogged()) {
 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));

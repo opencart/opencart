@@ -1,5 +1,6 @@
 <?php
-class ControllerProductThumb extends Controller {
+namespace Application\Controller\Product;
+class Thumb extends \System\Engine\Controller {
 	public function index($data) {
 		$this->load->language('product/thumb');
 

@@ -1,5 +1,5 @@
 <?php
-namespace Session;
+namespace System\Library\Session;
 class File {
 	public function read($session_id) {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);
@@ -20,11 +20,11 @@ class File {
 
 				return json_decode($data, true);
 			} else {
-				return array();
+				return [];
 			}
 		}
 
-		return array();
+		return [];
 	}
 
 	public function write($session_id, $data) {
@@ -68,7 +68,7 @@ class File {
 			$gc_probability = 1;
 		}
 
-		if (mt_rand() / mt_getrandmax() > $gc_probability / $gc_divisor) {
+		if (mt_rand() / mt_getrandmax() < $gc_probability / $gc_divisor) {
 			$expire = time() - ini_get('session.gc_maxlifetime');
 
 			$files = glob(DIR_SESSION . 'sess_*');

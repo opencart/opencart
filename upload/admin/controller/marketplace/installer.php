@@ -1,21 +1,22 @@
 <?php
-class ControllerMarketplaceInstaller extends Controller {
+namespace Application\Controller\Marketplace;
+class Installer extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/installer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -86,40 +87,46 @@ class ControllerMarketplaceInstaller extends Controller {
 			$page = 1;
 		}
 
-		$data['extensions'] = array();
+		$data['extensions'] = [];
 		
 		$this->load->model('setting/extension');
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_extension_download_id' => $filter_extension_download_id,
 			'sort'                         => $sort,
 			'order'                        => $order,
 			'start'                        => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                        => $this->config->get('config_pagination')
-		);
+		];
 
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
 		$results = $this->model_setting_extension->getInstalls($filter_data);
 		
 		foreach ($results as $result) {
+			if ($result['extension_id']) {
+				$link = $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']);
+			} elseif ($result['link']) {
+				$link = $result['link'];
+			} else {
+				$link = '';
+			}
 
-
-			$data['extensions'][] = array(
+			$data['extensions'][] = [
 				'name'       => $result['name'],
 				'version'    => $result['version'],
 				'image'      => $result['image'],
 				'author'     => $result['author'],
 				'status'     => $result['status'],
-				'link'       => $this->url->link('marketplace/marketplace/info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
+				'link'       => $link,
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'install'    => $this->url->link('marketplace/installer/install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
 				'uninstall'  => $this->url->link('marketplace/installer/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
 				'delete'     => $this->url->link('marketplace/installer/delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id'])
-			);
+			];
 		}
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($extension_total - 10)) ? $extension_total : ((($page - 1) * 10) + 10), $extension_total, ceil($extension_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($extension_total - $this->config->get('config_pagination'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $extension_total, ceil($extension_total / $this->config->get('config_pagination')));
 
 		$url = '';
 
@@ -137,12 +144,12 @@ class ControllerMarketplaceInstaller extends Controller {
 		$data['sort_version'] = $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
 		$data['sort_date_added'] = $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_date_added' . $url);
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('marketplace/installer/extension', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
-		));
+		]);
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -153,7 +160,7 @@ class ControllerMarketplaceInstaller extends Controller {
 	public function upload() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		// Check for any install directories
 		if (isset($this->request->files['file']['name'])) {
@@ -167,10 +174,13 @@ class ControllerMarketplaceInstaller extends Controller {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 
+			if (is_file($filename)) {
+				$json['error'] = $this->language->get('error_exists');
+			}
+
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 			}
-
 		} else {
 			$json['error'] = $this->language->get('error_upload');
 		}
@@ -182,7 +192,7 @@ class ControllerMarketplaceInstaller extends Controller {
 
 			if (is_file($file)) {
 				// Unzip the files
-				$zip = new ZipArchive();
+				$zip = new \ZipArchive();
 
 				if ($zip->open($file)) {
 					$xml = $zip->getFromName('install.xml');
@@ -193,7 +203,7 @@ class ControllerMarketplaceInstaller extends Controller {
 				// If xml file just put it straight into the DB
 				if ($xml) {
 					try {
-						$dom = new DOMDocument('1.0', 'UTF-8');
+						$dom = new \DOMDocument('1.0', 'UTF-8');
 						$dom->loadXml($xml);
 
 						$name = $dom->getElementsByTagName('name')->item(0);
@@ -210,14 +220,6 @@ class ControllerMarketplaceInstaller extends Controller {
 							$version = $version->nodeValue;
 						} else {
 							$version = '';
-						}
-
-						$image = $dom->getElementsByTagName('image')->item(0);
-
-						if ($image) {
-							$image = $version->nodeValue;
-						} else {
-							$image = '';
 						}
 
 						$author = $dom->getElementsByTagName('author')->item(0);
@@ -240,16 +242,15 @@ class ControllerMarketplaceInstaller extends Controller {
 					}
 
 					if (!$json) {
-						$extension_data = array(
+						$extension_data = [
 							'extension_id'          => 0,
 							'extension_download_id' => 0,
 							'name'                  => $name,
+							'code'              	=> basename($filename, '.ocmod.zip'),
 							'version'               => $version,
-							'image'                 => $image,
-							'filename'              => $filename,
 							'author'                => $author,
 							'link'                  => $link
-						);
+						];
 
 						$this->load->model('setting/extension');
 
@@ -261,6 +262,8 @@ class ControllerMarketplaceInstaller extends Controller {
 			} else {
 				$json['error'] = sprintf($this->language->get('error_file'), $filename);
 			}
+		} else {
+			unset($this->request->files['file']['tmp_name']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -270,7 +273,7 @@ class ControllerMarketplaceInstaller extends Controller {
 	public function install() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];
@@ -287,26 +290,24 @@ class ControllerMarketplaceInstaller extends Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if ($extension_install_info) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
+			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
 
 			if (!is_file($file)) {
-				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['filename']);
+				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
 			}
 
-			$directory = basename($extension_install_info['filename'], '.ocmod.zip') . '/';
-
-			if (is_dir(DIR_EXTENSION . $directory)) {
-				$json['error'] = sprintf($this->language->get('error_exists'), $directory);
+			if (is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
+				$json['error'] = sprintf($this->language->get('error_exists'), $extension_install_info['code'] . '/');
 			}
 		} else {
 			$json['error'] = $this->language->get('error_install');
 		}
 
-		$extract = array();
+		$extract = [];
 
 		if (!$json) {
 			// Unzip the files
-			$zip = new ZipArchive();
+			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
 				// Check if any of the files already exist.
@@ -321,14 +322,14 @@ class ControllerMarketplaceInstaller extends Controller {
 
 					// admin > extension/{directory}/admin
 					if (substr($destination, 0, 6) == 'admin/') {
-						$path = $destination;
-						$base = DIR_EXTENSION . $directory;
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
 					// catalog > extension/{directory}/catalog
 					if (substr($destination, 0, 8) == 'catalog/') {
-						$path = $destination;
-						$base = DIR_EXTENSION . $directory;
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
 					// image > image
@@ -338,8 +339,8 @@ class ControllerMarketplaceInstaller extends Controller {
 					}
 
 					if (substr($destination, 0, 7) == 'system/') {
-						$path = $destination;
-						$base = DIR_EXTENSION . $directory;
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
 					// system/config > system/config
@@ -356,12 +357,12 @@ class ControllerMarketplaceInstaller extends Controller {
 
 					if ($path) {
 						if (!is_file($base . $path)) {
-							$extract[] = array(
+							$extract[] = [
 								'source'      => $source,
 								'destination' => $destination,
 								'base'        => $base,
 								'path'        => $path
-							);
+							];
 						} else {
 							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
 
@@ -378,17 +379,17 @@ class ControllerMarketplaceInstaller extends Controller {
 
 		if (!$json) {
 			// Add extension directory
-			mkdir(DIR_EXTENSION . $directory, 0777);
+			mkdir(DIR_EXTENSION . $extension_install_info['code'], 0777);
 
 			foreach ($extract as $copy) {
 				// Must not have a path before files and directories can be moved
 				if (substr($copy['path'], -1) == '/' && mkdir($copy['base'] . $copy['path'], 0777)) {
-					$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
+					$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
 				}
 
 				// If check if the path is not directory and check there is no existing file
 				if (substr($copy['path'], -1) != '/' && copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
-					$this->model_setting_extension->addPath($extension_install_id, $copy['destination']);
+					$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
 				}
 			}
 
@@ -404,7 +405,7 @@ class ControllerMarketplaceInstaller extends Controller {
 	public function uninstall() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];
@@ -420,13 +421,7 @@ class ControllerMarketplaceInstaller extends Controller {
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
-		if ($extension_install_info) {
-			$directory =  basename($extension_install_info['filename'], '.ocmod.zip') . '/';
-
-			if (!is_dir(DIR_EXTENSION . $directory)) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $directory);
-			}
-		} else {
+		if (!$extension_install_info) {
 			$json['error'] = $this->language->get('error_install');
 		}
 
@@ -439,22 +434,13 @@ class ControllerMarketplaceInstaller extends Controller {
 				$path = '';
 
 				// admin > extension/{directory}/admin
-				if (substr($result['path'], 0, 6) == 'admin/') {
-					$path = DIR_EXTENSION . $directory . $result['path'];
-				}
-
-				// catalog > extension/{directory}/catalog
-				if (substr($result['path'], 0, 8) == 'catalog/') {
-					$path = DIR_EXTENSION . $directory . $result['path'];
+				if (substr($result['path'], 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
+					$path = DIR_EXTENSION . $result['path'];
 				}
 
 				// Image
 				if (substr($result['path'], 0, 6) == 'image/') {
 					$path = DIR_IMAGE . substr($result['path'], 6);
-				}
-
-				if (substr($result['path'], 0, 7) == 'system/') {
-					$path = DIR_EXTENSION . $directory . $result['path'];
 				}
 
 				// Config
@@ -478,7 +464,7 @@ class ControllerMarketplaceInstaller extends Controller {
 			}
 
 			// Remove extension directory
-			rmdir(DIR_EXTENSION . $directory);
+			rmdir(DIR_EXTENSION . $extension_install_info['code'] . '/');
 
 			$this->model_setting_extension->editStatus($extension_install_id, 0);
 
@@ -492,7 +478,7 @@ class ControllerMarketplaceInstaller extends Controller {
 	public function delete() {
 		$this->load->language('marketplace/installer');
 
-		$json = array();
+		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];
@@ -513,7 +499,7 @@ class ControllerMarketplaceInstaller extends Controller {
 		}
 
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['filename'];
+			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
 
 			// Remove file
 			if (is_file($file)) {

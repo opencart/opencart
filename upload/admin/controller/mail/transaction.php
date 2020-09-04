@@ -1,5 +1,6 @@
 <?php
-class ControllerMailTransaction extends Controller {
+namespace Application\Controller\Mail;
+class Transaction extends \System\Engine\Controller {
 	public function index($route, $args, $output) {
 		if (isset($args[0])) {
 			$customer_id = $args[0];
@@ -52,14 +53,14 @@ class ControllerMailTransaction extends Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new Language($language_code);
+			$language = new \System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/transaction');
 
 			$data['text_received'] = sprintf($language->get('text_received'), $this->currency->format($amount, $this->config->get('config_currency')));
 			$data['text_total'] = sprintf($language->get('text_total'), $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency')));
 			
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

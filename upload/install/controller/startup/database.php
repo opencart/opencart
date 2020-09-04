@@ -1,5 +1,6 @@
 <?php
-class ControllerStartupDatabase extends Controller {
+namespace Application\Controller\Startup;
+class Database extends \System\Engine\Controller {
 	public function index() {
 		if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {
 			$lines = file(DIR_OPENCART . 'config.php');
@@ -16,7 +17,7 @@ class ControllerStartupDatabase extends Controller {
 				$port = ini_get('mysqli.default_port');
 			}
 			
-			$this->registry->set('db', new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port));
+			$this->registry->set('db', new \System\Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port));
 		}
 	}
 }

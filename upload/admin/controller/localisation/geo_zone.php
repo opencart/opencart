@@ -1,6 +1,7 @@
 <?php
-class ControllerLocalisationGeoZone extends Controller {
-	private $error = array();
+namespace Application\Controller\Localisation;
+class GeoZone extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('localisation/geo_zone');
@@ -143,41 +144,41 @@ class ControllerLocalisationGeoZone extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('localisation/geo_zone/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/geo_zone/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['geo_zones'] = array();
+		$data['geo_zones'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
 
 		$results = $this->model_localisation_geo_zone->getGeoZones($filter_data);
 
 		foreach ($results as $result) {
-			$data['geo_zones'][] = array(
+			$data['geo_zones'][] = [
 				'geo_zone_id' => $result['geo_zone_id'],
 				'name'        => $result['name'],
 				'description' => $result['description'],
 				'edit'        => $this->url->link('localisation/geo_zone/edit', 'user_token=' . $this->session->data['user_token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url)
-			);
+			];
 		}
 
 		if (isset($this->error['warning'])) {
@@ -197,7 +198,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -225,12 +226,12 @@ class ControllerLocalisationGeoZone extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $geo_zone_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($geo_zone_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($geo_zone_total - $this->config->get('config_pagination'))) ? $geo_zone_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $geo_zone_total, ceil($geo_zone_total / $this->config->get('config_pagination')));
 
@@ -279,17 +280,17 @@ class ControllerLocalisationGeoZone extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (!isset($this->request->get['geo_zone_id'])) {
 			$data['action'] = $this->url->link('localisation/geo_zone/add', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -330,7 +331,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		} elseif (!empty($geo_zone_info)) {
 			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones($this->request->get['geo_zone_id']);
 		} else {
-			$data['zone_to_geo_zones'] = array();
+			$data['zone_to_geo_zones'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');

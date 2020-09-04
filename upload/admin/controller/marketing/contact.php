@@ -1,5 +1,6 @@
 <?php
-class ControllerMarketingContact extends Controller {
+namespace Application\Controller\Marketing;
+class Contact extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketing/contact');
 
@@ -10,17 +11,17 @@ class ControllerMarketingContact extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
 		$data['cancel'] = $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token']);
 
@@ -42,7 +43,7 @@ class ControllerMarketingContact extends Controller {
 	public function send() {
 		$this->load->language('marketing/contact');
 
-		$json = array();
+		$json = [];
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if (!$this->user->hasPermission('modify', 'marketing/contact')) {
@@ -67,14 +68,12 @@ class ControllerMarketingContact extends Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
-				
+
 				$this->load->model('setting/setting');
 				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
 				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
 				$this->load->model('customer/customer');
-
-				$this->load->model('customer/customer_group');
 
 				$this->load->model('sale/order');
 
@@ -86,15 +85,15 @@ class ControllerMarketingContact extends Controller {
 
 				$email_total = 0;
 
-				$emails = array();
+				$emails = [];
 
 				switch ($this->request->post['to']) {
 					case 'newsletter':
-						$customer_data = array(
+						$customer_data = [
 							'filter_newsletter' => 1,
 							'start'             => ($page - 1) * 10,
 							'limit'             => 10
-						);
+						];
 
 						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
 
@@ -105,10 +104,10 @@ class ControllerMarketingContact extends Controller {
 						}
 						break;
 					case 'customer_all':
-						$customer_data = array(
+						$customer_data = [
 							'start' => ($page - 1) * 10,
 							'limit' => 10
-						);
+						];
 
 						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
 
@@ -119,11 +118,11 @@ class ControllerMarketingContact extends Controller {
 						}
 						break;
 					case 'customer_group':
-						$customer_data = array(
+						$customer_data = [
 							'filter_customer_group_id' => $this->request->post['customer_group_id'],
 							'start'                    => ($page - 1) * 10,
 							'limit'                    => 10
-						);
+						];
 
 						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
 
@@ -135,16 +134,13 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'customer':
 						if (!empty($this->request->post['customer'])) {
-							$start = ($page - 1) * 10;
+							$customers = array_slice($this->request->post['customer'], ($page - 1) * 10, 10);
 
-							for ($i = 0; $i < 10; $i++) {
-								if (isset($this->request->post['customer'][($start + $i)])) {
-									$customer_id = $this->request->post['customer'][($start + $i)];
-									$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+							foreach ($customers as $customer_id) {
+								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
-									if ($customer_info) {
-										$emails[] = $customer_info['email'];
-									}
+								if ($customer_info) {
+									$emails[] = $customer_info['email'];
 								}
 							}
 
@@ -152,11 +148,11 @@ class ControllerMarketingContact extends Controller {
 						}
 						break;
 					case 'affiliate_all':
-						$affiliate_data = array(
+						$affiliate_data = [
 							'filter_affiliate' => 1,
 							'start'            => ($page - 1) * 10,
 							'limit'            => 10
-						);
+						];
 
 						$email_total = $this->model_customer_customer->getTotalCustomers($affiliate_data);
 
@@ -168,21 +164,18 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'affiliate':
 						if (!empty($this->request->post['affiliate'])) {
-							$start = ($page - 1) * 10;
+							$affiliates = array_slice($this->request->post['affiliate'], ($page - 1) * 10, 10);
 
-							for ($i = 0; $i < 10; $i++) {
-								if (isset($this->request->post['affiliate'][($start + $i)])) {
-									$affiliate_id = $this->request->post['affiliate'][($start + $i)];
-									$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
+							foreach ($affiliates as $affiliate_id) {
+								$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
 
-									if ($affiliate_info) {
-										$emails[] = $affiliate_info['email'];
-									}
+								if ($affiliate_info) {
+									$emails[] = $affiliate_info['email'];
 								}
 							}
-						}
 
-						$email_total = count($this->request->post['affiliate']);
+							$email_total = count($this->request->post['affiliate']);
+						}
 						break;
 					case 'product':
 						if (isset($this->request->post['product'])) {
@@ -211,7 +204,7 @@ class ControllerMarketingContact extends Controller {
 						$json['next'] = '';
 					}
 
-					$message  = '<html dir="ltr" lang="en">' . "\n";
+					$message  = '<html dir="ltr" lang="' . $this->language->get('code') . '">' . "\n";
 					$message .= '  <head>' . "\n";
 					$message .= '    <title>' . $this->request->post['subject'] . '</title>' . "\n";
 					$message .= '    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
@@ -221,7 +214,7 @@ class ControllerMarketingContact extends Controller {
 
 					foreach ($emails as $email) {
 						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail = new Mail($this->config->get('config_mail_engine'));
+							$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 							$mail->smtp_username = $this->config->get('config_mail_smtp_username');

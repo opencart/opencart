@@ -1,4 +1,5 @@
 <?php
+namespace Install;
 //
 // Command line tool for installing opencart
 // Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
@@ -54,17 +55,17 @@ define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Registry
-$registry = new Registry();
+$registry = new \System\Engine\Registry();
 
 // Loader
-$loader = new Loader($registry);
+$loader = new \System\Engine\Loader($registry);
 $registry->set('load', $loader);
 
 // Request
-$registry->set('request', new Request());
+$registry->set('request', new \System\Library\Request());
 
 // Response
-$response = new Response();
+$response = new \System\Library\Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
@@ -74,15 +75,15 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 		return false;
 	}
 
-	throw new ErrorException($message, 0, $code, $file, $line);
+	throw new \ErrorException($message, 0, $code, $file, $line);
 });
 
-class ControllerCliInstall extends Controller {
+class Cli extends \System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
 		} else {
-			$argv = array();
+			$argv = [];
 		}
 
 		// Just displays the path to the file
@@ -106,7 +107,7 @@ class ControllerCliInstall extends Controller {
 
 	public function install($argv) {
 		// Options
-		$option = array(
+		$option = [
 			'username'    => 'admin',
 			'cloud'       => 0,
 			'db_driver'   => 'mysqli',
@@ -114,7 +115,7 @@ class ControllerCliInstall extends Controller {
 			'db_password' => '',
 			'db_port'     => '3306',
 			'db_prefix'   => 'oc_'
-		);
+		];
 
 		// Turn args into an array
 		for ($i = 0; $i < count($argv); $i++) {
@@ -142,7 +143,7 @@ class ControllerCliInstall extends Controller {
 
 		// Cloud Install
 		if (!$cloud) {
-			$required = array(
+			$required = [
 				'username',    // Already set
 				'email',
 				'password',
@@ -155,18 +156,18 @@ class ControllerCliInstall extends Controller {
 				'db_database',
 				'db_port',     // Already set
 				'db_prefix'    // Already set
-			);
+			];
 		} else {
-			$required = array(
+			$required = [
 				'username', // Already set
 				'email',
 				'password',
 				'cloud'     // Already set
-			);
+			];
 		}
 
 		// Validation
-		$missing = array();
+		$missing = [];
 
 		foreach ($required as $value) {
 			if (!array_key_exists($value, $option)) {
@@ -182,7 +183,7 @@ class ControllerCliInstall extends Controller {
 		$error = '';
 
 		if (version_compare(phpversion(), '7.3.0', '<')) {
-			$error .= 'ERROR: You need to use PHP7+ or above for OpenCart to work!' . "\n";
+			$error .= 'ERROR: You need to use PHP7.3+ or above for OpenCart to work!' . "\n";
 		}
 
 		if (!ini_get('file_uploads')) {
@@ -286,7 +287,7 @@ class ControllerCliInstall extends Controller {
 
 		try {
 			// Database
-			$db = new \DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
+			$db = new \System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
 		} catch (ErrorException $e) {
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
@@ -310,7 +311,7 @@ class ControllerCliInstall extends Controller {
 			}
 
 			if (isset($table['primary'])) {
-				$primary_data = array();
+				$primary_data = [];
 
 				foreach ($table['primary'] as $primary) {
 					$primary_data[] = "`" . $primary . "`";
@@ -321,7 +322,7 @@ class ControllerCliInstall extends Controller {
 
 			if (isset($table['index'])) {
 				foreach ($table['index'] as $index) {
-					$index_data = array();
+					$index_data = [];
 
 					foreach ($index['key'] as $key) {
 						$index_data[] = "`" . $key . "`";
@@ -374,7 +375,7 @@ class ControllerCliInstall extends Controller {
 				$password = $option['password'];
 			}
 
-			$db->query("INSERT INTO `" . $db_prefix . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($option['username']) . "', salt = '', password = '" . $db->escape($password) . "', firstname = 'John', lastname = 'Doe', email = '" . $db->escape($option['email']) . "', status = '1', date_added = NOW()");
+			$db->query("INSERT INTO `" . $db_prefix . "user` SET `user_id` = '1', `user_group_id` = '1', username = '" . $db->escape($option['username']) . "', `salt` = '', `password` = '" . $db->escape($password) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($option['email']) . "', `status` = '1', `date_added` = NOW()");
 
 			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");
 			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', value = '" . $db->escape($option['email']) . "'");
@@ -384,12 +385,12 @@ class ControllerCliInstall extends Controller {
 
 			$db->query("UPDATE `" . $db_prefix . "product` SET `viewed` = '0'");
 
-			$db->query("INSERT INTO `" . $db_prefix . "api` SET username = 'Default', `key` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+			$db->query("INSERT INTO `" . $db_prefix . "api` `SET` username = 'Default', `key` = '" . $db->escape(token(256)) . "', `status` = 1, `date_added` = NOW(), `date_modified` = NOW()");
 
 			$last_id = $db->getLastId();
 
 			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_api_id'");
-			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$last_id . "'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_api_id', `value` = '" . (int)$last_id . "'");
 
 			// set the current years prefix
 			$db->query("UPDATE `" . $db_prefix . "setting` SET `value` = 'INV-" . date('Y') . "-00' WHERE `key` = 'config_invoice_prefix'");
@@ -488,7 +489,7 @@ class ControllerCliInstall extends Controller {
 	}
 
 	public function usage() {
-		$option = implode(' ', array(
+		$option = implode(' ', [
 			'--username',
 			'admin',
 			'--email',
@@ -513,7 +514,7 @@ class ControllerCliInstall extends Controller {
 			'3306',
 			'--db_prefix',
 			'oc_'
-		));
+		]);
 
 		$output  = 'Usage:' . "\n";
 		$output .= '======' . "\n\n";
@@ -524,7 +525,7 @@ class ControllerCliInstall extends Controller {
 }
 
 // Controller
-$controller = new ControllerCliInstall($registry);
+$controller = new \Install\Cli($registry);
 $controller->index();
 
 // Output

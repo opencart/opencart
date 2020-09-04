@@ -1,5 +1,6 @@
 <?php
-class ControllerMailAffiliate extends Controller {
+namespace Application\Controller\Mail;
+class Affiliate extends \System\Engine\Controller {
 	public function approve(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');
 
@@ -28,7 +29,7 @@ class ControllerMailAffiliate extends Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new Language($language_code);
+			$language = new \System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/affiliate_approve');
 
@@ -39,7 +40,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['login'] = $store_url . 'index.php?route=affiliate/login';
 			$data['store'] = $store_name;
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -84,7 +85,7 @@ class ControllerMailAffiliate extends Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new Language($language_code);
+			$language = new \System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/affiliate_deny');
 
@@ -95,7 +96,7 @@ class ControllerMailAffiliate extends Controller {
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
 			$data['store'] = $store_name;
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

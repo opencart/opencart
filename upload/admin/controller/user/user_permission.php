@@ -1,6 +1,7 @@
 <?php
-class ControllerUserUserPermission extends Controller {
-	private $error = array();
+namespace Application\Controller\User;
+class UserPermission extends \System\Engine\Controller {
+	private $error = [];
 
 	public function index() {
 		$this->load->language('user/user_group');
@@ -143,40 +144,40 @@ class ControllerUserUserPermission extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		$data['add'] = $this->url->link('user/user_permission/add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('user/user_permission/delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_groups'] = array();
+		$data['user_groups'] = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
-		);
+		];
 
 		$user_group_total = $this->model_user_user_group->getTotalUserGroups();
 
 		$results = $this->model_user_user_group->getUserGroups($filter_data);
 
 		foreach ($results as $result) {
-			$data['user_groups'][] = array(
+			$data['user_groups'][] = [
 				'user_group_id' => $result['user_group_id'],
 				'name'          => $result['name'],
 				'edit'          => $this->url->link('user/user_permission/edit', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
-			);
+			];
 		}
 
 		if (isset($this->error['warning'])) {
@@ -196,7 +197,7 @@ class ControllerUserUserPermission extends Controller {
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$data['selected'] = array();
+			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -223,12 +224,12 @@ class ControllerUserUserPermission extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$data['pagination'] = $this->load->controller('common/pagination', array(
+		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $user_group_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
-		));
+		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_group_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($user_group_total - $this->config->get('config_pagination'))) ? $user_group_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $user_group_total, ceil($user_group_total / $this->config->get('config_pagination')));
 
@@ -271,17 +272,17 @@ class ControllerUserUserPermission extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		);
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
-		);
+		];
 
 		if (!isset($this->request->get['user_group_id'])) {
 			$data['action'] = $this->url->link('user/user_permission/add', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -303,7 +304,8 @@ class ControllerUserUserPermission extends Controller {
 			$data['name'] = '';
 		}
 
-		$ignore = array(
+		// Routes to ignore
+		$ignore = [
 			'common/dashboard',
 			'common/startup',
 			'common/login',
@@ -314,14 +316,12 @@ class ControllerUserUserPermission extends Controller {
 			'common/header',
 			'error/not_found',
 			'error/permission'
-		);
+		];
 
-		$data['permissions'] = array();
-
-		$files = array();
+		$files = [];
 
 		// Make path into an array
-		$path = array(DIR_APPLICATION . 'controller/*');
+		$path = [DIR_APPLICATION . 'controller/*'];
 
 		// While the path array is still populated keep looping through
 		while (count($path) != 0) {
@@ -342,7 +342,9 @@ class ControllerUserUserPermission extends Controller {
 
 		// Sort the file array
 		sort($files);
-					
+
+		$data['permissions'] = [];
+
 		foreach ($files as $file) {
 			$controller = substr($file, strlen(DIR_APPLICATION . 'controller/'));
 
@@ -353,12 +355,23 @@ class ControllerUserUserPermission extends Controller {
 			}
 		}
 
+		$data['extensions'] = [];
+
+		// Extension permissions
+		$this->load->model('setting/extension');
+
+		$results = $this->model_setting_extension->getPaths('%/admin/controller/%.php');
+
+		foreach ($results as $result) {
+			$data['extensions'][] = str_replace('admin/controller/', '', substr($result['path'], 0, strrpos($result['path'], '.')));
+		}
+
 		if (isset($this->request->post['permission']['access'])) {
 			$data['access'] = $this->request->post['permission']['access'];
 		} elseif (isset($user_group_info['permission']['access'])) {
 			$data['access'] = $user_group_info['permission']['access'];
 		} else {
-			$data['access'] = array();
+			$data['access'] = [];
 		}
 
 		if (isset($this->request->post['permission']['modify'])) {
@@ -366,7 +379,7 @@ class ControllerUserUserPermission extends Controller {
 		} elseif (isset($user_group_info['permission']['modify'])) {
 			$data['modify'] = $user_group_info['permission']['modify'];
 		} else {
-			$data['modify'] = array();
+			$data['modify'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -1,18 +1,19 @@
 <?php
-class ControllerCommonCart extends Controller {
+namespace Application\Controller\Common;
+class Cart extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/cart');
 
 		// Totals
 		$this->load->model('setting/extension');
 
-		$totals = array();
+		$totals = [];
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$sort_order = array();
+			$sort_order = [];
 
 			$results = $this->model_setting_extension->getExtensions('total');
 
@@ -24,14 +25,14 @@ class ControllerCommonCart extends Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$this->load->model('extension/total/' . $result['code']);
+					$this->load->model('extension/opencart/total/' . $result['code']);
 
 					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-					($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
+					($this->{'model_extension_opencart_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 				}
 			}
 
-			$sort_order = array();
+			$sort_order = [];
 
 			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
@@ -45,7 +46,7 @@ class ControllerCommonCart extends Controller {
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
 
-		$data['products'] = array();
+		$data['products'] = [];
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
@@ -54,7 +55,7 @@ class ControllerCommonCart extends Controller {
 				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
 			}
 
-			$option_data = array();
+			$option_data = [];
 
 			foreach ($product['option'] as $option) {
 				if ($option['type'] != 'file') {
@@ -69,11 +70,11 @@ class ControllerCommonCart extends Controller {
 					}
 				}
 
-				$option_data[] = array(
+				$option_data[] = [
 					'name'  => $option['name'],
 					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value),
 					'type'  => $option['type']
-				);
+				];
 			}
 
 			// Display prices
@@ -87,7 +88,7 @@ class ControllerCommonCart extends Controller {
 				$total = false;
 			}
 
-			$data['products'][] = array(
+			$data['products'][] = [
 				'cart_id'   => $product['cart_id'],
 				'thumb'     => $image,
 				'name'      => $product['name'],
@@ -98,29 +99,29 @@ class ControllerCommonCart extends Controller {
 				'price'     => $price,
 				'total'     => $total,
 				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-			);
+			];
 		}
 
 		// Gift Voucher
-		$data['vouchers'] = array();
+		$data['vouchers'] = [];
 
 		if (!empty($this->session->data['vouchers'])) {
 			foreach ($this->session->data['vouchers'] as $key => $voucher) {
-				$data['vouchers'][] = array(
+				$data['vouchers'][] = [
 					'key'         => $key,
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
-				);
+				];
 			}
 		}
 
-		$data['totals'] = array();
+		$data['totals'] = [];
 
 		foreach ($totals as $total) {
-			$data['totals'][] = array(
+			$data['totals'][] = [
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency']),
-			);
+			];
 		}
 
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));

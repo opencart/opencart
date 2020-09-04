@@ -87,7 +87,6 @@ class Payment extends \System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				$code = substr($result['path'], 0, strpos('/'));
 
 				$extension = basename($result['path'], '.php');
 

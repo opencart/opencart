@@ -169,7 +169,7 @@ class Upgrade extends \System\Engine\Controller {
 
 			if ($response_info) {
 				foreach ($response_info['file'] as $file) {
-					$destination = str_replace('\\', '/', substr($file, strlen($directory . '/')));
+					$destination = str_replace('\\', '/', substr($file, strlen($file . '/')));
 
 					$path = str_replace('\\', '/', realpath(DIR_CATALOG . '../')) . '/' . $destination;
 

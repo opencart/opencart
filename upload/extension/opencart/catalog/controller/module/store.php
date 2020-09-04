@@ -5,7 +5,7 @@ class Store extends \System\Engine\Controller {
 		$status = true;
 
 		if ($this->config->get('module_store_admin')) {
-			$this->user = new \System\library\Cart\User($this->registry);
+			$this->user = new \System\Library\Cart\User($this->registry);
 
 			$status = $this->user->isLogged();
 		}

@@ -19,7 +19,7 @@ class Session extends \System\Engine\Controller {
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,
 			'SameSite' => 'strict'
-		);
+		];
 
 		oc_setcookie($this->config->get('session_name'), $this->session->getId(), $option);
 	}

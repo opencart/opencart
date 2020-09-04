@@ -28,7 +28,7 @@ class Permission extends \System\Engine\Controller {
 			];
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return new \System\Library\Action('error/permission');
+				return new \System\Engine\Action('error/permission');
 			}
 		}
 	}

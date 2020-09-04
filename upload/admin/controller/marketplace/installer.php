@@ -237,7 +237,7 @@ class Installer extends \System\Engine\Controller {
 						} else {
 							$link = '';
 						}
-					} catch(Exception $exception) {
+					} catch(\Exception $exception) {
 						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
 

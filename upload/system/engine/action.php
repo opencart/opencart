@@ -68,7 +68,7 @@ class Action {
 		if (is_callable($callable)) {
 			return call_user_func_array($callable, $args);
 		} else {
-			throw new \Exception('Error: Could not call ' . $this->route . '!');
+			return new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 	}
 }

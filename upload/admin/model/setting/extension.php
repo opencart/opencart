@@ -12,7 +12,7 @@ class Extension extends \System\Engine\Model {
 	}
 
 	public function install($type, $extension, $code) {
-		$extensions = $this->getInstalled($type);
+		$extensions = $this->getExtensionsByType($type);
 
 		if (!in_array($code, $extensions)) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = '" . $this->db->escape($extension) . "', `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");

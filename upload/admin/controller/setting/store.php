@@ -331,7 +331,7 @@ class Store extends \System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
 		foreach ($extensions as $code) {
 			if ($this->config->get('theme_' . $code . '_status')) {

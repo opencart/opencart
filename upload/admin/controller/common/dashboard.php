@@ -33,7 +33,7 @@ class Dashboard extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
-		$extensions = $this->model_setting_extension->getInstalled('dashboard');
+		$extensions = $this->model_setting_extension->getExtensionsByType('dashboard');
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {

@@ -26,6 +26,6 @@ $autoloader->register('Admin', DIR_ADMIN);
 $autoloader->register('System', DIR_SYSTEM);
 $autoloader->register('Application\Controller\Extension\Opencart', DIR_EXTENSION . 'opencart/admin/controller/');
 $autoloader->register('Application\Model\Extension\Opencart', DIR_EXTENSION . 'opencart/admin/model/');
-$autoloader->register('System\Extension\Opencart', DIR_EXTENSION . 'opencart/system/');
+//$autoloader->register('System\Extension\Opencart', DIR_EXTENSION . 'opencart/system/');
 
 start('admin');

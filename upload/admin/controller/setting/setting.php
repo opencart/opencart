@@ -199,7 +199,7 @@ class Setting extends \System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
 		foreach ($extensions as $code) {
 			if ($this->config->get('theme_' . $code . '_status')) {
@@ -374,7 +374,7 @@ class Setting extends \System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('currency');
+		$extensions = $this->model_setting_extension->getExtensionsByType('currency');
 
 		foreach ($extensions as $code) {
 			if ($this->config->get('currency_' . $code . '_status')) {
@@ -712,7 +712,7 @@ class Setting extends \System\Engine\Controller {
 		$data['captchas'] = [];
 
 		// Get a list of installed captchas
-		$extensions = $this->model_setting_extension->getInstalled('captcha');
+		$extensions = $this->model_setting_extension->getExtensionsByType('captcha');
 
 		foreach ($extensions as $code) {
 			$this->load->language('extension/captcha/' . $code, $code);

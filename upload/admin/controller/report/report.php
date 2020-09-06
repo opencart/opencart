@@ -32,7 +32,7 @@ class Report extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
-		$extensions = $this->model_setting_extension->getInstalled('report');
+		$extensions = $this->model_setting_extension->getExtensionsByType('report');
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {

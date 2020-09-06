@@ -325,7 +325,7 @@ class Layout extends \System\Engine\Controller {
 		$data['extensions'] = [];
 
 		// Get a list of installed modules
-		$extensions = $this->model_setting_extension->getInstalled('module');
+		$extensions = $this->model_setting_extension->getExtensionsByType('module');
 
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {

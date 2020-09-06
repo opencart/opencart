@@ -15,6 +15,16 @@ class Permission extends \System\Engine\Controller {
 				$route .= '/' . $part[1];
 			}
 
+			if ($part[0] == 'extension') {
+				if (isset($part[2])) {
+					$route .= '/' . $part[2];
+				}
+
+				if (isset($part[3])) {
+					$route .= '/' . $part[3];
+				}
+			}
+
 			// We want to ingore some pages from having its permission checked.
 			$ignore = [
 				'common/dashboard',

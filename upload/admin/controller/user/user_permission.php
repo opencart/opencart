@@ -363,7 +363,7 @@ class UserPermission extends \System\Engine\Controller {
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/%.php');
 
 		foreach ($results as $result) {
-			$data['extensions'][] = str_replace('admin/controller/', '', substr($result['path'], 0, strrpos($result['path'], '.')));
+			$data['extensions'][] = 'extension/' . str_replace('admin/controller/', '', substr($result['path'], 0, strrpos($result['path'], '.')));
 		}
 
 		if (isset($this->request->post['permission']['access'])) {

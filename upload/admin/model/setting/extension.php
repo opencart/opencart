@@ -1,6 +1,36 @@
 <?php
 namespace Application\Model\Setting;
 class Extension extends \System\Engine\Model {
+
+
+
+
+	public function getExtensionsByType($type) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
+
+		return $query->rows;
+	}
+
+	public function install($type, $extension, $code) {
+		$extensions = $this->getInstalled($type);
+
+		if (!in_array($code, $extensions)) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = '" . $this->db->escape($extension) . "', `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
+		}
+	}
+
+	public function uninstall($type, $code) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
+	}
+
+
+
+
+
+
+
+
 	public function addInstall($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `image` = '" . $this->db->escape($data['image']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
 	
@@ -33,7 +63,7 @@ class Extension extends \System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getInstalls($filter_data = []) {
+	public function getInstalls($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -75,7 +105,7 @@ class Extension extends \System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalInstalls($filter_data = []) {
+	public function getTotalInstalls($data = []) {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -86,6 +116,8 @@ class Extension extends \System\Engine\Model {
 
 		return $query->row['total'];
 	}
+
+
 
 
 
@@ -115,27 +147,4 @@ class Extension extends \System\Engine\Model {
 
 		return $query->rows;
 	}
-
-
-
-
-	public function getInstalled($type) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
-
-		return $query->rows;
-	}
-
-	public function install($type, $code, $extension) {
-		$extensions = $this->getInstalled($type);
-
-		if (!in_array($code, $extensions)) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = '" . $this->db->escape($extension) . "', `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
-		}
-	}
-
-	public function uninstall($type, $code) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
-	}
-
 }

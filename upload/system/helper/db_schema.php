@@ -2104,6 +2104,11 @@ function db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name' => 'extension',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
 				'name' => 'type',
 				'type' => 'varchar(32)',
 				'not_null' => true

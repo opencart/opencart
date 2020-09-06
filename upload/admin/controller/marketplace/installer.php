@@ -115,7 +115,6 @@ class Installer extends \System\Engine\Controller {
 			$data['extensions'][] = [
 				'name'       => $result['name'],
 				'version'    => $result['version'],
-				'image'      => $result['image'],
 				'author'     => $result['author'],
 				'status'     => $result['status'],
 				'link'       => $link,

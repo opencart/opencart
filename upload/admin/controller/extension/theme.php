@@ -17,15 +17,15 @@ class Theme extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->install('theme', $this->request->get['extension']);
+			$this->model_setting_extension->install('theme', $this->request->get['extension'], $this->request->get['code']);
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/theme/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/theme/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/theme/' . $this->request->get['code']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/theme/' . $this->request->get['code']);
 
-			// Call install method if it exsits
-			$this->load->controller('extension/theme/' . $this->request->get['extension'] . '/install');
+			// Call install method if it exists
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/theme/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -39,10 +39,10 @@ class Theme extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('theme', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('theme', $this->request->get['code']);
 
-			// Call uninstall method if it exsits
-			$this->load->controller('extension/theme/' . $this->request->get['extension'] . '/uninstall');
+			// Call uninstall method if it exists
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/theme/' . $this->request->get['code'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -65,21 +65,23 @@ class Theme extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$installed = [];
+		$available = [];
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/theme/%.php');
 
 		foreach ($results as $result) {
-			$installed[] = basename($result['path'], '.php');
+			$available[] = basename($result['path'], '.php');
 		}
 
-		$extensions = $this->model_setting_extension->getInstalled('theme');
+		$installed = [];
 
-		foreach ($extensions as $key => $value) {
-			if (!in_array($value, $extensions)) {
-				$this->model_setting_extension->uninstall('theme', $value);
+		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
-				unset($extensions[$key]);
+		foreach ($extensions as $key => $extension) {
+			if (in_array($extension['code'], $available)) {
+				$installed[] = $extension['code'];
+			} else {
+				$this->model_setting_extension->uninstall('theme', $extension['code']);
 			}
 		}
 
@@ -92,11 +94,11 @@ class Theme extends \System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				$code = substr($result['path'], 0, strpos('/'));
+				$extension = substr($result['path'], 0, strpos($result['path'], '/'));
 
-				$extension = basename($result['path'], '.php');
+				$code = basename($result['path'], '.php');
 
-				$this->load->language('extension/theme/' . $extension, $extension);
+				$this->load->language('extension/' . $extension . '/theme/' . $extension, $extension);
 
 				$store_data = [];
 
@@ -116,9 +118,9 @@ class Theme extends \System\Engine\Controller {
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($extension . '_heading_title'),
-					'install'   => $this->url->link('extension/theme/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
-					'uninstall' => $this->url->link('extension/theme/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
-					'installed' => in_array($extension, $extensions),
+					'install'   => $this->url->link('extension/theme/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/theme/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'installed' => in_array($code, $installed),
 					'store'     => $store_data
 				];
 			}

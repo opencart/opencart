@@ -1,6 +1,5 @@
 <?php
 namespace Application\Controller\Marketplace;
-//use \Extension\Opencart\Admin\Controller\Captcha as Captcha;
 class Extension extends \System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/extension');

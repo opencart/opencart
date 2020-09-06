@@ -17,14 +17,14 @@ class Total extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->install('total', $this->request->get['extension']);
+			$this->model_setting_extension->install('total', $this->request->get['extension'], $this->request->get['code']);
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/total/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code']);
 
-			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -40,7 +40,7 @@ class Total extends \System\Engine\Controller {
 		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
 
-			$this->load->controller('extension/total/' . $this->request->get['extension'] . '/uninstall');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -63,21 +63,23 @@ class Total extends \System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$installed = [];
+		$available = [];
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/total/%.php');
 
 		foreach ($results as $result) {
-			$installed[] = basename($result['path'], '.php');
+			$available[] = basename($result['path'], '.php');
 		}
 
-		$extensions = $this->model_setting_extension->getInstalled('total');
+		$installed = [];
 
-		foreach ($extensions as $key => $value) {
-			if (!in_array($value, $extensions)) {
-				$this->model_setting_extension->uninstall('total', $value);
+		$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
-				unset($extensions[$key]);
+		foreach ($extensions as $key => $extension) {
+			if (in_array($extension['code'], $available)) {
+				$installed[] = $extension['code'];
+			} else {
+				$this->model_setting_extension->uninstall('total', $extension['code']);
 			}
 		}
 
@@ -85,20 +87,20 @@ class Total extends \System\Engine\Controller {
 
 		if ($results) {
 			foreach ($results as $result) {
-				$code = substr($result['path'], 0, strpos('/'));
+				$extension = substr($result['path'], 0, strpos($result['path'], '/'));
 
-				$extension = basename($result['path'], '.php');
+				$code = basename($result['path'], '.php');
 
-				$this->load->language('extension/total/' . $extension, $extension);
+				$this->load->language('extension/' . $extension . '/total/' . $code, $code);
 
 				$data['extensions'][] = [
-					'name'       => $this->language->get($extension . '_heading_title'),
-					'status'     => $this->config->get('total_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'sort_order' => $this->config->get('total_' . $extension . '_sort_order'),
-					'install'    => $this->url->link('extension/total/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
-					'uninstall'  => $this->url->link('extension/total/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension),
-					'installed'  => in_array($extension, $extensions),
-					'edit'       => $this->url->link('extension/total/' . $extension, 'user_token=' . $this->session->data['user_token'])
+					'name'       => $this->language->get($code . '_heading_title'),
+					'status'     => $this->config->get('total_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'sort_order' => $this->config->get('total_' . $code . '_sort_order'),
+					'install'    => $this->url->link('extension/total/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall'  => $this->url->link('extension/total/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'installed'  => in_array($code, $installed),
+					'edit'       => $this->url->link('extension/' . $extension . '/total/' . $extension, 'user_token=' . $this->session->data['user_token'])
 				];
 			}
 		}

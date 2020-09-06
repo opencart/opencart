@@ -50,7 +50,7 @@ class Cache {
 	 * 
 	 * @return	string
      */
-	public function set(string $key, array $value) {
+	public function set(string $key, $value) {
 		return $this->adaptor->set($key, $value);
 	}
    

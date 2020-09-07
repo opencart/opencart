@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\Cart;
+namespace Opencart\System\Library\Cart;
 class User {
 	private $user_id;
 	private $user_group_id;

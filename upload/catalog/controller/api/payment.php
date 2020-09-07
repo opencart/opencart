@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Api;
-class Payment extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Api;
+class Payment extends \Opencart\System\Engine\Controller {
 	public function address() {
 		$this->load->language('api/payment');
 
@@ -176,10 +176,10 @@ class Payment extends \System\Engine\Controller {
 
 				foreach ($results as $result) {
 					if ($this->config->get('total_' . $result['code'] . '_status')) {
-						$this->load->model('extension/total/' . $result['code']);
+						$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
 
 						// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-						($this->{'model_extension_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
+						($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 					}
 				}
 
@@ -194,9 +194,9 @@ class Payment extends \System\Engine\Controller {
 
 				foreach ($results as $result) {
 					if ($this->config->get('payment_' . $result['code'] . '_status')) {
-						$this->load->model('extension/payment/' . $result['code']);
+						$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
 
-						$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
+						$method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
 
 						if ($method) {
 							if ($recurring) {

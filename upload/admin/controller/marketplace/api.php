@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Marketplace;
-class Api extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Marketplace;
+class Api extends \Opencart\System\Engine\Controller {
 	public function index() {	
 		$this->load->language('marketplace/api');
 			

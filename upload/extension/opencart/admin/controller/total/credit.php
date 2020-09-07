@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Total;
-class Credit extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Total;
+class Credit extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\Mail;
+namespace Opencart\System\Library\Mail;
 class Smtp {
 	public $smtp_hostname;
 	public $smtp_username;

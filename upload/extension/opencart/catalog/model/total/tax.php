@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Extension\Opencart\Total;
-class Tax extends \System\Engine\Model {
+namespace Opencart\Application\Model\Extension\Opencart\Total;
+class Tax extends \Opencart\System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		foreach ($taxes as $key => $value) {
 			if ($value > 0) {

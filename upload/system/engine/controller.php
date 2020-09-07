@@ -10,7 +10,7 @@
 /**
  * Controller class
  */
-namespace System\Engine;
+namespace Opencart\System\Engine;
 class Controller {
 	protected $registry;
 

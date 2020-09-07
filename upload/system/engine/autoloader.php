@@ -1,4 +1,5 @@
 <?php
+namespace Opencart\System\Engine;
 class Autoloader {
 	private $data = array();
 

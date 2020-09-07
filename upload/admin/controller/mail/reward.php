@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Reward extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Reward extends \Opencart\System\Engine\Controller {
 	public function index($route, $args, $output) {
 		if (isset($args[0])) {
 			$customer_id = $args[0];
@@ -53,14 +53,14 @@ class Reward extends \System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \System\Library\Language($language_code);
+			$language = new \Opencart\System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/reward');
 
 			$data['text_received'] = sprintf($language->get('text_received'), $points);
 			$data['text_total'] = sprintf($language->get('text_total'), $this->model_customer_customer->getRewardTotal($customer_id));
 
-			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

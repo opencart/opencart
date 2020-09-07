@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Product;
-class Search extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Product;
+class Search extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('product/search');
 

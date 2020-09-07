@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Design;
-class Banner extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Design;
+class Banner extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

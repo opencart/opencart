@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Design;
-class Theme extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Design;
+class Theme extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('design/theme');
 

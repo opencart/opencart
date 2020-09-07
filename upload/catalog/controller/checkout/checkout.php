@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Checkout;
-class Checkout extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Checkout;
+class Checkout extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {

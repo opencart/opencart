@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Localisation;
-class Language extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Localisation;
+class Language extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

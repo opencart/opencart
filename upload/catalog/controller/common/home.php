@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class Home extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class Home extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->document->setTitle($this->config->get('config_meta_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));

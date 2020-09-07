@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Customer;
-class CustomField extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Customer;
+class CustomField extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

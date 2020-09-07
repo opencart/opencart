@@ -10,7 +10,7 @@
 /**
 * Config class
 */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Config {
 	private $data = [];
     

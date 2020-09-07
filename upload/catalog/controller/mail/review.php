@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Review extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Review extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after
 	public function index(&$route, &$args, &$output) {
 		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {
@@ -23,7 +23,7 @@ class Review extends \System\Engine\Controller {
 				$data['rating'] = (int)$args[1]['rating'];
 				$data['text'] = $args[1]['text'];
 
-				$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 				$mail->smtp_username = $this->config->get('config_mail_smtp_username');

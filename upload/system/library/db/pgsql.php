@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\DB;
+namespace Opencart\System\Library\DB;
 final class PgSQL {
 	private $connection;
 

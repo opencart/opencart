@@ -10,9 +10,7 @@
 /**
  * Loader class
  */
-namespace System\Engine;
-use \Application\Controller as Controller;
-use \Application\Model as Model;
+namespace Opencart\System\Engine;
 final class Loader {
 	protected $registry;
 
@@ -46,7 +44,7 @@ final class Loader {
 		$this->registry->get('event')->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 		// Make sure its only the last event that returns an output if required.
-		$action = new \System\Engine\Action($route);
+		$action = new \Opencart\System\Engine\Action($route);
 		$output = $action->execute($this->registry, $args);
 
 		// Trigger the post events
@@ -69,10 +67,10 @@ final class Loader {
 		// Check if the requested model is already stored in the registry.
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
 			// Converting a route path to a class name
-			$class = 'Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+			$class = 'Opencart\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 			if (class_exists($class)) {
-				$proxy = new \System\Engine\Proxy();
+				$proxy = new \Opencart\System\Engine\Proxy();
 
 				// Overriding models is a little harder so we have to use PHP's magic methods.
 				foreach (get_class_methods($class) as $method) {
@@ -111,7 +109,7 @@ final class Loader {
 		$this->registry->get('event')->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code]);
 
 		// Make sure its only the last event that returns an output if required.
-		$template = new \System\Library\Template($this->registry->get('config')->get('template_engine'));
+		$template = new \Opencart\System\Library\Template($this->registry->get('config')->get('template_engine'));
 
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);
@@ -142,7 +140,7 @@ final class Loader {
 
 		$this->registry->get('event')->trigger('library/' . $trigger . '/before', [&$route, &$args]);
 
-		$class = '\System\Library\\' . str_replace('/', '\\', $route);
+		$class = 'Opencart\System\Library\\' . str_replace('/', '\\', $route);
 
 		if (class_exists($class)) {
 			$reflection = new \ReflectionClass($class);
@@ -251,7 +249,7 @@ final class Loader {
 				// Check if the model has already been initialised or not
 				if (!$this->registry->has($key)) {
 					// Create the class name from the key
-					$class = 'Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
+					$class = 'Opencart\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
 
 					$model = new $class($this->registry);
 

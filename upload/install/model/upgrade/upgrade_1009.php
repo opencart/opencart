@@ -1,13 +1,13 @@
 <?php
 namespace Install\Model\Upgrade;
-class Upgrade1009 extends \System\Engine\Model {
+class Upgrade1009 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Affiliate customer merge code
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate'");
 		
 		if ($query->num_rows) {
 			// Removing affiliate and moving to the customer account.
-			$config = new \System\Library\Config();
+			$config = new \Opencart\System\Library\Config();
 			
 			$setting_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0'");
 			

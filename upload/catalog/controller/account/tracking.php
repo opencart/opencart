@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Account;
-class Tracking extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Account;
+class Tracking extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
@@ -53,7 +53,7 @@ class Tracking extends \System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('account/tracking', $data));
 		} else {
-			return new \System\Engine\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 

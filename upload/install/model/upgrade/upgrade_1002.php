@@ -1,6 +1,6 @@
 <?php
 namespace Install\Model\Upgrade;
-class Upgrade1002 extends \System\Engine\Model {
+class Upgrade1002 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// setting
 		$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_product_limit'");

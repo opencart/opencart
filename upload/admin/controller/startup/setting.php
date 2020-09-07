@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class Startup extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class Startup extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Store
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/') . "'");

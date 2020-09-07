@@ -11,7 +11,7 @@
 /**
  * URL class.
  */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Url {
 	/** @var string */
 	private $url;

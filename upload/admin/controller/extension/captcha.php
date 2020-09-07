@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension;
-class Captcha extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension;
+class Captcha extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

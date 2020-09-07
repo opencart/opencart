@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Checkout;
-class ShippingMethod extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Checkout;
+class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 
@@ -14,9 +14,9 @@ class ShippingMethod extends \System\Engine\Controller {
 
 			foreach ($results as $result) {
 				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
-					$this->load->model('extension/shipping/' . $result['code']);
+					$this->load->model('extension/' . $result['extension'] . '/shipping/' . $result['code']);
 
-					$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+					$quote = $this->{'model_extension_' . $result['extension'] . '_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
 					if ($quote) {
 						$method_data[$result['code']] = [

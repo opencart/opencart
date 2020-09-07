@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Account;
-class Reset extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Account;
+class Reset extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

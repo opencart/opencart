@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 */
 
-namespace System\Library\Session;
+namespace Opencart\System\Library\Session;
 final class DB {
 	public $expire = 3600;
 

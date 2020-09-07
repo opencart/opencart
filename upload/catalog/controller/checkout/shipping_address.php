@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Checkout;
-class ShippingAddress extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Checkout;
+class ShippingAddress extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 

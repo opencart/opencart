@@ -1,14 +1,15 @@
 <?php
+namespace Opencart;
 function start($application) {
 	// Autoloader
-	$autoloader = new Autoloader();
+	$autoloader = new System\Engine\Autoloader();
 
 	// Registry
-	$registry = new \System\Engine\Registry();
+	$registry = new System\Engine\Registry();
 	$registry->set('autoloader', $autoloader);
 
 	// Config
-	$config = new \System\Library\Config();
+	$config = new System\Library\Config();
 
 	// Load the default config
 	$config->load('default');
@@ -16,7 +17,7 @@ function start($application) {
 	$registry->set('config', $config);
 
 	// Log
-	$log = new \System\Library\Log($config->get('error_filename'));
+	$log = new System\Library\Log($config->get('error_filename'));
 	$registry->set('log', $log);
 
 	date_default_timezone_set($config->get('date_timezone'));
@@ -67,28 +68,28 @@ function start($application) {
 	});
 
 	// Event
-	$event = new \System\Engine\Event($registry);
+	$event = new System\Engine\Event($registry);
 	$registry->set('event', $event);
 
 	// Event Register
 	if ($config->has('action_event')) {
 		foreach ($config->get('action_event') as $key => $value) {
 			foreach ($value as $priority => $action) {
-				$event->register($key, new \System\Engine\Action($action), $priority);
+				$event->register($key, new System\Engine\Action($action), $priority);
 			}
 		}
 	}
 
 	// Loader
-	$loader = new \System\Engine\Loader($registry);
+	$loader = new System\Engine\Loader($registry);
 	$registry->set('load', $loader);
 
 	// Request
-	$request = new \System\Library\Request();
+	$request = new System\Library\Request();
 	$registry->set('request', $request);
 
 	// Response
-	$response = new \System\Library\Response();
+	$response = new System\Library\Response();
 	foreach ($config->get('response_header') as $header) {
 		$response->addHeader($header);
 	}
@@ -97,7 +98,7 @@ function start($application) {
 
 	// Database
 	if ($config->get('db_autostart')) {
-		$db = new \System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+		$db = new System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
 		$registry->set('db', $db);
 
 		// Sync PHP and DB time zones
@@ -105,7 +106,7 @@ function start($application) {
 	}
 
 	// Session
-	$session = new \System\Library\Session($config->get('session_engine'), $registry);
+	$session = new System\Library\Session($config->get('session_engine'), $registry);
 	$registry->set('session', $session);
 
 	if ($config->get('session_autostart')) {
@@ -143,16 +144,16 @@ function start($application) {
 	}
 
 	// Cache
-	$registry->set('cache', new \System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
+	$registry->set('cache', new System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 	// Url
-	$registry->set('url', new \System\Library\Url($config->get('site_url')));
+	$registry->set('url', new System\Library\Url($config->get('site_url')));
 
 	// Language
-	$registry->set('language', new \System\Library\Language($config->get('language_directory')));
+	$registry->set('language', new System\Library\Language($config->get('language_directory')));
 
 	// Document
-	$registry->set('document', new \System\Library\Document());
+	$registry->set('document', new System\Library\Document());
 
 	// Config Autoload
 	if ($config->has('config_autoload')) {
@@ -191,13 +192,13 @@ function start($application) {
 
 	// Route
 	if (!empty($request->get['route'])) {
-		$action = new \System\Engine\Action((string)$request->get['route']);
+		$action = new System\Engine\Action((string)$request->get['route']);
 	} else {
-		$action = new \System\Engine\Action($config->get('action_default'));
+		$action = new System\Engine\Action($config->get('action_default'));
 	}
 
 	// Action error object to execute if any other actions can not be executed.
-	$error = new \System\Engine\Action($config->get('action_error'));
+	$error = new System\Engine\Action($config->get('action_error'));
 
 	$pre_actions = $config->get('action_pre_action');
 
@@ -206,11 +207,11 @@ function start($application) {
 
 	// Pre Actions
 	foreach ($pre_actions as $pre_action) {
-		$pre_action = new \System\Engine\Action($pre_action);
+		$pre_action = new System\Engine\Action($pre_action);
 
 		$result = $pre_action->execute($registry);
 
-		if ($result instanceof \System\Engine\Action) {
+		if ($result instanceof System\Engine\Action) {
 			$action = $result;
 
 			break;

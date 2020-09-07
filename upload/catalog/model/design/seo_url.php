@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Design;
-class SeoUrl extends \System\Engine\Model {
+namespace Opencart\Application\Model\Design;
+class SeoUrl extends \Opencart\System\Engine\Model {
 	public $keyword = [];
 
 	public function getSeoUrlByKeyword($keyword) {

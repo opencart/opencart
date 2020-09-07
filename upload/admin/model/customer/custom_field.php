@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Customer;
-class CustomField extends \System\Engine\Model {
+namespace Opencart\Application\Model\Customer;
+class CustomField extends \Opencart\System\Engine\Model {
 	public function addCustomField($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape((string)$data['type']) . "', value = '" . $this->db->escape((string)$data['value']) . "', validation = '" . $this->db->escape((string)$data['validation']) . "', location = '" . $this->db->escape((string)$data['location']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 

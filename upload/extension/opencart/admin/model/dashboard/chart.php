@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Extension\Opencart\Dashboard;
-class Chart extends \System\Engine\Model {
+namespace Opencart\Application\Model\Extension\Opencart\Dashboard;
+class Chart extends \Opencart\System\Engine\Model {
 	public function getTotalOrdersByDay() {
 		$implode = [];
 

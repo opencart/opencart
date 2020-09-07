@@ -13,7 +13,7 @@
  * Stores the response so the correct headers can go out before the response output is shown.
  *
 */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Response {
 	private $headers = [];
 	private $level = 0;

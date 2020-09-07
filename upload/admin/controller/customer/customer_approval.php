@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Customer;
-class CustomerApproval extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Customer;
+class CustomerApproval extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('customer/customer_approval');
 

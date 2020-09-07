@@ -1,6 +1,6 @@
 <?php
 namespace Install\Model\Upgrade;
-class Upgrade1007 extends \System\Engine\Model {
+class Upgrade1007 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Download
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `filename` `filename` varchar(140) NOT NULL");

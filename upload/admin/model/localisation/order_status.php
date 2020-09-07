@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Localisation;
-class OrderStatus extends \System\Engine\Model {
+namespace Opencart\Application\Model\Localisation;
+class OrderStatus extends \Opencart\System\Engine\Model {
 	public function addOrderStatus($data) {
 		foreach ($data['order_status'] as $language_id => $value) {
 			if (isset($order_status_id)) {

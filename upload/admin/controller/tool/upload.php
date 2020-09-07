@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Tool;
-class Upload extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Tool;
+class Upload extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

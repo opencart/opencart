@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Customer;
-class CustomerGroup extends \System\Engine\Model {
+namespace Opencart\Application\Model\Customer;
+class CustomerGroup extends \Opencart\System\Engine\Model {
 	public function addCustomerGroup($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_group SET approval = '" . (int)$data['approval'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 

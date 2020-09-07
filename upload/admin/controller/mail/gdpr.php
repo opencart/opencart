@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Gdpr extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Gdpr extends \Opencart\System\Engine\Controller {
 	// admin/model/customer/gdpr/editStatus
 	public function index(&$route, &$args, &$output) {
 		$this->load->model('customer/gdpr');
@@ -44,7 +44,7 @@ class Gdpr extends \System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new \System\Library\Language($language_code);
+		$language = new \Opencart\System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_export');
 
@@ -187,7 +187,7 @@ class Gdpr extends \System\Engine\Controller {
 			$data['store_url'] = HTTPS_CATALOG;
 		}
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -215,7 +215,7 @@ class Gdpr extends \System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new \System\Library\Language($language_code);
+		$language = new \Opencart\System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_approve');
 
@@ -257,7 +257,7 @@ class Gdpr extends \System\Engine\Controller {
 			$data['store_url'] = HTTPS_CATALOG;
 		}
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -285,7 +285,7 @@ class Gdpr extends \System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new \System\Library\Language($language_code);
+		$language = new \Opencart\System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_deny');
 
@@ -328,7 +328,7 @@ class Gdpr extends \System\Engine\Controller {
 			$data['contact'] = HTTPS_CATALOG . 'index.php?route=information/contact';
 		}
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -356,7 +356,7 @@ class Gdpr extends \System\Engine\Controller {
 			$language_code = $this->config->get('config_language');
 		}
 
-		$language = new \System\Library\Language($language_code);
+		$language = new \Opencart\System\Library\Language($language_code);
 		$language->load($language_code);
 		$language->load('mail/gdpr_delete');
 
@@ -400,7 +400,7 @@ class Gdpr extends \System\Engine\Controller {
 			$data['contact'] = HTTPS_CATALOG . 'index.php?route=information/contact';
 		}
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');

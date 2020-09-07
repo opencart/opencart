@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Account;
-class Transaction extends \System\Engine\Model {
+namespace Opencart\Application\Model\Account;
+class Transaction extends \Opencart\System\Engine\Model {
 	public function getTransactions($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE customer_id = '" . (int)$this->customer->getId() . "'";
 

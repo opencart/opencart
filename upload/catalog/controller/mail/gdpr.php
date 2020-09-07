@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Gdpr extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Gdpr extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/gdpr/addGdpr
 	public function index(&$route, &$args, &$output) {
 		// $args[0] $code
@@ -26,7 +26,7 @@ class Gdpr extends \System\Engine\Controller {
 		$data['store_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 		$data['store_url'] = $this->config->get('config_url');
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');

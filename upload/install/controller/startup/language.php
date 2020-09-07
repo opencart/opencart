@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class Language extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class Language extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Default language code
 		$code = $this->config->get('language_default');
@@ -32,7 +32,7 @@ class Language extends \System\Engine\Controller {
 		}
 		
 		// Language
-		$language = new \System\Library\Language($this->session->data['language']);
+		$language = new \Opencart\System\Library\Language($this->session->data['language']);
 		$language->load($this->session->data['language']);
 		$this->registry->set('language', $language);
 	}

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Report;
-class Marketing extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Report;
+class Marketing extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/report/marketing');
 

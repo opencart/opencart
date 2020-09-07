@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class Dashboard extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class Dashboard extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/dashboard');
 

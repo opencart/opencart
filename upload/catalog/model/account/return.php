@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Account;
-class Returns extends \System\Engine\Model {
+namespace Opencart\Application\Model\Account;
+class Returns extends \Opencart\System\Engine\Model {
 	public function addReturn($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET order_id = '" . (int)$data['order_id'] . "', product_id = '" . (int)$data['product_id'] . "', customer_id = '" . (int)$this->customer->getId() . "', firstname = '" . $this->db->escape((string)$data['firstname']) . "', lastname = '" . $this->db->escape((string)$data['lastname']) . "', email = '" . $this->db->escape((string)$data['email']) . "', telephone = '" . $this->db->escape((string)$data['telephone']) . "', product = '" . $this->db->escape((string)$data['product']) . "', model = '" . $this->db->escape((string)$data['model']) . "', quantity = '" . (int)$data['quantity'] . "', opened = '" . (int)$data['opened'] . "', return_reason_id = '" . (int)$data['return_reason_id'] . "', return_status_id = '" . (int)$this->config->get('config_return_status_id') . "', comment = '" . $this->db->escape((string)$data['comment']) . "', date_ordered = '" . $this->db->escape((string)$data['date_ordered']) . "', date_added = NOW(), date_modified = NOW()");
 

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Setting;
-class Store extends \System\Engine\Model {
+namespace Opencart\Application\Model\Setting;
+class Store extends \Opencart\System\Engine\Model {
 	public function getStores() {
 		$store_data = $this->cache->get('store');
 

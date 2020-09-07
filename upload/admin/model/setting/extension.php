@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Setting;
-class Extension extends \System\Engine\Model {
+namespace Opencart\Application\Model\Setting;
+class Extension extends \Opencart\System\Engine\Model {
 
 
 

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Sale;
-class Recurring extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Sale;
+class Recurring extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
@@ -425,7 +425,7 @@ class Recurring extends \System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('sale/recurring_info', $data));
 		} else {
-			return new \System\Engine\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 }

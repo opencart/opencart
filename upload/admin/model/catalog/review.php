@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Catalog;
-class Review extends \System\Engine\Model {
+namespace Opencart\Application\Model\Catalog;
+class Review extends \Opencart\System\Engine\Model {
 	public function addReview($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape((string)$data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = '" . $this->db->escape((string)$data['date_added']) . "'");
 

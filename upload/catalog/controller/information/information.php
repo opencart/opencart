@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Information;
-class Information extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Information;
+class Information extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('information/information');
 

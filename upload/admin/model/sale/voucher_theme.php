@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Sale;
-class VoucherTheme extends \System\Engine\Model {
+namespace Opencart\Application\Model\Sale;
+class VoucherTheme extends \Opencart\System\Engine\Model {
 	public function addVoucherTheme($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_theme` SET `image` = '" . $this->db->escape((string)$data['image']) . "'");
 

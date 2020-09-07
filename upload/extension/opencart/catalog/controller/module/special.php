@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Module;
-class Special extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Module;
+class Special extends \Opencart\System\Engine\Controller {
 	public function index($setting) {
 		$this->load->language('extension/module/special');
 

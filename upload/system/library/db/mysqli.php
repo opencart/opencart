@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\DB;
+namespace Opencart\System\Library\DB;
 class MySQLi {
 	private $connection;
 	private $connected;

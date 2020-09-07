@@ -10,7 +10,7 @@
 /**
 * Document class
 */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Document {
 	private $title;
 	private $description;

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Report;
-class Statistics extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Report;
+class Statistics extends \Opencart\System\Engine\Controller {
 	private $error = [];
 	
 	public function index() {

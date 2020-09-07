@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Checkout;
-class Recurring extends \System\Engine\Model {
+namespace Opencart\Application\Model\Checkout;
+class Recurring extends \Opencart\System\Engine\Model {
 	public function addRecurring($order_id, $description, $item) {
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring` SET 

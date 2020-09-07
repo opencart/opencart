@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Catalog;
-class Information extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Catalog;
+class Information extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

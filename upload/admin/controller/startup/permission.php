@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class Permission extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class Permission extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
 			$route = '';
@@ -33,7 +33,7 @@ class Permission extends \System\Engine\Controller {
 			];
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return new \System\Engine\Action('error/permission');
+				return new \Opencart\System\Engine\Action('error/permission');
 			}
 		}
 	}

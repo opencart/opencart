@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Localisation;
-class ReturnReason extends \System\Engine\Model {
+namespace Opencart\Application\Model\Localisation;
+class ReturnReason extends \Opencart\System\Engine\Model {
 	public function addReturnReason($data) {
 		foreach ($data['return_reason'] as $language_id => $value) {
 			if (isset($return_reason_id)) {

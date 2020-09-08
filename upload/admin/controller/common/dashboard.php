@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class Dashboard extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class Dashboard extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/dashboard');
 
@@ -33,18 +33,18 @@ class Dashboard extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
-		$extensions = $this->model_setting_extension->getInstalled('dashboard');
+		$extensions = $this->model_setting_extension->getExtensionsByType('dashboard');
 
 		// Add all the modules which have multiple settings for each module
-		foreach ($extensions as $code) {
-			if ($this->config->get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extension/dashboard/' . $code)) {
-				$output = $this->load->controller('extension/' . '/dashboard/' . $code . '/dashboard');
+		foreach ($extensions as $extension) {
+			if ($this->config->get('dashboard_' . $extension['code'] . '_status') && $this->user->hasPermission('access', 'extension/' . $extension['extension'] . '/dashboard/' . $extension['code'])) {
+				$output = $this->load->controller('extension/' . $extension['extension'] . '/dashboard/' . $extension['code'] . '/dashboard');
 
 				if ($output) {
 					$dashboards[] = [
-						'code'       => $code,
-						'width'      => $this->config->get('dashboard_' . $code . '_width'),
-						'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
+						'code'       => $extension['code'],
+						'width'      => $this->config->get('dashboard_' . $extension['code'] . '_width'),
+						'sort_order' => $this->config->get('dashboard_' . $extension['code'] . '_sort_order'),
 						'output'     => $output
 					];
 				}

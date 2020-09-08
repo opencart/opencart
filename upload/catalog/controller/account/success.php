@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Account;
-class Success extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Account;
+class Success extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('account/success');
 

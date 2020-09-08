@@ -2,8 +2,8 @@
 /*
 Amazon S3 system wil be used for storing cloud data
 */
-namespace Application\Model\Tool;
-class S3 extends \System\Engine\Model {
+namespace Opencart\Application\Model\Tool;
+class S3 extends \Opencart\System\Engine\Model {
 	public function addFile($file, $path) {
 		try {
 

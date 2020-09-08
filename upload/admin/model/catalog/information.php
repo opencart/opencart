@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Catalog;
-class Information extends \System\Engine\Model {
+namespace Opencart\Application\Model\Catalog;
+class Information extends \Opencart\System\Engine\Model {
 	public function addInformation($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (int)$data['status'] . "'");
 

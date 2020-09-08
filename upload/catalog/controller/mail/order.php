@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Order extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Order extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];
@@ -58,7 +58,7 @@ class Order extends \System\Engine\Controller {
 		}
 
 		// Load the language for any mails that might be required to be sent out
-		$language = new \System\Library\Language($order_info['language_code']);
+		$language = new \Opencart\System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_add');
 
@@ -267,7 +267,7 @@ class Order extends \System\Engine\Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -284,7 +284,7 @@ class Order extends \System\Engine\Controller {
 	}
 
 	public function edit($order_info, $order_status_id, $comment, $notify) {
-		$language = new \System\Library\Language($order_info['language_code']);
+		$language = new \Opencart\System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_edit');
 
@@ -324,7 +324,7 @@ class Order extends \System\Engine\Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -465,7 +465,7 @@ class Order extends \System\Engine\Controller {
 
 			$data['comment'] = strip_tags($order_info['comment']);
 
-			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

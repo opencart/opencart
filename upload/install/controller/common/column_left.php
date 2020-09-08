@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class ColumnLeft extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class ColumnLeft extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/column_left');
 
@@ -34,7 +34,7 @@ class ColumnLeft extends \System\Engine\Controller {
 		foreach ($languages as $code) {
 			$code = basename($code);
 
-			$language = new \System\Library\Language($code);
+			$language = new \Opencart\System\Library\Language($code);
 			$language->load('common/column_left');
 
 			$data['languages'][] = [

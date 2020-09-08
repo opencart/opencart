@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class Cron extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class Cron extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$time = time();
 

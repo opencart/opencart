@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Catalog;
-class Recurring extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Catalog;
+class Recurring extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

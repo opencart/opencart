@@ -10,7 +10,7 @@
 /**
 * Image class
 */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Image {
 	private $file;
 	private $image;

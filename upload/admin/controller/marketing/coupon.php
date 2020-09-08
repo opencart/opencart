@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Marketing;
-class Coupon extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Marketing;
+class Coupon extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

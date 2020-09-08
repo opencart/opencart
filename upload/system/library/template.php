@@ -10,7 +10,7 @@
 /**
 * Template class
 */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Template {
 	private $adaptor;
 
@@ -21,7 +21,7 @@ class Template {
 	 *
 	 */
 	public function __construct($adaptor) {
-		$class = '\System\Library\Template\\' . $adaptor;
+		$class = 'Opencart\System\Library\Template\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class();

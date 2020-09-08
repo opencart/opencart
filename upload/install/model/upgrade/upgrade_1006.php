@@ -1,6 +1,6 @@
 <?php
 namespace Install\Model\Upgrade;
-class Upgrade1006 extends \System\Engine\Model {
+class Upgrade1006 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Update some language settings
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");

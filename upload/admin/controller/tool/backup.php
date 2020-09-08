@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Tool;
-class Backup extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Tool;
+class Backup extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/backup');
 

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class Cookie extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class Cookie extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->language('common/cookie');

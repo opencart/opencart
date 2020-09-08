@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class Security extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class Security extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/security');
 

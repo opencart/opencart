@@ -1,6 +1,6 @@
 <?php
 namespace Install\Model\Upgrade;
-class Upgrade1004 extends \System\Engine\Model {
+class Upgrade1004 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'required'");

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Api;
-class Customer extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Api;
+class Customer extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/customer');
 

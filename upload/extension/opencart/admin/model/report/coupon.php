@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Extension\Opencart\Report;
-class Coupon extends \System\Engine\Model {
+namespace Opencart\Application\Model\Extension\Opencart\Report;
+class Coupon extends \Opencart\System\Engine\Model {
 	public function getCoupons($data = []) {
 		$sql = "SELECT ch.coupon_id, c.name, c.code, COUNT(DISTINCT ch.order_id) AS `orders`, SUM(ch.amount) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.coupon_id = c.coupon_id)";
 

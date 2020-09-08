@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Install;
-class Step2 extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Install;
+class Step2 extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Payment;
-class BankTransfer extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Payment;
+class BankTransfer extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

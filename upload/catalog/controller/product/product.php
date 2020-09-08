@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Product;
-class Product extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Product;
+class Product extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

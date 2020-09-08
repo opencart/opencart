@@ -10,7 +10,7 @@
 /**
 * Registry class
 */
-namespace System\Engine;
+namespace Opencart\System\Engine;
 class Registry {
 	private $data = [];
 

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Tool;
-class Upload extends \System\Engine\Model {
+namespace Opencart\Application\Model\Tool;
+class Upload extends \Opencart\System\Engine\Model {
 	public function addUpload($name, $filename) {
 		$code = sha1(uniqid(mt_rand(), true));
 

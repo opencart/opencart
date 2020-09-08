@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Tool;
-class Log extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Tool;
+class Log extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {		

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Report;
-class Online extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Report;
+class Online extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('report/online');
 

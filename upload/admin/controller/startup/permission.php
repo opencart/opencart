@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class Permission extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class Permission extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
 			$route = '';
@@ -13,6 +13,11 @@ class Permission extends \System\Engine\Controller {
 
 			if (isset($part[1])) {
 				$route .= '/' . $part[1];
+			}
+
+			if ($part[0] == 'extension' && isset($part[2]) && isset($part[3])) {
+				$route .= '/' . $part[2];
+				$route .= '/' . $part[3];
 			}
 
 			// We want to ingore some pages from having its permission checked.
@@ -28,7 +33,7 @@ class Permission extends \System\Engine\Controller {
 			];
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return new \System\Library\Action('error/permission');
+				return new \Opencart\System\Engine\Action('error/permission');
 			}
 		}
 	}

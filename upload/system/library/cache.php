@@ -10,7 +10,7 @@
 /**
 * Cache class
 */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Cache {
 	private $adaptor;
 	
@@ -22,7 +22,7 @@ class Cache {
 	 *
  	*/
 	public function __construct(string $adaptor, $expire = 3600) {
-		$class = 'System\Library\Cache\\' . $adaptor;
+		$class = 'Opencart\System\Library\Cache\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class($expire);
@@ -50,7 +50,7 @@ class Cache {
 	 * 
 	 * @return	string
      */
-	public function set(string $key, array $value) {
+	public function set(string $key, $value) {
 		return $this->adaptor->set($key, $value);
 	}
    

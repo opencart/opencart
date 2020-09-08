@@ -1,6 +1,6 @@
 <?php
 namespace Install\Model\Upgrade;
-class Upgrade1003 extends \System\Engine\Model {
+class Upgrade1003 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// affiliate_activity
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");

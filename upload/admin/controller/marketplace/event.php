@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Marketplace;
-class Event extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Marketplace;
+class Event extends \Opencart\System\Engine\Controller {
 	private $error = [];
 	
 	public function index() {

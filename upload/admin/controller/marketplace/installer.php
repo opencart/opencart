@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Marketplace;
-class Installer extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Marketplace;
+class Installer extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/installer');
 
@@ -115,7 +115,6 @@ class Installer extends \System\Engine\Controller {
 			$data['extensions'][] = [
 				'name'       => $result['name'],
 				'version'    => $result['version'],
-				'image'      => $result['image'],
 				'author'     => $result['author'],
 				'status'     => $result['status'],
 				'link'       => $link,

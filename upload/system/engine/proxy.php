@@ -10,7 +10,7 @@
 /**
  * Proxy class
  */
-namespace System\Engine;
+namespace Opencart\System\Engine;
 class Proxy {
 	/**
 	 * Magic Method Get

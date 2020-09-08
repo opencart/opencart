@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Account;
-class Order extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Account;
+class Order extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
@@ -334,7 +334,7 @@ class Order extends \System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('account/order_info', $data));
 		} else {
-			return new \System\Engine\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 

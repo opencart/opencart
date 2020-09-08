@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Setting;
-class Store extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Setting;
+class Store extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
@@ -327,19 +327,19 @@ class Store extends \System\Engine\Controller {
 		$data['themes'] = [];
 
 		// Create a new language container so we don't pollute the current one
-		$language = new \System\Library\Language($this->config->get('config_language'));
+		$language = new \Opencart\System\Library\Language($this->config->get('config_language'));
 
 		$this->load->model('setting/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
-		foreach ($extensions as $code) {
-			if ($this->config->get('theme_' . $code . '_status')) {
-				$this->load->language('extension/theme/' . $code, 'extension');
+		foreach ($extensions as $extension) {
+			if ($this->config->get('theme_' . $extension['code'] . '_status')) {
+				$this->load->language('extension/theme/' . $extension['code'], 'extension');
 
 				$data['themes'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
-					'value' => $code
+					'value' => $extension['code']
 				];
 			}
 		}

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class Marketing extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class Marketing extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Tracking Code
 		if (isset($this->request->get['tracking'])) {

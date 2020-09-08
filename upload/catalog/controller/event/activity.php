@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Event;
-class Activity extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Event;
+class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after
 	public function addCustomer(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity')) {

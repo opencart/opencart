@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Marketing;
-class Marketing extends \System\Engine\Model {
+namespace Opencart\Application\Model\Marketing;
+class Marketing extends \Opencart\System\Engine\Model {
 	public function addMarketing($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape((string)$data['name']) . "', description = '" . $this->db->escape((string)$data['description']) . "', code = '" . $this->db->escape((string)$data['code']) . "', date_added = NOW()");
 

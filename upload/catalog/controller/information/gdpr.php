@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Information;
-class Gdpr extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Information;
+class Gdpr extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->model('catalog/information');
 
@@ -42,7 +42,7 @@ class Gdpr extends \System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('information/gdpr', $data));
 		} else {
-			return new \System\Library\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 
@@ -180,7 +180,7 @@ class Gdpr extends \System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('common/success', $data));
 		} else {
-			return new \System\Library\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 }

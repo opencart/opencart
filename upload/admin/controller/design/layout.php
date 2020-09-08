@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Design;
-class Layout extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Design;
+class Layout extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
@@ -325,27 +325,27 @@ class Layout extends \System\Engine\Controller {
 		$data['extensions'] = [];
 
 		// Get a list of installed modules
-		$extensions = $this->model_setting_extension->getInstalled('module');
+		$extensions = $this->model_setting_extension->getExtensionsByType('module');
 
 		// Add all the modules which have multiple settings for each module
-		foreach ($extensions as $code) {
-			$this->load->language('extension/module/' . $code, $code);
+		foreach ($extensions as $extension) {
+			$this->load->language('extension/' . $extension['extension'] . '/module/' . $extension['code'], $extension['code']);
 
 			$module_data = [];
 
-			$modules = $this->model_setting_module->getModulesByCode($code);
+			$modules = $this->model_setting_module->getModulesByCode($extension['code']);
 
 			foreach ($modules as $module) {
 				$module_data[] = [
 					'name' => strip_tags($module['name']),
-					'code' => $code . '.' .  $module['module_id']
+					'code' => $extension['extension'] . '.' .  $extension['code'] . '.' .  $module['module_id']
 				];
 			}
 
-			if ($this->config->has('module_' . $code . '_status') || $module_data) {
+			if ($this->config->has('module_' . $extension['code'] . '_status') || $module_data) {
 				$data['extensions'][] = [
-					'name'   => strip_tags($this->language->get($code . '_heading_title')),
-					'code'   => $code,
+					'name'   => strip_tags($this->language->get($extension['code'] . '_heading_title')),
+					'code'   => $extension['code'],
 					'module' => $module_data
 				];
 			}
@@ -371,17 +371,17 @@ class Layout extends \System\Engine\Controller {
 					'code'       => $layout_module['code'],
 					'position'   => $layout_module['position'],
 					'sort_order' => $layout_module['sort_order'],
-					'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'])
+					'edit'       => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'])
 				];
 			} else {
-				$module_info = $this->model_setting_module->getModule($part[1]);
+				$module_info = $this->model_setting_module->getModule($part[2]);
 
 				if ($module_info) {
 					$data['layout_modules'][] = [
 						'code'       => $layout_module['code'],
 						'position'   => $layout_module['position'],
 						'sort_order' => $layout_module['sort_order'],
-						'edit'   	 => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[1])
+						'edit'   	 => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[2])
 					];
 				}
 			}

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Extension\Opencart\Shipping;
-class Item extends \System\Engine\Model {
+namespace Opencart\Application\Model\Extension\Opencart\Shipping;
+class Item extends \Opencart\System\Engine\Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/item');
 

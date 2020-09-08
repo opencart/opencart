@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Account;
-class Reward extends \System\Engine\Model {
+namespace Opencart\Application\Model\Account;
+class Reward extends \Opencart\System\Engine\Model {
 	public function getRewards($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE customer_id = '" . (int)$this->customer->getId() . "'";
 

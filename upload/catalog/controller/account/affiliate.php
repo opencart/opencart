@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Account;
-class Affiliate extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Account;
+class Affiliate extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function add() {

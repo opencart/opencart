@@ -1,11 +1,11 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Module;
-class Store extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Module;
+class Store extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$status = true;
 
 		if ($this->config->get('module_store_admin')) {
-			$this->user = new \System\library\Cart\User($this->registry);
+			$this->user = new \Opencart\System\library\Cart\User($this->registry);
 
 			$status = $this->user->isLogged();
 		}

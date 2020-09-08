@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Localisation;
-class TaxClass extends \System\Engine\Model {
+namespace Opencart\Application\Model\Localisation;
+class TaxClass extends \Opencart\System\Engine\Model {
 	public function addTaxClass($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape((string)$data['title']) . "', description = '" . $this->db->escape((string)$data['description']) . "', date_added = NOW()");
 

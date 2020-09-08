@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Extension\Opencart\Fraud;
-class Ip extends \System\Engine\Model {
+namespace Opencart\Application\Model\Extension\Opencart\Fraud;
+class Ip extends \Opencart\System\Engine\Model {
 	public function check($order_info) {
 		$status = false;
 

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Returns extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Returns extends \Opencart\System\Engine\Controller {
 	public function index($route, $args, $output) {
 		if (isset($args[0])) {
 			$return_id = $args[0];
@@ -42,7 +42,7 @@ class Returns extends \System\Engine\Controller {
 					$language_code = $this->config->get('config_language');
 				}
 
-				$language = new \System\Library\Language($language_code);
+				$language = new \Opencart\System\Library\Language($language_code);
 				$language->load($language_code);
 				$language->load('mail/return');
 
@@ -51,7 +51,7 @@ class Returns extends \System\Engine\Controller {
 				$data['return_status'] = $return_info['return_status'];
 				$data['comment'] = strip_tags(html_entity_decode($comment, ENT_QUOTES, 'UTF-8'));
 
-				$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 				$mail->smtp_username = $this->config->get('config_mail_smtp_username');

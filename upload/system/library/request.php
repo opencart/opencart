@@ -10,7 +10,7 @@
 /**
 * Request class
 */
-namespace System\Library;
+namespace Opencart\System\Library;
 class Request {
 	public $get = [];
 	public $post = [];

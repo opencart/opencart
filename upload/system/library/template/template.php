@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\Template;
+namespace Opencart\System\Library\Template;
 class Template {
 	protected $data = [];
 

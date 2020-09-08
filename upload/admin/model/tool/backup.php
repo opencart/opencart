@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Tool;
-class Backup extends \System\Engine\Model {
+namespace Opencart\Application\Model\Tool;
+class Backup extends \Opencart\System\Engine\Model {
 	public function getTables() {
 		$table_data = [];
 

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Upgrade;
-class Upgrade1000 extends \System\Engine\Model {
+namespace Opencart\Application\Model\Upgrade;
+class Upgrade1000 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Structure
 		$this->load->helper('db_schema');

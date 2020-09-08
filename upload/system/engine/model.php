@@ -10,7 +10,7 @@
 /**
 * Model class
 */
-namespace System\Engine;
+namespace Opencart\System\Engine;
 class Model {
 	protected $registry;
 

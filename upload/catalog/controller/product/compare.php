@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Product;
-class Compare extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Product;
+class Compare extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('product/compare');
 

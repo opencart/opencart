@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Payment;
-class FreeCheckout extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Payment;
+class FreeCheckout extends \Opencart\System\Engine\Controller {
 	public function index() {
 		return $this->load->view('extension/payment/free_checkout');
 	}

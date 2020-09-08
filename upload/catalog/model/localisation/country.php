@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Localisation;
-class Country extends \System\Engine\Model {
+namespace Opencart\Application\Model\Localisation;
+class Country extends \Opencart\System\Engine\Model {
 	public function getCountry($country_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id . "' AND status = '1'");
 

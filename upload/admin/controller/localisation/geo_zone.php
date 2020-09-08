@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Localisation;
-class GeoZone extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Localisation;
+class GeoZone extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

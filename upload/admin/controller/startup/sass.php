@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class Sass extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class Sass extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$files = glob(DIR_APPLICATION . 'view/stylesheet/*.scss');
 

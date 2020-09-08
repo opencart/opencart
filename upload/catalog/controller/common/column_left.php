@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class ColumnLeft extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class ColumnLeft extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->model('design/layout');
 
@@ -55,23 +55,23 @@ class ColumnLeft extends \System\Engine\Controller {
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
 
-			if (isset($part[0]) && $this->config->get('module_' . $part[0] . '_status')) {
-				$module_data = $this->load->controller('extension/module/' . $part[0]);
+			if (isset($part[1]) && $this->config->get('module_' . $part[1] . '_status')) {
+				$module_data = $this->load->controller('extension/' .  $part[0] . '/module/' . $part[1]);
 
 				if ($module_data) {
 					$data['modules'][] = $module_data;
 				}
 			}
 
-			if (isset($part[1])) {
-				$setting_info = $this->model_setting_module->getModule($part[1]);
+			if (isset($part[2])) {
+				$setting_info = $this->model_setting_module->getModule($part[2]);
 
 				if ($setting_info && $setting_info['status']) {
-					//$output = $this->load->controller('extension/module/' . $part[0], $setting_info);
+					$output = $this->load->controller('extension/' .  $part[0] . '/module/' . $part[1], $setting_info);
 
-					//if ($output) {
-					//	$data['modules'][] = $output;
-					//}
+					if ($output) {
+						$data['modules'][] = $output;
+					}
 				}
 			}
 		}

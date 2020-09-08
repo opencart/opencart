@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Report;
-class Report extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Report;
+class Report extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('report/report');
 
@@ -32,18 +32,18 @@ class Report extends \System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		// Get a list of installed modules
-		$extensions = $this->model_setting_extension->getInstalled('report');
+		$extensions = $this->model_setting_extension->getExtensionsByType('report');
 		
 		// Add all the modules which have multiple settings for each module
-		foreach ($extensions as $code) {
-			if ($this->config->get('report_' . $code . '_status') && $this->user->hasPermission('access', 'extension/report/' . $code)) {
-				$this->load->language('extension/report/' . $code, $code);
+		foreach ($extensions as $extension) {
+			if ($this->config->get('report_' . $extension['code'] . '_status') && $this->user->hasPermission('access', 'extension/' . $extension['extension'] . '/report/' . $extension['code'])) {
+				$this->load->language('extension/' . $extension['extension'] . '/report/' . $extension['code'], $extension['code']);
 				
 				$data['reports'][] = [
-					'text'       => $this->language->get($code . '_heading_title'),
-					'code'       => $code,
-					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-					'href'       => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=' . $code)
+					'text'       => $this->language->get($extension['code'] . '_heading_title'),
+					'code'       => $extension['code'],
+					'sort_order' => $this->config->get('report_' . $extension['code'] . '_sort_order'),
+					'href'       => $this->url->link('extension/' . $extension['extension'] . '/report/' . $extension['code'], 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension['extension'] . '&code=' . $extension['code'])
 				];
 			}
 		}
@@ -57,9 +57,9 @@ class Report extends \System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $data['reports']);
 		
 		if (isset($this->request->get['code'])) {
-			$data['report'] = $this->load->controller('extension/report/' . $this->request->get['code'] . '/report');
+			$data['report'] = $this->load->controller('extension/' . $this->request->get['extension'] . '/report/' . $this->request->get['code'] . '/report');
 		} elseif (isset($data['reports'][0])) {
-			$data['report'] = $this->load->controller('extension/report/' . $data['reports'][0]['code'] . '/report');
+			$data['report'] = $this->load->controller('extension/' . $this->request->get['extension'] . '/report/' . $data['reports'][0]['code'] . '/report');
 		} else {
 			$data['report'] = '';
 		}

@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\Cart;
+namespace Opencart\System\Library\Cart;
 final class Tax {
 	private $tax_rates = [];
 

@@ -55,17 +55,17 @@ define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Registry
-$registry = new \System\Engine\Registry();
+$registry = new \Opencart\System\Engine\Registry();
 
 // Loader
-$loader = new \System\Engine\Loader($registry);
+$loader = new \Opencart\System\Engine\Loader($registry);
 $registry->set('load', $loader);
 
 // Request
-$registry->set('request', new \System\Library\Request());
+$registry->set('request', new \Opencart\System\Library\Request());
 
 // Response
-$response = new \System\Library\Response();
+$response = new \Opencart\System\Library\Response();
 $response->addHeader('Content-Type: text/plain; charset=utf-8');
 $registry->set('response', $response);
 
@@ -78,7 +78,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 	throw new \ErrorException($message, 0, $code, $file, $line);
 });
 
-class Cli extends \System\Engine\Controller {
+class Cli extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
@@ -287,7 +287,7 @@ class Cli extends \System\Engine\Controller {
 
 		try {
 			// Database
-			$db = new \System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
+			$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
 		} catch (ErrorException $e) {
 			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}

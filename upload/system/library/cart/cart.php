@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\Cart;
+namespace Opencart\System\Library\Cart;
 class Cart {
 	private $data = [];
 

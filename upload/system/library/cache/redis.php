@@ -1,5 +1,5 @@
 <?php
-namespace System\Library\Cache;
+namespace Opencart\System\Library\Cache;
 class Redis {
 	private $expire;
 	private $cache;

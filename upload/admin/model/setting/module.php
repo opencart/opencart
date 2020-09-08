@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Setting;
-class Module extends \System\Engine\Model {
+namespace Opencart\Application\Model\Setting;
+class Module extends \Opencart\System\Engine\Model {
 	public function addModule($code, $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape($code) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "'");
 	}

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Upgrade;
-class Upgrade extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Upgrade;
+class Upgrade extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('upgrade/upgrade');
 

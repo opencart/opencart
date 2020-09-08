@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class SeoUrl extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class SeoUrl extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Design;
-class Banner extends \System\Engine\Model {
+namespace Opencart\Application\Model\Design;
+class Banner extends \Opencart\System\Engine\Model {
 	public function addBanner($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "banner SET name = '" . $this->db->escape((string)$data['name']) . "', status = '" . (int)$data['status'] . "'");
 

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Shipping;
-class Weight extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Shipping;
+class Weight extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Setting;
-class Cron extends \System\Engine\Model {
+namespace Opencart\Application\Model\Setting;
+class Cron extends \Opencart\System\Engine\Model {
 	public function addCron($code, $cycle = 'day', $action, $status) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
 

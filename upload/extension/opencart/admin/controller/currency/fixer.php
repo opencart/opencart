@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Extension\Opencart\Currency;
-class Fixer extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Extension\Opencart\Currency;
+class Fixer extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {

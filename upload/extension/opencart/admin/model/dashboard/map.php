@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Extension\Opencart\Dashboard;
-class Map extends \System\Engine\Model {
+namespace Opencart\Application\Model\Extension\Opencart\Dashboard;
+class Map extends \Opencart\System\Engine\Model {
 	public function getTotalOrdersByCountry() {
 		$implode = [];
 		

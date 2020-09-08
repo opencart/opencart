@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Design;
-class Translation extends \System\Engine\Model {
+namespace Opencart\Application\Model\Design;
+class Translation extends \Opencart\System\Engine\Model {
 	public function addTranslation($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "translation` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `route` = '" . $this->db->escape((string)$data['route']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `date_added` = NOW()");
 	}

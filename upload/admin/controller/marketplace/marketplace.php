@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Marketplace;
-class Marketplace extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Marketplace;
+class Marketplace extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/marketplace');
 
@@ -666,7 +666,7 @@ class Marketplace extends \System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('marketplace/marketplace_info', $data));
 		} else {
-			return new \System\Engine\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 

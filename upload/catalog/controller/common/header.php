@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Common;
-class Header extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Common;
+class Header extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Analytics
 		$this->load->model('setting/extension');
@@ -11,7 +11,7 @@ class Header extends \System\Engine\Controller {
 
 		foreach ($analytics as $analytic) {
 			if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
-				$data['analytics'][] = $this->load->controller('extension/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+				$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
 			}
 		}
 

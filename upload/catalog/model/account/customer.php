@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Account;
-class Customer extends \System\Engine\Model {
+namespace Opencart\Application\Model\Account;
+class Customer extends \Opencart\System\Engine\Model {
 	public function addCustomer($data) {
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $data['customer_group_id'];

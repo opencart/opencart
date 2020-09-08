@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Localisation;
-class TaxRate extends \System\Engine\Model {
+namespace Opencart\Application\Model\Localisation;
+class TaxRate extends \Opencart\System\Engine\Model {
 	public function addTaxRate($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "tax_rate SET name = '" . $this->db->escape((string)$data['name']) . "', rate = '" . (float)$data['rate'] . "', `type` = '" . $this->db->escape((string)$data['type']) . "', geo_zone_id = '" . (int)$data['geo_zone_id'] . "', date_added = NOW(), date_modified = NOW()");
 

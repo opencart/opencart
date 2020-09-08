@@ -1,6 +1,6 @@
 <?php
 namespace Install\Model\Upgrade;
-class Upgrade1008 extends \System\Engine\Model {
+class Upgrade1008 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		//  Option
 		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = 'radio' WHERE `type` = 'image'");

@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Api;
-class Currency extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Api;
+class Currency extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/currency');
 

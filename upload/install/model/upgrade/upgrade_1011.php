@@ -12,7 +12,7 @@
 * 
 */
 namespace Install\Model\Upgrade;
-class Upgrade1011 extends \System\Engine\Model {
+class Upgrade1011 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		//get all setting columns from extension table
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");	

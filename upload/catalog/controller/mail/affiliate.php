@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Affiliate extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Affiliate extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');
 
@@ -40,7 +40,7 @@ class Affiliate extends \System\Engine\Controller {
 		$data['store_url'] = $this->config->get('config_url');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-		$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -115,7 +115,7 @@ class Affiliate extends \System\Engine\Controller {
 				$data['customer_group'] = '';
 			}
 
-			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

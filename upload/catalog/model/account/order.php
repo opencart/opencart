@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Account;
-class Order extends \System\Engine\Model {
+namespace Opencart\Application\Model\Account;
+class Order extends \Opencart\System\Engine\Model {
 	public function getOrder($order_id) {
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND customer_id != '0' AND order_status_id > '0'");
 

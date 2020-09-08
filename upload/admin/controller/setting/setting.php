@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Setting;
-class Setting extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Setting;
+class Setting extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
@@ -199,15 +199,15 @@ class Setting extends \System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('theme');
+		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
-		foreach ($extensions as $code) {
-			if ($this->config->get('theme_' . $code . '_status')) {
-				$this->load->language('extension/theme/' . $code, 'extension');
+		foreach ($extensions as $extension) {
+			if ($this->config->get('theme_' . $extension['code'] . '_status')) {
+				$this->load->language('extension/' . $extension['extension'] . '/theme/' . $extension['code'], 'extension');
 
 				$data['themes'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
-					'value' => $code
+					'value' => $extension['code']
 				];
 			}
 		}
@@ -374,15 +374,15 @@ class Setting extends \System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('currency');
+		$extensions = $this->model_setting_extension->getExtensionsByType('currency');
 
-		foreach ($extensions as $code) {
-			if ($this->config->get('currency_' . $code . '_status')) {
-				$this->load->language('extension/currency/' . $code, 'extension');
+		foreach ($extensions as $extension) {
+			if ($this->config->get('currency_' . $extension['code'] . '_status')) {
+				$this->load->language('extension/' . $extension['extension'] . '/currency/' . $extension['code'], 'extension');
 
 				$data['currency_engines'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
-					'value' => $code
+					'value' => $extension['code']
 				];
 			}
 		}
@@ -712,15 +712,15 @@ class Setting extends \System\Engine\Controller {
 		$data['captchas'] = [];
 
 		// Get a list of installed captchas
-		$extensions = $this->model_setting_extension->getInstalled('captcha');
+		$extensions = $this->model_setting_extension->getExtensionsByType('captcha');
 
-		foreach ($extensions as $code) {
-			$this->load->language('extension/captcha/' . $code, $code);
+		foreach ($extensions as $extension) {
+			$this->load->language('extension/' . $extension['extension'] . '/captcha/' . $extension['code'], $extension['code']);
 
-			if ($this->config->get('captcha_' . $code . '_status')) {
+			if ($this->config->get('captcha_' . $extension['code'] . '_status')) {
 				$data['captchas'][] = [
-					'text'  => $this->language->get($code . '_heading_title'),
-					'value' => $code
+					'text'  => $this->language->get($extension['code'] . '_heading_title'),
+					'value' => $extension['code']
 				];
 			}
 		}

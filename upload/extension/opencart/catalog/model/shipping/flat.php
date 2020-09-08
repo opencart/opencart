@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Extension\Opencart\Shipping;
-class Flat extends \System\Engine\Model {
+namespace Opencart\Application\Model\Extension\Opencart\Shipping;
+class Flat extends \Opencart\System\Engine\Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/flat');
 

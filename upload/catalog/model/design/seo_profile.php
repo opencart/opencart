@@ -1,6 +1,6 @@
 <?php
-namespace Application\Model\Design;
-class SeoProfile extends \System\Engine\Model {
+namespace Opencart\Application\Model\Design;
+class SeoProfile extends \Opencart\System\Engine\Model {
 	public $profile = [];
 
 	public function getSeoProfilesByKey($key) {

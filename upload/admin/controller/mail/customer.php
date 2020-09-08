@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Mail;
-class Customer extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Mail;
+class Customer extends \Opencart\System\Engine\Controller {
 	public function approve(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');
 
@@ -37,7 +37,7 @@ class Customer extends \System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \System\Library\Language($language_code);
+			$language = new \Opencart\System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/customer_approve');
 
@@ -54,7 +54,7 @@ class Customer extends \System\Engine\Controller {
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
-			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -107,7 +107,7 @@ class Customer extends \System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \System\Library\Language($language_code);
+			$language = new \Opencart\System\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/customer_deny');
 
@@ -123,7 +123,7 @@ class Customer extends \System\Engine\Controller {
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
-			$mail = new \System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

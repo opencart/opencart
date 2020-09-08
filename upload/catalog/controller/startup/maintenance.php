@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Startup;
-class Maintenance extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Startup;
+class Maintenance extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
 			// Route
@@ -16,10 +16,10 @@ class Maintenance extends \System\Engine\Controller {
 			];
 
 			// Show site if logged in as admin
-			$this->user = new \System\Library\Cart\User($this->registry);
+			$this->user = new \Opencart\System\Library\Cart\User($this->registry);
 
 			if ((substr($route, 0, 17) != 'extension/payment' && substr($route, 0, 3) != 'api') && !in_array($route, $ignore) && !$this->user->isLogged()) {
-				return new \System\Engine\Action('common/maintenance');
+				return new \Opencart\System\Engine\Action('common/maintenance');
 			}
 		}
 	}

@@ -10,8 +10,7 @@
 /**
  * Action class
  */
-namespace System\Engine;
-use Application\Controller as Controller;
+namespace Opencart\System\Engine;
 class Action {
 	private $route;
 	private $class;
@@ -25,7 +24,7 @@ class Action {
 	public function __construct(string $route) {
 		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		$class = 'Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		$class = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 		if (class_exists($class)) {
 			$this->class = $class;
@@ -68,7 +67,7 @@ class Action {
 		if (is_callable($callable)) {
 			return call_user_func_array($callable, $args);
 		} else {
-			throw new \Exception('Error: Could not call ' . $this->route . '!');
+			return new \Exception('Error: Could not call ' . $this->route . '!');
 		}
 	}
 }

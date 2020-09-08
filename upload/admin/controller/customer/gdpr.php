@@ -1,6 +1,6 @@
 <?php
-namespace Application\Controller\Customer;
-class Gdpr extends \System\Engine\Controller {
+namespace Opencart\Application\Controller\Customer;
+class Gdpr extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('customer/gdpr');
 

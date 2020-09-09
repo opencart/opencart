@@ -87,9 +87,6 @@ class Online extends \Opencart\System\Engine\Controller {
 	public function dashboard() {
 		$this->load->language('extension/dashboard/online');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		// Total Orders
 		$this->load->model('extension/dashboard/online');
 
 		// Customers Online

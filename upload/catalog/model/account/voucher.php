@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Application\Model\Account;
 class Voucher extends \Opencart\System\Engine\Model {
 	public function addVoucher($order_id, $data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape((string)$data['code']) . "', from_name = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '1', `date_added` = NOW()");
@@ -69,57 +69,5 @@ class Voucher extends \Opencart\System\Engine\Model {
 				'date_added'       => $voucher_query->row['date_added']
 			];
 		}
-	}
-
-	public function getTotal(&$totals, &$taxes, &$total) {
-		if (isset($this->session->data['voucher'])) {
-			$this->load->language('extension/opencart/total/voucher', 'voucher');
-
-			$voucher_info = $this->getVoucher($this->session->data['voucher']);
-
-			if ($voucher_info) {
-				$amount = min($voucher_info['amount'], $total);
-
-				if ($amount > 0) {
-					$totals[] = [
-						'code'       => 'voucher',
-						'title'      => sprintf($this->language->get('voucher_text_voucher'), $this->session->data['voucher']),
-						'value'      => -$amount,
-						'sort_order' => $this->config->get('total_voucher_sort_order')
-					];
-
-					$total -= $amount;
-				} else {
-					unset($this->session->data['voucher']);
-				}
-			} else {
-				unset($this->session->data['voucher']);
-			}
-		}
-	}
-
-	public function confirm($order_info, $order_total) {
-		$code = '';
-
-		$start = strpos($order_total['title'], '(') + 1;
-		$end = strrpos($order_total['title'], ')');
-
-		if ($start && $end) {
-			$code = substr($order_total['title'], $start, $end - $start);
-		}
-
-		if ($code) {
-			$voucher_info = $this->getVoucher($code);
-
-			if ($voucher_info) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_info['voucher_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
-			} else {
-				return $this->config->get('config_fraud_status_id');
-			}
-		}
-	}
-
-	public function unconfirm($order_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE order_id = '" . (int)$order_id . "'");
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Application\Controller\Checkout;
-class q2Cart extends \Opencart\System\Engine\Controller {
+class Cart extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/cart');
 
@@ -213,15 +213,11 @@ class q2Cart extends \Opencart\System\Engine\Controller {
 
 			$data['modules'] = [];
 
-			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
+			foreach ($results as $result) {
+				$result = $this->load->controller('extension/' . $result['extension'] . '/total/' . $result['code']);
 
-			if ($files) {
-				foreach ($files as $file) {
-					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
-
-					if ($result) {
-						$data['modules'][] = $result;
-					}
+				if ($result) {
+					$data['modules'][] = $result;
 				}
 			}
 

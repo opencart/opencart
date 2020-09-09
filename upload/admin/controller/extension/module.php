@@ -70,7 +70,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		if ($this->validate()) {
 			$this->load->language('extension/' . $this->request->get['extension'] . '/module/' . $this->request->get['code']);
 			
-			$this->model_setting_module->addModule($this->request->get['code'], $this->language->get('heading_title'));
+			$this->model_setting_module->addModule($this->request->get['extension'] . '.' . $this->request->get['code'], $this->language->get('heading_title'));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -139,13 +139,11 @@ class Module extends \Opencart\System\Engine\Controller {
 
 				$code = basename($result['path'], '.php');
 
-				//$language = new Language();
-
 				$this->load->language('extension/' . $extension . '/module/' . $code, $code);
 
 				$module_data = [];
 
-				$modules = $this->model_setting_module->getModulesByCode($code);
+				$modules = $this->model_setting_module->getModulesByCode($extension . '.' . $code);
 
 				foreach ($modules as $module) {
 					if ($module['setting']) {

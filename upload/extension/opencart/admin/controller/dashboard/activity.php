@@ -4,7 +4,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/dashboard/activity');
+		$this->load->language('extension/opencart/dashboard/activity');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/dashboard/activity', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/dashboard/activity', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/dashboard/activity', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/dashboard/activity', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
@@ -73,11 +73,11 @@ class Activity extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/activity_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/dashboard/activity_form', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/dashboard/activity')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/activity')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -85,15 +85,15 @@ class Activity extends \Opencart\System\Engine\Controller {
 	}
 	
 	public function dashboard() {
-		$this->load->language('extension/dashboard/activity');
+		$this->load->language('extension/opencart/dashboard/activity');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['activities'] = [];
 
-		$this->load->model('extension/dashboard/activity');
+		$this->load->model('extension/opencart/dashboard/activity');
 
-		$results = $this->model_extension_dashboard_activity->getActivities();
+		$results = $this->model_extension_opencart_dashboard_activity->getActivities();
 
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));

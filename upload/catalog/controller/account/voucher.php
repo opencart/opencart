@@ -118,9 +118,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$data['from_email'] = '';
 		}
 
-		$this->load->model('extension/total/voucher_theme');
+		$this->load->model('account/voucher_theme');
 
-		$data['voucher_themes'] = $this->model_extension_total_voucher_theme->getVoucherThemes();
+		$data['voucher_themes'] = $this->model_account_voucher_theme->getVoucherThemes();
 
 		if (isset($this->request->post['voucher_theme_id'])) {
 			$data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];

@@ -4,7 +4,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/module/store');
+		$this->load->language('extension/opencart/module/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/module/store', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/module/store', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/module/store', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/module/store', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
@@ -65,7 +65,7 @@ class Store extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/module/store')) {
+		if (!$this->user->hasPermission('modify', 'opencart/extension/module/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

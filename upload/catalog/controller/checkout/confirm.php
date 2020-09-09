@@ -198,13 +198,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 				foreach ($product['option'] as $option) {
 					$option_data[] = [
-						'product_option_id' => $option['product_option_id'],
+						'product_option_id'       => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id' => $option['option_id'],
-						'option_value_id' => $option['option_value_id'],
-						'name' => $option['name'],
-						'value' => $option['value'],
-						'type' => $option['type']
+						'option_id'               => $option['option_id'],
+						'option_value_id'         => $option['option_value_id'],
+						'name'                    => $option['name'],
+						'value'                   => $option['value'],
+						'type'                    => $option['type']
 					];
 				}
 
@@ -357,17 +357,17 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['products'][] = [
-					'cart_id' => $product['cart_id'],
+					'cart_id'    => $product['cart_id'],
 					'product_id' => $product['product_id'],
-					'name' => $product['name'],
-					'model' => $product['model'],
-					'option' => $option_data,
-					'recurring' => $recurring,
-					'quantity' => $product['quantity'],
-					'subtract' => $product['subtract'],
-					'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-					'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
-					'href' => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $option_data,
+					'recurring'  => $recurring,
+					'quantity'   => $product['quantity'],
+					'subtract'   => $product['subtract'],
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
+					'href'       => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 				];
 			}
 
@@ -378,7 +378,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$data['vouchers'][] = [
 						'description' => $voucher['description'],
-						'amount' => $this->currency->format($voucher['amount'], $this->session->data['currency'])
+						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
 					];
 				}
 			}
@@ -388,7 +388,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			foreach ($totals as $total) {
 				$data['totals'][] = [
 					'title' => $total['title'],
-					'text' => $this->currency->format($total['value'], $this->session->data['currency'])
+					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
 				];
 			}
 

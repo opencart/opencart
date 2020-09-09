@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Report;
 class SaleCoupon extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/report/sale_coupon');
+		$this->load->language('extension/opencart/report/sale_coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -36,10 +36,10 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/report/sale_coupon', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/report/sale_coupon', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/report/sale_coupon', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/report/sale_coupon', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
@@ -59,11 +59,11 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/sale_coupon_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/report/sale_coupon_form', $data));
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/report/sale_coupon')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/sale_coupon')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -71,7 +71,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function report() {
-		$this->load->language('extension/report/sale_coupon');
+		$this->load->language('extension/opencart/report/sale_coupon');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -91,7 +91,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/report/coupon');
+		$this->load->model('extension/opencart/report/coupon');
 
 		$data['coupons'] = [];
 
@@ -102,9 +102,9 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination')
 		];
 
-		$coupon_total = $this->model_extension_report_coupon->getTotalCoupons($filter_data);
+		$coupon_total = $this->model_extension_opencart_report_coupon->getTotalCoupons($filter_data);
 
-		$results = $this->model_extension_report_coupon->getCoupons($filter_data);
+		$results = $this->model_extension_report_opencart_coupon->getCoupons($filter_data);
 
 		foreach ($results as $result) {
 			$data['coupons'][] = [
@@ -140,6 +140,6 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 
-		return $this->load->view('extension/report/sale_coupon_info', $data);
+		return $this->load->view('extension/opencart/report/sale_coupon_info', $data);
 	}
 }

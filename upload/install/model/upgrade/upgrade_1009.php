@@ -7,7 +7,7 @@ class Upgrade1009 extends \Opencart\System\Engine\Model {
 		
 		if ($query->num_rows) {
 			// Removing affiliate and moving to the customer account.
-			$config = new \Opencart\System\Library\Config();
+			$config = new \Opencart\System\Engine\Config();
 			
 			$setting_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0'");
 			

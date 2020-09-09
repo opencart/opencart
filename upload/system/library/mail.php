@@ -131,7 +131,7 @@ class Mail {
 			throw new \Exception('Error: E-Mail subject required!');
 		}
 
-		if ((!$this->text) && (!$this->html)) {
+		if (!$this->text && !$this->html) {
 			throw new \Exception('Error: E-Mail message required!');
 		}
 

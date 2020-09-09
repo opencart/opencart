@@ -4,7 +4,7 @@ class Cod extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/payment/cod');
+		$this->load->language('extension/opencart/payment/cod');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class Cod extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/cod', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/payment/cod', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/payment/cod', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/payment/cod', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
@@ -87,11 +87,11 @@ class Cod extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/payment/cod', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/payment/cod', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/payment/cod')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/payment/cod')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

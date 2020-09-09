@@ -13,7 +13,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($points && $points_total && $this->config->get('total_reward_status')) {
-			$this->load->language('extension/total/reward');
+			$this->load->language('extension/opencart/total/reward');
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
 
@@ -25,12 +25,12 @@ class Reward extends \Opencart\System\Engine\Controller {
 				$data['reward'] = '';
 			}
 
-			return $this->load->view('extension/total/reward', $data);
+			return $this->load->view('extension/opencart/total/reward', $data);
 		}
 	}
 
 	public function reward() {
-		$this->load->language('extension/total/reward');
+		$this->load->language('extension/opencart/total/reward');
 
 		$json = [];
 

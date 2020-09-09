@@ -27,6 +27,6 @@ class Slideshow extends \Opencart\System\Engine\Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('extension/module/slideshow', $data);
+		return $this->load->view('extension/opencart/module/slideshow', $data);
 	}
 }

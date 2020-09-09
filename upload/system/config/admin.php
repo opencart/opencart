@@ -46,7 +46,7 @@ $_['action_event']      = [
 	//	'event/extension/model'
 	//],
 	//'view/*/before' => [
-	//	'event/extension/view'
+	//	'event/extension'
 	//],
 	'view/*/before' => [
 		999 => 'event/language'

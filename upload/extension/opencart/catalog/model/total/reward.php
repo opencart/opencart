@@ -3,7 +3,7 @@ namespace Opencart\Application\Model\Extension\Opencart\Total;
 class Reward extends \Opencart\System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		if (isset($this->session->data['reward'])) {
-			$this->load->language('extension/total/reward', 'reward');
+			$this->load->language('extension/opencart/total/reward', 'reward');
 
 			$points = $this->customer->getRewardPoints();
 
@@ -53,7 +53,7 @@ class Reward extends \Opencart\System\Engine\Model {
 	}
 
 	public function confirm($order_info, $order_total) {
-		$this->load->language('extension/total/reward');
+		$this->load->language('extension/opencart/total/reward');
 
 		$points = 0;
 

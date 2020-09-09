@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Module;
 class Latest extends \Opencart\System\Engine\Controller {
 	public function index($setting) {
-		$this->load->language('extension/module/latest');
+		$this->load->language('extension/opencart/module/latest');
 
 		$this->load->model('catalog/product');
 
@@ -54,7 +54,7 @@ class Latest extends \Opencart\System\Engine\Controller {
 				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 
-			return $this->load->view('extension/module/latest', $data);
+			return $this->load->view('extension/opencart/module/latest', $data);
 		}
 	}
 }

@@ -98,7 +98,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 	public function getTotal(&$totals, &$taxes, &$total) {
 		if (isset($this->session->data['coupon'])) {
-			$this->load->language('extension/total/coupon', 'coupon');
+			$this->load->language('extension/opencart/total/coupon', 'coupon');
 
 			$coupon_info = $this->getCoupon($this->session->data['coupon']);
 

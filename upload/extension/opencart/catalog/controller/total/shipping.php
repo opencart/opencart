@@ -3,7 +3,7 @@ namespace Opencart\Application\Controller\Extension\Opencart\Total;
 class Shipping extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
-			$this->load->language('extension/total/shipping');
+			$this->load->language('extension/opencart/total/shipping');
 
 			if (isset($this->session->data['shipping_address']['country_id'])) {
 				$data['country_id'] = $this->session->data['shipping_address']['country_id'];
@@ -33,12 +33,12 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$data['shipping_method'] = '';
 			}
 
-			return $this->load->view('extension/total/shipping', $data);
+			return $this->load->view('extension/opencart/total/shipping', $data);
 		}
 	}
 
 	public function quote() {
-		$this->load->language('extension/total/shipping');
+		$this->load->language('extension/opencart/total/shipping');
 
 		$json = [];
 
@@ -156,7 +156,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	}
 
 	public function shipping() {
-		$this->load->language('extension/total/shipping');
+		$this->load->language('extension/opencart/total/shipping');
 
 		$json = [];
 

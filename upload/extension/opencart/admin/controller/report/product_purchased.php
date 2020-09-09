@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Report;
 class ProductPurchased extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/report/product_purchased');
+		$this->load->language('extension/opencart/report/product_purchased');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -36,10 +36,10 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/report/product_purchased', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/report/product_purchased', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/report/product_purchased', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/report/product_purchased', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
@@ -59,11 +59,11 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/product_purchased_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/report/product_purchased_form', $data));
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/report/product_purchased')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/product_purchased')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -71,7 +71,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function report() {
-		$this->load->language('extension/report/product_purchased');
+		$this->load->language('extension/opencart/report/product_purchased');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -155,6 +155,6 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		return $this->load->view('extension/report/product_purchased_info', $data);
+		return $this->load->view('extension/opencart/report/product_purchased_info', $data);
 	}
 }

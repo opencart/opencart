@@ -27,6 +27,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('extension/module/banner', $data);
+		return $this->load->view('extension/opencart/module/banner', $data);
 	}
 }

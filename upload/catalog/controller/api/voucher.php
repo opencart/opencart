@@ -12,7 +12,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('extension/total/voucher');
+			$this->load->model('extension/opencart/total/voucher');
 
 			if (isset($this->request->post['voucher'])) {
 				$voucher = $this->request->post['voucher'];

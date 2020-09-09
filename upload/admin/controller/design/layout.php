@@ -333,7 +333,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 			$module_data = [];
 
-			$modules = $this->model_setting_module->getModulesByCode($extension['code']);
+			$modules = $this->model_setting_module->getModulesByCode($extension['extension'] .'.' . $extension['code']);
 
 			foreach ($modules as $module) {
 				$module_data[] = [
@@ -345,7 +345,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			if ($this->config->has('module_' . $extension['code'] . '_status') || $module_data) {
 				$data['extensions'][] = [
 					'name'   => strip_tags($this->language->get($extension['code'] . '_heading_title')),
-					'code'   => $extension['code'],
+					'code'   => $extension['extension'] . '.' .  $extension['code'],
 					'module' => $module_data
 				];
 			}
@@ -366,7 +366,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		foreach ($layout_modules as $layout_module) {
 			$part = explode('.', $layout_module['code']);
 
-			if (!isset($part[1])) {
+			if (!isset($part[2])) {
 				$data['layout_modules'][] = [
 					'code'       => $layout_module['code'],
 					'position'   => $layout_module['position'],

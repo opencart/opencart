@@ -4,7 +4,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/total/shipping');
+		$this->load->language('extension/opencart/total/shipping');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/total/shipping', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/total/shipping', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/total/shipping', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/total/shipping', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
@@ -67,11 +67,11 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/total/shipping', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/total/shipping', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/total/shipping')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/total/shipping')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

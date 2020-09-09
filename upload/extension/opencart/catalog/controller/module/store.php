@@ -11,7 +11,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($status) {
-			$this->load->language('extension/module/store');
+			$this->load->language('extension/opencart/module/store');
 
 			$data['store_id'] = $this->config->get('config_store_id');
 
@@ -35,7 +35,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			return $this->load->view('extension/module/store', $data);
+			return $this->load->view('extension/opencart/module/store', $data);
 		}
 	}
 }

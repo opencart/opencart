@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Module;
 class Information extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/module/information');
+		$this->load->language('extension/opencart/module/information');
 
 		$this->load->model('catalog/information');
 
@@ -18,6 +18,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));
 		$data['sitemap'] = $this->url->link('information/sitemap', 'language=' . $this->config->get('config_language'));
 
-		return $this->load->view('extension/module/information', $data);
+		return $this->load->view('extension/opencart/module/information', $data);
 	}
 }

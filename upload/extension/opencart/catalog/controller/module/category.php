@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Module;
 class Category extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/module/category');
+		$this->load->language('extension/opencart/module/category');
 
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
@@ -60,6 +60,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		return $this->load->view('extension/module/category', $data);
+		return $this->load->view('extension/opencart/module/category', $data);
 	}
 }

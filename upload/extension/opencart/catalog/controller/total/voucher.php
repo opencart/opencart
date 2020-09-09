@@ -3,7 +3,7 @@ namespace Opencart\Application\Controller\Extension\Opencart\Total;
 class Voucher extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('total_voucher_status')) {
-			$this->load->language('extension/total/voucher');
+			$this->load->language('extension/opencart/total/voucher');
 
 			if (isset($this->session->data['voucher'])) {
 				$data['voucher'] = $this->session->data['voucher'];
@@ -11,16 +11,14 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				$data['voucher'] = '';
 			}
 
-			return $this->load->view('extension/total/voucher', $data);
+			return $this->load->view('extension/opencart/total/voucher', $data);
 		}
 	}
 
 	public function voucher() {
-		$this->load->language('extension/total/voucher');
+		$this->load->language('extension/opencart/total/voucher');
 
 		$json = [];
-
-		$this->load->model('extension/total/voucher');
 
 		if (isset($this->request->post['voucher'])) {
 			$voucher = $this->request->post['voucher'];
@@ -28,7 +26,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$voucher = '';
 		}
 
-		$voucher_info = $this->model_extension_total_voucher->getVoucher($voucher);
+		$this->load->model('account/voucher');
+
+		$voucher_info = $this->model_account_voucher->getVoucher($voucher);
 
 		if (empty($this->request->post['voucher'])) {
 			$json['error'] = $this->language->get('error_empty');
@@ -53,7 +53,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		// If order status in the complete range create any vouchers that where in the order need to be made available.
 		if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
-			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE v.order_id = '" . (int)$order_info['order_id'] . "' AND vtd.language_id = '" . (int)$order_info['language_id'] . "'");
+			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN `" . DB_PREFIX . "voucher_theme` vt ON (v.`voucher_theme_id` = vt.`voucher_theme_id`) LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE v.`order_id` = '" . (int)$order_info['order_id'] . "' AND vtd.`language_id` = '" . (int)$order_info['language_id'] . "'");
 
 			if ($voucher_query->num_rows) {
 				// Send out any gift voucher mails

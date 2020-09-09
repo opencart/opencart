@@ -3,7 +3,7 @@ namespace Opencart\Application\Model\Extension\Opencart\Total;
 class LowOrderFee extends \Opencart\System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		if ($this->cart->getSubTotal() && ($this->cart->getSubTotal() < $this->config->get('total_low_order_fee_total'))) {
-			$this->load->language('extension/total/low_order_fee');
+			$this->load->language('extension/opencart/total/low_order_fee');
 
 			$totals[] = [
 				'code'       => 'low_order_fee',

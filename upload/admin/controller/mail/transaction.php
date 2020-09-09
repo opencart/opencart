@@ -53,7 +53,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \Opencart\System\Library\Language($language_code);
+			$language = new \Opencart\Engine\Library\Language($language_code);
 			$language->load($language_code);
 			$language->load('mail/transaction');
 

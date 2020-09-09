@@ -4,7 +4,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/dashboard/customer');
+		$this->load->language('extension/opencart/dashboard/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/dashboard/customer', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/dashboard/customer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/dashboard/customer', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/dashboard/customer', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
@@ -73,11 +73,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/customer_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/dashboard/customer_form', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/dashboard/customer')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/customer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -85,7 +85,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function dashboard() {
-		$this->load->language('extension/dashboard/customer');
+		$this->load->language('extension/opencart/dashboard/customer');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -120,6 +120,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['customer'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token']);
 
-		return $this->load->view('extension/dashboard/customer_info', $data);
+		return $this->load->view('extension/opencart/dashboard/customer_info', $data);
 	}
 }

@@ -583,7 +583,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			
 						// If voucher belongs to an order
 						if ($order_info) {
-							$language = new \Opencart\System\Library\Language($order_info['language_code']);
+							$language = new \Opencart\Engine\Library\Language($order_info['language_code']);
 							$language->load($order_info['language_code']);
 							$language->load('mail/voucher');
 			

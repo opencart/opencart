@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Report;
 class CustomerReward extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/report/customer_reward');
+		$this->load->language('extension/opencart/report/customer_reward');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -36,10 +36,10 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/report/customer_reward', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/report/customer_reward', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/report/customer_reward', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/report/customer_reward', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
@@ -59,11 +59,11 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/customer_reward_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_reward_form', $data));
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/report/customer_reward')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_reward')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -71,7 +71,7 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function report() {
-		$this->load->language('extension/report/customer_reward');
+		$this->load->language('extension/opencart/report/customer_reward');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -97,7 +97,7 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/report/customer');
+		$this->load->model('extension/opencart/report/customer');
 
 		$data['customers'] = [];
 
@@ -109,9 +109,9 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 			'limit'				=> $this->config->get('config_pagination')
 		];
 
-		$customer_total = $this->model_extension_report_customer->getTotalRewardPoints($filter_data);
+		$customer_total = $this->model_extension_opencart_report_customer->getTotalRewardPoints($filter_data);
 
-		$results = $this->model_extension_report_customer->getRewardPoints($filter_data);
+		$results = $this->model_extension_report_opencart_customer->getRewardPoints($filter_data);
 
 		foreach ($results as $result) {
 			$data['customers'][] = [
@@ -155,6 +155,6 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 	
-		return $this->load->view('extension/report/customer_reward_info', $data);
+		return $this->load->view('extension/opencart/report/customer_reward_info', $data);
 	}
 }

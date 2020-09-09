@@ -4,7 +4,7 @@ class LowOrderFee extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/total/low_order_fee');
+		$this->load->language('extension/opencart/total/low_order_fee');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class LowOrderFee extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/total/low_order_fee', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/total/low_order_fee', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/total/low_order_fee', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/total/low_order_fee', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
@@ -83,11 +83,11 @@ class LowOrderFee extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/total/low_order_fee', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/total/low_order_fee', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/total/low_order_fee')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/total/low_order_fee')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

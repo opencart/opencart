@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Report;
 class CustomerTransaction extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/report/customer_transaction');
+		$this->load->language('extension/opencart/report/customer_transaction');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -36,10 +36,10 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/report/customer_transaction', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/report/customer_transaction', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/report/customer_transaction', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/report/customer_transaction', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
@@ -59,11 +59,11 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/customer_transaction_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_transaction_form', $data));
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/report/customer_transaction')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_transaction')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -71,7 +71,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function report() {
-		$this->load->language('extension/report/customer_transaction');
+		$this->load->language('extension/opencart/report/customer_transaction');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];

@@ -27,6 +27,6 @@ class Carousel extends \Opencart\System\Engine\Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('extension/module/carousel', $data);
+		return $this->load->view('extension/opencart/module/carousel', $data);
 	}
 }

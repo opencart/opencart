@@ -9,7 +9,7 @@ function start($application) {
 	$registry->set('autoloader', $autoloader);
 
 	// Config
-	$config = new System\Library\Config();
+	$config = new System\Engine\Config();
 
 	// Load the default config
 	$config->load('default');

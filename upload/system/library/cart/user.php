@@ -2,8 +2,8 @@
 namespace Opencart\System\Library\Cart;
 class User {
 	private $user_id;
-	private $user_group_id;
 	private $username;
+	private $user_group_id;
 	private $permission = [];
 
 	public function __construct($registry) {
@@ -12,16 +12,16 @@ class User {
 		$this->session = $registry->get('session');
 
 		if (isset($this->session->data['user_id'])) {
-			$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'");
+			$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$this->session->data['user_id'] . "' AND `status` = '1'");
 
 			if ($user_query->num_rows) {
 				$this->user_id = $user_query->row['user_id'];
 				$this->username = $user_query->row['username'];
 				$this->user_group_id = $user_query->row['user_group_id'];
 
-				$this->db->query("UPDATE " . DB_PREFIX . "user SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE `user_id` = '" . (int)$this->session->data['user_id'] . "'");
 
-				$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+				$user_group_query = $this->db->query("SELECT `permission` FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_query->row['user_group_id'] . "'");
 
 				$permissions = json_decode($user_group_query->row['permission'], true);
 
@@ -37,7 +37,7 @@ class User {
 	}
 
 	public function login($username, $password) {
-		$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE username = '" . $this->db->escape($username) . "' AND status = '1'");
+		$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `username` = '" . $this->db->escape($username) . "' AND `status` = '1'");
 
 		if ($user_query->num_rows) {
 			if (password_verify($password, $user_query->row['password'])) {
@@ -57,10 +57,10 @@ class User {
 			$this->user_group_id = $user_query->row['user_group_id'];
 			
 			if (isset($new_password_hashed)) {
-				$this->db->query("UPDATE " . DB_PREFIX . "user SET salt = '', password = '" . $this->db->escape($new_password_hashed) . "' WHERE user_id = '" . (int)$this->user_id . "'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `salt` = '', `password` = '" . $this->db->escape($new_password_hashed) . "' WHERE `user_id` = '" . (int)$this->user_id . "'");
 			}
 
-			$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+			$user_group_query = $this->db->query("SELECT `permission` FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_query->row['user_group_id'] . "'");
 
 			$permissions = json_decode($user_group_query->row['permission'], true);
 

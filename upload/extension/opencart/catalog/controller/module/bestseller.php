@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Module;
 class BestSeller extends \Opencart\System\Engine\Controller {
 	public function index($setting) {
-		$this->load->language('extension/module/bestseller');
+		$this->load->language('extension/opencart/module/bestseller');
 
 		$this->load->model('catalog/product');
 
@@ -54,7 +54,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 				$data['products'][] = $this->load->controller('product/thumb', $product_data);
 			}
 
-			return $this->load->view('extension/module/bestseller', $data);
+			return $this->load->view('extension/opencart/module/bestseller', $data);
 		}
 	}
 }

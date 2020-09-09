@@ -4,7 +4,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/module/bestseller');
+		$this->load->language('extension/opencart/module/bestseller');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -12,7 +12,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!isset($this->request->get['module_id'])) {
-				$this->model_setting_module->addModule('bestseller', $this->request->post);
+				$this->model_setting_module->addModule('opencart.bestseller', $this->request->post);
 			} else {
 				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
 			}
@@ -63,19 +63,19 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/module/bestseller', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token'])
 			];
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('extension/module/bestseller', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id'])
+				'href' => $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id'])
 			];
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('extension/module/bestseller', 'user_token=' . $this->session->data['user_token']);
+			$data['action'] = $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['action'] = $this->url->link('extension/module/bestseller', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+			$data['action'] = $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
 		}
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
@@ -128,11 +128,11 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/module/bestseller', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/module/bestseller', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/module/bestseller')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

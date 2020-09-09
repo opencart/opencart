@@ -4,7 +4,7 @@ class Map extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/dashboard/map');
+		$this->load->language('extension/opencart/dashboard/map');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class Map extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/dashboard/map', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/dashboard/map', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/dashboard/map', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/dashboard/map', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
@@ -73,7 +73,7 @@ class Map extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/map_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/dashboard/map_form', $data));
 	}
 
 	protected function validate() {
@@ -85,11 +85,11 @@ class Map extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function dashboard() {
-		$this->load->language('extension/dashboard/map');
+		$this->load->language('extension/opencart/dashboard/map');
 
 		$data['user_token'] = $this->session->data['user_token'];
 		
-		return $this->load->view('extension/dashboard/map_info', $data);
+		return $this->load->view('extension/opencart/dashboard/map_info', $data);
 	}
 
 	public function map() {

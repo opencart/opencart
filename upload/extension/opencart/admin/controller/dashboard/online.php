@@ -4,7 +4,7 @@ class Online extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/dashboard/online');
+		$this->load->language('extension/opencart/dashboard/online');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -38,10 +38,10 @@ class Online extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/dashboard/online', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/dashboard/online', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/dashboard/online', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/dashboard/online', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
@@ -73,11 +73,11 @@ class Online extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/dashboard/online_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/dashboard/online_form', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/dashboard/online')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/online')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -85,7 +85,7 @@ class Online extends \Opencart\System\Engine\Controller {
 	}
 	
 	public function dashboard() {
-		$this->load->language('extension/dashboard/online');
+		$this->load->language('extension/opencart/dashboard/online');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -109,6 +109,6 @@ class Online extends \Opencart\System\Engine\Controller {
 
 		$data['online'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token']);
 
-		return $this->load->view('extension/dashboard/online_info', $data);
+		return $this->load->view('extension/opencart/dashboard/online_info', $data);
 	}
 }

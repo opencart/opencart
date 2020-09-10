@@ -14,26 +14,32 @@ class Template {
 
 	public function render($filename, $code = '') {
 
-		// No need to go through the whole process if the class has already been loaded.
-		$namespace = '';
 
-		$parts = explode('\\', $filename);
-
-		foreach ($parts as $part) {
-			if (!$namespace) {
-				$namespace .= $part;
-			} else {
-				$namespace .= '\\' . $part;
-			}
-
-			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . $filename . '.php';
-			}
-		}
 
 
 
 		if (!$code) {
+			$namespace = '';
+
+			$parts = explode('\\', $filename);
+
+			foreach ($parts as $part) {
+				if (!$namespace) {
+					$namespace .= $part;
+				} else {
+					$namespace .= '\\' . $part;
+				}
+
+				if (isset($this->path[$namespace])) {
+					$file = $this->path[$namespace] . $filename . '.php';
+				}
+			}
+
+
+
+
+
+
 			$file = DIR_TEMPLATE . $filename . '.tpl';
 
 			if (is_file($file)) {

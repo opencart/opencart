@@ -13,7 +13,6 @@ class Autoloader {
 	}
 
 	public function load($class) {
-		// No need to go through the whole process if the class has already been loaded.
 		$namespace = '';
 
 		$parts = explode('\\', $class);

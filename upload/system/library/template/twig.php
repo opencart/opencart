@@ -50,7 +50,9 @@ class Twig {
 			$filename = substr($filename, 19);
 		}
 
-		//echo $filename . "\n";
+		if (substr($filename, 0, 9) == 'extension') {
+			//$filename = substr($filename, 19);
+		}
 
 		try {
 			$twig = new \Twig\Environment($loader, $config);

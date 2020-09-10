@@ -25,7 +25,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/theme/' . $this->request->get['code']);
 
 			// Call install method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/theme/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/theme/' . $this->request->get['code'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -98,21 +98,21 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 				$code = basename($result['path'], '.php');
 
-				$this->load->language('extension/' . $extension . '/theme/' . $extension, $extension);
+				$this->load->language('extension/' . $extension . '/theme/' . $code, $code);
 
 				$store_data = [];
 
 				$store_data[] = [
 					'name'   => $this->config->get('config_name'),
-					'edit'   => $this->url->link('extension/theme/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
-					'status' => $this->config->get('theme_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+					'edit'   => $this->url->link('extension/' . $extension . '/theme/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
+					'status' => $this->config->get('theme_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				];
 
 				foreach ($stores as $store) {
 					$store_data[] = [
 						'name'   => $store['name'],
-						'edit'   => $this->url->link('extension/theme/' . $extension, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
-						'status' => $this->model_setting_setting->getValue('theme_' . $extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+						'edit'   => $this->url->link('extension/' . $extension . '/theme/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store['store_id']),
+						'status' => $this->model_setting_setting->getValue('theme_' . $code . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 					];
 				}
 

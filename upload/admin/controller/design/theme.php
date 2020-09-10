@@ -116,7 +116,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$path = '';
 		}
 
-		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/default/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
+		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/basic/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
 			$path_data = [];
 
 			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.

@@ -28,9 +28,9 @@
             <div class="form-group row">
               <label for="input-directory" class="col-sm-2 col-form-label">{{ entry_directory }}</label>
               <div class="col-sm-10">
-                <select name="theme_default_directory" id="input-directory" class="form-control">
+                <select name="theme_basic_directory" id="input-directory" class="form-control">
                   {% for directory in directories %}
-                    {% if directory == theme_default_directory %}
+                    {% if directory == theme_basic_directory %}
                       <option value="{{ directory }}" selected="selected">{{ directory }}</option>
                     {% else %}
                       <option value="{{ directory }}">{{ directory }}</option>
@@ -43,8 +43,8 @@
             <div class="form-group row">
               <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
               <div class="col-sm-10">
-                <select name="theme_default_status" id="input-status" class="form-control">
-                  {% if theme_default_status %}
+                <select name="theme_basic_status" id="input-status" class="form-control">
+                  {% if theme_basic_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                   {% else %}
@@ -60,7 +60,7 @@
             <div class="form-group row required">
               <label for="input-catalog-limit" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
               <div class="col-sm-10">
-                <input type="text" name="theme_default_pagination" value="{{ theme_default_pagination }}" placeholder="{{ entry_pagination }}" id="input-catalog-limit" class="form-control"/>
+                <input type="text" name="theme_basic_pagination" value="{{ theme_basic_pagination }}" placeholder="{{ entry_pagination }}" id="input-catalog-limit" class="form-control"/>
                 <small class="form-text text-muted">{{ help_pagination }}</small>
                 {% if error_pagination %}
                   <div class="invalid-tooltip">{{ error_pagination }}</div>
@@ -70,7 +70,7 @@
             <div class="form-group row required">
               <label for="input-description-limit" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
               <div class="col-sm-10">
-                <input type="text" name="theme_default_product_description_length" value="{{ theme_default_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-limit" class="form-control"/>
+                <input type="text" name="theme_basic_product_description_length" value="{{ theme_basic_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-limit" class="form-control"/>
                 <small class="form-text text-muted">{{ help_product_description_length }}</small>
                 {% if error_product_description_length %}
                   <div class="invalid-tooltip">{{ error_product_description_length }}</div>
@@ -85,10 +85,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_category_width" value="{{ theme_default_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control"/>
+                    <input type="text" name="theme_basic_image_category_width" value="{{ theme_basic_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_category_height" value="{{ theme_default_image_category_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_category_height" value="{{ theme_basic_image_category_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_category %}
@@ -101,10 +101,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_thumb_width" value="{{ theme_default_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control"/>
+                    <input type="text" name="theme_basic_image_thumb_width" value="{{ theme_basic_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_thumb_height" value="{{ theme_default_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_thumb_height" value="{{ theme_basic_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_thumb %}
@@ -117,10 +117,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_popup_width" value="{{ theme_default_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control"/>
+                    <input type="text" name="theme_basic_image_popup_width" value="{{ theme_basic_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_popup_height" value="{{ theme_default_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_popup_height" value="{{ theme_basic_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_popup %}
@@ -133,10 +133,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_product_width" value="{{ theme_default_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control"/>
+                    <input type="text" name="theme_basic_image_product_width" value="{{ theme_basic_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_product_height" value="{{ theme_default_image_product_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_product_height" value="{{ theme_basic_image_product_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_product %}
@@ -149,10 +149,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_additional_width" value="{{ theme_default_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control"/>
+                    <input type="text" name="theme_basic_image_additional_width" value="{{ theme_basic_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_additional_height" value="{{ theme_default_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_additional_height" value="{{ theme_basic_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_additional %}
@@ -165,10 +165,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_related_width" value="{{ theme_default_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related" class="form-control"/>
+                    <input type="text" name="theme_basic_image_related_width" value="{{ theme_basic_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_related_height" value="{{ theme_default_image_related_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_related_height" value="{{ theme_basic_image_related_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_related %}
@@ -181,10 +181,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_compare_width" value="{{ theme_default_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare" class="form-control"/>
+                    <input type="text" name="theme_basic_image_compare_width" value="{{ theme_basic_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_compare_height" value="{{ theme_default_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_compare_height" value="{{ theme_basic_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_compare %}
@@ -197,10 +197,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_wishlist_width" value="{{ theme_default_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist" class="form-control"/>
+                    <input type="text" name="theme_basic_image_wishlist_width" value="{{ theme_basic_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_wishlist_height" value="{{ theme_default_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_wishlist_height" value="{{ theme_basic_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_wishlist %}
@@ -213,10 +213,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_cart_width" value="{{ theme_default_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart" class="form-control"/>
+                    <input type="text" name="theme_basic_image_cart_width" value="{{ theme_basic_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_cart_height" value="{{ theme_default_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_cart_height" value="{{ theme_basic_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_cart %}
@@ -229,10 +229,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_location_width" value="{{ theme_default_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location" class="form-control"/>
+                    <input type="text" name="theme_basic_image_location_width" value="{{ theme_basic_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location" class="form-control"/>
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="theme_default_image_location_height" value="{{ theme_default_image_location_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                    <input type="text" name="theme_basic_image_location_height" value="{{ theme_basic_image_location_height }}" placeholder="{{ entry_height }}" class="form-control"/>
                   </div>
                 </div>
                 {% if error_image_location %}

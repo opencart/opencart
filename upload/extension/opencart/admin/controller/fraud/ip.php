@@ -93,9 +93,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 	public function ip() {
 		$this->load->language('extension/opencart/fraud/ip');
 
-		$this->load->model('extension/opencart/fraud/ip');
-		$this->load->model('customer/opencart/customer');
-
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -103,6 +100,9 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['ips'] = [];
+
+		$this->load->model('extension/opencart/fraud/ip');
+		$this->load->model('customer/customer');
 
 		$results = $this->model_extension_opencart_fraud_ip->getIps(($page - 1) * 10, 10);
 
@@ -155,7 +155,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 	}
 
 	public function removeIp() {
-		$this->load->language('extension/fraud/ip');
+		$this->load->language('extension/opencart/fraud/ip');
 
 		$json = [];
 

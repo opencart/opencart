@@ -77,7 +77,7 @@ class Map extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/dashboard/map')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/map')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -95,9 +95,9 @@ class Map extends \Opencart\System\Engine\Controller {
 	public function map() {
 		$json = [];
 
-		$this->load->model('extension/dashboard/map');
+		$this->load->model('extension/opencart/dashboard/map');
 
-		$results = $this->model_extension_dashboard_map->getTotalOrdersByCountry();
+		$results = $this->model_extension_opencart_dashboard_map->getTotalOrdersByCountry();
 
 		foreach ($results as $result) {
 			$json[strtolower($result['iso_code_2'])] = [

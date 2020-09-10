@@ -116,6 +116,6 @@ class Activity extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		return $this->load->view('extension/dashboard/activity_info', $data);
+		return $this->load->view('extension/opencart/dashboard/activity_info', $data);
 	}
 }

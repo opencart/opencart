@@ -25,7 +25,7 @@ class Fraud extends \Opencart\System\Engine\Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/fraud/' . $this->request->get['code']);
 
 			// Call install method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/fraud/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/fraud/' . $this->request->get['code'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -93,15 +93,15 @@ class Fraud extends \Opencart\System\Engine\Controller {
 
 				$code = basename($result['path'], '.php');
 
-				$this->load->language('extension/' . $extension . '/fraud/' . $extension, $extension);
+				$this->load->language('extension/' . $extension . '/fraud/' . $code, $code);
 
 				$data['extensions'][] = [
-					'name'      => $this->language->get($extension . '_heading_title'),
-					'status'    => $this->config->get('fraud_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'name'      => $this->language->get($code . '_heading_title'),
+					'status'    => $this->config->get('fraud_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->link('extension/fraud/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/fraud/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
-					'edit'      => $this->url->link('extension/' . $extension . '/fraud/' . $extension, 'user_token=' . $this->session->data['user_token'])
+					'edit'      => $this->url->link('extension/' . $extension . '/fraud/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];
 			}
 		}

@@ -82,11 +82,11 @@ $('#ip').on('click', '.pagination a', function(e) {
 	$('#ip').load(this.href);
 });
 
-$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
+$('#ip').load('index.php?route=extension/opencart/fraud/ip/ip&user_token={{ user_token }}');
 
 $('#button-ip-add').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/fraud/ip/addip&user_token={{ user_token }}',
+		url: 'index.php?route=extension/opencart/fraud/ip/addip&user_token={{ user_token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($('#input-ip').val()),
@@ -106,7 +106,7 @@ $('#button-ip-add').on('click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
+				$('#ip').load('index.php?route=extension/opencart/fraud/ip/ip&user_token={{ user_token }}');
 
 				$('#input-ip').val('');
 			}
@@ -121,7 +121,7 @@ $('#ip').on('click', 'button', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=extension/fraud/ip/removeip&user_token={{ user_token }}',
+		url: 'index.php?route=extension/opencart/fraud/ip/removeip&user_token={{ user_token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($(element).val()),
@@ -141,7 +141,7 @@ $('#ip').on('click', 'button', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#ip').load('index.php?route=extension/fraud/ip/ip&user_token={{ user_token }}');
+				$('#ip').load('index.php?route=extension/opencart/fraud/ip/ip&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

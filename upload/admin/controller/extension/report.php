@@ -24,7 +24,7 @@ class Report extends \Opencart\System\Engine\Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/report/' . $this->request->get['code']);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/report/' . $this->request->get['code']);
 
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/report/' . $this->request->get['extension'] . '/install');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/report/' . $this->request->get['code'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -75,7 +75,7 @@ class Report extends \Opencart\System\Engine\Controller {
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('report');
 
-		foreach ($extensions as $key => $extension) {
+		foreach ($extensions as $extension) {
 			if (in_array($extension['code'], $available)) {
 				$installed[] = $extension['code'];
 			} else {

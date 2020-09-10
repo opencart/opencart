@@ -43,7 +43,7 @@ class Report extends \Opencart\System\Engine\Controller {
 					'text'       => $this->language->get($extension['code'] . '_heading_title'),
 					'code'       => $extension['code'],
 					'sort_order' => $this->config->get('report_' . $extension['code'] . '_sort_order'),
-					'href'       => $this->url->link('extension/' . $extension['extension'] . '/report/' . $extension['code'], 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension['extension'] . '&code=' . $extension['code'])
+					'href'       => $this->url->link('extension/' . $extension['extension'] . '/report/' . $extension['code'] . '/report', 'user_token=' . $this->session->data['user_token'])
 				];
 			}
 		}
@@ -55,15 +55,7 @@ class Report extends \Opencart\System\Engine\Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['reports']);
-		
-		if (isset($this->request->get['code'])) {
-			$data['report'] = $this->load->controller('extension/' . $this->request->get['extension'] . '/report/' . $this->request->get['code'] . '/report');
-		} elseif (isset($data['reports'][0])) {
-			$data['report'] = $this->load->controller('extension/' . $this->request->get['extension'] . '/report/' . $data['reports'][0]['code'] . '/report');
-		} else {
-			$data['report'] = '';
-		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

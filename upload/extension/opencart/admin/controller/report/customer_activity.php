@@ -59,7 +59,7 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/customer_activity_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_activity_form', $data));
 	}
 		
 	protected function validate() {
@@ -103,8 +103,6 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/customer');
-
 		$data['activities'] = [];
 
 		$filter_data = [
@@ -115,6 +113,8 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 			'start'             => ($page - 1) * 20,
 			'limit'             => 20
 		];
+
+		$this->load->model('extension/opencart/report/customer');
 
 		$activity_total = $this->model_extension_opencart_report_customer->getTotalCustomerActivities($filter_data);
 

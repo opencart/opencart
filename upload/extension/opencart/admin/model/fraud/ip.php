@@ -44,7 +44,7 @@ class Ip extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalIpsByIp($ip) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "fraud_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "fraud_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
 
 		return $query->row['total'];
 	}

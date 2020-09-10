@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Report;
 class SaleOrder extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/report/sale_order');
+		$this->load->language('extension/opencart/report/sale_order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -36,10 +36,10 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/report/sale_order', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/report/sale_order', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/report/sale_order', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/report/sale_order', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
@@ -59,7 +59,7 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/sale_order_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/report/sale_order_form', $data));
 	}
 	
 	protected function validate() {
@@ -71,7 +71,7 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function report() {
-		$this->load->language('extension/report/sale_order');
+		$this->load->language('extension/opencart/report/sale_order');
 
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -191,6 +191,6 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		return $this->load->view('extension/report/sale_order_info', $data);
+		return $this->load->view('extension/opencart/report/sale_order_info', $data);
 	}
 }

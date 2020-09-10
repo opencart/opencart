@@ -1,5 +1,5 @@
 <?php
-namespace Extension\Opencart\Catalog\Controller\Module;
+namespace Opencart\Application\Controller\Extension\Opencart\Module;
 class Store extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
@@ -61,11 +61,11 @@ class Store extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/module/store', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/module/store', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'opencart/extension/module/store')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

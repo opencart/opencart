@@ -77,7 +77,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('analytics');
 
-		foreach ($extensions as $key => $extension) {
+		foreach ($extensions as $extension) {
 			if (in_array($extension['code'], $available)) {
 				$installed[] = $extension['code'];
 			} else {

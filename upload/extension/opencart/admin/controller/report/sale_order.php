@@ -191,6 +191,6 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		return $this->load->view('extension/opencart/report/sale_order_info', $data);
+		return $this->load->view('extension/opencart/report/sale_order', $data);
 	}
 }

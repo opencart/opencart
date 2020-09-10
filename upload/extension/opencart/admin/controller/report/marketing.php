@@ -71,7 +71,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 	}
 	
 	public function report() {
-		echo 'hiu';
 		$this->load->language('extension/opencart/report/marketing');
 
 		if (isset($this->request->get['filter_date_start'])) {
@@ -158,6 +157,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		return $this->load->view('extension/opencart/report/marketing_info', $data);
+		return $this->load->view('extension/opencart/report/marketing', $data);
 	}
 }

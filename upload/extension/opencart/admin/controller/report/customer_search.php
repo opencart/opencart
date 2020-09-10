@@ -192,6 +192,6 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
 
-		return $this->load->view('extension/opencart/report/customer_search_info', $data);
+		return $this->load->view('extension/opencart/report/customer_search', $data);
 	}
 }

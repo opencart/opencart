@@ -153,6 +153,6 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 
-		return $this->load->view('extension/opencart/report/customer_transaction_info', $data);
+		return $this->load->view('extension/opencart/report/customer_transaction', $data);
 	}
 }

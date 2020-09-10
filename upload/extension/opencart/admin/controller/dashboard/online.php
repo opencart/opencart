@@ -90,10 +90,10 @@ class Online extends \Opencart\System\Engine\Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		// Total Orders
-		$this->load->model('extension/dashboard/online');
+		$this->load->model('extension/opencart/dashboard/online');
 
 		// Customers Online
-		$online_total = $this->model_extension_dashboard_online->getTotalOnline();
+		$online_total = $this->model_extension_opencart_dashboard_online->getTotalOnline();
 
 		if ($online_total > 1000000000000) {
 			$data['total'] = round($online_total / 1000000000000, 1) . 'T';

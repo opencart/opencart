@@ -104,7 +104,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 
 		$coupon_total = $this->model_extension_opencart_report_coupon->getTotalCoupons($filter_data);
 
-		$results = $this->model_extension_report_opencart_coupon->getCoupons($filter_data);
+		$results = $this->model_extension_opencart_report_coupon->getCoupons($filter_data);
 
 		foreach ($results as $result) {
 			$data['coupons'][] = [
@@ -132,7 +132,7 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			'total' => $coupon_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_coupon' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/sale_coupon/report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_coupon' . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($coupon_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($coupon_total - $this->config->get('config_pagination'))) ? $coupon_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $coupon_total, ceil($coupon_total / $this->config->get('config_pagination')));

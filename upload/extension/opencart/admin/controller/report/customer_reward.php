@@ -111,7 +111,7 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 
 		$customer_total = $this->model_extension_opencart_report_customer->getTotalRewardPoints($filter_data);
 
-		$results = $this->model_extension_report_opencart_customer->getRewardPoints($filter_data);
+		$results = $this->model_extension_opencart_report_customer->getRewardPoints($filter_data);
 
 		foreach ($results as $result) {
 			$data['customers'][] = [
@@ -146,7 +146,7 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 			'total' => $customer_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_reward' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/customer_reward/report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_reward' . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($customer_total - $this->config->get('config_pagination'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $customer_total, ceil($customer_total / $this->config->get('config_pagination')));

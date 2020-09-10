@@ -81,8 +81,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		
 		$data['reset'] = $this->url->link('extension/opencart/report/product_viewed/reset', 'user_token=' . $this->session->data['user_token']);
 
-		$this->load->model('extension/opencart/report/product');
-
 		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
 			'limit' => $this->config->get('config_pagination')
@@ -90,11 +88,13 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		$this->load->model('extension/opencart/report/product');
+
 		$product_viewed_total = $this->model_extension_opencart_report_product->getTotalProductViews();
 
-		$product_total = $this->model_extension_report_opencart_product->getTotalProductsViewed();
+		$product_total = $this->model_extension_opencart_report_product->getTotalProductsViewed();
 
-		$results = $this->model_extension_report_opencart_product->getProductsViewed($filter_data);
+		$results = $this->model_extension_opencart_report_product->getProductsViewed($filter_data);
 
 		foreach ($results as $result) {
 			if ($result['viewed']) {
@@ -123,7 +123,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/product_viewed/report', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($product_total - $this->config->get('config_pagination'))) ? $product_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $product_total, ceil($product_total / $this->config->get('config_pagination')));
@@ -144,6 +144,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed'));
+		$this->response->redirect($this->url->link('extension/opencart/report/product_viewed/report', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed'));
 	}
 }

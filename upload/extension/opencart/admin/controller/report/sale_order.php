@@ -103,7 +103,7 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/report/sale');
+		$this->load->model('extension/opencart/report/sale');
 
 		$data['orders'] = [];
 
@@ -116,9 +116,9 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
-		$order_total = $this->model_extension_report_sale->getTotalOrders($filter_data);
+		$order_total = $this->model_extension_opencart_report_sale->getTotalOrders($filter_data);
 
-		$results = $this->model_extension_report_sale->getOrders($filter_data);
+		$results = $this->model_extension_opencart_report_sale->getOrders($filter_data);
 
 		foreach ($results as $result) {
 			$data['orders'][] = [
@@ -181,7 +181,7 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_order' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/sale_order', 'user_token=' . $this->session->data['user_token'] . '&code=sale_order' . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($order_total - $this->config->get('config_pagination'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $order_total, ceil($order_total / $this->config->get('config_pagination')));

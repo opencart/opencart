@@ -103,7 +103,7 @@ class Sale extends \Opencart\System\Engine\Controller {
 			$data['percentage'] = 0;
 		}
 
-		$sale_total = $this->model_extension_dashboard_sale->getTotalSales();
+		$sale_total = $this->model_extension_opencart_dashboard_sale->getTotalSales();
 
 		if ($sale_total > 1000000000000) {
 			$data['total'] = round($sale_total / 1000000000000, 1) . 'T';

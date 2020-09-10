@@ -31,6 +31,16 @@ class Template {
 	}
 
 	/**
+	 * addPath
+	 *
+	 * @param    string $namespace
+	 * @param    string $directory
+	 */
+	public function addPath($namespace, $directory) {
+		$this->adaptor->addPath($namespace, $directory);
+	}
+
+	/**
 	 * Set
 	 *
 	 * @param    string $key

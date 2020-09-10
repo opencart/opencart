@@ -26,21 +26,6 @@
           <fieldset>
             <legend>{{ text_general }}</legend>
             <div class="form-group row">
-              <label for="input-directory" class="col-sm-2 col-form-label">{{ entry_directory }}</label>
-              <div class="col-sm-10">
-                <select name="theme_basic_directory" id="input-directory" class="form-control">
-                  {% for directory in directories %}
-                    {% if directory == theme_basic_directory %}
-                      <option value="{{ directory }}" selected="selected">{{ directory }}</option>
-                    {% else %}
-                      <option value="{{ directory }}">{{ directory }}</option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
-                <small class="form-text text-muted">{{ help_directory }}</small>
-              </div>
-            </div>
-            <div class="form-group row">
               <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
               <div class="col-sm-10">
                 <select name="theme_basic_status" id="input-status" class="form-control">

@@ -24,6 +24,33 @@ final class Loader {
 	}
 
 	/**
+	 * __get
+	 *
+	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.get
+	 *
+	 * @param    string $key
+	 *
+	 * @return   object
+	 */
+	public function __get($key) {
+		return $this->registry->get($key);
+	}
+
+	/**
+	 * __set
+	 *
+	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
+	 *
+	 * @param    string $key
+	 * @param    object $value
+	 *
+	 * @return    object
+	 */
+	public function __set($key, $value) {
+		$this->registry->set($key, $value);
+	}
+
+	/**
 	 * Controller
 	 *
 	 * https://wiki.php.net/rfc/variadics
@@ -41,14 +68,14 @@ final class Loader {
 		$trigger = $route;
 
 		// Trigger the pre events
-		$this->registry->get('event')->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 		// Make sure its only the last event that returns an output if required.
 		$action = new \Opencart\System\Engine\Action($route);
 		$output = $action->execute($this->registry, $args);
 
 		// Trigger the post events
-		$this->registry->get('event')->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+		$this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
 		if (!$output instanceof Exception) {
 			return $output;
@@ -106,10 +133,12 @@ final class Loader {
 		$code = '';
 
 		// Trigger the pre events
-		$this->registry->get('event')->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code]);
+		$this->event->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code]);
 
 		// Make sure its only the last event that returns an output if required.
 		$template = new \Opencart\System\Library\Template($this->registry->get('config')->get('template_engine'));
+
+		//$template->addPath();
 
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);
@@ -118,7 +147,7 @@ final class Loader {
 		$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 
 		// Trigger the post events
-		$this->registry->get('event')->trigger('view/' . $trigger . '/after', [&$route, &$data, &$output]);
+		$this->event->trigger('view/' . $trigger . '/after', [&$route, &$data, &$output]);
 
 		return $output;
 	}
@@ -138,7 +167,7 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->registry->get('event')->trigger('library/' . $trigger . '/before', [&$route, &$args]);
+		$this->event->trigger('library/' . $trigger . '/before', [&$route, &$args]);
 
 		$class = 'Opencart\System\Library\\' . str_replace('/', '\\', $route);
 
@@ -153,7 +182,7 @@ final class Loader {
 			error_log('Error: Could not load library ' . $route . '!');
 		}
 
-		$this->registry->get('event')->trigger('library/' . $trigger . '/after', [&$route, &$args, &$library]);
+		$this->event->trigger('library/' . $trigger . '/after', [&$route, &$args, &$library]);
 
 		return $library;
 	}
@@ -185,11 +214,11 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->registry->get('event')->trigger('config/' . $trigger . '/before', [&$route]);
+		$this->event->trigger('config/' . $trigger . '/before', [&$route]);
 
-		$this->registry->get('config')->load($route);
+		$this->config->load($route);
 
-		$this->registry->get('event')->trigger('config/' . $trigger . '/after', [&$route]);
+		$this->event->trigger('config/' . $trigger . '/after', [&$route]);
 
 		//return $data;
 	}
@@ -209,11 +238,11 @@ final class Loader {
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->registry->get('event')->trigger('language/' . $trigger . '/before', [&$route, &$prefix]);
+		$this->event->trigger('language/' . $trigger . '/before', [&$route, &$prefix]);
 
-		$data = $this->registry->get('language')->load($route, $prefix);
+		$data = $this->language->load($route, $prefix);
 
-		$this->registry->get('event')->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
+		$this->event->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
 
 		return $data;
 	}
@@ -238,7 +267,7 @@ final class Loader {
 			$trigger = $route;
 
 			// Trigger the pre events
-			$result = $this->registry->get('event')->trigger('model/' . $trigger . '/before', [&$route, &$args]);
+			$result = $this->event->trigger('model/' . $trigger . '/before', [&$route, &$args]);
 
 			if ($result) {
 				$output = $result;
@@ -271,7 +300,7 @@ final class Loader {
 			}
 
 			// Trigger the post events
-			$result = $this->registry->get('event')->trigger('model/' . $trigger . '/after',[&$route, &$args, &$output]);
+			$result = $this->event->trigger('model/' . $trigger . '/after',[&$route, &$args, &$output]);
 
 			if ($result) {
 				$output = $result;

@@ -120,22 +120,6 @@ class Basic extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$setting_info = $this->model_setting_setting->getSetting('theme_basic', $this->request->get['store_id']);
 		}
-		
-		if (isset($this->request->post['theme_basic_directory'])) {
-			$data['theme_basic_directory'] = $this->request->post['theme_basic_directory'];
-		} elseif (isset($setting_info['theme_basic_directory'])) {
-			$data['theme_basic_directory'] = $setting_info['theme_basic_directory'];
-		} else {
-			$data['theme_basic_directory'] = 'default';
-		}		
-
-		$data['directories'] = [];
-
-		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$data['directories'][] = basename($directory);
-		}
 
 		if (isset($this->request->post['theme_basic_pagination'])) {
 			$data['theme_basic_pagination'] = $this->request->post['theme_basic_pagination'];

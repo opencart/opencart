@@ -105,22 +105,17 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$theme = $this->model_setting_setting->getValue('config_theme', $store_id);
 
-		// This is only here for compatibility with old themes.
-		if ($theme == 'theme_default') {
-			$theme = $this->model_setting_setting->getValue('theme_default_directory', $store_id);
-		}
-
 		if (isset($this->request->get['path'])) {
 			$path = $this->request->get['path'];
 		} else {
 			$path = '';
 		}
 
-		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/theme/basic/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
+		if (substr(str_replace('\\', '/', realpath(DIR_CATALOG . 'view/template/' . $path)), 0, strlen(DIR_CATALOG . 'view')) == DIR_CATALOG . 'view') {
 			$path_data = [];
 
 			// We grab the files from the default theme directory first as the custom themes drops back to the default theme if selected theme files can not be found.
-			$files = glob(rtrim(DIR_CATALOG . 'view/theme/{default,' . $theme . '}/template/' . $path, '/') . '/*', GLOB_BRACE);
+			$files = glob(rtrim(DIR_CATALOG . 'view/template/' . $path, '/') . '/*', GLOB_BRACE);
 
 			if ($files) {
 				foreach ($files as $file) {
@@ -145,11 +140,25 @@ class Theme extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!empty($this->request->get['path'])) {
-			$json['back'] = [
-				'name' => $this->language->get('button_back'),
-				'path' => urlencode(substr($path, 0, strrpos($path, '/'))),
-			];
+		// Extension theme editing
+		$this->load->model('setting/extension');
+
+		$results = $this->model_setting_extension->getPaths('%/catalog/view/template/%');
+
+		foreach ($results as $result) {
+			if (substr($result['path'], -1) == '/') {
+				$json['directory'][] = [
+					'name' => 'extension/' . basename($result['path']),
+					'path' => trim($path . '/' . basename($result['path']), '/')
+				];
+			}
+
+			if (substr($result['path'], -5) == '.twig') {
+				$json['file'][] = [
+					'name' => basename($result['path']),
+					'path' => trim($result['path'] . '/' . basename($result['path']), '/')
+				];
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

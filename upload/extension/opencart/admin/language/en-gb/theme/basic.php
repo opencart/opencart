@@ -11,7 +11,6 @@ $_['text_product']                     = 'Products';
 $_['text_image']                       = 'Images';
 
 // Entry
-$_['entry_directory']                  = 'Theme Directory';
 $_['entry_status']                     = 'Status';
 $_['entry_pagination']                 = 'Default Items Per Page';
 $_['entry_product_description_length'] = 'List Description Limit';
@@ -29,7 +28,6 @@ $_['entry_width']                      = 'Width';
 $_['entry_height']                     = 'Height';
 
 // Help
-$_['help_directory']                   = 'This field is only to enable older themes to be compatible with the new theme system. You can set the theme directory to use on the image size settings defined here.';
 $_['help_pagination']                  = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
 

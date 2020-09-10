@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Report;
 class SaleShipping extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/report/sale_shipping');
+		$this->load->language('extension/opencart/report/sale_shipping');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -36,10 +36,10 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/report/sale_shipping', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/report/sale_shipping', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/report/sale_shipping', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/report/sale_shipping', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
@@ -59,11 +59,11 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/report/sale_shipping_form', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/report/sale_shipping_form', $data));
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/report/sale_shipping')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/sale_shipping')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -71,7 +71,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 	}
 		
 	public function report() {
-		$this->load->language('extension/report/sale_shipping');
+		$this->load->language('extension/opencart/report/sale_shipping');
 	
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
@@ -103,7 +103,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/report/sale');
+		$this->load->model('extension/opencart/report/sale');
 
 		$data['orders'] = [];
 
@@ -116,9 +116,9 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
-		$order_total = $this->model_extension_report_sale->getTotalShipping($filter_data);
+		$order_total = $this->model_extension_opencart_report_sale->getTotalShipping($filter_data);
 
-		$results = $this->model_extension_report_sale->getShipping($filter_data);
+		$results = $this->model_extension_opencart_report_sale->getShipping($filter_data);
 
 		foreach ($results as $result) {
 			$data['orders'][] = [
@@ -190,6 +190,6 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		return $this->load->view('extension/opencart/report/sale_shipping', $data);
+		$this->response->setOutput($this->load->view('extension/opencart/report/sale_shipping', $data));
 	}
 }

@@ -155,6 +155,6 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		return $this->load->view('extension/opencart/report/product_purchased', $data);
+		$this->response->setOutput($this->load->view('extension/opencart/report/product_purchased', $data));
 	}
 }

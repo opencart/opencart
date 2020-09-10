@@ -111,7 +111,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 
 		$customer_total = $this->model_extension_opencart_report_customer_transaction->getTotalTransactions($filter_data);
 
-		$results = $this->model_extension_report_opencart_customer_transaction->getTransactions($filter_data);
+		$results = $this->model_extension_opencart_report_customer_transaction->getTransactions($filter_data);
 
 		foreach ($results as $result) {
 			$data['customers'][] = [
@@ -153,6 +153,6 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 
-		return $this->load->view('extension/opencart/report/customer_transaction', $data);
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_transaction', $data));
 	}
 }

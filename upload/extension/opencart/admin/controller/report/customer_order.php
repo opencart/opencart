@@ -118,7 +118,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$customer_total = $this->model_extension_opencart_report_customer->getTotalOrders($filter_data);
 
-		$results = $this->model_extension_report_opencart_customer->getOrders($filter_data);
+		$results = $this->model_extension_opencart_report_customer->getOrders($filter_data);
 
 		foreach ($results as $result) {
 			$data['customers'][] = [
@@ -171,6 +171,6 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 
-		return $this->load->view('extension/opencart/report/customer_order', $data);
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order', $data));
 	}
 }

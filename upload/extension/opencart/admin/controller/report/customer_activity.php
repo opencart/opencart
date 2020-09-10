@@ -174,6 +174,6 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
 
-		return $this->load->view('extension/opencart/report/customer_activity', $data);
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_activity', $data));
 	}
 }

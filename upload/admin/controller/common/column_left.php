@@ -272,10 +272,10 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'sale/return')) {
+			if ($this->user->hasPermission('access', 'sale/returns')) {
 				$sale[] = [
 					'name'	   => $this->language->get('text_return'),
-					'href'     => $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token']),
+					'href'     => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}

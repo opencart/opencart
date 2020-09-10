@@ -4,7 +4,7 @@ class Twig {
 	protected $loader;
 	protected $data = [];
 
-	public function __construct() {
+	public function __construct($directory = '') {
 		$this->loader = new \Twig\Loader\FilesystemLoader(DIR_TEMPLATE);
 
 		$this->loader->addPath(DIR_EXTENSION . 'opencart/admin/view/template/');

@@ -167,6 +167,8 @@ $('#path').on('click', 'a.file', function(e) {
 				$(element).find('i').addClass('fa-arrow-right');
 			},
 			success: function(json) {
+				console.log(json);
+
 				if (json['code']) {
 					$('#code').show();
 					$('#recent').hide();

@@ -5,13 +5,10 @@ class Twig {
 	protected $data = [];
 
 	public function __construct() {
-		$this->loader = new \Twig\Loader\FilesystemLoader(DIR_TEMPLATE);
-
-		$this->loader->addPath(DIR_EXTENSION . 'opencart/admin/view/template/');
-		$this->loader->addPath(DIR_EXTENSION . 'opencart/catalog/view/template/');
+		$this->loader = new \Twig\Loader\FilesystemLoader();
 	}
 
-	public function addPath($directory) {
+	public function addPath($extension, $directory) {
 		$this->loader->addPath($directory);
 	}
 

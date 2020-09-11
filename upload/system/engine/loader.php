@@ -137,8 +137,10 @@ final class Loader {
 
 		// Make sure its only the last event that returns an output if required.
 		$template = new \Opencart\System\Library\Template($this->registry->get('config')->get('template_engine'));
-
-		//$template->addPath();
+		
+		$template->addPath('', DIR_TEMPLATE);
+		$template->addPath('extension', DIR_EXTENSION . 'opencart/admin/view/template/');
+		$template->addPath('extension', DIR_EXTENSION . 'opencart/catalog/view/template/');
 
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);

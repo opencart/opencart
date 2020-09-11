@@ -13,11 +13,6 @@ class Template {
 	}
 
 	public function render($filename, $code = '') {
-
-
-
-
-
 		if (!$code) {
 			$namespace = '';
 
@@ -31,23 +26,15 @@ class Template {
 				}
 
 				if (isset($this->path[$namespace])) {
-					$file = $this->path[$namespace] . $filename . '.php';
+					$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.tpl';
 				}
 			}
 
-
-
-
-
-
-			$file = DIR_TEMPLATE . $filename . '.tpl';
-
-			if (is_file($file)) {
+			if (isset($file) && is_file($file)) {
 				$code = file_get_contents($file);
 			} else {
-				error_log('Error: Could not load template ' . $file . '!');
+				error_log('Error: Could not load template ' . $filename . '!');
 			}
-
 		}
 
 		if ($code) {

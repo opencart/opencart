@@ -1,0 +1,17 @@
+<script type="text/javascript">
+    gtag('event', 'purchase', {
+        'send_to': '{{ send_to }}',
+        'transaction_id': '{{ transaction_id }}',
+        'currency': '{{ currency }}',
+        'tax': '{{ tax }}',
+        'shipping': '{{ shipping }}',
+        'value': {{ value }},
+        'items': {{ items }},
+        'ecomm_totalvalue': {{ ecomm_totalvalue }},
+        'ecomm_prodid': {{ ecomm_prodid }}
+    });
+
+    if (typeof gtag_report_conversion == 'function') {
+        gtag_report_conversion();
+    }
+</script>

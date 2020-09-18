@@ -1,9 +1,31 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Proxy class
+*/
 class Proxy {
+    /**
+     * 
+     *
+     * @param	string	$key
+     */	
 	public function __get($key) {
 		return $this->{$key};
 	}	
-	
+
+    /**
+     * 
+     *
+     * @param	string	$key
+	 * @param	string	$value
+     */	
 	public function __set($key, $value) {
 		 $this->{$key} = $value;
 	}

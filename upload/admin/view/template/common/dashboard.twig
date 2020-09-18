@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-setting" title="{{ button_setting }}" data-loading-text="{{ text_loading }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
+        <button type="button" id="button-developer" title="{{ button_developer  }}" data-loading-text="{{ text_loading }}" class="btn btn-info"><i class="fa fa-cog"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -31,15 +31,15 @@
     {% endfor %}</div>
     {{ security }}
   <script type="text/javascript"><!--
-$('#button-setting').on('click', function() {
+$('#button-developer').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=common/developer&user_token={{ user_token }}',
 		dataType: 'html',
 		beforeSend: function() {
-			$('#button-setting').button('loading');
+			$('#button-developer').button('loading');
 		},
 		complete: function() {
-			$('#button-setting').button('reset');
+			$('#button-developer').button('reset');
 		},
 		success: function(html) {
 			$('#modal-developer').remove();

@@ -2,11 +2,11 @@
 <modification>
   <name>Modification Default</name>
   <code>default</code>
-  <version>1.0</version>
+  <version>1.1</version>
   <author>OpenCart Ltd</author>
   <link>http://www.opencart.com</link>
   <file path="system/{engine,library}/{action,loader,config,language}*.php|system/library/template/template.php">
-	<operation>
+    <operation>
       <search regex="true">
         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
       </search>
@@ -16,21 +16,16 @@
     </operation>
   </file>
   <file path="system/library/template/twig.php">
-	<operation>
+    <operation>
       <search>
-        <![CDATA[$loader = new \Twig_Loader_Filesystem(DIR_TEMPLATE);]]>
+        <![CDATA[if (is_file($file)) {]]>
       </search>
       <add position="replace">
-        <![CDATA[		
-		$loader = new \Twig_Loader_Filesystem();
-		
-		if (defined('DIR_CATALOG') && is_dir(DIR_MODIFICATION . 'admin/view/template/')) {	
-			$loader->addPath(DIR_MODIFICATION . 'admin/view/template/');
-		} elseif (is_dir(DIR_MODIFICATION . 'catalog/view/theme/')) {
-			$loader->addPath(DIR_MODIFICATION . 'catalog/view/theme/');
-		}
-		
-		$loader->addPath(DIR_TEMPLATE);]]>
+        <![CDATA[if (defined('DIR_CATALOG') && is_file(DIR_MODIFICATION . 'admin/view/template/' . $filename . '.twig')) {	
+                $code = file_get_contents(DIR_MODIFICATION . 'admin/view/template/' . $filename . '.twig');
+            } elseif (is_file(DIR_MODIFICATION . 'catalog/view/theme/' . $filename . '.twig')) {
+                $code = file_get_contents(DIR_MODIFICATION . 'catalog/view/theme/' . $filename . '.twig');
+            } elseif (is_file($file)) {]]>
       </add>
     </operation>
   </file> 

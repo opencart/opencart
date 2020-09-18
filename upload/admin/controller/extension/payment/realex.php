@@ -243,9 +243,9 @@ class ControllerExtensionPaymentRealex extends Controller {
 
 				$data['auto_settle'] = $realex_order['settle_type'];
 
-				$data['order_id'] = $this->request->get['order_id'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 				
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/realex_order', $data);
 			}

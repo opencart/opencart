@@ -158,7 +158,7 @@ class ModelExtensionPaymentEway extends Model {
 		if (curl_errno($ch) != CURLE_OK) {
 			$response = new stdClass();
 			$response->Errors = "POST Error: " . curl_error($ch) . " URL: $url";
-			$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
+			$this->log->write(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
 			$response = json_encode($response);
 		} else {
 			$info = curl_getinfo($ch);

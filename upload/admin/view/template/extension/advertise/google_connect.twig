@@ -1,0 +1,168 @@
+{{ header }}
+{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="{{ text_video_tutorial_url_install }}" target="_blank" class="btn btn-info" data-toggle="tooltip" title="{{ button_video_tutorial_install }}"><i class="fa fa-video-camera"></i></a>
+                <a href="{{ cancel }}" class="btn btn-default" data-toggle="tooltip" title="{{ button_cancel }}"><i class="fa fa-reply"></i></a>
+            </div> 
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {{ steps }}
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+            <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ text_connect_intro }}
+        </div>
+        {% if success %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
+            </div>
+        {% endif %}
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-plug"></i>&nbsp;<span>{{ text_panel_connect }}</span></h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+                    <fieldset>
+                        <legend>{{ text_extension_settings }}</legend>
+                        <div class="form-group">
+                            <label for="select-status" class="col-sm-2 control-label">{{ text_status }}</label>
+                            <div class="col-sm-10">
+                                <select name="advertise_google_status" id="select-status" class="form-control">
+                                    <option value="1" selected>{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label for="input-app-id" class="col-sm-2 control-label">{{ text_app_id }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="input-app-id" class="form-control" name="advertise_google_app_id" autocomplete="off" value="{{ advertise_google_app_id }}" />
+                                {% if error_app_id %}
+                                    <div class="text-danger">{{ error_app_id }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label for="input-app-secret" class="col-sm-2 control-label">{{ text_app_secret }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="input-app-secret" class="form-control" name="advertise_google_app_secret" autocomplete="off" value="{{ advertise_google_app_secret }}" />
+                                {% if error_app_secret %}
+                                    <div class="text-danger">{{ error_app_secret }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>{{ text_cron_settings }}</legend>
+                        <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_cron_info }}</div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-original-title="{{ help_local_cron }}">{{ text_local_cron }}</span></label>
+                            <div class="col-sm-10">
+                                <input readonly type="text" class="form-control" value="{{ advertise_google_cron_command }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-original-title="{{ help_remote_cron }}">{{ text_remote_cron }}</span></label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input readonly type="text" name="advertise_google_cron_url" id="input_advertise_google_cron_url" class="form-control" value="" />
+                                    <div data-toggle="tooltip" data-original-title="{{ text_refresh_token }}" class="input-group-addon btn btn-primary" id="refresh-cron-token">
+                                        <i class="fa fa-refresh"></i>
+                                    </div>
+                                </div>
+                                <input id="input_advertise_google_cron_token" type="hidden" name="advertise_google_cron_token" value="{{ advertise_google_cron_token }}" />
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="checkbox_advertise_google_cron_acknowledge">{{ entry_setup_confirmation }}</label>
+                            <div class="col-sm-10">
+                                <label class="checkbox-inline">
+                                    <input id="checkbox_advertise_google_cron_acknowledge" type="checkbox" value="1" {% if advertise_google_cron_acknowledge %} checked {% endif %} name="advertise_google_cron_acknowledge" /> {{ text_acknowledge_cron }}
+                                </label>
+
+                                {% if error_cron_acknowledge %}
+                                    <div class="text-danger">{{ error_cron_acknowledge }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="dropdown_advertise_google_cron_email_status"><span data-toggle="tooltip" data-original-title="{{ help_cron_email_status }}">{{ text_cron_email_status }}</span></label>
+                            <div class="col-sm-10">
+                                <select id="dropdown_advertise_google_cron_email_status" name="advertise_google_cron_email_status" class="form-control">
+                                    <option value="1" {% if advertise_google_cron_email_status == '1' %} selected {% endif %}>{{ text_enabled }}</option>
+                                    <option value="0" {% if advertise_google_cron_email_status == '0' %} selected {% endif %}>{{ text_disabled }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="input_advertise_google_cron_email"><span data-toggle="tooltip" data-original-title="{{ help_cron_email }}">{{ text_cron_email }}</span></label>
+                            <div class="col-sm-10">
+                                <input id="input_advertise_google_cron_email" name="advertise_google_cron_email" type="text" class="form-control" value="{{ advertise_google_cron_email }}"/>
+                                {% if error_cron_email %}
+                                    <div class="text-danger">{{ error_cron_email }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary btn-block" id="connect">{{ button_connect }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+(function($) {
+    var selector = {
+        save: '#connect',
+        form: '#form'
+    }
+
+    var randomString = function() {
+        return (Math.random() * 100).toString(16).replace('.', '');
+    }
+
+    var setCronUrl = function() {
+        $('#input_advertise_google_cron_url').val(
+            "{{ advertise_google_cron_url }}".replace('{CRON_TOKEN}', $('#input_advertise_google_cron_token').val())
+        );
+    }
+
+    $(document).on('click', selector.save, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $(selector.save).text('{{ text_connecting }}').attr('disabled', true);
+
+        $(selector.form).submit();
+    });
+
+    $(document).ready(function() {
+        setCronUrl();
+    });
+
+    $('#refresh-cron-token').click(function() {
+        $('#input_advertise_google_cron_token').val(randomString() + randomString());
+        setCronUrl();
+    });
+})(jQuery);
+</script>
+{{ footer }}

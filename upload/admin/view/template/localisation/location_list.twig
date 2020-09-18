@@ -49,22 +49,22 @@
                 </tr>
               </thead>
               <tbody>
-                {% if location %}
-                {% for locations in location %}
+                {% if locations %}
+                {% for location in locations %}
                 <tr>
-                  <td class="text-center">{% if locations.location_id in selected %}
-                    <input type="checkbox" name="selected[]" value="{{ locations.location_id }}" checked="checked" />
+                  <td class="text-center">{% if location.location_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ location.location_id }}" checked="checked" />
                     {% else %}
-                    <input type="checkbox" name="selected[]" value="{{ locations.location_id }}" />
+                    <input type="checkbox" name="selected[]" value="{{ location.location_id }}" />
                     {% endif %}</td>
-                  <td class="text-left">{{ locations.name }}</td>
-                  <td class="text-left">{{ locations.address }}</td>
-                  <td class="text-right"><a href="{{ locations.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left">{{ location.name }}</td>
+                  <td class="text-left">{{ location.address }}</td>
+                  <td class="text-right"><a href="{{ location.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}
                 <tr>
-                  <td class="text-center" colspan="6">{{ text_no_results }}</td>
+                  <td class="text-center" colspan="4">{{ text_no_results }}</td>
                 </tr>
                 {% endif %}
               </tbody>
@@ -79,4 +79,4 @@
     </div>
   </div>
 </div>
-{{ footer }} 
+{{ footer }}

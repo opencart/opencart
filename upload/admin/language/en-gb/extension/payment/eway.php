@@ -11,6 +11,8 @@ $_['text_authorisation']		= 'Authorisation';
 $_['text_sale']					= 'Sale';
 $_['text_transparent']			= 'Transparent Redirect (payment form on site)';
 $_['text_iframe']				= 'IFrame (payment form in window)';
+$_['text_connect_eway']	        = 'eWAY helps businesses to securely process all major credit cards, with built-in fraud prevention, 24/7 technical support and so much more. <a target="_blank" href="https://myeway.force.com/success/accelerator-signup?pid=4382&pa=0012000000ivcWf">Click Here</a>';
+$_['text_eway_image']	        = '<a target="_blank" href="https://myeway.force.com/success/accelerator-signup?pid=4382&pa=0012000000ivcWf"><img src="view/image/payment/eway_connect.png" alt="eWAY" title="eWAY" class="img-fluid" /></a>';
 
 // Entry
 $_['entry_paymode']				= 'Payment Mode';

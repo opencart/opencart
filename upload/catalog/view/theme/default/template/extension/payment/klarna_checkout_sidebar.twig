@@ -48,7 +48,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">Order Summary</h3>
     </div>
-    {% products or vouchers %}
+    {% if products or vouchers %}
         <div style="overflow: auto;">
         	<table class="table-klarna">
         	  {% for product in products %}

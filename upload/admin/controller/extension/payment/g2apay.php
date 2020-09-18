@@ -212,9 +212,9 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 				$data['g2apay_order'] = $g2apay_order;
 
-				$data['order_id'] = $this->request->get['order_id'];
+				$data['order_id'] = (int)$this->request->get['order_id'];
 				
-				$data['user_token'] = $this->request->get['user_token'];
+				$data['user_token'] = $this->session->data['user_token'];
 
 				return $this->load->view('extension/payment/g2apay_order', $data);
 			}

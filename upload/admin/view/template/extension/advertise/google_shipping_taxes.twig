@@ -1,0 +1,231 @@
+{{ header }}
+{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="{{ text_video_tutorial_url_install }}" target="_blank" class="btn btn-info" data-toggle="tooltip" title="{{ button_video_tutorial_install }}"><i class="fa fa-video-camera"></i></a>
+                <a href="{{ cancel }}" class="btn btn-default" data-toggle="tooltip" title="{{ button_cancel }}"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if not from_dashboard %}
+            {{ steps }}
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
+            </div>
+        {% endif %}
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-truck"></i>&nbsp;
+                    <span>
+                        {% if from_dashboard %}
+                            {{ text_panel_heading_shipping_taxes_2 }}
+                        {% else %}
+                            {{ text_panel_heading_shipping_taxes }}
+                        {% endif %}
+                    </span>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+                    <fieldset>
+                        <legend>{{ text_shipping_transit_times }}</legend>
+                        <div class="form-group required">
+                            <label for="input-min-transit-time" class="col-sm-3 control-label">{{ entry_min_transit_time }}</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="input-min-transit-time" name="advertise_google_shipping_taxes[min_transit_time]" value="{{ advertise_google_shipping_taxes.min_transit_time }}" />
+                                {% if error_min_transit_time %}
+                                    <div class="text-danger">{{ error_min_transit_time }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label for="input-max-transit-time" class="col-sm-3 control-label">{{ entry_max_transit_time }}</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="input-max-transit-time" name="advertise_google_shipping_taxes[max_transit_time]" value="{{ advertise_google_shipping_taxes.max_transit_time }}" />
+                                {% if error_max_transit_time %}
+                                    <div class="text-danger">{{ error_max_transit_time }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>{{ text_shipping_services }}</legend>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label>
+                                    <input type="radio" name="advertise_google_shipping_taxes[shipping_type]" value="flat" {{ advertise_google_shipping_taxes.shipping_type == 'flat' ? 'checked' }} />
+                                    {{ text_shipping_flat }}
+                                </label>
+                            </div>
+                            <div class="col-sm-9" data-shipping-visible-on="flat">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                    <input type="number" class="form-control" name="advertise_google_shipping_taxes[flat_rate]" value="{{ advertise_google_shipping_taxes.flat_rate }}" />
+                                    <div class="input-group-addon">{{ text_usd }}</div>
+                                </div>
+                                {% if error_flat_rate %}
+                                    <div class="text-danger">{{ error_flat_rate }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label>
+                                    <input type="radio" name="advertise_google_shipping_taxes[shipping_type]" value="carrier" {{ advertise_google_shipping_taxes.shipping_type == 'carrier' ? 'checked' }}  />
+                                    {{ text_shipping_carrier }}
+                                </label>
+                            </div>
+                            <div class="col-sm-9" data-shipping-visible-on="carrier">
+                                <div class="input-group">
+                                    <div class="input-group-addon">{{ text_carrier_postcode }}</div>
+                                    <input type="text" class="form-control" name="advertise_google_shipping_taxes[carrier_postcode]" value="{{ advertise_google_shipping_taxes.carrier_postcode }}" />
+                                </div>
+                                {% if error_carrier_postcode %}
+                                    <div class="text-danger">{{ error_carrier_postcode }}</div>
+                                {% endif %}
+                                <div class="input-group margin-top-10">
+                                    <div class="input-group-addon"><span data-toggle="tooltip" title="{{ help_carrier_price_percentage }}">{{ text_carrier_price_percentage }}</span></div>
+                                    <input type="number" class="form-control" name="advertise_google_shipping_taxes[carrier_price_percentage]" value="{{ advertise_google_shipping_taxes.carrier_price_percentage }}" />
+                                    <div class="input-group-addon"><i class="fa fa-percent"></i></div>
+                                </div>
+                                {% if error_carrier_price_percentage %}
+                                    <div class="text-danger">{{ error_carrier_price_percentage }}</div>
+                                {% endif %}
+                                {% for carrier in available_carriers %}
+                                    <fieldset class="margin-top-10">
+                                        <legend>{{ carrier.name }} ({{ carrier.country }})</legend>
+                                        {% for service in carrier.services %}
+                                            <label class="label-block">
+                                                <input type="checkbox" name="advertise_google_shipping_taxes[carrier][{{ carrier.code }}][{{ service.code }}]" value="1" {{ advertise_google_shipping_taxes.carrier[carrier.code][service.code] == '1' ? 'checked' }} /> {{ service.name }}
+                                            </label>
+                                        {% endfor %}
+                                    </fieldset>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label>
+                                    <input type="radio" name="advertise_google_shipping_taxes[shipping_type]" value="custom" {{ advertise_google_shipping_taxes.shipping_type == 'custom' ? 'checked' }}  />
+                                    {{ text_shipping_custom }}
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="margin-top-10">
+                        <legend>{{ text_taxes }}</legend>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label>
+                                    <input type="radio" name="advertise_google_shipping_taxes[tax_type]" value="usa" {{ advertise_google_shipping_taxes.tax_type == 'usa' ? 'checked' }}  />
+                                    {{ text_tax_usa }}
+                                </label>
+                            </div>
+                            <div class="col-sm-9" data-tax-visible-on="usa">
+                                <div class="input-group">
+                                    <div class="input-group-addon">{{ text_tax_on_shipping }}</div>
+                                    <select class="form-control" name="advertise_google_shipping_taxes[tax_on_shipping]">
+                                        <option value="1" {{ advertise_google_shipping_taxes.tax_on_shipping == '1' ? 'selected' }}>{{ text_enabled }}</option>
+                                        <option value="0" {{ advertise_google_shipping_taxes.tax_on_shipping == '0' ? 'selected' }}>{{ text_disabled }}</option>
+                                    </select>
+                                </div>
+                                <fieldset class="margin-top-10">
+                                    <legend>{{ text_active_states }}</legend>
+                                    {% for id, state in states %}
+                                        <label class="label-block">
+                                            <input type="checkbox" name="advertise_google_shipping_taxes[tax][]" value="{{ id }}" {{ id in advertise_google_shipping_taxes.tax ? 'checked' }} /> {{ state }}
+                                        </label>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label>
+                                    <input type="radio" name="advertise_google_shipping_taxes[tax_type]" value="not_usa" {{ advertise_google_shipping_taxes.tax_type == 'not_usa' ? 'checked' }}  />
+                                    {{ text_tax_not_usa }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label>
+                                    <input type="radio" name="advertise_google_shipping_taxes[tax_type]" value="custom" {{ advertise_google_shipping_taxes.tax_type == 'custom' ? 'checked' }}  />
+                                    {{ text_tax_custom }}
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary" id="proceed">{{ button_proceed }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .label-block {
+        display: block;
+        cursor: pointer;
+    }
+
+    .margin-top-10 {
+        margin-top: 10px;
+    }
+</style>
+<script type="text/javascript">
+(function($) {
+    var selector = {
+        shipping_type: '[name="advertise_google_shipping_taxes[shipping_type]"]',
+        tax_type: '[name="advertise_google_shipping_taxes[tax_type]"]',
+        save: '#proceed',
+        form: '#form'
+    }
+
+    $(selector.shipping_type).change(function(e) {
+        $('[data-shipping-visible-on]').hide();
+
+        $('[data-shipping-visible-on="' + $(this).val() + '"]').show();
+    });
+
+    $(selector.shipping_type + ':checked').trigger('change');
+
+    $(selector.tax_type).change(function(e) {
+        $('[data-tax-visible-on]').hide();
+
+        $('[data-tax-visible-on="' + $(this).val() + '"]').show();
+    });
+
+    $(selector.tax_type + ':checked').trigger('change');
+
+    $(document).on('click', selector.save, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $(selector.save).text('{{ text_loading }}').attr('disabled', true);
+
+        $(selector.form).submit();
+    });
+})(jQuery);
+</script>
+{{ footer }}

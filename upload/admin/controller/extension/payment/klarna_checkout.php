@@ -307,7 +307,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 		
-		$data['order_id'] = $this->request->get['order_id'];
+		$data['order_id'] = (int)$this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/klarna_checkout_order', $data);
 	}
@@ -346,7 +346,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		
 		$data['user_token'] = $this->session->data['user_token'];
 		
-		$data['order_id'] = $this->request->get['order_id'];
+		$data['order_id'] = (int)$this->request->get['order_id'];
 		
 		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
@@ -530,6 +530,30 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$data['max_refund_amount'] = $this->currency->format($max_refund_amount, $order_info['currency_code'], '1.00000000', false);
 		$data['symbol_left'] = $this->currency->getSymbolLeft($order_info['currency_code']);
 		$data['symbol_right'] = $this->currency->getSymbolRight($order_info['currency_code']);
+
+		// The URL we send API requests to
+		$data['catalog'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+
+		// API login
+		$this->load->model('user/api');
+
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+
+		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
+			$session = new Session($this->config->get('session_engine'), $this->registry);
+
+			$session->start();
+
+			$this->model_user_api->deleteApiSessionBySessonId($session->getId());
+
+			$this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+
+			$session->data['api_id'] = $api_info['api_id'];
+
+			$data['api_token'] = $session->getId();
+		} else {
+			$data['api_token'] = '';
+		}
 
 		$this->response->setOutput($this->load->view('extension/payment/klarna_checkout_order_ajax', $data));
 	}
@@ -786,7 +810,7 @@ class ControllerExtensionPaymentKlarnaCheckout extends Controller {
 		$this->load->model('extension/payment/klarna_checkout');
 		$this->load->model('localisation/geo_zone');
 
-		if (version_compare(phpversion(), '5.4.0', '<')) {
+		if (version_compare(phpversion(), '7.3', '<')) {
 			$this->error['warning'] = $this->language->get('error_php_version');
 		}
 

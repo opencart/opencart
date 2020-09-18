@@ -165,8 +165,8 @@ class ModelExtensionTotalCoupon extends Model {
 				}
 
 				// If discount greater than total
-				if ($discount_total > $total) {
-					$discount_total = $total;
+				if ($discount_total > $total['total']) {
+					$discount_total = $total['total'];
 				}
 
 				if ($discount_total > 0) {

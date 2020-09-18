@@ -654,38 +654,38 @@ $(document).off('click', '.button-command').on('click', '.button-command', funct
 					$('.kc-alert').show().addClass('alert alert-success').html('<i class="fa fa-exclamation-circle"></i> ' + json.success);
 				}
 
-                if (json.order_status_id) {
-                    $.ajax({
-                        url: '{{ store_url }}index.php?route=api/order/history&token=' + token + '&order_id={{ order_id }}',
-                        type: 'post',
-                        dataType: 'json',
-                        data: 'order_status_id=' + encodeURIComponent(json.order_status_id) + '&notify=0&override=1&comment',
-                        beforeSend: function() {
-                            $('#button-history').button('loading');
-                        },
-                        complete: function() {
-                            $('#button-history').button('reset');
-                        },
-                        success: function(json) {
-                            $('.alert-dismissible').remove();
+				if (json.order_status_id) {
+					$.ajax({
+						url: '{{ catalog }}index.php?route=api/order/history&api_token={{ api_token }}&order_id={{ order_id }}',
+						type: 'post',
+						dataType: 'json',
+						data: 'order_status_id=' + encodeURIComponent(json.order_status_id) + '&notify=0&override=1&comment',
+						beforeSend: function() {
+							$('#button-history').button('loading');
+						},
+						complete: function() {
+							$('#button-history').button('reset');
+						},
+						success: function(json) {
+							$('.alert-dismissible').remove();
 
-                            if (json['error']) {
-                                $('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                            }
+							if (json['error']) {
+								$('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							}
 
-                            if (json['success']) {
-                                $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+							if (json['success']) {
+								$('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
-                                $('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+								$('#history').before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-                                $('textarea[name=\'comment\']').val('');
-                            }
-                        },
-                        error: function(xhr, ajaxOptions, thrownError) {
-                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                        }
-                    });
-                }
+								$('textarea[name=\'comment\']').val('');
+							}
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}
 
 				setTimeout(function() {
 					getTransaction('{{ order_id }}');

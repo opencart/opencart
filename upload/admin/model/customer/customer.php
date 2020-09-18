@@ -59,6 +59,7 @@ class ModelCustomerCustomer extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_activity WHERE customer_id = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_affiliate WHERE customer_id = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_approval WHERE customer_id = '" . (int)$customer_id . "'");
+ 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_history WHERE customer_id = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$customer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$customer_id . "'");
@@ -230,7 +231,7 @@ class ModelCustomerCustomer extends Model {
 	}
 
 	public function getTotalCustomers($data = array()) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer";
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer c";
 
 		$implode = array();
 
@@ -270,6 +271,12 @@ class ModelCustomerCustomer extends Model {
 
 		return $query->row['total'];
 	}
+        
+        public function getAffliateByTracking($tracking) {
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_affiliate WHERE tracking = '" . $this->db->escape($tracking) . "'");
+                
+                return $query->row;
+        }
 	
 	public function getAffiliate($customer_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_affiliate WHERE customer_id = '" . (int)$customer_id . "'");

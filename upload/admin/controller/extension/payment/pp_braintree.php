@@ -551,7 +551,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 		
-		$data['order_id'] = $this->request->get['order_id'];
+		$data['order_id'] = (int)$this->request->get['order_id'];
 
 		return $this->load->view('extension/payment/pp_braintree_order', $data);
 	}
@@ -1023,7 +1023,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		}
 	}
 
-	public function preferredSolution() {
+	public function promotion() {
 		$this->load->language('extension/payment/pp_braintree');
 
 		$data['connect_link'] = '';
@@ -1045,7 +1045,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 			$data['payment_pp_braintree_status'] = "disabled";
 		}
 
-		return $this->load->view('extension/payment/pp_braintree_preferred', $data);
+		return $this->load->view('extension/payment/pp_braintree_promotion', $data);
 	}
 
 	protected function validate() {
@@ -1053,7 +1053,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$check_credentials = true;
 
-		if (version_compare(phpversion(), '5.4.0', '<')) {
+		if (version_compare(phpversion(), '7.3', '<')) {
 			$this->error['warning'] = $this->language->get('error_php_version');
 		}
 

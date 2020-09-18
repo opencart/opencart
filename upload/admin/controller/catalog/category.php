@@ -540,7 +540,7 @@ class ControllerCatalogCategory extends Controller {
 			
 			foreach ($this->request->post['category_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if (trim($keyword)) {
+					if (!empty($keyword)) {
 						if (count(array_keys($language, $keyword)) > 1) {
 							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_unique');
 						}

@@ -134,7 +134,7 @@
           </span></div>
       </div>
       {% endif %}
-      {% if custom_field.type == 'time' %}
+      {% if custom_field.type == 'datetime' %}
       <div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
         <label class="control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
         <div class="input-group datetime">

@@ -177,7 +177,7 @@ class ControllerSaleVoucher extends Controller {
 			} else {
 				$order_href = '';
 			}
-			
+
 			$data['vouchers'][] = array(
 				'voucher_id' => $result['voucher_id'],
 				'code'       => $result['code'],
@@ -268,7 +268,7 @@ class ControllerSaleVoucher extends Controller {
 		$data['text_form'] = !isset($this->request->get['voucher_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->request->get['voucher_id'])) {
-			$data['voucher_id'] = $this->request->get['voucher_id'];
+			$data['voucher_id'] = (int)$this->request->get['voucher_id'];
 		} else {
 			$data['voucher_id'] = 0;
 		}
@@ -567,6 +567,9 @@ class ControllerSaleVoucher extends Controller {
 			}
 
 			if ($vouchers) {
+				$this->load->model('sale/order');
+				$this->load->model('sale/voucher_theme');
+
 				foreach ($vouchers as $voucher_id) {
 					$voucher_info = $this->model_sale_voucher->getVoucher($voucher_id);
 			
@@ -576,8 +579,6 @@ class ControllerSaleVoucher extends Controller {
 						} else {
 							$order_id = 0;
 						}
-			
-						$this->load->model('sale/order');
 			
 						$order_info = $this->model_sale_order->getOrder($order_id);
 			
@@ -597,8 +598,6 @@ class ControllerSaleVoucher extends Controller {
 							$data['text_message'] = $language->get('text_message');
 							$data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher_info['code']);
 							$data['text_footer'] = $language->get('text_footer');
-			
-							$this->load->model('sale/voucher_theme');
 			
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 			
@@ -628,25 +627,25 @@ class ControllerSaleVoucher extends Controller {
 							$mail->send();
 			
 						// If voucher does not belong to an order
-						}  else {
+						} else {
+							$this->language->load('mail/voucher');
+
 							$data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
 			
 							$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));
 							$data['text_from'] = sprintf($this->language->get('text_from'), $voucher_info['from_name']);
 							$data['text_message'] = $this->language->get('text_message');
 							$data['text_redeem'] = sprintf($this->language->get('text_redeem'), $voucher_info['code']);
-							$data['text_footer'] = $this->language->get('text_footer');
-			
-							$this->load->model('sale/voucher_theme');
+							$data['text_footer'] = $this->language->get('text_footer');		
 			
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
-			
+
 							if ($voucher_theme_info && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
 								$data['image'] = HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
 							} else {
 								$data['image'] = '';
 							}
-			
+
 							$data['store_name'] = $this->config->get('config_name');
 							$data['store_url'] = HTTP_CATALOG;
 							$data['message'] = nl2br($voucher_info['message']);

@@ -102,11 +102,11 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$this->model_extension_payment_g2apay->logger($fields);
 
 		if ($response_data === false) {
-			$this->response->redirect($this->url->link('extension/payment/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure', '', true));
 		}
 
 		if (strtolower($response_data->status) != 'ok') {
-			$this->response->redirect($this->url->link('extension/payment/failure', '', true));
+			$this->response->redirect($this->url->link('checkout/failure', '', true));
 		}
 
 		$this->model_extension_payment_g2apay->addG2aOrder($order_info);

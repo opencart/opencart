@@ -747,7 +747,7 @@
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] ? custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                 </div>
               </div>
               {% endif %}
@@ -1905,7 +1905,7 @@ $('#button-shipping-address').on('click', function() {
 											}
 										}
 									} else {
-										html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
+										html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
 									}
 
 									html += '</optgroup>';
@@ -2126,18 +2126,18 @@ $('#button-reward').on('click', function() {
 $('input[name=\'affiliate\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=marketing/affiliate/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				json.unshift({
-					affiliate_id: 0,
+					customer_id: 0,
 					name: '{{ text_none }}'
 				});
 
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['affiliate_id']
+						value: item['customer_id']
 					}
 				}));
 			}
@@ -2260,7 +2260,7 @@ $('.time').datetimepicker({
 	pickDate: false
 });
 //--></script>
-  <script type="text/javascript">
+  <script type="text/javascript"><!--
 // Sort the custom fields
 $('#tab-customer .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .form-group').length) {
@@ -2490,5 +2490,5 @@ $('#button-refresh').on('click', function() {
 		}
 	});
 });
-</script></div>
+//--></script></div>
 {{ footer }}

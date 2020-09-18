@@ -325,6 +325,14 @@ class ControllerAccountReturn extends Controller {
 			$data['order_id'] = '';
 		}
 
+		if (isset($this->request->post['product_id'])) {
+			$data['product_id'] = $this->request->post['product_id'];
+		} elseif (!empty($product_info)) {
+			$data['product_id'] = $product_info['product_id'];
+		} else {
+			$data['product_id'] = '';
+		}
+
 		if (isset($this->request->post['date_ordered'])) {
 			$data['date_ordered'] = $this->request->post['date_ordered'];
 		} elseif (!empty($order_info)) {
@@ -422,7 +430,7 @@ class ControllerAccountReturn extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_return_id'), true), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_return_id'), true), $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}

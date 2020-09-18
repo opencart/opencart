@@ -76,10 +76,10 @@ class ControllerExtensionPaymentAuthorizeNetSim extends Controller {
 
 		$data['callback'] = HTTP_CATALOG . 'index.php?route=extension/payment/authorizenet_sim/callback';
 
-		if (isset($this->request->post['payment_authorizenet_sim_md5'])) {
-			$data['payment_authorizenet_sim_md5'] = $this->request->post['payment_authorizenet_sim_md5'];
+		if (isset($this->request->post['payment_authorizenet_sim_hash'])) {
+			$data['payment_authorizenet_sim_hash'] = $this->request->post['payment_authorizenet_sim_hash'];
 		} else {
-			$data['payment_authorizenet_sim_md5'] = $this->config->get('payment_authorizenet_sim_md5');
+			$data['payment_authorizenet_sim_hash'] = $this->config->get('payment_authorizenet_sim_hash');
 		}
 
 		if (isset($this->request->post['payment_authorizenet_sim_total'])) {

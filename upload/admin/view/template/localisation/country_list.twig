@@ -39,7 +39,7 @@
                     <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
-                    <{% endif %}</td>
+                    {% endif %}</td>
                   <td class="text-left">{% if sort == 'iso_code_2' %}
                     <a href="{{ sort_iso_code_2 }}" class="{{ order|lower }}">{{ column_iso_code_2 }}</a>
                     {% else %}

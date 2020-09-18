@@ -55,7 +55,7 @@
 	  <div class="form-group">
 		<div class="col-sm-11" id='paymentDetailsHere' style="margin-left: 3%"></div>
 	  </div>
-	  {% if worldpay_card %}
+	  {% if payment_worldpay_card %}
 		  <div class="form-group">
 			<label class="col-sm-2 control-label" for="input-cc-save">{{ entry_card_save }}</label>
 			<div class="col-sm-2">
@@ -80,7 +80,7 @@
         Worldpay.setClientKey("{{ worldpay_client_key }}");
 
         // disable new card form if existing cards
-{% if not existing_cards %}
+{% if existing_cards %}
 	        $('#payment-new-form :input').prop('disabled', true);
 {% endif %}
 

@@ -20,7 +20,7 @@ class ControllerCommonDashboard extends Controller {
 		);
 		
 		// Check install directory exists
-		if (is_dir(DIR_APPLICATION . 'install')) {
+		if (is_dir(DIR_CATALOG . '../install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
@@ -74,6 +74,10 @@ class ControllerCommonDashboard extends Controller {
 				$width = 0;
 				$column = array();
 			}
+		}
+
+		if (!empty($column)) {
+    			$data['rows'][] = $column;
 		}
 
 		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {

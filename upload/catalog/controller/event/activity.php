@@ -186,7 +186,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 		}
 	}
 	
-	// catalog/model/account/return/addReturn/after
+	// catalog/model/account/returns/addReturn/after
 	public function addReturn(&$route, &$args, &$output) {
 		if ($this->config->get('config_customer_activity') && $output) {
 			$this->load->model('account/activity');

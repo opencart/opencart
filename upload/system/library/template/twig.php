@@ -8,7 +8,7 @@ class Twig {
 		$this->loader = new \Twig\Loader\FilesystemLoader();
 	}
 
-	public function addPath($extension, $directory) {
+	public function addPath($namespace, $directory) {
 		$this->loader->addPath($directory);
 	}
 
@@ -43,12 +43,9 @@ class Twig {
 			$loader = $this->loader;
 		}
 
+		//'extension/' .
 		if (substr($filename, 0, 19) == 'extension/opencart/') {
 			$filename = substr($filename, 19);
-		}
-
-		if (substr($filename, 0, 9) == 'extension') {
-			//$filename = substr($filename, 19);
 		}
 
 		try {

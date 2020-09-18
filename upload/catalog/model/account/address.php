@@ -79,7 +79,7 @@ class Address extends \Opencart\System\Engine\Model {
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
 				'custom_field'   => json_decode($address_query->row['custom_field'], true)
-			);
+			];
 
 			return $address_data;
 		} else {

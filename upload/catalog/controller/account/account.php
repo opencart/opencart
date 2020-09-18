@@ -63,7 +63,7 @@ class Account extends \Opencart\System\Engine\Controller {
 			$data['reward'] = '';
 		}
 
-		$data['return'] = $this->url->link('account/return', 'language=' . $this->config->get('config_language'));
+		$data['return'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language'));
 		$data['transaction'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
 		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
 		$data['recurring'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));

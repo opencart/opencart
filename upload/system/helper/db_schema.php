@@ -5391,11 +5391,6 @@ function db_schema() {
 				'name' => 'url',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			],
-			[
-				'name' => 'ssl',
-				'type' => 'varchar(255)',
-				'not_null' => true
 			]
 		],
 		'primary' => [
@@ -5568,11 +5563,6 @@ function db_schema() {
 			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'theme',
-				'type' => 'varchar(64)',
 				'not_null' => true
 			],
 			[

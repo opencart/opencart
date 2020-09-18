@@ -79,7 +79,7 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 
 		$events[] = [
 			'code'    => 'activity_return_add',
-			'trigger' => 'catalog/model/account/return/addReturn/after',
+			'trigger' => 'catalog/model/account/returns/addReturn/after',
 			'action'  => 'event/activity/addReturn'
 		];
 
@@ -145,7 +145,7 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 
 		$events[] = [
 			'code'    => 'statistics_return_add',
-			'trigger' => 'catalog/model/account/return/addReturn/after',
+			'trigger' => 'catalog/model/account/returns/addReturn/after',
 			'action'  => 'event/statistics/addReturn'
 		];
 

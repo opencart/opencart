@@ -33,7 +33,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$images = array_slice($directories, ($page - 1) * 16, 16);
 
 			foreach ($images as $image) {
-				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+				if (get_path($image, 'catalog') == DIR_IMAGE . 'catalog') {
 					$name = basename($image);
 
 					$url = '';
@@ -71,7 +71,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$images = array_slice($files, ($page - 1) * 16, 16 - count($data['directories']));
 
 			foreach ($images as $image) {
-				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+				if (get_path($image, 'catalog') == DIR_IMAGE . 'catalog') {
 					$name = basename($image);
 
 					$data['images'][] = [
@@ -223,7 +223,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+		if (!is_dir($directory) || get_path($directory, 'catalog') != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -318,7 +318,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+		if (!is_dir($directory) || get_path($directory, 'catalog') != DIR_IMAGE . 'catalog') {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -372,7 +372,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$path = html_entity_decode($path, ENT_QUOTES, 'UTF-8');
 
 			// Check path exists
-			if (($path == DIR_IMAGE . 'catalog') || (substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog')) {
+			if (($path == DIR_IMAGE . 'catalog') || (get_path($path, 'catalog') != DIR_IMAGE . 'catalog')) {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;

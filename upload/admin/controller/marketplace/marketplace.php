@@ -853,7 +853,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			curl_close($curl);
 
 			if (isset($response_info['download'])) {
-
 				if (substr($response_info['filename'], -10) == '.ocmod.zip') {
 					$handle = fopen(DIR_STORAGE . 'marketplace/' . $response_info['filename'], 'w');
 

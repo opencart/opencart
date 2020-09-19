@@ -743,7 +743,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$time = time();
 
-			// We create a hash from the data in a similarsimilar method to how amazon does things.
+			// We create a hash from the data in a similar method to how amazon does things.
 			$string = 'api/marketplace/purchase' . "\n";
 			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";

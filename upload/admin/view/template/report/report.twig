@@ -41,8 +41,6 @@
 <script type="text/javascript"><!--
 $('select[name=\'report\']').on('change', function(e) {
 	$('#report').load(this.value);
-
-	console.log(this.value);
 });
 
 $('select[name=\'report\']').trigger('change');

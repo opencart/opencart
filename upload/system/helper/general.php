@@ -83,61 +83,61 @@ if (!function_exists('hash_equals')) {
 	}
 }
 
-function date_added($date) {
+function date_added($date, $language) {
 	$second = time() - strtotime($date);
 
 	if ($second < 10) {
 		$date_added = 'just now';
 	} elseif ($second) {
-		$date_added = $second . ' seconds ago';
+		$date_added = $second . ' ' . $language['text_seconds_ago'];
 	}
 
 	$minute = floor($second / 60);
 
 	if ($minute == 1) {
-		$date_added = $minute . ' minute ago';
+		$date_added = $minute . ' ' . $language['text_minute_ago'];
 	} elseif ($minute) {
-		$date_added = $minute . ' minutes ago';
+		$date_added = $minute . ' ' . $language['text_minutes_ago'];
 	}
 
 	$hour = floor($minute / 60);
 
 	if ($hour == 1) {
-		$date_added = $hour . ' hour ago';
+		$date_added = $hour . ' ' . $language['text_hour_ago'];
 	} elseif ($hour) {
-		$date_added = $hour . ' hours ago';
+		$date_added = $hour . ' ' . $language['text_hours_ago'];
 	}
 
 	$day = floor($hour / 24);
 
 	if ($day == 1) {
-		$date_added = $day . ' day ago';
+		$date_added = $day . ' ' . $language['text_day_ago'];
 	} elseif ($day) {
-		$date_added = $day . ' days ago';
+		$date_added = $day . ' ' . $language['text_days_ago'];
 	}
 
 	$week = floor($day / 7);
 
 	if ($week == 1) {
-		$date_added = $week . ' week ago';
+		$date_added = $week . ' ' . $language['text_week_ago'];
 	} elseif ($week) {
-		$date_added = $week . ' weeks ago';
+		$date_added = $week . ' ' . $language['text_weeks_ago'];
 	}
 
 	$month = floor($week / 4);
 
 	if ($month == 1) {
-		$date_added = $month . ' month ago';
+		$date_added = $month . ' ' . $language['text_month_ago'];
 	} elseif ($month) {
-		$date_added = $month . ' months ago';
+		$date_added = $month . ' ' . $language['text_months_ago'];
 	}
 
 	$year = floor($week / 52.1429);
 
 	if ($year == 1) {
-		$date_added = $year . ' year ago';
+		$date_added = $year . ' ' . $language['text_year_ago'];
 	} elseif ($year) {
-		$date_added = $year . ' years ago';
+		$date_added = $year . ' ' . $language['text_years_ago'];
 	}
 
 	return $date_added;

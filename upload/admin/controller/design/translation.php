@@ -449,7 +449,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$directory = DIR_CATALOG . 'language/';
 
-		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
+		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && get_path($directory . $language_info['code'] . '/' . $route . '.php', $directory) == str_replace('\\', '/', $directory)) {
 			$_ = [];
 
 			include($directory . $language_info['code'] . '/' . $route . '.php');

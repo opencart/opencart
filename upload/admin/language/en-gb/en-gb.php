@@ -29,6 +29,18 @@ $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
 $_['text_just_now']                 = 'just now';
 $_['text_seconds_ago']              = 'seconds ago';
+$_['text_minute_ago']               = 'minute ago';
+$_['text_minutes_ago']              = 'minutes ago';
+$_['text_hour_ago']                 = 'hour ago';
+$_['text_hours_ago']                = 'hours ago';
+$_['text_day_ago']                  = 'day ago';
+$_['text_days_ago']                 = 'days ago';
+$_['text_week_ago']                 = 'week ago';
+$_['text_weeks_ago']                = 'weeks ago';
+$_['text_month_ago']                = 'month ago';
+$_['text_months_ago']               = 'months ago';
+$_['text_year_ago']                 = 'year ago';
+$_['text_years_ago']                = 'years ago';
 
 // Button
 $_['button_add']                    = 'Add New';

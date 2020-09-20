@@ -124,12 +124,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 			];
 		}
-
-		$filter_data = [
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
-		];
-
+		
 		$store_total += $this->model_setting_store->getTotalStores();
 
 		$results = $this->model_setting_store->getStores();

@@ -528,7 +528,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$results = $this->model_catalog_category->getPaths($this->request->post['parent_id']);
 			
 			foreach ($results as $result) {
-				if ($result['path_id'] == $this->request->get['category_id']) {
+				if ($result['path_id'] == (int)$this->request->get['category_id']) {
 					$this->error['parent'] = $this->language->get('error_parent');
 					
 					break;

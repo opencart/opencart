@@ -598,7 +598,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		// Check if there is already a key value pair on the same store using the same language
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($this->request->post['key'], $this->request->post['value'], $this->request->post['store_id'], $this->request->post['language_id']);
 
-		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != $this->request->get['seo_url_id'])) {
+		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != (int)$this->request->get['seo_url_id'])) {
 			$this->error['value'] = $this->language->get('error_value_exists');
 		}
 

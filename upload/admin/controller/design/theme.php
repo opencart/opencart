@@ -378,7 +378,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['theme_id'])) {
-			$theme_id = $this->request->get['theme_id'];
+			$theme_id = (int)$this->request->get['theme_id'];
 		} else {
 			$theme_id = 0;
 		}

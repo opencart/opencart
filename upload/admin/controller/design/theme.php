@@ -95,7 +95,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
+			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}
@@ -220,7 +220,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
+			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}
@@ -285,7 +285,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
+			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}
@@ -323,7 +323,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
+			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}

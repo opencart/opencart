@@ -125,7 +125,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -513,7 +513,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['column_date_added'] = $this->language->get('column_date_added');
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}

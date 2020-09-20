@@ -499,7 +499,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if ($coupon_info) {
 			if (!isset($this->request->get['coupon_id'])) {
 				$this->error['warning'] = $this->language->get('error_exists');
-			} elseif ($coupon_info['coupon_id'] != $this->request->get['coupon_id']) {
+			} elseif ($coupon_info['coupon_id'] != (int)$this->request->get['coupon_id']) {
 				$this->error['warning'] = $this->language->get('error_exists');
 			}
 		}
@@ -519,7 +519,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->load->language('marketing/coupon');
 
 		if (isset($this->request->get['coupon_id'])) {
-			$coupon_id = $this->request->get['coupon_id'];
+			$coupon_id = (int)$this->request->get['coupon_id'];
 		} else {
 			$coupon_id = 0;
 		}

@@ -514,7 +514,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 	public function info() {
 		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
+			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
@@ -674,7 +674,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->load->language('marketplace/marketplace');
 
 		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
+			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
@@ -723,7 +723,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
+			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
@@ -802,13 +802,13 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
+			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
 
 		if (isset($this->request->get['extension_download_id'])) {
-			$extension_download_id = $this->request->get['extension_download_id'];
+			$extension_download_id = (int)$this->request->get['extension_download_id'];
 		} else {
 			$extension_download_id = 0;
 		}
@@ -898,13 +898,13 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
+			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
 
 		if (isset($this->request->get['parent_id'])) {
-			$parent_id = $this->request->get['parent_id'];
+			$parent_id = (int)$this->request->get['parent_id'];
 		} else {
 			$parent_id = 0;
 		}
@@ -1043,13 +1043,13 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->load->language('marketplace/marketplace');
 
 		if (isset($this->request->get['extension_id'])) {
-			$extension_id = $this->request->get['extension_id'];
+			$extension_id = (int)$this->request->get['extension_id'];
 		} else {
 			$extension_id = 0;
 		}
 
 		if (isset($this->request->get['parent_id'])) {
-			$parent_id = $this->request->get['parent_id'];
+			$parent_id = (int)$this->request->get['parent_id'];
 		} else {
 			$parent_id = 0;
 		}

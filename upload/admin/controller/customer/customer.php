@@ -253,7 +253,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer_group_id'])) {
-			$filter_customer_group_id = $this->request->get['filter_customer_group_id'];
+			$filter_customer_group_id = (int)$this->request->get['filter_customer_group_id'];
 		} else {
 			$filter_customer_group_id = '';
 		}
@@ -962,7 +962,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 	public function login() {
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -978,7 +978,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$this->model_customer_customer->editToken($customer_id, $token);
 
 			if (isset($this->request->get['store_id'])) {
-				$store_id = $this->request->get['store_id'];
+				$store_id = (int)$this->request->get['store_id'];
 			} else {
 				$store_id = 0;
 			}
@@ -1025,7 +1025,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->load->model('customer/customer');
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -1067,7 +1067,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -1090,7 +1090,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->load->language('customer/customer');
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -1137,7 +1137,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -1160,7 +1160,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->load->language('customer/customer');
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -1207,7 +1207,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -1230,7 +1230,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->load->language('customer/customer');
 
 		if (isset($this->request->get['customer_id'])) {
-			$customer_id = $this->request->get['customer_id'];
+			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
 			$customer_id = 0;
 		}
@@ -1352,7 +1352,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		// Customer Group
 		if (isset($this->request->get['customer_group_id'])) {
-			$customer_group_id = $this->request->get['customer_group_id'];
+			$customer_group_id = (int)$this->request->get['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}

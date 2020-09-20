@@ -200,7 +200,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['event_id'])) {
-			$event_id = $this->request->get['event_id'];
+			$event_id = (int)$this->request->get['event_id'];
 		} else {
 			$event_id = 0;
 		}
@@ -225,7 +225,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['event_id'])) {
-			$event_id = $this->request->get['event_id'];
+			$event_id = (int)$this->request->get['event_id'];
 		} else {
 			$event_id = 0;
 		}

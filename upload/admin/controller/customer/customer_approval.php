@@ -47,7 +47,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		}
 		
 		if (isset($this->request->get['filter_customer_group_id'])) {
-			$filter_customer_group_id = $this->request->get['filter_customer_group_id'];
+			$filter_customer_group_id = (int)$this->request->get['filter_customer_group_id'];
 		} else {
 			$filter_customer_group_id = '';
 		}

@@ -409,7 +409,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->post['default'])) {
 			$data['default'] = $this->request->post['default'];
 		} elseif (isset($this->request->get['address_id'])) {
-			$data['default'] = $this->customer->getAddressId() == $this->request->get['address_id'];
+			$data['default'] = $this->customer->getAddressId() == (int)$this->request->get['address_id'];
 		} else {
 			$data['default'] = false;
 		}
@@ -482,7 +482,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_delete');
 		}
 
-		if ($this->customer->getAddressId() == $this->request->get['address_id']) {
+		if ($this->customer->getAddressId() == (int)$this->request->get['address_id']) {
 			$this->error['warning'] = $this->language->get('error_default');
 		}
 

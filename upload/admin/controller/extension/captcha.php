@@ -80,8 +80,6 @@ class Captcha extends \Opencart\System\Engine\Controller {
 		foreach ($extensions as $extension) {
 			if (in_array($extension['code'], $available)) {
 				$installed[] = $extension['code'];
-
-				echo $extension['code'];
 			} else {
 				$this->model_setting_extension->uninstall('captcha', $extension['code']);
 			}

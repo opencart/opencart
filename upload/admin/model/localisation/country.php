@@ -4,7 +4,7 @@ class ModelLocalisationCountry extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "country SET name = '" . $this->db->escape((string)$data['name']) . "', iso_code_2 = '" . $this->db->escape((string)$data['iso_code_2']) . "', iso_code_3 = '" . $this->db->escape((string)$data['iso_code_3']) . "', address_format = '" . $this->db->escape((string)$data['address_format']) . "', postcode_required = '" . (int)$data['postcode_required'] . "', status = '" . (int)$data['status'] . "'");
 
 		$this->cache->delete('country');
-		
+
 		return $this->db->getLastId();
 	}
 
@@ -25,10 +25,10 @@ class ModelLocalisationCountry extends Model {
 
 		$this->cache->delete('country');
 	}
-	
+
 	public function disableCountries($ids) {
 		$this->db->query("UPDATE " . DB_PREFIX . "country SET status = 0 WHERE country_id IN (" . $ids . ")");
-		
+
 		$this->cache->delete('country');
 	}
 
@@ -42,12 +42,12 @@ class ModelLocalisationCountry extends Model {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "country";
 
-			$sort_data = array(
+			$sort_data = [
 				'name',
 				'iso_code_2',
 				'iso_code_3',
 				'status'
-			);
+			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 				$sql .= " ORDER BY " . $data['sort'];

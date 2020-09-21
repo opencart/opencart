@@ -112,71 +112,71 @@ class ControllerLocalisationCountry extends Controller {
 
 	public function enable() {
 		$this->load->language('localisation/country');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('localisation/country');
-		
+
 		if (isset($this->request->post['selected']) && $this->validateEnable()) {
 			$ids = implode(",", $this->request->post['selected']);
 			$this->model_localisation_country->enableCountries($ids);
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
-			
+
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-			
+
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-			
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
 			$this->load->language('localisation/country');
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
-		
+
 		$this->getList();
 	}
-	
+
 	public function disable() {
 		$this->load->language('localisation/country');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('localisation/country');
-		
+
 		if (isset($this->request->post['selected']) && $this->validateDisable()) {
 			$ids = implode(",", $this->request->post['selected']);
 			$this->model_localisation_country->disableCountries($ids);
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
-			
+
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-			
+
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-			
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
 			$this->load->language('localisation/country');
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
-		
+
 		$this->getList();
 	}
 
@@ -289,7 +289,7 @@ class ControllerLocalisationCountry extends Controller {
 		$data['sort_name'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_iso_code_2'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
 		$data['sort_iso_code_3'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
-		$data['sort_status'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url, true);
+		$data['sort_status'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
 		$url = '';
 
@@ -487,18 +487,18 @@ class ControllerLocalisationCountry extends Controller {
 		if (!$this->user->hasPermission('modify', 'localisation/country')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		return !$this->error;
 	}
-	
+
 	protected function validateDisable() {
 		if (!$this->user->hasPermission('modify', 'localisation/country')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		return !$this->error;
 	}
-	
+
 	public function country() {
 		$json = array();
 
@@ -523,5 +523,5 @@ class ControllerLocalisationCountry extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

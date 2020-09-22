@@ -1,11 +1,22 @@
 <?php
 namespace Opencart\System\Library\Template;
 class Template {
+	protected $directory;
 	protected $path = [];
 	protected $data = [];
 
-	public function addPath($namespace, $directory) {
-		$this->path[$namespace] = $directory;
+	/**
+	 * addPath
+	 *
+	 * @param    string $namespace
+	 * @param    string $directory
+	 */
+	public function addPath($namespace, $directory = '') {
+		if (!$directory) {
+			$this->directory = $namespace;
+		} else {
+			$this->path[$namespace] = $directory;
+		}
 	}
 
 	public function set($key, $value) {
@@ -14,15 +25,17 @@ class Template {
 
 	public function render($filename, $code = '') {
 		if (!$code) {
+			$file = $this->directory . $filename . '.tpl';
+
 			$namespace = '';
 
-			$parts = explode('\\', $filename);
+			$parts = explode('/', $filename);
 
 			foreach ($parts as $part) {
 				if (!$namespace) {
 					$namespace .= $part;
 				} else {
-					$namespace .= '\\' . $part;
+					$namespace .= '/' . $part;
 				}
 
 				if (isset($this->path[$namespace])) {

@@ -7,7 +7,7 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		$data['analytics'] = [];
 
-		$analytics = $this->model_setting_extension->getExtensions('analytics');
+		$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
 
 		foreach ($analytics as $analytic) {
 			if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {

@@ -12,20 +12,24 @@
 */
 namespace Opencart\System\Library;
 class Language {
-	private $default = 'en-gb';
-	private $directory;
-	public $data = [];
-	
+	protected $directory;
+	protected $path = [];
+	protected $data = [];
+
 	/**
-	 * Constructor
+	 * addPath
 	 *
-	 * @param	string	$file
-	 *
- 	*/
-	public function __construct($directory = '') {
-		$this->directory = $directory;
+	 * @param    string $namespace
+	 * @param    string $directory
+	 */
+	public function addPath($namespace, $directory = '') {
+		if (!$directory) {
+			$this->directory = $namespace;
+		} else {
+			$this->path[$namespace] = $directory;
+		}
 	}
-	
+
 	/**
      * Get language tex string
      *
@@ -65,15 +69,25 @@ class Language {
 	 * @return	array
      */	
 	public function load($filename, $prefix = '') {
-		$_ = [];
+		$file = $this->directory . $filename . '.php';
 
-		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+		$namespace = '';
 
-		if (is_file($file)) {
-			require($file);
+		$parts = explode('/', $filename);
+
+		foreach ($parts as $part) {
+			if (!$namespace) {
+				$namespace .= $part;
+			} else {
+				$namespace .= '/' . $part;
+			}
+
+			if (isset($this->path[$namespace])) {
+				$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.php';
+			}
 		}
 
-		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
+		$_ = [];
 
 		if (is_file($file)) {
 			require($file);

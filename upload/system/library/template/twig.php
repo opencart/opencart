@@ -1,15 +1,22 @@
 <?php
 namespace Opencart\System\Library\Template;
 class Twig {
-	protected $loader;
+	protected $directory;
+	protected $path = [];
 	protected $data = [];
 
-	public function __construct() {
-		$this->loader = new \Twig\Loader\FilesystemLoader();
-	}
-
-	public function addPath($namespace, $directory) {
-		$this->loader->addPath($directory);
+	/**
+	 * addPath
+	 *
+	 * @param    string $namespace
+	 * @param    string $directory
+	 */
+	public function addPath($namespace, $directory = '') {
+		if (!$directory) {
+			$this->directory = $namespace;
+		} else {
+			$this->path[$namespace] = $directory;
+		}
 	}
 
 	public function set($key, $value) {
@@ -17,6 +24,8 @@ class Twig {
 	}
 
 	public function render($filename, $code = '') {
+		$file = $this->directory . $filename . '.twig';
+
 		/*
 		 * FYI all the Twig lovers out there!
 		 * The Twig syntax is good, but the implementation and the available methods is a joke!
@@ -27,7 +36,30 @@ class Twig {
 		 * The fact that this system cache is just compiling php into more php code instead of html is a disgrace!
 		 */
 
-		// render from modified template code
+		$path = '';
+
+		$namespace = '';
+
+		$parts = explode('/', $filename);
+
+		foreach ($parts as $part) {
+			if (!$namespace) {
+				$namespace .= $part;
+			} else {
+				$namespace .= '/' . $part;
+			}
+
+			if (isset($this->path[$namespace])) {
+				$filename = substr($filename, strlen($namespace) + 1);
+				$path = $this->path[$namespace];
+
+				//echo $namespace . "\n";
+				//echo $filename . "\n";
+				//echo $path . "\n";
+
+			}
+		}
+
 		// Initialize Twig environment
 		$config = [
 			'charset'     => 'utf-8',
@@ -38,14 +70,18 @@ class Twig {
 		];
 
 		if ($code) {
+			// render from modified template code
 			$loader = new \Twig\Loader\ArrayLoader([$filename . '.twig' => $code]);
 		} else {
-			$loader = $this->loader;
-		}
+			$loader = new \Twig\Loader\FilesystemLoader();
 
-		//'extension/' .
-		if (substr($filename, 0, 19) == 'extension/opencart/') {
-			$filename = substr($filename, 19);
+			if ($this->directory) {
+				$loader->addPath($this->directory);
+			}
+
+			if ($path) {
+				$loader->addPath($path);
+			}
 		}
 
 		try {

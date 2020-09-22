@@ -14,18 +14,14 @@ $_['db_port']            = DB_PORT;
 // Session
 $_['session_autostart']  = false;
 $_['session_engine']     = 'db'; // db or file
-$_['session_name']       = 'OCSESSID';
-
-// Template
-$_['template_engine']    = 'twig';
-$_['template_directory'] = '';
-
-// Autoload Libraries
-$_['library_autoload']   = [];
 
 // Actions
 $_['action_pre_action']  = [
-	'startup/startup',
+	'startup/setting',
+	'startup/extension',
+	'startup/session',
+	'startup/language',
+	'startup/application',
 	'startup/marketing',
 	'startup/error',
 	'startup/event',

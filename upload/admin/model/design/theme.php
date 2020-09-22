@@ -8,11 +8,11 @@ class Theme extends \Opencart\System\Engine\Model {
 	}
 
 	public function deleteTheme($theme_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE theme_id = '" . (int)$theme_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `theme_id` = '" . (int)$theme_id . "'");
 	}
 
 	public function getTheme($store_id, $route) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "theme` WHERE store_id = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
 
 		return $query->row;
 	}
@@ -26,7 +26,7 @@ class Theme extends \Opencart\System\Engine\Model {
 			$limit = 10;
 		}		
 		
-		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` s WHERE s.`store_id` = t.`store_id`) AS store FROM `" . DB_PREFIX . "theme` t ORDER BY t.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` s WHERE s.`store_id` = t.`store_id`) AS `store` FROM `" . DB_PREFIX . "theme` t ORDER BY t.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}	

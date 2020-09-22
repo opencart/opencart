@@ -2,10 +2,6 @@
 namespace Opencart\Application\Controller\Event;
 class Theme extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$code) {
-		if (!$this->config->get('theme_' . $this->config->get('config_theme') . '_status')) {
-			exit('Error: A theme has not been assigned to this store!');
-		}
-
 		// If there is a theme override we should get it
 		$this->load->model('design/theme');
 

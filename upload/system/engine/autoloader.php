@@ -29,12 +29,20 @@ class Autoloader {
 			}
 		}
 
+		//echo 'Autoloader' . "\n";
+
 		if (isset($file) && is_file($file)) {
 			include_once($file);
 
+			//echo 'FOUND' . "\n";
+			//echo '$class ' . $class . "\n";
+			//echo '$file ' . $file . "\n";
+
 			return true;
 		} else {
-
+			//echo 'NOT FOUND' . "\n";
+			//echo '$class ' . $class . "\n";
+			//echo '$file ' . $file . "\n";
 
 			return false;
 		}

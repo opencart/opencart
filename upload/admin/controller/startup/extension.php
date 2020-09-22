@@ -1,0 +1,31 @@
+<?php
+namespace Opencart\Application\Controller\Startup;
+class Extension extends \Opencart\System\Engine\Controller {
+	public function index() {
+
+		// Add events from the DB
+		$this->load->model('setting/extension');
+
+		// Default template directory
+		//$this->template->addPath(DIR_TEMPLATE);
+
+		// Default language directory
+		//$this->language->addPath(DIR_LANGUAGE);
+
+		$results = $this->model_setting_extension->getExtensions();
+
+		foreach ($results as $result) {
+			$extension = str_replace(['_', '/'], ['', '\\'], ucwords($result['extension'], '_/'));
+
+			// Register controllers, models and system extension folders
+			$this->autoloader->register('Opencart\Application\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/controller/');
+			$this->autoloader->register('Opencart\Application\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/model/');
+			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/system/');
+
+			//$this->template->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/view/template/');
+			//$this->language->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/language/');
+
+		}
+
+	}
+}

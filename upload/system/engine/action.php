@@ -24,13 +24,23 @@ class Action {
 	public function __construct(string $route) {
 		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		$class = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+		$class = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
+
+		if (substr($route, 0, 10) == 'extension/') {
+			//echo 'Action' . "\n";
+			//echo '$route ' . $route . "\n";
+			//echo '$class ' . $class . "\n";
+		}
 
 		if (class_exists($class)) {
 			$this->class = $class;
 		} else {
-			$this->class = substr($class, 0, strrpos($class, '\\'));
-			$this->method = substr($route, strrpos($route, '/') + 1);
+			$class = substr($class, 0, strrpos($class, '\\'));
+
+			if (class_exists($class)) {
+				$this->class = $class;
+				$this->method = substr($this->route, strrpos($this->route, '/') + 1);
+			}
 		}
 	}
 
@@ -60,14 +70,10 @@ class Action {
 		}
 
 		// Initialize the class
-		$controller = new $this->class($registry);
-
-		$callable = [$controller, $this->method];
-
-		if (is_callable($callable)) {
-			return call_user_func_array($callable, $args);
+		if ($this->class) {
+			return call_user_func_array([new $this->class($registry), $this->method], $args);
 		} else {
-			return new \Exception('Error: Could not call ' . $this->route . '!');
+			return new \Exception('Error: Could not call route ' . $this->route . ' class ' . $this->class . '!');
 		}
 	}
 }

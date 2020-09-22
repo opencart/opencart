@@ -36,7 +36,7 @@ class Template {
 	 * @param    string $namespace
 	 * @param    string $directory
 	 */
-	public function addPath($namespace, $directory) {
+	public function addPath($namespace, $directory = '') {
 		$this->adaptor->addPath($namespace, $directory);
 	}
 

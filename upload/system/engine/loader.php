@@ -77,7 +77,7 @@ final class Loader {
 		// Trigger the post events
 		$this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
-		if (!$output instanceof Exception) {
+		if (!$output instanceof \Exception) {
 			return $output;
 		}
 	}
@@ -108,7 +108,7 @@ final class Loader {
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
-				error_log('Error: Could not load model ' . $class . '!');
+				trigger_error('Error: Could not load model ' . $class . '!');
 			}
 		}
 	}
@@ -138,15 +138,15 @@ final class Loader {
 		// Make sure its only the last event that returns an output if required.
 		$template = new \Opencart\System\Library\Template($this->registry->get('config')->get('template_engine'));
 		
-		$template->addPath('template', DIR_TEMPLATE);
-		$template->addPath('extension', DIR_EXTENSION . 'opencart/admin/view/template/');
-		$template->addPath('extension', DIR_EXTENSION . 'opencart/catalog/view/template/');
+		$template->addPath(DIR_TEMPLATE);
+		$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/admin/view/template/');
+		//$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/catalog/view/template/');
 
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);
 		}
 
-		$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
+		$output = $template->render($route, $code);
 
 		// Trigger the post events
 		$this->event->trigger('view/' . $trigger . '/after', [&$route, &$data, &$output]);
@@ -181,7 +181,7 @@ final class Loader {
 			// Create a key to store the library object
 			$this->registry->set(str_replace('/', '_', (string)$route), $library);
 		} else {
-			error_log('Error: Could not load library ' . $route . '!');
+			trigger_error('Error: Could not load library ' . $route . '!');
 		}
 
 		$this->event->trigger('library/' . $trigger . '/after', [&$route, &$args]);

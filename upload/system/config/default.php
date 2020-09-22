@@ -43,7 +43,6 @@ $_['session_expire']       = 360000;
 
 // Template
 $_['template_engine']      = 'twig';
-$_['template_directory']   = '';
 $_['template_extension']   = '.twig';
 
 // Error
@@ -54,18 +53,6 @@ $_['error_filename']       = 'error.log';
 // Response
 $_['response_header']      = ['Content-Type: text/html; charset=utf-8'];
 $_['response_compression'] = 0;
-
-// Autoload Configs
-$_['config_autoload']      = [];
-
-// Autoload Libraries
-$_['library_autoload']     = [];
-
-// Autoload Models
-$_['model_autoload']       = [];
-
-// Autoload Helpers
-$_['helper_autoload']      = [];
 
 // Actions
 $_['action_default']       = 'common/home';

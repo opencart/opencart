@@ -62,8 +62,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			}
 		}
 
-
-
 		// order
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'shipping_custom_field'");
 
@@ -139,6 +137,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 					foreach ($lines as $line_id => $line) {
 						if (strpos($line, 'DIR_LOGS') !== false) {
 							$new_line = "define('DIR_MODIFICATION', '" . str_replace("\\", "/", DIR_SYSTEM) . 'modification/' . "');";
+							
 							$output .= $new_line . "\n";
 							$output .= $line;
 						} else {
@@ -174,6 +173,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 					foreach ($lines as $line_id => $line) {
 						if (strpos($line, 'DIR_LOGS') !== false) {
 							$new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
+							
 							$output .= $new_line . "\n";
 							$output .= $line;
 						} else {
@@ -209,6 +209,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 					foreach ($lines as $line_id => $line) {
 						if (strpos($line, "'mysql'") !== false) {
 							$new_line = "define('DB_DRIVER', 'mysqli');";
+							
 							$output .= $new_line . "\n";
 						} else {
 							$output .= $line;

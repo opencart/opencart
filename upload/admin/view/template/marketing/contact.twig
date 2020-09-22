@@ -240,8 +240,6 @@ function send(url) {
 			$('#button-send').button('reset');
 		},
 		success: function(json) {
-			console.log(json);
-
 			$('.alert-dismissible, .invalid-tooltip').remove();
 
 			if (json['error']) {
@@ -271,8 +269,6 @@ function send(url) {
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			console.log(xhr.responseText);
-
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});

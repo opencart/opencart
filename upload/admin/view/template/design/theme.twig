@@ -71,8 +71,6 @@ $('select[name=\'store_id\']').on('change', function(e) {
 			$('select[name=\'store_id\']').prop('disabled', false);
 		},
 		success: function(json) {
-			console.log(json);
-
 			html = '';
 
 			if (json['directory']) {
@@ -114,8 +112,6 @@ $('#path').on('click', 'a.directory', function(e) {
 			$(element).find('i').addClass('fa-arrow-right');
 		},
 		success: function(json) {
-			console.log(json);
-
 			html = '';
 
 			if (json['directory']) {

@@ -743,7 +743,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$time = time();
 
-			// We create a hash from the data in a similarsimilar method to how amazon does things.
+			// We create a hash from the data in a similar method to how amazon does things.
 			$string = 'api/marketplace/purchase' . "\n";
 			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
@@ -853,7 +853,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			curl_close($curl);
 
 			if (isset($response_info['download'])) {
-
 				if (substr($response_info['filename'], -10) == '.ocmod.zip') {
 					$handle = fopen(DIR_STORAGE . 'marketplace/' . $response_info['filename'], 'w');
 
@@ -979,7 +978,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -1056,7 +1055,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}

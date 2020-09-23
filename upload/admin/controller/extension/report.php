@@ -8,7 +8,7 @@ class Report extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function install() {
@@ -29,7 +29,7 @@ class Report extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function uninstall() {
@@ -45,10 +45,10 @@ class Report extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
-	protected function getList() {
+	public function getList() {
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -107,7 +107,7 @@ class Report extends \Opencart\System\Engine\Controller {
 
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
-		$this->response->setOutput($this->load->view('extension/report', $data));
+		return $this->load->view('extension/report', $data);
 	}
 
 	protected function validate() {

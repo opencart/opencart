@@ -10,7 +10,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/module');
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function install() {
@@ -35,8 +35,8 @@ class Module extends \Opencart\System\Engine\Controller {
 		} else {
 			$this->session->data['error'] = $this->error['warning'];
 		}
-	
-		$this->getList();
+
+		$this->response->setOutput($this->getList());
 	}
 
 	public function uninstall() {
@@ -57,7 +57,7 @@ class Module extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 	
 	public function add() {
@@ -75,7 +75,7 @@ class Module extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function delete() {
@@ -90,11 +90,11 @@ class Module extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
-		
-		$this->getList();
+
+		$this->response->setOutput($this->getList());
 	}
 
-	protected function getList() {
+	public function getList() {
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']));
 
 		if (isset($this->error['warning'])) {
@@ -183,7 +183,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
-		$this->response->setOutput($this->load->view('extension/module', $data));
+		return $this->load->view('extension/module', $data);
 	}
 
 	protected function validate() {

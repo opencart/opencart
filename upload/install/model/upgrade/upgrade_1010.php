@@ -8,79 +8,79 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 		$events[] = [
 			'code'    => 'activity_customer_add',
 			'trigger' => 'catalog/model/account/customer/addCustomer/after',
-			'action'  => 'event/activity/addCustomer'
+			'action'  => 'event/activity|addCustomer'
 		];
 
 		$events[] = [
 			'code'    => 'activity_customer_edit',
 			'trigger' => 'catalog/model/account/customer/editCustomer/after',
-			'action'  => 'event/activity/editCustomer'
+			'action'  => 'event/activity|editCustomer'
 		];
 
 		$events[] = [
 			'code'    => 'activity_customer_password',
 			'trigger' => 'catalog/model/account/customer/editPassword/after',
-			'action'  => 'event/activity/editPassword'
+			'action'  => 'event/activity|editPassword'
 		];
 
 		$events[] = [
 			'code'    => 'activity_customer_forgotten',
 			'trigger' => 'catalog/model/account/customer/editCode/after',
-			'action'  => 'event/activity/forgotten'
+			'action'  => 'event/activity|forgotten'
 		];
 
 		$events[] = [
 			'code'    => 'activity_transaction',
 			'trigger' => 'catalog/model/account/customer/addTransaction/after',
-			'action'  => 'event/activity/addTransaction'
+			'action'  => 'event/activity|addTransaction'
 		];
 
 		$events[] = [
 			'code'    => 'activity_customer_login',
 			'trigger' => 'catalog/model/account/customer/deleteLoginAttempts/after',
-			'action'  => 'event/activity/login'
+			'action'  => 'event/activity|login'
 		];
 
 		$events[] = [
 			'code'    => 'activity_address_add',
 			'trigger' => 'catalog/model/account/address/addAddress/after',
-			'action'  => 'event/activity/addAddress'
+			'action'  => 'event/activity|addAddress'
 		];
 
 		$events[] = [
 			'code'    => 'activity_address_edit',
 			'trigger' => 'catalog/model/account/address/editAddress/after',
-			'action'  => 'event/activity/editAddress'
+			'action'  => 'event/activity|editAddress'
 		];
 
 		$events[] = [
 			'code'    => 'activity_address_delete',
 			'trigger' => 'catalog/model/account/address/deleteAddress/after',
-			'action'  => 'event/activity/deleteAddress'
+			'action'  => 'event/activity|deleteAddress'
 		];
 
 		$events[] = [
 			'code'    => 'activity_affiliate_add',
 			'trigger' => 'catalog/model/account/customer/addAffiliate/after',
-			'action'  => 'event/activity/addAffiliate'
+			'action'  => 'event/activity|addAffiliate'
 		];
 
 		$events[] = [
 			'code'    => 'activity_affiliate_edit',
 			'trigger' => 'catalog/model/account/customer/editAffiliate/after',
-			'action'  => 'event/activity/editAffiliate'
+			'action'  => 'event/activity|editAffiliate'
 		];
 
 		$events[] = [
 			'code'    => 'activity_order_add',
 			'trigger' => 'catalog/model/checkout/order/addHistory/before',
-			'action'  => 'event/activity/addHistory'
+			'action'  => 'event/activity|addHistory'
 		];
 
 		$events[] = [
 			'code'    => 'activity_return_add',
 			'trigger' => 'catalog/model/account/returns/addReturn/after',
-			'action'  => 'event/activity/addReturn'
+			'action'  => 'event/activity|addReturn'
 		];
 
 		$events[] = [
@@ -116,13 +116,13 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 		$events[] = [
 			'code'    => 'mail_affiliate_alert',
 			'trigger' => 'catalog/model/account/customer/addAffiliate/after',
-			'action'  => 'mail/affiliate/alert'
+			'action'  => 'mail/affiliate|alert'
 		];
 
 		$events[] = [
 			'code'    => 'mail_voucher',
 			'trigger' => 'catalog/model/checkout/order/addHistory/after',
-			'action'  => 'extension/opencart/voucher/send'
+			'action'  => 'account/voucher|send'
 		];
 
 		$events[] = [
@@ -134,49 +134,49 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 		$events[] = [
 			'code'    => 'mail_order_alert',
 			'trigger' => 'catalog/model/checkout/order/addHistory/before',
-			'action'  => 'mail/order/alert'
+			'action'  => 'mail/order|alert'
 		];
 
 		$events[] = [
 			'code'    => 'statistics_review_add',
 			'trigger' => 'catalog/model/catalog/review/addReview/after',
-			'action'  => 'event/statistics/addReview'
+			'action'  => 'event/statistics|addReview'
 		];
 
 		$events[] = [
 			'code'    => 'statistics_return_add',
 			'trigger' => 'catalog/model/account/returns/addReturn/after',
-			'action'  => 'event/statistics/addReturn'
+			'action'  => 'event/statistics|addReturn'
 		];
 
 		$events[] = [
 			'code'    => 'statistics_order_history',
 			'trigger' => 'catalog/model/checkout/order/addHistory/after',
-			'action'  => 'event/statistics/addHistory'
+			'action'  => 'event/statistics|addHistory'
 		];
 
 		$events[] = [
 			'code'    => 'admin_mail_affiliate_approve',
 			'trigger' => 'admin/model/customer/customer_approval/approveAffiliate/after',
-			'action'  => 'mail/affiliate/approve'
+			'action'  => 'mail/affiliate|approve'
 		];
 
 		$events[] = [
 			'code'    => 'admin_mail_affiliate_deny',
 			'trigger' => 'admin/model/customer/customer_approval/denyAffiliate/after',
-			'action'  => 'mail/affiliate/deny'
+			'action'  => 'mail/affiliate|deny'
 		];
 
 		$events[] = [
 			'code'    => 'admin_mail_customer_approve',
 			'trigger' => 'admin/model/customer/customer_approval/approveCustomer/after',
-			'action'  => 'mail/customer/approve'
+			'action'  => 'mail/customer|approve'
 		];
 
 		$events[] = [
 			'code'    => 'admin_mail_customer_deny',
 			'trigger' => 'admin/model/customer/customer_approval/denyCustomer/after',
-			'action'  => 'mail/customer/deny'
+			'action'  => 'mail/customer|deny'
 		];
 
 		$events[] = [

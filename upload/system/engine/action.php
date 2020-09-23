@@ -32,10 +32,6 @@ class Action {
 			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
 			$this->method = substr($this->route, $pos + 1);
 		}
-
-		//echo '$this->route ' . $this->route . "\n";
-		//echo '$this->class ' . $this->class . "\n";
-		//echo '$this->method ' . $this->method . "\n";
 	}
 
 	/**
@@ -61,12 +57,6 @@ class Action {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
-		}
-
-		if (substr($this->route, 0, 10) == 'extension/') {
-			//echo '$this->route ' . $this->route . "\n";
-			//echo '$this->class ' . $this->class . "\n";
-			//echo '$this->method ' . $this->method . "\n";
 		}
 
 		// Initialize the class

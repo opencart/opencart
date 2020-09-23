@@ -131,6 +131,8 @@ class Module extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		//$this->load->model('setting/module');
+
 		$data['extensions'] = [];
 
 		if ($results) {

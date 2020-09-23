@@ -24,7 +24,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 			];
 
-			$this->response->redirect($this->url->link('account/voucher/success', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/voucher|success', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = [];

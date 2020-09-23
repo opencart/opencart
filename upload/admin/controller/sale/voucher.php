@@ -156,8 +156,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('sale/voucher/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('sale/voucher/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('sale/voucher|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/voucher|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['vouchers'] = [];
 
@@ -174,7 +174,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			if ($result['order_id']) {	
-				$order_href = $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url);
+				$order_href = $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url);
 			} else {
 				$order_href = '';
 			}
@@ -188,7 +188,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('sale/voucher/edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $result['voucher_id'] . $url),
+				'edit'       => $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $result['voucher_id'] . $url),
 				'order'      => $order_href
 			];
 		}
@@ -342,9 +342,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['voucher_id'])) {
-			$data['action'] = $this->url->link('sale/voucher/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('sale/voucher|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('sale/voucher/edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id'] . $url);
+			$data['action'] = $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -491,7 +491,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$order_voucher_info = $this->model_sale_order->getVoucherByVoucherId($voucher_id);
 
 			if ($order_voucher_info) {
-				$this->error['warning'] = sprintf($this->language->get('error_order'), $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_voucher_info['order_id']));
+				$this->error['warning'] = sprintf($this->language->get('error_order'), $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_voucher_info['order_id']));
 
 				break;
 			}
@@ -537,7 +537,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('sale/voucher/history', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id'] . '&page={page}')
+			'url'   => $this->url->link('sale/voucher|history', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));

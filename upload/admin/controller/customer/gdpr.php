@@ -20,9 +20,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
 
-		$data['approve'] = $this->url->link('customer/gdpr/approve', 'user_token=' . $this->session->data['user_token']);
-		$data['deny'] = $this->url->link('customer/gdpr/deny', 'user_token=' . $this->session->data['user_token']);
-		$data['delete'] = $this->url->link('customer/gdpr/delete', 'user_token=' . $this->session->data['user_token']);
+		$data['approve'] = $this->url->link('customer/gdpr|approve', 'user_token=' . $this->session->data['user_token']);
+		$data['deny'] = $this->url->link('customer/gdpr|deny', 'user_token=' . $this->session->data['user_token']);
+		$data['delete'] = $this->url->link('customer/gdpr|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -88,7 +88,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$customer_info = $this->model_customer_customer->getCustomerByEmail($result['email']);
 
 			if ($customer_info) {
-				$edit = $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_info['customer_id']);
+				$edit = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_info['customer_id']);
 			} else {
 				$edit = '';
 			}
@@ -99,10 +99,10 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				'action'     => $this->language->get('text_' . $result['action']),
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'approve'    => $this->url->link('customer/gdpr/approve', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
-				'deny'       => $this->url->link('customer/gdpr/deny', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
+				'approve'    => $this->url->link('customer/gdpr|approve', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
+				'deny'       => $this->url->link('customer/gdpr|deny', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id']),
 				'edit'       => $edit,
-				'delete'     => $this->url->link('customer/gdpr/delete', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'])
+				'delete'     => $this->url->link('customer/gdpr|delete', 'user_token=' . $this->session->data['user_token'] . '&gdpr_id=' . $result['gdpr_id'])
 			];
 		}
 
@@ -128,7 +128,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'total' => $gdpr_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('customer/gdpr/gdpr', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('customer/gdpr|gdpr', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($gdpr_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($gdpr_total - $this->config->get('config_pagination'))) ? $gdpr_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $gdpr_total, ceil($gdpr_total / $this->config->get('config_pagination')));

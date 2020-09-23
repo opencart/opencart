@@ -156,8 +156,8 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/attribute_group/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/attribute_group/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('catalog/attribute_group|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/attribute_group|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['attribute_groups'] = [];
 
@@ -177,7 +177,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 				'attribute_group_id' => $result['attribute_group_id'],
 				'name'               => $result['name'],
 				'sort_order'         => $result['sort_order'],
-				'edit'               => $this->url->link('catalog/attribute_group/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url)
+				'edit'               => $this->url->link('catalog/attribute_group|edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url)
 			];
 		}
 
@@ -287,9 +287,9 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['attribute_group_id'])) {
-			$data['action'] = $this->url->link('catalog/attribute_group/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('catalog/attribute_group|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/attribute_group/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $this->request->get['attribute_group_id'] . $url);
+			$data['action'] = $this->url->link('catalog/attribute_group|edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $this->request->get['attribute_group_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url);

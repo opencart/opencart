@@ -156,8 +156,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/manufacturer/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/manufacturer/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('catalog/manufacturer|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/manufacturer|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['manufacturers'] = [];
 
@@ -177,7 +177,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/manufacturer/edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url)
+				'edit'            => $this->url->link('catalog/manufacturer|edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url)
 			];
 		}
 
@@ -293,9 +293,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['manufacturer_id'])) {
-			$data['action'] = $this->url->link('catalog/manufacturer/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('catalog/manufacturer|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/manufacturer/edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url);
+			$data['action'] = $this->url->link('catalog/manufacturer|edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url);

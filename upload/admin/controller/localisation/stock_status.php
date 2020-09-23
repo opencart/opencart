@@ -156,8 +156,8 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/stock_status/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/stock_status/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('localisation/stock_status|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/stock_status|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['stock_statuses'] = [];
 
@@ -176,7 +176,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$data['stock_statuses'][] = [
 				'stock_status_id' => $result['stock_status_id'],
 				'name'            => $result['name'],
-				'edit'            => $this->url->link('localisation/stock_status/edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)
+				'edit'            => $this->url->link('localisation/stock_status|edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $result['stock_status_id'] . $url)
 			];
 		}
 
@@ -285,9 +285,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['stock_status_id'])) {
-			$data['action'] = $this->url->link('localisation/stock_status/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('localisation/stock_status|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/stock_status/edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $this->request->get['stock_status_id'] . $url);
+			$data['action'] = $this->url->link('localisation/stock_status|edit', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $this->request->get['stock_status_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url);

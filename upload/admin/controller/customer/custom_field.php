@@ -156,8 +156,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('customer/custom_field/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('customer/custom_field/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('customer/custom_field|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('customer/custom_field|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['custom_fields'] = [];
 
@@ -215,7 +215,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 				'type'            => $type,
 				'status'          => $result['status'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('customer/custom_field/edit', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . $url)
+				'edit'            => $this->url->link('customer/custom_field|edit', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . $url)
 			];
 		}
 
@@ -334,9 +334,9 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['custom_field_id'])) {
-			$data['action'] = $this->url->link('customer/custom_field/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('customer/custom_field|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('customer/custom_field/edit', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url);
+			$data['action'] = $this->url->link('customer/custom_field|edit', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url);

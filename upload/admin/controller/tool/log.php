@@ -38,8 +38,8 @@ class Log extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['download'] = $this->url->link('tool/log/download', 'user_token=' . $this->session->data['user_token']);
-		$data['clear'] = $this->url->link('tool/log/clear', 'user_token=' . $this->session->data['user_token']);
+		$data['download'] = $this->url->link('tool/log|download', 'user_token=' . $this->session->data['user_token']);
+		$data['clear'] = $this->url->link('tool/log|clear', 'user_token=' . $this->session->data['user_token']);
 
 		$data['log'] = '';
 

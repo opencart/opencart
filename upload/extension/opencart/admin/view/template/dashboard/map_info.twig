@@ -11,8 +11,11 @@
 $(document).ready(function() {
 	$.ajax({
 		url: 'index.php?route=extension/opencart/dashboard/map/map&user_token={{ user_token }}',
-		dataType: 'json',
+		dataType: 'html',
 		success: function(json) {
+			console.log(json);
+
+			/*
 			data = [];
 
 			for (i in json) {
@@ -36,6 +39,7 @@ $(document).ready(function() {
 					}
 				}
 			});
+			*/
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

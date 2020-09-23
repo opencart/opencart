@@ -156,8 +156,8 @@ class Location extends \Opencart\System\Engine\Controller {
 			'href' =>  $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/location/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/location/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('localisation/location|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/location|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['locations'] = [];
 
@@ -177,7 +177,7 @@ class Location extends \Opencart\System\Engine\Controller {
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],
 				'address'     => $result['address'],
-				'edit'        => $this->url->link('localisation/location/edit', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $result['location_id'] . $url)
+				'edit'        => $this->url->link('localisation/location|edit', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $result['location_id'] . $url)
 			];
 		}
 
@@ -299,9 +299,9 @@ class Location extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['location_id'])) {
-			$data['action'] = $this->url->link('localisation/location/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('localisation/location|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/location/edit', 'user_token=' . $this->session->data['user_token'] .  '&location_id=' . $this->request->get['location_id'] . $url);
+			$data['action'] = $this->url->link('localisation/location|edit', 'user_token=' . $this->session->data['user_token'] .  '&location_id=' . $this->request->get['location_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url);

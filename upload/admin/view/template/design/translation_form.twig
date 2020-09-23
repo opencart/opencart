@@ -87,7 +87,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'language_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=design/translation/path&user_token={{ user_token }}&language_id=' + $('select[name=\'language_id\']').val(),
+		url: 'index.php?route=design/translation|path&user_token={{ user_token }}&language_id=' + $('select[name=\'language_id\']').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'language_id\']').prop('disabled', true);
@@ -124,7 +124,7 @@ $('select[name=\'language_id\']').on('change', function() {
 
 $('select[name=\'route\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=design/translation/translation&user_token={{ user_token }}&language_id=' + $('select[name=\'language_id\']').val() + '&path=' + $('select[name=\'route\']').val(),
+		url: 'index.php?route=design/translation|translation&user_token={{ user_token }}&language_id=' + $('select[name=\'language_id\']').val() + '&path=' + $('select[name=\'route\']').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'language_id\']').prop('disabled', true);

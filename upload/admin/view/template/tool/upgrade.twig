@@ -135,11 +135,11 @@ $('#button-upgrade').on('click', function() {
 	$('#progress-text').html('{{ text_download }}');
 	$('#log').append('{{ text_download }}' + "\n");
 
-	var next = 'index.php?route=tool/backup/restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val(), this);
+	var next = 'index.php.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val(), this);
 
 	var upgrade = function() {
 		return $.ajax({
-			url: 'index.php?route=tool/upgrade/download&user_token={{ user_token }}&version={{ version }}',
+			url: 'index.php.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}',
 			dataType: 'json',
 			beforeSend: function() {
 				$('#button-upgrade').button('loading');

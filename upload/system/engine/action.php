@@ -22,26 +22,20 @@ class Action {
 	 * @param    string $route
 	 */
 	public function __construct(string $route) {
-		$this->route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
+		$this->route = preg_replace('/[^a-zA-Z0-9_|\/]/', '', $route);
 
-		$class = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
+		$pos = strrpos($this->route, '|');
 
-		if (substr($route, 0, 10) == 'extension/') {
-			//echo 'Action' . "\n";
-			//echo '$route ' . $route . "\n";
-			//echo '$class ' . $class . "\n";
-		}
-
-		if (class_exists($class)) {
-			$this->class = $class;
+		if ($pos === false) {
+			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
 		} else {
-			$class = substr($class, 0, strrpos($class, '\\'));
-
-			if (class_exists($class)) {
-				$this->class = $class;
-				$this->method = substr($this->route, strrpos($this->route, '/') + 1);
-			}
+			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
+			$this->method = substr($this->route, $pos + 1);
 		}
+
+		//echo '$this->route ' . $this->route . "\n";
+		//echo '$this->class ' . $this->class . "\n";
+		//echo '$this->method ' . $this->method . "\n";
 	}
 
 	/**
@@ -69,11 +63,17 @@ class Action {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
+		if (substr($this->route, 0, 10) == 'extension/') {
+			//echo '$this->route ' . $this->route . "\n";
+			//echo '$this->class ' . $this->class . "\n";
+			//echo '$this->method ' . $this->method . "\n";
+		}
+
 		// Initialize the class
-		if ($this->class) {
+		if (class_exists($this->class)) {
 			return call_user_func_array([new $this->class($registry), $this->method], $args);
 		} else {
-			return new \Exception('Error: Could not call route ' . $this->route . ' class ' . $this->class . '!');
+			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}
 	}
 }

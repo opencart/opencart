@@ -156,8 +156,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('marketing/coupon/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('marketing/coupon/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('marketing/coupon|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('marketing/coupon|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['coupons'] = [];
 
@@ -181,7 +181,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'       => $this->url->link('marketing/coupon/edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'] . $url)
+				'edit'       => $this->url->link('marketing/coupon|edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'] . $url)
 			];
 		}
 
@@ -321,9 +321,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['coupon_id'])) {
-			$data['action'] = $this->url->link('marketing/coupon/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('marketing/coupon|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('marketing/coupon/edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url);
+			$data['action'] = $this->url->link('marketing/coupon|edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -551,7 +551,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('marketing/coupon/history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $coupon_id . '&page={page}')
+			'url'   => $this->url->link('marketing/coupon|history', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $coupon_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));

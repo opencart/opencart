@@ -203,7 +203,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace|purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
 		type: 'post',
 		data: $('input[name=\'pin\']'),
 		dataType: 'json',
@@ -225,7 +225,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 
 				$('#modal-purchase').modal('hide');
 
-				$('#download').load('index.php?route=marketplace/marketplace/extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+				$('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -235,7 +235,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 });
 
 // Download
-$('#download').load('index.php?route=marketplace/marketplace/extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+$('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
 $('#tab-download').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
@@ -261,7 +261,7 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			if (json['success']) {
 				$('#download').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#download').load('index.php?route=marketplace/marketplace/extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+				$('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -294,7 +294,7 @@ $('#tab-download').on('click', '.dropdown-item', function(e) {
 			if (json['success']) {
 				$('#download').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#download').load('index.php?route=marketplace/marketplace/extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+				$('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -310,12 +310,12 @@ $('#comment').on('click', '.pagination a', function(e) {
 	$('#comment').load(this.href);
 });
 
-$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+$('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
 // Add comment
 $('#button-comment').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=marketplace/marketplace/addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+		url: 'index.php?route=marketplace/marketplace|addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
@@ -335,7 +335,7 @@ $('#button-comment').on('click', function() {
 			if (json['success']) {
 				$('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+				$('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
 				$('textarea[name=\'comment\']').val('');
 			}

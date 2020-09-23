@@ -244,8 +244,8 @@ class Review extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/review/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/review/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('catalog/review|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/review|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['reviews'] = [];
 
@@ -272,7 +272,7 @@ class Review extends \Opencart\System\Engine\Controller {
 				'rating'     => $result['rating'],
 				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('catalog/review/edit', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
+				'edit'       => $this->url->link('catalog/review|edit', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
 			];
 		}
 
@@ -458,9 +458,9 @@ class Review extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['review_id'])) {
-			$data['action'] = $this->url->link('catalog/review/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('catalog/review|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/review/edit', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $this->request->get['review_id'] . $url);
+			$data['action'] = $this->url->link('catalog/review|edit', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $this->request->get['review_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);

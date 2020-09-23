@@ -25,7 +25,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			$mail->setText($this->request->post['enquiry']);
 			$mail->send();
 
-			$this->response->redirect($this->url->link('information/contact/success', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('information/contact|success', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = [];

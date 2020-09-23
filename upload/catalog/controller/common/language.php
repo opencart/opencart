@@ -34,7 +34,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$data['languages'][] = [
 				'name' => $result['name'],
 				'code' => $result['code'],
-				'href' => $this->url->link('common/language/language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
+				'href' => $this->url->link('common/language|language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
 			];
 		}
 

@@ -156,8 +156,8 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('user/user_permission/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('user/user_permission/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('user/user_permission|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('user/user_permission|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['user_groups'] = [];
 
@@ -176,7 +176,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$data['user_groups'][] = [
 				'user_group_id' => $result['user_group_id'],
 				'name'          => $result['name'],
-				'edit'          => $this->url->link('user/user_permission/edit', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
+				'edit'          => $this->url->link('user/user_permission|edit', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
 			];
 		}
 
@@ -285,9 +285,9 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['user_group_id'])) {
-			$data['action'] = $this->url->link('user/user_permission/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('user/user_permission|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('user/user_permission/edit', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $this->request->get['user_group_id'] . $url);
+			$data['action'] = $this->url->link('user/user_permission|edit', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $this->request->get['user_group_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);

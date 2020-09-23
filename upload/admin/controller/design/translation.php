@@ -156,8 +156,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('design/translation|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/translation|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
 
@@ -190,7 +190,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 				'language'       => $code,
 				'key'            => $result['key'],
 				'value'          => $result['value'],
-				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
+				'edit'           => $this->url->link('design/translation|edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
 			];
 		}
 
@@ -295,9 +295,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['translation_id'])) {
-			$data['action'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('design/translation|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $this->request->get['translation_id'] . $url);
+			$data['action'] = $this->url->link('design/translation|edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $this->request->get['translation_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);

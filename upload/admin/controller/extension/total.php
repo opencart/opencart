@@ -97,8 +97,8 @@ class Total extends \Opencart\System\Engine\Controller {
 					'name'       => $this->language->get($code . '_heading_title'),
 					'status'     => $this->config->get('total_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('total_' . $code . '_sort_order'),
-					'install'    => $this->url->link('extension/total/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall'  => $this->url->link('extension/total/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'    => $this->url->link('extension/total|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall'  => $this->url->link('extension/total|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed'  => in_array($code, $installed),
 					'edit'       => $this->url->link('extension/' . $extension . '/total/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];

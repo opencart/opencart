@@ -92,7 +92,7 @@ class Event extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['delete'] = $this->url->link('marketplace/event/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('marketplace/event|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['events'] = [];
 

@@ -156,8 +156,8 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/attribute/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/attribute/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('catalog/attribute|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/attribute|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['attributes'] = [];
 
@@ -178,7 +178,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 				'name'            => $result['name'],
 				'attribute_group' => $result['attribute_group'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/attribute/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)
+				'edit'            => $this->url->link('catalog/attribute|edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)
 			];
 		}
 		
@@ -291,9 +291,9 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['attribute_id'])) {
-			$data['action'] = $this->url->link('catalog/attribute/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('catalog/attribute|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/attribute/edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id'] . $url);
+			$data['action'] = $this->url->link('catalog/attribute|edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);

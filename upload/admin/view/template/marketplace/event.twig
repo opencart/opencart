@@ -83,7 +83,7 @@ $('#form-event').on('click', '.btn-success', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=marketplace/event/enable&user_token={{ user_token }}&event_id=' + $(element).val(),
+		url: 'index.php?route=marketplace/event|enable&user_token={{ user_token }}&event_id=' + $(element).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -114,7 +114,7 @@ $('#form-event').on('click', '.btn-danger', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=marketplace/event/disable&user_token={{ user_token }}&event_id=' + $(element).val(),
+		url: 'index.php?route=marketplace/event|disable&user_token={{ user_token }}&event_id=' + $(element).val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');

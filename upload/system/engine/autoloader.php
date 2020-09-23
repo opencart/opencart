@@ -13,6 +13,8 @@ class Autoloader {
 	}
 
 	public function load($class) {
+		//echo 'Autoloader' . "\n";
+
 		$namespace = '';
 
 		$parts = explode('\\', $class);
@@ -29,7 +31,10 @@ class Autoloader {
 			}
 		}
 
-		//echo 'Autoloader' . "\n";
+		if ($class == 'Opencart\Application\Controller\Extension\Opencart\Payment\BankTransfer') {
+			//echo '$namespace ' . $namespace . "\n";
+			//print_r($this->path);
+		}
 
 		if (isset($file) && is_file($file)) {
 			include_once($file);

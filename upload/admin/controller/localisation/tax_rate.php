@@ -156,8 +156,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/tax_rate/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/tax_rate/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('localisation/tax_rate|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/tax_rate|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['tax_rates'] = [];
 
@@ -181,7 +181,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 				'geo_zone'      => $result['geo_zone'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('localisation/tax_rate/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url)
+				'edit'          => $this->url->link('localisation/tax_rate|edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $result['tax_rate_id'] . $url)
 			];
 		}
 
@@ -301,9 +301,9 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['tax_rate_id'])) {
-			$data['action'] = $this->url->link('localisation/tax_rate/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('localisation/tax_rate|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/tax_rate/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $this->request->get['tax_rate_id'] . $url);
+			$data['action'] = $this->url->link('localisation/tax_rate|edit', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $this->request->get['tax_rate_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url);

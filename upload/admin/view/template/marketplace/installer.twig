@@ -43,7 +43,7 @@ $('#extension').on('click', '.pagination a', function(e) {
 	$('#extension').load(this.href);
 });
 
-$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+$('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
 
 // Upload
 $('#button-upload').on('click', function() {
@@ -62,7 +62,7 @@ $('#button-upload').on('click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=marketplace/installer/upload&user_token={{ user_token }}',
+				url: 'index.php?route=marketplace/installer|upload&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -83,7 +83,7 @@ $('#button-upload').on('click', function() {
 					if (json['success']) {
 						alert(json['success']);
 
-						$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+						$('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -124,7 +124,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 				$('#progress-bar').addClass('progress-bar-success').css('width', '100%');
 				$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
-				$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+				$('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -159,7 +159,7 @@ $('#extension').on('click', '.btn-danger', function(e) {
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-					$('#extension').load('index.php?route=marketplace/installer/extension&user_token={{ user_token }}');
+					$('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

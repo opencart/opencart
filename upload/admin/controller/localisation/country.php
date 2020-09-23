@@ -156,8 +156,8 @@ class Country extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/country/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/country/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('localisation/country|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/country|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['countries'] = [];
 
@@ -178,7 +178,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : ''),
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
-				'edit'       => $this->url->link('localisation/country/edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
+				'edit'       => $this->url->link('localisation/country|edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
 			];
 		}
 
@@ -289,9 +289,9 @@ class Country extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['country_id'])) {
-			$data['action'] = $this->url->link('localisation/country/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('localisation/country|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/country/edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $this->request->get['country_id'] . $url);
+			$data['action'] = $this->url->link('localisation/country|edit', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $this->request->get['country_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url);

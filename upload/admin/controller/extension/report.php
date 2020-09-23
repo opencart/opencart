@@ -97,8 +97,8 @@ class Report extends \Opencart\System\Engine\Controller {
 					'name'       => $this->language->get($code . '_heading_title'),
 					'status'     => $this->config->get('report_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('report_' . $code . '_sort_order'),
-					'install'    => $this->url->link('extension/report/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall'  => $this->url->link('extension/report/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'    => $this->url->link('extension/report|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall'  => $this->url->link('extension/report|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed'  => in_array($code, $installed),
 					'edit'       => $this->url->link('extension/' . $extension . '/report/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];

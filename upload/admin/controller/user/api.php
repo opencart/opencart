@@ -156,8 +156,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('user/api/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('user/api/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('user/api|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('user/api|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['apis'] = [];
 
@@ -179,7 +179,7 @@ class Api extends \Opencart\System\Engine\Controller {
 				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('user/api/edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url)
+				'edit'          => $this->url->link('user/api|edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url)
 			];
 		}
 
@@ -300,9 +300,9 @@ class Api extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['api_id'])) {
-			$data['action'] = $this->url->link('user/api/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('user/api|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('user/api/edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $this->request->get['api_id'] . $url);
+			$data['action'] = $this->url->link('user/api|edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $this->request->get['api_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);

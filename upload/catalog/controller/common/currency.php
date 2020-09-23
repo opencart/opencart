@@ -4,7 +4,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/currency');
 
-		$data['action'] = $this->url->link('common/currency/currency', 'language=' . $this->config->get('config_language'));
+		$data['action'] = $this->url->link('common/currency|currency', 'language=' . $this->config->get('config_language'));
 
 		$data['code'] = $this->session->data['currency'];
 

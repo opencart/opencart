@@ -156,8 +156,8 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/weight_class/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/weight_class/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('localisation/weight_class|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/weight_class|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['weight_classes'] = [];
 
@@ -178,7 +178,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 				'title'           => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : ''),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
-				'edit'            => $this->url->link('localisation/weight_class/edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $result['weight_class_id'] . $url)
+				'edit'            => $this->url->link('localisation/weight_class|edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $result['weight_class_id'] . $url)
 			];
 		}
 
@@ -295,9 +295,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['weight_class_id'])) {
-			$data['action'] = $this->url->link('localisation/weight_class/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('localisation/weight_class|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/weight_class/edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $this->request->get['weight_class_id'] . $url);
+			$data['action'] = $this->url->link('localisation/weight_class|edit', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $this->request->get['weight_class_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url);

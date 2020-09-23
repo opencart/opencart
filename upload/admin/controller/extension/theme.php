@@ -118,8 +118,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
-					'install'   => $this->url->link('extension/theme/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/theme/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'   => $this->url->link('extension/theme|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/theme|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'store'     => $store_data
 				];

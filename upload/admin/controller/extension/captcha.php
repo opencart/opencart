@@ -98,8 +98,8 @@ class Captcha extends \Opencart\System\Engine\Controller {
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title') . ($code == $this->config->get('config_captcha') ? $this->language->get('text_default') : ''),
 					'status'    => $this->config->get('captcha_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/captcha/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/captcha/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'   => $this->url->link('extension/captcha|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/captcha|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/captcha/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];

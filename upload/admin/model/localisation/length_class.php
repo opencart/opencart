@@ -16,7 +16,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 	}
 
 	public function editLengthClass($length_class_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "length_class` SET value = '" . (float)$data['value'] . "' WHERE `length_class_id` = '" . (int)$length_class_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "' WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 

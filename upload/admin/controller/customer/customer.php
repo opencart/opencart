@@ -349,7 +349,7 @@ class ControllerCustomerCustomer extends Controller {
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();
-		
+
 		$data['customers'] = array();
 
 		$filter_data = array(
@@ -391,7 +391,7 @@ class ControllerCustomerCustomer extends Controller {
 					'href' => $this->url->link('customer/customer/login', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&store_id=' . $store['store_id'], true)
 				);
 			}
-			
+
 			$data['customers'][] = array(
 				'customer_id'    => $result['customer_id'],
 				'name'           => $result['name'],
@@ -407,7 +407,7 @@ class ControllerCustomerCustomer extends Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-		
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -528,7 +528,7 @@ class ControllerCustomerCustomer extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -576,7 +576,7 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['error_telephone'] = '';
 		}
-		
+
 		if (isset($this->error['cheque'])) {
 			$data['error_cheque'] = $this->error['cheque'];
 		} else {
@@ -600,7 +600,7 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['error_bank_account_number'] = '';
 		}
-		
+
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {
@@ -642,11 +642,11 @@ class ControllerCustomerCustomer extends Controller {
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
-		
+
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
 		}
-		
+
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
@@ -730,7 +730,7 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
-		
+
 		// Custom Fields
 		$this->load->model('customer/custom_field');
 
@@ -822,16 +822,16 @@ class ControllerCustomerCustomer extends Controller {
 		// Affliate
 		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$affiliate_info = $this->model_customer_customer->getAffiliate($this->request->get['customer_id']);
-		}		
-		
+		}
+
 		if (isset($this->request->post['affiliate'])) {
 			$data['affiliate'] = $this->request->post['affiliate'];
 		} elseif (!empty($affiliate_info)) {
 			$data['affiliate'] = $affiliate_info['status'];
 		} else {
 			$data['affiliate'] = '';
-		}	
-		
+		}
+
 		if (isset($this->request->post['company'])) {
 			$data['company'] = $this->request->post['company'];
 		} elseif (!empty($affiliate_info)) {
@@ -839,23 +839,23 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['company'] = '';
 		}
-			
+
 		if (isset($this->request->post['website'])) {
 			$data['website'] = $this->request->post['website'];
 		} elseif (!empty($affiliate_info)) {
 			$data['website'] = $affiliate_info['website'];
 		} else {
 			$data['website'] = '';
-		}	
-					
+		}
+
 		if (isset($this->request->post['tracking'])) {
 			$data['tracking'] = $this->request->post['tracking'];
 		} elseif (!empty($affiliate_info)) {
 			$data['tracking'] = $affiliate_info['tracking'];
 		} else {
 			$data['tracking'] = '';
-		}	
-		
+		}
+
 		if (isset($this->request->post['commission'])) {
 			$data['commission'] = $this->request->post['commission'];
 		} elseif (!empty($affiliate_info)) {
@@ -871,7 +871,7 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['tax'] = '';
 		}
-		
+
 		if (isset($this->request->post['payment'])) {
 			$data['payment'] = $this->request->post['payment'];
 		} elseif (!empty($affiliate_info)) {
@@ -943,7 +943,7 @@ class ControllerCustomerCustomer extends Controller {
 		} else {
 			$data['affiliate_custom_field'] = array();
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -994,7 +994,7 @@ class ControllerCustomerCustomer extends Controller {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			} elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-			}			
+			}
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->get['customer_id']))) {
@@ -1064,18 +1064,18 @@ class ControllerCustomerCustomer extends Controller {
 				if ($this->request->post['bank_account_name'] == '') {
 					$this->error['bank_account_name'] = $this->language->get('error_bank_account_name');
 				}
-		
+
 				if ($this->request->post['bank_account_number'] == '') {
 					$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
 				}
 			}
-		
+
 			if (!$this->request->post['tracking']) {
 				$this->error['tracking'] = $this->language->get('error_tracking');
 			}
-		
+
 			$affiliate_info = $this->model_customer_customer->getAffliateByTracking($this->request->post['tracking']);
-		
+
 			if (!isset($this->request->get['customer_id'])) {
 				if ($affiliate_info) {
 					$this->error['tracking'] = $this->language->get('error_tracking_exists');
@@ -1085,16 +1085,16 @@ class ControllerCustomerCustomer extends Controller {
 					$this->error['tracking'] = $this->language->get('error_tracking_exists');
 				}
 			}
-			
+
 			foreach ($custom_fields as $custom_field) {
 				if (($custom_field['location'] == 'affiliate') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['location'] == 'affiliate') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
 					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
-			}			
+			}
 		}
-		
+
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
@@ -1403,13 +1403,13 @@ class ControllerCustomerCustomer extends Controller {
 			} else {
 				$filter_email = '';
 			}
-			
+
 			if (isset($this->request->get['filter_affiliate'])) {
 				$filter_affiliate = $this->request->get['filter_affiliate'];
 			} else {
 				$filter_affiliate = '';
 			}
-			
+
 			$this->load->model('customer/customer');
 
 			$filter_data = array(

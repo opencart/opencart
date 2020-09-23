@@ -19,6 +19,20 @@ $_['text_all_zones']        = 'All Zones';
 $_['text_pagination']       = 'Showing %d to %d of %d (%d Pages)';
 $_['text_loading']          = 'Loading...';
 $_['text_no_results']       = 'No results!';
+$_['text_just_now']         = 'just now';
+$_['text_seconds_ago']      = '%s seconds ago';
+$_['text_minute_ago']       = '%s minute ago';
+$_['text_minutes_ago']      = '%s minutes ago';
+$_['text_hour_ago']         = '%s hour ago';
+$_['text_hours_ago']        = '%s hours ago';
+$_['text_day_ago']          = '%s day ago';
+$_['text_days_ago']         = '%s days ago';
+$_['text_week_ago']         = '%s week ago';
+$_['text_weeks_ago']        = '%s weeks ago';
+$_['text_month_ago']        = '%s month ago';
+$_['text_months_ago']       = '%s onths ago';
+$_['text_year_ago']         = '%s year ago';
+$_['text_years_ago']        = '%s years ago';
 
 // Buttons
 $_['button_address_add']    = 'Add Address';

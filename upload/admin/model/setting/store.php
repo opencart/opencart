@@ -19,7 +19,7 @@ class Store extends \Opencart\System\Engine\Model {
 	}
 
 	public function editStore($store_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "store SET `name` = '" . $this->db->escape((string)$data['config_name']) . "', `url` = '" . $this->db->escape((string)$data['config_url']) . "' WHERE `store_id` = '" . (int)$store_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "store` SET `name` = '" . $this->db->escape((string)$data['config_name']) . "', `url` = '" . $this->db->escape((string)$data['config_url']) . "' WHERE `store_id` = '" . (int)$store_id . "'");
 
 		$this->cache->delete('store');
 	}

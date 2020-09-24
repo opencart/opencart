@@ -2,7 +2,7 @@
 namespace Opencart\Application\Model\Design;
 class Layout extends \Opencart\System\Engine\Model {
 	public function addLayout($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "layout SET `name` = '" . $this->db->escape((string)$data['name']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "'");
 
 		$layout_id = $this->db->getLastId();
 
@@ -57,14 +57,14 @@ class Layout extends \Opencart\System\Engine\Model {
 	}
 
 	public function getLayouts($data = []) {
-		$sql = "SELECT * FROM " . DB_PREFIX . "layout";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "layout`";
 
 		$sort_data = ['name'];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY `name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

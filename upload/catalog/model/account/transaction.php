@@ -2,7 +2,7 @@
 namespace Opencart\Application\Model\Account;
 class Transaction extends \Opencart\System\Engine\Model {
 	public function getTransactions($data = []) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE customer_id = '" . (int)$this->customer->getId() . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";
 
 		$sort_data = [
 			'amount',
@@ -13,7 +13,7 @@ class Transaction extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY date_added";
+			$sql .= " ORDER BY `date_added`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -40,13 +40,13 @@ class Transaction extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalTransactions() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_transaction` WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalAmount() {
-		$query = $this->db->query("SELECT SUM(amount) AS total FROM `" . DB_PREFIX . "customer_transaction` WHERE customer_id = '" . (int)$this->customer->getId() . "' GROUP BY customer_id");
+		$query = $this->db->query("SELECT SUM(amount) AS total FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {
 			return $query->row['total'];

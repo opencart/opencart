@@ -2,7 +2,7 @@
 namespace Opencart\Application\Model\Localisation;
 class Currency extends \Opencart\System\Engine\Model {
 	public function getCurrencyByCode($currency) {
-		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "currency WHERE code = '" . $this->db->escape($currency) . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "'");
 
 		return $query->row;
 	}
@@ -13,7 +13,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		if (!$currency_data) {
 			$currency_data = [];
 
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency ORDER BY title ASC");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` ORDER BY `title` ASC");
 
 			foreach ($query->rows as $result) {
 				$currency_data[$result['code']] = [

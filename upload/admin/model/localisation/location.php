@@ -2,27 +2,27 @@
 namespace Opencart\Application\Model\Localisation;
 class Location extends \Opencart\System\Engine\Model {
 	public function addLocation($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "location SET `name` = '" . $this->db->escape((string)$data['name']) . "', address = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `fax` = '" . $this->db->escape((string)$data['fax']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', address = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `fax` = '" . $this->db->escape((string)$data['fax']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "'");
 	
 		return $this->db->getLastId();
 	}
 
 	public function editLocation($location_id, $data) {
-			$this->db->query("UPDATE " . DB_PREFIX . "location SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address` = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `fax` = '" . $this->db->escape((string)$data['fax']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "' WHERE `location_id` = '" . (int)$location_id . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address` = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `fax` = '" . $this->db->escape((string)$data['fax']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "' WHERE `location_id` = '" . (int)$location_id . "'");
 	}
 
 	public function deleteLocation($location_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "location WHERE location_id = '" . (int)$location_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "location` WHERE `location_id` = '" . (int)$location_id . "'");
 	}
 
 	public function getLocation($location_id) {
-		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "location WHERE location_id = '" . (int)$location_id . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "location` WHERE `location_id` = '" . (int)$location_id . "'");
 
 		return $query->row;
 	}
 
 	public function getLocations($data = []) {
-		$sql = "SELECT location_id, name, address FROM " . DB_PREFIX . "location";
+		$sql = "SELECT `location_id`, `name`, `address` FROM `" . DB_PREFIX . "location`";
 
 		$sort_data = [
 			'name',
@@ -32,7 +32,7 @@ class Location extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY `name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -59,7 +59,7 @@ class Location extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalLocations() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "location");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "location`");
 
 		return $query->row['total'];
 	}

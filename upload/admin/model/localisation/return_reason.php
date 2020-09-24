@@ -43,7 +43,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "return_reason` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY `name`";
 
 			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";

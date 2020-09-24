@@ -32,7 +32,7 @@ class Setting extends \Opencart\System\Engine\Model {
 	}
 
 	public function deleteSetting($code, $store_id = 0) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 	}
 
 	public function getValue($key, $store_id = 0) {

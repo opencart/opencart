@@ -15,13 +15,13 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 	protected function getList() {
 		if (isset($this->request->get['filter_order_recurring_id'])) {
-			$filter_order_recurring_id = $this->request->get['filter_order_recurring_id'];
+			$filter_order_recurring_id = (int)$this->request->get['filter_order_recurring_id'];
 		} else {
 			$filter_order_recurring_id = '';
 		}
 
 		if (isset($this->request->get['filter_order_id'])) {
-			$filter_order_id = $this->request->get['filter_order_id'];
+			$filter_order_id = (int)$this->request->get['filter_order_id'];
 		} else {
 			$filter_order_id = '';
 		}
@@ -293,7 +293,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$this->load->model('sale/recurring');
 		
 		if (isset($this->request->get['order_recurring_id'])) {
-			$order_recurring_id = $this->request->get['order_recurring_id'];
+			$order_recurring_id = (int)$this->request->get['order_recurring_id'];
 		} else {
 			$order_recurring_id = 0;
 		}

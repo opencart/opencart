@@ -89,7 +89,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -342,7 +342,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -353,7 +353,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if ($order_info) {
 			if (isset($this->request->get['order_product_id'])) {
-				$order_product_id = $this->request->get['order_product_id'];
+				$order_product_id = (int)$this->request->get['order_product_id'];
 			} else {
 				$order_product_id = 0;
 			}

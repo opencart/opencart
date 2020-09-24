@@ -174,7 +174,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->request->get['gdpr_id'])) {
-				$gdprs[] = $this->request->get['gdpr_id'];
+				$gdprs[] = (int)$this->request->get['gdpr_id'];
 			}
 
 			$this->load->model('customer/gdpr');
@@ -215,7 +215,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->request->get['gdpr_id'])) {
-				$gdprs[] = $this->request->get['gdpr_id'];
+				$gdprs[] = (int)$this->request->get['gdpr_id'];
 			}
 
 			$this->load->model('customer/gdpr');
@@ -246,7 +246,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->request->get['gdpr_id'])) {
-				$gdprs[] = $this->request->get['gdpr_id'];
+				$gdprs[] = (int)$this->request->get['gdpr_id'];
 			}
 
 			$this->load->model('customer/gdpr');

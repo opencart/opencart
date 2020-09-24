@@ -31,7 +31,7 @@ class Search extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['category_id'])) {
-			$category_id = $this->request->get['category_id'];
+			$category_id = (int)$this->request->get['category_id'];
 		} else {
 			$category_id = 0;
 		}

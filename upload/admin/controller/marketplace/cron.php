@@ -205,7 +205,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['cron_id'])) {
-			$cron_id = $this->request->get['cron_id'];
+			$cron_id = (int)$this->request->get['cron_id'];
 		} else {
 			$cron_id = 0;
 		}
@@ -236,7 +236,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['cron_id'])) {
-			$cron_id = $this->request->get['cron_id'];
+			$cron_id = (int)$this->request->get['cron_id'];
 		} else {
 			$cron_id = 0;
 		}
@@ -261,7 +261,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['cron_id'])) {
-			$cron_id = $this->request->get['cron_id'];
+			$cron_id = (int)$this->request->get['cron_id'];
 		} else {
 			$cron_id = 0;
 		}

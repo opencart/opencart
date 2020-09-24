@@ -26,7 +26,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 			$data['type'] = '';
 		}
 
-		$data['categories'] = array();
+		$data['categories'] = [];
 
 		$this->load->model('setting/extension');
 

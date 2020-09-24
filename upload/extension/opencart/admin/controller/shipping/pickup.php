@@ -71,7 +71,7 @@ class Pickup extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/shipping/pickup', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/shipping/pickup', $data));
 	}
 
 	protected function validate() {

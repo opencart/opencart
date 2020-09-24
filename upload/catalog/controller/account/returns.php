@@ -58,7 +58,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'href'       => $this->url->link('account/returns/info', 'language=' . $this->config->get('config_language') . '&return_id=' . $result['return_id'] . $url)
+				'href'       => $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&return_id=' . $result['return_id'] . $url)
 			];
 		}
 
@@ -93,7 +93,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/returns/info', 'language=' . $this->config->get('config_language') . '&return_id=' . $return_id);
+			$this->session->data['redirect'] = $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&return_id=' . $return_id);
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
@@ -130,7 +130,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_return'),
-				'href' => $this->url->link('account/returns/info', 'language=' . $this->config->get('config_language') . '&return_id=' . $this->request->get['return_id'] . $url)
+				'href' => $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&return_id=' . $this->request->get['return_id'] . $url)
 			];
 
 			$data['return_id'] = $return_info['return_id'];
@@ -199,7 +199,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_return'),
-				'href' => $this->url->link('account/returns/info', 'language=' . $this->config->get('config_language') . '&return_id=' . $return_id . $url)
+				'href' => $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&return_id=' . $return_id . $url)
 			];
 
 			$data['continue'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language'));
@@ -223,7 +223,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_return->addReturn($this->request->post);
 
-			$this->response->redirect($this->url->link('account/returns/success', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/returns|success', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -246,7 +246,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/returns/add', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/returns|add', 'language=' . $this->config->get('config_language'))
 		];
 
 		if (isset($this->error['warning'])) {
@@ -303,7 +303,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['error_reason'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/returns/add', 'language=' . $this->config->get('config_language'));
+		$data['action'] = $this->url->link('account/returns|add', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('account/order');
 
@@ -430,7 +430,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_return_id')), $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|agree', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_return_id')), $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}

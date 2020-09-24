@@ -158,7 +158,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('information/gdpr/success', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('information/gdpr|success', 'language=' . $this->config->get('config_language'))
 			];
 
 			if ($gdpr_info['status'] == 0) {

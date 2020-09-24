@@ -156,8 +156,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('customer/customer_group/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('customer/customer_group/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('customer/customer_group|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('customer/customer_group|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['customer_groups'] = [];
 
@@ -177,7 +177,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 				'customer_group_id' => $result['customer_group_id'],
 				'name'              => $result['name'] . (($result['customer_group_id'] == $this->config->get('config_customer_group_id')) ? $this->language->get('text_default') : ''),
 				'sort_order'        => $result['sort_order'],
-				'edit'              => $this->url->link('customer/customer_group/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $result['customer_group_id'] . $url)
+				'edit'              => $this->url->link('customer/customer_group|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $result['customer_group_id'] . $url)
 			];
 		}
 
@@ -287,9 +287,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['customer_group_id'])) {
-			$data['action'] = $this->url->link('customer/customer_group/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('customer/customer_group|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('customer/customer_group/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $this->request->get['customer_group_id'] . $url);
+			$data['action'] = $this->url->link('customer/customer_group|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $this->request->get['customer_group_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url);

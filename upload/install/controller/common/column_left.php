@@ -19,7 +19,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 		}
 
 		// Language
-		$data['action'] = $this->url->link('common/column_left/language', '', $this->request->server['HTTPS']);
+		$data['action'] = $this->url->link('common/column_left|language', '', $this->request->server['HTTPS']);
 
 		if (isset($this->session->data['language'])) {
 			$data['code'] = $this->session->data['language'];

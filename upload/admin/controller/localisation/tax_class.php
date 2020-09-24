@@ -156,8 +156,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/tax_class/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/tax_class/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('localisation/tax_class|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/tax_class|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['tax_classes'] = [];
 
@@ -176,7 +176,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$data['tax_classes'][] = [
 				'tax_class_id' => $result['tax_class_id'],
 				'title'        => $result['title'],
-				'edit'         => $this->url->link('localisation/tax_class/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . $url)
+				'edit'         => $this->url->link('localisation/tax_class|edit', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . $url)
 			];
 		}
 
@@ -291,9 +291,9 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['tax_class_id'])) {
-			$data['action'] = $this->url->link('localisation/tax_class/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('localisation/tax_class|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/tax_class/edit', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $this->request->get['tax_class_id'] . $url);
+			$data['action'] = $this->url->link('localisation/tax_class|edit', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $this->request->get['tax_class_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url);

@@ -644,7 +644,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=customer/customer/customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+		url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
 		dataType: 'json',
 		success: function(json) {
 			$('.custom-field').hide();
@@ -899,7 +899,7 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
 
 	if (!zone[$(element).val()]) {
 		$.ajax({
-			url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + $(element).val(),
+			url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + $(element).val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(element).prop('disabled', true);
@@ -980,13 +980,13 @@ $('#history').on('click', '.pagination a', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=customer/customer/history&user_token={{ user_token }}&customer_id={{ customer_id }}');
+$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#button-history').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=customer/customer/addhistory&user_token={{ user_token }}&customer_id={{ customer_id }}',
+		url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id={{ customer_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
@@ -1006,7 +1006,7 @@ $('#button-history').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#history').load('index.php?route=customer/customer/history&user_token={{ user_token }}&customer_id={{ customer_id }}');
+				$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 				$('#tab-history textarea[name=\'comment\']').val('');
 			}
@@ -1024,13 +1024,13 @@ $('#transaction').on('click', '.pagination a', function(e) {
 	$('#transaction').load(this.href);
 });
 
-$('#transaction').load('index.php?route=customer/customer/transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
+$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#button-transaction').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=customer/customer/addtransaction&user_token={{ user_token }}&customer_id={{ customer_id }}',
+		url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id={{ customer_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
@@ -1050,7 +1050,7 @@ $('#button-transaction').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#transaction').load('index.php?route=customer/customer/transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
+				$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 				$('#tab-transaction input[name=\'amount\']').val('');
 				$('#tab-transaction input[name=\'description\']').val('');
@@ -1069,13 +1069,13 @@ $('#reward').on('click', '.pagination a', function(e) {
 	$('#reward').load(this.href);
 });
 
-$('#reward').load('index.php?route=customer/customer/reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
+$('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#button-reward').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=customer/customer/addreward&user_token={{ user_token }}&customer_id={{ customer_id }}',
+		url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id={{ customer_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
@@ -1095,7 +1095,7 @@ $('#button-reward').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#reward').load('index.php?route=customer/customer/reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
+				$('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 				$('#tab-reward input[name=\'points\']').val('');
 				$('#tab-reward input[name=\'description\']').val('');
@@ -1113,7 +1113,7 @@ $('#ip').on('click', '.pagination a', function(e) {
 	$('#ip').load(this.href);
 });
 
-$('#ip').load('index.php?route=customer/customer/ip&user_token={{ user_token }}&customer_id={{ customer_id }}');
+$('#ip').load('index.php?route=customer/customer|ip&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
 $('#content').on('click', 'button[id^=\'button-custom-field\']', function() {
 	var element = this;
@@ -1133,7 +1133,7 @@ $('#content').on('click', 'button[id^=\'button-custom-field\']', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=tool/upload/upload&user_token={{ user_token }}',
+				url: 'index.php?route=tool/upload|upload&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),

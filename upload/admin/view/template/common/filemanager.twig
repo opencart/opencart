@@ -114,7 +114,7 @@ $('#modal-image').on('click', '#button-upload', function() {
 		if ($('#form-upload input[name=\'file[]\']').val() != '') {
 			clearInterval(timer);
 
-			var url = 'index.php?route=common/filemanager/upload&user_token={{ user_token }}';
+			var url = 'index.php?route=common/filemanager|upload&user_token={{ user_token }}';
 
 			var directory = $('#modal-image input[name=\'directory\']').val();
 
@@ -176,7 +176,7 @@ $('#modal-image').popover({
 });
 
 $('#modal-image').on('click', '#button-create', function() {
-	var url = 'index.php?route=common/filemanager/folder&user_token={{ user_token }}';
+	var url = 'index.php?route=common/filemanager|folder&user_token={{ user_token }}';
 
 	var directory = $('#modal-image input[name=\'directory\']').val();
 
@@ -215,7 +215,7 @@ $('#modal-image').on('click', '#button-create', function() {
 $('#modal-image').on('click', '#button-delete', function(e) {
 	if (confirm('{{ text_confirm }}')) {
 		$.ajax({
-			url: 'index.php?route=common/filemanager/delete&user_token={{ user_token }}',
+			url: 'index.php?route=common/filemanager|delete&user_token={{ user_token }}',
 			type: 'post',
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),

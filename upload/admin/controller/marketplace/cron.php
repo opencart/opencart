@@ -92,7 +92,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['delete'] = $this->url->link('marketplace/cron/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('marketplace/cron|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['cron'] = $this->url->link('common/cron');
 
 		$data['crons'] = [];

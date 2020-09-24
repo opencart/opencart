@@ -38,10 +38,10 @@ $_['action_default']    = 'common/dashboard';
 // Action Events
 $_['action_event']      = [
 	'controller/*/before' => [
-		'event/language/before'
+		'event/language|before'
 	],
 	'controller/*/after' => [
-		'event/language/after'
+		'event/language|after'
 	],
 	//'extension/opencart/controller/after' => [
 	//	'event/language/after'

@@ -10,7 +10,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/module');
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function install() {
@@ -35,8 +35,8 @@ class Module extends \Opencart\System\Engine\Controller {
 		} else {
 			$this->session->data['error'] = $this->error['warning'];
 		}
-	
-		$this->getList();
+
+		$this->response->setOutput($this->getList());
 	}
 
 	public function uninstall() {
@@ -57,7 +57,7 @@ class Module extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 	
 	public function add() {
@@ -75,11 +75,11 @@ class Module extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function delete() {
-		$this->load->language('extension/module');
+
 
 		$this->load->model('setting/extension');
 
@@ -90,11 +90,11 @@ class Module extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
-		
-		$this->getList();
+
+		$this->response->setOutput($this->getList());
 	}
 
-	protected function getList() {
+	public function getList() {
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']));
 
 		if (isset($this->error['warning'])) {
@@ -131,6 +131,8 @@ class Module extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('setting/module');
+
 		$data['extensions'] = [];
 
 		if ($results) {
@@ -157,7 +159,7 @@ class Module extends \Opencart\System\Engine\Controller {
 						'name'      => $module['name'],
 						'status'    => !$module_data && !empty($setting_info['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 						'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
-						'delete'    => $this->url->link('extension/module/delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
+						'delete'    => $this->url->link('extension/module|delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
 					];
 				}
 
@@ -165,8 +167,8 @@ class Module extends \Opencart\System\Engine\Controller {
 					'name'      => $this->language->get($code . '_heading_title'),
 					'status'    => $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'module'    => $module_data,
-					'install'   => $this->url->link('extension/module/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/module/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'   => $this->url->link('extension/module|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/module|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];
@@ -183,7 +185,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
-		$this->response->setOutput($this->load->view('extension/module', $data));
+		return $this->load->view('extension/module', $data);
 	}
 
 	protected function validate() {

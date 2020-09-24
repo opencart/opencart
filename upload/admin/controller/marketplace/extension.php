@@ -26,7 +26,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 			$data['type'] = '';
 		}
 
-		$data['categories'] = array();
+		$data['categories'] = [];
 
 		$this->load->model('setting/extension');
 
@@ -38,14 +38,22 @@ class Extension extends \Opencart\System\Engine\Controller {
 			$this->load->language('extension/' . $extension, $extension);
 
 			if ($extension != 'promotion' && $this->user->hasPermission('access', 'extension/' . $extension)) {
-				$files = $this->model_setting_extension->getPaths('%/admin/controller/' . $extension . '/%');
+				$extensions = $this->model_setting_extension->getPaths('%/admin/controller/' . $extension . '/%.php');
 
 				$data['categories'][] = [
 					'code' => $extension,
-					'text' => $this->language->get($extension . '_heading_title') . ' (' . count($files) . ')',
+					'text' => $this->language->get($extension . '_heading_title') . ' (' . count($extensions) . ')',
 					'href' => $this->url->link('extension/' . $extension, 'user_token=' . $this->session->data['user_token'])
 				];
 			}
+		}
+
+		if (isset($this->request->get['type'])) {
+			$data['extension'] = $this->load->controller('extension/' . $this->request->get['type'] . '|getList');
+		} elseif ($data['categories']) {
+			$data['extension'] = $this->load->controller('extension/' . $data['categories'][0]['code'] . '|getList');
+		} else {
+			$data['extension'] = '';
 		}
 
 		$data['header'] = $this->load->controller('common/header');

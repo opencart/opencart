@@ -62,7 +62,7 @@ final class Loader {
 	 */
 	public function controller($route, ...$args) {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+		$route = preg_replace('/[^a-zA-Z0-9_|\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
@@ -139,7 +139,9 @@ final class Loader {
 		$template = new \Opencart\System\Library\Template($this->registry->get('config')->get('template_engine'));
 		
 		$template->addPath(DIR_TEMPLATE);
+
 		$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/admin/view/template/');
+
 		//$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/catalog/view/template/');
 
 		foreach ($data as $key => $value) {
@@ -200,7 +202,7 @@ final class Loader {
 		if (is_file($file)) {
 			include_once($file);
 		} else {
-			throw new \Exception('Error: Could not load helper ' . $route . '!');
+			trigger_error('Error: Could not load helper ' . $route . '!');
 		}
 	}
 
@@ -297,7 +299,7 @@ final class Loader {
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);
 				} else {
-					throw new \Exception('Error: Could not call model/' . $route . '!');
+					trigger_error('Error: Could not call model/' . $route . '!');
 				}
 			}
 

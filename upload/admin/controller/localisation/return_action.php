@@ -156,8 +156,8 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/return_action/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/return_action/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('localisation/return_action|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/return_action|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['return_actions'] = [];
 
@@ -176,7 +176,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$data['return_actions'][] = [
 				'return_action_id' => $result['return_action_id'],
 				'name'             => $result['name'],
-				'edit'             => $this->url->link('localisation/return_action/edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)
+				'edit'             => $this->url->link('localisation/return_action|edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)
 			];
 		}
 
@@ -285,9 +285,9 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['return_action_id'])) {
-			$data['action'] = $this->url->link('localisation/return_action/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('localisation/return_action|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/return_action/edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $this->request->get['return_action_id'] . $url);
+			$data['action'] = $this->url->link('localisation/return_action|edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $this->request->get['return_action_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url);

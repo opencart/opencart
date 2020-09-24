@@ -24,8 +24,6 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 			//$this->template->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/view/template/');
 			//$this->language->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/language/');
-
 		}
-
 	}
 }

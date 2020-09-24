@@ -35,7 +35,7 @@
             </div>
           </div>
         </fieldset>
-        <div id="extension"></div>
+        <div id="extension">{{ extension }}</div>
       </div>
     </div>
   </div>
@@ -63,8 +63,6 @@ $('select[name=\'type\']').on('change', function() {
 		}
 	});
 });
-
-$('select[name=\'type\']').trigger('change');
 
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();

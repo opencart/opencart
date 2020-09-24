@@ -156,8 +156,8 @@ class User extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('user/user/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('user/user/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('user/user|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('user/user|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['users'] = [];
 
@@ -178,7 +178,7 @@ class User extends \Opencart\System\Engine\Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/user/edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
+				'edit'       => $this->url->link('user/user|edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
 			];
 		}
 
@@ -319,9 +319,9 @@ class User extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['user_id'])) {
-			$data['action'] = $this->url->link('user/user/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('user/user|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('user/user/edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id'] . $url);
+			$data['action'] = $this->url->link('user/user|edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url);

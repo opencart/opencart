@@ -156,8 +156,8 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('design/seo_profile/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/seo_profile/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('design/seo_profile|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/seo_profile|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['seo_profiles'] = [];
 
@@ -179,7 +179,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 				'key'            => $result['key'],
 				'regex'          => $result['regex'],
 				'sort_order'     => $result['sort_order'],
-				'edit'           => $this->url->link('design/seo_profile/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $result['seo_profile_id'] . $url)
+				'edit'           => $this->url->link('design/seo_profile|edit', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $result['seo_profile_id'] . $url)
 			];
 		}
 
@@ -301,9 +301,9 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['seo_profile_id'])) {
-			$data['action'] = $this->url->link('design/seo_profile/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('design/seo_profile|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/seo_profile/edit', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $this->request->get['seo_profile_id'] . $url);
+			$data['action'] = $this->url->link('design/seo_profile|edit', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $this->request->get['seo_profile_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url);

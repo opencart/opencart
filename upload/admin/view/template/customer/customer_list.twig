@@ -127,7 +127,7 @@
                                 <div class="dropdown-divider"></div>
                                 <h6 class="dropdown-header">{{ text_login }}</h6>
                                 {% for store in customer.store %}
-                                  <a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fas fa-lock"></i> {{ store.name }}{% if customer.store_id == store.store_id %}{{ text_default }}{% endif %}</a>
+                                  <a href="{{ store.href }}" target="_blank" class="dropdown-item text-primary"><i class="fas fa-lock"></i> {% if customer.store_id == store.store_id %}<span class="text-primary">{{ store.name }}</span>{% else %}{{ store.name }}{% endif %}</a>
                                 {% endfor %}
                               </div>
                             </div>
@@ -200,7 +200,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -219,7 +219,7 @@ $('input[name=\'filter_name\']').autocomplete({
 $('input[name=\'filter_email\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

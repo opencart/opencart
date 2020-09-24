@@ -38,17 +38,16 @@ class Account extends \Opencart\System\Engine\Controller {
 
 		$data['credit_cards'] = [];
 
-		$files = glob(DIR_APPLICATION . 'controller/extension/credit_card/*.php');
+		// Get a list of installed modules
+		$results = $this->model_setting_extension->getExtensionsByType('payment');
 
-		foreach ($files as $file) {
-			$code = basename($file, '.php');
-
-			if ($this->config->get('payment_' . $code . '_status') && $this->config->get('payment_' . $code . '_card')) {
-				$this->load->language('extension/credit_card/' . $code, 'extension');
+		foreach ($results as $result) {
+			if ($this->config->get('payment_' . $result['code'] . '_status') && $this->config->get('payment_' . $result['code'] . '_card')) {
+				$this->load->language('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'extension');
 
 				$data['credit_cards'][] = [
 					'name' => $this->language->get('extension')->get('heading_title'),
-					'href' => $this->url->link('extension/credit_card/' . $code, 'language=' . $this->config->get('config_language'))
+					'href' => $this->url->link('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'language=' . $this->config->get('config_language'))
 				];
 			}
 		}
@@ -74,9 +73,9 @@ class Account extends \Opencart\System\Engine\Controller {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
 			if (!$affiliate_info) {
-				$data['affiliate'] = $this->url->link('account/affiliate/add', 'language=' . $this->config->get('config_language'));
+				$data['affiliate'] = $this->url->link('account/affiliate|add', 'language=' . $this->config->get('config_language'));
 			} else {
-				$data['affiliate'] = $this->url->link('account/affiliate/edit', 'language=' . $this->config->get('config_language'));
+				$data['affiliate'] = $this->url->link('account/affiliate|edit', 'language=' . $this->config->get('config_language'));
 			}
 
 			if ($affiliate_info) {

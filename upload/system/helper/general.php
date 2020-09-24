@@ -83,61 +83,61 @@ if (!function_exists('hash_equals')) {
 	}
 }
 
-function date_added($date) {
+function date_added($date, $language) {
 	$second = time() - strtotime($date);
 
 	if ($second < 10) {
-		$date_added = 'just now';
+		$date_added = sprintf($language['text_just_now'], $second);
 	} elseif ($second) {
-		$date_added = $second . ' seconds ago';
+		$date_added = sprintf($language['text_seconds_ago'], $second);
 	}
 
 	$minute = floor($second / 60);
 
 	if ($minute == 1) {
-		$date_added = $minute . ' minute ago';
+		$date_added = sprintf($language['text_minute_ago'], $minute);
 	} elseif ($minute) {
-		$date_added = $minute . ' minutes ago';
+		$date_added = sprintf($language['text_minutes_ago'], $minute);
 	}
 
 	$hour = floor($minute / 60);
 
 	if ($hour == 1) {
-		$date_added = $hour . ' hour ago';
+		$date_added = sprintf($language['text_hour_ago'], $hour);
 	} elseif ($hour) {
-		$date_added = $hour . ' hours ago';
+		$date_added = sprintf($language['text_hours_ago'], $hour);
 	}
 
 	$day = floor($hour / 24);
 
 	if ($day == 1) {
-		$date_added = $day . ' day ago';
+		$date_added = sprintf($language['text_day_ago'], $day);
 	} elseif ($day) {
-		$date_added = $day . ' days ago';
+		$date_added = sprintf($language['text_days_ago'], $day);
 	}
 
 	$week = floor($day / 7);
 
 	if ($week == 1) {
-		$date_added = $week . ' week ago';
+		$date_added = sprintf($language['text_week_ago'], $week);
 	} elseif ($week) {
-		$date_added = $week . ' weeks ago';
+		$date_added = sprintf($language['text_weeks_ago'], $week);
 	}
 
 	$month = floor($week / 4);
 
 	if ($month == 1) {
-		$date_added = $month . ' month ago';
+		$date_added = sprintf($language['text_month_ago'], $month);
 	} elseif ($month) {
-		$date_added = $month . ' months ago';
+		$date_added = sprintf($language['text_months_ago'], $month);
 	}
 
 	$year = floor($week / 52.1429);
 
 	if ($year == 1) {
-		$date_added = $year . ' year ago';
+		$date_added = sprintf($language['text_year_ago'], $year);
 	} elseif ($year) {
-		$date_added = $year . ' years ago';
+		$date_added = sprintf($language['text_years_ago'], $year);
 	}
 
 	return $date_added;

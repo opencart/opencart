@@ -3,21 +3,12 @@ namespace Opencart\Application\Controller\Startup;
 class Permission extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
-			$route = '';
+			$pos = strrpos($this->request->get['route'], '|');
 
-			$part = explode('/', $this->request->get['route']);
-
-			if (isset($part[0])) {
-				$route .= $part[0];
-			}
-
-			if (isset($part[1])) {
-				$route .= '/' . $part[1];
-			}
-
-			if ($part[0] == 'extension' && isset($part[2]) && isset($part[3])) {
-				$route .= '/' . $part[2];
-				$route .= '/' . $part[3];
+			if ($pos === false) {
+				$route = $this->request->get['route'];
+			} else {
+				$route = substr($this->request->get['route'], 0, $pos);
 			}
 
 			// We want to ingore some pages from having its permission checked.

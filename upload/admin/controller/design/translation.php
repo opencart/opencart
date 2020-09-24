@@ -156,8 +156,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['add'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/translation/delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('design/translation|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/translation|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
 
@@ -190,7 +190,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 				'language'       => $code,
 				'key'            => $result['key'],
 				'value'          => $result['value'],
-				'edit'           => $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
+				'edit'           => $this->url->link('design/translation|edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
 			];
 		}
 
@@ -295,9 +295,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['translation_id'])) {
-			$data['action'] = $this->url->link('design/translation/add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('design/translation|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/translation/edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $this->request->get['translation_id'] . $url);
+			$data['action'] = $this->url->link('design/translation|edit', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $this->request->get['translation_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -414,6 +414,33 @@ class Translation extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+
+
+
+			$path = glob(DIR_EXTENSION . '*/catalog/language/' . $language_info['code'] . '/*');
+
+			while (count($path) != 0) {
+				$new_path = substr(DIR_EXTENSION, strlen(DIR_EXTENSION));
+
+				$code = substr($new_path, 0, strpos($new_path, '/'));
+
+
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					if (substr($file, -4) == '.php') {
+						$json[] = substr(substr($file, strlen(DIR_EXTENSION . 'opencart/language/' . $language_info['code'] . '/')), 0, -4);
+					}
+				}
+			}
+
+
+
+
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -461,6 +488,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
+
+
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

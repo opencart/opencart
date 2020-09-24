@@ -34,7 +34,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function reset() {
-		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = '0'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET viewed = '0'");
 	}
 
 	public function getPurchased($data = []) {

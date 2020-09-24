@@ -108,8 +108,8 @@ class Store extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['add'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token']);
-		$data['delete'] = $this->url->link('setting/store/delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('setting/store|add', 'user_token=' . $this->session->data['user_token']);
+		$data['delete'] = $this->url->link('setting/store|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['stores'] = [];
 
@@ -124,12 +124,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				'edit'     => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 			];
 		}
-
-		$filter_data = [
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
-		];
-
+		
 		$store_total += $this->model_setting_store->getTotalStores();
 
 		$results = $this->model_setting_store->getStores();
@@ -139,7 +134,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				'store_id' => $result['store_id'],
 				'name'     => $result['name'],
 				'url'      => $result['url'],
-				'edit'     => $this->url->link('setting/store/edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
+				'edit'     => $this->url->link('setting/store|edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
 			];
 		}
 
@@ -251,12 +246,12 @@ class Store extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['store_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('setting/store|add', 'user_token=' . $this->session->data['user_token'])
 			];
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store/edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
+				'href' => $this->url->link('setting/store|edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
 			];
 		}
 
@@ -269,9 +264,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['store_id'])) {
-			$data['action'] = $this->url->link('setting/store/add', 'user_token=' . $this->session->data['user_token']);
+			$data['action'] = $this->url->link('setting/store|add', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['action'] = $this->url->link('setting/store/edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
+			$data['action'] = $this->url->link('setting/store|edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
 		}
 
 		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);

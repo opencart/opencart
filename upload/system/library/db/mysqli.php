@@ -14,7 +14,6 @@ class MySQLi {
 		}
 
 		$this->connection->set_charset("utf8");
-		$this->connection->query("SET SQL_MODE = ''");
 	}
 
 	public function query($sql) {

@@ -2,10 +2,7 @@
   <div class="card-header">
     <div class="float-right"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-calendar-alt"></i> <i class="fas fa-caret-down"></i></a>
       <div id="range" class="dropdown-menu dropdown-menu-right">
-        <a href="day" class="dropdown-item">{{ text_day }}</a>
-        <a href="week" class="dropdown-item">{{ text_week }}</a>
-        <a href="month" class="dropdown-item active">{{ text_month }}</a>
-        <a href="year" class="dropdown-item">{{ text_year }}</a>
+        <a href="day" class="dropdown-item">{{ text_day }}</a> <a href="week" class="dropdown-item">{{ text_week }}</a> <a href="month" class="dropdown-item active">{{ text_month }}</a> <a href="year" class="dropdown-item">{{ text_year }}</a>
       </div>
     </div>
     <i class="fas fa-chart-bar"></i> {{ heading_title }}
@@ -17,6 +14,7 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script>
 <script type="text/javascript"><!--
+/*
 $('#range a').on('click', function(e) {
 	e.preventDefault();
 
@@ -82,4 +80,5 @@ $('#range a').on('click', function(e) {
 });
 
 $('#range a.active').trigger('click');
+*/
 //--></script>

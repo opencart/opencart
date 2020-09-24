@@ -86,7 +86,7 @@ $('#gdpr').on('click', '.pagination a', function(e) {
 	$('#gdpr').load(this.href);
 });
 
-$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
+$('#gdpr').load('index.php?route=customer/gdpr|gdpr&user_token={{ user_token }}');
 
 $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
 	e.preventDefault();
@@ -112,7 +112,7 @@ $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
 			}
 
 			if (json['success']) {
-				$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
+				$('#gdpr').load('index.php?route=customer/gdpr|gdpr&user_token={{ user_token }}');
 
 				$('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -145,7 +145,7 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
 			}
 
 			if (json['success']) {
-				$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}');
+				$('#gdpr').load('index.php?route=customer/gdpr|gdpr&user_token={{ user_token }}');
 
 				$('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
@@ -183,14 +183,14 @@ $('#button-filter').on('click', function() {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 
-	$('#gdpr').load('index.php?route=customer/gdpr/gdpr&user_token={{ user_token }}' + url);
+	$('#gdpr').load('index.php?route=customer/gdpr|gdpr&user_token={{ user_token }}' + url);
 });
 //--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_email\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {

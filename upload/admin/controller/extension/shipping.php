@@ -8,7 +8,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function install() {
@@ -30,7 +30,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
 	public function uninstall() {
@@ -47,10 +47,10 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->setOutput($this->getList());
 	}
 
-	protected function getList() {
+	public function getList() {
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -99,8 +99,8 @@ class Shipping extends \Opencart\System\Engine\Controller {
 					'name'       => $this->language->get($code . '_heading_title'),
 					'status'     => $this->config->get('shipping_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('shipping_' . $code . '_sort_order'),
-					'install'    => $this->url->link('extension/shipping/install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'    => $this->url->link('extension/shipping|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall'  => $this->url->link('extension/shipping|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed'  => in_array($code, $installed),
 					'edit'       => $this->url->link('extension/' . $extension . '/shipping/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];
@@ -109,7 +109,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
-		$this->response->setOutput($this->load->view('extension/shipping', $data));
+		return $this->load->view('extension/shipping', $data);
 	}
 
 	protected function validate() {

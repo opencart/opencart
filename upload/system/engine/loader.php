@@ -137,23 +137,54 @@ final class Loader {
 
 		// Make sure its only the last event that returns an output if required.
 		$template = new \Opencart\System\Library\Template($this->registry->get('config')->get('template_engine'));
-		
 		$template->addPath(DIR_TEMPLATE);
-
 		$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/admin/view/template/');
-
 		//$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/catalog/view/template/');
 
 		foreach ($data as $key => $value) {
-			$template->set($key, $value);
+			if (is_object($value)) {
+				$template->set($key, $value->render());
+			} else {
+				$template->set($key, $value);
+			}
 		}
 
 		$output = $template->render($route, $code);
+
+		//foreach ($data as $key => $value) {
+		//	$this->template->set($key, $value);
+		//}
+
+		//$output = $this->template->render($route, $code);
 
 		// Trigger the post events
 		$this->event->trigger('view/' . $trigger . '/after', [&$route, &$data, &$output]);
 
 		return $output;
+	}
+
+	/**
+	 * Language
+	 *
+	 * @param    string $route
+	 * @param    string $key
+	 *
+	 * @return    array
+	 */
+	public function language($route, $prefix = '') {
+		// Sanitize the call
+		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
+
+		// Keep the original trigger
+		$trigger = $route;
+
+		$this->event->trigger('language/' . $trigger . '/before', [&$route, &$prefix]);
+
+		$data = $this->language->load($route, $prefix);
+
+		$this->event->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
+
+		return $data;
 	}
 
 	/**
@@ -225,30 +256,6 @@ final class Loader {
 		$this->event->trigger('config/' . $trigger . '/after', [&$route]);
 
 		//return $data;
-	}
-
-	/**
-	 * Language
-	 *
-	 * @param    string $route
-	 * @param    string $key
-	 *
-	 * @return    array
-	 */
-	public function language($route, $prefix = '') {
-		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
-
-		// Keep the original trigger
-		$trigger = $route;
-
-		$this->event->trigger('language/' . $trigger . '/before', [&$route, &$prefix]);
-
-		$data = $this->language->load($route, $prefix);
-
-		$this->event->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
-
-		return $data;
 	}
 
 	/**

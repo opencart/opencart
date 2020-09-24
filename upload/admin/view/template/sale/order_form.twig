@@ -1941,7 +1941,7 @@ $('#button-shipping-address').on('click', function() {
 // Shipping Method
 $('#button-shipping-method').on('click', function() {
 	$.ajax({
-		url: '{{ catalog }}index.php.php?route=api/shipping|method&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '{{ catalog }}index.php?route=api/shipping|method&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
 		dataType: 'json',
@@ -1979,7 +1979,7 @@ $('#button-shipping-method').on('click', function() {
 // Payment Method
 $('#button-payment-method').on('click', function() {
 	$.ajax({
-		url: '{{ catalog }}index.php.php?route=api/payment|method&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '{{ catalog }}index.php?route=api/payment|method&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
 		dataType: 'json',
@@ -2132,7 +2132,7 @@ $('#button-reward').on('click', function() {
 $('input[name=\'affiliate\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
+			url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				json.unshift({
@@ -2158,9 +2158,9 @@ $('input[name=\'affiliate\']').autocomplete({
 // Checkout
 $('#button-save').on('click', function() {
 	if ($('input[name=\'order_id\']').val() == 0) {
-		var url = '{{ catalog }}index.php.php?route=api/order|add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val();
+		var url = '{{ catalog }}index.php?route=api/order|add&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val();
 	} else {
-		var url = '{{ catalog }}index.php.php?route=api/order|edit&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
+		var url = '{{ catalog }}index.php?route=api/order|edit&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
 	}
 
 	$.ajax({
@@ -2214,7 +2214,7 @@ $('#content').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-cu
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php.php?route=tool/upload|upload&user_token={{ user_token }}',
+				url: 'index.php?route=tool/upload|upload&user_token={{ user_token }}',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -2316,7 +2316,7 @@ $('#collapse-shipping .form-group[data-sort]').detach().each(function() {
 // Add all products to the cart using the api
 $('#button-refresh').on('click', function() {
 	$.ajax({
-		url: '{{ catalog }}index.php.php?route=api/cart|products&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '{{ catalog }}index.php?route=api/cart|products&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {

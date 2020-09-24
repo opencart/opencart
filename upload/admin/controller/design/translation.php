@@ -433,7 +433,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 					}
 
 					if (substr($file, -4) == '.php') {
-						$json[] = substr(substr($file, strlen(DIR_EXTENSION . 'opencart/language/' . $language_info['code'] . '/')), 0, -4);
+						$json[] = substr(substr($file, strlen(DIR_EXTENSION . $code . '/catalog/language/' . $language_info['code'] . '/')), 0, -4);
 					}
 				}
 			}

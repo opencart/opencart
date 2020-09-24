@@ -141,7 +141,7 @@ $(document).ready(function() {
 		e.preventDefault();
 
 		$.ajax({
-			url: 'index.php?route=common/cookie/agree',
+			url: 'index.php?route=common/cookie|agree',
 			dataType: 'json',
 			beforeSend: function() {
 				$('#button-cookie').button('loading');
@@ -164,7 +164,7 @@ $(document).ready(function() {
 var cart = {
 	'add': function(product_id, quantity) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/add',
+			url: 'index.php?route=checkout/cart|add',
 			type: 'post',
 			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
@@ -198,7 +198,7 @@ var cart = {
 					$('#toast').toast('show');
 
 					// Need to set timeout otherwise it wont update the total
-					$('#cart').parent().load('index.php?route=common/cart/info');
+					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -208,7 +208,7 @@ var cart = {
 	},
 	'update': function(key, quantity) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/edit',
+			url: 'index.php?route=checkout/cart|edit',
 			type: 'post',
 			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
@@ -222,7 +222,7 @@ var cart = {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info');
+					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -232,7 +232,7 @@ var cart = {
 	},
 	'remove': function(key) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove',
+			url: 'index.php?route=checkout/cart|remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -246,7 +246,7 @@ var cart = {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info');
+					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -262,7 +262,7 @@ var voucher = {
 	},
 	'remove': function(key) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/remove',
+			url: 'index.php?route=checkout/cart|remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
@@ -276,7 +276,7 @@ var voucher = {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart').parent().load('index.php?route=common/cart/info');
+					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -289,7 +289,7 @@ var voucher = {
 var wishlist = {
 	'add': function(product_id) {
 		$.ajax({
-			url: 'index.php?route=account/wishlist/add',
+			url: 'index.php?route=account/wishlist|add',
 			type: 'post',
 			data: 'product_id=' + product_id,
 			dataType: 'json',
@@ -332,7 +332,7 @@ var wishlist = {
 var compare = {
 	'add': function(product_id) {
 		$.ajax({
-			url: 'index.php?route=product/compare/add',
+			url: 'index.php?route=product/compare|add',
 			type: 'post',
 			data: 'product_id=' + product_id,
 			dataType: 'json',

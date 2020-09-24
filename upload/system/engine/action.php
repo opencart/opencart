@@ -14,7 +14,7 @@ namespace Opencart\System\Engine;
 class Action {
 	private $route;
 	private $class;
-	private $method = 'index';
+	private $method;
 
 	/**
 	 * Constructor
@@ -28,6 +28,7 @@ class Action {
 
 		if ($pos === false) {
 			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
+			$this->method = 'index';
 		} else {
 			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
 			$this->method = substr($this->route, $pos + 1);

@@ -561,7 +561,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'config_theme\']').on('change', function() {
 	$.ajax({
-		url: 'index.php.php?route=setting/setting|theme&user_token={{ user_token }}&theme=' + this.value,
+		url: 'index.php?route=setting/setting|theme&user_token={{ user_token }}&theme=' + this.value,
 		dataType: 'html',
 		beforeSend: function() {
 			$('select[name=\'config_theme\']').prop('disabled', true);

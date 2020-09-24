@@ -40,7 +40,7 @@
 <script type="text/javascript"><!--
 $('#button-quote').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/opencart/total/shipping/quote',
+		url: 'index.php?route=extension/opencart/total/shipping|quote',
 		type: 'post',
 		data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
 		dataType: 'json',
@@ -135,7 +135,7 @@ $('#button-quote').on('click', function() {
 
 $(document).delegate('#button-shipping', 'click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/opencart/total/shipping/shipping',
+		url: 'index.php?route=extension/opencart/total/shipping|shipping',
 		type: 'post',
 		data: 'shipping_method=' + encodeURIComponent($('input[name=\'shipping_method\']:checked').val()),
 		dataType: 'json',

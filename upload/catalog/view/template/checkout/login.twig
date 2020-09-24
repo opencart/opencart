@@ -71,7 +71,7 @@ $('#button-account').on('click', function() {
 $('#button-login').on('click', function() {
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/login/save',
+			url: 'index.php?route=checkout/login|save',
 			type: 'post',
 			data: $('#collapse-checkout-option :input'),
 			dataType: 'json',

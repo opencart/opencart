@@ -194,7 +194,7 @@
 $('#button-guest-shipping').on('click', function() {
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/guest_shipping/save',
+			url: 'index.php?route=checkout/guest_shipping|save',
 			type: 'post',
 			data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
 			dataType: 'json',

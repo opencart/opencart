@@ -400,7 +400,7 @@ $('#button-cart').on('click', function() {
 				$('#toast').toast({'delay': 3000});
 				$('#toast').toast('show');
 
-				$('#cart').parent().load('index.php?route=common/cart/info');
+				$('#cart').parent().load('index.php?route=common/cart|info');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

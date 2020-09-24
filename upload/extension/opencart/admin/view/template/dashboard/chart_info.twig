@@ -14,7 +14,6 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script>
 <script type="text/javascript"><!--
-/*
 $('#range a').on('click', function(e) {
 	e.preventDefault();
 
@@ -24,7 +23,7 @@ $('#range a').on('click', function(e) {
 
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=extension/opencart/dashboard/chart/chart&user_token={{ user_token }}&range=' + $(this).attr('href'),
+		url: 'index.php?route=extension/opencart/dashboard/chart|chart&user_token={{ user_token }}&range=' + $(this).attr('href'),
 		dataType: 'json',
 		success: function(json) {
 			if (typeof json['order'] == 'undefined') {
@@ -80,5 +79,4 @@ $('#range a').on('click', function(e) {
 });
 
 $('#range a.active').trigger('click');
-*/
 //--></script>

@@ -414,6 +414,33 @@ class Translation extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+
+
+
+			$path = glob(DIR_EXTENSION . '*/catalog/language/' . $language_info['code'] . '/*');
+
+			while (count($path) != 0) {
+				$path = substr(DIR_EXTENSION, strlen(DIR_EXTENSION));
+
+				$df = substr($path);
+
+
+				$next = array_shift($path);
+
+				foreach ((array)glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					if (substr($file, -4) == '.php') {
+						$json[] = substr(substr($file, strlen(DIR_EXTENSION . 'opencart/language/' . $language_info['code'] . '/')), 0, -4);
+					}
+				}
+			}
+
+
+
+
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -461,6 +488,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
+
+
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

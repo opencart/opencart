@@ -78,8 +78,6 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		} else {
 			$page = 1;
 		}
-		
-		$data['reset'] = $this->url->link('extension/opencart/report/product_viewed|reset', 'user_token=' . $this->session->data['user_token']);
 
 		$filter_data = [
 			'start' => ($page - 1) * $this->config->get('config_pagination'),
@@ -132,18 +130,21 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	public function reset() {
+		$json = [];
+
 		$this->load->language('extension/opencart/report/product_viewed');
 
-		if (!$this->user->hasPermission('modify', 'extension/report/product_viewed')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/product_viewed')) {
+			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('extension/opencart/report/product');
 
 			$this->model_extension_opencart_report_product->reset();
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('extension/opencart/report/product_viewed|report', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed'));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

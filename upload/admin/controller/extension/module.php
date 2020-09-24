@@ -79,7 +79,7 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	public function delete() {
-		$this->load->language('extension/module');
+
 
 		$this->load->model('setting/extension');
 
@@ -131,7 +131,7 @@ class Module extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		//$this->load->model('setting/module');
+		$this->load->model('setting/module');
 
 		$data['extensions'] = [];
 

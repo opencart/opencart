@@ -6,7 +6,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	public function editStatus($code, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE `code` = '" . $this->db->escape($code) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (int)$status . "' WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
 	public function getGdprByCode($code) {

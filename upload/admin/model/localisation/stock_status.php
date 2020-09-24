@@ -4,9 +4,9 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	public function addStockStatus($data) {
 		foreach ($data['stock_status'] as $language_id => $value) {
 			if (isset($stock_status_id)) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
 			} else {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
 
 				$stock_status_id = $this->db->getLastId();
 			}
@@ -18,32 +18,32 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	public function editStockStatus($stock_status_id, $data) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "stock_status WHERE stock_status_id = '" . (int)$stock_status_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
 
 		foreach ($data['stock_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
 		}
 
 		$this->cache->delete('stock_status');
 	}
 
 	public function deleteStockStatus($stock_status_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "stock_status WHERE stock_status_id = '" . (int)$stock_status_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
 
 		$this->cache->delete('stock_status');
 	}
 
 	public function getStockStatus($stock_status_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "stock_status WHERE stock_status_id = '" . (int)$stock_status_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
 	public function getStockStatuses($data = []) {
 		if ($data) {
-			$sql = "SELECT * FROM " . DB_PREFIX . "stock_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY `name`";
 
 			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
@@ -70,7 +70,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 			$stock_status_data = $this->cache->get('stock_status.' . (int)$this->config->get('config_language_id'));
 
 			if (!$stock_status_data) {
-				$query = $this->db->query("SELECT stock_status_id, name FROM " . DB_PREFIX . "stock_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
+				$query = $this->db->query("SELECT `stock_status_id`, `name` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`");
 
 				$stock_status_data = $query->rows;
 
@@ -84,7 +84,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	public function getDescriptions($stock_status_id) {
 		$stock_status_data = [];
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "stock_status WHERE stock_status_id = '" . (int)$stock_status_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
 
 		foreach ($query->rows as $result) {
 			$stock_status_data[$result['language_id']] = ['name' => $result['name']];
@@ -94,7 +94,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalStockStatuses() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "stock_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

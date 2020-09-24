@@ -303,7 +303,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		// Customer Group
 		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->get['customer_group_id'];
+			$customer_group_id = (int)$this->request->get['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}

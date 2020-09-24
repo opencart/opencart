@@ -87,7 +87,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
-			$filter_order_id = $this->request->get['filter_order_id'];
+			$filter_order_id = (int)$this->request->get['filter_order_id'];
 		} else {
 			$filter_order_id = '';
 		}
@@ -105,7 +105,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
-			$filter_order_status_id = $this->request->get['filter_order_status_id'];
+			$filter_order_status_id = (int)$this->request->get['filter_order_status_id'];
 		} else {
 			$filter_order_status_id = '';
 		}
@@ -1269,7 +1269,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -1298,7 +1298,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -1333,7 +1333,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -1364,7 +1364,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -1399,7 +1399,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -1428,7 +1428,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->language('sale/order');
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -1488,7 +1488,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$orders = $this->request->post['selected'];
 		} elseif (isset($this->request->get['order_id'])) {
-			$orders[] = $this->request->get['order_id'];
+			$orders[] = (int)$this->request->get['order_id'];
 		}
 
 		foreach ($orders as $order_id) {
@@ -1694,7 +1694,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->post['selected'])) {
 			$orders = $this->request->post['selected'];
 		} elseif (isset($this->request->get['order_id'])) {
-			$orders[] = $this->request->get['order_id'];
+			$orders[] = (int)$this->request->get['order_id'];
 		}
 
 		foreach ($orders as $order_id) {

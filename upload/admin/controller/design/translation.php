@@ -389,7 +389,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['language_id'])) {
-			$language_id = $this->request->get['language_id'];
+			$language_id = (int)$this->request->get['language_id'];
 		} else {
 			$language_id = 0;
 		}
@@ -453,13 +453,13 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
+			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}
 
 		if (isset($this->request->get['language_id'])) {
-			$language_id = $this->request->get['language_id'];
+			$language_id = (int)$this->request->get['language_id'];
 		} else {
 			$language_id = 0;
 		}

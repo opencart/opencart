@@ -21,7 +21,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['filter_extension_id'])) {
-			$data['filter_extension_download_id'] = $this->request->get['filter_extension_download_id'];
+			$data['filter_extension_download_id'] = (int)$this->request->get['filter_extension_download_id'];
 		} else {
 			$data['filter_extension_download_id'] = '';
 		}
@@ -64,7 +64,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->load->language('marketplace/installer');
 
 		if (isset($this->request->get['filter_extension_download_id'])) {
-			$filter_extension_download_id = $this->request->get['filter_extension_download_id'];
+			$filter_extension_download_id = (int)$this->request->get['filter_extension_download_id'];
 		} else {
 			$filter_extension_download_id = '';
 		}
@@ -275,7 +275,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
-			$extension_install_id = $this->request->get['extension_install_id'];
+			$extension_install_id = (int)$this->request->get['extension_install_id'];
 		} else {
 			$extension_install_id = 0;
 		}
@@ -407,7 +407,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
-			$extension_install_id = $this->request->get['extension_install_id'];
+			$extension_install_id = (int)$this->request->get['extension_install_id'];
 		} else {
 			$extension_install_id = 0;
 		}
@@ -480,7 +480,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['extension_install_id'])) {
-			$extension_install_id = $this->request->get['extension_install_id'];
+			$extension_install_id = (int)$this->request->get['extension_install_id'];
 		} else {
 			$extension_install_id = 0;
 		}

@@ -414,7 +414,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 					if ($keyword) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
-						if ($seo_url_info && ($seo_url_info['key'] != 'manufacturer_id' || !isset($this->request->get['manufacturer_id']) || $seo_url_info['value'] != $this->request->get['manufacturer_id'])) {
+						if ($seo_url_info && ($seo_url_info['key'] != 'manufacturer_id' || !isset($this->request->get['manufacturer_id']) || $seo_url_info['value'] != (int)$this->request->get['manufacturer_id'])) {
 							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {

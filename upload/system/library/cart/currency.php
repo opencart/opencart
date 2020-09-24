@@ -7,7 +7,7 @@ class Currency {
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency`");
 
 		foreach ($query->rows as $result) {
 			$this->currencies[$result['code']] = [

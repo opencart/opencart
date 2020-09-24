@@ -437,7 +437,7 @@ class Information extends \Opencart\System\Engine\Controller {
 					if ($keyword) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
-						if ($seo_url_info && (!isset($this->request->get['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != $this->request->get['information_id'])) {
+						if ($seo_url_info && (!isset($this->request->get['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->get['information_id'])) {
 							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {

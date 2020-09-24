@@ -2,7 +2,7 @@
 namespace Opencart\Application\Model\Customer;
 class Gdpr extends \Opencart\System\Engine\Model {
 	public function deleteGdpr($gdpr_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 
 	public function getGdprs($data = []) {
@@ -92,6 +92,6 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	public function editStatus($gdpr_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET status = '" . (int)$status . "' WHERE gdpr_id = '" . (int)$gdpr_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (int)$status . "' WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 }

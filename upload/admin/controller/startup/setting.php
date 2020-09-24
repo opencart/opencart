@@ -3,7 +3,7 @@ namespace Opencart\Application\Controller\Startup;
 class Setting extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Settings
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0'");
 
 		foreach ($query->rows as $setting) {
 			if (!$setting['serialized']) {

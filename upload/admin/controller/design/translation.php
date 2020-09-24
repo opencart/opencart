@@ -420,9 +420,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$path = glob(DIR_EXTENSION . '*/catalog/language/' . $language_info['code'] . '/*');
 
 			while (count($path) != 0) {
-				$path = substr(DIR_EXTENSION, strlen(DIR_EXTENSION));
+				$new_path = substr(DIR_EXTENSION, strlen(DIR_EXTENSION));
 
-				$df = substr($path);
+				$code = substr($new_path, 0, strpos($new_path, '/'));
 
 
 				$next = array_shift($path);

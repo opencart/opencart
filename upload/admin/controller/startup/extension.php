@@ -5,9 +5,6 @@ class Extension extends \Opencart\System\Engine\Controller {
 		// Add extension paths from the DB
 		$this->load->model('setting/extension');
 
-		// Default language directory
-		//$this->language->addPath(DIR_LANGUAGE);
-
 		$results = $this->model_setting_extension->getExtensions();
 
 		foreach ($results as $result) {
@@ -18,8 +15,10 @@ class Extension extends \Opencart\System\Engine\Controller {
 			$this->autoloader->register('Opencart\Application\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/model/');
 			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/system/');
 
-			// Default template directory
+			// Template directory
 			$this->template->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/view/template/');
+
+			// Language directory
 			$this->language->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/admin/language/');
 		}
 	}

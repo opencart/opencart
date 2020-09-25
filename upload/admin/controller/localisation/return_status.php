@@ -337,13 +337,13 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 				$this->error['warning'] = $this->language->get('error_default');
 			}
 
-			$return_total = $this->model_sale_return->getTotalReturnsByReturnStatusId($return_status_id);
+			$return_total = $this->model_sale_returns->getTotalReturnsByReturnStatusId($return_status_id);
 
 			if ($return_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);
 			}
 
-			$return_total = $this->model_sale_return->getTotalHistoriesByReturnStatusId($return_status_id);
+			$return_total = $this->model_sale_returns->getTotalHistoriesByReturnStatusId($return_status_id);
 
 			if ($return_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);

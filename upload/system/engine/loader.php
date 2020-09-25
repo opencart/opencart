@@ -15,7 +15,7 @@ final class Loader {
 	protected $registry;
 
 	/**
-	 * Constructor
+	 * __construct
 	 *
 	 * @param    object $registry
 	 */

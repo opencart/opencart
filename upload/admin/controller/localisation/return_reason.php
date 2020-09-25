@@ -330,10 +330,10 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('sale/return');
+		$this->load->model('sale/returns');
 
 		foreach ($this->request->post['selected'] as $return_reason_id) {
-			$return_total = $this->model_sale_return->getTotalReturnsByReturnReasonId($return_reason_id);
+			$return_total = $this->model_sale_returns->getTotalReturnsByReturnReasonId($return_reason_id);
 
 			if ($return_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);

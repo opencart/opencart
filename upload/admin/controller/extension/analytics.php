@@ -51,6 +51,8 @@ class Analytics extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList() {
+		$this->load->language('extension/analytics');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

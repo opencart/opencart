@@ -330,10 +330,10 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('sale/return');
+		$this->load->model('sale/returns');
 
 		foreach ($this->request->post['selected'] as $return_action_id) {
-			$return_total = $this->model_sale_return->getTotalReturnsByReturnActionId($return_action_id);
+			$return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
 
 			if ($return_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);

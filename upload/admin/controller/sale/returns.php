@@ -808,7 +808,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'sale/return')) {
+		if (!$this->user->hasPermission('modify', 'sale/returns')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -862,8 +862,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 	public function history() {
 		$this->load->language('sale/return');
 
-		$this->load->model('sale/returns');
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -871,6 +869,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['histories'] = [];
+
+		$this->load->model('sale/returns');
 
 		$results = $this->model_sale_return->getHistories($this->request->get['return_id'], ($page - 1) * 10, 10);
 

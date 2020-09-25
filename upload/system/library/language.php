@@ -12,9 +12,20 @@
 */
 namespace Opencart\System\Library;
 class Language {
+	protected $code;
 	protected $directory;
 	protected $path = [];
 	protected $data = [];
+
+	/**
+	 * Constructor
+	 *
+	 * @param    string $code
+	 *
+	 */
+	public function __construct($code) {
+		$this->code = $code;
+	}
 
 	/**
 	 * addPath
@@ -67,9 +78,9 @@ class Language {
 	 * @param	string	$key
 	 * 
 	 * @return	array
-     */	
+     */
 	public function load($filename, $prefix = '') {
-		$file = $this->directory . $filename . '.php';
+		$file = $this->directory . $this->code . '/' . $filename . '.php';
 
 		$namespace = '';
 
@@ -83,7 +94,7 @@ class Language {
 			}
 
 			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.php';
+				$file = $this->path[$namespace] . $this->code . substr($filename, strlen($namespace)) . '.php';
 			}
 		}
 

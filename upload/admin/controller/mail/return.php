@@ -27,9 +27,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($notify) {
-			$this->load->model('sale/return');
+			$this->load->model('sale/returns');
 
-			$return_info = $this->model_sale_return->getReturn($return_id);
+			$return_info = $this->model_sale_returns->getReturn($return_id);
 
 			if ($return_info) {
 				$this->load->model('localisation/language');

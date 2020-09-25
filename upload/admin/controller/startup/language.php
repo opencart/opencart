@@ -10,10 +10,10 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		// Language
-		$language = new \Opencart\System\Library\Language();
-		$language->addPath(DIR_LANGUAGE . $this->config->get('config_admin_language') . '/');
-		$language->load($this->config->get('config_admin_language'));
+		//$language = new \Opencart\System\Library\Language();
+		//$language->addPath(DIR_LANGUAGE . $this->config->get('config_admin_language') . '/');
+		//$language->load($this->config->get('config_admin_language'));
 		
-		$this->registry->set('language', $language);
+		//$this->registry->set('language', $language);
 	}
 }

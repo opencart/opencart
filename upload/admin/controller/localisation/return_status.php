@@ -330,7 +330,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('sale/return');
+		$this->load->model('sale/returns');
 
 		foreach ($this->request->post['selected'] as $return_status_id) {
 			if ($this->config->get('config_return_status_id') == $return_status_id) {

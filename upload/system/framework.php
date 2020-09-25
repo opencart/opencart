@@ -65,18 +65,15 @@ if ($config->get('db_autostart')) {
 // Cache
 $registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
-// Default language directory
-//$this->language->addPath(DIR_LANGUAGE);
-
 // Template
 $template = new \Opencart\System\Library\Template($config->get('template_engine'));
 $template->addPath(DIR_TEMPLATE);
 $registry->set('template', $template);
 
 // Language
-$language = new \Opencart\System\Library\Language();
-$language->addPath(DIR_LANGUAGE . $config->get('config_language') . '/');
-$language->load($config->get('config_language'));
+$language = new \Opencart\System\Library\Language($config->get('language_directory'));
+$language->addPath(DIR_LANGUAGE);
+$language->load($config->get('language_directory'));
 $registry->set('language', $language);
 
 // Route

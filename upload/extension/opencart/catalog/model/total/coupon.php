@@ -151,7 +151,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 					$discount_total += $discount;
 				}
 
-				if ($coupon_info['shipping'] && isset($this->session->data['shipping_method'])['cost']) && isset($this->session->data['shipping_method']['tax_class_id'])) {
+				if ($coupon_info['shipping'] && isset($this->session->data['shipping_method']['cost']) && isset($this->session->data['shipping_method']['tax_class_id'])) {
 					if (!empty($this->session->data['shipping_method']['tax_class_id'])) {
 						$tax_rates = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
 

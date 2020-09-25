@@ -136,26 +136,7 @@ final class Loader {
 		$this->event->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code]);
 
 		// Make sure its only the last event that returns an output if required.
-		$template = new \Opencart\System\Library\Template($this->registry->get('config')->get('template_engine'));
-		$template->addPath(DIR_TEMPLATE);
-		$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/admin/view/template/');
-		//$template->addPath('extension/opencart', DIR_EXTENSION . 'opencart/catalog/view/template/');
-
-		foreach ($data as $key => $value) {
-			if (is_object($value)) {
-				$template->set($key, $value->render());
-			} else {
-				$template->set($key, $value);
-			}
-		}
-
-		$output = $template->render($route, $code);
-
-		//foreach ($data as $key => $value) {
-		//	$this->template->set($key, $value);
-		//}
-
-		//$output = $this->template->render($route, $code);
+		$output = $this->template->render($route, $data, $code);
 
 		// Trigger the post events
 		$this->event->trigger('view/' . $trigger . '/after', [&$route, &$data, &$output]);

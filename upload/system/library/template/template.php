@@ -19,10 +19,6 @@ class Template {
 		}
 	}
 
-	public function set($key, $value) {
-		$this->data[$key] = $value;
-	}
-
 	public function render($filename, $code = '') {
 		if (!$code) {
 			$file = $this->directory . $filename . '.tpl';

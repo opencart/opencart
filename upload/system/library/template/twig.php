@@ -19,11 +19,7 @@ class Twig {
 		}
 	}
 
-	public function set($key, $value) {
-		$this->data[$key] = $value;
-	}
-
-	public function render($filename, $code = '') {
+	public function render($filename, $data = [], $code = '') {
 		$file = $this->directory . $filename . '.twig';
 
 		/*
@@ -52,11 +48,6 @@ class Twig {
 			if (isset($this->path[$namespace])) {
 				$filename = substr($filename, strlen($namespace) + 1);
 				$path = $this->path[$namespace];
-
-				//echo $namespace . "\n";
-				//echo $filename . "\n";
-				//echo $path . "\n";
-
 			}
 		}
 
@@ -87,7 +78,7 @@ class Twig {
 		try {
 			$twig = new \Twig\Environment($loader, $config);
 
-			return $twig->render($filename . '.twig', $this->data);
+			return $twig->render($filename . '.twig', $data);
 		} catch (Twig_Error_Syntax $e) {
 			error_log('Error: Could not load template ' . $filename . '!');
 			exit();

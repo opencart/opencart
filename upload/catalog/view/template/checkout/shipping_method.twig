@@ -39,7 +39,7 @@
 $('#button-shipping-method').on('click', function() {
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/shipping_method/save',
+			url: 'index.php?route=checkout/shipping_method|save',
 			type: 'post',
 			data: $('#collapse-shipping-method input[type=\'radio\']:checked, #collapse-shipping-method textarea'),
 			dataType: 'json',

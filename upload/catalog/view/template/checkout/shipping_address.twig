@@ -212,7 +212,7 @@ $('input[name=\'shipping_address\']').on('change', function() {
 $('#button-shipping-address').on('click', function() {
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/shipping_address/save',
+			url: 'index.php?route=checkout/shipping_address|save',
 			type: 'post',
 			data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
 			dataType: 'json',

@@ -66,7 +66,7 @@ $('#button-continue').on('click', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=information/gdpr/action',
+		url: 'index.php?route=information/gdpr|action',
 		type: 'post',
 		data: $('input[name=\'email\'], input[name=\'action\']:checked'),
 		dataType: 'json',

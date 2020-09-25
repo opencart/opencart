@@ -41,16 +41,6 @@ class Template {
 	}
 
 	/**
-	 * Set
-	 *
-	 * @param    string $key
-	 * @param    mixed $value
-	 */
-	public function set($key, $value) {
-		$this->adaptor->set($key, $value);
-	}
-
-	/**
 	 * Render
 	 *
 	 * @param    string $filename
@@ -58,7 +48,7 @@ class Template {
 	 *
 	 * @return    string
 	 */
-	public function render($filename, $code = '') {
-		return $this->adaptor->render($filename, $code);
+	public function render($filename, $data = [], $code = '') {
+		return $this->adaptor->render($filename, $data, $code);
 	}
 }

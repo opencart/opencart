@@ -210,7 +210,7 @@ $('input[name=\'payment_address\']').on('change', function() {
 $('#button-payment-address').on('click', function() {
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/payment_address/save',
+			url: 'index.php?route=checkout/payment_address|save',
 			type: 'post',
 			data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'date\'], #collapse-payment-address input[type=\'datetime-local\'], #collapse-payment-address input[type=\'time\'], #collapse-payment-address input[type=\'password\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address textarea, #collapse-payment-address select'),
 			dataType: 'json',

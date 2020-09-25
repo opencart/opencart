@@ -384,7 +384,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data);
 
-					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout|cart', 'language=' . $this->config->get('config_language')));
+					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);

@@ -3,9 +3,9 @@
 $autoloader = new \Opencart\System\Engine\Autoloader();
 $autoloader->register('Opencart\Application', DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
-$autoloader->register('Opencart\Catalog', DIR_CATALOG);
-$autoloader->register('Opencart\Admin', DIR_ADMIN);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
+//$autoloader->register('Opencart\Catalog', DIR_CATALOG);
+//$autoloader->register('Opencart\Admin', DIR_ADMIN);
 
 // Registry
 $registry = new \Opencart\System\Engine\Registry();

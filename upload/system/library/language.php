@@ -63,23 +63,25 @@ class Language {
 	}
 	
 	/**
-     * 
+     * All
      *
 	 * @return	array
-     */	
+     */
 	public function all() {
 		return $this->data;
 	}
 	
 	/**
-     * 
+     * Load
      *
      * @param	string	$filename
-	 * @param	string	$key
+	 * @param	string	$code 		Language code
 	 * 
 	 * @return	array
      */
 	public function load($filename, $prefix = '') {
+		//$this->data = [];
+
 		$file = $this->directory . $this->code . '/' . $filename . '.php';
 
 		$namespace = '';

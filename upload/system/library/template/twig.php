@@ -3,7 +3,6 @@ namespace Opencart\System\Library\Template;
 class Twig {
 	protected $directory;
 	protected $path = [];
-	protected $data = [];
 
 	/**
 	 * addPath

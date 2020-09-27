@@ -35,7 +35,6 @@ $_['cache_engine']         = 'file'; // apc, file, mem, memcached or redis
 $_['cache_expire']         = 3600;
 
 // Session
-$_['session_autostart']    = true;
 $_['session_engine']       = 'file'; // db or file
 $_['session_name']         = 'OCSESSID';
 $_['session_expire']       = 360000;

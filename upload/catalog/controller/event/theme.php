@@ -2,6 +2,8 @@
 namespace Opencart\Application\Controller\Event;
 class Theme extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$code) {
+		// system/config/admin.php
+		// system/config/catalog.php
 		// If there is a theme override we should get it
 		$this->load->model('design/theme');
 

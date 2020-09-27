@@ -2,6 +2,8 @@
 namespace Opencart\Application\Controller\Event;
 class Debug extends \Opencart\System\Engine\Controller {
 	public function before(&$route, &$args) {
+		// system/config/admin.php
+		// system/config/catalog.php
 		// add the route you want to test
 		//if ($route == 'common/home') {
 			$this->session->data['debug'][$route] = microtime(true);
@@ -9,6 +11,8 @@ class Debug extends \Opencart\System\Engine\Controller {
 	}
 	
 	public function after($route, &$args, &$output) {
+		// system/config/admin.php
+		// system/config/catalog.php
 		// add the route you want to test
 		//if ($route == 'common/home') {
 			if (isset($this->session->data['debug'][$route])) {

@@ -2,23 +2,23 @@
 namespace Opencart\Application\Model\Extension\Opencart\Report;
 class Coupon extends \Opencart\System\Engine\Model {
 	public function getCoupons($data = []) {
-		$sql = "SELECT ch.coupon_id, c.name, c.code, COUNT(DISTINCT ch.order_id) AS `orders`, SUM(ch.amount) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.coupon_id = c.coupon_id)";
+		$sql = "SELECT ch.`coupon_id`, c.`name`, c.`code`, COUNT(DISTINCT ch.`order_id`) AS orders, SUM(ch.`amount`) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`)";
 
 		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(ch.date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$implode[] = "DATE(ch.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(ch.date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$implode[] = "DATE(ch.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
-		$sql .= " GROUP BY ch.coupon_id ORDER BY total DESC";
+		$sql .= " GROUP BY ch.`coupon_id` ORDER BY `total` DESC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -38,16 +38,16 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCoupons($data = []) {
-		$sql = "SELECT COUNT(DISTINCT coupon_id) AS total FROM `" . DB_PREFIX . "coupon_history`";
+		$sql = "SELECT COUNT(DISTINCT `coupon_id`) AS total FROM `" . DB_PREFIX . "coupon_history`";
 
 		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(date_added) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$implode[] = "DATE(`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(date_added) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$implode[] = "DATE(`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
 		if ($implode) {

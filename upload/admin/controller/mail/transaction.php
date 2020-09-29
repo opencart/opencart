@@ -5,7 +5,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		if (isset($args[0])) {
 			$customer_id = $args[0];
 		} else {
-			$customer_id = '';
+			$customer_id = 0;
 		}
 		
 		if (isset($args[1])) {

@@ -86,7 +86,7 @@ final class Loader {
 	 * validateController
 	 *
 	 * @param    string $route
-	 * @param	 string $method_name
+	 * @param    string $method_name
 	 */
 	public function validateController($route, $method_name) {
 		// Sanitize the call
@@ -98,7 +98,7 @@ final class Loader {
 		if (class_exists($class)) {
 			// Lookup into controller methods is a little harder so we have to use PHP's magic methods.
 			foreach (get_class_methods($class) as $method) {
-				if ($method == trim(strtolower($method_name))) {
+				if (trim(strtolower($method)) == trim(strtolower($method_name))) {
 					return true;
 					break;
 				} else {

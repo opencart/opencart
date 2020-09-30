@@ -5,7 +5,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$status = true;
 
 		if ($this->config->get('module_store_admin')) {
-			$this->user = new \Opencart\System\library\Cart\User($this->registry);
+			$this->user = new \Opencart\System\Library\Cart\User($this->registry);
 
 			$status = $this->user->isLogged();
 		}

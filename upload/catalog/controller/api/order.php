@@ -680,7 +680,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 					// When order editing is completed, delete added order status for Void the order first.
 					if ($order_status_id) {
-						$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE order_id = '" . (int)$order_id . "' AND order_status_id = '0'");
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "' AND `order_status_id` = '0'");
 					}
 				}
 			} else {

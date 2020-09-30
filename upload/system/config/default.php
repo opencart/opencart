@@ -3,7 +3,7 @@
 $_['site_url']             = '';
 
 // Language
-$_['language_directory']   = 'en-gb';
+$_['language_code']        = 'en-gb';
 
 // Date
 $_['date_timezone']        = 'UTC';

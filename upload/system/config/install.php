@@ -21,7 +21,9 @@ $_['error_display']     = true;
 $_['action_default']    = 'install/step_1';
 $_['action_error']      = 'error/not_found';
 $_['action_pre_action'] = [
+	'startup/session',
 	'startup/language',
+	'startup/install',
 	'startup/upgrade',
 	'startup/database'
 ];

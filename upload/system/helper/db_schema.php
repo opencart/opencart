@@ -775,14 +775,12 @@ function db_schema() {
 			[
 				'name' => 'date_start',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			],
 			[
 				'name' => 'date_end',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			],
 			[
 				'name' => 'uses_total',
@@ -4151,8 +4149,7 @@ function db_schema() {
 			[
 				'name' => 'date_available',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			],
 			[
 				'name' => 'weight',
@@ -4374,14 +4371,12 @@ function db_schema() {
 			[
 				'name' => 'date_start',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			],
 			[
 				'name' => 'date_end',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			]
 		],
 		'primary' => [
@@ -4703,14 +4698,12 @@ function db_schema() {
 			[
 				'name' => 'date_start',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			],
 			[
 				'name' => 'date_end',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			]
 		],
 		'primary' => [
@@ -5023,8 +5016,7 @@ function db_schema() {
 			[
 				'name' => 'date_ordered',
 				'type' => 'date',
-				'not_null' => true,
-				'default' => '0000-00-00'
+				'not_null' => true
 			],
 			[
 				'name' => 'date_added',

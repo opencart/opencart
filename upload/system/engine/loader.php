@@ -161,15 +161,15 @@ final class Loader {
 
 		$this->event->trigger('language/' . $trigger . '/before', [&$route, &$prefix]);
 
-		$language = new \OpenCart\System\Library\Language($this->config->get('config_language'));
-
-		$data = $this->language->load($route, $prefix);
+		////$language = new \OpenCart\System\Library\Language($this->config->get('config_language'));
+		//$language->addPath(DIR_LANGUAGE);
+		//$data = $language->load($route, $prefix);
 
 		$this->event->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
 
-		return $language;
+		//return $language;
 
-		//return $data;
+		return $data;
 	}
 
 	/**

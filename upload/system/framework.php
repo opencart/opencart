@@ -70,10 +70,12 @@ $template = new \Opencart\System\Library\Template($config->get('template_engine'
 $template->addPath(DIR_TEMPLATE);
 $registry->set('template', $template);
 
+print_r($template);
+
 // Language
-$language = new \Opencart\System\Library\Language($config->get('language_directory'));
+$language = new \Opencart\System\Library\Language($config->get('language_default'));
 $language->addPath(DIR_LANGUAGE);
-$language->load($config->get('language_directory'));
+$language->load($config->get('language_code'));
 $registry->set('language', $language);
 
 // Route
@@ -143,6 +145,8 @@ while ($action) {
 
 	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 }
+
+
 
 // Output
 $response->output();

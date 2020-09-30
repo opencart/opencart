@@ -209,18 +209,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				}
 
 				$order_data['products'][] = [
-					'product_id' => $product['product_id'],
-					'master_id' => $product['master_id'],
-					'name' => $product['name'],
-					'model' => $product['model'],
-					'option' => $option_data,
-					'download' => $product['download'],
-					'quantity' => $product['quantity'],
-					'subtract' => $product['subtract'],
-					'price' => $product['price'],
-					'total' => $product['total'],
-					'tax' => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward' => $product['reward']
+					'product_id' 	=> $product['product_id'],
+					'master_id' 	=> $product['master_id'],
+					'name' 		=> $product['name'],
+					'model' 	=> $product['model'],
+					'option' 	=> $option_data,
+					'download' 	=> $product['download'],
+					'quantity' 	=> $product['quantity'],
+					'subtract' 	=> $product['subtract'],
+					'price' 	=> $product['price'],
+					'total' 	=> $product['total'],
+					'tax' 		=> $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward' 	=> $product['reward']
 				];
 			}
 
@@ -230,15 +230,15 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
-						'description' => $voucher['description'],
-						'code' => token(10),
-						'to_name' => $voucher['to_name'],
-						'to_email' => $voucher['to_email'],
-						'from_name' => $voucher['from_name'],
-						'from_email' => $voucher['from_email'],
-						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message' => $voucher['message'],
-						'amount' => $voucher['amount']
+						'description' 		=> $voucher['description'],
+						'code' 			=> token(10),
+						'to_name' 		=> $voucher['to_name'],
+						'to_email' 		=> $voucher['to_email'],
+						'from_name' 		=> $voucher['from_name'],
+						'from_email' 		=> $voucher['from_email'],
+						'voucher_theme_id' 	=> $voucher['voucher_theme_id'],
+						'message' 		=> $voucher['message'],
+						'amount' 		=> $voucher['amount']
 					];
 				}
 			}
@@ -246,6 +246,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['comment'] = $this->session->data['comment'];
 			$order_data['total'] = $total;
 
+			// Affiliate
 			$order_data['tracking'] = '';
 			$order_data['affiliate_id'] = 0;
 			$order_data['commission'] = 0;
@@ -311,11 +312,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$this->load->model('tool/upload');
 
 			$frequencies = [
-				'day' => $this->language->get('text_day'),
-				'week' => $this->language->get('text_week'),
-				'semi_month' => $this->language->get('text_semi_month'),
-				'month' => $this->language->get('text_month'),
-				'year' => $this->language->get('text_year'),
+				'day' 		=> $this->language->get('text_day'),
+				'week' 		=> $this->language->get('text_week'),
+				'semi_month' 	=> $this->language->get('text_semi_month'),
+				'month' 	=> $this->language->get('text_month'),
+				'year' 		=> $this->language->get('text_year'),
 			];
 
 			$data['products'] = [];

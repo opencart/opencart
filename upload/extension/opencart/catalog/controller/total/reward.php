@@ -58,7 +58,6 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$this->session->data['reward'] = abs($this->request->post['reward']);
-
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));

@@ -23,7 +23,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('catalog/category');
-
 		$this->load->model('catalog/product');
 
 		$data['categories'] = [];

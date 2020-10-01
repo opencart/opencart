@@ -5,7 +5,6 @@ class Featured extends \Opencart\System\Engine\Controller {
 		$this->load->language('extension/opencart/module/featured');
 
 		$this->load->model('catalog/product');
-
 		$this->load->model('tool/image');
 
 		$data['products'] = [];

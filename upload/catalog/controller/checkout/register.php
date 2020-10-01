@@ -220,6 +220,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['account'] = 'register';
 
+			// Customer groups
 			$this->load->model('account/customer_group');
 
 			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);

@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Mail;
 class Forgotten extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
-		if ($args[0] && $args[1]) {
+		if (isset($args[0]) && isset($args[1]) && $args[0] && $args[1]) {
 			$this->load->language('mail/forgotten');
 
 			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));

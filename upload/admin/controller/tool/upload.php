@@ -132,12 +132,12 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$data['uploads'] = [];
 
 		$filter_data = [
-			'filter_name'	    => $filter_name,
+			'filter_name'	    	=> $filter_name,
 			'filter_date_added'	=> $filter_date_added,
-			'sort'              => $sort,
-			'order'             => $order,
-			'start'             => ($page - 1) * $this->config->get('config_pagination'),
-			'limit'             => $this->config->get('config_pagination')
+			'sort'              	=> $sort,
+			'order'             	=> $order,
+			'start'             	=> ($page - 1) * $this->config->get('config_pagination'),
+			'limit'             	=> $this->config->get('config_pagination')
 		];
 
 		$upload_total = $this->model_tool_upload->getTotalUploads($filter_data);

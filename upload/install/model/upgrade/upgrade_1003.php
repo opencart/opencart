@@ -35,7 +35,7 @@ class Upgrade1003 extends \Opencart\System\Engine\Model {
 		}
 
 		// setting
-		$query = $this->db->query("SELECT setting_id,value FROM `" . DB_PREFIX . "setting` WHERE serialized = '1' AND `value` LIKE 'a:%'");
+		$query = $this->db->query("SELECT `setting_id`, value FROM `" . DB_PREFIX . "setting` WHERE `serialized` = '1' AND `value` LIKE 'a:%'");
 
 		foreach ($query->rows as $result) {
 			if (preg_match('/^(a:)/', $result['value'])) {

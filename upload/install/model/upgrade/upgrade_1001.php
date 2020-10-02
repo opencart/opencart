@@ -126,7 +126,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				foreach ($lines as $line) {
 					if (strpos($line, 'DIR_MODIFICATION') !== false) {
 						$upgrade = false;
-
 						break;
 					}
 				}
@@ -162,7 +161,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				foreach ($lines as $line) {
 					if (strpos($line, 'DIR_UPLOAD') !== false) {
 						$upgrade = false;
-
 						break;
 					}
 				}
@@ -198,7 +196,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				foreach ($lines as $line) {
 					if (strpos($line, "define('DB_DRIVER', 'mysql'") !== false) {
 						$upgrade = true;
-
 						break;
 					}
 				}

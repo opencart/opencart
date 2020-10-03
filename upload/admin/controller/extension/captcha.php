@@ -51,6 +51,9 @@ class Captcha extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList() {
+		// Had top load again because the method is called directly.
+		$this->load->language('extension/captcha');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -106,7 +109,7 @@ class Captcha extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['promotion'] = $this->load->controller('extension/promotion');
+		$data['promotion'] = $this->load->controller('marketplace/promotion');
 
 		return $this->load->view('extension/captcha', $data);
 	}

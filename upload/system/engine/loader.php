@@ -101,7 +101,7 @@ final class Loader {
 
 				// Overriding models is a little harder so we have to use PHP's magic methods.
 				foreach (get_class_methods($class) as $method) {
-					if (substr($method, 0, 2) != '__') {
+					if ((substr($method, 0, 2) != '__') && is_callable($class, $method))  {
 						$proxy->{$method} = $this->callback($route . '/' . $method);
 					}
 				}
@@ -161,13 +161,9 @@ final class Loader {
 
 		$this->event->trigger('language/' . $trigger . '/before', [&$route, &$prefix]);
 
-		////$language = new \OpenCart\System\Library\Language($this->config->get('config_language'));
-		//$language->addPath(DIR_LANGUAGE);
-		//$data = $language->load($route, $prefix);
+		$data = $this->language->load($route, $prefix);
 
 		$this->event->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$data]);
-
-		//return $language;
 
 		return $data;
 	}

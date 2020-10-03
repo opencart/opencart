@@ -15,6 +15,7 @@ class Language {
 	protected $code;
 	protected $directory;
 	protected $path = [];
+	protected $main = [];
 	protected $data = [];
 
 	/**
@@ -70,7 +71,7 @@ class Language {
 	public function all() {
 		return $this->data;
 	}
-	
+
 	/**
      * Load
      *
@@ -80,8 +81,6 @@ class Language {
 	 * @return	array
      */
 	public function load($filename, $prefix = '') {
-		//$this->data = [];
-
 		$file = $this->directory . $this->code . '/' . $filename . '.php';
 
 		$namespace = '';

@@ -185,7 +185,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
-		return $this->load->view('extension/module', $data);
+		return $this->load->view('marketplace/module', $data);
 	}
 
 	protected function validate() {

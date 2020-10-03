@@ -105,7 +105,7 @@ class Total extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['promotion'] = $this->load->controller('extension/promotion');
+		$data['promotion'] = $this->load->controller('marketplace/promotion');
 
 		return $this->load->view('extension/total', $data);
 	}

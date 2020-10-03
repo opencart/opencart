@@ -70,8 +70,6 @@ $template = new \Opencart\System\Library\Template($config->get('template_engine'
 $template->addPath(DIR_TEMPLATE);
 $registry->set('template', $template);
 
-print_r($template);
-
 // Language
 $language = new \Opencart\System\Library\Language($config->get('language_default'));
 $language->addPath(DIR_LANGUAGE);
@@ -90,8 +88,8 @@ $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 $pre_actions = $config->get('action_pre_action');
 
-// So the pre-actions can be changed or triggered.
-//$event->trigger('pre_action', array(&$pre_actions));
+// So the pre_actions can be altered using the events system.
+$event->trigger('pre_action', array(&$pre_actions));
 
 // Pre Actions
 foreach ($pre_actions as $pre_action) {
@@ -145,8 +143,6 @@ while ($action) {
 
 	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 }
-
-
 
 // Output
 $response->output();

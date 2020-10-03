@@ -37,7 +37,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 			$this->load->language('extension/' . $extension, $extension);
 
-			if ($extension != 'promotion' && $this->user->hasPermission('access', 'extension/' . $extension)) {
+			if ($this->user->hasPermission('access', 'extension/' . $extension)) {
 				$extensions = $this->model_setting_extension->getPaths('%/admin/controller/' . $extension . '/%.php');
 
 				$data['categories'][] = [

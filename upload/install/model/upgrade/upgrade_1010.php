@@ -256,7 +256,7 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 			fclose($handle);
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_pagination' WHERE `key` = 'config_limit_admin'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'payment_free_checkout_order_status_id'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_pagination' WHERE `key` = 'config_pagination'");
 	}
 }

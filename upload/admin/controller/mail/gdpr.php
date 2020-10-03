@@ -11,17 +11,17 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			// Choose which mail to send
 
 			// Export plus complete
-			if ($gdpr_info['action'] == 'export' && $args[1] == 3) {
+			if ($gdpr_info['action'] == 'export' && (int)$args[1] == 3) {
 				$this->export($gdpr_info);
 			}
 
 			// Remove plus processing
-			if ($gdpr_info['action'] == 'remove' && $args[1] == 2) {
+			if ($gdpr_info['action'] == 'remove' && (int)$args[1] == 2) {
 				$this->approve($gdpr_info);
 			}
 
 			// Remove plus complete
-			if ($gdpr_info['action'] == 'remove' && $args[1] == 3) {
+			if ($gdpr_info['action'] == 'remove' && (int)$args[1] == 3) {
 				$this->remove($gdpr_info);
 			}
 
@@ -368,8 +368,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 
-		$data['text_request'] = $language->get('text_request');
-
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);
@@ -380,6 +378,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['text_hello'] = sprintf($language->get('text_hello'), $language->get('text_user'));
 		}
 
+		$data['text_request'] = $language->get('text_request');
 		$data['text_delete'] = $language->get('text_delete');
 		$data['text_thanks'] = $language->get('text_thanks');
 		$data['text_contact'] =  $language->get('text_contact');

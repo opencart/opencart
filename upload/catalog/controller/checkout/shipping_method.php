@@ -118,7 +118,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-
 			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 		}
 

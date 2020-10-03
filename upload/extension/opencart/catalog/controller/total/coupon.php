@@ -36,7 +36,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['coupon']);
 		} elseif ($coupon_info) {
 			$this->session->data['coupon'] = $this->request->post['coupon'];
-
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));

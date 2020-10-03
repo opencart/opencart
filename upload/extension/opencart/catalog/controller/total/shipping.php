@@ -174,7 +174,6 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$shipping = explode('.', $this->request->post['shipping_method']);
 
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));

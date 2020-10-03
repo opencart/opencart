@@ -10,10 +10,10 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 		$this->cache->delete('language');
 
 		// Update the template setting for v1.5.x
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_theme', value = 'default' WHERE `key` = 'config_template' AND `value` = 'default'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_theme', `value` = 'default' WHERE `key` = 'config_template' AND `value` = 'default'");
 
 		// update the template setting for v2.x
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET value = 'default' WHERE `key` = 'config_theme'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'default' WHERE `key` = 'config_theme'");
 
 		// Update the config.php by adding a DB_PORT
 		if (is_file(DIR_OPENCART . 'config.php')) {
@@ -190,11 +190,13 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 
 		// Open the source directory to read in files
 		$i = new \DirectoryIterator($src);
+		
 		foreach ($i as $f) {
 			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
 				@rename($f->getRealPath(), "$dest/" . $f->getFilename());
 			} elseif (!$f->isDot() && $f->isDir()) {
 				$this->recursive_move($f->getRealPath(), "$dest/$f");
+				
 				@unlink($f->getRealPath());
 			}
 		}

@@ -60,7 +60,7 @@ class ControllerExtensionReportCustomerTransaction extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_transaction_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/customer_transaction')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportCustomerTransaction extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/customer_transaction');
 
@@ -101,11 +101,11 @@ class ControllerExtensionReportCustomerTransaction extends Controller {
 		$data['customers'] = array();
 
 		$filter_data = array(
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
-			'filter_customer'	=> $filter_customer,
-			'start'				=> ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'				=> $this->config->get('config_limit_admin')
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
+			'filter_customer'   => $filter_customer,
+			'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'             => $this->config->get('config_limit_admin')
 		);
 
 		$customer_total = $this->model_extension_report_customer_transaction->getTotalTransactions($filter_data);

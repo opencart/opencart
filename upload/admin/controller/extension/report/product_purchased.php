@@ -60,7 +60,7 @@ class ControllerExtensionReportProductPurchased extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/product_purchased_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/product_purchased')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportProductPurchased extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/product_purchased');
 
@@ -101,8 +101,8 @@ class ControllerExtensionReportProductPurchased extends Controller {
 		$data['products'] = array();
 
 		$filter_data = array(
-			'filter_date_start'	     => $filter_date_start,
-			'filter_date_end'	     => $filter_date_end,
+			'filter_date_start'      => $filter_date_start,
+			'filter_date_end'        => $filter_date_end,
 			'filter_order_status_id' => $filter_order_status_id,
 			'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit'                  => $this->config->get('config_limit_admin')

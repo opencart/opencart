@@ -60,7 +60,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/customer_activity_form', $data));
 	}
-		
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/customer_activity')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/customer_activity');
 
@@ -109,10 +109,10 @@ class ControllerExtensionReportCustomerActivity extends Controller {
 		$filter_data = array(
 			'filter_customer'   => $filter_customer,
 			'filter_ip'         => $filter_ip,
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
-			'start'             => ($page - 1) * 20,
-			'limit'             => 20
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
+			'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'             => $this->config->get('config_limit_admin')
 		);
 
 		$activity_total = $this->model_extension_report_customer->getTotalCustomerActivities($filter_data);

@@ -60,7 +60,7 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/sale_coupon_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/sale_coupon')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,7 +68,7 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function report() {
 		$this->load->language('extension/report/sale_coupon');
 
@@ -95,8 +95,8 @@ class ControllerExtensionReportSaleCoupon extends Controller {
 		$data['coupons'] = array();
 
 		$filter_data = array(
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
+			'filter_date_start' => $filter_date_start,
+			'filter_date_end'   => $filter_date_end,
 			'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit'             => $this->config->get('config_limit_admin')
 		);

@@ -60,7 +60,7 @@ class ControllerExtensionReportSaleTax extends Controller {
 
 		$this->response->setOutput($this->load->view('extension/report/sale_tax_form', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/report/sale_tax')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -68,10 +68,10 @@ class ControllerExtensionReportSaleTax extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function report() {
 		$this->load->language('extension/report/sale_tax');
-		
+
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -107,8 +107,8 @@ class ControllerExtensionReportSaleTax extends Controller {
 		$data['orders'] = array();
 
 		$filter_data = array(
-			'filter_date_start'	     => $filter_date_start,
-			'filter_date_end'	     => $filter_date_end,
+			'filter_date_start'      => $filter_date_start,
+			'filter_date_end'        => $filter_date_end,
 			'filter_group'           => $filter_group,
 			'filter_order_status_id' => $filter_order_status_id,
 			'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),

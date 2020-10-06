@@ -309,15 +309,15 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			if ($page == 1) {
 			    $this->document->addLink($this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 			} else {
-				$this->document->addLink($this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. $page), 'canonical');
+				$this->document->addLink($this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . $page), 'canonical');
 			}
 
 			if ($page > 1) {
-			    $this->document->addLink($this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . (($page - 2) ? '&page='. ($page - 1) : '')), 'prev');
+				$this->document->addLink($this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . (($page - 2) ? '&page=' . ($page - 1) : '')), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {
-			    $this->document->addLink($this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. ($page + 1)), 'next');
+				$this->document->addLink($this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . ($page + 1)), 'next');
 			}
 
 			$data['sort'] = $sort;

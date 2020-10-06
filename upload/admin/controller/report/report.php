@@ -36,7 +36,7 @@ class Report extends \Opencart\System\Engine\Controller {
 		
 		// Add all the modules which have multiple settings for each module
 		foreach ($results as $result) {
-			if ($this->config->get('report_' . $result['code'] . '_status') && $this->user->hasPermission('access', 'extension/' . $result['extension'] . '/report/' . $result['code'])) {
+			if ($this->config->get('report_' . $result['code'] . '_status') && $this->user->hasPermission('access', 'extension/' . $result['extension'] . '/report/' . $result['code']) && $this->load->validateController('extension/' . $result['extension'] . '/report/' . $result['code'], 'report')) {
 				$this->load->language('extension/' . $result['extension'] . '/report/' . $result['code'], $result['code']);
 				
 				$data['reports'][] = [

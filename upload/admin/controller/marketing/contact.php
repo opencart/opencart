@@ -71,9 +71,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
-				
+
 				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
-				
+
 				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
 				if (isset($this->request->get['page'])) {
@@ -229,6 +229,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 							$mail->send();
 						}
 					}
+				} else {
+					$json['error']['email'] = $this->language->get('error_email');
 				}
 			}
 		}

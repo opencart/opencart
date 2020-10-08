@@ -44,7 +44,7 @@ $_['template_engine']      = 'twig';
 $_['template_extension']   = '.twig';
 
 // Error
-$_['error_display']        = true;
+$_['error_display']        = true; // You need to change this to false on a live site.
 $_['error_log']            = true;
 $_['error_filename']       = 'error.log';
 

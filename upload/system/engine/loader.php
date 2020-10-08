@@ -83,37 +83,6 @@ final class Loader {
 	}
 	
 	/**
-	 * validateController
-	 *
-	 * @param    string $route
-	 * @param    string $method_name
-	 */
-	public function validateController($route, $method_name) {
-		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
-
-		// Converting a route path to a class name
-		$class = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
-
-		if (class_exists($class)) {
-			// Lookup into controller methods is a little harder so we have to use PHP's magic methods.
-			foreach (get_class_methods($class) as $method) {
-				if (trim(strtolower($method)) == trim(strtolower($method_name))) {
-					return true;
-					break;
-				} else {
-					if ($this->registry->has('config') && $this->registry->get('config')->get('config_error_log') && $this->registry->has('log')) {
-						$this->registry->get('log')->write($route . '/' . $method_name);						
-					} else {
-						trigger_error('Error: Could not load controller route ' . $route . '/' . $method_name . '!');
-					}
-					break;
-				}
-			}
-		}		
-	}
-
-	/**
 	 * Model
 	 *
 	 * @param    string $route

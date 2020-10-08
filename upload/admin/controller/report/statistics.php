@@ -185,13 +185,11 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$results = $this->model_report_statistics->getStatistics();
 		
 		foreach ($results as $result) {
-			if ($this->load->validateController('report/statistics', str_replace('_', '', $result['code']))) {
-				$data['statistics'][] = [
-					'name'  => $this->language->get('text_' . $result['code']),
-					'value' => $result['value'],
-					'href'  => $this->url->link('report/statistics|' . str_replace('_', '', $result['code']), 'user_token=' . $this->session->data['user_token'])
-				];
-			}
+			$data['statistics'][] = [
+				'name'  => $this->language->get('text_' . $result['code']),
+				'value' => $result['value'],
+				'href'  => $this->url->link('report/statistics|' . str_replace('_', '', $result['code']), 'user_token=' . $this->session->data['user_token'])
+			];
 		}
 
 		if (isset($this->error['warning'])) {

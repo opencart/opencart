@@ -13,8 +13,6 @@ class Autoloader {
 	}
 
 	public function load($class) {
-		//echo 'Autoloader' . "\n";
-
 		$namespace = '';
 
 		$parts = explode('\\', $class);
@@ -31,24 +29,11 @@ class Autoloader {
 			}
 		}
 
-		if ($class == 'Opencart\Application\Controller\Extension\Opencart\Payment\BankTransfer') {
-			//echo '$namespace ' . $namespace . "\n";
-			//print_r($this->path);
-		}
-
 		if (isset($file) && is_file($file)) {
 			include_once($file);
 
-			//echo 'FOUND' . "\n";
-			//echo '$class ' . $class . "\n";
-			//echo '$file ' . $file . "\n";
-
 			return true;
 		} else {
-			//echo 'NOT FOUND' . "\n";
-			//echo '$class ' . $class . "\n";
-			//echo '$file ' . $file . "\n";
-
 			return false;
 		}
 	}

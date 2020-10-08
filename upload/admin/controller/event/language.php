@@ -24,8 +24,10 @@ class Language extends \Opencart\System\Engine\Controller {
 	// 2. After controller load restore old language data.
 	public function after(&$route, &$args, &$output) {
 		$data = $this->language->get('backup');
-		
+
 		if (is_array($data)) {
+			$this->language->clear();
+
 			foreach ($data as $key => $value) {
 				$this->language->set($key, $value);
 			}

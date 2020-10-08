@@ -1,8 +1,26 @@
 <?php
 namespace Opencart\System\Library\Template;
 class Twig {
+	protected $root;
+	protected $loader;
 	protected $directory;
 	protected $path = [];
+
+	/**
+	 * Constructor
+	 *
+	 * @param    string $adaptor
+	 *
+	 */
+	public function __construct() {
+		// Unfortunately we have to set the web root directory as the base since Twig confuses which template cache to use.
+		$this->root = $_SERVER['DOCUMENT_ROOT'];
+
+		// We have to add the C directory as the base directory because twig can only accept the fist namespace/
+		// rather than a multiple namespace system which took me less than a minute to write. If symphony is like
+		// this then I have nopt idea why people use the framework.
+		$this->loader = new \Twig\Loader\FilesystemLoader('/', $this->root);
+	}
 
 	/**
 	 * addPath
@@ -18,6 +36,15 @@ class Twig {
 		}
 	}
 
+	/**
+	 * Render
+	 *
+	 * @param	string	$filename
+	 * @param	array	$data
+	 * @param	string	$code
+	 *
+	 * @return	array
+	 */
 	public function render($filename, $data = [], $code = '') {
 		$file = $this->directory . $filename . '.twig';
 
@@ -45,43 +72,36 @@ class Twig {
 			}
 
 			if (isset($this->path[$namespace])) {
-				$filename = substr($filename, strlen($namespace) + 1);
-				$path = $this->path[$namespace];
+				$file = $this->path[$namespace] . substr($filename, strlen($namespace) + 1) . '.twig';
 			}
 		}
 
-		// Initialize Twig environment
-		$config = [
-			'charset'     => 'utf-8',
-			'autoescape'  => false,
-			'debug'       => false,
-			'auto_reload' => true,
-			'cache'       => DIR_CACHE . 'template/'
-		];
+		// We have to remove the root web directory.
+		$file = substr($file, strlen($this->root) + 1);
 
 		if ($code) {
 			// render from modified template code
-			$loader = new \Twig\Loader\ArrayLoader([$filename . '.twig' => $code]);
+			$loader = new \Twig\Loader\ArrayLoader([$file . '.twig' => $code]);
 		} else {
-			$loader = new \Twig\Loader\FilesystemLoader();
-
-			if ($this->directory) {
-				$loader->addPath($this->directory);
-			}
-
-			if ($path) {
-				$loader->addPath($path);
-			}
+			$loader = $this->loader;
 		}
 
 		try {
+			// Initialize Twig environment
+			$config = [
+				'charset'     => 'utf-8',
+				'autoescape'  => false,
+				'debug'       => false,
+				'auto_reload' => true,
+				'cache'       => DIR_CACHE . 'template/'
+			];
+
 			$twig = new \Twig\Environment($loader, $config);
 
-			return $twig->render($filename . '.twig', $data);
+			return $twig->render($file, $data);
 		} catch (Twig_Error_Syntax $e) {
 			error_log('Error: Could not load template ' . $filename . '!');
 			exit();
 		}
 	}
-
 }

@@ -234,6 +234,7 @@ class FilesystemLoader implements LoaderInterface
 
     private function parseName(string $name, string $default = self::MAIN_NAMESPACE): array
     {
+
         if (isset($name[0]) && '@' == $name[0]) {
             if (false === $pos = strpos($name, '/')) {
                 throw new LoaderError(sprintf('Malformed namespaced template name "%s" (expecting "@namespace/template_name").', $name));

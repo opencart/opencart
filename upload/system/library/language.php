@@ -73,6 +73,15 @@ class Language {
 	}
 
 	/**
+	 * Clear
+	 *
+	 * @return	array
+	 */
+	public function clear() {
+		$this->data = [];
+	}
+
+	/**
      * Load
      *
      * @param	string	$filename

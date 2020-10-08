@@ -51,6 +51,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList() {
+		$this->load->language('extension/currency');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

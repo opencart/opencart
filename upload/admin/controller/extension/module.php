@@ -79,7 +79,7 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	public function delete() {
-
+		$this->load->language('extension/module');
 
 		$this->load->model('setting/extension');
 
@@ -95,6 +95,8 @@ class Module extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList() {
+		$this->load->language('extension/module');
+
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']));
 
 		if (isset($this->error['warning'])) {
@@ -185,7 +187,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$data['promotion'] = $this->load->controller('extension/promotion');
 
-		return $this->load->view('marketplace/module', $data);
+		return $this->load->view('extension/module', $data);
 	}
 
 	protected function validate() {

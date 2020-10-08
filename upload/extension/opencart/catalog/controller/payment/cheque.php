@@ -2,19 +2,19 @@
 namespace Opencart\Application\Controller\Extension\Opencart\Payment;
 class Cheque extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$this->load->language('extension/payment/cheque');
+		$this->load->language('extension/opencart/payment/cheque');
 
 		$data['payable'] = $this->config->get('payment_cheque_payable');
 		$data['address'] = nl2br($this->config->get('config_address'));
 
-		return $this->load->view('extension/payment/cheque', $data);
+		return $this->load->view('extension/opencart/payment/cheque', $data);
 	}
 
 	public function confirm() {
 		$json = [];
 
 		if (isset($this->session->data['payment_method']) && $this->session->data['payment_method']['code'] == 'cheque') {
-			$this->load->language('extension/payment/cheque');
+			$this->load->language('extension/opencart/payment/cheque');
 
 			$this->load->model('checkout/order');
 

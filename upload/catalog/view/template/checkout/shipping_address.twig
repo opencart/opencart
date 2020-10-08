@@ -398,7 +398,7 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/checkout|country&country_id=' + $('#collapse-shipping-address select[name=\'country_id\']').val(),
+			url: 'index.php?route=localisation/country&country_id=' + $('#collapse-shipping-address select[name=\'country_id\']').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);

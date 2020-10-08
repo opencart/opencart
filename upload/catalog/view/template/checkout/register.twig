@@ -354,17 +354,17 @@ $('#button-register').on('click', function() {
 
 									// Add the shipping address
 									chain.attach(function() {
-                    return $.ajax({
-                      url: 'index.php?route=checkout/shipping_address',
-                      dataType: 'html',
-                      success: function(html) {
-                        $('#collapse-shipping-address .card-body').html(html);
-                      },
-                      error: function(xhr, ajaxOptions, thrownError) {
-                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                      }
-                    });
-                  });
+										return $.ajax({
+											url: 'index.php?route=checkout/shipping_address',
+											dataType: 'html',
+											success: function(html) {
+												$('#collapse-shipping-address .card-body').html(html);
+											},
+											error: function(xhr, ajaxOptions, thrownError) {
+												alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+											}
+										});
+									});
 
 									$('#heading-shipping-method').attr('data-toggle', 'collapse');
 
@@ -562,7 +562,7 @@ $('.datetime').datetimepicker({
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
 	chain.attach(function() {
 		return $.ajax({
-			url: 'index.php?route=checkout/checkout|country&country_id=' + $('#collapse-payment-address select[name=\'country_id\']').val(),
+			url: 'index.php?route=localisation/country&country_id=' + $('#collapse-payment-address select[name=\'country_id\']').val(),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#collapse-payment-address select[name=\'country_id\']').prop('disabled', true);

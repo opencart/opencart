@@ -393,7 +393,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['payment'] = $this->load->controller('extension/payment/' . $this->session->data['payment_method']['code']);
+			getExtensionByCode
+			$data['payment'] = $this->load->controller('extension/' . $this->session->data['payment_method']['code'] . '/payment/' . $this->session->data['payment_method']['code']);
 		} else {
 			$data['redirect'] = str_replace('&amp;', '&', $redirect);
 		}

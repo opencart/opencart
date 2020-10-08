@@ -33,10 +33,10 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 			$order_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_field`");
 
 			foreach ($order_field_query->rows as $result) {
-				$order_custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_custom_field` WHERE `order_id` = '" . (int)$result['order_id'] . "' AND custom_field_id = '" . (int)$result['custom_field_id'] . "' AND custom_field_value_id = '" . (int)$result['custom_field_value_id'] . "' AND `name` = '" . $this->db->escape($result['name']) . "' AND `value` = '" . $this->db->escape($result['value']) . "'");
+				$order_custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_custom_field` WHERE `order_id` = '" . (int)$result['order_id'] . "' AND `custom_field_id` = '" . (int)$result['custom_field_id'] . "' AND `custom_field_value_id` = '" . (int)$result['custom_field_value_id'] . "' AND `name` = '" . $this->db->escape($result['name']) . "' AND `value` = '" . $this->db->escape($result['value']) . "'");
 
 				if (!$order_custom_field_query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_custom_field` SET `order_id` = '" . (int)$result['order_id'] . "', custom_field_id = '" . (int)$result['custom_field_id'] . "', custom_field_value_id = '" . (int)$result['custom_field_value_id'] . "', `name` = '" . $this->db->escape($result['name']) . "', `value` = '" . $this->db->escape($result['value']) . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_custom_field` SET `order_id` = '" . (int)$result['order_id'] . "', `custom_field_id` = '" . (int)$result['custom_field_id'] . "', `custom_field_value_id` = '" . (int)$result['custom_field_value_id'] . "', `name` = '" . $this->db->escape($result['name']) . "', `value` = '" . $this->db->escape($result['value']) . "'");
 				}
 			}
 
@@ -98,30 +98,30 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 
 		// Convert _smtp_ to _mail_smtp_
 		if (empty($settings['config_mail_smtp_hostname']) && !empty($settings['config_smtp_host'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_host']) . "', `key` = 'config_mail_smtp_hostname', `code` = 'config', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_host']) . "', `key` = 'config_mail_smtp_hostname', `code` = 'config', `store_id` = '0'");
 		}
 		if (empty($settings['config_mail_smtp_username']) && !empty($settings['config_smtp_username'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_username']) . "', `key` = 'config_mail_smtp_username', `code` = 'config', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_username']) . "', `key` = 'config_mail_smtp_username', `code` = 'config', `store_id` = '0'");
 		}
 		if (empty($settings['config_mail_smtp_password']) && !empty($settings['config_smtp_password'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_password']) . "', `key` = 'config_mail_smtp_password', `code` = 'config', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_password']) . "', `key` = 'config_mail_smtp_password', `code` = 'config', `store_id` = '0'");
 		}
 		if (empty($settings['config_mail_smtp_port']) && !empty($settings['config_smtp_port'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_port']) . "', `key` = 'config_mail_smtp_port', `code` = 'config', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_port']) . "', `key` = 'config_mail_smtp_port', `code` = 'config', `store_id` = '0'");
 		}
 		if (empty($settings['config_mail_smtp_timeout']) && !empty($settings['config_smtp_timeout'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_timeout']) . "', `key` = 'config_mail_smtp_timeout', `code` = 'config', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($settings['config_smtp_timeout']) . "', `key` = 'config_mail_smtp_timeout', `code` = 'config', `store_id` = '0'");
 		}
 
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_meta_title'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_meta_title', `value` = '" . $this->db->escape($settings['config_name']) . "', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_meta_title', `value` = '" . $this->db->escape($settings['config_name']) . "', `code` = 'config', `serialized` = '0', `store_id` = '0'");
 		}
 
 		// Convert 1.5.x core module format to 2.x (core modules only)
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE serialized = '1'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `serialized` = '1'");
 
 		foreach ($query->rows as $result) {
 			if ($result['serialized']) {
@@ -159,7 +159,6 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 								foreach ($query->rows as $result2) {
 									if ($result2['key'] == 'featured_product') {
 										$module_data['product'] = explode(",", $result2['value']);
-
 										$module_data['limit'] = 4;
 										break;
 									} else {
@@ -173,11 +172,11 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 								}
 							}
 
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
 
 							$module_id = $this->db->getLastId();
 
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'] . '.' . $module_id)  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
 
 							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
 						}
@@ -186,11 +185,11 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 					}
 				} elseif (in_array($result['code'], ['category', 'account', 'affiliate', 'filter'])) {
 					foreach ($value as $k => $v) {
-						$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET store_id = '" . (int)$result['store_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `key` = '" . ($result['code'] . '_status') . "', value = 1");
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$result['store_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `key` = '" . ($result['code'] . '_status') . "', `value` = '1'");
 
 						if ($v['status']) {
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'])  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
 						}
 					}
 				} elseif (in_array($result['code'], ['banner', 'carousel', 'slideshow'])) {
@@ -216,12 +215,13 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 								$module_data['height'] = $v['height']; 
 							}
 
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
 							
 							$module_id = $this->db->getLastId();
 							
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'] . '.' . $module_id)  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
+							
+							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
 						}
 					} else {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
@@ -229,7 +229,7 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 				} elseif (in_array($result['code'], ['welcome'])) {
 					if ($value) {
 						// Install HTML module if not already installed
-						$html_query = $this->db->query("SELECT count(*) FROM " . DB_PREFIX . "extension WHERE code = 'html'");
+						$html_query = $this->db->query("SELECT count(*) FROM `" . DB_PREFIX . "extension` WHERE `code` = 'html'");
 
 						if ($html_query->row['count(*)'] == '0') {
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'module', `code` = 'html'");
@@ -246,15 +246,15 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 								$module_data['module_description'][$language_id]['description'] = str_replace('image/data', 'image/catalog', $description);
 							}
 
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
 							
 							$module_id = $this->db->getLastId();
 							
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` (`layout_id`, `code`, `position`, `sort_order`) values ('" . (int)$v['layout_id'] . "', '" . ($result['code'] . '.' . $module_id)  . "', '" . $this->db->escape($v['position']) . "', '" . (int)$v['sort_order'] . "')");
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = 'welcome'");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order']) . "'");
+							
+							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = 'welcome'");
 						}
 					} else {
-						//$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = 'welcome'");
 					}
 				} else {
@@ -268,10 +268,7 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 								$module_data['name'] = ($result['key'] . '_' . $k);
 								$module_data['status'] = '0'; // Disable non-core modules
 
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` (`name`, `code`, `setting`) values ('" . $this->db->escape($result['key']) . '_' . $k . "', '" . $this->db->escape($result['code']) . "', '" . $this->db->escape(json_encode($module_data)) . "')");
-								//$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
-								//$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
-								//$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
+								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
 							}
 						}
 					} else {

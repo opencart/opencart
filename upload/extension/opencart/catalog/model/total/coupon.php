@@ -53,7 +53,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 				foreach ($this->cart->getProducts() as $product) {
 					if (in_array($product['product_id'], $coupon_product_data)) {
 						$product_data[] = $product['product_id'];
-
 						continue;
 					}
 
@@ -62,7 +61,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 						if ($coupon_category_query->row['total']) {
 							$product_data[] = $product['product_id'];
-
 							continue;
 						}
 					}

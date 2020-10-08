@@ -90,52 +90,52 @@ class Upgrade1005 extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_complete_status'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_complete_status', `value` = '[\"5\"]', `code` = 'config', `serialized` = '1', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_complete_status', `value` = '[\"5\"]', `code` = 'config', `serialized` = '1', `store_id` = '0'");
 		}
 
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_processing_status'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_processing_status', `value` = '[\"2\"]', `code` = 'config', `serialized` = '1', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_processing_status', `value` = '[\"2\"]', `code` = 'config', `serialized` = '1', `store_id` = '0'");
 		}
 
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_fraud_status_id'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_fraud_status_id', `value` = '8', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_fraud_status_id', `value` = '8', `code` = 'config', `serialized` = '0', `store_id` = '0'");
 		}
 
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_api_id'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_api_id', `value` = '1', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_api_id', `value` = '1', `code` = 'config', `serialized` = '0', `store_id` = '0'");
 		}
 
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_product_description_length'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_product_description_length', `value` = '100', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_product_description_length', `value` = '100', `code` = 'config', `serialized` = '0', `store_id` = '0'");
 		}
 
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_pagination'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_pagination', `value` = '20', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_pagination', `value` = '20', `code` = 'config', `serialized` = '0', `store_id` = '0'");
 		}
 
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_encryption'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_encryption', `value` = '" . hash('sha512', mt_rand()) . "', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_encryption', `value` = '" . hash('sha512', mt_rand()) . "', `code` = 'config', `serialized` = '0', `store_id` = '0'");
 		} elseif (strlen($query->row['value']) < 28) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_encryption'");
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_encryption', `value` = '" . hash('sha512', mt_rand()) . "', `code` = 'config', `serialized` = '0', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_encryption', `value` = '" . hash('sha512', mt_rand()) . "', `code` = 'config', `serialized` = '0', `store_id` = '0'");
 		}
 
 		// force some settings to prevent errors

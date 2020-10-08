@@ -142,3 +142,7 @@ function date_added($date, $language) {
 
 	return $date_added;
 }
+
+function get_path($source, $dir) {
+	return utf8_substr(str_replace('\\', '/', realpath($source)), 0, utf8_strlen($dir));
+}

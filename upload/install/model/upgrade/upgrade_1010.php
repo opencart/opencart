@@ -104,7 +104,7 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 		$events[] = [
 			'code'    => 'mail_customer_alert',
 			'trigger' => 'catalog/model/account/customer/addCustomer/after',
-			'action'  => 'mail/register/alert'
+			'action'  => 'mail/register|alert'
 		];
 
 		$events[] = [
@@ -229,7 +229,7 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/return/addHistory/after' WHERE `code` = 'admin_mail_return'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/returns/addHistory/after' WHERE `code` = 'admin_mail_return'");
 
 		// extension_install
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "extension_install' AND COLUMN_NAME = 'extension_id'");

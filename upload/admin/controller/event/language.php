@@ -1,6 +1,7 @@
 <?php
 namespace Opencart\Application\Controller\Event;
 class Language extends \Opencart\System\Engine\Controller {
+	// view/*/before
 	// Dump all the language vars into the template.
 	public function index(&$route, &$args) {
 		foreach ($this->language->all() as $key => $value) {

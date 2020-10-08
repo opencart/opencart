@@ -2,6 +2,7 @@
 namespace Opencart\Application\Controller\Event;
 class Language extends \Opencart\System\Engine\Controller {
 	// view/*/before
+	// Dump all the language vars into the template.
 	public function index(&$route, &$args) {
 		foreach ($this->language->all() as $key => $value) {
 			if (!isset($args[$key])) {
@@ -26,6 +27,8 @@ class Language extends \Opencart\System\Engine\Controller {
 		$data = $this->language->get('backup');
 
 		if (is_array($data)) {
+			$this->language->clear();
+
 			foreach ($data as $key => $value) {
 				$this->language->set($key, $value);
 			}

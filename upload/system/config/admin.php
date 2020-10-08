@@ -21,9 +21,9 @@ $_['error_display']     = true;
 // Actions
 $_['action_pre_action'] = [
 	'startup/setting',
+	'startup/session',
 	'startup/language',
 	'startup/extension',
-	'startup/session',
 	'startup/application',
 	'startup/error',
 	'startup/event',

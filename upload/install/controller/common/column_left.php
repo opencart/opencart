@@ -35,6 +35,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			$code = basename($code);
 
 			$language = new \Opencart\System\Library\Language($code);
+			$language->addPath(DIR_LANGUAGE);
 			$language->load('common/column_left');
 
 			$data['languages'][] = [

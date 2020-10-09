@@ -230,15 +230,15 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
-						'description' 		=> $voucher['description'],
-						'code' 			=> token(10),
-						'to_name' 		=> $voucher['to_name'],
-						'to_email' 		=> $voucher['to_email'],
-						'from_name' 		=> $voucher['from_name'],
-						'from_email' 		=> $voucher['from_email'],
-						'voucher_theme_id' 	=> $voucher['voucher_theme_id'],
-						'message' 		=> $voucher['message'],
-						'amount' 		=> $voucher['amount']
+						'description'      => $voucher['description'],
+						'code' 			   => token(10),
+						'to_name' 		   => $voucher['to_name'],
+						'to_email' 		   => $voucher['to_email'],
+						'from_name' 	   => $voucher['from_name'],
+						'from_email' 	   => $voucher['from_email'],
+						'voucher_theme_id' => $voucher['voucher_theme_id'],
+						'message' 		   => $voucher['message'],
+						'amount' 		   => $voucher['amount']
 					];
 				}
 			}
@@ -393,7 +393,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			getExtensionByCode
+
+
+			$this->load->model('setting/extension');
+
+			$results = $this->model_setting_extension->getExtensionByCode('total');
+
 			$data['payment'] = $this->load->controller('extension/' . $this->session->data['payment_method']['code'] . '/payment/' . $this->session->data['payment_method']['code']);
 		} else {
 			$data['redirect'] = str_replace('&amp;', '&', $redirect);

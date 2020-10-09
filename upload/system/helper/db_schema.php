@@ -4050,7 +4050,8 @@ function db_schema() {
 			[
 				'name' => 'master_id',
 				'type' => 'int(11)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => '0'
 			],
 			[
 				'name' => 'model',
@@ -4095,12 +4096,14 @@ function db_schema() {
 			[
 				'name' => 'variant',
 				'type' => 'text',
-				'not_null' => true
+				'not_null' => true,
+				'default' => ''
 			],
 			[
 				'name' => 'override',
 				'type' => 'text',
-				'not_null' => true
+				'not_null' => true,
+				'default' => ''
 			],
 			[
 				'name' => 'quantity',
@@ -5325,7 +5328,8 @@ function db_schema() {
 			[
 				'name' => 'serialized',
 				'type' => 'tinyint(1)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => 0
 			]
 		],
 		'primary' => [
@@ -5828,17 +5832,20 @@ function db_schema() {
 			[
 				'name' => 'image',
 				'type' => 'varchar(255)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => ''
 			],
 			[
 				'name' => 'code',
 				'type' => 'varchar(40)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => ''
 			],
 			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => ''
 			],
 			[
 				'name' => 'status',

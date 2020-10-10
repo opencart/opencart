@@ -101,6 +101,12 @@ class ControllerStartupSeoUrl extends Controller {
 
 					unset($data[$key]);
 				}
+				 elseif ($key == 'route') {
+					if ($data['route'] == 'common/home') {
+						if ($url == '') $url = '/';
+						unset($data[$key]);
+					}
+				}
 			}
 		}
 

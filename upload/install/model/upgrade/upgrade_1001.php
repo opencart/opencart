@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Application\Model\Upgrade;
 class Upgrade1001 extends \Opencart\System\Engine\Model {
-	public function upgrade() {Notice: Error: Could not load model
+	public function upgrade() {
 		// order_recurring
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `status` `status` tinyint(4) NOT NULL AFTER `trial_price`");
 

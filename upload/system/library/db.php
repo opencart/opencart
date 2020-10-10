@@ -35,6 +35,10 @@ class DB {
 		}
 	}
 
+    public function close() {
+        $this->adaptor->close();
+	}
+
 	/**
      * 
      *

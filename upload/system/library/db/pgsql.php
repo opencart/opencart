@@ -68,7 +68,7 @@ final class PgSQL {
 		return $query->row['id'];
 	}
 
-	public function __destruct() {
+	public function close() {
 		if ($this->isConnected()) {
 			pg_close($this->connection);
 		}

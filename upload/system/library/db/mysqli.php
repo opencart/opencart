@@ -11,8 +11,6 @@ class MySQLi {
 			$this->connection->report_mode = MYSQLI_REPORT_STRICT;
 
 			$this->connection->set_charset('utf8');
-
-			register_shutdown_function([$this, 'close']);
 		} else {
 			error_log('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 			exit();

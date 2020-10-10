@@ -111,6 +111,7 @@ foreach ($pre_actions as $pre_action) {
 		break;
 	}
 }
+register_shutdown_function([$registry->get('db'), 'close']);
 
 // Dispatch
 while ($action) {

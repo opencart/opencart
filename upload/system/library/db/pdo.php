@@ -106,7 +106,7 @@ final class PDO {
 		}
 	}
 
-	public function __destruct() {
+	public function close() {
 		$this->connection = null;
 	}
 }

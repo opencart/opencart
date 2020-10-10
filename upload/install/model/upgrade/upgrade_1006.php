@@ -87,7 +87,11 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 		}
 
 		// Disable any existing ocmods
-		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET `status` = 0");
+		$modification_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "modification'");
+
+		if ($modification_query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET `status` = '0'");
+		}
 
 		// Cleanup files in old directories
 		$directories = [

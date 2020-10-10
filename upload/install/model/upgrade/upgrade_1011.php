@@ -11,7 +11,7 @@
 * Upgrade file for updating setting table columns
 * 
 */
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1011 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		//get all setting columns from extension table
@@ -20,7 +20,7 @@ class Upgrade1011 extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $extension) {
 			//get all setting from setting table
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $extension['code'] . "'");	
-			
+
 			if ($query->num_rows) {
 				foreach ($query->rows as $result) {
 					//update old column name to adding prefix before the name

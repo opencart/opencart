@@ -1,5 +1,5 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1005 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// customer
@@ -11,7 +11,7 @@ class Upgrade1005 extends \Opencart\System\Engine\Model {
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `code` tinyint(1) NOT NULL AFTER `token`");
 		}
-		
+
 		// custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'validation'");
 
@@ -85,7 +85,7 @@ class Upgrade1005 extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `meta_title` = `name` WHERE meta_title = ''");
 		$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `meta_title` = `name` WHERE meta_title = ''");
 		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `meta_title` = `title` WHERE meta_title = ''");
-		
+
 		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_complete_status'");
 

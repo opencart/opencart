@@ -1,7 +1,7 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1001 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade() {Notice: Error: Could not load model
 		// order_recurring
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` CHANGE `status` `status` tinyint(4) NOT NULL AFTER `trial_price`");
 
@@ -136,7 +136,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 					foreach ($lines as $line_id => $line) {
 						if (strpos($line, 'DIR_LOGS') !== false) {
 							$new_line = "define('DIR_MODIFICATION', '" . str_replace("\\", "/", DIR_SYSTEM) . 'modification/' . "');";
-							
+
 							$output .= $new_line . "\n";
 							$output .= $line;
 						} else {
@@ -194,7 +194,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				$lines = file($file);
 
 				foreach ($lines as $line) {
-					if (strpos($line, "define('DB_DRIVER', 'mysql'") !== false) {
+					if (strpos($line, "define('DB_DRIVER', 'mysql');") !== false) {
 						$upgrade = true;
 						break;
 					}
@@ -204,7 +204,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 					$output = '';
 
 					foreach ($lines as $line_id => $line) {
-						if (strpos($line, "'mysql'") !== false) {
+						if (strpos($line, "define('DB_DRIVER', 'mysql');") !== false) {
 							$new_line = "define('DB_DRIVER', 'mysqli');";
 							
 							$output .= $new_line . "\n";

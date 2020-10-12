@@ -26,9 +26,20 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment method has been set.
-		if (!isset($this->session->data['payment_method'])) {
+		$extension_info = $this->model_setting_extension->getExtensionByCode($this->session->data['payment_method']['code']);
+
+		if (isset($this->session->data['payment_method'])) {
+
+
+			if ($extension_info) {
+
+			}
+		} else {
 			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+
 		}
+
+
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -393,13 +404,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			$extension_info = $this->model_setting_extension->getExtensionByCode($this->session->data['payment_method']['code']);
 
-
-			$this->load->model('setting/extension');
-
-			$results = $this->model_setting_extension->getExtensionByCode('total');
-
-			$data['payment'] = $this->load->controller('extension/' . $this->session->data['payment_method']['code'] . '/payment/' . $this->session->data['payment_method']['code']);
+			if ($extension_info) {
+				$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
+			}
 		} else {
 			$data['redirect'] = str_replace('&amp;', '&', $redirect);
 		}

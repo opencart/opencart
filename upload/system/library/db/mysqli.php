@@ -2,8 +2,9 @@
 namespace Opencart\System\Library\DB;
 class MySQLi {
 	private $connection;
+
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$connection = new \mysqli($hostname, $username, $password, $database, $port);
+		$connection = new \MySQLi($hostname, $username, $password, $database, $port);
 
 		if (!$connection->connect_error) {
 			$this->connection = $connection;
@@ -12,7 +13,7 @@ class MySQLi {
 
 			$this->connection->set_charset('utf8');
 
-			register_shutdown_function([$this, 'close']);
+			//register_shutdown_function([$this, 'close']);
 		} else {
 			error_log('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 			exit();
@@ -63,6 +64,12 @@ class MySQLi {
 	}
 	
 	public function close() {
-		$this->connection->close();
+		if (!$this->connection) {
+			$this->connection->close();
+		}
+	}
+
+	public function __destruct() {
+		$this->close();
 	}
 }

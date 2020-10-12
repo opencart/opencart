@@ -12,8 +12,8 @@ class Event extends \Opencart\System\Engine\Controller {
 				$this->event->register(substr($result['trigger'], 6), new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
 			}
 
-			if ((substr($result['trigger'], 0, 6) == 'extension/') && $result['status']) {
-			//	$this->event->register(substr($result['trigger'], 6), new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
+			if ((substr($result['trigger'], 0, 10) == 'extension/') && $result['status']) {
+				$this->event->register(substr($result['trigger'], 6), new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
 			}
 
 		}

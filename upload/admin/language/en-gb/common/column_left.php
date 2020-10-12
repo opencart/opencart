@@ -60,6 +60,7 @@ $_['text_setting']           = 'Settings';
 $_['text_seo']               = 'SEO';
 $_['text_seo_profile']       = 'SEO Profile';
 $_['text_seo_url']           = 'SEO URL';
+$_['text_startup']           = 'Startup';
 $_['text_statistics']        = 'Statistics';
 $_['text_stock_status']      = 'Stock Statuses';
 $_['text_system']            = 'System';

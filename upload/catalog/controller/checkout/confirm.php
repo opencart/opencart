@@ -4,14 +4,10 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$redirect = '';
 
-
-		//$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
-
-
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 
 			// Validate if shipping method has been set.

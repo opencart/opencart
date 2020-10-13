@@ -24,7 +24,7 @@ class Total extends \Opencart\System\Engine\Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code']);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code']);
 
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code'] . '/install');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code'] . '|install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -40,7 +40,7 @@ class Total extends \Opencart\System\Engine\Controller {
 		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
 
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code'] . '/uninstall');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code'] . '|uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}

@@ -58,7 +58,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails that might be required to be sent out
-		$language = new \Opencart\System\Engine\Language($order_info['language_code']);
+		$language = new \Opencart\System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_add');
 
@@ -284,7 +284,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function edit($order_info, $order_status_id, $comment, $notify) {
-		$language = new \Opencart\System\Engine\Language($order_info['language_code']);
+		$language = new \Opencart\System\Library\Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_edit');
 

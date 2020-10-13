@@ -2,13 +2,11 @@
 namespace Opencart\Application\Model\Extension\Opencart\Fraud;
 class Ip extends \Opencart\System\Engine\Model {
 	public function install() {
-		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fraud_ip` (
+		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fraud_ip` (
 		  `ip` varchar(40) NOT NULL,
 		  `date_added` datetime NOT NULL,
 		  PRIMARY KEY (`ip`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-		");
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
 	}
 
 	public function uninstall() {

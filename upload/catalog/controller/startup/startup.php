@@ -8,8 +8,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$results = $this->model_setting_startup->getStartups();
 
 		foreach ($results as $result) {
-			if (substr($result['trigger'], 0, 8) == 'catalog/') {
-				$this->controller->load(substr($result['action'], 9));
+			if (substr($result['action'], 0, 8) == 'catalog/') {
+				$this->load->controller(substr($result['action'], 8));
 			}
 		}
 	}

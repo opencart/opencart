@@ -4,8 +4,6 @@ $autoloader = new \Opencart\System\Engine\Autoloader();
 $autoloader->register('Opencart\Application', DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
-//$autoloader->register('Opencart\Catalog', DIR_CATALOG);
-//$autoloader->register('Opencart\Admin', DIR_ADMIN);
 
 // Registry
 $registry = new \Opencart\System\Engine\Registry();
@@ -86,13 +84,8 @@ if (!empty($request->get['route'])) {
 // Action error object to execute if any other actions can not be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
-$pre_actions = $config->get('action_pre_action');
-
-// So the pre_actions can be altered using the events system.
-$event->trigger('pre_action', array(&$pre_actions));
-
 // Pre Actions
-foreach ($pre_actions as $pre_action) {
+foreach ($config->get('action_pre_action') as $pre_action) {
 	$pre_action = new \Opencart\System\Engine\Action($pre_action);
 
 	$result = $pre_action->execute($registry);

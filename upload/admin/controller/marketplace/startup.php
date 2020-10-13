@@ -21,8 +21,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/startup');
 
 		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $event_id) {
-				$this->model_setting_startup->deleteStartup($event_id);
+			foreach ($this->request->post['selected'] as $startup_id) {
+				$this->model_setting_startup->deleteStartup($startup_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');

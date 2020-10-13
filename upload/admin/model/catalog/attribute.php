@@ -99,8 +99,16 @@ class Attribute extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalAttributesByAttributeGroupId($attribute_group_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
-
-		return $query->row['total'];
+		$this->load->model('catalog/attribute_group');
+		
+		$attribute_group = $this->model_catalog_attribute_group->getAttributeGroup($attribute_group_id);
+		
+		if ($attribute_group) {		
+			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
+			
+			return $query->row['total'];
+		} else {
+			return false;
+		}
 	}
 }

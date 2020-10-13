@@ -19,32 +19,25 @@ class Header extends \Opencart\System\Engine\Controller {
 			$this->document->addLink($this->config->get('config_url') . 'image/' . $this->config->get('config_icon'), 'icon');
 		}
 
+		$data['lang'] = $this->language->get('code');
+		$data['direction'] = $this->language->get('direction');
+
 		$data['title'] = $this->document->getTitle();
 		$data['base'] = $this->config->get('config_url');
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
-		$data['links'] = $this->document->getLinks();
-		$data['styles'] = $this->document->getStyles();
-		$data['scripts'] = $this->document->getScripts('header');
-		$data['lang'] = $this->language->get('code');
-		$data['direction'] = $this->language->get('direction');
 
 		// Hardcoding scripts so they can be replaced via the events system.
 		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.3.1.min.js';
+		$data['bootstrap_js'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+		$data['bootstrap_css'] = 'catalog/view/stylesheet/bootstrap.css';
+		$data['icon'] = 'catalog/view/javascript/fontawesome/css/fontawesome-all.min.css';
+		$data['font'] = '//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet';
+		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
 
-		$data['bootstrap'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
-
-		$data['bootstrap'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
-/*
-  <link href="catalog/view/stylesheet/bootstrap.css" rel="stylesheet" media="screen"/>
-  <script src="catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-  <link href="catalog/view/javascript/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
-  <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css"/>
-
-  <link href="catalog/view/stylesheet/stylesheet.css" rel="stylesheet">
-*/
-
-
+		$data['links'] = $this->document->getLinks();
+		$data['styles'] = $this->document->getStyles();
+		$data['scripts'] = $this->document->getScripts('header');
 
 		$data['name'] = $this->config->get('config_name');
 

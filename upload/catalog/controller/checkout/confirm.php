@@ -4,14 +4,10 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$redirect = '';
 
-
-		//$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
-
-
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 
 			// Validate if shipping method has been set.
@@ -222,18 +218,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				}
 
 				$order_data['products'][] = [
-					'product_id' => $product['product_id'],
-					'master_id'  => $product['master_id'],
-					'name' 		 => $product['name'],
-					'model' 	 => $product['model'],
-					'option' 	 => $option_data,
-					'download' 	 => $product['download'],
-					'quantity' 	 => $product['quantity'],
-					'subtract' 	 => $product['subtract'],
-					'price' 	 => $product['price'],
-					'total' 	 => $product['total'],
-					'tax' 		 => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward' 	 => $product['reward']
+					'product_id' 	=> $product['product_id'],
+					'master_id'  	=> $product['master_id'],
+					'name' 		=> $product['name'],
+					'model' 	=> $product['model'],
+					'option' 	=> $option_data,
+					'download' 	=> $product['download'],
+					'quantity' 	=> $product['quantity'],
+					'subtract' 	=> $product['subtract'],
+					'price' 	=> $product['price'],
+					'total' 	=> $product['total'],
+					'tax' 		=> $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward' 	=> $product['reward']
 				];
 			}
 
@@ -244,14 +240,14 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
 						'description'      => $voucher['description'],
-						'code' 			   => token(10),
-						'to_name' 		   => $voucher['to_name'],
-						'to_email' 		   => $voucher['to_email'],
+						'code' 		   => token(10),
+						'to_name' 	   => $voucher['to_name'],
+						'to_email' 	   => $voucher['to_email'],
 						'from_name' 	   => $voucher['from_name'],
 						'from_email' 	   => $voucher['from_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message' 		   => $voucher['message'],
-						'amount' 		   => $voucher['amount']
+						'message' 	   => $voucher['message'],
+						'amount' 	   => $voucher['amount']
 					];
 				}
 			}

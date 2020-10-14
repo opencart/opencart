@@ -8,7 +8,7 @@ class Api extends \Opencart\System\Engine\Model {
 	}
 
 	public function getApiByToken($token) {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` a LEFT JOIN `" . DB_PREFIX . "api_session` as ON (a.`api_id` = as.`api_id`) LEFT JOIN `" . DB_PREFIX . "api_ip` ai ON (a.`api_id` = ai.`api_id`) WHERE a.`status` = '1' AND as.`session_id` = '" . $this->db->escape((string)$token) . "' AND ai.`ip` = '" . $this->db->escape((string)$this->request->server['REMOTE_ADDR']) . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` a LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.`api_id` = `as`.`api_id`) LEFT JOIN `" . DB_PREFIX . "api_ip` ai ON (a.`api_id` = ai.`api_id`) WHERE a.`status` = '1' AND `as`.`session_id` = '" . $this->db->escape((string)$token) . "' AND ai.`ip` = '" . $this->db->escape((string)$this->request->server['REMOTE_ADDR']) . "'");
 
 		return $query->row;
 	}

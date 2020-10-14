@@ -171,7 +171,11 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 			$extension_info = $this->model_setting_extension->getByCode($recurring_info['payment_code']);
 
-			$data['recurring'] = $this->load->controller('extension/' . $extension_info['extension'] . '/recurring/' . $recurring_info['payment_code']);
+			if ($extension_info) {
+				$data['recurring'] = $this->load->controller('extension/' . $extension_info['extension'] . '/recurring/' . $recurring_info['payment_code']);
+			} else {
+				$data['recurring'] = '';
+			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

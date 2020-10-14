@@ -2,16 +2,26 @@
 namespace Opencart\Application\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$data['title'] = $this->document->getTitle();
+		$data['lang'] = $this->language->get('code');
+		$data['direction'] = $this->language->get('direction');
 
+		$data['title'] = $this->document->getTitle();
 		$data['base'] = HTTP_SERVER;
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
+
+		// Hard coding css so they can be replaced via the events system.
+		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
+		$data['icons'] = 'view/javascript/fontawesome/css/fontawesome-all.min.css';
+		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts so they can be replaced via the events system.
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.5.1.min.js';
+		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts();
-		$data['lang'] = $this->language->get('code');
-		$data['direction'] = $this->language->get('direction');
 
 		$this->load->language('common/header');
 		

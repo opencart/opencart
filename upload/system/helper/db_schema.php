@@ -5241,6 +5241,44 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'startup',
+		'field' => [
+			[
+				'name' => 'startup_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'action',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'startup_id'
+		],
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'statistics',
 		'field' => [
 			[

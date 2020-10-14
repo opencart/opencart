@@ -82,6 +82,11 @@ $('#button-payment-method').on('click', function() {
 
 								$('#heading-checkout-confirm').trigger('click');
 							},
+							statusCode: {
+								302: function() {
+									console.log('hi');
+								},
+							},
 							error: function(xhr, ajaxOptions, thrownError) {
 								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 							}

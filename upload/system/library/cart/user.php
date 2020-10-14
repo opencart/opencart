@@ -41,24 +41,24 @@ class User {
 
 		if ($user_query->num_rows) {
 			if (password_verify($password, $user_query->row['password'])) {
-				if (password_needs_rehash($user_query->row['password'], PASSWORD_DEFAULT)) {
-					$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
-				}
-			} elseif ($user_query->row['password'] == sha1($user_query->row['salt'] . sha1($user_query->row['salt'] . sha1($password))) || $user_query->row['password'] == md5($password)) {
-				$new_password_hashed = password_hash($password, PASSWORD_DEFAULT);
+				$rehash = password_needs_rehash($user_query->row['password'], PASSWORD_DEFAULT);
+			} elseif ($user_query->row['password'] == sha1($user_query->row['salt'] . sha1($user_query->row['salt'] . sha1($password)))) {
+				$rehash = true;
+			} elseif ($user_query->row['password'] == md5($password)) {
+				$rehash = true;
 			} else {
 				return false;
 			}
-			
+
+			if ($rehash) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `salt `= '', `password` = '" . $this->db->escape(password_hash($password, PASSWORD_DEFAULT)) . "' WHERE `user_id` = '" . (int)$user_query->row['user_id'] . "'");
+			}
+
 			$this->session->data['user_id'] = $user_query->row['user_id'];
 
 			$this->user_id = $user_query->row['user_id'];
 			$this->username = $user_query->row['username'];
 			$this->user_group_id = $user_query->row['user_group_id'];
-			
-			if (isset($new_password_hashed)) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `salt` = '', `password` = '" . $this->db->escape($new_password_hashed) . "' WHERE `user_id` = '" . (int)$this->user_id . "'");
-			}
 
 			$user_group_query = $this->db->query("SELECT `permission` FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_query->row['user_group_id'] . "'");
 

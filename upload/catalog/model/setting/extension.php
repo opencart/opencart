@@ -16,6 +16,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	public function getExtensionByCode($code) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($code) . "'");
 
-		return $query->rows;
+		return $query->row;
 	}
 }

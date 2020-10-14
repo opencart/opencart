@@ -2,8 +2,9 @@
 namespace Opencart\System\Library\DB;
 class MySQLi {
 	private $connection;
+
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$connection = new \mysqli($hostname, $username, $password, $database, $port);
+		$connection = new \MySQLi($hostname, $username, $password, $database, $port);
 
 		if (!$connection->connect_error) {
 			$this->connection = $connection;
@@ -61,6 +62,12 @@ class MySQLi {
 	}
 	
 	public function close() {
-		$this->connection->close();
+		if (!$this->connection) {
+			$this->connection->close();
+		}
+	}
+
+	public function __destruct() {
+		$this->close();
 	}
 }

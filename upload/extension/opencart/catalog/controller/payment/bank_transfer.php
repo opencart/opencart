@@ -6,7 +6,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 
 		$data['bank'] = nl2br($this->config->get('payment_bank_transfer_bank' . $this->config->get('config_language_id')));
 
-		return $this->load->view('extension/payment/bank_transfer', $data);
+		return $this->load->view('extension/opencart/payment/bank_transfer', $data);
 	}
 
 	public function confirm() {

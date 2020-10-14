@@ -46,7 +46,7 @@ class Account extends \Opencart\System\Engine\Controller {
 				$this->load->language('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'extension');
 
 				$data['credit_cards'][] = [
-					'name' => $this->language->get('extension')->get('heading_title'),
+					'name' => $this->language->get('heading_title', 'extension'),
 					'href' => $this->url->link('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'language=' . $this->config->get('config_language'))
 				];
 			}

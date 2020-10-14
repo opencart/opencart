@@ -27,13 +27,15 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
 
-		// Hardcoding scripts so they can be replaced via the events system.
+		// Hard coding css so they can be replaced via the events system.
+		$data['bootstrap_css'] = 'catalog/view/stylesheet/bootstrap.css';
+		$data['icons'] = 'catalog/view/javascript/fontawesome/css/fontawesome-all.min.css';
+		$data['fonts'] = '//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet';
+		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts so they can be replaced via the events system.
 		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.3.1.min.js';
 		$data['bootstrap_js'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
-		$data['bootstrap_css'] = 'catalog/view/stylesheet/bootstrap.css';
-		$data['icon'] = 'catalog/view/javascript/fontawesome/css/fontawesome-all.min.css';
-		$data['font'] = '//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet';
-		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
 
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();

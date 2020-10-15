@@ -249,17 +249,17 @@ class Order extends \Opencart\System\Engine\Model {
 				$order_products = $this->getProducts($order_id);
 
 				foreach ($order_products as $order_product) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (quantity - " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `subtract` = '1'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `subtract` = '1'");
 
 					// Stock subtraction from master product
 					if ($order_product['master_id']) {
-						$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (quantity - " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['master_id'] . "' AND `subtract` = '1'");
+						$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['master_id'] . "' AND `subtract` = '1'");
 					}
 
 					$order_options = $this->getOptions($order_id, $order_product['order_product_id']);
 
 					foreach ($order_options as $order_option) {
-						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (quantity - " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
+						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
 				}
 
@@ -286,17 +286,17 @@ class Order extends \Opencart\System\Engine\Model {
 				$order_products = $this->getProducts($order_id);
 
 				foreach ($order_products as $order_product) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (quantity + " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `subtract` = '1'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `subtract` = '1'");
 
 					// Restock the master product stock level if product is a variant
 					if ($order_product['master_id']) {
-						$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (quantity + " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['master_id'] . "' AND `subtract` = '1'");
+						$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_id` = '" . (int)$order_product['master_id'] . "' AND `subtract` = '1'");
 					}
 
 					$order_options = $this->getOptions($order_id, $order_product['order_product_id']);
 
 					foreach ($order_options as $order_option) {
-						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (quantity + " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
+						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
 				}
 

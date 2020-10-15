@@ -766,11 +766,11 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (19, 'mail_affiliate_alert', 'catalog/model/account/affiliate/addAffiliate/after', 'mail/affiliate|alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(20, 'mail_voucher', 'catalog/model/checkout/order/addHistory/after', 'extension/opencart/total/voucher|send', 1);
+(20, 'mail_order_alert', 'catalog/model/checkout/order/addHistory/before', 'mail/order|alert', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(21, 'mail_order_add', 'catalog/model/checkout/order/addHistory/before', 'mail/order', 1);
+(21, 'mail_voucher', 'catalog/model/checkout/order/addHistory/after', 'mail/voucher', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
-(22, 'mail_order_alert', 'catalog/model/checkout/order/addHistory/before', 'mail/order|alert', 1);
+(22, 'mail_order_add', 'catalog/model/checkout/order/addHistory/before', 'mail/order', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (23, 'mail_gdpr', 'catalog/model/account/gdpr/addGdpr/after', 'mail/gdpr', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES

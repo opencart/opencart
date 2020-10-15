@@ -325,11 +325,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$this->load->model('tool/upload');
 
 			$frequencies = [
-				'day' 		=> $this->language->get('text_day'),
-				'week' 		=> $this->language->get('text_week'),
-				'semi_month' 	=> $this->language->get('text_semi_month'),
-				'month' 	=> $this->language->get('text_month'),
-				'year' 		=> $this->language->get('text_year'),
+				'day' 		 => $this->language->get('text_day'),
+				'week' 		 => $this->language->get('text_week'),
+				'semi_month' => $this->language->get('text_semi_month'),
+				'month' 	 => $this->language->get('text_month'),
+				'year' 		 => $this->language->get('text_year')
 			];
 
 			$data['products'] = [];
@@ -351,7 +351,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 					}
 
 					$option_data[] = [
-						'name' => $option['name'],
+						'name'  => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 					];
 				}

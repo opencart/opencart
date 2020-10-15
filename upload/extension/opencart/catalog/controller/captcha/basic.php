@@ -26,16 +26,16 @@ class Basic extends \Opencart\System\Engine\Controller {
 	public function captcha() {
 		$this->session->data['captcha'] = substr(token(100), rand(0, 94), 6);
 
-		$image = imagecreatetruecolor(150, 35);
+		$image  = imagecreatetruecolor(150, 35);
 
-		$width = imagesx($image);
+		$width  = imagesx($image);
 		$height = imagesy($image);
 
-		$black = imagecolorallocate($image, 0, 0, 0);
-		$white = imagecolorallocate($image, 255, 255, 255);
-		$red = imagecolorallocatealpha($image, 255, 0, 0, 75);
-		$green = imagecolorallocatealpha($image, 0, 255, 0, 75);
-		$blue = imagecolorallocatealpha($image, 0, 0, 255, 75);
+		$black  = imagecolorallocate($image, 0, 0, 0);
+		$white  = imagecolorallocate($image, 255, 255, 255);
+		$red    = imagecolorallocatealpha($image, 255, 0, 0, 75);
+		$green  = imagecolorallocatealpha($image, 0, 255, 0, 75);
+		$blue   = imagecolorallocatealpha($image, 0, 0, 255, 75);
 
 		imagefilledrectangle($image, 0, 0, $width, $height, $white);
 		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $red);

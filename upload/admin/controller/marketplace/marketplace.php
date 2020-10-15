@@ -30,7 +30,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$filter_rating = '';
 		}
 
-		if (isset($this->request->get['filter_member_type'])) {c
+		if (isset($this->request->get['filter_member_type'])) {
 			$filter_member_type = $this->request->get['filter_member_type'];
 		} else {
 			$filter_member_type = '';

@@ -30,7 +30,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$filter_rating = '';
 		}
 
-		if (isset($this->request->get['filter_member_type'])) {
+		if (isset($this->request->get['filter_member_type'])) {c
 			$filter_member_type = $this->request->get['filter_member_type'];
 		} else {
 			$filter_member_type = '';
@@ -1003,7 +1003,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$comment_total = !empty($json['comment_total']) ? $json['comment_total'] : 0;
 
-		if ($json['comments']) {
+		if (!empty($json['comments'])) {
 			$results = $json['comments'];
 
 			foreach ($results as $result) {

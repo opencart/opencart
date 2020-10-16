@@ -2,6 +2,7 @@
 namespace Opencart\System\Library\Cart;
 class Currency {
 	private $currencies = [];
+	private $language;
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');

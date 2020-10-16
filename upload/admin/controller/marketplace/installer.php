@@ -289,10 +289,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if ($extension_install_info) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
+			$file = DIR_STORAGE . 'marketplace/' . basename($extension_install_info['code'] . '.ocmod.zip');
 
 			if (!is_file($file)) {
-				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
+				$json['error'] = sprintf($this->language->get('error_file'), basename($extension_install_info['code'] . '.ocmod.zip'));
 			}
 
 			if (is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
@@ -498,7 +498,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
+			$file = DIR_STORAGE . 'marketplace/' . basename($extension_install_info['code'] . '.ocmod.zip');
 
 			// Remove file
 			if (is_file($file)) {

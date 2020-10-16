@@ -47,11 +47,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+			$url .= '&filter_order_status=' . html_entity_decode((string)$this->request->get['filter_order_status'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
@@ -93,13 +93,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
+			$filter_customer = html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filter_customer = '';
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
-			$filter_order_status = $this->request->get['filter_order_status'];
+			$filter_order_status = html_entity_decode((string)$this->request->get['filter_order_status'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filter_order_status = '';
 		}
@@ -153,11 +153,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+			$url .= '&filter_order_status=' . html_entity_decode((string)$this->request->get['filter_order_status'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
@@ -268,11 +268,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+			$url .= '&filter_order_status=' . html_entity_decode((string)$this->request->get['filter_order_status'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
@@ -315,11 +315,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+			$url .= '&filter_order_status=' . html_entity_decode((string)$this->request->get['filter_order_status'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
@@ -411,11 +411,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+			$url .= '&filter_order_status=' . html_entity_decode((string)$this->request->get['filter_order_status'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
@@ -737,11 +737,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+				$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_order_status'])) {
-				$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+				$url .= '&filter_order_status=' . html_entity_decode((string)$this->request->get['filter_order_status'], ENT_QUOTES, 'UTF-8');
 			}
 
 			if (isset($this->request->get['filter_order_status_id'])) {

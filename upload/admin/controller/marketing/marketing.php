@@ -28,11 +28,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+				$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_code'])) {
-				$url .= '&filter_code=' . $this->request->get['filter_code'];
+				$url .= '&filter_code=' . html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 			}
 
 			if (isset($this->request->get['filter_date_added'])) {
@@ -72,11 +72,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+				$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_code'])) {
-				$url .= '&filter_code=' . $this->request->get['filter_code'];
+				$url .= '&filter_code=' . html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 			}
 
 			if (isset($this->request->get['filter_date_added'])) {
@@ -118,11 +118,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+				$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_code'])) {
-				$url .= '&filter_code=' . $this->request->get['filter_code'];
+				$url .= '&filter_code=' . html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 			}
 
 			if (isset($this->request->get['filter_date_added'])) {
@@ -149,13 +149,13 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
+			$filter_name = html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filter_name = '';
 		}
 
 		if (isset($this->request->get['filter_code'])) {
-			$filter_code = $this->request->get['filter_code'];
+			$filter_code = html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filter_code = '';
 		}
@@ -187,11 +187,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
+			$url .= '&filter_code=' . html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
@@ -282,11 +282,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
+			$url .= '&filter_code=' . html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
@@ -310,11 +310,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
+			$url .= '&filter_code=' . html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
@@ -384,11 +384,11 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
+			$url .= '&filter_code=' . html_entity_decode((string)$this->request->get['filter_code'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
@@ -436,7 +436,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['store'] = HTTP_CATALOG;
 
 		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
+			$data['name'] = html_entity_decode((string)$this->request->post['name'], ENT_QUOTES, 'UTF-8');
 		} elseif (!empty($marketing_info)) {
 			$data['name'] = $marketing_info['name'];
 		} else {
@@ -444,7 +444,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['description'])) {
-			$data['description'] = $this->request->post['description'];
+			$data['description'] = html_entity_decode((string)$this->request->post['description'], ENT_QUOTES, 'UTF-8');
 		} elseif (!empty($marketing_info)) {
 			$data['description'] = $marketing_info['description'];
 		} else {
@@ -452,7 +452,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
+			$data['code'] = html_entity_decode((string)$this->request->post['code'], ENT_QUOTES, 'UTF-8');
 		} elseif (!empty($marketing_info)) {
 			$data['code'] = $marketing_info['code'];
 		} else {

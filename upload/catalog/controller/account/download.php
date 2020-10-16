@@ -98,6 +98,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	public function download() {
+		$this->load->language('account/download');
+		
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 
@@ -137,10 +139,10 @@ class Download extends \Opencart\System\Engine\Controller {
 
 					exit();
 				} else {
-					exit('Error: Could not find file ' . $file . '!');
+					exit(sprintf($this->language->get('error_not_found'), basename($file)));
 				}
 			} else {
-				exit('Error: Headers already sent out!');
+				exit($this->language->get('error_headers_sent'));
 			}
 		} else {
 			$this->response->redirect($this->url->link('account/download', 'language=' . $this->config->get('config_language')));

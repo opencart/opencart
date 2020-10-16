@@ -17,11 +17,15 @@ class Redis {
 		return json_decode($data, true);
 	}
 
-	public function set($key, $value) {
+	public function set($key, $value, $expire = '') {
+		if (!$expire) {
+			$expire = $this->expire;
+		}
+
 		$status = $this->cache->set(CACHE_PREFIX . $key, json_encode($value));
 
 		if ($status) {
-			$this->cache->expire(CACHE_PREFIX . $key, $this->expire);
+			$this->cache->expire(CACHE_PREFIX . $key, $expire);
 		}
 
 		return $status;

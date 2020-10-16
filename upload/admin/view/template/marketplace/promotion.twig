@@ -1,0 +1,31 @@
+{% if banner %}
+  <div class="text-center">{{ banner }}</div>
+{% endif %}
+{% if extensions %}
+  <fieldset>
+    <legend>{{ text_recommended }}</legend>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-left">{{ column_name }}</td>
+            <td class="text-left">{{ column_status }}</td>
+            <td class="text-right">{{ column_action }}</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for extension in extensions %}
+            <tr>
+              <td class="text-left" colspan="2"><b>{{ extension.name }}</b></td>
+              <td class="text-right">{% if not extension.installed %}
+                  <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+                {% else %}
+                  <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+                {% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </fieldset>
+{% endif %}

@@ -47,10 +47,14 @@ class File {
 		return false;
 	}
 
-	public function set($key, $value) {
+	public function set($key, $value, $expire = '') {
 		$this->delete($key);
 
-		$file = DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $this->expire);
+		if (!$expire) {
+			$expire = $this->expire;
+		}
+
+		$file = DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $expire);
 
 		$handle = fopen($file, 'w');
 

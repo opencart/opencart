@@ -17,8 +17,12 @@ class Memcached {
 		return $this->memcached->get(CACHE_PREFIX . $key);
 	}
 
-	public function set($key, $value) {
-		return $this->memcached->set(CACHE_PREFIX . $key, $value, $this->expire);
+	public function set($key, $value, $expire = '') {
+		if (!$expire) {
+			$expire = $this->expire;
+		}
+
+		return $this->memcached->set(CACHE_PREFIX . $key, $value, $expire);
 	}
 
 	public function delete($key) {

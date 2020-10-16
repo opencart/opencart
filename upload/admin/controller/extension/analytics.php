@@ -67,6 +67,9 @@ class Analytics extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
+		//Recommended
+		$data['promotion'] = $this->load->controller('marketplace/promotion');
+
 		$available = [];
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/analytics/%.php');
@@ -130,8 +133,6 @@ class Analytics extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
-
-		$data['promotion'] = $this->load->controller('marketplace/promotion');
 
 		return $this->load->view('extension/analytics', $data);
 	}

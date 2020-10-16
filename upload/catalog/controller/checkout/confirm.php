@@ -11,23 +11,34 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 			}
+
+
+
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
 				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 			}
+
+
+
 		} else {
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 		}
 
+
+
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
 			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		}
+
+
+
 
 		if (isset($this->session->data['payment_method'])) {
 			// Validate if payment method has been set.
@@ -40,6 +51,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 		}
+
+
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -104,6 +117,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			array_multisort($sort_order, SORT_ASC, $totals);
 
 			$order_data['totals'] = $totals;
+
+
+
+
+
+
 
 			$this->load->language('checkout/checkout');
 
@@ -258,6 +277,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$order_data['comment'] = $this->session->data['comment'];
 			$order_data['total'] = $total;
+
+
+
+
+
+
 
 			// Affiliate
 			$order_data['tracking'] = '';

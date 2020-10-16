@@ -21,6 +21,7 @@
             <div class="card-body"></div>
           </div>
         </div>
+
         <div class="card">
           {% if not logged and account != 'guest' %}
             <h4 id="heading-payment-address" class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
@@ -34,6 +35,7 @@
             </div>
           {% endif %}
         </div>
+
         {% if shipping_required %}
           <div class="card">
             <h4 id="heading-shipping-address" class="card-header collapsed" data-target="#collapse-shipping-address">{{ text_checkout_shipping_address }}</h4>
@@ -48,6 +50,7 @@
             </div>
           </div>
         {% endif %}
+
         <div class="card">
           <h4 id="heading-payment-method" class="card-header collapsed" data-target="#collapse-payment-method">{{ text_checkout_payment_method }}</h4>
           <div id="collapse-payment-method" class="collapse" data-parent="#accordion">

@@ -60,7 +60,9 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Unset guest
-			unset($this->session->data['guest']);
+			if (isset($this->session->data['guest'])) {
+				unset($this->session->data['guest']);
+			}
 
 			// Default Shipping Address
 			$this->load->model('account/address');

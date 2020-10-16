@@ -568,6 +568,15 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			if ($vouchers) {
 				$this->load->model('sale/order');
 				$this->load->model('sale/voucher_theme');
+				
+				// Mail
+				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+				$mail->parameter = $this->config->get('config_mail_parameter');
+				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 				foreach ($vouchers as $voucher_id) {
 					$voucher_info = $this->model_sale_voucher->getVoucher($voucher_id);
@@ -607,14 +616,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 							$data['store_name'] = $order_info['store_name'];
 							$data['store_url'] = $order_info['store_url'];
 							$data['message'] = nl2br($voucher_info['message']);
-			
-							$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-							$mail->parameter = $this->config->get('config_mail_parameter');
-							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-							$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-							$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 			
 							$mail->setTo($voucher_info['to_email']);
 							$mail->setFrom($this->config->get('config_email'));

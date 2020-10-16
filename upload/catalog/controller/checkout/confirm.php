@@ -60,7 +60,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			if ($product['minimum'] > $product_total) {
 				$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
-
 				break;
 			}
 
@@ -244,14 +243,14 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
 						'description'      => $voucher['description'],
-						'code' 			   => token(10),
-						'to_name' 		   => $voucher['to_name'],
-						'to_email' 		   => $voucher['to_email'],
+						'code' 		   => token(10),
+						'to_name' 	   => $voucher['to_name'],
+						'to_email' 	   => $voucher['to_email'],
 						'from_name' 	   => $voucher['from_name'],
 						'from_email' 	   => $voucher['from_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message' 		   => $voucher['message'],
-						'amount' 		   => $voucher['amount']
+						'message' 	   => $voucher['message'],
+						'amount' 	   => $voucher['amount']
 					];
 				}
 			}

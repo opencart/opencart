@@ -265,6 +265,12 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['error_description'] = '';
 		}
+		
+		if (isset($this->error['zone_duplicates'])) {
+			$data['error_zone_duplicates'] = $this->error['zone_duplicates'];
+		} else {
+			$data['error_zone_duplicates'] = [];
+		}
 
 		$url = '';
 
@@ -352,6 +358,43 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
 			$this->error['description'] = $this->language->get('error_description');
+		}
+		
+		// Validate duplicated zones.
+		if (isset($this->request->post['zone_to_geo_zone'])) {
+			$zones_data = [];
+			
+			foreach ($this->request->post['zone_to_geo_zone'] as $value) {
+				$zones = $this->model_localisation_zone->getZonesByCountryId($value['country_id']);
+				
+				$zone_ids = array_column($zones, 'zone_id');
+				
+				if ($zone_ids && in_array($value['zone_id'], $zone_ids)) {
+					$zone_info = $this->model_localisation_zone->getZone($value['zone_id']);
+					
+					if ($zone_info) {
+						$zones_data[] = $value['zone_id'];
+					}
+				}
+				
+				if ($zones_data) {
+					$zones_acv = array_count_values($zones_data);
+					
+					if ($zones_acv) {
+						$this->load->model('localisation/zone');
+						
+						foreach ($zones_acv as $total_zones => $zone_id) {
+							if ($total_zones > 1) {
+								$zone_info = $this->model_localisation_zone->getZone($zone_id);
+								
+								if ($zone_info) {
+									$this->error['zone_duplicates'][$zone_id] = sprintf($this->language->get('error_zone_duplicate'), html_entity_decode($zone_info['name'], ENT_QUOTES, 'UTF-8'));
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		return !$this->error;

@@ -33,7 +33,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
+			$filter_customer = html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filter_customer = '';
 		}

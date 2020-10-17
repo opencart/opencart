@@ -19,7 +19,7 @@ class Promotion extends \Opencart\System\Engine\Controller {
 			curl_close($curl);
 
 			if ($response) {
-				$promotion = $response;
+				$promotion = json_decode($response, true);
 			} else {
 				$promotion = '';
 			}
@@ -27,18 +27,20 @@ class Promotion extends \Opencart\System\Engine\Controller {
 			$this->cache->set('promotion', $promotion, 3600 * 24);
 		}
 
-		if ($promotion) {
+		if (isset($promotion['banner'])) {
 			$data['banner'] = $promotion['banner'];
+		} else {
+			$data['banner'] = '';
+		}
 
-			$data['extensions'] = [];
+		$data['extensions'] = [];
 
-			if ($promotion['extensions']) {
-				foreach ($promotion['extensions'] as $result) {
-					$data['extensions'][] = [
-						'name'     => $result['name'],
-						'download' => $this->url->link('marketplace/marketplace/download', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . '&extension_download_id=' . $result['extension_download_id'])
-					];
-				}
+		if (isset($promotion['extensions'])) {
+			foreach ($promotion['extensions'] as $result) {
+				$data['extensions'][] = [
+					'name'     => $result['name'],
+					'download' => $this->url->link('marketplace/marketplace/download', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . '&extension_download_id=' . $result['extension_download_id'])
+				];
 			}
 		}
 

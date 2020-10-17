@@ -117,6 +117,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		if ($page == 1) {
 			$store_total = 1;
+
 			$data['stores'][] = [
 				'store_id' => 0,
 				'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
@@ -321,16 +322,13 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
-		// Create a new language container so we don't pollute the current one
-		$language = new \Opencart\System\Library\Language($this->config->get('config_language'));
-
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
 		foreach ($extensions as $extension) {
 			if ($this->config->get('theme_' . $extension['code'] . '_status')) {
-				$this->load->language('extension/theme/' . $extension['code'], 'extension');
+				$this->load->language('extension/' . $extension['extension'] . '/theme/' . $extension['code'], 'extension');
 
 				$data['themes'][] = [
 					'text'  => $this->language->get('extension_heading_title'),

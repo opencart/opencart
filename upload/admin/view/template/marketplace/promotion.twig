@@ -9,19 +9,14 @@
         <thead>
           <tr>
             <td class="text-left">{{ column_name }}</td>
-            <td class="text-left">{{ column_status }}</td>
             <td class="text-right">{{ column_action }}</td>
           </tr>
         </thead>
         <tbody>
           {% for extension in extensions %}
             <tr>
-              <td class="text-left" colspan="2"><b>{{ extension.name }}</b></td>
-              <td class="text-right">{% if not extension.installed %}
-                  <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
-                {% else %}
-                  <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
-                {% endif %}</td>
+              <td class="text-left"><b>{{ extension.name }}</b></td>
+              <td class="text-right"><a href="{{ extension.download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fas fa-download"></i></a></td>
             </tr>
           {% endfor %}
         </tbody>

@@ -164,7 +164,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['action'] = $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']);
-
 		$data['cancel'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		$data['user_token'] = $this->session->data['user_token'];

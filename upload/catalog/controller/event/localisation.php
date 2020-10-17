@@ -34,11 +34,11 @@ class Localisation extends \Opencart\System\Engine\Controller {
             
             $this->load->model('localisation/zone');
             
-            $payment_zones_total = $this->model_localisation_zone->getTotalZonesByName($order_info['payment_country']);
-            $shipping_zones_total = $this->model_localisation_zone->getTotalZonesByName($order_info['shipping_country']);
+            $payment_zones_total = $this->model_localisation_zone->getTotalZonesByName($order_info['payment_zone']);
+            $shipping_zones_total = $this->model_localisation_zone->getTotalZonesByName($order_info['shipping_zone']);
             
             if (($payment_zones_total > 1) || ($shipping_zones_total > 1)) {
-                $comment = sprintf($this->language->get('error_country_duplicate'), $order_info['payment_zone'], $order_info['shipping_zone']);
+                $comment = sprintf($this->language->get('error_zone_duplicate'), $order_info['payment_zone'], $order_info['shipping_zone']);
                         
                 $this->model_checkout_prder->addHistory($order_info['order_id'], $order_info['order_status_id'], $comment);
             }

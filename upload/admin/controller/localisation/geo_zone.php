@@ -365,17 +365,15 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['zone_to_geo_zone'] as $value) {
 				$zones = $this->model_localisation_zone->getZonesByCountryId($value['country_id']);
 				
-				$zone_ids = array_column($zones, 'zone_id');
-				
-				if ($zone_ids && in_array($value['zone_id'], $zone_ids)) {
-					$zone_info = $this->model_localisation_zone->getZone($value['zone_id']);
-					
-					if ($zone_info) {
+				if ($zones) {
+					$zone_ids = array_column($zones, 'zone_id');
+
+					if ($zone_ids && in_array($value['zone_id'], $zone_ids)) {
 						$zones_total = $this->model_loocalisation_zone->getTotalZonesByZoneName($zone_info['name']);
-						
+
 						if ($zones_total > 1) {
 							$this->error['zone_duplicates'][$value['zone_id']] = sprintf($this->language->get('error_zone_duplicate'), html_entity_decode($zone_info['name'], ENT_QUOTES, 'UTF-8'));
-						}
+						}						
 					}
 				}
 			}

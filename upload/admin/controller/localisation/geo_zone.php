@@ -362,6 +362,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		
 		// Validate duplicated zones.
 		if (isset($this->request->post['zone_to_geo_zone'])) {
+			$this->load->model('localisation/zone');
+			
 			foreach ($this->request->post['zone_to_geo_zone'] as $value) {
 				$zones = $this->model_localisation_zone->getZonesByCountryId($value['country_id']);
 				

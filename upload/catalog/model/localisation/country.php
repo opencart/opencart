@@ -20,4 +20,10 @@ class Country extends \Opencart\System\Engine\Model {
 
 		return $country_data;
 	}
+	
+	public function getTotalCountriesByName($name) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "country` WHERE LCASE(`name`) = '" . $this->db->escape(strtolower($name)) . "'");
+
+		return $query->row['total'];
+	}
 }

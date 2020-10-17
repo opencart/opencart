@@ -356,18 +356,11 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
-		}
-		
-		// Validate duplicated zones.
-		if (isset($this->request->post['country_id'])) {
-			$zones = $this->model_localisation_zone->getZonesByCountryId($this->request->post['country_id']);
+		} else {
+			$zones_total = $this->model_localisation_zone->getTotalZonesByName($this->request->post['name']);
 			
-			if ($zones) {
-				$zone_names = array_column($zones, 'name');
-				
-				if (in_array(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'), $zone_names)) {
-					$this->error['zone_duplicate'] = $this->language->get('error_zone_duplicate');	
-				}
+			if ($zones_total > 1) {
+				$this->error['zone_duplicate'] = $this->language->get('error_zone_duplicate');	
 			}
 		}
 

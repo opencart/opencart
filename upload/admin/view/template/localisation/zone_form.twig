@@ -18,7 +18,7 @@
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
-    {% endif %}
+    {% endif %}    
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
@@ -29,6 +29,9 @@
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
               {% if error_name %}
                 <div class="invalid-tooltip">{{ error_name }}</div>
+              {% endif %}
+              {% if error_zone_duplicate %}
+                <div class="invalid-tooltip">{{ error_zone_duplicate }}</div>
               {% endif %}
             </div>
           </div>

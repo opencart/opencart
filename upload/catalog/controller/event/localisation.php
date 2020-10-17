@@ -2,6 +2,36 @@
 namespace Opencart\Application\Controller\Event;
 class Localisation extends \Opencart\System\Engine\Controller {
     // catalog/model/checkout/order/addHistory/after
+    public function validateCountry(&$route, &$args, &$output) {
+        $this->load->model('checkout/order');
+        
+        $order_info = $this->model_checkout_order->getOrder($args[0]);
+        
+        if ($order_info) {
+            $this->load->language('checkout/checkout');
+            
+            $this->load->model('localisation/country');
+            
+            $countries = $this->model_localisation_country->getCountries();
+            
+            if ($countries) {
+                $country_names = array_column($countries, 'name');
+                $countries_acv = array_count_values($country_names);
+            
+                if ($countries_acv) {
+                    foreach ($countries_acv as $countries_total => $country_name) {
+                        if ($countries_total > 1 && (($order_info['payment_country'] == $country_name) || ($order_info['shipping_country'] == $country_name))) {
+                            $comment = sprintf($this->language->get('error_duplicate_country'), $country_name);
+                        
+                            $this->model_checkout_prder->addHistory($order_info['order_id'], $order_info['order_status_id'], $comment);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // catalog/model/checkout/order/addHistory/after
     public function validateZone(&$route, &$args, &$output) {
         $this->load->model('checkout/order');
         

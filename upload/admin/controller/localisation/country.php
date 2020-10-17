@@ -261,6 +261,12 @@ class Country extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['error_name'] = '';
 		}
+		
+		if (isset($this->error['country_duplicate'])) {
+			$data['error_country_duplicate'] = $this->error['country_duplicate'];
+		} else {
+			$data['error_country_duplicate'] = '';	
+		}
 
 		$url = '';
 
@@ -362,6 +368,12 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 128)) {
 			$this->error['name'] = $this->language->get('error_name');
+		} else {
+			$countries_total = $this->model_localisation_country->getTotalCountriesByName($this->request->post['name']);
+			
+			if ($countries_total > 1) {
+				$this->error['country_duplicate'] = $this->language->get('error_country_duplicate');
+			}
 		}
 
 		return !$this->error;

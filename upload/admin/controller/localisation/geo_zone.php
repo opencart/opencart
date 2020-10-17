@@ -362,8 +362,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		
 		// Validate duplicated zones.
 		if (isset($this->request->post['zone_to_geo_zone'])) {
-			$zones_data = [];
-			
 			foreach ($this->request->post['zone_to_geo_zone'] as $value) {
 				$zones = $this->model_localisation_zone->getZonesByCountryId($value['country_id']);
 				
@@ -373,24 +371,10 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 					$zone_info = $this->model_localisation_zone->getZone($value['zone_id']);
 					
 					if ($zone_info) {
-						$zones_data[] = $value['zone_id'];
-					}
-				}
-				
-				if ($zones_data) {
-					$zones_acv = array_count_values($zones_data);
-					
-					if ($zones_acv) {
-						$this->load->model('localisation/zone');
+						$zones_total = $this->model_loocalisation_zone->getTotalZonesByZoneName($zone_info['name']);
 						
-						foreach ($zones_acv as $total_zones => $zone_id) {
-							if ($total_zones > 1) {
-								$zone_info = $this->model_localisation_zone->getZone($zone_id);
-								
-								if ($zone_info) {
-									$this->error['zone_duplicates'][$zone_id] = sprintf($this->language->get('error_zone_duplicate'), html_entity_decode($zone_info['name'], ENT_QUOTES, 'UTF-8'));
-								}
-							}
+						if ($zones_total > 1) {
+							$this->error['zone_duplicates'][$value['zone_id']] = sprintf($this->language->get('error_zone_duplicate'), html_entity_decode($zone_info['name'], ENT_QUOTES, 'UTF-8'));
 						}
 					}
 				}

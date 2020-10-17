@@ -27,3 +27,4 @@ $_['error_default']          = 'Warning: This zone cannot be deleted as it is cu
 $_['error_store']            = 'Warning: This zone cannot be deleted as it is currently assigned to %s stores!';
 $_['error_address']          = 'Warning: This zone cannot be deleted as it is currently assigned to %s address book entries!';
 $_['error_zone_to_geo_zone'] = 'Warning: This zone cannot be deleted as it is currently assigned to %s zones to geo zones!';
+$_['error_zone_duplicate']   = 'Error: The entered zone name already exists!';

@@ -91,5 +91,5 @@ $_['error_no_shipping']              = 'Warning: No Shipping options are availab
 $_['error_payment']                  = 'Warning: Payment method required!';
 $_['error_no_payment']               = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
 $_['error_custom_field']             = '%s required!';
-$_['error_duplicate_zone']           = 'Warning: Duplicated zone name: %s has been found in localisation!';
-$_['error_duplicate_country']        = 'Warning: Duplicated country name: %s has been found in localisation!';
+$_['error_zone_duplicate']           = 'Warning: Duplicated zone name: %s has been found in localisation!';
+$_['error_country_duplicate']        = 'Warning: Duplicated payment country name: %s or shipping country name %s have been found in localisation!';

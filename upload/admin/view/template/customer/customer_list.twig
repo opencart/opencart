@@ -127,7 +127,7 @@
                                 <div class="dropdown-divider"></div>
                                 <h6 class="dropdown-header">{{ text_login }}</h6>
                                 {% for store in customer.store %}
-                                  <a href="{{ store.href }}" target="_blank" class="dropdown-item text-primary"><i class="fas fa-lock"></i> {% if customer.store_id == store.store_id %}<span class="text-primary">{{ store.name }}</span>{% else %}{{ store.name }}{% endif %}</a>
+                                  <a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fas fa-lock"></i> {% if customer.store_id == store.store_id %}<span class="text-primary">{{ store.name }}</span>{% else %}{{ store.name }}{% endif %}</a>
                                 {% endfor %}
                               </div>
                             </div>

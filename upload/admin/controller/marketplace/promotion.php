@@ -7,7 +7,7 @@ class Promotion extends \Opencart\System\Engine\Controller {
 		if (!$promotion) {
 			$curl = curl_init();
 
-			curl_setopt($curl, CURLOPT_URL, OPENCART_SERVER . 'index.php?route=api/recommended&type=' . substr($this->request->get['route'], strrpos($this->request->get['route'], '/') + 1));
+			curl_setopt($curl, CURLOPT_URL, OPENCART_SERVER . 'index.php?route=api/recommended&type=' . substr($this->request->get['route'], strrpos($this->request->get['route'], '/') + 1) . '&version=' . VERSION);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

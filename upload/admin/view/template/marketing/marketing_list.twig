@@ -27,29 +27,33 @@
     {% endif %}
     <div class="row">
       <div id="filter-marketing" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
-        <div class="card">
-          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
-          <div class="card-body">
-            <div class="form-group">
-              <label for="input-name" class="col-form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-            </div>
-            <div class="form-group">
-              <label for="input-code" class="col-form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-            </div>
-            <div class="form-group">
-              <label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" class="form-control"/>
-                <div class="input-group-append">
-                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+        <form action="index.php">
+          <input type="hidden" name="route" value="marketing/marketing">
+          <input type="hidden" name="user_token" value="{{ user_token }}">
+          <div class="card">
+            <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="input-name" class="col-form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label for="input-code" class="col-form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
+                <div class="input-group date">
+                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" class="form-control"/>
+                  <div class="input-group-append">
+                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+              <div class="form-group text-right">
+                <button type="submit" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
       <div class="col-md-9 col-sm-12">
         <div class="card">
@@ -105,31 +109,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#button-filter').on('click', function() {
-	url = 'index.php?route=marketing/marketing&user_token={{ user_token }}';
-
-	var filter_name = $('input[name=\'filter_name\']').val();
-
-	if (filter_name) {
-		url += '&filter_name=' + encodeURIComponent(filter_name);
-	}
-
-	var filter_code = $('input[name=\'filter_code\']').val();
-
-	if (filter_code) {
-		url += '&filter_code=' + encodeURIComponent(filter_code);
-	}
-
-	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-
-	if (filter_date_added) {
-		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
-	}
-
-	location = url;
-});
-//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	'format': 'YYYY-MM-DD',

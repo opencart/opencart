@@ -27,44 +27,48 @@
     {% endif %}
     <div class="row">
       <div id="filter-review" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
-        <div class="card">
-          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
-          <div class="card-body">
-            <div class="form-group">
-              <label for="input-product" class="col-form-label">{{ entry_product }}</label> <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-            </div>
-            <div class="form-group">
-              <label for="input-author" class="col-form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
-            </div>
-            <div class="form-group">
-              <label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
-                <option value=""></option>
-                {% if filter_status == '1' %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                {% else %}
-                  <option value="1">{{ text_enabled }}</option>
-                {% endif %}
-                {% if filter_status == '0' %}
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% else %}
-                  <option value="0">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
-                <div class="input-group-append">
-                  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+        <form action="index.php">
+          <input type="hidden" name="route" value="catalog/review">
+          <input type="hidden" name="user_token" value="{{ user_token }}">
+          <div class="card">
+            <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="input-product" class="col-form-label">{{ entry_product }}</label> <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label for="input-author" class="col-form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
+                  <option value=""></option>
+                  {% if filter_status == '1' %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                  {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                  {% endif %}
+                  {% if filter_status == '0' %}
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% else %}
+                    <option value="0">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
+                <div class="input-group date">
+                  <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+                  <div class="input-group-append">
+                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+              <div class="form-group text-right">
+                <button type="submit" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
       <div class="col-md-9 col-sm-12">
         <div class="card">
@@ -120,37 +124,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#button-filter').on('click', function() {
-	url = 'index.php?route=catalog/review&user_token={{ user_token }}';
-
-	var filter_product = $('input[name=\'filter_product\']').val();
-
-	if (filter_product) {
-		url += '&filter_product=' + encodeURIComponent(filter_product);
-	}
-
-	var filter_author = $('input[name=\'filter_author\']').val();
-
-	if (filter_author) {
-		url += '&filter_author=' + encodeURIComponent(filter_author);
-	}
-
-	var filter_status = $('select[name=\'filter_status\']').val();
-
-	if (filter_status !== '') {
-		url += '&filter_status=' + encodeURIComponent(filter_status);
-	}
-
-	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-
-	if (filter_date_added) {
-		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
-	}
-
-	location = url;
-});
-//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	'format': 'YYYY-MM-DD',

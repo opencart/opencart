@@ -19,6 +19,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('localisation/currency');
+		
+		$this->load->model('localisation/country');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_currency->addCurrency($this->request->post);
@@ -51,6 +53,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('localisation/currency');
+		
+		$this->load->model('localisation/country');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_localisation_currency->editCurrency($this->request->get['currency_id'], $this->request->post);
@@ -83,7 +87,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('localisation/currency');
-
+		
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $currency_id) {
 				$this->model_localisation_currency->deleteCurrency($currency_id);
@@ -119,7 +123,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/currency');
 
 		if ($this->validateRefresh()) {
-			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '/currency', $this->config->get('config_currency'));
+			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '|currency', $this->config->get('config_currency'));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -296,7 +300,13 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (isset($this->error['title'])) {
 			$data['error_title'] = $this->error['title'];
 		} else {
-			$data['error_title'] = '';
+			$data['error_title'] = array();
+		}
+		
+		if (isset($this->error['country'])) {
+			$data['error_country'] = $this->error['country'];
+		} else {
+			$data['error_country'] = array();
 		}
 
 		if (isset($this->error['code'])) {
@@ -338,17 +348,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['cancel'] = $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['currency_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);
+		
+		if (isset($this->request->get['currency_id'])) {
+			$currency_id = (int)$this->request->get['currency_id'];
+		} else {
+			$currency_id = 0;
 		}
 
-		if (isset($this->request->post['title'])) {
-			$data['title'] = $this->request->post['title'];
-		} elseif (!empty($currency_info)) {
-			$data['title'] = $currency_info['title'];
-		} else {
-			$data['title'] = '';
+		if (isset($this->request->get['currency_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);
 		}
 
 		if (isset($this->request->post['code'])) {
@@ -398,6 +406,20 @@ class Currency extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['status'] = '';
 		}
+		
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->request->post['currency_description'])) {
+			$data['currency_description'] = $this->request->post['currency_description'];
+		} elseif (!empty($currency_info)) {
+			$data['currency_description'] = $this->model_localisation_currency->getDescriptions($currency_id);
+		} else {
+			$data['currency_description'] = [];
+		}
+		
+		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -410,9 +432,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-
-		if ((utf8_strlen($this->request->post['title']) < 3) || (utf8_strlen($this->request->post['title']) > 32)) {
-			$this->error['title'] = $this->language->get('error_title');
+		
+		foreach ($this->request->post['currency_description'] as $language_id => $value) {
+			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 32)) {
+				$this->error['title'][$language_id] = $this->language->get('error_title');
+			}
+			
+			if (!filter_var($value['country_id'], FILTER_VALIDATE_INT)) {
+				$this->error['country'][$language_id] = $this->language->get('error_country');
+			}
 		}
 
 		if (utf8_strlen($this->request->post['code']) != 3) {

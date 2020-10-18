@@ -12,7 +12,7 @@ class Currency extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		$this->cache->delete('currency.' . $this->config->get('config_language_id'));
+		$this->cache->delete('currency.' . (int)$this->config->get('config_language_id'));
 		
 		return $currency_id;
 	}
@@ -27,20 +27,20 @@ class Currency extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		$this->cache->delete('currency.' . $this->config->get('config_language_id'));
+		$this->cache->delete('currency.' . (int)$this->config->get('config_language_id'));
 	}
 
 	public function editValueByCode($code, $value) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `value` = '" . (float)$value . "', `date_modified` = NOW() WHERE `code` = '" . $this->db->escape((string)$code) . "'");
 
-		$this->cache->delete('currency');
+		$this->cache->delete('currency.' . (int)$this->config->get('config_language_id'));
 	}
 
 	public function deleteCurrency($currency_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");		
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_description` WHERE `currency_id` = '" . (int)$currency_id . "'");
 		
-		$this->cache->delete('currency.' . $this->config->get('config_language_id'));
+		$this->cache->delete('currency.' . (int)$this->config->get('config_language_id'));
 	}
 
 	public function getCurrency($currency_id) {
@@ -94,7 +94,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 			return $query->rows;
 		} else {
-			$currency_data = $this->cache->get('currency.' . $this->config->get('config_language_id'));
+			$currency_data = $this->cache->get('currency.' . (int)$this->config->get('config_language_id'));
 
 			if (!$currency_data) {
 				$currency_data = [];
@@ -117,7 +117,7 @@ class Currency extends \Opencart\System\Engine\Model {
 					];
 				}
 
-				$this->cache->set('currency.' . $this->config->get('config_language_id'), $currency_data);
+				$this->cache->set('currency.' . (int)$this->config->get('config_language_id'), $currency_data);
 			}
 
 			return $currency_data;

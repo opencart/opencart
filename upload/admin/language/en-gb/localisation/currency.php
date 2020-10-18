@@ -8,6 +8,7 @@ $_['text_list']            = 'Currency List';
 $_['text_add']             = 'Add Currency';
 $_['text_edit']            = 'Edit Currency';
 $_['text_iso']             = 'You can find a full list of ISO currency codes and settings <a href="http://www.xe.com/iso4217.php" target="_blank" class="alert-link">here</a>.';
+$_['text_form']			   = 'Currency List';
 
 // Column
 $_['column_title']         = 'Currency Title';
@@ -19,6 +20,8 @@ $_['column_action']        = 'Action';
 
 // Entry
 $_['entry_title']          = 'Currency Title';
+$_['entry_push']	       = 'Currency Symbol Space';
+$_['entry_country']		   = 'Country Name';
 $_['entry_code']           = 'Code';
 $_['entry_value']          = 'Value';
 $_['entry_symbol_left']    = 'Symbol Left';
@@ -30,9 +33,14 @@ $_['entry_status']         = 'Status';
 $_['help_code']            = 'Do not change if this is your default currency.';
 $_['help_value']           = 'The value of your default currency in the current currency unit. Set to 1 for your default currency.';
 
+// Tab
+$_['tab_general']		   = 'General';
+$_['tab_data']			   = 'Data';
+
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify currencies!';
 $_['error_title']          = 'Currency Title must be between 3 and 32 characters!';
+$_['error_country']		   = 'Please select a country!';
 $_['error_code']           = 'Currency Code must contain 3 characters!';
 $_['error_default']        = 'Warning: This currency cannot be deleted as it is currently assigned as the default store currency!';
 $_['error_store']          = 'Warning: This currency cannot be deleted as it is currently assigned to %s stores!';

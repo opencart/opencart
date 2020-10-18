@@ -809,6 +809,8 @@ INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUE
 (40, 'localisation_zone_history', 'catalog/model/checkout/order/addHistory/after', 'event/localisation/validateZone', 1);
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
 (41, 'localisation_country_history', 'catalog/model/checkout/order/addHistory/after', 'event/localisation/validateCountry', 1);
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`, `status`) VALUES
+(42, 'localisation_currency_history', 'admin/model/localisation/currency/deleteCurrency/after', 'event/currency/validateCurrency', 1);
 
 -----------------------------------------------------------
 

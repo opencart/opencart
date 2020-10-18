@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
-        <button type="submit" form="form-currency" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <button type="submit" form="form-currency" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -19,72 +19,146 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_iso }}</div>
+	<div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_iso }}</div>
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
-      <div class="card-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-currency">
-          <div class="form-group row required">
-            <label for="input-title" class="col-sm-2 col-form-label">{{ entry_title }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control"/>
-              {% if error_title %}
-                <div class="invalid-tooltip">{{ error_title }}</div>
-              {% endif %}
+      <div class="card-body">        
+        <form method="post" enctype="multipart/form-data" id="form-currency">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-data" data-toggle="tab" class="nav-link">{{ tab_data }}</a></li>            
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <ul class="nav nav-tabs" id="language">
+                {% for language in languages %}
+                  <li class="nav-item"><a href="#language{{ language.language_id }}" data-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <div class="tab-content">
+                {% for language in languages %}
+                  <div class="tab-pane" id="language{{ language.language_id }}">
+				    <div class="form-group row required">
+					  <label for="input-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+					  <div class="col-sm-10">
+						<div class="input-group">
+						  <input type="text" name="currency_description[{{ language.language_id }}][title]" value="{{ currency_description[language.language_id] ? currency_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control"/>                      
+						</div>
+						{% if error_title[language.language_id] %}
+						  <div class="invalid-tooltip">{{ error_title[language.language_id] }}</div>
+						{% endif %}
+					  </div>
+					</div>
+                    <div class="form-group row required">
+                      <label for="input-country{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_country }}</label>
+                      <div class="col-sm-10">
+                        <div class="input-group">
+						  <select name="currency_description[{{ language.language_id }}][country_id]" id="input-country{{ language.language_id }}" class="form-control"/>
+						    <option value="">{{ text_select }}</option>
+					        {% for country in countries %}
+							  {% if country.country_id == currency_description[{{ language.language_id }}].country_id %}
+							    <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+							  {% else %}
+							    <option value="{{ country.country_id }}">{{ country.name }}</option>
+							  {% endif %}
+						    {% endfor %}
+						  </select>
+                        </div>
+						{% if error_country[language.language_id] %}
+						  <div class="invalid-tooltip">{{ error_country[language.language_id] }}</div>
+						{% endif %}
+                      </div>
+                    </div>					
+                    <div class="form-group row">
+                      <label for="input-push{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_push }}</label>
+                      <div class="col-sm-10">
+                        <div class="input-group">
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="input-push{{ language.language_id }}">
+							{% if currency_description[{{ language.language_id }}].push == 1 %}
+							  <label class="btn btn-outline-secondary active"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="1" checked="checked"/> {{ text_yes }}</label>
+							  <label class="btn btn-outline-secondary"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="0"/> {{ text_no }}</label>
+							{% else %}
+							  <label class="btn btn-outline-secondary"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="1"/> {{ text_yes }}</label>
+							  <label class="btn btn-outline-secondary active"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="0" checked="checked"/> {{ text_no }}</label>
+							{% endif %}
+						  </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
             </div>
-          </div>
-          <div class="form-group row required">
-            <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-              {% if error_code %}
-                <div class="invalid-tooltip">{{ error_code }}</div>
-              {% endif %}
-              <small class="form-text text-muted">{{ help_code }}</small>
+			
+            <div id="tab-data" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_title }}</legend>                
+                <div class="form-group row required">
+                  <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>                      
+                    </div>
+                    <small class="form-text text-muted">{{ help_code }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="input-symbol-left" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" id="input-symbol-left" class="form-control"/>                      
+                    </div>                    
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="input-symbol-right" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" id="input-symbol-right" class="form-control"/>                      
+                    </div>                    
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="input-decimal-place" class="col-sm-2 col-form-label">{{ entry_decimal_place }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="decimal_place" value="{{ decimal_place }}" placeholder="{{ entry_decimal_place }}" id="input-decimal-place" class="form-control"/>                      
+                    /div>                    
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>                      
+                    </div>
+                    <small class="form-text text-muted">{{ help_value }}</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+				  <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+				  <div class="col-sm-10">
+					<select name="status" id="input-status" class="form-control">
+					  {% if status %}
+					    <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                      {% else %}
+                        <option value="1">{{ text_enabled }}</option>
+                         <option value="0" selected="selected">{{ text_disabled }}</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
             </div>
-          </div>
-          <div class="form-group row">
-            <label for="input-symbol-left" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" id="input-symbol-left" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="input-symbol-right" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" id="input-symbol-right" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="input-decimal-place" class="col-sm-2 col-form-label">{{ entry_decimal_place }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="decimal_place" value="{{ decimal_place }}" placeholder="{{ entry_decimal_place }}" id="input-decimal-place" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
-              <small class="form-text text-muted">{{ help_value }}</small>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
-            <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                {% if status %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <option value="0">{{ text_disabled }}</option>
-                {% else %}
-                  <option value="1">{{ text_enabled }}</option>
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
-            </div>
+			
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#language li:first-child a').tab('show');
+//--></script>
 {{ footer }}

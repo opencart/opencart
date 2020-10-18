@@ -8,7 +8,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	public function getCurrencies() {
-		$currency_data = $this->cache->get('currency');
+		$currency_data = $this->cache->get('currency.' . $this->config->get('config_language_id'));
 
 		if (!$currency_data) {
 			$currency_data = [];
@@ -29,7 +29,7 @@ class Currency extends \Opencart\System\Engine\Model {
 				];
 			}
 
-			$this->cache->set('currency', $currency_data);
+			$this->cache->set('currency.' . $this->config->get('config_language_id'), $currency_data);
 		}
 
 		return $currency_data;

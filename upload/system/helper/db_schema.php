@@ -952,7 +952,7 @@ function db_schema() {
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
 	];
-
+	
 	$tables[] = [
 		'name' => 'currency',
 		'field' => [
@@ -961,11 +961,6 @@ function db_schema() {
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
-			],
-			[
-				'name' => 'title',
-				'type' => 'varchar(32)',
-				'not_null' => true
 			],
 			[
 				'name' => 'code',
@@ -1005,6 +1000,45 @@ function db_schema() {
 		],
 		'primary' => [
 			'currency_id'
+		],
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'currency_description',
+		'field' => [
+			[
+				'name' => 'currency_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'title',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],			
+			[
+				'name' => 'push',
+				'type' => 'int(1)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'currency_id',
+			'country_id',
+			'language_id'
 		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',

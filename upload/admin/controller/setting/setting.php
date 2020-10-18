@@ -1065,15 +1065,28 @@ class Setting extends \Opencart\System\Engine\Controller {
 	}
 
 	public function theme() {
-		// This is only here for compatibility with old themes.
-		if ($this->request->get['theme'] == 'theme_default') {
-			$theme = $this->config->get('theme_default_directory');
+		$theme = basename($this->request->get['theme']);
+
+		if ($theme == 'basic') {
+			$image = HTTP_CATALOG . 'view/template/image/' . $theme . '.png';
 		} else {
-			$theme = basename($this->request->get['theme']);
+			$this->load->model('setting/extension');
+
+			$extension_info = $this->model_setting_extension->getExtensionByCode('theme', $theme);
+
+			if ($extension_info) {
+				$image = DIR_EXTENSION . $extension_info['extension'] . '/catalog/view/template/image/' . $extension_info['code'] . '.png';
+			}
 		}
 
-		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/image/' . $theme . '.png')) {
-			$this->response->setOutput(HTTP_CATALOG . 'catalog/view/theme/' . $theme . '/image/' . $theme . '.png');
+		if (is_file($image)) {
+			$this->response->setOutput($image);
+		} else {
+			$this->response->setOutput(HTTP_CATALOG . 'image/no_image.png');
+		}
+
+		if (is_file(DIR_EXTENSION . $extension_info['extension'] . '/catalog/view/template/image/' . $extension_info['code'] . '.png')) {
+			$this->response->setOutput(DIR_EXTENSION . $extension_info['extension'] . '/catalog/view/template/image/' . $extension_info['code'] . '.png');
 		} else {
 			$this->response->setOutput(HTTP_CATALOG . 'image/no_image.png');
 		}

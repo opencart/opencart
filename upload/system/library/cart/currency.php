@@ -6,18 +6,23 @@ class Currency {
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
+		$this->load = $registry->get('load');
+		
+		$this->load->model('localisation/currency');
+		
+		$currencies = $this->model_localisation_currency->getCurrencies();
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency`");
-
-		foreach ($query->rows as $result) {
-			$this->currencies[$result['code']] = [
-				'currency_id'   => $result['currency_id'],
-				'title'         => $result['title'],
-				'symbol_left'   => $result['symbol_left'],
-				'symbol_right'  => $result['symbol_right'],
-				'decimal_place' => $result['decimal_place'],
-				'value'         => $result['value']
-			];
+		if ($currencies) {
+			foreach ($currencies as $currency) {
+				$this->currencies[$currency['code']] = [
+					'currency_id'   => $currency['currency_id'],
+					'title'         => $currency['title'],
+					'symbol_left'   => $currency['symbol_left'],
+					'symbol_right'  => $currency['symbol_right'],
+					'decimal_place' => $currency['decimal_place'],
+					'value'         => $currency['value']
+				];
+			}
 		}
 	}
 

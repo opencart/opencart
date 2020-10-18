@@ -6,8 +6,9 @@ class Currency {
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
+		$this->config = $registry->get('config');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency`");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c LEFT JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND cd.`country_id` = '" . (int)$this->config->get('config_country_id') . "'");
 
 		foreach ($query->rows as $result) {
 			$this->currencies[$result['code']] = [
@@ -16,6 +17,7 @@ class Currency {
 				'symbol_left'   => $result['symbol_left'],
 				'symbol_right'  => $result['symbol_right'],
 				'decimal_place' => $result['decimal_place'],
+				'push'		=> $result['push'],
 				'value'         => $result['value']
 			];
 		}
@@ -25,6 +27,7 @@ class Currency {
 		$symbol_left = $this->currencies[$currency]['symbol_left'];
 		$symbol_right = $this->currencies[$currency]['symbol_right'];
 		$decimal_place = $this->currencies[$currency]['decimal_place'];
+		$push = $this->currencies[$currency]['push'];
 
 		if (!$value) {
 			$value = $this->currencies[$currency]['value'];
@@ -41,13 +44,13 @@ class Currency {
 		$string = '';
 
 		if ($symbol_left) {
-			$string .= $symbol_left;
+			$string .= $symbol_left . ($push ? ' ' : '');
 		}
 
 		$string .= number_format($amount, (int)$decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 
 		if ($symbol_right) {
-			$string .= $symbol_right;
+			$string .= ($push ? ' ' : '') . $symbol_right;
 		}
 
 		return $string;

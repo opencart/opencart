@@ -106,7 +106,7 @@ class Currency extends \Opencart\System\Engine\Model {
 						'currency_id'   => $result['currency_id'],
 						'country_id'	=> $result['country_id'],						
 						'title'         => $result['title'],
-						'push'			=> $result['push'],
+						'push'		=> $result['push'],
 						'code'          => $result['code'],
 						'symbol_left'   => $result['symbol_left'],
 						'symbol_right'  => $result['symbol_right'],

@@ -303,10 +303,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$data['error_title'] = [];
 		}
 		
-		if (isset($this->error['currency_description'])) {
-			$data['error_currency_description'] = $this->error['currency_description'];
+		if (isset($this->error['country'])) {
+			$data['error_country'] = $this->error['country'];
 		} else {
-			$data['error_currency_description'] = [];
+			$data['error_country'] = [];
 		}
 
 		if (isset($this->error['code'])) {
@@ -445,7 +445,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			if (isset($value['country'])) {
 				foreach ($value['country'] as $country_row => $country) {
 					if (!filter_var($country['country_id'], FILTER_VALIDATE_INT)) {
-						$this->error['currency_description'][$language_id]['country'][$country_row] = $this->language->get('error_country');
+						$this->error['country'][$language_id] = $this->language->get('error_country');
 					}
 				}
 			}

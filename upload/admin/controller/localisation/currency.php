@@ -404,23 +404,27 @@ class Currency extends \Opencart\System\Engine\Controller {
 		} elseif (!empty($currency_info)) {
 			$data['status'] = $currency_info['status'];
 		} else {
-			$data['status'] = '';
+			$data['status'] = 0;
 		}
 		
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
-		$data['currency_country'] = [];
-
 		if (isset($this->request->post['currency_description'])) {
 			$data['currency_description'] = $this->request->post['currency_description'];
 		} elseif (!empty($currency_info)) {
 			$data['currency_description'] = $this->model_localisation_currency->getDescriptions($currency_id);
-			
-			$data['currency_country'] = $this->model_localisation_currency->getCountriesByCurrencyId($currency_id);
 		} else {
 			$data['currency_description'] = [];
+		}
+		
+		if (isset($this->request->post['currency_country'])) {
+			$data['currency_country'] = $this->request->post['currency_country'];
+		} elseif (!empty($currency_info)) {
+			$data['currency_country'] = $this->model_localisation_currency->getCountriesByCurrencyId($currency_id);
+		} else {
+			$data['currency_country'] = [];
 		}
 		
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -445,7 +449,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			if (isset($value['country'])) {
 				foreach ($value['country'] as $country_row => $country) {
 					if (!filter_var($country['country_id'], FILTER_VALIDATE_INT)) {
-						$this->error['country'][$language_id] = $this->language->get('error_country');
+						$this->error['country'][$language_id] = $this->language->get('error_country');						
 					}
 				}
 			}
@@ -453,6 +457,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		if (utf8_strlen($this->request->post['code']) != 3) {
 			$this->error['code'] = $this->language->get('error_code');
+		}
+		
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
 		return !$this->error;

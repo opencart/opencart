@@ -427,6 +427,14 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$data['currency_country'] = [];
 		}
 		
+		if (isset($this->request->post['currency_push'])) {
+			$data['currency_push'] = $this->request->post['currency_push'];
+		} elseif (!empty($currency_info)) {
+			$data['currency_push'] = $this->model_localisation_currency->getCountriesPushByCurrencyId($currency_id);
+		} else {
+			$data['currency_push'] = [];
+		}
+		
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		$data['header'] = $this->load->controller('common/header');

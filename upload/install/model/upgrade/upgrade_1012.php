@@ -27,7 +27,7 @@ class Upgrade1012 extends \Opencart\System\Engine\Model {
 				if ($query->num_rows) {
 					foreach ($currencies->rows as $currency) {
 						foreach ($languages->rows as $language) {
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `title` = '" . $this->db->escape($currency['title']) . "', `currency_id` = '" . (int)$currency['currency_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `push` = '0'");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `symbol_left` = '" . $this->db->escape((string)$currency['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$currency['symbol_right']) . "', `title` = '" . $this->db->escape((string)$currency['title']) . "', `currency_id` = '" . (int)$currency['currency_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `push` = '0'");
 							
 							$currency_id = $this->db->getLastId();
 							
@@ -37,6 +37,8 @@ class Upgrade1012 extends \Opencart\System\Engine\Model {
 				}
 				
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "currency` DROP COLUMN `title`");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "currency` DROP COLUMN `symbol_left`");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "currency` DROP COLUMN `symbol_right`");
 			}
 		}
 	}

@@ -966,17 +966,7 @@ function db_schema() {
 				'name' => 'code',
 				'type' => 'varchar(3)',
 				'not_null' => true
-			],
-			[
-				'name' => 'symbol_left',
-				'type' => 'varchar(12)',
-				'not_null' => true
-			],
-			[
-				'name' => 'symbol_right',
-				'type' => 'varchar(12)',
-				'not_null' => true
-			],
+			],			
 			[
 				'name' => 'decimal_place',
 				'type' => 'char(1)',
@@ -1023,11 +1013,20 @@ function db_schema() {
 				'name' => 'title',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			]			
+			],
+			[
+				'name' => 'symbol_left',
+				'type' => 'varchar(12)',
+				'not_null' => true
+			],
+			[
+				'name' => 'symbol_right',
+				'type' => 'varchar(12)',
+				'not_null' => true
+			]
 		],
 		'primary' => [
-			'currency_id',
-			'country_id',
+			'currency_id',			
 			'language_id'
 		],
 		'engine' => 'MyISAM',

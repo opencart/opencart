@@ -38,127 +38,127 @@
               <div class="tab-content">
                 {% for language in languages %}
                   <div class="tab-pane" id="language{{ language.language_id }}">
-				    <div class="form-group row required">
-					  <label for="input-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
-					  <div class="col-sm-10">
-						<div class="input-group">
-						  <input type="text" name="currency_description[{{ language.language_id }}][title]" value="{{ currency_description[language.language_id] ? currency_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control"/>                      
-						</div>
-						{% if error_title[language.language_id] %}
-						  <div class="invalid-tooltip">{{ error_title[language.language_id] }}</div>
-						{% endif %}
+		            <div class="form-group row required">
+		              <label for="input-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+		                <div class="col-sm-10">
+						  <div class="input-group">
+						    <input type="text" name="currency_description[{{ language.language_id }}][title]" value="{{ currency_description[language.language_id] ? currency_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control"/>                      
+						  </div>
+						  {% if error_title[language.language_id] %}
+						    <div class="invalid-tooltip">{{ error_title[language.language_id] }}</div>
+						  {% endif %}
+					    </div>
 					  </div>
-					</div>
-                    <div class="form-group row required">
-                      <label class="col-sm-2 col-form-label">{{ entry_country }}</label>
+                      <div class="form-group row required">
+                        <label class="col-sm-2 col-form-label">{{ entry_country }}</label>
+                          <div class="col-sm-10">
+                            <div class="input-group">
+                              <div id="currency-country{{ language.language_id }}" class="form-control" style="height: 150px; overflow: auto;">
+							  {% set country_row = 0 %}
+                              {% for country in countries %}
+                                <label class="form-check">
+                                  % if currency_country and country.country_id in currency_country %}
+                                    <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}[country_id]" value="{{ country.country_id }}" checked="checked" class="form-check-input"/>
+                                    {{ country.name }}
+                                  {% else %}
+                                    <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}[country_id]" value="{{ country.country_id }}" class="form-check-input"/>
+                                    {{ country.name }}
+                                  {% endif %}
+                                </label>
+							    {% set country_row = country_row + 1 %}
+                              {% endfor %}
+                            </div>                    
+                          </div>
+						  {% if error_country[language.language_id] %}
+						    <div class="invalid-tooltip">{{ error_country[language.language_id] }}</div>
+						  {% endif %}
+                        </div>
+                      </div>					
+                      <div class="form-group row">
+                        <label for="input-push{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_push }}</label>
                         <div class="col-sm-10">
                           <div class="input-group">
-                            <div id="currency-country{{ language.language_id }}" class="form-control" style="height: 150px; overflow: auto;">
-							{% set country_row = 0 %}
-                            {% for country in countries %}
-                              <label class="form-check">
-                                {% if currency_country and country.country_id in currency_country %}
-                                  <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}[country_id]" value="{{ country.country_id }}" checked="checked" class="form-check-input"/>
-                                  {{ country.name }}
-                                {% else %}
-                                  <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}[country_id]" value="{{ country.country_id }}" class="form-check-input"/>
-                                  {{ country.name }}
-                                {% endif %}
-                              </label>
-							  {% set country_row = country_row + 1 %}
-                            {% endfor %}
-                          </div>                    
-                        </div>
-						{% if error_country[language.language_id] %}
-						  <div class="invalid-tooltip">{{ error_country[language.language_id] }}</div>
-						{% endif %}
-                      </div>
-                    </div>					
-                    <div class="form-group row">
-                      <label for="input-push{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_push }}</label>
-                      <div class="col-sm-10">
-                        <div class="input-group">
-                          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="input-push{{ language.language_id }}">
-							{% if currency_description[{{ language.language_id }}].push == 1 %}
-							  <label class="btn btn-outline-secondary active"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="1" checked="checked"/> {{ text_yes }}</label>
-							  <label class="btn btn-outline-secondary"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="0"/> {{ text_no }}</label>
-							{% else %}
-							  <label class="btn btn-outline-secondary"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="1"/> {{ text_yes }}</label>
-							  <label class="btn btn-outline-secondary active"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="0" checked="checked"/> {{ text_no }}</label>
-							{% endif %}
-						  </div>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" id="input-push{{ language.language_id }}">
+							  {% if currency_description[{{ language.language_id }}].push == 1 %}
+							    <label class="btn btn-outline-secondary active"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="1" checked="checked"/> {{ text_yes }}</label>
+							    <label class="btn btn-outline-secondary"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="0"/> {{ text_no }}</label>
+							  {% else %}
+							    <label class="btn btn-outline-secondary"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="1"/> {{ text_yes }}</label>
+							    <label class="btn btn-outline-secondary active"><input type="radio" name="currency_description[{{ language.language_id }}][push]" value="0" checked="checked"/> {{ text_no }}</label>
+							  {% endif %}
+						    </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                {% endfor %}
+                  {% endfor %}
+                </div>
               </div>
+			
+              <div id="tab-data" class="tab-pane">
+                <fieldset>
+                  <legend>{{ text_title }}</legend>                
+                  <div class="form-group row required">
+                    <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>                      
+                      </div>
+                      <small class="form-text text-muted">{{ help_code }}</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="input-symbol-left" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" id="input-symbol-left" class="form-control"/>                      
+                      </div>                    
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="input-symbol-right" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" id="input-symbol-right" class="form-control"/>                      
+                      </div>                    
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="input-decimal-place" class="col-sm-2 col-form-label">{{ entry_decimal_place }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="decimal_place" value="{{ decimal_place }}" placeholder="{{ entry_decimal_place }}" id="input-decimal-place" class="form-control"/>                      
+                    </div>                    
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>                      
+                      </div>
+                      <small class="form-text text-muted">{{ help_value }}</small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+				    <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+				      <div class="col-sm-10">
+					    <select name="status" id="input-status" class="form-control">
+					    {% if status %}
+					      <option value="1" selected="selected">{{ text_enabled }}</option>
+                          <option value="0">{{ text_disabled }}</option>
+                        {% else %}
+                          <option value="1">{{ text_enabled }}</option>
+                          <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {% endif %}
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+			  </div>
+			
             </div>
-			
-            <div id="tab-data" class="tab-pane">
-              <fieldset>
-                <legend>{{ text_title }}</legend>                
-                <div class="form-group row required">
-                  <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>                      
-                    </div>
-                    <small class="form-text text-muted">{{ help_code }}</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="input-symbol-left" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" id="input-symbol-left" class="form-control"/>                      
-                    </div>                    
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="input-symbol-right" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" id="input-symbol-right" class="form-control"/>                      
-                    </div>                    
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="input-decimal-place" class="col-sm-2 col-form-label">{{ entry_decimal_place }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="decimal_place" value="{{ decimal_place }}" placeholder="{{ entry_decimal_place }}" id="input-decimal-place" class="form-control"/>                      
-                    /div>                    
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>                      
-                    </div>
-                    <small class="form-text text-muted">{{ help_value }}</small>
-                  </div>
-                </div>
-                <div class="form-group row">
-				  <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
-				    <div class="col-sm-10">
-					  <select name="status" id="input-status" class="form-control">
-					  {% if status %}
-					    <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
-                      {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
-                      {% endif %}
-                      </select>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-			</div>
-			
-          </div>
         </form>
       </div>
     </div>

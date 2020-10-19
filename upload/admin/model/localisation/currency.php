@@ -86,7 +86,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	public function getCurrencies($data = []) {
 		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (c.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'";
 
 			$sort_data = [
 				'title',
@@ -128,7 +128,7 @@ class Currency extends \Opencart\System\Engine\Model {
 			if (!$currency_data) {
 				$currency_data = [];
 
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "' ORDER cd.`title` ASC");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (c.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "' ORDER cd.`title` ASC");
 
 				foreach ($query->rows as $result) {
 					$currency_data[$result['code']] = [
@@ -169,7 +169,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	public function getCountriesByCurrencyId($currency_id) {
 		$country_currency_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency_to_country` c2c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (cd.`currency_id` = c2c.`currency_id`) WHERE c2c.`currency_id` = '" . (int)$currency_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency_to_country` c2c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c2c.`currency_id` = cd.`currency_id`) WHERE c2c.`currency_id` = '" . (int)$currency_id . "'");
 
 		foreach ($query->rows as $result) {
 			$country_currency_data[$result['language_id']] = [
@@ -183,7 +183,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	public function getCountriesPushByCurrencyId($currency_id) {
 		$country_push_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency_to_country_push` c2cp INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (cd.`currency_id` = c2cp.`currency_id`) WHERE c2cp.`currency_id` = '" . (int)$currency_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency_to_country_push` c2cp INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c2cp.`currency_id` = cd.`currency_id`) WHERE c2cp.`currency_id` = '" . (int)$currency_id . "'");
 
 		foreach ($query->rows as $result) {
 			$country_push_data[$result['language_id']] = [
@@ -195,7 +195,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCurrencies() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) LEFT JOIN `" . DB_PREFIX . "currency_to_country_push` c2cp ON (c2cp.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (c.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'");
 
 		return $query->row['total'];
 	}

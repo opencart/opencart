@@ -1015,11 +1015,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'country_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -1039,6 +1034,29 @@ function db_schema() {
 			'currency_id',
 			'country_id',
 			'language_id'
+		],
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+	
+	$tables[] = [
+		'name' => 'currency_to_country',
+		'field' => [
+			[
+				'name' => 'currency_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'currency_id',
+			'country_id'
 		],
 		'engine' => 'MyISAM',
 		'charset' => 'utf8',

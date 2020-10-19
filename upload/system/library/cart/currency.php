@@ -8,7 +8,7 @@ class Currency {
 		$this->language = $registry->get('language');
 		$this->config = $registry->get('config');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c LEFT JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) LEFT JOIN `" . DB_PREFIX . "currency_to_country c2c ON (c2c.`currency_id` = cd.`currency_id`) WHERE c.`status` = '1' AND cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'");
+		$query = $this->db->query("SELECT *, c2cp.`country_id` AS `push` FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country c2c ON (c.`currency_id` = c2c.`currency_id`) LEFT JOIN `" . DB_PREFIX . "currency_to_country_push` c2cp ON (c.`currency_id` = c2cp.`currency_id`) WHERE c.`status` = '1' AND cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "' AND c2cp.`country_id` = c2c.`country_id`");
 
 		foreach ($query->rows as $result) {
 			$this->currencies[$result['code']] = [

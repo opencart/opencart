@@ -1069,7 +1069,8 @@ function db_schema() {
 			[
 				'name' => 'country_id',
 				'type' => 'int(11)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => '0'
 			]
 		],
 		'primary' => [

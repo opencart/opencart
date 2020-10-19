@@ -17,7 +17,7 @@ class Currency {
 				'symbol_left'   => $result['symbol_left'],
 				'symbol_right'  => $result['symbol_right'],
 				'decimal_place' => $result['decimal_place'],
-				'push'			=> $result['push'],
+				'push'		=> $result['push'],
 				'value'         => $result['value']
 			];
 		}

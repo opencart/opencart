@@ -1023,12 +1023,7 @@ function db_schema() {
 				'name' => 'title',
 				'type' => 'varchar(32)',
 				'not_null' => true
-			],			
-			[
-				'name' => 'push',
-				'type' => 'int(1)',
-				'not_null' => true
-			]
+			]			
 		],
 		'primary' => [
 			'currency_id',
@@ -1042,6 +1037,29 @@ function db_schema() {
 	
 	$tables[] = [
 		'name' => 'currency_to_country',
+		'field' => [
+			[
+				'name' => 'currency_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'currency_id',
+			'country_id'
+		],
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+	
+	$tables[] = [
+		'name' => 'currency_to_country_push',
 		'field' => [
 			[
 				'name' => 'currency_id',

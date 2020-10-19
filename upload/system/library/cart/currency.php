@@ -17,7 +17,7 @@ class Currency {
 				'symbol_left'   => $result['symbol_left'],
 				'symbol_right'  => $result['symbol_right'],
 				'decimal_place' => $result['decimal_place'],
-				'push'		=> ($result['push'] && ($result['push'] == $result['country_id']) ? $result['push'] : 0),
+				'push'		=> ($result['push'] && ($result['push'] == $result['country_id']) ? 1 : 0),
 				'value'         => $result['value']
 			];
 		}

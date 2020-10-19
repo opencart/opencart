@@ -300,13 +300,13 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (isset($this->error['title'])) {
 			$data['error_title'] = $this->error['title'];
 		} else {
-			$data['error_title'] = array();
+			$data['error_title'] = [];
 		}
 		
-		if (isset($this->error['country'])) {
-			$data['error_country'] = $this->error['country'];
+		if (isset($this->error['currency_description'])) {
+			$data['error_currency_description'] = $this->error['currency_description'];
 		} else {
-			$data['error_country'] = array();
+			$data['error_currency_description'] = [];
 		}
 
 		if (isset($this->error['code'])) {
@@ -442,8 +442,12 @@ class Currency extends \Opencart\System\Engine\Controller {
 				$this->error['title'][$language_id] = $this->language->get('error_title');
 			}
 			
-			if (!filter_var($value['country_id'], FILTER_VALIDATE_INT)) {
-				$this->error['country'][$language_id] = $this->language->get('error_country');
+			if (isset($value['country'])) {
+				foreach ($value['country'] as $country_row => $country) {
+					if (!filter_var($country['country_id'], FILTER_VALIDATE_INT)) {
+						$this->error['currency_description'][$language_id]['country'][$country_row] = $this->language->get('error_country');
+					}
+				}
 			}
 		}
 

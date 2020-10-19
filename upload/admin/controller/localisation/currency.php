@@ -356,7 +356,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['currency_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);
+			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);			
 		}
 
 		if (isset($this->request->post['code'])) {
@@ -410,11 +410,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
+		
+		$data['currency_country'] = [];
 
 		if (isset($this->request->post['currency_description'])) {
 			$data['currency_description'] = $this->request->post['currency_description'];
 		} elseif (!empty($currency_info)) {
 			$data['currency_description'] = $this->model_localisation_currency->getDescriptions($currency_id);
+			
+			$data['currency_country'] = $this->model_localisation_currency->getCountriesByCurrencyId($currency_id);
 		} else {
 			$data['currency_description'] = [];
 		}

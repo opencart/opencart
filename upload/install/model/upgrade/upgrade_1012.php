@@ -27,7 +27,11 @@ class Upgrade1012 extends \Opencart\System\Engine\Model {
 				if ($query->num_rows) {
 					foreach ($currencies->rows as $currency) {
 						foreach ($languages->rows as $language) {
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `title` = '" . $this->db->escape($currency['title']) . "', `currency_id` = '" . (int)$currency['currency_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `country_id` = '" . (int)$query->row['value'] . "', `push` = '0'");
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `title` = '" . $this->db->escape($currency['title']) . "', `currency_id` = '" . (int)$currency['currency_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `push` = '0'");
+							
+							$currency_id = $this->db->getLastId();
+							
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_to_country` SET `currency_id` = '" . (int)$currency_id . "', `country_id` = '" . (int)$query->row['value'] . "'");
 						}
 					}
 				}

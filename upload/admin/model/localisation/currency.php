@@ -8,11 +8,17 @@ class Currency extends \Opencart\System\Engine\Model {
 		
 		if (isset($data['currency_description'])) {
 			foreach ($data['currency_description'] as $language_id => $value) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `title` = '" . $this->db->escape($value['title']) . "', `language_id` = '" . (int)$language_id . "', `push` = '" . (int)$value['push'] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `title` = '" . $this->db->escape((string)$value['title']) . "', `language_id` = '" . (int)$language_id . "'");
 				
 				if (isset($value['country'])) {
 					foreach ($value['country'] as $country) {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_to_country` SET `currency_id` = '" . (int)$currency_id . "', `country_id` = '" . (int)$country['country_id'] . "'");
+					}
+				}
+				
+				if (!empty($value['push'])) {
+					foreach ($value['push'] as $country) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_to_country_push` SET `currency_id` = '" . (int)$currency_id . "', `country_id` = '" . (int)$country['country_id'] . "'");
 					}
 				}
 			}
@@ -25,16 +31,24 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	public function editCurrency($currency_id, $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");		
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_description` WHERE `currency_id` = '" . (int)$currency_id . "'");
+		
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_description` WHERE `currency_id` = '" . (int)$currency_id . "'");		
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_to_country`  WHERE `currency_id` = '" . (int)$currency_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_to_country_push`  WHERE `currency_id` = '" . (int)$currency_id . "'");
 		
 		if (isset($data['currency_description'])) {
 			foreach ($data['currency_description'] as $language_id => $value) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `title` = '" . $this->db->escape($value['title']) . "', `language_id` = '" . (int)$language_id . "', `push` = '" . (int)$value['push'] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `title` = '" . $this->db->escape((string)$value['title']) . "', `language_id` = '" . (int)$language_id . "'");
 				
 				if (isset($value['country'])) {
 					foreach ($value['country'] as $country) {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_to_country` SET `currency_id` = '" . (int)$currency_id . "', `country_id` = '" . (int)$country['country_id'] . "'");
+					}
+				}
+				
+				if (!empty($value['push'])) {
+					foreach ($value['push'] as $country) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_to_country_push` SET `currency_id` = '" . (int)$currency_id . "', `country_id` = '" . (int)$country['country_id'] . "'");
 					}
 				}
 			}
@@ -53,6 +67,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");		
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_description` WHERE `currency_id` = '" . (int)$currency_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_to_country` WHERE `currency_id` = '" . (int)$currency_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_to_country_push` WHERE `currency_id` = '" . (int)$currency_id . "'");
 		
 		$this->cache->delete('currency.' . (int)$this->config->get('config_language_id'));
 	}
@@ -71,7 +86,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 	public function getCurrencies($data = []) {
 		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "currency` c LEFT JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) LEFT JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'";
 
 			$sort_data = [
 				'title',
@@ -113,14 +128,13 @@ class Currency extends \Opencart\System\Engine\Model {
 			if (!$currency_data) {
 				$currency_data = [];
 
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c LEFT JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) LEFT JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "' ORDER cd.`title` ASC");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "' ORDER cd.`title` ASC");
 
 				foreach ($query->rows as $result) {
 					$currency_data[$result['code']] = [
 						'currency_id'   => $result['currency_id'],
 						'country_id'	=> $result['country_id'],						
 						'title'         => $result['title'],
-						'push'		=> $result['push'],
 						'code'          => $result['code'],
 						'symbol_left'   => $result['symbol_left'],
 						'symbol_right'  => $result['symbol_right'],
@@ -145,8 +159,7 @@ class Currency extends \Opencart\System\Engine\Model {
 
 		foreach ($query->rows as $result) {
 			$currency_description_data[$result['language_id']] = [
-				'title'             => $result['title'],			
-				'push'              => $result['push']
+				'title'             => $result['title']				
 			];
 		}
 
@@ -156,23 +169,45 @@ class Currency extends \Opencart\System\Engine\Model {
 	public function getCountriesByCurrencyId($currency_id) {
 		$country_currency_data = [];
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency_to_country` WHERE `currency_id` = '" . (int)$currency_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency_to_country` c2c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (cd.`currency_id` = c2c.`currency_id`) WHERE c2c.`currency_id` = '" . (int)$currency_id . "'");
 
 		foreach ($query->rows as $result) {
-			$country_currency_data[] = $result['country_id'];
+			$country_currency_data[$result['language_id']] = [
+				'country_id'             => $result['country_id']
+			];
 		}
 
 		return $country_currency_data;
 	}
+	
+	public function getCountriesPushByCurrencyId($currency_id) {
+		$country_push_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency_to_country_push` c2cp INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (cd.`currency_id` = c2cp.`currency_id`) WHERE c2cp.`currency_id` = '" . (int)$currency_id . "'");
+
+		foreach ($query->rows as $result) {
+			$country_push_data[$result['language_id']] = [
+				'country_id'             => $result['country_id']
+			];
+		}
+
+		return $country_push_data;
+	}
 
 	public function getTotalCurrencies() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency` c LEFT JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) LEFT JOIN `" . DB_PREFIX . "currency_to_country_push` c2cp ON (c2cp.`currency_id` = c2c.`currency_id`) WHERE cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "'");
 
 		return $query->row['total'];
 	}
 	
 	public function getTotalCountriesByCurrencyId($currency_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency_to_country` WHERE `currency_id` = '" . (int)$currency_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency_to_country` c2c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (cd.`currency_id` = c2c.`currency_id`) WHERE c2c.`currency_id` = '" . (int)$currency_id . "' AND cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row['total'];
+	}
+	
+	public function getTotalCountriesPushByCurrencyId($currency_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency_to_country_push` c2cp INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (cd.`currency_id` = c2cp.`currency_id`) WHERE c2cp.`currency_id` = '" . (int)$currency_id . "' AND cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

@@ -2,13 +2,13 @@
 namespace Opencart\Application\Model\Localisation;
 class Currency extends \Opencart\System\Engine\Model {
 	public function addCurrency($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW()");
 
 		$currency_id = $this->db->getLastId();
 		
 		if (isset($data['currency_description'])) {
 			foreach ($data['currency_description'] as $language_id => $value) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `title` = '" . $this->db->escape((string)$value['title']) . "', `language_id` = '" . (int)$language_id . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `symbol_left` = '" . $this->db->escape((string)$value['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$value['symbol_right']) . "', `title` = '" . $this->db->escape((string)$value['title']) . "', `language_id` = '" . (int)$language_id . "'");
 				
 				if (isset($value['country'])) {
 					foreach ($value['country'] as $country) {
@@ -30,7 +30,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	public function editCurrency($currency_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");		
+		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");		
 		
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_description` WHERE `currency_id` = '" . (int)$currency_id . "'");		
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency_to_country`  WHERE `currency_id` = '" . (int)$currency_id . "'");
@@ -38,7 +38,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		
 		if (isset($data['currency_description'])) {
 			foreach ($data['currency_description'] as $language_id => $value) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `title` = '" . $this->db->escape((string)$value['title']) . "', `language_id` = '" . (int)$language_id . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "currency_description` SET `currency_id` = '" . (int)$currency_id . "', `symbol_left` = '" . $this->db->escape((string)$value['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$value['symbol_right']) . "', `title` = '" . $this->db->escape((string)$value['title']) . "', `language_id` = '" . (int)$language_id . "'");
 				
 				if (isset($value['country'])) {
 					foreach ($value['country'] as $country) {
@@ -159,7 +159,9 @@ class Currency extends \Opencart\System\Engine\Model {
 
 		foreach ($query->rows as $result) {
 			$currency_description_data[$result['language_id']] = [
-				'title'             => $result['title']				
+				'title'             => $result['title'],
+				'symbol_left'	    => $result['symbol_left'],
+				'symbol_right'	    => $result['symbol_right']
 			];
 		}
 

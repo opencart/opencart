@@ -40,32 +40,32 @@
                   <div class="tab-pane" id="language{{ language.language_id }}">
 		            <div class="form-group row required">
 		              <label for="input-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
-		                <div class="col-sm-10">
-						  <div class="input-group">
-						    <input type="text" name="currency_description[{{ language.language_id }}][title]" value="{{ currency_description[language.language_id] ? currency_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control"/>                      
-						  </div>
-						  {% if error_title[language.language_id] %}
-						    <div class="invalid-tooltip">{{ error_title[language.language_id] }}</div>
-						  {% endif %}
+		              <div class="col-sm-10">
+					    <div class="input-group">
+					      <input type="text" name="currency_description[{{ language.language_id }}][title]" value="{{ currency_description[language.language_id] ? currency_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control"/>                      
 					    </div>
+					    {% if error_title[language.language_id] %}
+					      <div class="invalid-tooltip">{{ error_title[language.language_id] }}</div>
+					    {% endif %}
 					  </div>
-                      <div class="form-group row required">
-                        <label class="col-sm-2 col-form-label">{{ entry_country }}</label>
-                          <div class="col-sm-10">
-                            <div class="input-group">
-                              <div id="currency-country{{ language.language_id }}" class="form-control" style="height: 150px; overflow: auto;">
-							  {% set country_row = 0 %}
-                              {% for country in countries %}
-                                <label class="form-check">
-                                  % if currency_country and country.country_id in currency_country %}
-                                    <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}][country_id]" value="{{ country.country_id }}" checked="checked" class="form-check-input"/>
-                                    {{ country.name }}
-                                  {% else %}
-                                    <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}][country_id]" value="{{ country.country_id }}" class="form-check-input"/>
-                                    {{ country.name }}
-                                  {% endif %}
-                                </label>
-							    {% set country_row = country_row + 1 %}
+					</div>
+                    <div class="form-group row required">
+                      <label class="col-sm-2 col-form-label">{{ entry_country }}</label>
+                      <div class="col-sm-10">
+                        <div class="input-group">
+                          <div id="currency-country{{ language.language_id }}" class="form-control" style="height: 150px; overflow: auto;">
+						    {% set country_row = 0 %}							
+                            {% for country in countries %}
+                              <label class="form-check">
+                                {% if currency_country and country.country_id in currency_country %}
+                                  <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}][country_id]" value="{{ country.country_id }}" checked="checked" class="form-check-input"/>
+                                  {{ country.name }}
+                                {% else %}
+                                  <input type="checkbox" name="currency_description[{{ language.language_id }}][country][{{ country_row }}][country_id]" value="{{ country.country_id }}" class="form-check-input"/>
+                                  {{ country.name }}
+                                {% endif %}
+                              </label>
+							  {% set country_row = country_row + 1 %}							  
                               {% endfor %}
                             </div>                    
                           </div>
@@ -82,7 +82,7 @@
 							  {% set push_row = 0 %}
                               {% for country in countries %}
                                 <label class="form-check">
-                                  % if currency_push and country.country_id in currency_push %}
+                                  {% if currency_push and country.country_id in currency_push %}
                                     <input type="checkbox" name="currency_description[{{ language.language_id }}][push][{{ push_row }}][country_id]" value="{{ country.country_id }}" checked="checked" class="form-check-input"/>
                                     {{ country.name }}
                                   {% else %}
@@ -96,6 +96,22 @@
                           </div>						  
                         </div>
                       </div>
+					  <div class="form-group row">
+		                <label for="input-symbol-left{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
+		                <div class="col-sm-10">
+					      <div class="input-group">
+					        <input type="text" name="currency_description[{{ language.language_id }}][symbol_left]" value="{{ currency_description[language.language_id] ? currency_description[language.language_id].symbol_left }}" placeholder="{{ entry_symbol_left }}" id="input-symbol-left{{ language.language_id }}" class="form-control"/>                      
+					      </div>					      
+					    </div>
+					  </div>
+					  <div class="form-group row">
+		                <label for="input-symbol-right{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
+		                <div class="col-sm-10">
+					      <div class="input-group">
+					        <input type="text" name="currency_description[{{ language.language_id }}][symbol_right]" value="{{ currency_description[language.language_id] ? currency_description[language.language_id].symbol_right }}" placeholder="{{ entry_symbol_right }}" id="input-symbol-right{{ language.language_id }}" class="form-control"/>                      
+					      </div>					      
+					    </div>
+					  </div>
                     </div>
                   {% endfor %}
                 </div>
@@ -112,23 +128,7 @@
                       </div>
                       <small class="form-text text-muted">{{ help_code }}</small>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="input-symbol-left" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <input type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" id="input-symbol-left" class="form-control"/>                      
-                      </div>                    
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="input-symbol-right" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
-                    <div class="col-sm-10">
-                      <div class="input-group">
-                        <input type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" id="input-symbol-right" class="form-control"/>                      
-                      </div>                    
-                    </div>
-                  </div>
+                  </div>                  
                   <div class="form-group row">
                     <label for="input-decimal-place" class="col-sm-2 col-form-label">{{ entry_decimal_place }}</label>
                     <div class="col-sm-10">

@@ -13,7 +13,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		if (!$currency_data) {
 			$currency_data = [];
 
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c LEFT JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) LEFT JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (cd.`currency_id` = c2c.`currency_id`) WHERE c.`status` = '1' AND cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "' ORDER BY cd.`title` ASC");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency` c INNER JOIN `" . DB_PREFIX . "currency_description` cd ON (c.`currency_id` = cd.`currency_id`) INNER JOIN `" . DB_PREFIX . "currency_to_country` c2c ON (c.`currency_id` = c2c.`currency_id`) WHERE c.`status` = '1' AND cd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND c2c.`country_id` = '" . (int)$this->config->get('config_country_id') . "' ORDER BY cd.`title` ASC");
 
 			foreach ($query->rows as $result) {
 				$currency_data[$result['code']] = [

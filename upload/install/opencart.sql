@@ -501,7 +501,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (173, 'Qatar', 'QA', 'QAT', '', 0, 1),
 (174, 'Reunion', 'RE', 'REU', '', 0, 1),
 (175, 'România', 'RO', 'ROM', '', 0, 1),
-(176, 'Russian Federation', 'RU', 'RUS', '', 0, 1),
+(176, 'Russian Federation', 'RU', 'RUS', '{lastname} {firstname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{zone}\r\n{city}\r\n{country}\r\n{postcode}', 1, 1),
 (177, 'Rwanda', 'RW', 'RWA', '', 0, 1),
 (178, 'Saint Kitts and Nevis', 'KN', 'KNA', '', 0, 1),
 (179, 'Saint Lucia', 'LC', 'LCA', '', 0, 1),

@@ -26,7 +26,7 @@
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_admin }}</label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_admin }}">{{ entry_admin }}</span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 {% if module_store_admin %}

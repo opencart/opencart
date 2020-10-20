@@ -21,7 +21,7 @@ class ControllerMarketingContact extends Controller {
 			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['cancel'] = $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 
 		$this->load->model('setting/store');
 

@@ -25,8 +25,9 @@
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ help_code|escape('html') }}</div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="{{ help_code|escape('html') }}">{{ entry_code }}</span></label>
+              <label class="col-sm-2 control-label" for="input-code">{{ entry_code }}</label>
             <div class="col-sm-10">
               <textarea name="module_google_hangouts_code" rows="5" id="input-code" class="form-control">{{ module_google_hangouts_code }}</textarea>
               {% if error_code %}

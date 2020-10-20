@@ -45,7 +45,7 @@ class ControllerExtensionCreditCardSagepayDirect extends Controller {
 			$data['delete'] = $this->url->link('extension/credit_card/sagepay_direct/delete', 'card_id=', true);
 
 			if (isset($this->request->get['page'])) {
-				$page = $this->request->get['page'];
+				$page = (int)$this->request->get['page'];
 			} else {
 				$page = 1;
 			}

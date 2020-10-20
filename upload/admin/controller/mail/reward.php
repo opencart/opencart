@@ -17,7 +17,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 		if (isset($args[2])) {
 			$points = $args[2];
 		} else {
-			$points = '';
+			$points = 0;
 		}
 
 		if (isset($args[3])) {

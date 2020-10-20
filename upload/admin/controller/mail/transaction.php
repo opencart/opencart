@@ -17,13 +17,13 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		if (isset($args[2])) {
 			$amount = $args[2];
 		} else {
-			$amount = '';
+			$amount = 0;
 		}
 		
 		if (isset($args[3])) {
 			$order_id = $args[3];
 		} else {
-			$order_id = '';
+			$order_id = 0;
 		}
 			
 		$this->load->model('customer/customer');

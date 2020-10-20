@@ -288,9 +288,17 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCustomersByCustomerGroupId($customer_group_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+		$this->load->model('customer/customer_group');
+		
+		$customer_group = $this->model_customer_customer_group->getCustomerGroup($customer_group_id);
+		
+		if ($customer_group) {
+			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 
-		return $query->row['total'];
+			return $query->row['total'];
+		} else {
+			return false;	
+		}
 	}
 
 	public function addHistory($customer_id, $comment) {

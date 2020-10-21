@@ -79,11 +79,11 @@ final class Capsule
 
     public function connected()
     {
-        throw new \Exception('Laravel capsule dosent support connected.');
+        throw new \Exception('Laravel capsule dosent support connected method.');
     }
 
     public function __destruct()
     {
-        // close
+        // close connection
     }
 }

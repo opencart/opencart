@@ -69,7 +69,7 @@ final class Capsule
 
     public function countAffected()
     {
-        throw new \Exception('Laravel capsule dosent support count affected.');
+        throw new \Exception('Laravel capsule doesn\'t support count affected.');
     }
 
     public function getLastId()
@@ -79,7 +79,7 @@ final class Capsule
 
     public function connected()
     {
-        throw new \Exception('Laravel capsule dosent support connected method.');
+        throw new \Exception('Laravel capsule doesn\'t support connected method.');
     }
 
     public function __destruct()

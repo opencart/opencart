@@ -1,5 +1,6 @@
 {% if banner %}
   <div class="text-center">{{ banner }}</div>
+  <br/>
 {% endif %}
 {% if extensions %}
   <fieldset>
@@ -15,8 +16,8 @@
         <tbody>
           {% for extension in extensions %}
             <tr>
-              <td class="text-left"><b>{{ extension.name }}</b></td>
-              <td class="text-right"><a href="{{ extension.download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fas fa-download"></i></a></td>
+              <td class="text-left"><a href="{{ extension.href }}">{{ extension.name }}</a></td>
+              <td class="text-right"><a href="{{ extension.download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fas fa-download"></i></a></td>
             </tr>
           {% endfor %}
         </tbody>
@@ -24,3 +25,4 @@
     </div>
   </fieldset>
 {% endif %}
+

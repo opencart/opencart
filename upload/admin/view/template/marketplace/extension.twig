@@ -64,6 +64,42 @@ $('select[name=\'type\']').on('change', function() {
 	});
 });
 
+$('#extension').on('click', '.btn-info', function(e) {
+	e.preventDefault();
+
+	var element = this;
+
+	$.ajax({
+		url: $(element).attr('href'),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			console.log(json);
+
+
+			if (json['error']) {
+				$('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+			}
+
+			if (json['success']) {
+				$('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('#extension').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();
 

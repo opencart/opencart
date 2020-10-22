@@ -119,7 +119,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/currency');
 
 		if ($this->validateRefresh()) {
-			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '/currency', $this->config->get('config_currency'));
+			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '|currency', $this->config->get('config_currency'));
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

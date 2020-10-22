@@ -400,7 +400,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['custom_field']['address'])) {
 			$data['address_custom_field'] = $this->request->post['custom_field']['address'];
-		} elseif (isset($address_info)) {
+		} elseif (isset($address_info['custom_field'])) {
 			$data['address_custom_field'] = $address_info['custom_field'];
 		} else {
 			$data['address_custom_field'] = [];

@@ -38,7 +38,7 @@ $_['text_days_ago']                 = '%s days ago';
 $_['text_week_ago']                 = '%s week ago';
 $_['text_weeks_ago']                = '%s weeks ago';
 $_['text_month_ago']                = '%s month ago';
-$_['text_months_ago']               = '%s onths ago';
+$_['text_months_ago']               = '%s months ago';
 $_['text_year_ago']                 = '%s year ago';
 $_['text_years_ago']                = '%s years ago';
 

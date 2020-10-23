@@ -1,5 +1,4 @@
 <?php
-namespace OpenCart\Application\Language\Account\Account;
 // Heading
 $_['heading_title']       = 'My Account';
 

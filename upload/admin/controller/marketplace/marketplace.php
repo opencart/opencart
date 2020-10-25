@@ -653,8 +653,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			if ($response_info['downloads']) {
 				$this->session->data['extension_download'][$extension_id] = $response_info['downloads'];
 			} else {
-				$this->session->data['extension_download'][$extension_id] = [];
-				$this->session->data['extension_download'][$extension_id] = [];
+				$this->session->data['extension_download'][$extension_id] = [];				
 			}
 
 			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');
@@ -868,7 +867,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						'extension_id'          => $response_info['extension_id'],
 						'extension_download_id' => $response_info['extension_download_id'],
 						'name'                  => $response_info['name'],
-						'code' 				    => basename($response_info['filename'], 'ocmod.zip'),
+						'code' 			=> basename($response_info['filename'], 'ocmod.zip'),
 						'author'                => $response_info['author'],
 						'version'               => $response_info['version'],
 						'link' 					=> ''
@@ -921,7 +920,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
-			$string = 'api/marketplace/addcomment' . "\n";
+			$string = 'api/marketplace/addComment' . "\n";
 			$string .= urlencode($this->config->get('opencart_username')) . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= urlencode(VERSION) . "\n";
@@ -940,7 +939,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);
 
-			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/marketplace/addcomment&extension_id=' . $extension_id . $url);
+			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/marketplace/addComment&extension_id=' . $extension_id . $url);
 
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
@@ -1020,7 +1019,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 					'comment'              => $result['comment'],
 					'date_added'           => $result['date_added'],
 					'reply'                => $result['reply'],
-					'add'                  => $this->url->link('marketplace/marketplace|addcomment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id']),
+					'add'                  => $this->url->link('marketplace/marketplace|addComment', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id']),
 					'refresh'              => $this->url->link('marketplace/marketplace|reply', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&parent_id=' . $result['extension_comment_id'] . '&page=1'),
 					'next'                 => $next
 				];

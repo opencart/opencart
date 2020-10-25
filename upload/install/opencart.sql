@@ -1324,7 +1324,7 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 (1, 'Home'),
 (2, 'Product'),
 (3, 'Category'),
-(4, 'basic'),
+(4, 'Default'),
 (5, 'Manufacturer'),
 (6, 'Account'),
 (7, 'Checkout'),

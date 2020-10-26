@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Application\Controller\Common;
 class Cart extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index($setting) {
 		$this->load->language('common/cart');
 
 		// Totals

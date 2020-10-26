@@ -81,9 +81,6 @@ $('#extension').on('click', '.btn-info', function(e) {
 		success: function(json) {
 			$('.alert-dismissible').remove();
 
-			console.log(json);
-
-
 			if (json['error']) {
 				$('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 			}

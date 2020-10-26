@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Application\Controller\Common;
 class Footer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index($setting) {
 		$this->load->language('common/footer');
 
 		$this->load->model('catalog/information');

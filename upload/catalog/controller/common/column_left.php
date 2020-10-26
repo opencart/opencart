@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Application\Controller\Common;
 class ColumnLeft extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index($setting) {
 		$this->load->model('design/layout');
 
 		if (isset($this->request->get['route'])) {

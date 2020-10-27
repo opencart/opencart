@@ -51,7 +51,7 @@ class Document {
 		return $this->links;
 	}
 
-	public function addStyle($href, $params = array()) {
+	public function addStyle($href, $params = array(), $preload = false) {
 		if ($params) {
 			$new_params = false;
 
@@ -64,7 +64,7 @@ class Document {
 			$params = 'rel="stylesheet" media="screen"';
 		}
 
-		$this->styles[$href] = array(
+		$this->styles[$href . $preload] = array(
 			'href'   => $href,
 			'params' => $params,
 		);
@@ -74,7 +74,7 @@ class Document {
 		return $this->styles;
 	}
 
-	public function addScript($href, $postion = 'header', $params = array()) {
+	public function addScript($href, $postion = 'header', $params = array(), $preload = false) {
 		if ($params) {
 			$new_params = false;
 
@@ -87,7 +87,7 @@ class Document {
 			$params = '';
 		}
 
-		$this->scripts[$postion][$href] = array(
+		$this->scripts[$postion][$href . $preload] = array(
 			'href'   => $href,
 			'params' => $params,
 		);

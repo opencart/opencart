@@ -4,8 +4,6 @@ class Promotion extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/promotion');
 
-		$promotion = $this->cache->get('promotion');
-
 		if (isset($this->request->get['type'])) {
 			$type = $this->request->get['type'];
 		} else {
@@ -13,6 +11,8 @@ class Promotion extends \Opencart\System\Engine\Controller {
 		}
 
 		$promotion = $this->cache->get('promotion.' . $type);
+
+		$promotion = '';
 
 		if (!$promotion) {
 			$curl = curl_init();
@@ -53,8 +53,9 @@ class Promotion extends \Opencart\System\Engine\Controller {
 
 				if (!$extension_download_info) {
 					$data['extensions'][] = [
-						'name' => $result['name'],
-						'href' => $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
+						'name'     => $result['name'],
+						'status'   => $extension_download_info['status'],
+						'href'     => $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
 						'download' => $this->url->link('marketplace/marketplace|download', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . '&extension_download_id=' . $result['extension_download_id'])
 					];
 				}

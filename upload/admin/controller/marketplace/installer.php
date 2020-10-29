@@ -26,33 +26,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$data['filter_extension_download_id'] = '';
 		}
 
-		/*
-		// Code to grab pre installed extensions
-		$extensions = $this->model_setting_extension->getDownloaded('analytics');
-
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/core&version=' . VERSION);
-
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-
-		$response_info = json_decode($response, true);
-
-		foreach ($response_info['extension'] as $extension) {
-			$this->model_setting_extension->addExtension($extension, '');
-		}
-
-		echo VERSION . "\n";
-		echo $response;
-		*/
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -314,6 +287,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$source = $zip->getNameIndex($i);
 
 					// Only extract the contents of the upload folder
+					if ($source)
+
+
 					$destination = str_replace('\\', '/', substr($source, strlen('upload/')));
 
 					$path = '';

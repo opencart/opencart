@@ -1,0 +1,97 @@
+<style type="text/css">
+
+#paypal_smart_button {
+	text-align: {{ button_align }};
+}
+
+#paypal_smart_button_container {
+	{% if button_width %}
+	display: inline-block;
+	width: {{ button_width }};
+	{% endif %}
+}
+
+</style>
+<script type="text/javascript" src="https://www.paypal.com/sdk/js?components=buttons&client-id={{ client_id }}&merchant-id={{ merchant_id }}&currency={{ currency_code }}&intent={{ transaction_method }}&commit=false{% if (environment == 'sandbox') %}&buyer-country=NL{% endif %}" data-partner-attribution-id="{{ partner_id }}"></script>
+<script type="text/javascript">
+
+window.onload = function() {
+	setupPayPalSmartButton();
+};
+
+function setupPayPalSmartButton() {
+	if ($('{{ insert_tag }}').length) {
+		$('{{ insert_tag }}').{{ insert_type }}('<div id="paypal_smart_button" class="buttons clearfix"><div id="paypal_smart_button_container"></div></div>');
+			
+		try {		
+			// Render the PayPal button into #paypal_smart_button_container
+			paypal.Buttons({
+				env: '{{ environment }}',
+				locale: '{{ locale }}',
+				style: {
+					layout: 'horizontal',
+					size: '{{ button_size }}',
+					color: '{{ button_color }}',
+					shape: '{{ button_shape }}',
+					label: '{{ button_label }}',
+					tagline: '{{ button_tagline }}'
+				},
+				// Set up the transaction
+				createOrder: function(data, actions) {
+					order_id = false;
+					
+					$.ajax({
+						method: 'post',
+						url: 'index.php?route=extension/module/paypal_smart_button/createOrder',
+						data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
+						dataType: 'json',
+						async: false,
+						success: function(json) {							
+							showPayPalSmartButtonAlert(json);
+							
+							order_id = json['order_id'];
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+					
+					return order_id;	
+				},
+				// Finalize the transaction
+				onApprove: function(data, actions) {						
+					// Call your server to save the transaction
+					$.ajax({
+						method: 'post',
+						url: 'index.php?route=extension/module/paypal_smart_button/approveOrder',
+						data: {'order_id': data.orderID},
+						dataType: 'json',
+						async: false,
+						success: function(json) {							
+							showPayPalSmartButtonAlert(json);
+							
+							if (json['url']) {
+								location = json['url'];
+							}
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+				}
+			}).render('#paypal_smart_button_container');
+		} catch (error) {
+			console.error('PayPal failed during startup', error);
+		}
+	}
+}
+
+function showPayPalSmartButtonAlert(json) {			
+	if (json['error']) {
+		if (json['error']['warning']) {
+			alert(json['error']['warning']);
+		}
+	}
+}
+
+</script>

@@ -21,6 +21,7 @@ legend {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 15px;
 }
+
 #container {
     min-height: 100%;
     width: 100%;
@@ -387,7 +388,7 @@ div.required .col-form-label:not(span):before, td.required:before {
 
 .image {
     width: 12rem;
- }
+}
 
 .table thead td span[data-toggle="tooltip"]:after, label.col-form-label span:after {
     font-family: 'Font Awesome 5 Free';

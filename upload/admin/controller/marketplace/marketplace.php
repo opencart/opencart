@@ -531,7 +531,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-		$url = '&username=' . urlencode($this->config->get('opencart_username'));
+		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . urlencode(VERSION);
 		$url .= '&extension_id=' . $extension_id;
@@ -831,7 +831,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-			$url = '&username=' . urlencode($this->config->get('opencart_username'));
+			$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . urlencode(VERSION);
 			$url .= '&extension_id=' . $extension_id;
@@ -865,10 +865,10 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 					$this->load->model('setting/extension');
 
 					$extension_data = [
-						'extension_id'          => $response_info['extension_id'],
-						'extension_download_id' => $response_info['extension_download_id'],
+						'extension_id'          => $extension_id,
+						'extension_download_id' => $extension_download_id,
 						'name'                  => $response_info['name'],
-						'code' 				    => basename($response_info['filename'], 'ocmod.zip'),
+						'code' 				    => basename($response_info['filename'], '.ocmod.zip'),
 						'author'                => $response_info['author'],
 						'version'               => $response_info['version'],
 						'link' 					=> ''
@@ -877,7 +877,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 					$json['extension_install_id'] = $this->model_setting_extension->addInstall($extension_data);
 
 					$json['success'] = $this->language->get('text_success');
-
 				} else {
 					$json['redirect'] = $response_info['download'];
 				}

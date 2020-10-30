@@ -287,7 +287,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$source = $zip->getNameIndex($i);
 
 					// Only extract the contents of the upload folder
-					if ($source)
+				//	if ($source)
 
 
 					$destination = str_replace('\\', '/', substr($source, strlen('upload/')));
@@ -316,12 +316,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 					if (substr($destination, 0, 7) == 'system/') {
 						$path = $extension_install_info['code'] . '/' . $destination;
 						$base = DIR_EXTENSION;
-					}
-
-					// system/config > system/config
-					if (substr($destination, 0, 14) == 'system/config/') {
-						$path = substr($destination, 14);
-						$base = DIR_CONFIG;
 					}
 
 					// system/storage/vendor > system/storage/vendor

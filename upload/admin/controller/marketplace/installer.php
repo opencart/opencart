@@ -316,29 +316,50 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$base = substr(DIR_IMAGE, 0, -6);
 					}
 
-					if (substr($destination, 0, 7) == 'system/') {
+					// Add the system directory if it doesn't exist.
+					if ($destination == 'system/') {
 						$path = $extension_install_info['code'] . '/' . $destination;
 						$base = DIR_EXTENSION;
 					}
 
-					// system/storage/vendor > system/storage/vendor
+					// Config
+					if (substr($destination, 0, 14) == 'system/config/') {
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
+					}
+
+					// Helper
+					if (substr($destination, 0, 14) == 'system/helper/') {
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
+					}
+
+					// Library
+					if (substr($destination, 0, 15) == 'system/library/') {
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
+					}
+
+					// We need to store the path differently for vendor folders.
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
-						$path = $destination;
-						$base = substr(DIR_STORAGE . 'vendor/', 0, strrpos(DIR_STORAGE . 'vendor/', 'system/storage/vendor/'));
+						$path = substr($destination, 15);
+						$base = DIR_STORAGE;
 					}
 
 					if ($path) {
-						if (!is_file($base . $path)) {
-							$extract[] = [
-								'source'      => $source,
-								'destination' => $destination,
-								'base'        => $base,
-								'path'        => $path
-							];
-						} else {
+						if (substr($path, -1) != '/' && is_file($base . $path)) {
 							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
 
 							break;
+						}
+
+						if (!is_dir($base . $path)) {
+							$extract[] = [
+								'source'      => $source,
+								'destination' => $destination,
+								'base'       => $base,
+								'path'       => $path
+							];
 						}
 					}
 				}
@@ -405,19 +426,19 @@ class Installer extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$path = '';
 
-				// admin > extension/{directory}/admin
+				// Remove extension directory and files
 				if (substr($result['path'], 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
 					$path = DIR_EXTENSION . $result['path'];
 				}
 
-				// Image
+				// Remove images
 				if (substr($result['path'], 0, 6) == 'image/') {
 					$path = DIR_IMAGE . substr($result['path'], 6);
 				}
 
-				// Storage
-				if (substr($result['path'], 0, 22) == 'system/storage/vendor/') {
-					$path = DIR_STORAGE . 'vendor/' . substr($result['path'], 22);
+				// Remove vendor files
+				if (substr($result['path'], 0, 7) == 'vendor/') {
+					$path = DIR_STORAGE . $result['path'];
 				}
 
 				// Check if the location exists or not

@@ -12,8 +12,24 @@
 */
 namespace Opencart\System\Engine;
 class Config {
+	protected $directory;
+	private $path = [];
 	private $data = [];
-    
+
+	/**
+	 * addPath
+	 *
+	 * @param    string $namespace
+	 * @param    string $directory
+	 */
+	public function addPath($namespace, $directory = '') {
+		if (!$directory) {
+			$this->directory = $namespace;
+		} else {
+			$this->path[$namespace] = $directory;
+		}
+	}
+
 	/**
      * 
      *
@@ -52,7 +68,23 @@ class Config {
      * @param	string	$filename
      */
 	public function load(string $filename) {
-		$file = DIR_CONFIG . $filename . '.php';
+		$file = $this->directory . $filename . '.php';
+
+		$namespace = '';
+
+		$parts = explode('/', $filename);
+
+		foreach ($parts as $part) {
+			if (!$namespace) {
+				$namespace .= $part;
+			} else {
+				$namespace .= '/' . $part;
+			}
+
+			if (isset($this->path[$namespace])) {
+				$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.tpl';
+			}
+		}
 
 		if (is_file($file)) {
 			$_ = [];

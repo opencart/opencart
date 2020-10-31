@@ -63,7 +63,7 @@ class Language extends \Opencart\System\Engine\Model {
 		}
 
 		// Download
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_descriptio`n WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $download) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "download_description` SET `download_id` = '" . (int)$download['download_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($download['name']) . "'");

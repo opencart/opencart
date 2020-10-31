@@ -54,7 +54,7 @@ class Promotion extends \Opencart\System\Engine\Controller {
 				if (!$extension_download_info) {
 					$data['extensions'][] = [
 						'name'     => $result['name'],
-						'status'   => $extension_download_info['status'],
+						//'status'   => $extension_download_info['status'],
 						'href'     => $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
 						'download' => $this->url->link('marketplace/marketplace|download', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id'] . '&extension_download_id=' . $result['extension_download_id'])
 					];

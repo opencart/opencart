@@ -287,10 +287,13 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$source = $zip->getNameIndex($i);
 
 					// Only extract the contents of the upload folder
-				//	if ($source)
+					if (substr($source, 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
+						$remove = strlen($extension_install_info['code'] . '/upload/');
+					} else {
+						$remove = strlen('upload/');
+					}
 
-
-					$destination = str_replace('\\', '/', substr($source, strlen('upload/')));
+					$destination = str_replace('\\', '/', substr($source, $remove));
 
 					$path = '';
 					$base = '';
@@ -309,8 +312,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					// image > image
 					if (substr($destination, 0, 6) == 'image/') {
-						$path = substr($destination, 6);
-						$base = DIR_IMAGE;
+						$path = $destination;
+						$base = substr(DIR_IMAGE, 0, -6);
 					}
 
 					if (substr($destination, 0, 7) == 'system/') {
@@ -320,8 +323,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					// system/storage/vendor > system/storage/vendor
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
-						$path = substr($destination, 22);
-						$base = DIR_STORAGE . 'vendor/';
+						$path = $destination;
+						$base = substr(DIR_STORAGE . 'vendor/', 0, strrpos(DIR_STORAGE . 'vendor/', 'system/storage/vendor/'));
 					}
 
 					if ($path) {
@@ -410,11 +413,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 				// Image
 				if (substr($result['path'], 0, 6) == 'image/') {
 					$path = DIR_IMAGE . substr($result['path'], 6);
-				}
-
-				// Config
-				if (substr($result['path'], 0, 14) == 'system/config/') {
-					$path = DIR_CONFIG . substr($result['path'], 14);
 				}
 
 				// Storage

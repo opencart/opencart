@@ -692,7 +692,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 					// Download
 					if (!$extension_install_info) {
-						$download = $this->url->link('marketplace/marketplace|download', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $result['extension_download_id']);
+						$download = $this->url->link('marketplace/marketplace|download', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&extension_download_id=' . $result['extension_download_id']);
 					} else {
 						$download = '';
 					}

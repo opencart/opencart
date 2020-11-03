@@ -83,11 +83,11 @@ class Promotion extends \Opencart\System\Engine\Controller {
 
 				if (!$extension_install_info || !$extension_install_info['status']) {
 					$data['extensions'][] = [
-						'name'      => $result['name'],
-						'href'      => $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
-						'download'  => $download,
-						'install'   => $install,
-						'delete'    => $delete
+						'name'     => $result['name'],
+						'href'     => $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']),
+						'download' => $download,
+						'install'  => $install,
+						'delete'   => $delete
 					];
 				}
 			}

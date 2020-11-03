@@ -114,7 +114,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['sort_name'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_version'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
-		$data['sort_date_added'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_date_added' . $url);
+		$data['sort_date_added'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
@@ -230,7 +230,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_upload');
 			} else {
 				$json['error'] = sprintf($this->language->get('error_file'), $filename);
 			}
@@ -357,8 +357,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 							$extract[] = [
 								'source'      => $source,
 								'destination' => $destination,
-								'base'       => $base,
-								'path'       => $path
+								'base'        => $base,
+								'path'        => $path
 							];
 						}
 					}
@@ -388,7 +388,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_extension->editStatus($extension_install_id, 1);
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_install');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -456,7 +456,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_extension->editStatus($extension_install_id, 0);
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_uninstall');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -496,7 +496,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_extension->deleteInstall($extension_install_id);
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_delete');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

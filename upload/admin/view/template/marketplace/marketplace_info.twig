@@ -261,7 +261,7 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			if (json['success']) {
 				$('#download').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+				$(element).parent().addClass();
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

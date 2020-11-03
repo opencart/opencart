@@ -690,25 +690,41 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				if (substr($result['filename'], -10) == '.ocmod.zip') {
 					$extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($result['extension_download_id']);
 
-					if ($extension_install_info) {
-						$extension_install_id = $extension_install_info['extension_install_id'];
-						$installed = $extension_install_info['status'];
+					// Download
+					if (!$extension_install_info) {
+						$download = $this->url->link('marketplace/marketplace|download', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $result['extension_download_id']);
 					} else {
-						$extension_install_id = 0;
-						$installed = 0;
+						$download = '';
+					}
+
+			 		// Install
+					if ($extension_install_info && !$extension_install_info['status']) {
+						$install = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_info['extension_install_id']);
+					} else {
+						$install = '';
+					}
+
+					// Uninstall
+					if ($extension_install_info && $extension_install_info['status']) {
+						$uninstall = $this->url->link('marketplace/installer|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_info['extension_install_id']);
+					} else {
+						$uninstall = '';
+					}
+
+					// Delete
+					if ($extension_install_info && !$extension_install_info['status']) {
+						$delete = $this->url->link('marketplace/installer|delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_info['extension_install_id']);
+					} else {
+						$delete = '';
 					}
 
 					$data['downloads'][] = [
-						'extension_install_id'  => $extension_install_id,
-						'extension_download_id' => $result['extension_download_id'],
-						'name'                  => $result['name'],
-						'date_added'            => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-						'status'                => $result['status'],
-						'installed'             => $installed,
-						'download'              => $this->url->link('marketplace/marketplace|download', 'user_token=' . $this->session->data['user_token'] . '&extension_download_id=' . $result['extension_download_id']),
-						'install'               => $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id),
-						'uninstall'             => $this->url->link('marketplace/installer|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id),
-						'delete'                => $this->url->link('marketplace/installer|delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_id)
+						'name'       => $result['name'],
+						'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+						'download'   => $download,
+						'install'    => $install,
+						'uninstall'  => $uninstall,
+						'delete'     => $delete
 					];
 				}
 			}
@@ -931,7 +947,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
 
-			$url = '&username=' . $this->config->get('opencart_username');
+			$url  = '&username=' . $this->config->get('opencart_username');
 			$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 			$url .= '&version=' . VERSION;
 			$url .= '&extension_id=' . $extension_id;

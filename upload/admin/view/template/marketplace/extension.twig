@@ -66,7 +66,7 @@ $('select[name=\'type\']').on('change', function() {
 });
 
 // Download promotion extension
-$('#recommended').on('click', '.btn-primary', function(e) {
+$('#extension').on('click', '#recommended .btn-primary', function(e) {
 	e.preventDefault();
 
 	var element = this;
@@ -83,8 +83,6 @@ $('#recommended').on('click', '.btn-primary', function(e) {
 		success: function(json) {
 			$('.alert-dismissible').remove();
 
-			console.log(json);
-
 			if (json['error']) {
 				$('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 			}
@@ -94,15 +92,13 @@ $('#recommended').on('click', '.btn-primary', function(e) {
 
 				$(element).prop('disabled', true);
 
-				$(element).prop('disabled', true);
+				html  = '<a href="index.php?route=marketplace/installer|install&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa fa-plus-circle fa-fw"></i> {{ text_install }}</a>';
+				html += '<a href="index.php?route=marketplace/installer|delete&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="far fa-trash-alt fa-fw"></i> {{ text_delete }}</a>';
 
 				// Once the extension is downloaded we trigger the install
-				$(element).parent().find('.dropdown-item:first').trigger('click');
+				$(element).parent().find('.dropdown-menu').html(html);
 
 				$(element).parent().find('.dropdown-item:first').trigger('click');
-
-
-
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -120,15 +116,7 @@ $('#extension').on('click', '.dropdown-item', function(e) {
 	$.ajax({
 		url: $(element).attr('href'),
 		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
 		success: function(json) {
-			console.log(json);
-
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
@@ -138,7 +126,7 @@ $('#extension').on('click', '.dropdown-item', function(e) {
 			if (json['success']) {
 				$('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#extension').load($('select[name=\'type\']:selected').val());
+				$('#extension').load($('select[name=\'type\']').val());
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

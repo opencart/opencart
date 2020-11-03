@@ -92,10 +92,14 @@ $('#recommended').on('click', '.btn-primary', function(e) {
 			if (json['success']) {
 				$('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
+				$(element).prop('disabled', true);
+
+				$(element).prop('disabled', true);
+
 				// Once the extension is downloaded we trigger the install
 				$(element).parent().find('.dropdown-item:first').trigger('click');
 
-				$(element).prop('disabled', true);
+
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

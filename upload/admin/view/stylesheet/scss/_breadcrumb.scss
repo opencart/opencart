@@ -7,6 +7,7 @@
   flex-wrap: wrap;
   padding: $breadcrumb-padding-y $breadcrumb-padding-x;
   margin-bottom: $breadcrumb-margin-bottom;
+  @include font-size($breadcrumb-font-size);
   list-style: none;
   background-color: $breadcrumb-bg;
   @include border-radius($breadcrumb-border-radius);
@@ -21,13 +22,13 @@
   color: #1e91cf;
 }
 /* OpenCart End */
-
 .breadcrumb-item {
+
   /* OpenCart Start */
   text-shadow: 0 1px #fff;
   font-size: .9231rem;
-  display: inline-block;
   /* OpenCart End */
+  display: flex;
 
   // The separator between breadcrumbs (by default, a forward-slash: "/")
   + .breadcrumb-item {
@@ -37,8 +38,7 @@
       display: inline-block; // Suppress underlining of the separator in modern browsers
       padding-right: $breadcrumb-item-padding;
       color: $breadcrumb-divider-color;
-      content: $breadcrumb-divider;
-
+      content: escape-svg($breadcrumb-divider);
       /* OpenCart Start */
       font-family: "Font Awesome 5 Free";
       font-weight: 600;

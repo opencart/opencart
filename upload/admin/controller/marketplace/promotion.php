@@ -12,6 +12,8 @@ class Promotion extends \Opencart\System\Engine\Controller {
 
 			if ($pos !== false) {
 				$route = substr($this->request->get['route'], 0, $pos);
+			} else {
+				$route = $this->request->get['route'];
 			}
 
 			$type = substr($route, strrpos($route, '/') + 1);

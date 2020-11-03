@@ -15,8 +15,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$this->export($gdpr_info);
 			}
 
-			// Remove plus processing
-			if ($gdpr_info['action'] == 'remove' && (int)$args[1] == 2) {
+			// Approve plus processing
+			if ($gdpr_info['action'] == 'approve' && (int)$args[1] == 2) {
 				$this->approve($gdpr_info);
 			}
 

@@ -76,15 +76,23 @@ $('#button-payment-method').on('click', function() {
 								$('#button-payment-method').button('reset');
 							},
 							success: function(html) {
-								$('#collapse-checkout-confirm .card-body').html(html);
+								//$('#collapse-checkout-confirm .card-body').html(html);
 
 								$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
 
 								$('#heading-checkout-confirm').trigger('click');
 							},
 							statusCode: {
-								302: function() {
-									console.log('hi');
+								302: function(test) {
+									console.log(test);
+								},
+								401: function(test) {
+									//location = 'checkout/checkout/';
+									console.log(test);
+
+								},
+								200: function(test) {
+									console.log(test);
 								},
 							},
 							error: function(xhr, ajaxOptions, thrownError) {

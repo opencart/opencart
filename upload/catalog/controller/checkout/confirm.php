@@ -4,22 +4,20 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$redirect = '';
 
+		//$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true), 401);
 
-		//$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+		//$this->response->addHeader('HTTP/1.1 401 Unauthorized');
 
 
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+				$this->response->addHeader('HTTP/1.1 401 Unauthorized');
 			}
-
-
-
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+				$this->response->addHeader('HTTP/1.1 401 Unauthorized');
 			}
 
 		} else {

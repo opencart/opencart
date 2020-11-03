@@ -35,6 +35,7 @@
             </div>
           </div>
         </fieldset>
+
         <div id="extension">{{ extension }}</div>
       </div>
     </div>
@@ -64,13 +65,14 @@ $('select[name=\'type\']').on('change', function() {
 	});
 });
 
-$('#extension').on('click', '.btn-info', function(e) {
+// Download promotion extension
+$('#recommended').on('click', '.btn-primary', function(e) {
 	e.preventDefault();
 
 	var element = this;
 
 	$.ajax({
-		url: $(element).attr('href'),
+		url: $(element).attr('value'),
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -90,7 +92,10 @@ $('#extension').on('click', '.btn-info', function(e) {
 			if (json['success']) {
 				$('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).replaceWith('<button type="button" value="' + $(element).val() + '" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+				// Once the extension is downloaded we trigger the install
+				$(element).parent().find('.dropdown-item:first').trigger('click');
+
+				$(element).prop('disabled', true);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -99,7 +104,8 @@ $('#extension').on('click', '.btn-info', function(e) {
 	});
 });
 
-$('#extension').on('click', '.btn-warning', function(e) {
+// Download dropdown
+$('#extension').on('click', '.dropdown-item', function(e) {
 	e.preventDefault();
 
 	var element = this;
@@ -114,19 +120,18 @@ $('#extension').on('click', '.btn-warning', function(e) {
 			$(element).button('reset');
 		},
 		success: function(json) {
-			$('.alert-dismissible').remove();
-
 			console.log(json);
+
+			$('.alert-dismissible').remove();
 
 			if (json['error']) {
 				$('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 			}
 
 			if (json['success']) {
-				$('#extension').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+				$('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-
-
+				$('#extension').load($('select[name=\'type\']:selected').val());
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -135,9 +140,7 @@ $('#extension').on('click', '.btn-warning', function(e) {
 	});
 });
 
-
-
-
+// Install
 $('#extension').on('click', '.btn-success', function(e) {
 	e.preventDefault();
 
@@ -161,6 +164,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 	});
 });
 
+// Uninstall / Delete
 $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 	e.preventDefault();
 

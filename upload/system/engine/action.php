@@ -62,7 +62,13 @@ class Action {
 
 		// Initialize the class
 		if (class_exists($this->class)) {
-			return call_user_func_array([new $this->class($registry), $this->method], $args);
+			$controller = new $this->class($registry);
+		} else {
+			return new \Exception('Error: Could not call route ' . $this->route . '!');
+		}
+
+		if (is_callable([$controller, $this->method])) {
+			return call_user_func_array([$controller, $this->method], $args);
 		} else {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}

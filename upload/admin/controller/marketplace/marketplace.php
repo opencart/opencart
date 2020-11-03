@@ -837,7 +837,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$time = time();
 
 			// We create a hash from the data in a similar method to how amazon does things.
-			$string = 'api/marketplace/download' . "\n";
+			$string  = 'api/marketplace/download' . "\n";
 			$string .= $this->config->get('opencart_username') . "\n";
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";

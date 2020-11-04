@@ -1,10 +1,8 @@
 .breadcrumb {
-  display: flex;
-  /* OpenCart Start */
+  //display: flex;
   display: inline-block;
-  //border: 1px solid #000000;
-  /* OpenCart End */
-  flex-wrap: wrap;
+  //flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: $breadcrumb-padding-y $breadcrumb-padding-x;
   margin-bottom: $breadcrumb-margin-bottom;
   @include font-size($breadcrumb-font-size);
@@ -23,13 +21,13 @@
 }
 /* OpenCart End */
 .breadcrumb-item {
-
   /* OpenCart Start */
   text-shadow: 0 1px #fff;
   font-size: .9231rem;
   /* OpenCart End */
-  display: flex;
 
+  //display: flex;
+  display: inline-block;
   // The separator between breadcrumbs (by default, a forward-slash: "/")
   + .breadcrumb-item {
     padding-left: $breadcrumb-item-padding;

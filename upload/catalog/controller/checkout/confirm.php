@@ -4,7 +4,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$redirect = '';
 
-		//$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true), 401);
+		$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true), 401);
 
 		//$this->response->addHeader('HTTP/1.1 401 Unauthorized');
 

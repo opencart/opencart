@@ -81,7 +81,9 @@ $('#button-payment-method').on('click', function() {
 								$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
 
 								$('#heading-checkout-confirm').trigger('click');
-							},
+
+
+								},
 							statusCode: {
 								302: function(test) {
 									console.log(test);

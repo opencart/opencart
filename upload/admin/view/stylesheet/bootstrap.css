@@ -2982,11 +2982,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
       margin-bottom: -1px; }
 
 .breadcrumb {
-  display: flex;
-  /* OpenCart Start */
   display: inline-block;
-  /* OpenCart End */
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 0 0.65rem;
   margin-bottom: 1rem;
   list-style: none;
@@ -3006,7 +3003,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
   text-shadow: 0 1px #fff;
   font-size: 0.9231rem;
   /* OpenCart End */
-  display: flex; }
+  display: inline-block; }
   .breadcrumb-item + .breadcrumb-item {
     padding-left: 0.3rem; }
     .breadcrumb-item + .breadcrumb-item::before {

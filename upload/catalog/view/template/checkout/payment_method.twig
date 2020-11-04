@@ -52,7 +52,7 @@ $('#button-payment-method').on('click', function() {
 			url: 'index.php?route=checkout/payment_method|save',
 			type: 'post',
 			data: $('#collapse-payment-method input[type=\'radio\']:checked, #collapse-payment-method input[type=\'checkbox\']:checked, #collapse-payment-method textarea'),
-			dataType: 'json',
+			//dataType: 'json',
 			beforeSend: function() {
 				$('#button-payment-method').button('loading');
 			},
@@ -75,27 +75,24 @@ $('#button-payment-method').on('click', function() {
 							complete: function() {
 								$('#button-payment-method').button('reset');
 							},
-							success: function(html) {
-								//$('#collapse-checkout-confirm .card-body').html(html);
+							success: function(output, textStatus, jqXHR) {
+								// If HTML response display
+								if (jqXHR.getResponseHeader('content-type').substr(5, 4) == 'html') {
+									$('#collapse-checkout-confirm .card-body').html(output);
 
-								$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
+									$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
 
-								$('#heading-checkout-confirm').trigger('click');
+									$('#heading-checkout-confirm').trigger('click');
+								}
 
+								// If JSON use eval to turn into object.
+								if (jqXHR.getResponseHeader('content-type').substr(11, 4) == 'json') {
+									var json = eval('(' + output + ')');
 
-								},
-							statusCode: {
-								302: function(test) {
-									console.log(test);
-								},
-								401: function(test) {
-									//location = 'checkout/checkout/';
-									console.log(test);
-
-								},
-								200: function(test) {
-									console.log(test);
-								},
+									if (json['redirect']) {
+										location = json['redirect'];
+									}
+								}
 							},
 							error: function(xhr, ajaxOptions, thrownError) {
 								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -111,4 +108,3 @@ $('#button-payment-method').on('click', function() {
 	});
 });
 //--></script>
-

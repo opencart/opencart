@@ -2,24 +2,18 @@
 namespace Opencart\Application\Controller\Checkout;
 class Confirm extends \Opencart\System\Engine\Controller {
 	public function index() {
-		$redirect = '';
-
-		$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true), 401);
-
-		//$this->response->addHeader('HTTP/1.1 401 Unauthorized');
-
+		$json = [];
 
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$this->response->addHeader('HTTP/1.1 401 Unauthorized');
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$this->response->addHeader('HTTP/1.1 401 Unauthorized');
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
-
 		} else {
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
@@ -28,7 +22,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
-			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
 		if (isset($this->session->data['payment_method'])) {
@@ -36,16 +30,15 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
 
 			if (!$extension_info) {
-				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 			}
 		} else {
-			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
-
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	 		$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 		}
 
 		// Validate minimum quantity requirements.
@@ -61,15 +54,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 				break;
 			}
-
-
 		}
 
-		if (!$redirect) {
+		if (!$json) {
 			$order_data = [];
 
 			$totals = [];
@@ -409,10 +400,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
-		} else {
-			$data['redirect'] = str_replace('&amp;', '&', $redirect);
-		}
 
-		$this->response->setOutput($this->load->view('checkout/confirm', $data));
+			$this->response->setOutput($this->load->view('checkout/confirm', $data));
+		} else {
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+		}
 	}
 }

@@ -21,8 +21,6 @@ class Promotion extends \Opencart\System\Engine\Controller {
 
 		$promotion = $this->cache->get('promotion.' . $type);
 
-		$promotion = '';
-
 		if (!$promotion) {
 			$curl = curl_init();
 

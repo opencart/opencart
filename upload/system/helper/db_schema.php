@@ -3040,6 +3040,44 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'notification',
+		'field' => [
+			[
+				'name' => 'notification_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'title',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'text',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'notification_id'
+		],
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'option',
 		'field' => [
 			[

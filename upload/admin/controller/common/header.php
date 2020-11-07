@@ -39,20 +39,23 @@ class Header extends \Opencart\System\Engine\Controller {
 			// Notifications
 			$data['notifications'] = [];
 
-			/*
-			$this->load->model('setting/notification');
+			$this->load->model('tool/notification');
 
-			$data['notification_total'] = count($this->model_setting_notification->getTotalNotifications());
+			$data['notification_total'] = $this->model_tool_notification->getTotalNotifications(['filter_status' => 0]);
 
-			$results = $this->model_setting_notification->getNotifications();
+			$filter_data = [
+				'start' => 0,
+				'limit' => 5
+			];
+
+			$results = $this->model_tool_notification->getNotifications($filter_data);
 
 			foreach ($results as $result) {
 				$data['notifications'][] = [
 					'title' => $result['title'],
-					'href'  => $this->url->link('tool/notification|info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'])
+					'href'  => $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'])
 				];
 			}
-			*/
 
 			$data['notification_all'] = $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token']);
 

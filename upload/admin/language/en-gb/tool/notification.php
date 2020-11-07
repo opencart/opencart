@@ -7,8 +7,7 @@ $_['text_success']      = 'Success: You have modified notifications!';
 $_['text_list']         = 'Notification List';
 
 // Column
-$_['column_title']      = 'Title';
-$_['column_date_added'] = 'Date Added';
+$_['column_message']    = 'Message';
 $_['column_action']     = 'Action';
 
 // Error

@@ -41,16 +41,20 @@
         <a href="#" id="button-menu" class="d-inline-block d-md-none border-right"><span class="fas fa-bars"></span></a>
         <ul class="nav navbar-nav">
           <li class="nav-item dropdown border-left">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell fa-1x fa-fw"></i></a>
-            <div class="dropdown-menu dropdown-menu-right">
+
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell fa-1x fa-fw"></i> <span class="badge badge-danger position-absolute mt-2 mr-4">{{ notification_total }}</span></a>
+
+            <div class="dropdown-menu dropdown-menu-right p-2" style="max-width: 200px;">
+
               {% if notifications %}
                 {% for notification in notifications %}
-                  <a href="{{ notification.href }}" target="_blank" class="dropdown-item">{{ notification.title }}</a>
+                  <p><a href="{{ notification.href }}" target="_blank">{{ notification.title }}</a></p>
                 {% endfor %}
-                <a href="{{ notification_all }}" class="dropdown-item">{{ text_all }}</a>
+                <a href="{{ notification_all }}" class="dropdown-item text-center">{{ text_notification_all }}</a>
               {% else %}
-                <span class="dropdown-item">{{ text_no_results }}</span>
+                <span class="dropdown-item text-center">{{ text_no_results }}</span>
               {% endif %}
+
             </div>
           </li>
           <li class="nav-item dropdown border-left"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="rounded-circle"/>&nbsp;&nbsp;<span class="d-md-inline d-sm-none">{{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></span></a>

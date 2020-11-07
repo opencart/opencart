@@ -37,23 +37,6 @@ class Header extends \Opencart\System\Engine\Controller {
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
 
 			// Notifications
-			$data['notifications'] = [];
-
-			/*
-			$this->load->model('setting/notification');
-
-			$data['notification_total'] = count($this->model_setting_notification->getTotalNotifications());
-
-			$results = $this->model_setting_notification->getNotifications();
-
-			foreach ($results as $result) {
-				$data['notifications'][] = [
-					'title' => $result['title'],
-					'href'  => $this->url->link('tool/notification|info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'])
-				];
-			}
-			*/
-
 			$data['notification_all'] = $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token']);
 
 			$this->load->model('tool/image');

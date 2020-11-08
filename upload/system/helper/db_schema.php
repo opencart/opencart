@@ -3523,6 +3523,118 @@ function db_schema() {
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
 	];
+	
+	$tables[] = [
+		'name' => 'order_customer_affiliate',
+		'field' => [
+			[
+				'name' => 'order_customer_affiliate_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'affiliate_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'firstname',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
+				'name' => 'lastname',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
+				'name' => 'address_1',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'address_2',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'city',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'postcode',
+				'type' => 'varchar(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'country_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'country',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'zone_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'zone',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'custom_field',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'marketing_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'commission',
+				'type' => 'decimal(4,2)',
+				'not_null' => true,
+				'default' => '0.00'
+			],
+			[
+				'name' => 'tracking',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'order_customer_affiliate_id'
+		]
+		'engine' => 'MyISAM',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
 
 	$tables[] = [
 		'name' => 'order_history',

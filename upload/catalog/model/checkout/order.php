@@ -112,7 +112,7 @@ class Order extends \Opencart\System\Engine\Model {
 					}
 				}
 			} else {
-				$this->model_customer_customer->setAffiliateStatus($order_customer_affiliate_info['affiliate_id'], 0);
+				$this->model_customer_affiliate->setAffiliateStatus($order_customer_affiliate_info['affiliate_id'], 0);
 			}
 		}
 

@@ -15,6 +15,12 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	
 	public function setAffiliateStatus($customer_id, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer_affiliate` SET `status` = '" . (int)$status . "' WHERE `customer_id` = '" . (int)$customer_id . "' AND `status` != '" . (int)$status . "'");
+		
+		if ($this->db->countAffected()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function getAffiliate($customer_id) {

@@ -49,16 +49,18 @@ class Order extends \Opencart\System\Engine\Model {
 				$reward += $product['reward'];
 			}
 
-			$this->load->model('customer/customer');
+			$order_customer_affiliate_info = $this->getCustomerAffiliate($order_id);
 
-			$affiliate_info = $this->model_customer_customer->getCustomer($order_query->row['affiliate_id']);
-
-			if ($affiliate_info) {
-				$affiliate_firstname = $affiliate_info['firstname'];
-				$affiliate_lastname = $affiliate_info['lastname'];
+			if ($order_customer_affiliate_info) {
+				$affiliate_id = $order_customer_affiliate_info['affiliate_id'];
+				$affiliate_firstname = $order_customer_affiliate_info['firstname'];
+				$affiliate_lastname = $order_customer_affiliate_info['lastname'];
+				$commission = $order_customer_affiliate_info['commission'];
 			} else {
+				$affiliate_id = 0;
 				$affiliate_firstname = '';
 				$affiliate_lastname = '';
+				$commission = 0;
 			}
 
 			$this->load->model('localisation/language');
@@ -127,10 +129,10 @@ class Order extends \Opencart\System\Engine\Model {
 				'reward'                  => $reward,
 				'order_status_id'         => $order_query->row['order_status_id'],
 				'order_status'            => $order_query->row['order_status'],
-				'affiliate_id'            => $order_query->row['affiliate_id'],
+				'affiliate_id'            => $affiliate_id,
 				'affiliate_firstname'     => $affiliate_firstname,
 				'affiliate_lastname'      => $affiliate_lastname,
-				'commission'              => $order_query->row['commission'],
+				'commission'              => $commission,
 				'language_id'             => $order_query->row['language_id'],
 				'language_code'           => $language_code,
 				'currency_id'             => $order_query->row['currency_id'],
@@ -259,6 +261,33 @@ class Order extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order`");
 
 		return $query->rows;
+	}
+	
+	public function getCustomerAffiliate($order_id) {
+		$affiliate_data = [];
+		
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_customer_affiliate` WHERE `order_id` = '" . (int)$order_id . "'");
+		
+		if ($query->num_rows) {
+			$affiliate_data = ['affiliate_id'			=> $query->row['affiliate_id'],
+							   'firstname'				=> $query->row['firstname'],
+							   'lastname'				=> $query->row['lastname'],
+							   'address_1'				=> $query->row['address_1'],
+							   'address_2'				=> $query->row['address_2'],
+							   'city'					=> $query->row['city'],
+							   'postcode'				=> $query->row['postcode'],
+							   'country_id'				=> $query->row['country_id'],
+							   'country'				=> $query->row['country'],
+							   'zone_id'				=> $query->row['zone_id'],								 
+							   'zone'					=> $query->row['zone'],
+							   'custom_field'			=> json_decode($query->row['custom_field'], true),
+							   'commission'				=> $query->row['commission'],
+							   'tracking'				=> $query->row['tracking'],
+							   'marketing_id'			=> $query->row['marketing_id']
+							  ];
+		}
+		
+		return $affiliate_data;
 	}
 
 	public function getTotalOrders($data = []) {

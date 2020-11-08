@@ -137,7 +137,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 				'products'       => $result['products'],
 				'commission'	 => $this->currency->format($result['commission'], $this->config->get('config_currency')),
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+				'edit'           => $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
 

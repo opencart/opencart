@@ -253,36 +253,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['total'] = $total;
 			
 			// Affiliate
-			$order_data['tracking'] = '';
-			$order_data['affiliate_id'] = 0;
-			$order_data['commission'] = 0;
-			$order_data['marketing_id'] = 0;
-
 			if (isset($this->request->cookie['tracking'])) {
-				$order_data['tracking'] = $this->request->cookie['tracking'];
-
 				$subtotal = $this->cart->getSubTotal();
-
-				// Affiliate
-				if ($this->config->get('config_affiliate_status')) {
-					$this->load->model('account/affiliate');
-
-					$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);
-
-					if ($affiliate_info) {
-						$order_data['affiliate_id'] = $affiliate_info['customer_id'];
-						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
-					}
-				}
-
-				// Marketing
-				$this->load->model('marketing/marketing');
-
-				$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->cookie['tracking']);
-
-				if ($marketing_info) {
-					$order_data['marketing_id'] = $marketing_info['marketing_id'];
-				}
+				
+				$order_data['subtotal'] = $subtotal;
+			} else {
+				$order_data['subtotal'] = 0;
 			}
 
 			$order_data['language_id'] = $this->config->get('config_language_id');

@@ -752,6 +752,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('mail_order_add', 'catalog/model/checkout/order/addHistory/before', 'mail/order', 1),
 ('mail_gdpr', 'catalog/model/account/gdpr/addGdpr/after', 'mail/gdpr', 1),
 ('mail_review', 'catalog/model/catalog/review/addReview/after', 'mail/review', 1),
+('mail_affiliate_notify', 'catalog/model/account/affiliate/setAffiliateStatus/after', 'mail/affiliate/notify', 1);
 ('statistics_review_add', 'catalog/model/catalog/review/addReview/after', 'event/statistics|addReview', 1),
 ('statistics_return_add', 'catalog/model/account/returns/addReturn/after', 'event/statistics|addReturn', 1),
 ('statistics_order_history', 'catalog/model/checkout/order/addHistory/before', 'event/statistics|addHistory', 1),
@@ -767,7 +768,6 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('admin_currency_edit', 'admin/model/localisation/currency/editCurrency/after', 'event/currency', 1),
 ('admin_setting', 'admin/model/setting/setting/editSetting/after', 'event/currency', 1),
 ('admin_mail_gdpr', 'admin/model/customer/gdpr/editStatus/after', 'mail/gdpr', 1);
-('affiliate_notify', 'catalog/model/account/affiliate/setAffiliateStatus/after', 'mail/affiliate/notify', 1);
 -----------------------------------------------------------
 
 --

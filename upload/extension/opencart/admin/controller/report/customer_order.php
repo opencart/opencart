@@ -96,6 +96,12 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_order_status_id = 0;
 		}
+		
+		if (isset($this->request->get['filter_affiliate'])) {
+			$filter_affiliate = $this->request->get['filter_affiliate'];
+		} else {
+			$filter_affiliate = '';
+		}
 
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -112,6 +118,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			'filter_date_end'			=> $filter_date_end,
 			'filter_customer'			=> $filter_customer,
 			'filter_order_status_id'	=> $filter_order_status_id,
+			'filter_affiliate'			=> $filter_affiliate,
 			'start'						=> ($page - 1) * $this->config->get('config_pagination'),
 			'limit'						=> $this->config->get('config_pagination')
 		];
@@ -128,6 +135,7 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'orders'         => $result['orders'],
 				'products'       => $result['products'],
+				'commission'	 => $this->currency->format($result['commission'], $this->config->get('config_currency')),
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
 				'edit'           => $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
@@ -156,6 +164,10 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_order_status_id'])) {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
+		
+		if (isset($this->request->get['filter_affiliate'])) {
+			$url .= '&filter_affiliate=' . $this->request->get['filter_affiliate'];
+		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $customer_total,
@@ -170,7 +182,52 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
+		$data['filter_affiliate'] = $filter_affiliate;
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order', $data));
+	}
+	
+	public function autocomplete() {
+		$json = [];
+
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_affiliate'])) {
+			$filter_affiliate = $this->request->get['filter_affiliate'];
+		} else {
+			$filter_affiliate = '';
+		}
+		
+		$this->load->model('extension/report/customer');
+
+		$filter_data = [
+			'filter_name'      => $filter_name,
+			'filter_affiliate' => $filter_affiliate,
+			'start'            => 0,
+			'limit'            => 5
+		];
+
+		$results = $this->model_extension_report_customer->getOrders($filter_data);
+
+		foreach ($results as $result) {
+			$json[] = ['affiliate_id'			=> $result['affiliate_id'],
+					   'customer'				=> $result['customer'],					  				   
+					  ];
+		}	
+
+		$sort_order = [];
+
+		foreach ($json as $key => $value) {
+			$sort_order[$key] = $value['customer'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $json);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -168,8 +168,8 @@ $('input[name=\'filter_affiliate\']').autocomplete({
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item['customer'],
-						value: item['affiliate_id']
+						label: item['name'],
+						value: item['customer_id']
 					}
 				}));
 			}

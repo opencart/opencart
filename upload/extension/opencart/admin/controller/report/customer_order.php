@@ -214,8 +214,8 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 		$results = $this->model_extension_report_customer->getOrders($filter_data);
 
 		foreach ($results as $result) {
-			$json[] = ['affiliate_id'			=> $result['affiliate_id'],
-				   'customer'				=> $result['customer'],					  				   
+			$json[] = ['customer_id'			=> $result['affiliate_id'],
+				   'name'				=> $result['customer'],					  				   
 				  ];
 		}	
 

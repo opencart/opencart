@@ -21,9 +21,8 @@
               <td class="text-right"><button value="{{ notification.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
           {% else %}
-
             <tr id="notification-row{{ notification_row }}">
-              <td class="text-black-50" style="width: 1px;"><i class="fas fa-bell fa-3x"></i></td>
+              <td class="text-black-50" style="width: 1px;"><i class="far fa-bell fa-3x"></i></td>
               <td class="text-left"><a href="{{ notification.view }}"><strong>{{ notification.title }}</strong></a>
                 <br/>
                 <small class="text-muted">{{ notification.date_added }}</small>

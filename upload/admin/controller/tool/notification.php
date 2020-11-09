@@ -18,13 +18,13 @@ class Notification extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		if (isset($this->request->get['notification_id'])) {
 			$data['notification_id'] = (int)$this->request->get['notification_id'];
 		} else {
 			$data['notification_id'] = 0;
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

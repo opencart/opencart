@@ -208,15 +208,15 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			'filter_name'      => $filter_name,
 			'filter_affiliate' => $filter_affiliate,
 			'start'            => 0,
-			'limit'            => 5
+			'limit'            => $this->config->get('config_pagination')
 		];
 
 		$results = $this->model_extension_report_customer->getOrders($filter_data);
 
 		foreach ($results as $result) {
 			$json[] = ['affiliate_id'			=> $result['affiliate_id'],
-					   'customer'				=> $result['customer'],					  				   
-					  ];
+				   'customer'				=> $result['customer'],					  				   
+				  ];
 		}	
 
 		$sort_order = [];

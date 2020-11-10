@@ -11,7 +11,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			// Menu
 			$data['menus'][] = [
 				'id'       => 'menu-dashboard',
-				'icon'	   => 'fa-tachometer-alt',
+				'icon'	   => 'fa-dashboard',
 				'name'	   => $this->language->get('text_dashboard'),
 				'href'     => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
 				'children' => []
@@ -122,7 +122,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($catalog) {
 				$data['menus'][] = [
 					'id'       => 'menu-catalog',
-					'icon'	   => 'fa-tags',
+					'icon'	   => 'fa-tag',
 					'name'	   => $this->language->get('text_catalog'),
 					'href'     => '',
 					'children' => $catalog

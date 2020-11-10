@@ -12,7 +12,7 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		// Hard coding css so they can be replaced via the events system.
 		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
-		$data['icons'] = 'view/javascript/fontawesome/css/fontawesome-all.min.css';
+		$data['icons'] = 'view/stylesheet/icon/fontawesome/css/all.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
 		// Hard coding scripts so they can be replaced via the events system.

@@ -602,7 +602,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['order_status_id'] = $this->config->get('config_order_status_id');
 			$data['comment'] = '';
-			$data['affiliate_id'] = '';
+			$data['affiliate_id'] = 0;
 			$data['affiliate'] = '';
 			$data['currency_code'] = $this->config->get('config_currency');
 

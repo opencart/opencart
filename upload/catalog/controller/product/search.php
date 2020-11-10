@@ -5,9 +5,7 @@ class Search extends \Opencart\System\Engine\Controller {
 		$this->load->language('product/search');
 
 		$this->load->model('catalog/category');
-
 		$this->load->model('catalog/product');
-
 		$this->load->model('tool/image');
 
 		if (isset($this->request->get['search'])) {
@@ -39,7 +37,7 @@ class Search extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sub_category'])) {
 			$sub_category = $this->request->get['sub_category'];
 		} else {
-			$sub_category = '';
+			$sub_category = 0;
 		}
 
 		if (isset($this->request->get['sort'])) {

@@ -92,7 +92,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalMarketings($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "marketing`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`";
 
 		$implode = [];
 
@@ -132,7 +132,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalReports($marketing_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "marketing_report` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing_report` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 
 		return $query->row['total'];
 	}

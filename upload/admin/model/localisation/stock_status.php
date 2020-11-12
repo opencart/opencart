@@ -13,7 +13,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 		}
 
 		$this->cache->delete('stock_status');
-		
+
 		return $stock_status_id;
 	}
 
@@ -94,7 +94,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalStockStatuses() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

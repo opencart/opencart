@@ -34,7 +34,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 			$sql .= " AND DATE(o2.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
 		}
 
-		$sql .= " GROUP BY o2.`marketing_id`) AS total FROM `" . DB_PREFIX . "marketing` m ORDER BY m.`date_added` ASC";
+		$sql .= " GROUP BY o2.`marketing_id`) AS `total` FROM `" . DB_PREFIX . "marketing` m ORDER BY m.`date_added` ASC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -54,7 +54,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalMarketing($data = []) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "marketing`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`");
 
 		return $query->row['total'];
 	}

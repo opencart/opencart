@@ -11,7 +11,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 		}
 
 		$this->cache->delete('weight_class');
-		
+
 		return $weight_class_id;
 	}
 
@@ -114,7 +114,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalWeightClasses() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "weight_class`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "weight_class`");
 
 		return $query->row['total'];
 	}

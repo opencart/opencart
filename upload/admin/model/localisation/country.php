@@ -5,7 +5,7 @@ class Country extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (int)$data['status'] . "'");
 
 		$this->cache->delete('country');
-		
+
 		return $this->db->getLastId();
 	}
 
@@ -80,7 +80,7 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCountries() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "country`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country`");
 
 		return $query->row['total'];
 	}

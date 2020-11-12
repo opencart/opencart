@@ -11,7 +11,7 @@ class TaxRate extends \Opencart\System\Engine\Model {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rate_to_customer_group` SET `tax_rate_id` = '" . (int)$tax_rate_id . "', `customer_group_id` = '" . (int)$customer_group_id . "'");
 			}
 		}
-		
+
 		return $tax_rate_id;
 	}
 
@@ -92,13 +92,13 @@ class TaxRate extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalTaxRates() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "tax_rate`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate`");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalTaxRatesByGeoZoneId($geo_zone_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "tax_rate` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_rate` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
 		return $query->row['total'];
 	}

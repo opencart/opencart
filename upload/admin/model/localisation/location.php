@@ -3,7 +3,7 @@ namespace Opencart\Application\Model\Localisation;
 class Location extends \Opencart\System\Engine\Model {
 	public function addLocation($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', address = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `fax` = '" . $this->db->escape((string)$data['fax']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "'");
-	
+
 		return $this->db->getLastId();
 	}
 
@@ -59,7 +59,7 @@ class Location extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalLocations() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "location`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "location`");
 
 		return $query->row['total'];
 	}

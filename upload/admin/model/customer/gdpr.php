@@ -56,7 +56,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalGdprs($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "gdpr`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "gdpr`";
 
 		$implode = [];
 

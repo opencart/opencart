@@ -9,7 +9,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 		foreach ($data['customer_group_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "'");
 		}
-		
+
 		return $customer_group_id;
 	}
 
@@ -91,7 +91,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCustomerGroups() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_group`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_group`");
 
 		return $query->row['total'];
 	}

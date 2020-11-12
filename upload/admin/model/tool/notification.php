@@ -48,7 +48,7 @@ class Notification extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalNotifications($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "notification`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "notification`";
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$sql .= " WHERE `status` = '" . (int)$data['filter_status'] . "'";

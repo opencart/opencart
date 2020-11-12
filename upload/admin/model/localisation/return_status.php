@@ -13,7 +13,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		}
 
 		$this->cache->delete('return_status');
-		
+
 		return $return_status_id;
 	}
 
@@ -94,7 +94,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalReturnStatuses() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

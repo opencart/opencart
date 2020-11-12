@@ -8,7 +8,7 @@ class Upload extends \Opencart\System\Engine\Model {
 
 		return $code;
 	}
-		
+
 	public function deleteUpload($upload_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "upload` WHERE `upload_id` = '" . (int)$upload_id . "'");
 	}
@@ -82,7 +82,7 @@ class Upload extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalUploads($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "upload`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "upload`";
 
 		$implode = [];
 

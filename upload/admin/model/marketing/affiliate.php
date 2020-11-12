@@ -93,7 +93,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalAffiliates($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
+		$sql = "SELECT COUNT(*) AS `total` FROM " . DB_PREFIX . "customer_affiliate ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
 		$implode = [];
 
@@ -141,7 +141,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalReports($customer_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_affiliate_report WHERE customer_id = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM " . DB_PREFIX . "customer_affiliate_report WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}

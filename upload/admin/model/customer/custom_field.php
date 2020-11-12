@@ -29,7 +29,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 				}
 			}
 		}
-		
+
 		return $custom_field_id;
 	}
 
@@ -157,13 +157,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 
 		return $custom_field_data;
 	}
-	
+
 	public function getValue($custom_field_value_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value` cfv LEFT JOIN `" . DB_PREFIX . "custom_field_value_description` cfvd ON (cfv.`custom_field_value_id` = cfvd.`custom_field_value_id`) WHERE cfv.`custom_field_value_id` = '" . (int)$custom_field_value_id . "' AND cfvd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
-	
+
 	public function getValues($custom_field_id) {
 		$custom_field_value_data = [];
 
@@ -178,7 +178,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 
 		return $custom_field_value_data;
 	}
-	
+
 	public function getCustomerGroups($custom_field_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
@@ -210,7 +210,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCustomFields() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "custom_field`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
 
 		return $query->row['total'];
 	}

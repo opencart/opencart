@@ -10,7 +10,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	public function deleteCron($cron_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
-	
+
 	public function deleteCronByCode($code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
@@ -34,7 +34,7 @@ class Cron extends \Opencart\System\Engine\Model {
 
 		return $query->row;
 	}
-		
+
 	public function getCrons($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
 
@@ -77,7 +77,7 @@ class Cron extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCrons() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "cron`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cron`");
 
 		return $query->row['total'];
 	}

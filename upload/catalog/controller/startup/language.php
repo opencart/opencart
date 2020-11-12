@@ -103,7 +103,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		// Replace the default language object
-		$language = new \Opencart\System\Library\Language($this->config->get('config_admin_language'));
+		$language = new \Opencart\System\Library\Language($this->config->get('config_language'));
 		$language->addPath(DIR_LANGUAGE);
 		$language->load($code);
 

@@ -41,9 +41,9 @@ $_['text_download']      = 'Downloading';
 $_['text_install']       = 'Installing';
 $_['text_comment_add']   = 'Leave your comment';
 $_['text_write']         = 'Write your comment here..';
-$_['text_purchase']      = 'Please confirm who you are!';
-$_['text_pin']           = 'Please enter your 4 digit PIN number. This PIN number is to protect your account.';
-$_['text_secure']        = 'Do not give your PIN to any one including developers. If you require an extension seller to install an extension for you then you should email them the required extension.';
+$_['text_purchase']      = 'Buy an extension license';
+$_['text_choose_card']   = 'Please choose one of your saved credit cards on opencart.com';
+$_['text_no_cards']		 = 'No payment methods have been added to your account on www.opencart.com!';
 $_['text_name']          = 'Download Name';
 $_['text_available']     = 'Available Installs';
 $_['text_action']        = 'Action';
@@ -52,7 +52,7 @@ $_['text_uninstall']     = 'Uninstall';
 $_['text_delete']        = 'Delete';
 
 // Entry
-$_['entry_pin']          = 'PIN';
+$_['entry_card']          = 'Credit Card';
 
 // Tab
 $_['tab_description']    = 'Description';

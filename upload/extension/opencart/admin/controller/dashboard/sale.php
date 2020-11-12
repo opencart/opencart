@@ -50,13 +50,13 @@ class Sale extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['dashboard_sale_width'] = $this->config->get('dashboard_sale_width');
 		}
-	
+
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
+
 		if (isset($this->request->post['dashboard_sale_status'])) {
 			$data['dashboard_sale_status'] = $this->request->post['dashboard_sale_status'];
 		} else {
@@ -83,17 +83,17 @@ class Sale extends \Opencart\System\Engine\Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function dashboard() {
 		$this->load->language('extension/opencart/dashboard/sale');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->load->model('extension/opencart/dashboard/sale');
+		$this->load->model('extension/opencart/report/sale');
 
-		$today = $this->model_extension_opencart_dashboard_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);
+		$today = $this->model_extension_opencart_report_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);
 
-		$yesterday = $this->model_extension_opencart_dashboard_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-2 day'))]);
+		$yesterday = $this->model_extension_opencart_report_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-2 day'))]);
 
 		$difference = $today - $yesterday;
 
@@ -103,7 +103,7 @@ class Sale extends \Opencart\System\Engine\Controller {
 			$data['percentage'] = 0;
 		}
 
-		$sale_total = $this->model_extension_opencart_dashboard_sale->getTotalSales();
+		$sale_total = $this->model_extension_opencart_report_sale->getTotalSales();
 
 		if ($sale_total > 1000000000000) {
 			$data['total'] = round($sale_total / 1000000000000, 1) . 'T';

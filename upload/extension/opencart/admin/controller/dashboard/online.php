@@ -87,11 +87,10 @@ class Online extends \Opencart\System\Engine\Controller {
 	public function dashboard() {
 		$this->load->language('extension/opencart/dashboard/online');
 
-		// Total Orders
-		$this->load->model('extension/opencart/dashboard/online');
+		$this->load->model('report/online');
 
 		// Customers Online
-		$online_total = $this->model_extension_opencart_dashboard_online->getTotalOnline();
+		$online_total = $this->model_report_online->getTotalOnline();
 
 		if ($online_total > 1000000000000) {
 			$data['total'] = round($online_total / 1000000000000, 1) . 'T';

@@ -50,11 +50,19 @@ class Currency extends \Opencart\System\Engine\Controller {
 	public function currency() {
 		if (isset($this->request->post['code'])) {
 			$this->session->data['currency'] = $this->request->post['code'];
-		
+
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 		}
-		
+
+		$option = [
+			'max-age'  => time() + 60 * 60 * 24 * 30,
+			'path'     => '/',
+			'SameSite' => 'lax'
+		];
+
+		oc_setcookie('currency', $this->session->data['currency'], $option);
+
 		if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 		} else {

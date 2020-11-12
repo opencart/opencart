@@ -21,12 +21,10 @@ class Login extends \Opencart\System\Engine\Controller {
 			// Default Shipping Address
 			$this->load->model('account/address');
 
-			if ($this->config->get('config_tax_customer') == 'payment') {
-				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-			}
+			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
 
-			if ($this->config->get('config_tax_customer') == 'shipping') {
-				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			if ($this->config->get('config_tax_customer') && $address_info) {
+				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $address_info;
 			}
 
 			// Wishlist
@@ -190,13 +188,10 @@ class Login extends \Opencart\System\Engine\Controller {
 		if ($customer_info && $customer_info['token'] && $customer_info['token'] == $token && $this->customer->login($customer_info['email'], '', true)) {
 			// Default Addresses
 			$this->load->model('account/address');
+			$address_info = $this->model_account_address->getAddress($customer_info['address_id']);
 
-			if ($this->config->get('config_tax_customer') == 'payment') {
-				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-			}
-
-			if ($this->config->get('config_tax_customer') == 'shipping') {
-				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			if ($this->config->get('config_tax_customer') && $address_info) {
+				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $address_info;
 			}
 
 			$this->model_account_customer->editToken($email, '');

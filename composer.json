@@ -24,6 +24,7 @@
   "require": {
     "php": ">=7.2.0",
     "ext-curl": "*",
+    "ext-zip": "*",
     "scssphp/scssphp": "1.1.1",    
     "twig/twig": "^3.0",
     "aws/aws-sdk-php": "^3.142.1"

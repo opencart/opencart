@@ -25,7 +25,7 @@ RewriteBase /
 RewriteRule ^system/storage/(.*) index.php?route=error/not_found [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
+RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|svg|svgz|webp|js|css)
 RewriteRule ^([^?]*) index.php [L,QSA]
 
 ### Additional Settings that may need to be enabled for some servers

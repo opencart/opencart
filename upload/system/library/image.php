@@ -124,6 +124,8 @@ class Image {
 				imagepng($this->image, $file);
 			} elseif ($extension == 'gif') {
 				imagegif($this->image, $file);
+			} elseif ($extension == 'webp') {
+				imagewebp($this->image, $file, $quality);
 			}
 
 			imagedestroy($this->image);

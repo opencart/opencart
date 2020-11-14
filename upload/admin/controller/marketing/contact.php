@@ -72,10 +72,13 @@ class Contact extends \Opencart\System\Engine\Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
+				
+				$json['store_name'] = $store_name;
 
 				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
 
 				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
+				$json['store_email'] = $store_email;
 
 				if (isset($this->request->get['page'])) {
 					$page = (int)$this->request->get['page'];
@@ -101,7 +104,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 						$results = $this->model_customer_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
-							$emails[] = $result['email'];
+							if (($this->request->post['status'] && $this->request->post['status'] == $result['status']) || (!$this->request->post['status'])) {
+								$emails[] = $result['email'];
+							}
 						}
 						break;
 					case 'customer_all':
@@ -116,7 +121,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 						$results = $this->model_customer_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
-							$emails[] = $result['email'];
+							if (($this->request->post['status'] && $this->request->post['status'] == $result['status']) || (!$this->request->post['status'])) {
+								$emails[] = $result['email'];
+							}
 						}
 						break;
 					case 'customer_group':
@@ -132,7 +139,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 						$results = $this->model_customer_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
-							$emails[$result['customer_id']] = $result['email'];
+							if (($this->request->post['status'] && $this->request->post['status'] == $result['status']) || (!$this->request->post['status'])) {
+								$emails[$result['customer_id']] = $result['email'];
+							}
 						}
 						break;
 					case 'customer':
@@ -143,7 +152,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 								if ($customer_info) {
-									if ($customer_info['status']) {
+									if (($this->request->post['status'] && $this->request->post['status'] == $result['status']) || (!$this->request->post['status'])) {
 										$emails[] = $customer_info['email'];
 									}
 								}
@@ -175,7 +184,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 								$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 
 								if ($affiliate_info) {
-									if ($affiliate_info['status']) {
+									if (($this->request->post['status'] && $this->request->post['status'] == $result['status']) || (!$this->request->post['status'])) {
 										$emails[] = $affiliate_info['email'];
 									}
 								}
@@ -191,7 +200,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 							$results = $this->model_sale_order->getEmailsByProductsOrdered($this->request->post['product'], ($page - 1) * 10, 10);
 
 							foreach ($results as $result) {
-								$emails[] = $result['email'];
+								if (($this->request->post['status'] && $this->request->post['status'] == $result['status']) || (!$this->request->post['status'])) {
+									$emails[] = $result['email'];
+								}
 							}
 						}
 						break;
@@ -210,33 +221,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 					} else {
 						$json['next'] = '';
 					}
-
-					$message  = '<html dir="ltr" lang="' . $this->language->get('code') . '">' . "\n";
-					$message .= '  <head>' . "\n";
-					$message .= '    <title>' . $this->request->post['subject'] . '</title>' . "\n";
-					$message .= '    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
-					$message .= '  </head>' . "\n";
-					$message .= '  <body>' . html_entity_decode($this->request->post['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
-					$message .= '</html>' . "\n";
 					
-					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-					$mail->parameter = $this->config->get('config_mail_parameter');
-					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
-					foreach ($emails as $email) {
-						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail->setTo($email);
-							$mail->setFrom($store_email);
-							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
-							$mail->setHtml($message);
-							$mail->send();
-						}
-					}
+					$json['emails'] = $emails;
 				} else {
 					$json['error']['email'] = $this->language->get('error_email');
 				}

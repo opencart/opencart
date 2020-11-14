@@ -62,6 +62,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$this->load->model('setting/store');
 				$this->load->model('setting/setting');
 				$this->load->model('customer/customer');
+				$this->load->model('marketing/affiliate');
 				$this->load->model('sale/order');
 
 				$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
@@ -90,6 +91,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 					case 'newsletter':
 						$customer_data = [
 							'filter_newsletter' => 1,
+							'filter_status'	    => 1,
 							'start'             => ($page - 1) * 10,
 							'limit'             => 10
 						];
@@ -104,8 +106,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 						break;
 					case 'customer_all':
 						$customer_data = [
-							'start' => ($page - 1) * 10,
-							'limit' => 10
+							'filter_status'	=> 1,
+							'start' 		=> ($page - 1) * 10,
+							'limit' 		=> 10
 						];
 
 						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
@@ -118,9 +121,10 @@ class Contact extends \Opencart\System\Engine\Controller {
 						break;
 					case 'customer_group':
 						$customer_data = [
-							'filter_customer_group_id' => $this->request->post['customer_group_id'],
-							'start'                    => ($page - 1) * 10,
-							'limit'                    => 10
+							'filter_customer_group_id' 	=> $this->request->post['customer_group_id'],
+							'filter_status'	    		=> 1,
+							'start'                    	=> ($page - 1) * 10,
+							'limit'                    	=> 10
 						];
 
 						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
@@ -139,7 +143,9 @@ class Contact extends \Opencart\System\Engine\Controller {
 								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 								if ($customer_info) {
-									$emails[] = $customer_info['email'];
+									if ($customer_info['status']) {
+										$emails[] = $customer_info['email'];
+									}
 								}
 							}
 
@@ -148,14 +154,14 @@ class Contact extends \Opencart\System\Engine\Controller {
 						break;
 					case 'affiliate_all':
 						$affiliate_data = [
-							'filter_affiliate' => 1,
-							'start'            => ($page - 1) * 10,
-							'limit'            => 10
+							'filter_status' 	=> 1,
+							'start'            	=> ($page - 1) * 10,
+							'limit'            	=> 10
 						];
 
-						$email_total = $this->model_customer_customer->getTotalCustomers($affiliate_data);
+						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);
 
-						$results = $this->model_customer_customer->getCustomers($affiliate_data);
+						$results = $this->model_marketing_affiliate->getAffiliates($affiliate_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -166,10 +172,12 @@ class Contact extends \Opencart\System\Engine\Controller {
 							$affiliates = array_slice($this->request->post['affiliate'], ($page - 1) * 10, 10);
 
 							foreach ($affiliates as $affiliate_id) {
-								$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
+								$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 
 								if ($affiliate_info) {
-									$emails[] = $affiliate_info['email'];
+									if ($affiliate_info['status']) {
+										$emails[] = $affiliate_info['email'];
+									}
 								}
 							}
 

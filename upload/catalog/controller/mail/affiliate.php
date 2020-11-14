@@ -63,7 +63,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 	public function alert(&$route, &$args, &$output) {
 		// Send to main admin email if new affiliate email is enabled
-		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
+		if (is_array($this->config->get('config_mail_alert')) && in_array('affiliate', $this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/affiliate');
 
 			$this->load->model('tool/image');

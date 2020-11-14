@@ -41,7 +41,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 				];
 	
 				$this->model_account_activity->addActivity('password', $activity_data);
-			} elseif (isset($args[0])) {
+			} elseif ($args[0]) {
 				$customer_info = $this->model_account_customer->getCustomerByEmail($args[0]);
 		
 				if ($customer_info) {
@@ -228,7 +228,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 					];
 	
 					$this->model_account_activity->addActivity('order_account', $activity_data);
-				} elseif (isset($args[0])) {
+				} else {
 					$activity_data = [
 						'name'     => $order_info['firstname'] . ' ' . $order_info['lastname'],
 						'order_id' => $args[0]

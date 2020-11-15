@@ -138,7 +138,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$json['redirect'] = $this->url->link('tool/notification|list', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('tool/notification|list', 'user_token=' . $this->session->data['user_token'] . $url));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -763,6 +763,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('admin_mail_transaction', 'admin/model/customer/customer/addTransaction/after', 'mail/transaction', 1),
 ('admin_mail_return', 'admin/model/sale/returns/addHistory/after', 'mail/returns', 1),
 ('admin_mail_forgotten', 'admin/model/user/user/editCode/after', 'mail/forgotten', 1),
+('admin_mail_voucher', 'admin/controller/sale/order/voucher/send/after', 'mail/voucher', 1),
 ('admin_currency_add', 'admin/model/localisation/currency/addCurrency/after', 'event/currency', 1),
 ('admin_currency_edit', 'admin/model/localisation/currency/editCurrency/after', 'event/currency', 1),
 ('admin_setting', 'admin/model/setting/setting/editSetting/after', 'event/currency', 1),

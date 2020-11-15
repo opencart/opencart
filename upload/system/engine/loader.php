@@ -292,7 +292,7 @@ final class Loader {
 			}
 
 			// Trigger the post events
-			$result = $this->event->trigger('model/' . $trigger . '/after',[&$route, &$args, &$output]);
+			$result = $this->event->trigger('model/' . $trigger . '/after', [&$route, &$args, &$output]);
 
 			if ($result) {
 				$output = $result;

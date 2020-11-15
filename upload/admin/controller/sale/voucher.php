@@ -545,7 +545,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_history', $data));
 	}
 
-	public function send() {		
+	public function send() {
 		$this->load->language('mail/voucher');
 
 		$json = [];

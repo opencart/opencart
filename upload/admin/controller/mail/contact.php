@@ -1,7 +1,7 @@
 <?php
 class ControllerMailContact extends Controller {
 	public function index(&$route, &$args, &$output) {
-		$json = $this->response->getOutput();
+		$json = json_decode($this->response->getOutput(), true);
 		
 		if (isset($json['success']) && $json['success']) {
 			$message  = '<html dir="ltr" lang="' . $this->language->get('code') . '">' . "\n";

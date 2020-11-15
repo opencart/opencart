@@ -28,11 +28,11 @@
                 <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
               </div>
               <select id="input-sort" class="form-control" onchange="location = this.value;">
-                {% for sorts in sorts %}
-                  {% if sorts.value == '%s-%s'|format(sort, order) %}
-                    <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                {% for sort_option in sorts %}
+                  {% if sort_option.value == '%s-%s'|format(sort, order) %}
+                    <option value="{{ sort_option.href }}" selected="selected">{{ sort_option.text }}</option>
                   {% else %}
-                    <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                    <option value="{{ sort_option.href }}">{{ sort_option.text }}</option>
                   {% endif %}
                 {% endfor %}
               </select>
@@ -44,11 +44,11 @@
                 <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
               </div>
               <select id="input-limit" class="form-control" onchange="location = this.value;">
-                {% for limits in limits %}
-                  {% if limits.value == limit %}
-                    <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+                {% for limit_option in limits %}
+                  {% if limit_option.value == limit %}
+                    <option value="{{ limit_option.href }}" selected="selected">{{ limit_option.text }}</option>
                   {% else %}
-                    <option value="{{ limits.href }}">{{ limits.text }}</option>
+                    <option value="{{ limit_option.href }}">{{ limit_option.text }}</option>
                   {% endif %}
                 {% endfor %}
               </select>

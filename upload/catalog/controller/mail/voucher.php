@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Application\Controller\Mail;
 class Voucher extends \Opencart\System\Engine\Controller {
-	public function send(&$route, &$args, &$output) {
+	public function index(&$route, &$args, &$output) {
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($args[0]);

@@ -4,7 +4,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/voucher');
 		
-		$json = $this->response->getOutput();
+		$json = json_decode($this->response->getOutput(), true);
 		
 		if (!$json) {
 			$vouchers = [];

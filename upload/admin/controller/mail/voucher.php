@@ -2,6 +2,8 @@
 namespace Opencart\Application\Controller\Mail;
 class Voucher extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
+		$this->load->language('mail/voucher');
+		
 		$json = $this->response->getOutput();
 		
 		if (!$json) {

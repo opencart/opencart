@@ -134,11 +134,11 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+				$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_tracking'])) {
-				$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
+				$url .= '&filter_tracking=' . html_entity_decode((string)$this->request->get['filter_tracking'], ENT_QUOTES, 'UTF-8');
 			}
 
 			if (isset($this->request->get['filter_commission'])) {
@@ -173,13 +173,13 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
+			$filter_name = html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filter_name = '';
 		}
 
 		if (isset($this->request->get['filter_tracking'])) {
-			$filter_tracking = $this->request->get['filter_tracking'];
+			$filter_tracking = html_entity_decode((string)$this->request->get['filter_tracking'], ENT_QUOTES, 'UTF-8');
 		} else {
 			$filter_tracking = '';
 		}
@@ -223,11 +223,11 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
+			$url .= '&filter_tracking=' . html_entity_decode((string)$this->request->get['filter_tracking'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_commission'])) {
@@ -328,11 +328,11 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
+			$url .= '&filter_tracking=' . html_entity_decode((string)$this->request->get['filter_tracking'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_commission'])) {
@@ -366,11 +366,11 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
+			$url .= '&filter_tracking=' . html_entity_decode((string)$this->request->get['filter_tracking'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_commission'])) {
@@ -468,11 +468,11 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&filter_name=' . urlencode(html_entity_decode((string)$this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
+			$url .= '&filter_tracking=' . html_entity_decode((string)$this->request->get['filter_tracking'], ENT_QUOTES, 'UTF-8');
 		}
 
 		if (isset($this->request->get['filter_commission'])) {

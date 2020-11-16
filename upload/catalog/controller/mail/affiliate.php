@@ -141,4 +141,40 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 		}
 	}
+	
+	// catalog/model/account/affiliate/setAffiliateStatus/after
+	public function notify(&$route, &$args, &$output) {
+		if (isset($args[0]) && $args[0] && $output && !empty($this->config->get('config_mail_alert')) && is_array($this->config->get('config_mail_alert')) && in_array('affiliate', $this->config->get('config_mail_alert'))) {
+			$this->load->language('mail/affiliate');
+			
+			$this->load->model('account/affiliate');
+			
+			$affiliate_info = $this->model_account_affiliate->getAffiliate($args[0]);
+			
+			if ($affiliate_info) {
+				$this->load->model('checkout/order');
+				
+				$order_customer_affiliate_info = $this->model_checkout_order->getCustomerAffiliate($affiliate_info['affiliate_id']);
+				
+				if ($order_customer_affiliate_info) {
+					$data['order_customer_affiliate_info'] = $order_customer_affiliate_info;
+					
+					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+					$mail->parameter = $this->config->get('config_mail_parameter');
+					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+					$mail->setTo($this->config->get('config_email'));
+					$mail->setFrom($this->config->get('config_email'));
+					$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject(sprintf($this->language->get('text_affiliate_notify'), html_entity_decode($order_customer_affiliate_info['firstname'] . ' ' . $order_customer_affiliate_info['lastname'], ENT_QUOTES, 'UTF-8')));
+					$mail->setHtml($this->load->view('mail/affiliate_notify', $data));
+					$mail->send();
+				}
+			}
+		}
+	}
 }

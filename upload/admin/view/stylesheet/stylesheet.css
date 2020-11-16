@@ -34,62 +34,95 @@ legend {
     padding: 0 20px;
 }
 
+
+
+
 #header {
-    min-height: 0px;
     border-bottom: 1px solid #d8d8d8;
     z-index: 1000;
     margin: 0;
     padding: 0;
     box-shadow: 0px 0px 3px #ccc;
+    height: 61px;
 }
 
 #header .navbar-brand {
     transition: 0.3s all;
     width: 235px;
     text-align: center;
+    height: 100%;
 }
 
 #header .navbar-brand img {
-    padding: 12px 0px;
+    padding: 0px 0px;
+}
+
+
+#header .navbar-nav li {
+    height: 100%;
+    /*border: 1px solid #000000;*/
+}
+
+
+#header .navbar-nav .nav-link {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 60px;
+    cursor: pointer;
+    color: #6D6D6D;
+    vertical-align: middle;
+    /*border: 1px solid #000000;*/
+}
+
+#header .navbar-nav .dropdown .show .nav-link > a {
+    background: #EEEEEE;
 }
 
 #header .navbar-nav .nav-link:hover {
     background: #EEEEEE;
 }
 
-#header .navbar-nav .nav-link {
-    padding-left: 20px;
-    padding-right: 20px;
+#header #header-notification .nav-link {
+    padding-top: 10px;
+    line-height: 50px;
 }
 
-#header #user-profile {
-    max-width: 29px;
+#header #header-notification > a > i {
+    font-size: 24px;
 }
 
-#header .navbar-nav > li > a {
-    padding-left: 21px;
-    padding-right: 21px;
-    line-height: 45px;
-    cursor: pointer;
-    color: #6D6D6D;
-    border-left: 0px solid #E1E1E1;
-    padding: 0px;
+#header #header-notification a .badge {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    padding: 3px 4px 2px 4px;
+
+    opacity: 0.8;
+    border-radius: 6px;
 }
 
-#header .navbar-nav > li.dropdown > a {
-    padding-left: 10px;
-    padding-right: 10px;
+#header #header-profile img {
+    max-width: 30px;
 }
 
-/* Desktop */
 @media (min-width: 768px) {
-    #header #user-profile {
-        max-width: none;
+    #header #header-profile img {
+        max-width: 35px;
     }
+}
 
-    #header .navbar-nav > li > a {
-        line-height: 60px;
-    }
+/*
+#header #header-logout > a > i {
+    font-size: 24px;
+}
+*/
+@media (min-width: 768px) {
+
+
+
+
 }
 
 #button-menu {

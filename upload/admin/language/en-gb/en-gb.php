@@ -94,6 +94,7 @@ $_['button_deny']                   = 'Deny';
 $_['button_reset']                  = 'Reset';
 $_['button_generate']               = 'Generate';
 $_['button_voucher_add']            = 'Add Voucher';
+$_['button_view']                   = 'View';
 $_['button_reward_add']             = 'Add Reward Points';
 $_['button_reward_remove']          = 'Remove Reward Points';
 $_['button_commission_add']         = 'Add Commission';

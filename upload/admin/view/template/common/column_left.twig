@@ -4,12 +4,15 @@
     {% set i = 0 %}
     {% for menu in menus %}
       <li id="{{ menu.id }}">
-        {% if menu.href %}<a href="{{ menu.href }}"><i class="fas {{ menu.icon }}"></i> {{ menu.name }}</a>
+        {% if menu.href %}
+          <a href="{{ menu.href }}"><i class="fas {{ menu.icon }}"></i> {{ menu.name }}</a>
         {% else %}
-          <a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="fas {{ menu.icon }}"></i>  {{ menu.name }}</a>
+          <a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="fa {{ menu.icon }}"></i> {{ menu.name }}</a>
         {% endif %}
+
         {% if menu.children %}
           <ul id="collapse{{ i }}" class="collapse">
+
             {% set j = 0 %}
             {% for children_1 in menu.children %}
               <li>{% if children_1.href %}
@@ -36,9 +39,11 @@
                       {% set k = k + 1 %}
                     {% endfor %}
                   </ul>
-                {% endif %} </li>
+                {% endif %}
+              </li>
               {% set j = j + 1 %}
             {% endfor %}
+
           </ul>
         {% endif %}
       </li>

@@ -45,14 +45,41 @@ $('#notification').on('click', 'table a', function(e) {
 	});
 });
 
-{% if notification_id %}
-//$('#notification').trigger('click', '#notification-row{{ notification_id }} a');
-{% endif %}
+$('#notification').on('click', '.btn-info', function(e) {
+	var element = this;
 
-$('#notification').load('index.php?route=tool/notification|list&user_token={{ user_token }}');
+	$('#modal-notification').remove();
 
-$('#notification-row24 a').trigger('click');
+	$.ajax({
+		url: $(element).attr('value'),
+		dataType: 'html',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(html) {
+			$('body').append(html);
 
+			$('#modal-notification').modal('show');
+		}
+	});
+});
+
+$(document).ready(function() {
+	$.ajax({
+		url: 'index.php?route=tool/notification|list&user_token={{ user_token }}',
+		dataType: 'html',
+		success: function(html) {
+			$('#notification').html(html);
+		}
+	}).done(function() {
+		{% if notification_id %}
+		$('#notification #button-view{{ notification_id }}').trigger('click');
+		{% endif %}
+	});
+});
 
 // Delete
 $('#notification').on('click', '.btn-danger', function(e) {

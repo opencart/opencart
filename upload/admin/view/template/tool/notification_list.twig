@@ -10,15 +10,14 @@
       {% if notifications %}
         {% set notification_row = 0 %}
         {% for notification in notifications %}
-
           {% if not notification.status %}
-            <tr id="notification-row{{ notification_row }}" class="table-warning">
+            <tr id="notification-row{{ notification_row }}">
               <td class="text-warning" style="width: 1px;"><i class="fas far fa-bell fa-3x"></i></td>
               <td class="text-left"><a href="{{ notification.view }}" class="text-warning"><strong>{{ notification.title }}</strong></a>
                 <br/>
                 <small class="text-muted">{{ notification.date_added }}</small>
               </td>
-              <td class="text-right"><button value="{{ notification.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
+              <td class="text-right"><button value="{{ notification.view }}" data-toggle="tooltip" title="{{ button_view }}" id="button-view{{ notification.notification_id }}" class="btn btn-info"><i class="fas fa-eye"></i></button> <button value="{{ notification.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
           {% else %}
             <tr id="notification-row{{ notification_row }}">
@@ -27,10 +26,9 @@
                 <br/>
                 <small class="text-muted">{{ notification.date_added }}</small>
               </td>
-              <td class="text-right"><button value="{{ notification.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
+              <td class="text-right"><button value="{{ notification.view }}" data-toggle="tooltip" title="{{ button_view }}" id="button-view{{ notification.notification_id }}" class="btn btn-info"><i class="fas fa-eye"></i></button> <button value="{{ notification.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
           {% endif %}
-
           {% set notification_row = notification_row + 1 %}
         {% endfor %}
       {% else %}

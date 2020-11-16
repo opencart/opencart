@@ -40,8 +40,11 @@
 
         <a href="#" id="button-menu" class="d-inline-block d-md-none border-right"><span class="fas fa-bars"></span></a>
         <ul class="nav navbar-nav">
-          <li class="nav-item dropdown border-left">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell-o"></i><span class="badge badge-danger position-absolute mt-2 mr-4">{{ notification_total }}</span></a>
+
+          <li id="header-notification" class="nav-item dropdown">
+
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i> <span class="badge badge-danger">{{ notification_total }}</span></a>
+
             <div class="dropdown-menu dropdown-menu-right p-2" style="max-width: 200px;">
               {% if notifications %}
                 {% for notification in notifications %}
@@ -52,12 +55,15 @@
                 <span class="dropdown-item text-center">{{ text_no_results }}</span>
               {% endif %}
             </div>
+
           </li>
 
-          <li class="nav-item dropdown border-left">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="rounded-circle"/>&nbsp;&nbsp;<span class="d-md-inline d-sm-none">{{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></span></a>
+          <li id="header-profile" class="nav-item dropdown">
+
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="rounded-circle"/>&nbsp;&nbsp;<span class="d-none d-md-inline d-lg-inline ml-1">{{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></span></a>
+
             <div class="dropdown-menu dropdown-menu-right">
-              <a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a>
+              <a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle fa-fw"></i> {{ text_profile }}</a>
               <div class="dropdown-divider"></div>
               <h6 class="dropdown-header">{{ text_store }}</h6>
               {% for store in stores %}
@@ -67,9 +73,10 @@
               <h6 class="dropdown-header">{{ text_help }}</h6>
               <a href="https://www.opencart.com" target="_blank" class="dropdown-item"><i class="fab fa-opencart fa-fw"></i> {{ text_homepage }}</a> <a href="http://docs.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-file-alt fa-fw"></i> {{ text_documentation }}</a> <a href="http://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-comments fa-fw"></i> {{ text_support }}</a>
             </div>
+
           </li>
 
-          <li class="nav-item border-left"><a href="{{ logout }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
+          <li id="header-logout" class="nav-item"><a href="{{ logout }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
         </ul>
       {% endif %}
     </div>

@@ -350,7 +350,7 @@
 <script type="text/javascript"><!--
 $(document).on('click', '#button-invoice', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order|createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order|createInvoiceNo&user_token={{ user_token }}&order_id={{ order_id }}',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-invoice').button('loading');
@@ -379,7 +379,7 @@ $(document).on('click', '#button-invoice', function() {
 
 $(document).on('click', '#button-reward-add', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order|addreward&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order|addReward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -409,7 +409,7 @@ $(document).on('click', '#button-reward-add', function() {
 
 $(document).on('click', '#button-reward-remove', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order|removereward&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order|removeReward&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -439,7 +439,7 @@ $(document).on('click', '#button-reward-remove', function() {
 
 $(document).on('click', '#button-commission-add', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order|addcommission&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order|addCommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
@@ -469,7 +469,7 @@ $(document).on('click', '#button-commission-add', function() {
 
 $(document).on('click', '#button-commission-remove', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order|removecommission&user_token={{ user_token }}&order_id={{ order_id }}',
+		url: 'index.php?route=sale/order|removeCommission&user_token={{ user_token }}&order_id={{ order_id }}',
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {

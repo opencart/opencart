@@ -20,4 +20,10 @@ class Zone extends \Opencart\System\Engine\Model {
 
 		return $zone_data;
 	}
+	
+	public function getTotalZonesByName($name) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "zone` WHERE LCASE(`name`) = '" . $this->db->escape(strtolower($name)) . "'");
+
+		return $query->row['total'];
+	}
 }

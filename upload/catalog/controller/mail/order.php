@@ -50,7 +50,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($order_products as $order_product) {
 			// Check if there are any linked downloads
-			$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$order_product['product_id'] . "'");
+			$product_download_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$order_product['product_id'] . "'");
 
 			if ($product_download_query->row['total']) {
 				$download_status = true;

@@ -12,7 +12,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	public function deleteSeoUrl($seo_url_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 	}
-	
+
 	public function getSeoUrl($seo_url_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 
@@ -46,8 +46,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}	
-		
+		}
+
 		$sort_data = [
 			'keyword',
 			'key',
@@ -86,8 +86,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalSeoUrls($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "seo_url`";
-		
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "seo_url`";
+
 		$implode = [];
 
 
@@ -113,8 +113,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
-		}		
-		
+		}
+
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];

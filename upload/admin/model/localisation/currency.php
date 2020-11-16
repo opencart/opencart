@@ -7,7 +7,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		$currency_id = $this->db->getLastId();
 
 		$this->cache->delete('currency');
-		
+
 		return $currency_id;
 	}
 
@@ -109,7 +109,7 @@ class Currency extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCurrencies() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "currency`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "currency`");
 
 		return $query->row['total'];
 	}

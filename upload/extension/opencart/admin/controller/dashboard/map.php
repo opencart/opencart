@@ -52,11 +52,11 @@ class Map extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
+
 		if (isset($this->request->post['dashboard_map_status'])) {
 			$data['dashboard_map_status'] = $this->request->post['dashboard_map_status'];
 		} else {
@@ -83,12 +83,12 @@ class Map extends \Opencart\System\Engine\Controller {
 
 		return !$this->error;
 	}
-		
+
 	public function dashboard() {
 		$this->load->language('extension/opencart/dashboard/map');
 
 		$data['user_token'] = $this->session->data['user_token'];
-		
+
 		return $this->load->view('extension/opencart/dashboard/map_info', $data);
 	}
 

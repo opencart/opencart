@@ -102,7 +102,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalRecurrings() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "recurring`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "recurring`");
 
 		return $query->row['total'];
 	}

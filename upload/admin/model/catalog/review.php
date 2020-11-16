@@ -86,7 +86,7 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalReviews($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "review` r LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (r.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` r LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (r.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_product']) . "%'";
@@ -110,7 +110,7 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalReviewsAwaitingApproval() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "review` WHERE `status` = '0'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` WHERE `status` = '0'");
 
 		return $query->row['total'];
 	}

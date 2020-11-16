@@ -169,13 +169,13 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalManufacturers() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "manufacturer`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalManufacturersByLayoutId($layout_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->row['total'];
 	}

@@ -126,7 +126,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCoupons() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon`");
 
 		return $query->row['total'];
 	}
@@ -146,7 +146,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalHistories($coupon_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon_history` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
 
 		return $query->row['total'];
 	}

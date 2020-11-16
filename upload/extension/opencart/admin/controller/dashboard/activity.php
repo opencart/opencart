@@ -21,7 +21,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$data['error_warning'] = ''; 
+			$data['error_warning'] = '';
 		}
 
 		$data['breadcrumbs'] = [];
@@ -50,13 +50,13 @@ class Activity extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['dashboard_activity_width'] = $this->config->get('dashboard_activity_width');
 		}
-		
+
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-		
+
 		if (isset($this->request->post['dashboard_activity_status'])) {
 			$data['dashboard_activity_status'] = $this->request->post['dashboard_activity_status'];
 		} else {
@@ -83,7 +83,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function dashboard() {
 		$this->load->language('extension/opencart/dashboard/activity');
 
@@ -91,9 +91,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 
 		$data['activities'] = [];
 
-		$this->load->model('extension/opencart/dashboard/activity');
+		$this->load->model('extension/opencart/report/activity');
 
-		$results = $this->model_extension_opencart_dashboard_activity->getActivities();
+		$results = $this->model_extension_opencart_report_activity->getActivities();
 
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));

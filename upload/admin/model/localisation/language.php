@@ -200,18 +200,18 @@ class Language extends \Opencart\System\Engine\Model {
 
 	public function editLanguage($language_id, $data) {
 		$language_query = $this->db->query("SELECT `code` FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
-		
+
 		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "' WHERE `language_id` = '" . (int)$language_id . "'");
 
 		if ($language_query->row['code'] != $data['code']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_admin_language' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
 		}
-		
+
 		$this->cache->delete('catalog.language');
 		$this->cache->delete('admin.language');
 	}
-	
+
 	public function deleteLanguage($language_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -221,9 +221,9 @@ class Language extends \Opencart\System\Engine\Model {
 
 		/*
 		Do not put any delete code for related tables for languages!
-		
+
 		It is not required as whenever you save to a multi language table then the entries for the deleted language will also be deleted!
-		
+
 		Wasting my time with people adding code here!
 		*/
 	}
@@ -305,7 +305,7 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalLanguages() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "language`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "language`");
 
 		return $query->row['total'];
 	}

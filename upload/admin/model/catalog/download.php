@@ -88,7 +88,7 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalDownloads() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "download`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download`");
 
 		return $query->row['total'];
 	}
@@ -108,7 +108,7 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalReports($download_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "download_report` WHERE `download_id` = '" . (int)$download_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download_report` WHERE `download_id` = '" . (int)$download_id . "'");
 
 		return $query->row['total'];
 	}

@@ -13,7 +13,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		}
 
 		$this->cache->delete('return_action');
-		
+
 		return $return_action_id;
 	}
 
@@ -94,7 +94,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalReturnActions() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

@@ -102,8 +102,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			oc_setcookie('language', $code, $option);
 		}
 
-		// Replace the default language object
-		$language = new \Opencart\System\Library\Language($this->config->get('config_admin_language'));
+		// Language
+		$language = new \Opencart\System\Library\Language($code);
 		$language->addPath(DIR_LANGUAGE);
 		$language->load($code);
 

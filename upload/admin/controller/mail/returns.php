@@ -44,7 +44,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 				$language = new \Opencart\Engine\Library\Language($language_code);
 				$language->load($language_code);
-				$language->load('mail/return');
+				$language->load('mail/returns');
 
 				$data['return_id'] = $return_id;
 				$data['date_added'] = date($language->get('date_format_short'), strtotime($return_info['date_modified']));
@@ -63,7 +63,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 				$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $return_id));
-				$mail->setText($this->load->view('mail/return', $data));
+				$mail->setText($this->load->view('mail/returns', $data));
 				$mail->send();
 			}
 		}

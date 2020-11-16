@@ -96,9 +96,17 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalUsersByGroupId($user_group_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
+		$this->load->model('user/user_group');
+		
+		$user_group = $this->model_user_user_group->getUserGroup($user_group_id);
+		
+		if ($user_group) {
+			$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
-		return $query->row['total'];
+			return $query->row['total'];
+		} else {
+			return false;	
+		}
 	}
 
 	public function getTotalUsersByEmail($email) {

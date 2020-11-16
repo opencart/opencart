@@ -30,5 +30,8 @@ class Upgrade1011 extends \Opencart\System\Engine\Model {
 				}
 			}	
 		}
+		
+		// Mail Affiliate Notify
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = 'mail_affiliate_notify', `trigger` = 'catalog/model/account/affiliate/setAffiliateStatus/after', `action` = 'mail/affiliate/notify', `status` = '1'");
 	}
 }

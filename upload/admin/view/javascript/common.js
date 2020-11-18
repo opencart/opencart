@@ -74,15 +74,6 @@ $(document).ready(function() {
 		}
 	}
 
-	// Fix for overflow in responsive tables
-	$('.table-responsive').on('show.bs.dropdown', function() {
-		$('.table-responsive').css('overflow', 'inherit');
-	});
-
-	$('.table-responsive').on('hide.bs.dropdown', function() {
-		$('.table-responsive').css('overflow', 'auto');
-	});
-
 	$('#button-menu').on('click', function(e) {
 		e.preventDefault();
 
@@ -106,6 +97,24 @@ $(document).ready(function() {
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
 
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
+
+	$('#header-notification [data-toggle=\'modal\']').on('click', function(e) {
+		e.preventDefault();
+
+		var element = this;
+
+		$('#modal-notification').remove();
+
+		$.ajax({
+			url: $(element).attr('href'),
+			dataType: 'html',
+			success: function(html) {
+				$('body').append(html);
+
+				$('#modal-notification').modal('show');
+			}
+		});
+	});
 });
 
 // Image Manager

@@ -2,6 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="float-right"><button id="button-delete" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -43,11 +44,15 @@ $('#notification').on('click', 'table a', function(e) {
 			$('body').append(html);
 
 			$('#modal-notification').modal('show');
+
+			$(element).parent().parent().find('.fa-bell').removeClass('fas').addClass('far');
+			$(element).removeClass('font-weight-bold');
+			$(element).parent().parent().find('.btn-info').removeClass('btn-info').addClass('btn-outline-info');
 		}
 	});
 });
 
-$('#notification').on('click', '.btn-info', function(e) {
+$('#notification').on('click', '.btn', function(e) {
 	var element = this;
 
 	$('#modal-notification').remove();
@@ -65,19 +70,25 @@ $('#notification').on('click', '.btn-info', function(e) {
 			$('body').append(html);
 
 			$('#modal-notification').modal('show');
+
+			$(element).parent().parent().find('.fa-bell').removeClass('fas').addClass('far');
+			$(element).parent().parent().find('a').removeClass('font-weight-bold');
+			$(element).removeClass('btn-info').addClass('btn-outline-info');
 		}
 	});
 });
 
 // Delete
-$('#notification').on('click', '.btn-danger', function(e) {
+$('#button-delete').on('click', function(e) {
 	e.preventDefault();
 
 	var element = this;
 
 	if (confirm('{{ text_confirm }}')) {
 		$.ajax({
-			url: $(element).val(),
+			url: 'index.php?route=tool/notification|delete&user_token={{ user_token }}',
+			type: 'post',
+			data: $('#notification input[name^=\'selected\']:checked').serialize(),
 			dataType: 'json',
 			beforeSend: function() {
 				$(element).button('loading');
@@ -94,11 +105,12 @@ $('#notification').on('click', '.btn-danger', function(e) {
 
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '</div>');
-				}
 
-				if (json['redirect']) {
-					$('#notification').load(json['redirect']);
+					$('#notification').load('index.php?route=tool/notification|list&user_token={{ user_token }}');
 				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	}

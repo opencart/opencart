@@ -96,7 +96,7 @@ legend {
     }
 }
 
-#header #header-notification > .nav-link > i {
+#header #header-notification > .nav-link > i.fa-bell {
     font-size: 24px;
 }
 

@@ -111,10 +111,10 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['notification_id'])) {
-			$notification_id = $this->request->get['notification_id'];
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
 		} else {
-			$notification_id = 0;
+			$selected = [];
 		}
 
 		if (!$this->user->hasPermission('modify', 'tool/notification')) {
@@ -122,17 +122,11 @@ class Notification extends \Opencart\System\Engine\Controller {
 		} else {
 			$this->load->model('tool/notification');
 
-			$this->model_tool_notification->deleteNotification($notification_id);
-
-			$json['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
+			foreach ($selected as $notification_id) {
+				$this->model_tool_notification->deleteNotification($notification_id);
 			}
 
-			$json['redirect'] = $this->url->link('tool/notification|list', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

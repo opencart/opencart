@@ -3,10 +3,6 @@ namespace Opencart\Application\Controller\Install;
 class Step1 extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('install/step_1');
-		
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			$this->response->redirect($this->url->link('install/step_2'));
-		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -17,7 +13,7 @@ class Step1 extends \Opencart\System\Engine\Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['action'] = $this->url->link('install/step_1');
+		$data['continue'] = $this->url->link('install/step_2');
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');

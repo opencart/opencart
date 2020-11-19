@@ -1,32 +1,33 @@
 {{ header }}
 <div class="container">
-  <header>
-    <div class="row">
-      <div class="col-sm-6">
-        <h1 class="pull-left">2
-          <small>/4</small>
-        </h1>
-        <h3>{{ heading_title }}
-          <br>
-          <small>{{ text_step_2 }}</small>
-        </h3>
-      </div>
-      <div class="col-sm-6">
-        <div id="logo" class="pull-right d-none d-sm-block"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart"/></div>
-      </div>
-    </div>
-  </header>
+
+
+  <div class="text-center">
+    <h1>2
+      <small>/4</small>
+    </h1>
+    <h3>{{ heading_title }}
+      <br>
+      <small>{{ text_step_2 }}</small>
+    </h3>
+  </div>
+
+
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   {% endif %}
+
   <div class="row">
+
     <div class="col-sm-9">
+
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
-        <p>{{ text_install_php }}</p>
+
         <fieldset>
-          <table class="table">
+          <legend>{{ text_install_php }}</legend>
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <td width="35%"><b>{{ text_setting }}</b></td>
@@ -42,9 +43,9 @@
                 <td>7.0+</td>
                 <td class="text-center">
                   {% if version %}
-                    <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                    <span class="text-success"><i class="fas fa-check"></i></span>
                   {% else %}
-                    <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                    <span class="text-danger"><i class="fas fa-minus-circle"></i></span>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -57,9 +58,9 @@
                 <td>{{ text_off }}</td>
                 <td class="text-center">
                   {% if not register_globals %}
-                    <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                    <span class="text-success"><i class="fas fa-check"></i></span>
                   {% else %}
-                    <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                    <span class="text-danger"><i class="fas fa-minus-circle"></i></span>
                   {% endif %}</td>
               </tr>
               <tr>
@@ -260,7 +261,10 @@
         </div>
       </form>
     </div>
+
     <div class="col-sm-3">{{ column_left }}</div>
+
+
   </div>
 </div>
 {{ footer }}

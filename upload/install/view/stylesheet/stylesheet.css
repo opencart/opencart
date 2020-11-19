@@ -1,4 +1,7 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700);
+
 /* Reset */
+/*
 html {
     overflow: -moz-scrollbars-vertical;
     margin: 0;
@@ -15,7 +18,7 @@ body {
     margin: 0px;
     padding: 0px;
     line-height: 1.5;
-    background: #F6F6F6 url('../image/background.png');
+
 }
 
 body, p, td, th, input, textarea, select, option {
@@ -111,7 +114,7 @@ footer a {
     line-height: 28px;
 }
 
-/* Layout */
+/* Layout *//*
 #column-right {
     float: right;
     width: 284px;
@@ -143,7 +146,7 @@ footer a {
     background: url('../image/bullet-arrow.png') 0px 5px no-repeat;
 }
 
-/* Alert */
+/* Alert *//*
 .alert {
     padding: 8px 14px 8px 14px;
 }
@@ -160,7 +163,7 @@ div.required .control-label:before {
     color: #F00;
     font-weight: bold;
 }
-/* Buttons */
+/* Buttons *//*
 a.button, input.button {
     cursor: pointer;
     color: #FFF;
@@ -230,7 +233,7 @@ a.button, input.button {
     color: #23a1d1;
 }
 
-/* Visit */
+/* Visit *//*
 .visit {
     padding: 50px 0 50px 0;
     color: #fff;
@@ -265,14 +268,14 @@ a.button, input.button {
     }
 }
 
-/* Modules */
+/* Modules *//*
 .modules {
     text-align: center;
     padding: 50px 0px 50px 0px;
     background: #fff;
 }
 
-/* Mailing */
+/* Mailing *//*
 .mailing {
     padding: 50px;
     background: #23A1D1;
@@ -323,7 +326,7 @@ a.button, input.button {
 
 
 
-/* Support */
+/* Support *//*
 .support {
     padding: 0 50px 50px 50px;
     background: #173642;
@@ -365,7 +368,7 @@ a.button, input.button {
 }
 
 
-/* Terms */
+/* Terms */ /*
 .terms {
     background: #FFFFFF;
     border: 1px solid #DBDBDB;

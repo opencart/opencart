@@ -11,7 +11,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			// Menu
 			$data['menus'][] = [
 				'id'       => 'menu-dashboard',
-				'icon'	   => 'fa-dashboard',
+				'icon'	   => 'fa-home',
 				'name'	   => $this->language->get('text_dashboard'),
 				'href'     => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
 				'children' => []

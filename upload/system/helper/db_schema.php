@@ -1152,6 +1152,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'customer_group_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'key',
 				'type' => 'varchar(64)',
 				'not_null' => true

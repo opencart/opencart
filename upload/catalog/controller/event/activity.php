@@ -41,7 +41,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 				];
 	
 				$this->model_account_activity->addActivity('password', $activity_data);
-			} else {
+			} elseif ($args[0]) {
 				$customer_info = $this->model_account_customer->getCustomerByEmail($args[0]);
 		
 				if ($customer_info) {

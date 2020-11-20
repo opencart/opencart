@@ -53,11 +53,11 @@
             <div class="input-group float-right">
               <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-sort-amount-down"></i></span></div>
               <select onchange="location = this.value;" class="form-control">
-                {% for sorts in sorts %}
-                  {% if sorts.value == sort %}
-                    <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+                {% for sort_option in sorts %}
+                  {% if sort_option.value == sort %}
+                    <option value="{{ sort_option.href }}" selected="selected">{{ sort_option.text }}</option>
                   {% else %}
-                    <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+                    <option value="{{ sort_option.href }}">{{ sort_option.text }}</option>
                   {% endif %}
                 {% endfor %}
               </select>

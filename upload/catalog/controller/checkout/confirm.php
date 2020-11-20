@@ -25,6 +25,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
 		}
 
+		$this->load->model('setting/extension');
+
 		if (isset($this->session->data['payment_method'])) {
 			// Validate if payment method has been set.
 			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
@@ -66,9 +68,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$totals = [];
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
-
-			$this->load->model('setting/extension');
-
 			$sort_order = [];
 
 			$results = $this->model_setting_extension->getExtensionsByType('total');
@@ -251,7 +250,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$order_data['comment'] = $this->session->data['comment'];
 			$order_data['total'] = $total;
-			
+
 			// Affiliate
 			$order_data['tracking'] = '';
 			$order_data['affiliate_id'] = 0;

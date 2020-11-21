@@ -62,7 +62,13 @@ class Action {
 
 		// Initialize the class
 		if (class_exists($this->class)) {
-			$controller = new $this->class($registry);
+			$controller_route = 'controller_' . str_replace(array('/', '|'), '_', (string)$this->route);
+			if (!$registry->has($controller_route)) {
+				$controller = new $this->class($registry);
+				$registry->set($controller_route, $controller);
+			} else {
+				$controller = $registry->get($controller_route);
+			}
 		} else {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}

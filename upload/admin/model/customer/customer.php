@@ -156,25 +156,28 @@ class Customer extends \Opencart\System\Engine\Model {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
 
 		if ($address_query->num_rows) {
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$address_query->row['country_id'] . "'");
+			$this->load->model('localisation/country');
+			$this->load->model('localisation/zone');
+			
+			$country_info = $this->model_localisation_country->getCountry($address_query->row['country_id']);
 
-			if ($country_query->num_rows) {
-				$country = $country_query->row['name'];
-				$iso_code_2 = $country_query->row['iso_code_2'];
-				$iso_code_3 = $country_query->row['iso_code_3'];
-				$address_format = $country_query->row['address_format'];
+			if ($country_info) {
+				$country = $country_info['name'];
+				$iso_code_2 = $country_info['iso_code_2'];
+				$iso_code_3 = $country_info['iso_code_3'];
+				$address_format = $country_info['address_format'];
 			} else {
 				$country = '';
 				$iso_code_2 = '';
 				$iso_code_3 = '';
 				$address_format = '';
 			}
+			
+			$zone_info = $this->model_localisation_zone->getZone($address_query->row['zone_id']);
 
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$address_query->row['zone_id'] . "'");
-
-			if ($zone_query->num_rows) {
-				$zone = $zone_query->row['name'];
-				$zone_code = $zone_query->row['code'];
+			if ($zone_info) {
+				$zone = $zone_info['name'];
+				$zone_code = $zone_info['code'];
 			} else {
 				$zone = '';
 				$zone_code = '';
@@ -220,7 +223,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCustomers($data = []) {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` c";
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` c";
 
 		if (!empty($data['filter_affiliate'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
@@ -270,25 +273,25 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalAddressesByCustomerId($customer_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalAddressesByCountryId($country_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `country_id` = '" . (int)$country_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "address` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalAddressesByZoneId($zone_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `zone_id` = '" . (int)$zone_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "address` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalCustomersByCustomerGroupId($customer_group_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 
 		return $query->row['total'];
 	}
@@ -312,7 +315,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalHistories($customer_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_history` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
@@ -341,19 +344,19 @@ class Customer extends \Opencart\System\Engine\Model {
 
 
 	public function getTotalTransactions($customer_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total`  FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total  FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTransactionTotal($customer_id) {
-		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT SUM(`amount`) AS total FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalTransactionsByOrderId($order_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}
@@ -381,19 +384,19 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalRewards($customer_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getRewardTotal($customer_id) {
-		$query = $this->db->query("SELECT SUM(points) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT SUM(points) AS total FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalRewardsByOrderId($order_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > 0");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > 0");
 
 		return $query->row['total'];
 	}
@@ -412,13 +415,13 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalIps($customer_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalCustomersByIp($ip) {
-		$query = $this->db->query("SELECT COUNT(DISTINCT `customer_id`) AS `total` FROM `" . DB_PREFIX . "customer_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
+		$query = $this->db->query("SELECT COUNT(DISTINCT `customer_id`) AS total FROM `" . DB_PREFIX . "customer_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
 
 		return $query->row['total'];
 	}

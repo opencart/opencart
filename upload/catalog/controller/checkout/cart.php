@@ -325,7 +325,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']));
+				$json['redirect'] = redirect_link($this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']));
 			}
 		}
 

@@ -39,7 +39,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	}
 
 	public function rewrite($link) {
-		$url_info = parse_url(str_replace('&amp;', '&', $link));
+		$url_info = parse_url(redirect_link($link));
 
 		// Build the url
 		$url = '';

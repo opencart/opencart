@@ -203,7 +203,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token']);
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token']);
 		$data['add'] = $this->url->link('sale/order|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = str_replace('&amp;', '&', $this->url->link('sale/order|delete', 'user_token=' . $this->session->data['user_token'] . $url));
+		$data['delete'] = redirect_link($this->url->link('sale/order|delete', 'user_token=' . $this->session->data['user_token'] . $url));
 
 		$data['orders'] = [];
 

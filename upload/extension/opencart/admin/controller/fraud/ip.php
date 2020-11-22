@@ -70,6 +70,14 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/fraud/ip', $data));
 	}
 
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/fraud/ip')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+
 	public function install() {
 		$this->load->model('extension/opencart/fraud/ip');
 
@@ -80,14 +88,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$this->load->model('extension/opencart/fraud/ip');
 
 		$this->model_extension_opencart_fraud_ip->uninstall();
-	}
-
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/opencart/fraud/ip')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
 	}
 
 	public function ip() {

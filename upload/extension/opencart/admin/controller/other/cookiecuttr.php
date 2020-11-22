@@ -15,7 +15,7 @@ class Cookiecuttr extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=captcha'));
+			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=other'));
 		}
 
 		if (isset($this->error['warning'])) {
@@ -64,5 +64,27 @@ class Cookiecuttr extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function install() {
+		if ($this->user->hasPermission('modify', 'extension/opencart/other/cookiecuttr')) {
+			$code = 'cookiecuttr';
+			$trigger = 'catalog/view/common/footer/after';
+			$action = 'extension/opencart/other/cookiecuttr|event';
+			$status = 1;
+			$sort_order = 0;
+
+			$this->load->model('setting/event');
+
+			$this->model_setting_event->addEvent($code, $trigger, $action, $status, $sort_order);
+		}
+	}
+
+	public function uninstall() {
+		if ($this->user->hasPermission('modify', 'extension/opencart/other/cookiecuttr')) {
+			$this->load->model('setting/event');
+
+			$this->model_setting_event->deleteEventByCode('cookiecuttr');
+		}
 	}
 }

@@ -212,7 +212,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 			$json['text'] = $this->language->get('text_unzip');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|unzip', 'user_token=' . $this->session->data['user_token']));
+			$json['next'] = redirect_link($this->url->link('tool/upgrade|unzip', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -259,7 +259,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			if ($status == 200) {
 				$json['text'] = $this->language->get('text_unzip');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|unzip', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+				$json['next'] = redirect_link($this->url->link('tool/upgrade|unzip', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$json['error'] = $this->language->get('error_download');
 			}
@@ -300,7 +300,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 				$json['text'] = $this->language->get('text_move');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|move', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+				$json['next'] = redirect_link($this->url->link('tool/upgrade|move', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
@@ -395,7 +395,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 			$json['text'] = $this->language->get('text_remove');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|remove', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+			$json['next'] = redirect_link($this->url->link('tool/upgrade|remove', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -467,7 +467,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 				$json['text'] = $this->language->get('text_db');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|db', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+				$json['next'] = redirect_link($this->url->link('tool/upgrade|db', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 			} else {
 				$data['error'] = $this->language->get('error_connection');
 			}
@@ -507,7 +507,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 			$json['text'] = $this->language->get('text_clear');
 
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+			$json['next'] = redirect_link($this->url->link('tool/upgrade|clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

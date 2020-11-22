@@ -3022,7 +3022,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(32)',
+				'type' => 'varchar(64)',
 				'not_null' => true
 			],
 			[

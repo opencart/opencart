@@ -198,7 +198,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 					$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
 
 					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact|send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1)));
+						$json['next'] = redirect_link($this->url->link('marketing/contact|send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1)));
 					} else {
 						$json['next'] = '';
 					}
@@ -210,7 +210,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 					$message .= '  </head>' . "\n";
 					$message .= '  <body>' . html_entity_decode($this->request->post['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
 					$message .= '</html>' . "\n";
-					
+
 					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 					$mail->parameter = $this->config->get('config_mail_parameter');
 					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

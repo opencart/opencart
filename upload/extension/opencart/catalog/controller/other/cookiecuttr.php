@@ -3,10 +3,10 @@ namespace Opencart\Application\Controller\Extension\Opencart\Other;
 class Cookiecuttr extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
 		if ($this->config->get('other_cookiecuttr_status')) {
-			$key = 'cookiecuttr.' . $this->config->get('config_theme');
+			$key = 'cookiecuttr.' . (int)$this->config->get('config_store_id');
 
 			$cookiecuttr = $this->cache->get($key);
-
+			$cookiecuttr = '';
 			if (!$cookiecuttr) {
 				$this->load->language('extensison/opencart/other/cookiecuttr');
 

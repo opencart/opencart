@@ -70,7 +70,7 @@ class Cookiecuttr extends \Opencart\System\Engine\Controller {
 		if ($this->user->hasPermission('modify', 'extension/opencart/other/cookiecuttr')) {
 			$code = 'cookiecuttr';
 			$trigger = 'catalog/view/common/footer/after';
-			$action = 'extension/opencart/other/cookiecuttr|event';
+			$action = 'extension/opencart/other/cookiecuttr';
 			$status = 1;
 			$sort_order = 0;
 

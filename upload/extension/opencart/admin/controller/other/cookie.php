@@ -1,17 +1,17 @@
 <?php
 namespace Opencart\Application\Controller\Extension\Opencart\Other;
-class Cookiecuttr extends \Opencart\System\Engine\Controller {
+class Cookie extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
 	public function index() {
-		$this->load->language('extension/opencart/other/cookiecuttr');
+		$this->load->language('extension/opencart/other/cookie');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('other_cookiecuttr', $this->request->post);
+			$this->model_setting_setting->editSetting('other_cookie', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -38,28 +38,28 @@ class Cookiecuttr extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/other/cookiecuttr', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/other/cookie', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/other/cookiecuttr', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('extension/opencart/other/cookie', 'user_token=' . $this->session->data['user_token']);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=other');
 
-		if (isset($this->request->post['other_cookiecuttr_status'])) {
-			$data['other_cookiecuttr_status'] = $this->request->post['other_cookiecuttr_status'];
+		if (isset($this->request->post['other_cookie_status'])) {
+			$data['other_cookie_status'] = $this->request->post['other_cookie_status'];
 		} else {
-			$data['other_cookiecuttr_status'] = $this->config->get('other_cookiecuttr_status');
+			$data['other_cookie_status'] = $this->config->get('other_cookie_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/opencart/other/cookiecuttr', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/other/cookie', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/opencart/other/cookiecuttr')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/other/cookie')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
@@ -67,10 +67,10 @@ class Cookiecuttr extends \Opencart\System\Engine\Controller {
 	}
 
 	public function install() {
-		if ($this->user->hasPermission('modify', 'extension/opencart/other/cookiecuttr')) {
-			$code = 'cookiecuttr';
+		if ($this->user->hasPermission('modify', 'extension/opencart/other/cookie')) {
+			$code = 'cookie';
 			$trigger = 'catalog/view/common/footer/after';
-			$action = 'extension/opencart/other/cookiecuttr';
+			$action = 'extension/opencart/other/cookie';
 			$status = 1;
 			$sort_order = 0;
 
@@ -81,10 +81,10 @@ class Cookiecuttr extends \Opencart\System\Engine\Controller {
 	}
 
 	public function uninstall() {
-		if ($this->user->hasPermission('modify', 'extension/opencart/other/cookiecuttr')) {
+		if ($this->user->hasPermission('modify', 'extension/opencart/other/cookie')) {
 			$this->load->model('setting/event');
 
-			$this->model_setting_event->deleteEventByCode('cookiecuttr');
+			$this->model_setting_event->deleteEventByCode('cookie');
 		}
 	}
 }

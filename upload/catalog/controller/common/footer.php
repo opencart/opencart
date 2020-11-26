@@ -36,11 +36,24 @@ class Footer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['affiliate'] = false;
 		}
+
 		$data['special'] = $this->url->link('product/special', 'language=' . $this->config->get('config_language'));
 		$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
 		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
+
+		$data['text_cookie'] =
+
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_cookie_id'));
+
+		if ($information_info) {
+			$data['text_cookie'] = sprintf($this->language->get('text_cookie'), '');
+
+			$data['cookie'] = $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_info['information_id']);
+		} else {
+			$data['cookie'] = '';
+		}
 
 		$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
 

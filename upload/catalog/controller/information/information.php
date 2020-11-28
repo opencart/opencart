@@ -72,25 +72,23 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function agree() {
-		$this->load->model('catalog/information');
-
+	public function info() {
 		if (isset($this->request->get['information_id'])) {
 			$information_id = (int)$this->request->get['information_id'];
 		} else {
 			$information_id = 0;
 		}
 
-		$output = '';
+		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {
-			$output .= html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8') . "\n";
+			$data['title'] = $information_info['title'];
+			$data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+
+			$this->response->addHeader('X-Robots-Tag: noindex');
+			$this->response->setOutput($this->load->view('information/information_info', $data));
 		}
-
-		$this->response->addHeader('X-Robots-Tag: noindex');
-
-		$this->response->setOutput($output);
 	}
 }

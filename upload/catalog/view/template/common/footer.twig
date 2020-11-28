@@ -46,19 +46,13 @@
     </div>
     <hr>
     <p>{{ powered }}</p>
-
-    {% if cookie %}
-    <div id="cookie" class="container-fluid">
-      <div class="alert alert-warning position-absolute sticky-top"><a href="{{ cookie }}">{{ text_cookie }}ytutyu</a></div>
-    </div>
-    {% endif %}
-
     <!--
 OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
 Please donate via PayPal to donate@opencart.com
 //-->
   </div>
 </footer>
+{{ cookie }}
 {% for script in scripts %}
   <script src="{{ script }}" type="text/javascript"></script>
 {% endfor %}

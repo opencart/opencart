@@ -307,7 +307,7 @@ class Order extends \Opencart\System\Engine\Model {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
 					if (property_exists($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}, 'unconfirm')) {
-						$this->{'model_extension_total_' . $order_total['code']}->unconfirm($order_id);
+						$this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}
 

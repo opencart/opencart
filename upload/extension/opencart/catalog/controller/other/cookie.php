@@ -12,7 +12,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 			if (!$cookie) {
 				$this->load->language('extension/opencart/other/cookie');
 
-				//$data['text_cookie'] = sprintf($this->language->get('text_cookie'), $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_cookie_id')));
+				$data['text_cookie'] = sprintf($this->language->get('text_cookie'), $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_cookie_id')));
 
 				$output = str_replace('</body>', $this->load->view('extension/opencart/other/cookie') . '</body>', $output);
 

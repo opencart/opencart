@@ -7,11 +7,13 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		$data['analytics'] = [];
 
-		$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
+		if (!$this->config->get('config_cookie_id') || $this->cookie) {
+			$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
 
-		foreach ($analytics as $analytic) {
-			if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
-				$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+			foreach ($analytics as $analytic) {
+				if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
+					$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+				}
 			}
 		}
 

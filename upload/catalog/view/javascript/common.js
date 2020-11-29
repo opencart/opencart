@@ -156,24 +156,30 @@ $(document).ready(function() {
 	});
 
 	// Cookie Policy
-	$('#cookie .btn').on('click', function(e) {
-		e.preventDefault();
+	$('#cookie button').on('click', function() {
+		var element = this;
 
 		$.ajax({
 			url: $(this).val(),
+			type: 'get',
 			dataType: 'json',
 			beforeSend: function() {
-				$('#button-cookie').button('loading');
+				$(element).button('loading');
 			},
 			complete: function() {
-				$('#button-cookie').button('reset');
+				$(element).button('reset');
 			},
 			success: function(json) {
+				console.log(json);
+
 				if (json['success']) {
 					$('#cookie').fadeOut(400, function() {
 						$('#cookie').remove();
 					});
 				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	});
@@ -202,7 +208,7 @@ var cart = {
 				}
 
 				if (json['success']) {
-					html = '<div id="toast" class="toast">';
+					html  = '<div id="toast" class="toast">';
 					html += '  <div class="toast-header">';
 					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';

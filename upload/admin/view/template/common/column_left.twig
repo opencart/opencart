@@ -5,9 +5,9 @@
     {% for menu in menus %}
       <li id="{{ menu.id }}">
         {% if menu.href %}
-          <a href="{{ menu.href }}"><i class="fas {{ menu.icon }}"></i> {{ menu.name }}</a>
+          <a href="{{ menu.href }}"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
         {% else %}
-          <a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="fa {{ menu.icon }}"></i> {{ menu.name }}</a>
+          <a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
         {% endif %}
 
         {% if menu.children %}

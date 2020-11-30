@@ -3,11 +3,11 @@ namespace Opencart\Application\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Analytics
-		$this->load->model('setting/extension');
-
 		$data['analytics'] = [];
 
 		if (!$this->config->get('config_cookie_id') || (isset($this->request->cookie['policy']) && $this->request->cookie['policy'])) {
+			$this->load->model('setting/extension');
+
 			$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
 
 			foreach ($analytics as $analytic) {
@@ -16,7 +16,7 @@ class Header extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
-		
+
 		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$this->document->addLink($this->config->get('config_url') . 'image/' . $this->config->get('config_icon'), 'icon');
 		}

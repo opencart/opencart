@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Common;
 class Cookie extends \Opencart\System\Engine\Controller {
 	public function index() {
-		if ($this->config->get('config_cookie_id')) {
+		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_cookie_id'));
@@ -23,7 +23,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 	public function confirm() {
 		$json = [];
 
-		if (!isset($this->request->cookie['policy'])) {
+		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->language('common/cookie');
 
 			if (isset($this->request->get['agree'])) {
@@ -33,7 +33,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 			}
 
 			$option = [
-				'max-age'  => time() + 60 * 60 * 24 * 30,
+				'max-age'  => time() + 60 * 60 * 24 * 365,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			];

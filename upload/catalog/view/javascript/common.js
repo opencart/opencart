@@ -170,8 +170,6 @@ $(document).ready(function() {
 				$(element).button('reset');
 			},
 			success: function(json) {
-				console.log(json);
-
 				if (json['success']) {
 					$('#cookie').fadeOut(400, function() {
 						$('#cookie').remove();

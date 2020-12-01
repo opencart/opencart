@@ -82,6 +82,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 
 				if ($amount > 0) {
 					$totals[] = [
+						'extension'  => 'opencart',
 						'code'       => 'voucher',
 						'title'      => sprintf($this->language->get('voucher_text_voucher'), $this->session->data['voucher']),
 						'value'      => -$amount,

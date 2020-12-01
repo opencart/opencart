@@ -6,6 +6,7 @@ class Handling extends \Opencart\System\Engine\Model {
 			$this->load->language('extension/opencart/total/handling');
 
 			$totals[] = [
+				'extension'  => 'opencart',
 				'code'       => 'handling',
 				'title'      => $this->language->get('text_handling'),
 				'value'      => $this->config->get('total_handling_fee'),

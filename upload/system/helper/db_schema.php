@@ -3966,6 +3966,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'extension',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(32)',
 				'not_null' => true

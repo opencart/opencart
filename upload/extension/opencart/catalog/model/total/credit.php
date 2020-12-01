@@ -11,6 +11,7 @@ class Credit extends \Opencart\System\Engine\Model {
 
 			if ((float)$credit > 0) {
 				$totals[] = [
+					'extension'  => 'opencart',
 					'code'       => 'credit',
 					'title'      => $this->language->get('text_credit'),
 					'value'      => -$credit,

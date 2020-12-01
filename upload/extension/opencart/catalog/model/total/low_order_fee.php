@@ -6,6 +6,7 @@ class LowOrderFee extends \Opencart\System\Engine\Model {
 			$this->load->language('extension/opencart/total/low_order_fee');
 
 			$totals[] = [
+				'extension'  => 'opencart',
 				'code'       => 'low_order_fee',
 				'title'      => $this->language->get('text_low_order_fee'),
 				'value'      => $this->config->get('total_low_order_fee_fee'),

@@ -5,6 +5,7 @@ class Tax extends \Opencart\System\Engine\Model {
 		foreach ($taxes as $key => $value) {
 			if ($value > 0) {
 				$totals[] = [
+					'extension'  => 'opencart',
 					'code'       => 'tax',
 					'title'      => $this->tax->getRateName($key),
 					'value'      => $value,

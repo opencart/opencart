@@ -109,13 +109,14 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['events'][] = [
-				'event_id'   => $result['event_id'],
-				'code'       => $result['code'],
-				'trigger'    => $result['trigger'],
-				'action'     => $result['action'],
-				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'enabled'    => $result['status'],
-				'sort_order' => $result['sort_order']
+				'event_id'    => $result['event_id'],
+				'code'        => $result['code'],
+				'description' => $result['description'],
+				'trigger'     => $result['trigger'],
+				'action'      => $result['action'],
+				'status'      => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'enabled'     => $result['status'],
+				'sort_order'  => $result['sort_order']
 			];
 		}
 

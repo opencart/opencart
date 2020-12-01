@@ -2062,6 +2062,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
 				'name' => 'trigger',
 				'type' => 'text',
 				'not_null' => true

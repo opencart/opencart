@@ -75,10 +75,12 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	public function removePermission($user_group_id, $type, $route) {
 		$user_group_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
-		if ($user_group_query->num_rows) {
+		if ($user_group_query->num_rows && $user_group_query->row['permission']) {
 			$data = json_decode($user_group_query->row['permission'], true);
 
-			$data[$type] = array_diff($data[$type], [$route]);
+			if (isset($data[$type])) {
+				$data[$type] = array_diff($data[$type], [$route]);
+			}
 
 			$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode($data)) . "' WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 		}

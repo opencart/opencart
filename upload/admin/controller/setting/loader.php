@@ -2,7 +2,6 @@
 namespace Opencart\Application\Model\Setting;
 class Loader extends \Opencart\System\Engine\Model {
 	public function create($data) {
-
 		// Autoloader
 		$autoloader = new \Opencart\System\Engine\Autoloader();
 		$autoloader->register('Opencart\Application', DIR_CATALOG);
@@ -30,7 +29,6 @@ class Loader extends \Opencart\System\Engine\Model {
 			// Language directory
 			$this->language->addPath('extension/' . $result['extension'], DIR_EXTENSION . $result['extension'] . '/catalog/language/');
 		}
-
 
 		// Registry
 		$registry = new \Opencart\System\Engine\Registry();
@@ -79,16 +77,12 @@ class Loader extends \Opencart\System\Engine\Model {
 			$this->db->query("SET time_zone = '" . $this->db->escape(date('P')) . "'");
 		}
 
-
 		// Event
 		$this->load->model('setting/event');
 
 		$results = $this->model_setting_event->getEvents();
 
 		$registry->set('event', $event);
-
-
-
 
 		// Event Register
 		if ($config->has('action_event')) {

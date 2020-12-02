@@ -17,11 +17,10 @@
         <tr>
           <td class="text-left">{{ column_name }}</td>
           <td class="text-left">{{ column_status }}</td>
-          <td class="text-right">{{ column_action }}</td>
+          <td class="text-right" style="min-width: 103px;">{{ column_action }}</td>
         </tr>
       </thead>
       <tbody>
-
         {% if extensions %}
           {% for extension in extensions %}
             <tr>
@@ -39,7 +38,6 @@
           </tr>
         {% endif %}
       </tbody>
-
     </table>
   </div>
 </fieldset>

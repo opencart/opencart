@@ -23,7 +23,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_bank_transfer_order_status_id'), $comment, true);
 
-			$json['redirect'] = redirect_link($this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

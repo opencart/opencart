@@ -15,7 +15,6 @@ class Language {
 	protected $code;
 	protected $directory;
 	protected $path = [];
-	protected $main = [];
 	protected $data = [];
 
 	/**

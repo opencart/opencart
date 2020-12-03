@@ -3,7 +3,7 @@ namespace Opencart\Application\Model\User;
 class UserGroup extends \Opencart\System\Engine\Model {
 	public function addUserGroup($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_group` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `permission` = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
-	
+
 		return $this->db->getLastId();
 	}
 
@@ -75,7 +75,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	public function removePermission($user_group_id, $type, $route) {
 		$user_group_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
-		if ($user_group_query->num_rows && $user_group_query->row['permission']) {
+		if ($user_group_query->num_rows) {
 			$data = json_decode($user_group_query->row['permission'], true);
 
 			if (isset($data[$type])) {

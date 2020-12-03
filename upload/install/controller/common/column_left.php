@@ -24,7 +24,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['language'])) {
 			$data['code'] = $this->session->data['language'];
 		} else {
-			$data['code'] = $this->config->get('language.default');
+			$data['code'] = $this->config->get('language_code');
 		}
 
 		$data['languages'] = [];

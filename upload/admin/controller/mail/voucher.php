@@ -8,13 +8,24 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		// If order status in the complete range create any vouchers that where in the order need to be made available.
 		if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
+			// Send out any gift voucher mails
 			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN `" . DB_PREFIX . "voucher_theme` vt ON (v.`voucher_theme_id` = vt.`voucher_theme_id`) LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE v.`order_id` = '" . (int)$order_info['order_id'] . "' AND vtd.`language_id` = '" . (int)$order_info['language_id'] . "'");
 
 			if ($voucher_query->num_rows) {
-				// Send out any gift voucher mails
-				$language = new \Opencart\System\Library\Language($order_info['language_code']);
-				$language->load($order_info['language_code']);
-				$language->load('mail/voucher');
+				// Send the email in the correct language
+				$this->load->model('localisation/language');
+
+				$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
+
+				if ($language_info) {
+					$language_code = $language_info['code'];
+				} else {
+					$language_code = $this->config->get('config_language');
+				}
+
+				// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+				$this->language->load($language_code, $language_code, 'mail');
+				$this->language->load('mail/voucher', $language_code, 'mail');
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
@@ -28,13 +39,22 @@ class Voucher extends \Opencart\System\Engine\Controller {
 					// HTML Mail
 					$data = [];
 
-					$data['title'] = sprintf($language->get('text_subject'), $voucher['from_name']);
+					// Add language vars to the template folder
+					$results = $this->language->all();
 
-					$data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
-					$data['text_from'] = sprintf($language->get('text_from'), $voucher['from_name']);
-					$data['text_message'] = $language->get('text_message');
-					$data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
-					$data['text_footer'] = $language->get('text_footer');
+					foreach ($results as $key => $value) {
+						if (substr($key, 0, 5) == 'mail_') {
+							$data[substr($key, 5)] = $value;
+						}
+					}
+
+					$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $voucher['from_name']), ENT_QUOTES, 'UTF-8');
+
+					$data['title'] = sprintf($this->language->get('mail_text_subject'), $voucher['from_name']);
+
+					$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
+					$data['text_from'] = sprintf($this->language->get('mail_text_from'), $voucher['from_name']);
+					$data['text_redeem'] = sprintf($this->language->get('mail_text_redeem'), $voucher['code']);
 
 					if (is_file(DIR_IMAGE . $voucher['image'])) {
 						$data['image'] = $this->config->get('config_url') . 'image/' . $voucher['image'];
@@ -49,7 +69,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 					$mail->setTo($voucher['to_email']);
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-					$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $voucher['from_name']), ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject($subject);
 					$mail->setHtml($this->load->view('mail/voucher', $data));
 					$mail->send();
 				}

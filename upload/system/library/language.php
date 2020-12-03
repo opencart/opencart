@@ -88,29 +88,39 @@ class Language {
 	 * 
 	 * @return	array
      */
-	public function load($filename, $prefix = '') {
-		$file = $this->directory . $this->code . '/' . $filename . '.php';
-
-		$namespace = '';
-
-		$parts = explode('/', $filename);
-
-		foreach ($parts as $part) {
-			if (!$namespace) {
-				$namespace .= $part;
-			} else {
-				$namespace .= '/' . $part;
-			}
-
-			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . $this->code . substr($filename, strlen($namespace)) . '.php';
-			}
+	public function load($filename, $code = '', $prefix = '') {
+		if (!$code) {
+			$code = $this->code;
 		}
 
-		$_ = [];
+		if (!isset($this->cache[$code][$filename])) {
+			$file = $this->directory . $code . '/' . $filename . '.php';
 
-		if (is_file($file)) {
-			require($file);
+			$namespace = '';
+
+			$parts = explode('/', $filename);
+
+			foreach ($parts as $part) {
+				if (!$namespace) {
+					$namespace .= $part;
+				} else {
+					$namespace .= '/' . $part;
+				}
+
+				if (isset($this->path[$namespace])) {
+					$file = $this->path[$namespace] . $code . substr($filename, strlen($namespace)) . '.php';
+				}
+			}
+
+			$_ = [];
+
+			if (is_file($file)) {
+				require($file);
+			}
+
+			$this->cache[$code][$filename] = $_;
+		} else {
+			$_ = $this->cache[$code][$filename];
 		}
 
 		if ($prefix) {

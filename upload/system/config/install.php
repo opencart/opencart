@@ -4,7 +4,7 @@ $_['site_base']         = HTTP_SERVER;
 $_['site_ssl']          = HTTP_SERVER;
 
 // Language
-$_['language_default']  = 'en-gb';
+$_['language_code']     = 'en-gb';
 
 // Session
 $_['session_autostart'] = true;

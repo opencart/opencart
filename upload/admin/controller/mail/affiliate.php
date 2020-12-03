@@ -29,13 +29,22 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \Opencart\System\Library\Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/affiliate_approve');
+			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			$this->language->load($language_code, $language_code, 'mail');
+			$this->language->load('mail/affiliate_approve', $language_code, 'mail');
 
-			$subject = sprintf($language->get('text_subject'), $store_name);
+			// Add language vars to the template folder
+			$results = $this->language->all();
 
-			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
+			foreach ($results as $key => $value) {
+				if (substr($key, 0, 5) == 'mail_') {
+					$data[substr($key, 5)] = $value;
+				}
+			}
+
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
+
+			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['login'] = $store_url . 'index.php?route=affiliate/login';
 			$data['store'] = $store_name;
@@ -85,13 +94,22 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \Opencart\System\Library\Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/affiliate_deny');
+			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			$this->language->load($language_code, $language_code, 'mail');
+			$this->language->load('mail/affiliate_deny', $language_code, 'mail');
 
-			$subject = sprintf($language->get('text_subject'), $store_name);
+			// Add language vars to the template folder
+			$results = $this->language->all();
 
-			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
+			foreach ($results as $key => $value) {
+				if (substr($key, 0, 5) == 'mail_') {
+					$data[substr($key, 5)] = $value;
+				}
+			}
+
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
+
+			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
 			$data['store'] = $store_name;

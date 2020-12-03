@@ -37,18 +37,22 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \Opencart\System\Library\Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/customer_approve');
+			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			$this->language->load($language_code, $language_code, 'mail');
+			$this->language->load('mail/customer_approve', $language_code, 'mail');
 
-			$subject = sprintf($language->get('text_subject'), $store_name);
+			// Add language vars to the template folder
+			$results = $this->language->all();
 
-			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
-			$data['text_login'] = $language->get('text_login');
-			$data['text_service'] = $language->get('text_service');
-			$data['text_thanks'] = $language->get('text_thanks');
+			foreach ($results as $key => $value) {
+				if (substr($key, 0, 5) == 'mail_') {
+					$data[substr($key, 5)] = $value;
+				}
+			}
 
-			$data['button_login'] = $language->get('button_login');
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
+
+			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['login'] = $store_url . 'index.php?route=account/login';
 			$data['store'] = $store_name;
@@ -107,17 +111,22 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \Opencart\System\Library\Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/customer_deny');
+			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			$this->language->load($language_code, $language_code, 'mail');
+			$this->language->load('mail/customer_deny', $language_code, 'mail');
 
-			$subject = sprintf($language->get('text_subject'), $store_name);
+			// Add language vars to the template folder
+			$results = $this->language->all();
 
-			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
-			$data['text_denied'] = $language->get('text_denied');
-			$data['text_thanks'] = $language->get('text_thanks');
+			foreach ($results as $key => $value) {
+				if (substr($key, 0, 5) == 'mail_') {
+					$data[substr($key, 5)] = $value;
+				}
+			}
 
-			$data['button_contact'] = $language->get('button_contact');
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
+
+			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
 			$data['store'] = $store_name;

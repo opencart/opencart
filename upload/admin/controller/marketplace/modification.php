@@ -201,9 +201,10 @@ class ControllerMarketplaceModification extends Controller {
 										$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
 										$original[$key] = preg_replace('~\r?\n~', "\n", $content);
 
-										// Log
-										$log[] = PHP_EOL . 'FILE: ' . $key;
 									}
+									
+									// Log
+									$log[] = PHP_EOL . 'FILE: ' . $key;
 
 									foreach ($operations as $operation) {
 										$error = $operation->getAttribute('error');

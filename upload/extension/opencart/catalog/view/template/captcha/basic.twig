@@ -1,6 +1,6 @@
 <fieldset>
   <legend>{{ text_captcha }}</legend>
-  <div class="form-group row required">
+  <div class="form-group{{ route|slice(0, 9) != 'checkout/' ? ' row' : '' }} required">
     {% if route|slice(0, 9) == 'checkout/' %}
       <label for="input-payment-captcha" class="col-form-label">{{ entry_captcha }}</label>
       <input type="text" name="captcha" id="input-payment-captcha" class="form-control" autocomplete="off"/>

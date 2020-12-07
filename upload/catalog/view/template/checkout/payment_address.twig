@@ -239,12 +239,14 @@ $('#button-payment-address').on('click', function() {
 						} else {
 							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 						}
+
+						$(element).addClass('is-invalid');
 					}
 
 					// Highlight any found errors
 					$('.text-danger').parent().parent().addClass('has-error');
 				} else {
-                  {% if shipping_required %}
+					{% if shipping_required %}
 					chain.attach(function() {
 						return $.ajax({
 							url: 'index.php?route=checkout/shipping_address',
@@ -278,7 +280,7 @@ $('#button-payment-address').on('click', function() {
 							}
 						});
 					});
-                  {% else %}
+					{% else %}
 					chain.attach(function() {
 						return $.ajax({
 							url: 'index.php?route=checkout/payment_method',
@@ -310,7 +312,7 @@ $('#button-payment-address').on('click', function() {
 							}
 						});
 					});
-                  {% endif %}
+					{% endif %}
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

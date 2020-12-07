@@ -88,7 +88,7 @@ class Language {
 	 * 
 	 * @return	array
      */
-	public function load($filename, $code = '', $prefix = '') {
+	public function load($filename, $prefix = '', $code = '') {
 		if (!$code) {
 			$code = $this->code;
 		}

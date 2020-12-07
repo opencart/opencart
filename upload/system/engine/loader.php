@@ -152,18 +152,18 @@ final class Loader {
 	 *
 	 * @return    array
 	 */
-	public function language($route, $code = '', $prefix = '') {
+	public function language($route, $prefix = '', $code = '') {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\-\/]/', '', (string)$route);
 
 		// Keep the original trigger
 		$trigger = $route;
 
-		$this->event->trigger('language/' . $trigger . '/before', [&$route, &$code, &$prefix]);
+		$this->event->trigger('language/' . $trigger . '/before', [&$route, &$prefix, &$code]);
 
-		$data = $this->language->load($route, $code, $prefix);
+		$data = $this->language->load($route, $prefix, $code);
 
-		$this->event->trigger('language/' . $trigger . '/after', [&$route, &$code, &$data]);
+		$this->event->trigger('language/' . $trigger . '/after', [&$route, &$prefix, &$code, &$data]);
 
 		return $data;
 	}

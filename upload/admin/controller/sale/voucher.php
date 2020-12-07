@@ -628,6 +628,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 						} else {
 							$this->language->load('mail/voucher');
 
+							$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8');
+
 							$data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
 			
 							$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));
@@ -659,7 +661,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 							$mail->setTo($voucher_info['to_email']);
 							$mail->setFrom($this->config->get('config_email'));
 							$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8'));
+							$mail->setSubject($subject);
 							$mail->setHtml($this->load->view('mail/voucher', $data));
 							$mail->send();
 						}

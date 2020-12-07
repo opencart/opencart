@@ -714,11 +714,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$extensions = $this->model_setting_extension->getExtensionsByType('captcha');
 
 		foreach ($extensions as $extension) {
-			$this->load->language('extension/' . $extension['extension'] . '/captcha/' . $extension['code'], $extension['code']);
+			$this->load->language('extension/' . $extension['extension'] . '/captcha/' . $extension['code'], 'extension');
 
 			if ($this->config->get('captcha_' . $extension['code'] . '_status')) {
 				$data['captchas'][] = [
-					'text'  => $this->language->get($extension['code'] . '_heading_title'),
+					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $extension['code']
 				];
 			}

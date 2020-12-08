@@ -6,11 +6,10 @@ class Header extends \Opencart\System\Engine\Controller {
 		
 		$data['title'] = $this->document->getTitle();
 		$data['description'] = $this->document->getDescription();
+		$data['base'] = HTTP_SERVER;
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts();
-
-		$data['base'] = HTTP_SERVER;
 
 		return $this->load->view('common/header', $data);
 	}

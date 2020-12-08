@@ -1,0 +1,12 @@
+<div class="float-right dropdown">
+  <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown">{{ text_language }} <i class="fas fa-caret-down fa-fw"></i></button>
+  <div class="dropdown-menu dropdown-menu-right">
+    {% for language in languages %}
+    {% if language == code %}
+      <a href="{{ language.href }}" class="dropdown-item active"><img src="language/{{ language.code }}/{{ language.code }}.png"/> {{ language.text }}</a>
+    {% else %}
+      <a href="{{ language.href }}" class="dropdown-item"><img src="language/{{ language.code }}/{{ language.code }}.png"/> {{ language.text }}</a>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>

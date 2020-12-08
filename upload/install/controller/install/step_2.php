@@ -7,7 +7,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$this->load->language('install/step_2');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->response->redirect($this->url->link('install/step_3'));
+			$this->response->redirect($this->url->link('install/step_3', 'language=' . $this->config->get('language_code')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -53,7 +53,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('install/step_2');
+		$data['action'] = $this->url->link('install/step_2', 'language=' . $this->config->get('language_code'));
 
 		$data['php_version'] = phpversion();
 
@@ -112,11 +112,11 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['catalog_config'] = DIR_OPENCART . 'config.php';
 		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';
 
-		$data['back'] = $this->url->link('install/step_1');
+		$data['back'] = $this->url->link('install/step_1', 'language=' . $this->config->get('language_code'));
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['language'] = $this->load->controller('common/language');
 
 		$this->response->setOutput($this->load->view('install/step_2', $data));
 	}

@@ -2,6 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container">
+      <div class="float-right">{{ language }}</div>
       <h1>{{ heading_title }}</h1>
     </div>
   </div>
@@ -11,12 +12,15 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="row">
-      <div class="col-sm-9">
-        <div class="card">
-          <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_step_3 }}</div>
-          <div class="card-body">
-            <form action="{{ action }}" method="post" enctype="multipart/form-data">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_step_3 }}</div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data">
+
+          <div class="row">
+            <div class="col-8">
+
+
               <fieldset>
                 <legend>{{ text_db_connection }}</legend>
                 <div class="form-row">
@@ -73,44 +77,47 @@
                   </div>
                 </div>
               </fieldset>
+            </div>
+            <div class="col-2">
+<div class="alert alert-info w-100">
+              kfjvnkgfjnf
+              dfgffdg
+              fdgdsfg
+</div>
 
-              <fieldset>
-                <legend>{{ text_db_administration }}</legend>
-                <div class="form-row">
-                  <div class="form-group col required">
-                    <label class="col-form-label" for="input-username">{{ entry_username }}</label> <input type="text" name="username" value="{{ username }}" id="input-username" class="form-control"/>
-                    {% if error_username %}
-                      <div class="text-danger">{{ error_username }}</div>
-                    {% endif %}
-                  </div>
-                  <div class="form-group col required">
-                    <label class="col-form-label" for="input-password">{{ entry_password }}</label> <input type="text" name="password" value="{{ password }}" id="input-password" class="form-control"/>
-                    {% if error_password %}
-                      <div class="text-danger">{{ error_password }}</div>
-                    {% endif %}
-                  </div>
-                </div>
-                <div class="form-group required">
-                  <label class="col-form-label" for="input-email">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
-                  {% if error_email %}
-                    <div class="text-danger">{{ error_email }}</div>
-                  {% endif %}
-                </div>
-              </fieldset>
-
-              <div class="row mt-3">
-                <div class="col"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
-                <div class="col text-right"><input type="submit" value="{{ button_continue }}" class="btn btn-primary"/></div>
-              </div>
-
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="col-sm-3">{{ column_left }}</div>
+          <fieldset>
+            <legend>{{ text_db_administration }}</legend>
+            <div class="form-row">
+              <div class="form-group col required">
+                <label class="col-form-label" for="input-username">{{ entry_username }}</label> <input type="text" name="username" value="{{ username }}" id="input-username" class="form-control"/>
+                {% if error_username %}
+                  <div class="text-danger">{{ error_username }}</div>
+                {% endif %}
+              </div>
+              <div class="form-group col required">
+                <label class="col-form-label" for="input-password">{{ entry_password }}</label> <input type="text" name="password" value="{{ password }}" id="input-password" class="form-control"/>
+                {% if error_password %}
+                  <div class="text-danger">{{ error_password }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-form-label" for="input-email">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
+              {% if error_email %}
+                <div class="text-danger">{{ error_email }}</div>
+              {% endif %}
+            </div>
+          </fieldset>
+          <div class="row mt-3">
+            <div class="col"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+            <div class="col text-right"><input type="submit" value="{{ button_continue }}" class="btn btn-primary"/></div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
 {{ footer }}

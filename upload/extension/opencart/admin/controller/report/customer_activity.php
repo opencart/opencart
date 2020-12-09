@@ -129,8 +129,8 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 			];
 
 			$replace = [
-				$this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
-				$this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=')
+				$this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
+				$this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=')
 			];
 
 			$data['activities'][] = [

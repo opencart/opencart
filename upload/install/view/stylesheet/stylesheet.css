@@ -57,15 +57,15 @@ legend {
 }
 
 #header .navbar-brand {
-    padding: 11px 0px;
+  /*  padding: 11px 0px;*/
 }
 
 #header .navbar-brand img {
-    padding: 1px 0px;
+/*  padding: 1px 0px;*/
 }
 
 #content {
-    padding-bottom: 40px;
+padding-bottom: 40px;
 }
 
 /* Footer */

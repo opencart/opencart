@@ -30,9 +30,9 @@ class Language extends \Opencart\System\Engine\Controller {
 			$language->load($code);
 
 			$data['languages'][] = [
-				'text'  => $language->get('text_name'),
-				'code'  => $code,
-				'href'  => $this->url->link($route, 'language=' . $code)
+				'text' => $language->get('text_name'),
+				'code' => $code,
+				'href' => $this->url->link($route, 'language=' . $code)
 			];
 		}
 

@@ -21,7 +21,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 				$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-				$data['reset'] = str_replace('&amp;', '&', $this->url->link('account/reset', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($args[0]) . '&code=' . $args[1], true));
+				$data['reset'] = $this->url->link('account/reset', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($args[0]) . '&code=' . $args[1], true);
 				$data['ip'] = $this->request->server['REMOTE_ADDR'];
 				$data['store_url'] = $this->config->get('config_url');
 				$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');

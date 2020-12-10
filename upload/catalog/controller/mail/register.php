@@ -33,7 +33,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['approval'] = '';
 		}
 
-		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		$data['store_url'] = $this->config->get('config_url');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -64,7 +64,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['firstname'] = $args[0]['firstname'];
 			$data['lastname'] = $args[0]['lastname'];
 
-			$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+			$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 			$data['store_url'] = $this->config->get('config_url');
 			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 

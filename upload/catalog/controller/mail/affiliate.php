@@ -4,6 +4,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');
 
+		$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
+
 		$this->load->model('tool/image');
 
 		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
@@ -30,7 +32,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['approval'] = '';
 		}
 
-		$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
+		$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'), true);
 		$data['store_url'] = $this->config->get('config_url');
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
@@ -50,7 +52,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+		$mail->setSubject($subject);
 		$mail->setHtml($this->load->view('mail/affiliate', $data));
 		$mail->send();
 	}
@@ -59,6 +61,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		// Send to main admin email if new affiliate email is enabled
 		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/affiliate');
+
+			$subject = $this->language->get('text_new_affiliate');
 
 			$this->load->model('tool/image');
 
@@ -112,7 +116,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject($this->language->get('text_new_affiliate'));
+			$mail->setSubject($subject);
 			$mail->setHtml($this->load->view('mail/affiliate_alert', $data));
 			$mail->send();
 

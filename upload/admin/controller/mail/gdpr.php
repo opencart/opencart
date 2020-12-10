@@ -292,7 +292,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$subject = html_entity_decode(sprintf($language->get('mail_text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
+		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
 
 		$this->load->model('tool/image');
 
@@ -309,9 +309,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);
 
 		if ($customer_info) {
-			$data['text_hello'] = sprintf($language->get('mail_text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
+			$data['text_hello'] = sprintf($this->language->get('mail_text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));
 		} else {
-			$data['text_hello'] = sprintf($language->get('mail_text_hello'), $language->get('mail_text_user'));
+			$data['text_hello'] = sprintf($this->language->get('mail_text_hello'), $this->language->get('mail_text_user'));
 		}
 
 		$this->load->model('setting/store');

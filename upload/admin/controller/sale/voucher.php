@@ -505,13 +505,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/voucher');
 
-		$data['text_no_results'] = $this->language->get('text_no_results');
-
-		$data['column_order_id'] = $this->language->get('column_order_id');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_amount'] = $this->language->get('column_amount');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -592,19 +585,37 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			
 						// If voucher belongs to an order
 						if ($order_info) {
-							$language = new \Opencart\Engine\Library\Language($order_info['language_code']);
-							$language->load($order_info['language_code']);
-							$language->load('mail/voucher');
-			
+							$this->load->model('localisation/language');
+
+							$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
+
+							if ($language_info) {
+								$language_code = $language_info['code'];
+							} else {
+								$language_code = $this->config->get('config_language');
+							}
+
+							$this->language->load($language_code, 'mail', $language_code);
+							$this->language->load('mail/voucher', 'mail', $language_code);
+
+							// Add language vars to the template folder
+							$results = $this->language->all();
+
+							foreach ($results as $key => $value) {
+								if (substr($key, 0, 5) == 'mail_') {
+									$data[substr($key, 5)] = $value;
+								}
+							}
+
+							$subject = sprintf($this->language->get('mail_text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8'));
+
 							// HTML Mail
-							$data['title'] = sprintf($language->get('text_subject'), $voucher_info['from_name']);
+							$data['title'] = sprintf($this->language->get('mail_text_subject'), $voucher_info['from_name']);
 			
-							$data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher_info['amount'], (!empty($order_info['currency_code']) ? $order_info['currency_code'] : $this->config->get('config_currency')), (!empty($order_info['currency_value']) ? $order_info['currency_value'] : $this->currency->getValue($this->config->get('config_currency')))));
-							$data['text_from'] = sprintf($language->get('text_from'), $voucher_info['from_name']);
-							$data['text_message'] = $language->get('text_message');
-							$data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher_info['code']);
-							$data['text_footer'] = $language->get('text_footer');
-			
+							$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $this->currency->format($voucher_info['amount'], (!empty($order_info['currency_code']) ? $order_info['currency_code'] : $this->config->get('config_currency')), (!empty($order_info['currency_value']) ? $order_info['currency_value'] : $this->currency->getValue($this->config->get('config_currency')))));
+							$data['text_from'] = sprintf($this->language->get('mail_text_from'), $voucher_info['from_name']);
+							$data['text_redeem'] = sprintf($this->language->get('mail_text_redeem'), $voucher_info['code']);
+
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 			
 							if ($voucher_theme_info && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
@@ -620,7 +631,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 							$mail->setTo($voucher_info['to_email']);
 							$mail->setFrom($this->config->get('config_email'));
 							$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8')));
+							$mail->setSubject($subject);
 							$mail->setHtml($this->load->view('mail/voucher', $data));
 							$mail->send();
 			

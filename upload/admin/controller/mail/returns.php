@@ -42,12 +42,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 					$language_code = $this->config->get('config_language');
 				}
 
-				$language = new \Opencart\Engine\Library\Language($language_code);
-				$language->load($language_code);
-				$language->load('mail/returns');
+				$this->language->load($language_code, 'mail', $language_code);
+				$this->language->load('mail/returns', 'mail', $language_code);
+
+				$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $return_id);
 
 				$data['return_id'] = $return_id;
-				$data['date_added'] = date($language->get('date_format_short'), strtotime($return_info['date_modified']));
+				$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_modified']));
 				$data['return_status'] = $return_info['return_status'];
 				$data['comment'] = strip_tags(html_entity_decode($comment, ENT_QUOTES, 'UTF-8'));
 
@@ -62,7 +63,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				$mail->setTo($return_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $return_id));
+				$mail->setSubject($subject);
 				$mail->setText($this->load->view('mail/returns', $data));
 				$mail->send();
 			}

@@ -1,22 +1,22 @@
 {{ header }}
 <div id="content">
-  <div class="container-fluid">
+  <div class="container">
     <br/>
     <br/>
     <div class="row">
-      <div class="offset-sm-4 col-sm-4">
+      <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
         <div class="card">
           <div class="card-header"><i class="fas fa-redo"></i> {{ heading_title }}</div>
           <div class="card-body">
             <form action="{{ action }}" method="post" enctype="multipart/form-data">
               <p>{{ text_password }}</p>
-              <div class="form-group row">
+              <div class="form-group">
                 <label for="input-password" class="col-form-label">{{ entry_password }}</label> <input type="password" name="password" value="{{ password }}" id="input-password" class="form-control"/>
                 {% if error_password %}
                   <div class="invalid-tooltip">{{ error_password }}</div>
                 {% endif %}
               </div>
-              <div class="form-group row">
+              <div class="form-group">
                 <label for="input-confirm" class="col-form-label">{{ entry_confirm }}</label> <input type="password" name="confirm" value="{{ confirm }}" id="input-confirm" class="form-control"/>
                 {% if error_confirm %}
                   <div class="invalid-tooltip">{{ error_confirm }}</div>

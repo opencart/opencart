@@ -13,12 +13,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$data['text_login'] = $this->language->get('text_login');
-		$data['text_approval'] = $this->language->get('text_approval');
-		$data['text_service'] = $this->language->get('text_service');
-		$data['text_thanks'] = $this->language->get('text_thanks');
-
-		$data['button_login'] = $this->language->get('button_login');
 
 		$this->load->model('account/customer_group');
 
@@ -73,14 +67,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['logo'] = '';
 			}
-
-			$data['text_signup'] = $this->language->get('text_signup');
-			$data['text_website'] = $this->language->get('text_website');
-			$data['text_firstname'] = $this->language->get('text_firstname');
-			$data['text_lastname'] = $this->language->get('text_lastname');
-			$data['text_customer_group'] = $this->language->get('text_customer_group');
-			$data['text_email'] = $this->language->get('text_email');
-			$data['text_telephone'] = $this->language->get('text_telephone');
 
 			$data['login'] = $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language'));
 			$data['store_url'] = $this->config->get('config_url');

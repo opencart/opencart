@@ -5,6 +5,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		if (isset($args[0]) && isset($args[1]) && $args[0] && $args[1]) {
 			$this->load->language('mail/forgotten');
 
+			$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
+
 			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
 			$data['reset'] = $this->url->link('common/reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1]);
@@ -21,7 +23,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$mail->setTo($args[0]);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject($subject);
 			$mail->setText($this->load->view('mail/forgotten', $data));
 			$mail->send();
 		}

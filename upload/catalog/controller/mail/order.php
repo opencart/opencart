@@ -290,7 +290,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->language->load($language_code, 'mail', $language_code, 'mail');
+		$this->language->load($language_code, 'mail', $language_code);
 		$this->language->load('mail/order_edit', 'mail', $language_code);
 
 		// Add language vars to the template folder

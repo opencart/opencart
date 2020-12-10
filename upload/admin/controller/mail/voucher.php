@@ -24,8 +24,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				}
 
 				// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-				$this->language->load($language_code, $language_code, 'mail');
-				$this->language->load('mail/voucher', $language_code, 'mail');
+				$this->language->load($language_code, 'mail', $language_code);
+				$this->language->load('mail/voucher', 'mail', $language_code);
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');

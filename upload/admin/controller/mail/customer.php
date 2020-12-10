@@ -38,8 +38,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 
 			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-			$this->language->load($language_code, $language_code, 'mail');
-			$this->language->load('mail/customer_approve', $language_code, 'mail');
+			$this->language->load($language_code, 'mail', $language_code);
+			$this->language->load('mail/customer_approve', 'mail', $language_code);
 
 			// Add language vars to the template folder
 			$results = $this->language->all();
@@ -112,8 +112,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 
 			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-			$this->language->load($language_code, $language_code, 'mail');
-			$this->language->load('mail/customer_deny', $language_code, 'mail');
+			$this->language->load($language_code, 'mail', $language_code);
+			$this->language->load('mail/customer_deny', 'mail', $language_code);
 
 			// Add language vars to the template folder
 			$results = $this->language->all();

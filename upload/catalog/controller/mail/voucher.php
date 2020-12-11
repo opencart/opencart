@@ -27,6 +27,15 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				$this->language->load($language_code, 'mail', $language_code);
 				$this->language->load('mail/voucher', 'mail', $language_code);
 
+				// Add language vars to the template folder
+				$results = $this->language->all();
+
+				foreach ($results as $key => $value) {
+					if (substr($key, 0, 5) == 'mail_') {
+						$data[substr($key, 5)] = $value;
+					}
+				}
+
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -37,17 +46,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 				foreach ($voucher_query->rows as $voucher) {
 					// HTML Mail
-					$data = [];
-
-					// Add language vars to the template folder
-					$results = $this->language->all();
-
-					foreach ($results as $key => $value) {
-						if (substr($key, 0, 5) == 'mail_') {
-							$data[substr($key, 5)] = $value;
-						}
-					}
-
 					$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $voucher['from_name']), ENT_QUOTES, 'UTF-8');
 
 					$data['title'] = sprintf($this->language->get('mail_text_subject'), $voucher['from_name']);

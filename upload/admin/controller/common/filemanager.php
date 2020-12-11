@@ -276,6 +276,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						'image/x-png',
 						'image/gif',
 						'image/svg+xml',
+						'image/svg+xml-compressed',
 						'image/webp'
 					];
 

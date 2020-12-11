@@ -64,7 +64,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		$data['images'] = [];
 
-		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP,GIF}', GLOB_BRACE);
+		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,webp,gif,svg,svgz,JPG,JPEG,PNG,WEBP,GIF,SVG,SVGZ}', GLOB_BRACE);
 
 		if ($files) {
 			// Split the array based on current page number and max number of items per page of 10
@@ -259,7 +259,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						'jpeg',
 						'gif',
 						'png',
-						'webp'
+						'webp',
+						'svg',
+						'svgz'
 					];
 
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
@@ -273,7 +275,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						'image/png',
 						'image/x-png',
 						'image/webp',
-						'image/gif'
+						'image/gif',
+						'image/svg+xml',
+						'image/svg+xml-compressed'
 					];
 
 					if (!in_array($file['type'], $allowed)) {

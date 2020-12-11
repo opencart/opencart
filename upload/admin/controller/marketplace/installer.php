@@ -380,7 +380,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			mkdir(DIR_EXTENSION . $extension_install_info['code'], 0777);
 
 			// Add the installer xml
-			if (copy('zip://#install.xml', DIR_EXTENSION . $extension_install_info['code'])) {
+			if (copy('zip://' . $file . '#install.xml', DIR_EXTENSION . $extension_install_info['code'] . '/install.xml')) {
 				$this->model_setting_extension->addPath($extension_install_id, $extension_install_info['code'] . '/install.xml');
 			}
 

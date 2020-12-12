@@ -265,6 +265,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 				// Add commission if sale is linked to affiliate referral.
 				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
+					$this->load->language('account/order');
+
 					$this->load->model('account/customer');
 
 					if (!$this->model_account_customer->getTotalTransactionsByOrderId($order_id)) {

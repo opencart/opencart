@@ -348,9 +348,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
-			'page' => $page,
+			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($order_total - $this->config->get('config_pagination'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $order_total, ceil($order_total / $this->config->get('config_pagination')));
@@ -1477,6 +1477,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
+		// Hard coding css so they can be replaced via the events system.
+		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
+		$data['icons'] = 'view/stylesheet/icon/fontawesome/css/all.css';
+		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts so they can be replaced via the events system.
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.5.1.min.js';
+		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+
 		$this->load->model('sale/order');
 
 		$this->load->model('setting/setting');
@@ -1680,6 +1689,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['base'] = HTTP_SERVER;
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
+
+		// Hard coding css so they can be replaced via the events system.
+		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
+		$data['icons'] = 'view/stylesheet/icon/fontawesome/css/all.css';
+		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts so they can be replaced via the events system.
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.5.1.min.js';
+		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
 

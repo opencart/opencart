@@ -136,25 +136,48 @@ $(document).ready(function() {
 		$('#content .product-module').attr('class', 'product-layout product-module col-lg-3 col-md-3 col-sm-6 col-12');
 	}
 
-	// Cookie Policy
-	$('#button-cookie').on('click', function(e) {
+	/* Agree to Terms */
+	$('body').on('click', '.modal-link', function(e) {
 		e.preventDefault();
 
+		$('#modal-information').remove();
+
+		var element = this;
+
 		$.ajax({
-			url: 'index.php?route=common/cookie|agree',
+			url: $(element).attr('href'),
+			dataType: 'html',
+			success: function(html) {
+				$('body').append(html);
+
+				$('#modal-information').modal('show');
+			}
+		});
+	});
+
+	// Cookie Policy
+	$('#cookie button').on('click', function() {
+		var element = this;
+
+		$.ajax({
+			url: $(this).val(),
+			type: 'get',
 			dataType: 'json',
 			beforeSend: function() {
-				$('#button-cookie').button('loading');
+				$(element).button('loading');
 			},
 			complete: function() {
-				$('#button-cookie').button('reset');
+				$(element).button('reset');
 			},
 			success: function(json) {
 				if (json['success']) {
-					$('#cookie').slideUp(400, function() {
+					$('#cookie').fadeOut(400, function() {
 						$('#cookie').remove();
 					});
 				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	});
@@ -166,7 +189,7 @@ var cart = {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|add',
 			type: 'post',
-			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
+			data: 'product_id=' + product_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#cart > button').button('loading');
@@ -210,7 +233,7 @@ var cart = {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|edit',
 			type: 'post',
-			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
+			data: 'key=' + key + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#cart > button').button('loading');
@@ -301,7 +324,7 @@ var wishlist = {
 				}
 
 				if (json['success']) {
-					html  = '<div id="toast" class="toast">';
+					html = '<div id="toast" class="toast">';
 					html += '  <div class="toast-header">';
 					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
@@ -340,7 +363,7 @@ var compare = {
 				$('#toast').remove();
 
 				if (json['success']) {
-					html  = '<div id="toast" class="toast">';
+					html = '<div id="toast" class="toast">';
 					html += '  <div class="toast-header">';
 					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
@@ -366,38 +389,6 @@ var compare = {
 
 	}
 };
-
-/* Agree to Terms */
-$(document).delegate('.agree', 'click', function(e) {
-	e.preventDefault();
-
-	$('#modal-agree').remove();
-
-	var element = this;
-
-	$.ajax({
-		url: $(element).attr('href'),
-		type: 'get',
-		dataType: 'html',
-		success: function(data) {
-			html = '<div id="modal-agree" class="modal fade">';
-			html += '  <div class="modal-dialog">';
-			html += '    <div class="modal-content">';
-			html += '      <div class="modal-header">';
-			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
-			html += '        <button type="button" class="close" data-dismiss="modal">&times;</button>';
-			html += '      </div>';
-			html += '      <div class="modal-body">' + data + '</div>';
-			html += '    </div>';
-			html += '  </div>';
-			html += '</div>';
-
-			$('body').append(html);
-
-			$('#modal-agree').modal('show');
-		}
-	});
-});
 
 // Chain ajax calls.
 class Chain {

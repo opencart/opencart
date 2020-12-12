@@ -13,7 +13,7 @@ class Cod extends \Opencart\System\Engine\Controller {
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_cod_order_status_id'));
 
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/success', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

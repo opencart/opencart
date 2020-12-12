@@ -11,12 +11,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$product_info = $this->model_catalog_product->getProduct((int)$args[0]);
 
 			if ($product_info) {
-				$data['text_waiting'] = $this->language->get('text_waiting');
-
-				$data['text_product'] = $this->language->get('text_product');
-				$data['text_reviewer'] = $this->language->get('text_reviewer');
-				$data['text_rating'] = $this->language->get('text_rating');
-				$data['text_review'] = $this->language->get('text_review');
+				$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
 
 				$data['product'] = html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8');
 				$data['reviewer'] = html_entity_decode($args[1]['name'], ENT_QUOTES, 'UTF-8');
@@ -34,7 +29,7 @@ class Review extends \Opencart\System\Engine\Controller {
 				$mail->setTo($this->config->get('config_email'));
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject($subject);
 				$mail->setText($this->load->view('mail/review', $data));
 				$mail->send();
 

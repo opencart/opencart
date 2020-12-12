@@ -33,7 +33,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$images = array_slice($directories, ($page - 1) * 16, 16);
 
 			foreach ($images as $image) {
-				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+				if (substr(str_replace('\\', '/', realpath($image)), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 					$name = basename($image);
 
 					$url = '';
@@ -71,7 +71,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$images = array_slice($files, ($page - 1) * 16, 16 - count($data['directories']));
 
 			foreach ($images as $image) {
-				if (substr(str_replace('\\', '/', realpath($image)), 0, utf8_strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+				if (substr(str_replace('\\', '/', realpath($image)), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
 					$name = basename($image);
 
 					$data['images'][] = [

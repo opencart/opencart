@@ -13,6 +13,7 @@ class SubTotal extends \Opencart\System\Engine\Model {
 		}
 
 		$totals[] = [
+			'extension'  => 'opencart',
 			'code'       => 'sub_total',
 			'title'      => $this->language->get('text_sub_total'),
 			'value'      => $sub_total,

@@ -133,6 +133,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 						break;
 					case 'customer':
 						if (!empty($this->request->post['customer'])) {
+							$email_total = count($this->request->post['customer']);
+
 							$customers = array_slice($this->request->post['customer'], ($page - 1) * 10, 10);
 
 							foreach ($customers as $customer_id) {
@@ -142,8 +144,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 									$emails[] = $customer_info['email'];
 								}
 							}
-
-							$email_total = count($this->request->post['customer']);
 						}
 						break;
 					case 'affiliate_all':
@@ -210,7 +210,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 					$message .= '  </head>' . "\n";
 					$message .= '  <body>' . html_entity_decode($this->request->post['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
 					$message .= '</html>' . "\n";
-					
+
 					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 					$mail->parameter = $this->config->get('config_mail_parameter');
 					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

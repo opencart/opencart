@@ -38,7 +38,7 @@ class Total extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('total', $this->request->get['code']);
 
 			$this->load->controller('extension/' . $this->request->get['extension'] . '/total/' . $this->request->get['code'] . '|uninstall');
 
@@ -49,6 +49,8 @@ class Total extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList() {
+		$this->load->language('extension/total');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

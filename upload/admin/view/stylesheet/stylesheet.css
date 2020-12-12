@@ -35,69 +35,129 @@ legend {
 }
 
 #header {
-    min-height: 0px;
     border-bottom: 1px solid #d8d8d8;
+    box-shadow: 0px 0px 3px #ccc;
     z-index: 1000;
     margin: 0;
     padding: 0;
-    box-shadow: 0px 0px 3px #ccc;
 }
 
 #header .navbar-brand {
     transition: 0.3s all;
     width: 235px;
     text-align: center;
-}
-
-#header .navbar-brand img {
-    padding: 12px 0px;
-}
-
-#header .navbar-nav .nav-link:hover {
-    background: #EEEEEE;
-}
-
-#header .navbar-nav .nav-link {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-#header #user-profile {
-    max-width: 29px;
-}
-
-#header .navbar-nav > li > a {
-    padding-left: 21px;
-    padding-right: 21px;
-    line-height: 45px;
-    cursor: pointer;
-    color: #6D6D6D;
-    border-left: 0px solid #E1E1E1;
-    padding: 0px;
-}
-
-#header .navbar-nav > li.dropdown > a {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0px 0px;
 }
 
 /* Desktop */
 @media (min-width: 768px) {
-    #header #user-profile {
-        max-width: none;
-    }
-
-    #header .navbar-nav > li > a {
-        line-height: 60px;
+    #header .navbar-brand {
+        padding: 11px 0px;
     }
 }
 
+#header .navbar-brand img {
+    padding: 1px 0px;
+}
+
+#header .navbar-nav > li > .nav-link {
+    color: #6D6D6D;
+}
+
+#header .navbar-nav li > .nav-link:hover, #header .navbar-nav li.show > .nav-link {
+    background: #EEEEEE;
+}
+
+/* Header Notification */
+#header #header-notification .nav-link {
+    padding: 12px 15px 0px 15px;
+    line-height: 33px;
+}
+
+#header #header-notification > .nav-link .badge {
+    position: absolute;
+    top: 7px;
+    right: 12px;
+    padding: 3px 4px 2px 4px;
+    opacity: 0.8;
+    border-radius: 6px;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    #header #header-notification .nav-link {
+        padding: 10px 15px 0px 15px;
+        line-height: 50px;
+    }
+
+    #header #header-notification > .nav-link .badge {
+        top: 14px;
+        right: 11px;
+    }
+}
+
+#header #header-notification > .nav-link > i.fa-bell {
+    font-size: 24px;
+}
+
+/* Header Profile */
+#header #header-profile .nav-link {
+    padding: 0px 15px;
+    line-height: 45px;
+}
+
+#header #header-profile img {
+    max-width: 30px;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    #header #header-profile .nav-link {
+        padding: 0px 10px;
+        line-height: 60px;
+    }
+
+    #header #header-profile img {
+        max-width: 35px;
+    }
+}
+
+/* Header Logout */
+#header #header-logout > .nav-link {
+    padding: 6px 20px 0px 20px;
+    line-height: 39px;
+}
+
+#header #header-logout > .nav-link > i.fa-sign-out-alt {
+    font-size: 20px;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    #header #header-logout > .nav-link {
+        padding: 0px 20px 0px 15px;
+        line-height: 60px;
+    }
+
+    #header #header-logout > .nav-link > i.fa-sign-out-alt {
+        font-size: 15px;
+    }
+}
+
+/* Menu Button */
 #button-menu {
     font-size: 25px;
-    padding: 5px 16px;
+    padding: 0px 16px;
+    margin: 2px;
     cursor: pointer;
     color: #6D6D6D;
-    border-right: 1px solid #eee;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    #button-menu {
+        padding: 10px 16px;
+    }
 }
 
 #column-left {

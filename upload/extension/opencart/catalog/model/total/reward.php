@@ -41,6 +41,7 @@ class Reward extends \Opencart\System\Engine\Model {
 				}
 
 				$totals[] = [
+					'extension'  => 'opencart',
 					'code'       => 'reward',
 					'title'      => sprintf($this->language->get('reward_text_reward'), $this->session->data['reward']),
 					'value'      => -$discount_total,

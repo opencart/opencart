@@ -240,6 +240,8 @@ $('#button-shipping-address').on('click', function() {
 						} else {
 							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 						}
+
+						$(element).addClass('is-invalid');
 					}
 
 					// Highlight any found errors

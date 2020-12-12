@@ -38,7 +38,7 @@ class Order extends \Opencart\System\Engine\Model {
 		// Totals
 		if (isset($data['totals'])) {
 			foreach ($data['totals'] as $total) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `extension` = '" . $this->db->escape($total['extension']) . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
 			}
 		}
 
@@ -92,7 +92,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		if (isset($data['totals'])) {
 			foreach ($data['totals'] as $total) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `extension` = '" . $this->db->escape($total['extension']) . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
 			}
 		}
 	}
@@ -265,6 +265,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 				// Add commission if sale is linked to affiliate referral.
 				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
+					$this->load->language('account/order');
+
 					$this->load->model('account/customer');
 
 					if (!$this->model_account_customer->getTotalTransactionsByOrderId($order_id)) {
@@ -307,7 +309,7 @@ class Order extends \Opencart\System\Engine\Model {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
 					if (property_exists($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}, 'unconfirm')) {
-						$this->{'model_extension_total_' . $order_total['code']}->unconfirm($order_id);
+						$this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}
 

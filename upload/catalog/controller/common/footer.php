@@ -36,6 +36,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['affiliate'] = false;
 		}
+
 		$data['special'] = $this->url->link('product/special', 'language=' . $this->config->get('config_language'));
 		$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
@@ -72,6 +73,8 @@ class Footer extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['scripts'] = $this->document->getScripts('footer');
+
+		$data['cookie'] = $this->load->controller('common/cookie');
 
 		return $this->load->view('common/footer', $data);
 	}

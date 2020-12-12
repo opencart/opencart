@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Application\Model\Setting;
 class Event extends \Opencart\System\Engine\Model {
-	public function addEvent($code, $trigger, $action, $status = 1, $sort_order = 0) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
+	public function addEvent($code, $description, $trigger, $action, $status = 1, $sort_order = 0) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `description` = '" . $this->db->escape($description) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
 
 		return $this->db->getLastId();
 	}

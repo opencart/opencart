@@ -3,15 +3,17 @@ namespace Opencart\Application\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Analytics
-		$this->load->model('setting/extension');
-
 		$data['analytics'] = [];
 
-		$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
+		if (!$this->config->get('config_cookie_id') || (isset($this->request->cookie['policy']) && $this->request->cookie['policy'])) {
+			$this->load->model('setting/extension');
 
-		foreach ($analytics as $analytic) {
-			if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
-				$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+			$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
+
+			foreach ($analytics as $analytic) {
+				if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
+					$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+				}
 			}
 		}
 
@@ -75,7 +77,6 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));
 		$data['telephone'] = $this->config->get('config_telephone');
 
-		$data['cookie'] = $this->load->controller('common/cookie');
 		$data['language'] = $this->load->controller('common/language');
 		$data['currency'] = $this->load->controller('common/currency');
 		$data['search'] = $this->load->controller('common/search');

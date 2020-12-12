@@ -2062,6 +2062,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
 				'name' => 'trigger',
 				'type' => 'text',
 				'not_null' => true
@@ -3022,7 +3027,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(32)',
+				'type' => 'varchar(64)',
 				'not_null' => true
 			],
 			[
@@ -3963,6 +3968,11 @@ function db_schema() {
 			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'extension',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[

@@ -4,6 +4,7 @@ class Shipping extends \Opencart\System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		if ($this->cart->hasShipping() && isset($this->session->data['shipping_method']['title']) && isset($this->session->data['shipping_method']['cost'])) {
 			$totals[] = [
+				'extension'  => 'opencart',
 				'code'       => 'shipping',
 				'title'      => $this->session->data['shipping_method']['title'],
 				'value'      => $this->session->data['shipping_method']['cost'],

@@ -9,7 +9,7 @@ $_['text_account_already'] = 'If you already have an account with us, please log
 $_['text_your_details']    = 'Your Personal Details';
 $_['text_newsletter']      = 'Newsletter';
 $_['text_your_password']   = 'Your Password';
-$_['text_agree']           = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
+$_['text_agree']           = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
 
 // Entry
 $_['entry_customer_group'] = 'Customer Group';

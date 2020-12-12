@@ -8,6 +8,7 @@ $_['text_list']             = 'Customer Approval List';
 $_['text_default']          = 'Default';
 $_['text_customer']         = 'Customer';
 $_['text_affiliate']        = 'Affiliate';
+$_['text_filter']           = 'Filter';
 
 // Column
 $_['column_customer']       = 'Customer';

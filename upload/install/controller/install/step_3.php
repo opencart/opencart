@@ -93,7 +93,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 			fclose($file);
 
-			$this->response->redirect($this->url->link('install/step_4'));
+			$this->response->redirect($this->url->link('install/step_4', 'language=' . $this->config->get('language_code')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -181,7 +181,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$data['error_email'] = '';
 		}
 
-		$data['action'] = $this->url->link('install/step_3');
+		$data['action'] = $this->url->link('install/step_3', 'language=' . $this->config->get('language_code'));
 
 		$db_drivers = [
 			'mysqli',
@@ -260,11 +260,11 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$data['email'] = '';
 		}
 
-		$data['back'] = $this->url->link('install/step_2');
+		$data['back'] = $this->url->link('install/step_2', 'language=' . $this->config->get('language_code'));
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['language'] = $this->load->controller('common/language');
 
 		$this->response->setOutput($this->load->view('install/step_3', $data));
 	}

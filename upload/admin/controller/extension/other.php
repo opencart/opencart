@@ -38,7 +38,7 @@ class Other extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('other', $this->request->get['extension']);
+			$this->model_setting_extension->uninstall('other', $this->request->get['code']);
 
 			$this->load->controller('extension/' . $this->request->get['extension'] . '/other/' . $this->request->get['code'] . '|uninstall');
 
@@ -49,6 +49,9 @@ class Other extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList() {
+		// Had top load again because the method is called directly.
+		$this->load->language('extension/other');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

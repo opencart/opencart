@@ -138,7 +138,7 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($result['customer_id'] > 0) {
-				$customer = sprintf($this->language->get('text_customer'), $this->url->link('customer/customer/edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']), $result['customer']);
+				$customer = sprintf($this->language->get('text_customer'), $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']), $result['customer']);
 			} else {
 				$customer = $this->language->get('text_guest');
 			}

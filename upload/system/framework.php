@@ -70,7 +70,7 @@ $template->addPath(DIR_TEMPLATE);
 $registry->set('template', $template);
 
 // Language
-$language = new \Opencart\System\Library\Language($config->get('language_default'));
+$language = new \Opencart\System\Library\Language($config->get('language_code'));
 $language->addPath(DIR_LANGUAGE);
 $language->load($config->get('language_code'));
 $registry->set('language', $language);

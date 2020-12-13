@@ -22,8 +22,10 @@
     "vendor-dir": "./upload/system/storage/vendor/"
   },
   "require": {
-    "scssphp/scssphp": "1.1.1",
-    "php": ">=7.1.0",
+    "php": ">=7.3.0",
+    "ext-curl": "*",
+    "ext-zip": "*",
+    "scssphp/scssphp": "1.1.1",    
     "twig/twig": "^3.0",
     "aws/aws-sdk-php": "^3.142.1"
   }

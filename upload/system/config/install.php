@@ -10,7 +10,7 @@ $_['language_code']     = 'en-gb';
 $_['template_engine']   = 'twig';
 
 // Error
-$_['error_display']     = true;
+$_['error_display']     = false;
 
 // Actions
 $_['action_default']    = 'install/step_1';

@@ -36,7 +36,7 @@ class DB {
 	}
 
 	/**
-     * 
+     * Query
      *
      * @param	string	$sql
 	 * 
@@ -47,7 +47,7 @@ class DB {
 	}
 
 	/**
-     * 
+     * Escape
      *
      * @param	string	$value
 	 * 
@@ -58,7 +58,7 @@ class DB {
 	}
 
 	/**
-     * 
+     * Count Affected
 	 * 
 	 * @return	int
      */
@@ -67,7 +67,7 @@ class DB {
 	}
 
 	/**
-     * 
+     * Get Last ID
 	 * 
 	 * @return	int
      */
@@ -76,7 +76,7 @@ class DB {
 	}
 	
 	/**
-     * 
+     * Is Connected
 	 * 
 	 * @return	bool
      */	

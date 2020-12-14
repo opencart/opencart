@@ -4,7 +4,7 @@ class MySQLi {
 	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$connection = new \MySQLi($hostname, $username, $password, $database, $port);
+		$connection = @new \MySQLi($hostname, $username, $password, $database, $port);
 
 		if (!$connection->connect_error) {
 			$this->connection = $connection;

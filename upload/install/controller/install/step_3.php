@@ -301,9 +301,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		} else {
 			try {
 				$db = new \Opencart\System\Library\DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port']);
-
-				$db->isConnected();
-			} catch(Exception $e) {
+			} catch(\Exception $e) {
 				$this->error['warning'] = $e->getMessage();
 			}
 		}
@@ -327,6 +325,8 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
 			$this->error['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'admin/config.php!';
 		}
+
+		print_r($this->error);
 
 		return !$this->error;
 	}

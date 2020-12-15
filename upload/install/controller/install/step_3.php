@@ -326,8 +326,6 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'admin/config.php!';
 		}
 
-		print_r($this->error);
-
 		return !$this->error;
 	}
 }

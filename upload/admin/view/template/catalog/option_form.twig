@@ -164,7 +164,7 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {
-	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox' || this.value == 'image') {
+	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
 		$('#option-value').parent().show();
 	} else {
 		$('#option-value').parent().hide();
@@ -204,4 +204,4 @@ function addOptionValue() {
 	option_value_row++;
 }
 //--></script>
-{{ footer }} 
+{{ footer }}

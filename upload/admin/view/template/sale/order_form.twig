@@ -1286,30 +1286,6 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '</div>';
 				}
 
-				if (option['type'] == 'image') {
-					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
-					html += '  <label for="input-option' + option['product_option_id'] + '" class="col-sm-2 col-form-label">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-10">';
-					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
-					html += '      <option value="">{{ text_select }}</option>';
-
-					for (j = 0; j < option['product_option_value'].length; j++) {
-						option_value = option['product_option_value'][j];
-
-						html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
-
-						if (option_value['price']) {
-							html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
-						}
-
-						html += '</option>';
-					}
-
-					html += '    </select>';
-					html += '  </div>';
-					html += '</div>';
-				}
-
 				if (option['type'] == 'text') {
 					html += '<div class="form-group row' + (option['required'] == 1 ? ' required' : '') + '">';
 					html += '  <label for="input-option' + option['product_option_id'] + '" class="col-sm-2 col-form-label">' + option['name'] + '</label>';
@@ -2363,7 +2339,7 @@ $('#button-refresh').on('click', function() {
 
 							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
 
-							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+							if (option['type'] == 'select' || option['type'] == 'radio') {
 								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
 							}
 

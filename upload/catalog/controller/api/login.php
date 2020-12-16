@@ -28,7 +28,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 
-				$session = new \Opencart\Engine\Library\Session($this->config->get('session_engine'), $this->registry);
+				$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
 				$session->start();
 				
 				$this->model_account_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);

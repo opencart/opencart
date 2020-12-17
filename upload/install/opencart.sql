@@ -741,6 +741,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('activity_affiliate_edit', 'catalog/model/account/affiliate/editAffiliate/after', 'event/activity|editAffiliate', 1),
 ('activity_order_add', 'catalog/model/checkout/order/addHistory/before', 'event/activity|addHistory', 1),
 ('activity_return_add', 'catalog/model/account/returns/addReturn/after', 'event/activity|addReturn', 1),
+('activity_custom_fields', 'catalog/model/account/custom_field/getCustomFields/before', 'event/activity|getCustomFields', 1),
 ('mail_transaction', 'catalog/model/account/customer/addTransaction/after', 'mail/transaction', 1),
 ('mail_forgotten', 'catalog/model/account/customer/editCode/after', 'mail/forgotten', 1),
 ('mail_customer_add', 'catalog/model/account/customer/addCustomer/after', 'mail/register', 1),

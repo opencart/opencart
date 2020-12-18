@@ -76,11 +76,11 @@ $language->load($config->get('language_code'));
 $registry->set('language', $language);
 
 // Route
-if (!empty($request->get['route'])) {
-	$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-} else {
-	$action = new \Opencart\System\Engine\Action($config->get('action_default'));
+if (empty($request->get['route'])) {
+	$request->get['route'] = $config->get('action_default');
 }
+
+$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
 
 // Action error object to execute if any other actions can not be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));

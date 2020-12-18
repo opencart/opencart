@@ -38,6 +38,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 			if (!empty($this->request->get['route'])) {
 				return new \Opencart\System\Engine\Action((string)$this->request->get['route']);
+			} else {
+				return new \Opencart\System\Engine\Action($this->config->get('action_error'));
 			}
 		}
 	}

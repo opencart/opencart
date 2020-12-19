@@ -106,6 +106,9 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
 		$data['text_pgsql'] = $this->language->get('text_pgsql');
+		$data['text_help'] = $this->language->get('text_help');
+		$data['text_cpanel'] = $this->language->get('text_cpanel');
+		$data['text_plesk'] = $this->language->get('text_plesk');
 
 		$data['entry_db_driver'] = $this->language->get('entry_db_driver');
 		$data['entry_db_hostname'] = $this->language->get('entry_db_hostname');

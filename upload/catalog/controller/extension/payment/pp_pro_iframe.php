@@ -7,6 +7,11 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$this->load->language('extension/payment/pp_pro_iframe');
 
 		if ($this->config->get('payment_pp_pro_iframe_checkout_method') == 'redirect') {
+
+			if(!isset($this->session->data['order_id'])) {
+				return false;
+			}
+
 			$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 			$hosted_button_id = $this->constructButtonData($order_info);
@@ -38,6 +43,10 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		$this->load->model('extension/payment/pp_pro_iframe');
 
 		$data['text_secure_connection'] = $this->language->get('text_secure_connection');
+
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 

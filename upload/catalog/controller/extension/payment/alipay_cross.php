@@ -8,6 +8,10 @@ class ControllerExtensionPaymentAlipayCross extends Controller {
 
 		$this->load->model('checkout/order');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$out_trade_no = str_pad($order_info['order_id'], 7, "0",STR_PAD_LEFT); // Length must be greater than 7
@@ -41,7 +45,7 @@ class ControllerExtensionPaymentAlipayCross extends Controller {
 			"currency"       => $currency,
 			"_input_charset" => trim(strtolower($alipay_config['input_charset']))
 		);
-		if ($this->session->data['currency'] == 'CNY') {
+		if (isset($this->session->data['currency']) && $this->session->data['currency'] == 'CNY') {
 			$parameter['rmb_fee'] = $total_fee_cny;
 		} else {
 			$parameter['total_fee'] = $total_fee;

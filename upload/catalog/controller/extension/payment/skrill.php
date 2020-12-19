@@ -5,6 +5,10 @@ class ControllerExtensionPaymentSkrill extends Controller {
 
 		$this->load->language('extension/payment/skrill');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$data['action'] = 'https://www.moneybookers.com/app/payment.pl?p=OpenCart';

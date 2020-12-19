@@ -20,6 +20,10 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 
 		$this->load->model('checkout/order');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$data['owner'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
@@ -82,6 +86,10 @@ class ControllerExtensionPaymentPPPayflow extends Controller {
 		$this->load->language('extension/payment/pp_payflow');
 
 		$this->load->model('checkout/order');
+
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 

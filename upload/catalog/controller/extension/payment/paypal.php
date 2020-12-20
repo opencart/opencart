@@ -16,6 +16,10 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$this->load->model('extension/payment/paypal');
 		$this->load->model('localisation/country');
+
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
 				
 		$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 				
@@ -112,6 +116,10 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$this->load->model('extension/payment/paypal');
 		$this->load->model('checkout/order');
+
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
 				
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		

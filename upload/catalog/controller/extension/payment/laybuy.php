@@ -7,6 +7,10 @@ class ControllerExtensionPaymentLaybuy extends Controller {
 
 		$this->load->model('checkout/order');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$data['action'] = $this->url->link('extension/payment/laybuy/postToLaybuy', '', true);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);

@@ -13,6 +13,10 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$this->load->model('account/order');
 		$this->load->model('extension/payment/g2apay');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$order_data = array();

@@ -7,7 +7,7 @@ class ControllerExtensionPaymentFreeCheckout extends Controller {
 	}
 
 	public function confirm() {
-		if ($this->session->data['payment_method']['code'] == 'free_checkout') {
+		if (isset($this->session->data['payment_method']['code']) && $this->session->data['payment_method']['code'] == 'free_checkout') {
 			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_free_checkout_order_status_id'));

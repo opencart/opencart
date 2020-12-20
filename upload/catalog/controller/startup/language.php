@@ -94,7 +94,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		// Set a new language cookie if the code does not match the current one
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
 			$option = [
-				'max-age'  => time() + 60 * 60 * 24 * 30,
+				'expires'  => time() + 60 * 60 * 24 * 30,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			];

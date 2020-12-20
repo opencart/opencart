@@ -19,7 +19,20 @@
           <fieldset>
             <legend>{{ text_db_connection }}</legend>
             <div class="row">
-              <div class="col-8">
+
+              <div class="col-md-4 offset-md-8">
+                <div class="alert alert-info">
+                  <p>{{ text_help }}</p>
+                  <ul class="text-info">
+                    <li><strong><a href="https://docs.cpanel.net/cpanel/databases/mysql-databases/" target="_blank">{{ text_cpanel }}</a></strong></li>
+                    <li><strong><a href="https://support.plesk.com/hc/en-us/articles/115004263014-How-to-create-a-database-in-Plesk" target="_blank">{{ text_plesk }}</a></strong></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-md-8">
+
+
                 <div class="form-row">
                   <div class="form-group col">
                     <label class="col-form-label" for="input-db-driver">{{ entry_db_driver }}</label> <select name="db_driver" id="input-db-driver" class="form-control">
@@ -72,15 +85,6 @@
                       <div class="text-danger">{{ error_db_port }}</div>
                     {% endif %}
                   </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="alert alert-info">
-                  <p>{{ text_help }}</p>
-                  <ul class="text-info">
-                    <li><strong><a href="https://docs.cpanel.net/cpanel/databases/mysql-databases/" target="_blank">{{ text_cpanel }}</a></strong></li>
-                    <li><strong><a href="https://support.plesk.com/hc/en-us/articles/115004263014-How-to-create-a-database-in-Plesk" target="_blank">{{ text_plesk }}</a></strong></li>
-                  </ul>
                 </div>
               </div>
             </div>

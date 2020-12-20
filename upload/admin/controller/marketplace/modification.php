@@ -158,7 +158,7 @@ class ControllerMarketplaceModification extends Controller {
 				foreach ($files as $file) {
 					$operations = $file->getElementsByTagName('operation');
 
-					$files = explode('|', $file->getAttribute('path'));
+					$files = explode('|', str_replace("\\", '/', $file->getAttribute('path')));
 
 					foreach ($files as $file) {
 						$path = '';

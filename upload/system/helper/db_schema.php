@@ -1057,11 +1057,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'fax',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
 				'name' => 'password',
 				'type' => 'varchar(255)',
 				'not_null' => true

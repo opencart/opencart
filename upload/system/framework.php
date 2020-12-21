@@ -75,15 +75,10 @@ $language->addPath(DIR_LANGUAGE);
 $language->load($config->get('language_code'));
 $registry->set('language', $language);
 
-// Route
-if (!empty($request->get['route'])) {
-	$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-} else {
-	$action = new \Opencart\System\Engine\Action($config->get('action_default'));
-}
-
 // Action error object to execute if any other actions can not be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
+
+$action = '';
 
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
@@ -103,6 +98,15 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 
 		$error = '';
 		break;
+	}
+}
+
+// Route
+if (!$action) {
+	if (!empty($request->get['route'])) {
+		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
+	} else {
+		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
 	}
 }
 

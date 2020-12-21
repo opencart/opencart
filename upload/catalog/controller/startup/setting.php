@@ -28,6 +28,9 @@ class Setting extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Url
+		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('config_url')));
+
 		// Set time zone
 		if ($this->config->get('config_timezone')) {
 			date_default_timezone_set($this->config->get('config_timezone'));

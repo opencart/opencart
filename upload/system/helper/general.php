@@ -13,10 +13,10 @@ function oc_setcookie(string $key, string $value, $option = []) {
 	} else {
 		$string = '';
 
-		if (isset($option['max-age'])) {
-			$string .= '; max-age=' . $option['max-age'];
+		if (isset($option['expires'])) {
+			$string .= '; expires=' . $option['expires'];
 		} else {
-			$string .= '; max-age=0';
+			$string .= '; expires=0';
 		}
 
 		if (!empty($option['path'])) {

@@ -7,8 +7,7 @@ class Application extends \Opencart\System\Engine\Controller {
 			$this->response->setCompression($this->config->get('config_compression'));
 		}
 
-		// Url
-		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('config_url')));
+
 
 		// Document
 		$this->registry->set('document', new \Opencart\System\Library\Document());

@@ -31,13 +31,15 @@ $_['mail_verp']            = false;
 $_['mail_parameter']       = '';
 
 // Cache
-$_['cache_engine']         = 'file'; // apc, file, mem, memcached or redis
-$_['cache_expire']         = 3600;
+$_['cache_engine']           = 'file'; // apc, file, mem, memcached or redis
+$_['cache_expire']           = 3600;
 
 // Session
-$_['session_engine']       = 'file'; // db or file
-$_['session_name']         = 'OCSESSID';
-$_['session_expire']       = 360000;
+$_['session_engine']         = 'file'; // db or file
+$_['session_name']           = 'OCSESSID';
+$_['session_expire']         = 360000;
+$_['session_gc_probability'] = 360000;
+$_['session_gc_divisor']     = '';
 
 // Template
 $_['template_engine']      = 'twig';

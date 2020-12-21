@@ -1,6 +1,8 @@
 <?php
 namespace Opencart\System\Library\Session;
 class File {
+
+
 	public function read($session_id) {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);
 

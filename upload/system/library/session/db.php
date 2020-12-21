@@ -10,10 +10,15 @@ CREATE TABLE IF NOT EXISTS `session` (
 
 namespace Opencart\System\Library\Session;
 final class DB {
-	public $expire = 3600;
+	public $expire = 9999998;
+	public $gc_maxlifetime = 0.5;
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
+		$this->config = $registry->get('config');
+
+		ini_set('session.gc_maxlifetime', $this->expire);
+		echo ini_get('session.gc_maxlifetime');
 
 		$this->expire = ini_get('session.gc_maxlifetime');
 	}

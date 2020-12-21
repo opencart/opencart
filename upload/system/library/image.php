@@ -30,7 +30,7 @@ class Image {
 			exit('Error: PHP GD is not installed!');
 		}
 		
-		if (file_exists($file)) {
+		if (is_file($file)) {
 			$this->file = $file;
 
 			$info = getimagesize($file);
@@ -117,7 +117,7 @@ class Image {
 
 		$extension = strtolower($info['extension']);
 
-		if (is_resource($this->image)) {
+		if (is_object($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
 			} elseif ($extension == 'png') {

@@ -10,17 +10,9 @@ CREATE TABLE IF NOT EXISTS `session` (
 
 namespace Opencart\System\Library\Session;
 final class DB {
-	public $expire = 9999998;
-	public $gc_maxlifetime = 0.5;
-
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
-
-		ini_set('session.gc_maxlifetime', $this->expire);
-		echo ini_get('session.gc_maxlifetime');
-
-		$this->expire = ini_get('session.gc_maxlifetime');
 	}
 
 	public function read($session_id) {
@@ -35,7 +27,7 @@ final class DB {
 
 	public function write($session_id, $data) {
 		if ($session_id) {
-			$this->db->query("REPLACE INTO `" . DB_PREFIX . "session` SET `session_id` = '" . $this->db->escape($session_id) . "', `data` = '" . $this->db->escape($data ? json_encode($data) : '') . "', `expire` = '" . $this->db->escape(date('Y-m-d H:i:s', time() + $this->expire)) . "'");
+			$this->db->query("REPLACE INTO `" . DB_PREFIX . "session` SET `session_id` = '" . $this->db->escape($session_id) . "', `data` = '" . $this->db->escape($data ? json_encode($data) : '') . "', `expire` = '" . $this->db->escape(date('Y-m-d H:i:s', time() + $this->config->get('session_expire'))) . "'");
 		}
 
 		return true;
@@ -48,21 +40,7 @@ final class DB {
 	}
 
 	public function gc() {
-		$gc_divisor = (int)ini_get('session.gc_divisor');
-
-		if ($gc_divisor) {
-			$gc_divisor = $gc_divisor;
-		} else {
-			$gc_divisor = 1;
-		}
-
-		if (ini_get('session.gc_probability')) {
-			$gc_probability = ini_get('session.gc_probability');
-		} else {
-			$gc_probability = 1;
-		}
-
-		if (mt_rand() / mt_getrandmax() < $gc_probability / $gc_divisor) {
+		if (mt_rand() / mt_getrandmax() < $this->config->get('session_probability') / $this->config->get('session_divisor')) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE `expire` < '" . $this->db->escape(date('Y-m-d H:i:s', time())) . "'");
 		}
 

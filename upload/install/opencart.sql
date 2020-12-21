@@ -2053,7 +2053,7 @@ INSERT INTO `oc_seo_profile` (`seo_profile_id`, `name`, `key`, `regex`, `push`, 
 (4, 'Category Level 4', 'path', '(\\d+_\\d+_\\d+_\\d+)', 'route=product/category', 'route,path', 4),
 (5, 'Category Level 5', 'path', '(\\d+_\\d+_\\d+_\\d+_\\d+)', 'route=product/category', 'route,path', 5),
 (6, 'Information', 'information_id', '(\\d+)', 'route=information/information', 'route,information_id', 1),
-(7, 'Manufacturer', 'manufacturer_id', '(\\d+)', 'route=product/manufacturer/info', 'route,manufacturer_id', 2),
+(7, 'Manufacturer', 'manufacturer_id', '(\\d+)', 'route=product/manufacturer|info', 'route,manufacturer_id', 2),
 (8, 'Language', 'language', '([a-z-]+)', '', 'language', -1),
 (9, 'Product', 'product_id', '(\\d+)', 'route=product/product', 'route,product_id', 100),
 (10, 'Route', 'route', '([a-zA-Z0-9\/_]+)', '', 'route', 0);

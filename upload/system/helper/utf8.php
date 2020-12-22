@@ -44,8 +44,8 @@ if (extension_loaded('mbstring')) {
 		return iconv_strrpos($string, $needle, 'UTF-8');
 	}
 
-	function utf8_substr($string, $offset, $length = 0) {
-		if ($length === null) {
+	function utf8_substr($string, $offset, $length = '') {
+		if ($length === '') {
 			return iconv_substr($string, $offset, utf8_strlen($string), 'UTF-8');
 		} else {
 			return iconv_substr($string, $offset, $length, 'UTF-8');

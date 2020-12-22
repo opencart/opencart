@@ -8,9 +8,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			if (!$prefix) {
-				$this->language->set($result['key'], $result['value']);
+				$this->language->set($result['key'], html_entity_decode($result['value'], ENT_QUOTES, 'UTF-8'));
 			} else {
-				$this->language->set($prefix . '_' . $result['key'], $result['value']);
+				$this->language->set($prefix . '_' . $result['key'], html_entity_decode($result['value'], ENT_QUOTES, 'UTF-8'));
 			}
 		}	
 	}

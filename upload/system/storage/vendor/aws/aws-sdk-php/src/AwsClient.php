@@ -351,6 +351,9 @@ class AwsClient implements AwsClientInterface
             if (!empty($c['@context']['signing_region'])) {
                 $region = $c['@context']['signing_region'];
             }
+            if (!empty($c['@context']['signing_service'])) {
+                $name = $c['@context']['signing_service'];
+            }
             $authType = $api->getOperation($c->getName())['authtype'];
             switch ($authType){
                 case 'none':

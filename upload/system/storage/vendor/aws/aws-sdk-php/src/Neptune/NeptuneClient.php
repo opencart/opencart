@@ -2,6 +2,7 @@
 namespace Aws\Neptune;
 
 use Aws\AwsClient;
+use Aws\PresignUrlMiddleware;
 
 /**
  * This client is used to interact with the **Amazon Neptune** service.
@@ -21,6 +22,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise copyDBParameterGroupAsync(array $args = [])
  * @method \Aws\Result createDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createDBClusterAsync(array $args = [])
+ * @method \Aws\Result createDBClusterEndpoint(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createDBClusterEndpointAsync(array $args = [])
  * @method \Aws\Result createDBClusterParameterGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createDBClusterParameterGroupAsync(array $args = [])
  * @method \Aws\Result createDBClusterSnapshot(array $args = [])
@@ -35,6 +38,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createEventSubscriptionAsync(array $args = [])
  * @method \Aws\Result deleteDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDBClusterAsync(array $args = [])
+ * @method \Aws\Result deleteDBClusterEndpoint(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDBClusterEndpointAsync(array $args = [])
  * @method \Aws\Result deleteDBClusterParameterGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDBClusterParameterGroupAsync(array $args = [])
  * @method \Aws\Result deleteDBClusterSnapshot(array $args = [])
@@ -47,6 +52,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteDBSubnetGroupAsync(array $args = [])
  * @method \Aws\Result deleteEventSubscription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventSubscriptionAsync(array $args = [])
+ * @method \Aws\Result describeDBClusterEndpoints(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeDBClusterEndpointsAsync(array $args = [])
  * @method \Aws\Result describeDBClusterParameterGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDBClusterParameterGroupsAsync(array $args = [])
  * @method \Aws\Result describeDBClusterParameters(array $args = [])
@@ -89,6 +96,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result modifyDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyDBClusterAsync(array $args = [])
+ * @method \Aws\Result modifyDBClusterEndpoint(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyDBClusterEndpointAsync(array $args = [])
  * @method \Aws\Result modifyDBClusterParameterGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyDBClusterParameterGroupAsync(array $args = [])
  * @method \Aws\Result modifyDBClusterSnapshotAttribute(array $args = [])
@@ -124,4 +133,31 @@ use Aws\AwsClient;
  * @method \Aws\Result stopDBCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopDBClusterAsync(array $args = [])
  */
-class NeptuneClient extends AwsClient {}
+class NeptuneClient extends AwsClient {
+    public function __construct(array $args)
+    {
+        $args['with_resolved'] = function (array $args) {
+            $this->getHandlerList()->appendInit(
+                PresignUrlMiddleware::wrap(
+                    $this,
+                    $args['endpoint_provider'],
+                    [
+                        'operations' => [
+                            'CopyDBClusterSnapshot',
+                            'CreateDBCluster',
+                        ],
+                        'service' => 'rds',
+                        'presign_param' => 'PreSignedUrl',
+                        'require_different_region' => true,
+                        'extra_query_params' => [
+                            'CopyDBClusterSnapshot' => ['DestinationRegion'],
+                            'CreateDBCluster' => ['DestinationRegion'],
+                        ]
+                    ]
+                ),
+                'rds.presigner'
+            );
+        };
+        parent::__construct($args);
+    }
+}

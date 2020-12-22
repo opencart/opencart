@@ -8,6 +8,8 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Prepares requests that contain a body, adding the Content-Length,
  * Content-Type, and Expect headers.
+ *
+ * @final
  */
 class PrepareBodyMiddleware
 {
@@ -38,7 +40,7 @@ class PrepareBodyMiddleware
         // Add a default content-type if possible.
         if (!$request->hasHeader('Content-Type')) {
             if ($uri = $request->getBody()->getMetadata('uri')) {
-                if ($type = Psr7\mimetype_from_filename($uri)) {
+                if (is_string($uri) && $type = Psr7\MimeType::fromFilename($uri)) {
                     $modify['set_headers']['Content-Type'] = $type;
                 }
             }
@@ -59,17 +61,14 @@ class PrepareBodyMiddleware
         // Add the expect header if needed.
         $this->addExpectHeader($request, $options, $modify);
 
-        return $fn(Psr7\modify_request($request, $modify), $options);
+        return $fn(Psr7\Utils::modifyRequest($request, $modify), $options);
     }
 
     /**
      * Add expect header
      */
-    private function addExpectHeader(
-        RequestInterface $request,
-        array $options,
-        array &$modify
-    ): void {
+    private function addExpectHeader(RequestInterface $request, array $options, array &$modify): void
+    {
         // Determine if the Expect header should be used
         if ($request->hasHeader('Expect')) {
             return;

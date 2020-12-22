@@ -136,6 +136,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putDeliveryChannelAsync(array $args = [])
  * @method \Aws\Result putEvaluations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putEvaluationsAsync(array $args = [])
+ * @method \Aws\Result putExternalEvaluation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putExternalEvaluationAsync(array $args = [])
  * @method \Aws\Result putOrganizationConfigRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putOrganizationConfigRuleAsync(array $args = [])
  * @method \Aws\Result putOrganizationConformancePack(array $args = [])

@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise sendTaskSuccessAsync(array $args = [])
  * @method \Aws\Result startExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startExecutionAsync(array $args = [])
+ * @method \Aws\Result startSyncExecution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startSyncExecutionAsync(array $args = [])
  * @method \Aws\Result stopExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopExecutionAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])

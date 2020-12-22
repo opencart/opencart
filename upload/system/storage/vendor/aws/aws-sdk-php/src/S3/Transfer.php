@@ -355,7 +355,8 @@ class Transfer implements PromisorInterface
     {
         $args = $this->s3Args;
         $args['Key'] = $this->createS3Key($filename);
-
+        $filename = $filename instanceof \SplFileInfo ? $filename->getPathname() : $filename;
+        
         return (new MultipartUploader($this->client, $filename, [
             'bucket'          => $args['Bucket'],
             'key'             => $args['Key'],

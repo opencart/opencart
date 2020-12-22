@@ -595,7 +595,11 @@ class ClientResolver
     public static function _apply_debug($value, array &$args, HandlerList $list)
     {
         if ($value !== false) {
-            $list->interpose(new TraceMiddleware($value === true ? [] : $value));
+            $list->interpose(
+                new TraceMiddleware(
+                    $value === true ? [] : $value,
+                    $args['api'])
+            );
         }
     }
 

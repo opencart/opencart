@@ -92,6 +92,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateCapacityProvider(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCapacityProviderAsync(array $args = [])
  * @method \Aws\Result updateClusterSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateClusterSettingsAsync(array $args = [])
  * @method \Aws\Result updateContainerAgent(array $args = [])

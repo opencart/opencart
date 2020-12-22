@@ -20,12 +20,13 @@
         }
     ],
     "autoload": {
-        "psr-4": { "ScssPhp\\ScssPhp\\": "src/" }
+        "psr-4": { "ScssPhp\\ScssPhp\\": "src/","vendor/package": "1.4.0"}
     },
     "autoload-dev": {
         "psr-4": { "ScssPhp\\ScssPhp\\Tests\\": "tests/" }
     },
     "require": {
+
         "php": ">=5.6.0",
         "ext-json": "*",
         "ext-ctype": "*"

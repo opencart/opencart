@@ -8,7 +8,11 @@
           <div class="input-group">
             <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/>
             <div class="input-group-append">
-              <button type="button" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_coupon }}</button>
+              {% if not coupon %}
+                <button type="button" id="button-coupon" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_coupon }}</button>
+              {% else %}
+                <button type="button" id="button-remove" data-loading-text="{{ text_loading }}" class="btn btn-danger">{{ button_remove }}</button>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -44,6 +48,29 @@
 		  }
 	  });
   });
-  //-->
-  </script>
+
+  $('#button-remove').on('click', function() {
+	  $.ajax({
+		  url: 'index.php?route=extension/opencart/total/coupon|remove',
+		  dataType: 'json',
+		  beforeSend: function() {
+			  $('#button-coupon').button('loading');
+		  },
+		  complete: function() {
+			  $('#button-coupon').button('reset');
+		  },
+		  success: function(json) {
+			  $('.alert-dismissible').remove();
+
+			  if (json['redirect']) {
+				  location = json['redirect'];
+			  }
+		  },
+		  error: function(xhr, ajaxOptions, thrownError) {
+			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		  }
+	  });
+  });
+  //--></script>
 </div>
+

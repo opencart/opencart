@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -28,6 +29,7 @@ class Colors
     protected static $cssColors = [
         'aliceblue' => '240,248,255',
         'antiquewhite' => '250,235,215',
+        'cyan' => '0,255,255',
         'aqua' => '0,255,255',
         'aquamarine' => '127,255,212',
         'azure' => '240,255,255',
@@ -46,13 +48,12 @@ class Colors
         'cornflowerblue' => '100,149,237',
         'cornsilk' => '255,248,220',
         'crimson' => '220,20,60',
-        'cyan' => '0,255,255',
         'darkblue' => '0,0,139',
         'darkcyan' => '0,139,139',
         'darkgoldenrod' => '184,134,11',
         'darkgray' => '169,169,169',
-        'darkgreen' => '0,100,0',
         'darkgrey' => '169,169,169',
+        'darkgreen' => '0,100,0',
         'darkkhaki' => '189,183,107',
         'darkmagenta' => '139,0,139',
         'darkolivegreen' => '85,107,47',
@@ -74,15 +75,16 @@ class Colors
         'firebrick' => '178,34,34',
         'floralwhite' => '255,250,240',
         'forestgreen' => '34,139,34',
+        'magenta' => '255,0,255',
         'fuchsia' => '255,0,255',
         'gainsboro' => '220,220,220',
         'ghostwhite' => '248,248,255',
         'gold' => '255,215,0',
         'goldenrod' => '218,165,32',
         'gray' => '128,128,128',
+        'grey' => '128,128,128',
         'green' => '0,128,0',
         'greenyellow' => '173,255,47',
-        'grey' => '128,128,128',
         'honeydew' => '240,255,240',
         'hotpink' => '255,105,180',
         'indianred' => '205,92,92',
@@ -98,8 +100,8 @@ class Colors
         'lightcyan' => '224,255,255',
         'lightgoldenrodyellow' => '250,250,210',
         'lightgray' => '211,211,211',
-        'lightgreen' => '144,238,144',
         'lightgrey' => '211,211,211',
+        'lightgreen' => '144,238,144',
         'lightpink' => '255,182,193',
         'lightsalmon' => '255,160,122',
         'lightseagreen' => '32,178,170',
@@ -111,7 +113,6 @@ class Colors
         'lime' => '0,255,0',
         'limegreen' => '50,205,50',
         'linen' => '250,240,230',
-        'magenta' => '255,0,255',
         'maroon' => '128,0,0',
         'mediumaquamarine' => '102,205,170',
         'mediumblue' => '0,0,205',
@@ -145,7 +146,6 @@ class Colors
         'plum' => '221,160,221',
         'powderblue' => '176,224,230',
         'purple' => '128,0,128',
-        'rebeccapurple' => '102,51,153',
         'red' => '255,0,0',
         'rosybrown' => '188,143,143',
         'royalblue' => '65,105,225',
@@ -167,7 +167,6 @@ class Colors
         'teal' => '0,128,128',
         'thistle' => '216,191,216',
         'tomato' => '255,99,71',
-        'transparent' => '0,0,0,0',
         'turquoise' => '64,224,208',
         'violet' => '238,130,238',
         'wheat' => '245,222,179',
@@ -175,6 +174,8 @@ class Colors
         'whitesmoke' => '245,245,245',
         'yellow' => '255,255,0',
         'yellowgreen' => '154,205,50',
+        'rebeccapurple' => '102,51,153',
+        'transparent' => '0,0,0,0',
     ];
 
     /**
@@ -226,7 +227,10 @@ class Colors
             foreach (static::$cssColors as $name => $rgb_str) {
                 $rgb_str = explode(',', $rgb_str);
 
-                if (\count($rgb_str) == 3) {
+                if (
+                    \count($rgb_str) == 3 &&
+                    ! isset($reverseColorTable[\intval($rgb_str[0])][\intval($rgb_str[1])][\intval($rgb_str[2])])
+                ) {
                     $reverseColorTable[\intval($rgb_str[0])][\intval($rgb_str[1])][\intval($rgb_str[2])] = $name;
                 }
             }

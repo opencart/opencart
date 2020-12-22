@@ -32,7 +32,10 @@ class AssumeRoleWithWebIdentityCredentialProvider
     private $retries;
 
     /** @var integer */
-    private $attempts;
+    private $authenticationAttempts;
+
+    /** @var integer */
+    private $tokenFileReadAttempts;
 
     /**
      * The constructor attempts to load config from environment variables.
@@ -61,7 +64,8 @@ class AssumeRoleWithWebIdentityCredentialProvider
         }
 
         $this->retries = (int) getenv(self::ENV_RETRIES) ?: (isset($config['retries']) ? $config['retries'] : 3);
-        $this->attempts = 0;
+        $this->authenticationAttempts = 0;
+        $this->tokenFileReadAttempts = 0;
 
         $this->session = isset($config['SessionName'])
             ? $config['SessionName']
@@ -108,6 +112,14 @@ class AssumeRoleWithWebIdentityCredentialProvider
                         }
                         $token = file_get_contents($this->tokenFile);
                     }
+                    if (empty($token)) {
+                        if ($this->tokenFileReadAttempts < $this->retries) {
+                            sleep(pow(1.2, $this->tokenFileReadAttempts));
+                            $this->tokenFileReadAttempts++;
+                            continue;
+                        }
+                        throw new CredentialsException("InvalidIdentityToken from file: {$this->tokenFile}");
+                    }
                 } catch (\Exception $exception) {
                     throw new CredentialsException(
                         "Error reading WebIdentityTokenFile from " . $this->tokenFile,
@@ -126,8 +138,8 @@ class AssumeRoleWithWebIdentityCredentialProvider
                     $result = $client->assumeRoleWithWebIdentity($assumeParams);
                 } catch (AwsException $e) {
                     if ($e->getAwsErrorCode() == 'InvalidIdentityToken') {
-                        if ($this->attempts < $this->retries) {
-                            sleep(pow(1.2, $this->attempts));
+                        if ($this->authenticationAttempts < $this->retries) {
+                            sleep(pow(1.2, $this->authenticationAttempts));
                         } else {
                             throw new CredentialsException(
                                 "InvalidIdentityToken, retries exhausted"
@@ -146,7 +158,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
                         . " (" . $e->getCode() . ")"
                     );
                 }
-                $this->attempts++;
+                $this->authenticationAttempts++;
             }
 
             yield $this->client->createCredentials($result);

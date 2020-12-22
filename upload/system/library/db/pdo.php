@@ -5,11 +5,17 @@ final class PDO {
 	private $statement;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		try {
-			$this->connection = @new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
-		} catch (\PDOException $e) {
+
+		$connection = @new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
+
+		if (!$connection->connect_error) {
+			$this->connection = $connection;
+
+
+		} else {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
+
 
 		$this->connection->exec("SET NAMES 'utf8'");
 		$this->connection->exec("SET CHARACTER SET utf8");

@@ -36,12 +36,12 @@ private static $installed = array (
   array (
     'aws/aws-sdk-php' => 
     array (
-      'pretty_version' => '3.171.2',
-      'version' => '3.171.2.0',
+      'pretty_version' => '3.171.3',
+      'version' => '3.171.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '742663a85ec84647f74dea454d2dc45bba180f9d',
+      'reference' => '7469c8e7f8db5dec544937677d08d8fff4f2f4e9',
     ),
     'guzzlehttp/guzzle' => 
     array (
@@ -131,12 +131,12 @@ private static $installed = array (
     ),
     'scssphp/scssphp' => 
     array (
-      'pretty_version' => '1.1.1',
-      'version' => '1.1.1.0',
+      'pretty_version' => 'v1.4.0',
+      'version' => '1.4.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '824e4cec10b2bfa88eec5dac23991cb9106622c1',
+      'reference' => 'f7c9088320e218ca42e4ef0074259a1ba24ec93a',
     ),
     'symfony/polyfill-ctype' => 
     array (

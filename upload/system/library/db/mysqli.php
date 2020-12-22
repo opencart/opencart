@@ -12,6 +12,9 @@ class MySQLi {
 			$this->connection->report_mode = MYSQLI_REPORT_STRICT;
 
 			$this->connection->set_charset('utf8');
+
+			// Needs to use register_shutdown_function as __destructors don't automatically trigger at the end of page load.
+			register_shutdown_function([$this, 'close']);
 		} else {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}

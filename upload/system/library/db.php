@@ -60,7 +60,7 @@ class DB {
 	/**
      * Count Affected
 	 * 
-	 * @return	int
+	 * @return	int	returns the total number of affected rows.
      */
 	public function countAffected() {
 		return $this->adaptor->countAffected();
@@ -82,5 +82,14 @@ class DB {
      */	
 	public function isConnected() {
 		return $this->adaptor->isConnected();
+	}
+
+	/**
+	 * Close
+	 *
+	 * @return	bool
+	 */
+	public function close() {
+		return $this->adaptor->close();
 	}
 }

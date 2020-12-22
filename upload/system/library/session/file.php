@@ -58,7 +58,7 @@ class File {
 	}
 
 	public function __destruct() {
-		if (rand($this->config->get('session_probability'), $this->config->get('session_divisor')) < rand()) {
+		if (rand(0, $this->config->get('session_divisor')) == ($this->config->get('session_probability') / $this->config->get('session_divisor'))) {
 			$expire = time() - $this->config->get('session_expire');
 
 			$files = glob(DIR_SESSION . 'sess_*');

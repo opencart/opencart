@@ -39,7 +39,7 @@ $_['session_engine']         = 'file'; // db or file
 $_['session_name']           = 'OCSESSID';
 $_['session_expire']         = 360000;
 $_['session_probability']    = 1;
-$_['session_divisor']        = 100;
+$_['session_divisor']        = 4;
 
 // Template
 $_['template_engine']        = 'twig';

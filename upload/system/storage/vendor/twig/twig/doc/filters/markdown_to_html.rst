@@ -27,13 +27,11 @@ removed consistently before conversion:
         Hello!
     {% endapply %}
 
-You can also use the filter on an included file or a variable:
+You can also use the filter on an included file:
 
 .. code-block:: twig
 
     {{ include('some_template.markdown.twig')|markdown_to_html }}
-    
-    {{ changelog|markdown_to_html }}
 
 .. note::
 
@@ -65,6 +63,3 @@ You can also use the filter on an included file or a variable:
                 }
             }
         });
-       
-    Afterwards you need to install a markdown library of your choice. Some of them are
-    mentioned in the ``require-dev`` section of the ``twig/markdown-extra`` package.

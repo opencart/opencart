@@ -8,4 +8,5 @@ $baseDir = dirname(dirname(dirname(dirname($vendorDir))));
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Divido' => array($vendorDir . '/divido/divido-php/lib'),
+    'Braintree' => array($vendorDir . '/braintree/braintree_php/lib'),
 );

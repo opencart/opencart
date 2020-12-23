@@ -355,7 +355,7 @@ abstract class Template
      *
      * @return Template
      */
-    public function unwrap()
+    protected function unwrap()
     {
         return $this;
     }

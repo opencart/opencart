@@ -153,16 +153,7 @@ abstract class CallExpression extends AbstractExpression
         $optionalArguments = [];
         $pos = 0;
         foreach ($callableParameters as $callableParameter) {
-            $name = $this->normalizeName($callableParameter->name);
-            if (\PHP_VERSION_ID >= 80000 && 'range' === $callable) {
-                if ('start' === $name) {
-                    $name = 'low';
-                } elseif ('end' === $name) {
-                    $name = 'high';
-                }
-            }
-
-            $names[] = $name;
+            $names[] = $name = $this->normalizeName($callableParameter->name);
 
             if (\array_key_exists($name, $parameters)) {
                 if (\array_key_exists($pos, $parameters)) {

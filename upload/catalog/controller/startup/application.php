@@ -7,8 +7,6 @@ class Application extends \Opencart\System\Engine\Controller {
 			$this->response->setCompression($this->config->get('config_compression'));
 		}
 
-
-
 		// Document
 		$this->registry->set('document', new \Opencart\System\Library\Document());
 
@@ -55,7 +53,7 @@ class Application extends \Opencart\System\Engine\Controller {
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 30,
 				'path'     => '/',
-				'SameSite' => 'lax'
+				'SameSite' => 'Lax'
 			];
 
 			oc_setcookie('currency', $code, $option);

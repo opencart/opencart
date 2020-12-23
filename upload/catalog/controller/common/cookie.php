@@ -33,7 +33,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 			}
 
 			$option = [
-				'max-age'  => time() + 60 * 60 * 24 * 365,
+				'expires'  => time() + 60 * 60 * 24 * 365,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			];

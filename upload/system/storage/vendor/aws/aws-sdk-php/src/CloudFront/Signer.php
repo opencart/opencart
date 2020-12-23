@@ -45,7 +45,11 @@ class Signer
 
     public function __destruct()
     {
-        $this->pkHandle && openssl_pkey_free($this->pkHandle);
+        if (PHP_MAJOR_VERSION < 8) {
+            $this->pkHandle && openssl_pkey_free($this->pkHandle);
+        } else {
+            $this->pkHandle;
+        }
     }
 
     /**

@@ -67,5 +67,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateAgentAsync(array $args = [])
  * @method \Aws\Result updateTask(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTaskAsync(array $args = [])
+ * @method \Aws\Result updateTaskExecution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTaskExecutionAsync(array $args = [])
  */
 class DataSyncClient extends AwsClient {}

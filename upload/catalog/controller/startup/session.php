@@ -40,7 +40,7 @@ class Session extends \Opencart\System\Engine\Controller {
 			$session->start($session_id);
 
 			$option = [
-				'max-age'  => time() + $this->config->get('session_expire'),
+				'expires'  => time() + $this->config->get('session_expire'),
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 				'domain'   => $this->request->server['HTTP_HOST'],
 				'secure'   => $this->request->server['HTTPS'],

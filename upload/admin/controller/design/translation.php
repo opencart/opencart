@@ -415,16 +415,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
-
 			$path = glob(DIR_EXTENSION . '*/catalog/language/' . $language_info['code'] . '/*');
 
 			while (count($path) != 0) {
-				$new_path = substr(DIR_EXTENSION, strlen(DIR_EXTENSION));
-
-				$code = substr($new_path, 0, strpos($new_path, '/'));
-
-
 				$next = array_shift($path);
 
 				foreach ((array)glob($next) as $file) {
@@ -433,14 +426,18 @@ class Translation extends \Opencart\System\Engine\Controller {
 					}
 
 					if (substr($file, -4) == '.php') {
-						$json[] = substr(substr($file, strlen(DIR_EXTENSION . $code . '/catalog/language/' . $language_info['code'] . '/')), 0, -4);
+						$new_path = substr($file, strlen(DIR_EXTENSION));
+
+						$code = substr($new_path, 0, strpos($new_path, '/'));
+
+						$length = strlen(DIR_EXTENSION . $code . '/catalog/language/' . $language_info['code'] . '/');
+
+						$route = substr(substr($file, $length), 0, -4);
+
+						$json[] = 'extension/' . $code . '/' . $route;
 					}
 				}
 			}
-
-
-
-
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -474,7 +471,18 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 
-		$directory = DIR_CATALOG . 'language/';
+		$part = explode('/', $route);
+
+		if ($part[0] != 'extension') {
+			$directory = DIR_CATALOG . 'language/';
+		} else {
+			$directory = DIR_EXTENSION . $part[1] . '/catalog/language/';
+
+			array_shift($part);
+			array_shift($part);
+
+			$route = implode('/', $part);
+		}
 
 		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
 			$_ = [];
@@ -488,8 +496,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
-
-
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

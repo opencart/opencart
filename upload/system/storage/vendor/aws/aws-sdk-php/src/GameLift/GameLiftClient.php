@@ -80,6 +80,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeGameServerAsync(array $args = [])
  * @method \Aws\Result describeGameServerGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeGameServerGroupAsync(array $args = [])
+ * @method \Aws\Result describeGameServerInstances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeGameServerInstancesAsync(array $args = [])
  * @method \Aws\Result describeGameSessionDetails(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeGameSessionDetailsAsync(array $args = [])
  * @method \Aws\Result describeGameSessionPlacement(array $args = [])

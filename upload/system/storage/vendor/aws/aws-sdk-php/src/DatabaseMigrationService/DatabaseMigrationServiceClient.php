@@ -93,6 +93,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise modifyReplicationSubnetGroupAsync(array $args = [])
  * @method \Aws\Result modifyReplicationTask(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyReplicationTaskAsync(array $args = [])
+ * @method \Aws\Result moveReplicationTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise moveReplicationTaskAsync(array $args = [])
  * @method \Aws\Result rebootReplicationInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rebootReplicationInstanceAsync(array $args = [])
  * @method \Aws\Result refreshSchemas(array $args = [])

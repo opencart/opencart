@@ -13,6 +13,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise exportEC2InstanceRecommendationsAsync(array $args = [])
  * @method \Aws\Result getAutoScalingGroupRecommendations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAutoScalingGroupRecommendationsAsync(array $args = [])
+ * @method \Aws\Result getEBSVolumeRecommendations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getEBSVolumeRecommendationsAsync(array $args = [])
  * @method \Aws\Result getEC2InstanceRecommendations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEC2InstanceRecommendationsAsync(array $args = [])
  * @method \Aws\Result getEC2RecommendationProjectedMetrics(array $args = [])

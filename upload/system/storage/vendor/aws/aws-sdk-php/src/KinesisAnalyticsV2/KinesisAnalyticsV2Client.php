@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise addApplicationVpcConfigurationAsync(array $args = [])
  * @method \Aws\Result createApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationAsync(array $args = [])
+ * @method \Aws\Result createApplicationPresignedUrl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createApplicationPresignedUrlAsync(array $args = [])
  * @method \Aws\Result createApplicationSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationSnapshotAsync(array $args = [])
  * @method \Aws\Result deleteApplication(array $args = [])

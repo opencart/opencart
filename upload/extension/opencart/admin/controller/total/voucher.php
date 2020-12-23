@@ -71,18 +71,4 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		return !$this->error;
 	}
-
-	public function install() {
-		// Register the event triggers
-		$this->load->model('setting/event');
-
-		$this->model_setting_event->addEvent('voucher', 'catalog/model/checkout/order/addHistory/after', 'extension/total/voucher/send');
-	}
-
-	public function uninstall() {
-		// delete the event triggers
-		$this->load->model('setting/event');
-
-		$this->model_setting_event->deleteEventByCode('voucher');
-	}
 }

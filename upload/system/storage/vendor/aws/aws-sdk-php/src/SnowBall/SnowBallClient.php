@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createClusterAsync(array $args = [])
  * @method \Aws\Result createJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createJobAsync(array $args = [])
+ * @method \Aws\Result createReturnShippingLabel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createReturnShippingLabelAsync(array $args = [])
  * @method \Aws\Result describeAddress(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAddressAsync(array $args = [])
  * @method \Aws\Result describeAddresses(array $args = [])
@@ -23,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeClusterAsync(array $args = [])
  * @method \Aws\Result describeJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeJobAsync(array $args = [])
+ * @method \Aws\Result describeReturnShippingLabel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeReturnShippingLabelAsync(array $args = [])
  * @method \Aws\Result getJobManifest(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getJobManifestAsync(array $args = [])
  * @method \Aws\Result getJobUnlockCode(array $args = [])
@@ -43,5 +47,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateClusterAsync(array $args = [])
  * @method \Aws\Result updateJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateJobAsync(array $args = [])
+ * @method \Aws\Result updateJobShipmentState(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateJobShipmentStateAsync(array $args = [])
  */
 class SnowBallClient extends AwsClient {}

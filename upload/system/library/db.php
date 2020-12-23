@@ -31,12 +31,12 @@ class DB {
 		if (class_exists($class)) {
 			$this->adaptor = new $class($hostname, $username, $password, $database, $port);
 		} else {
-			error_log('Error: Could not load database adaptor ' . $adaptor . '!');
+			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}
 	}
 
 	/**
-     * 
+     * Query
      *
      * @param	string	$sql
 	 * 
@@ -47,7 +47,7 @@ class DB {
 	}
 
 	/**
-     * 
+     * Escape
      *
      * @param	string	$value
 	 * 
@@ -58,16 +58,16 @@ class DB {
 	}
 
 	/**
-     * 
+     * Count Affected
 	 * 
-	 * @return	int
+	 * @return	int	returns the total number of affected rows.
      */
 	public function countAffected() {
 		return $this->adaptor->countAffected();
 	}
 
 	/**
-     * 
+     * Get Last ID
 	 * 
 	 * @return	int
      */
@@ -76,11 +76,20 @@ class DB {
 	}
 	
 	/**
-     * 
+     * Is Connected
 	 * 
 	 * @return	bool
      */	
 	public function isConnected() {
 		return $this->adaptor->isConnected();
+	}
+
+	/**
+	 * Close
+	 *
+	 * @return	bool
+	 */
+	public function close() {
+		return $this->adaptor->close();
 	}
 }

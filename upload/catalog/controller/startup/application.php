@@ -7,8 +7,7 @@ class Application extends \Opencart\System\Engine\Controller {
 			$this->response->setCompression($this->config->get('config_compression'));
 		}
 
-		// Url
-		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('config_url')));
+
 
 		// Document
 		$this->registry->set('document', new \Opencart\System\Library\Document());
@@ -54,7 +53,7 @@ class Application extends \Opencart\System\Engine\Controller {
 		// Set a new currency cookie if the code does not match the current one
 		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
 			$option = [
-				'max-age'  => time() + 60 * 60 * 24 * 30,
+				'expires'  => time() + 60 * 60 * 24 * 30,
 				'path'     => '/',
 				'SameSite' => 'lax'
 			];

@@ -51,14 +51,12 @@
                   {% if customers %}
                     {% for customer in customers %}
                       <tr>
-                        <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ customer.ip }}" target="_blank">{{ customer.ip }}</a></td>
+                        <td class="text-left"><a href="https://whatismyipaddress.com/ip/{{ customer.ip }}" rel="noreferrer" target="_blank">{{ customer.ip }}</a></td>
                         <td class="text-left">{{ customer.customer }}</td>
-                        <td class="text-left"><a href="{{ customer.url }}" target="_blank" rel="noreferrer">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
-                        <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>{% endif %}</td>
+                        <td class="text-left"><a href="{{ customer.url }}" rel="noreferrer" target="_blank">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
+                        <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" rel="noreferrer" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>{% endif %}</td>
                         <td class="text-left">{{ customer.date_added }}</td>
-                        <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}
-                            <button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>
-                          {% endif %}</td>
+                        <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}<button type="button" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>{% endif %}</td>
                       </tr>
                     {% endfor %}
                   {% else %}
@@ -67,7 +65,6 @@
                     </tr>
                   {% endif %}
                 </tbody>
-
               </table>
             </div>
             <div class="row">

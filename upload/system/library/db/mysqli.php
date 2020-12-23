@@ -4,7 +4,7 @@ class MySQLi {
 	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$connection = new \MySQLi($hostname, $username, $password, $database, $port);
+		$connection = @new \MySQLi($hostname, $username, $password, $database, $port);
 
 		if (!$connection->connect_error) {
 			$this->connection = $connection;
@@ -13,10 +13,10 @@ class MySQLi {
 
 			$this->connection->set_charset('utf8');
 
-			//register_shutdown_function([$this, 'close']);
+			// Needs to use register_shutdown_function as __destructors don't automatically trigger at the end of page load.
+			register_shutdown_function([$this, 'close']);
 		} else {
-			error_log('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
-			exit();
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
 	}
 
@@ -70,6 +70,8 @@ class MySQLi {
 	}
 
 	public function __destruct() {
-		$this->close();
+		if ($this->connection) {
+			$this->connection->close();
+		}
 	}
 }

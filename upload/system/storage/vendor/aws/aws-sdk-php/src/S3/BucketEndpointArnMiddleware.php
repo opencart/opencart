@@ -2,10 +2,12 @@
 namespace Aws\S3;
 
 use Aws\Api\Service;
-use Aws\Arn\ArnInterface;
+use Aws\Arn\AccessPointArnInterface;
 use Aws\Arn\ArnParser;
 use Aws\Arn\Exception\InvalidArnException;
-use Aws\Arn\S3\AccessPointArn;
+use Aws\Arn\AccessPointArn as BaseAccessPointArn;
+use Aws\Arn\S3\OutpostsAccessPointArn;
+use Aws\Arn\S3\OutpostsArnInterface;
 use Aws\CommandInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
@@ -21,20 +23,10 @@ use Psr\Http\Message\RequestInterface;
  */
 class BucketEndpointArnMiddleware
 {
-    /** @var Service */
-    private $service;
+    use EndpointRegionHelperTrait;
 
     /** @var callable */
     private $nextHandler;
-
-    /** @var string */
-    private $region;
-
-    /** @var $config */
-    private $config;
-
-    /** @var PartitionEndpointProvider */
-    private $partitionProvider;
 
     /** @var array */
     private $nonArnableCommands = ['CreateBucket'];
@@ -131,6 +123,11 @@ class BucketEndpointArnMiddleware
                         ]);
                         $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
 
+                        // Update signing service for Outposts ARNs
+                        if ($arn instanceof OutpostsArnInterface) {
+                            $cmd['@context']['signing_service'] = $arn->getService();
+                        }
+
                     } catch (InvalidArnException $e) {
                         // Add context to ARN exception
                         throw new S3Exception(
@@ -149,59 +146,33 @@ class BucketEndpointArnMiddleware
     }
 
     private function generateAccessPointHost(
-        AccessPointArn $arn,
+        BaseAccessPointArn $arn,
         RequestInterface $req
     ) {
-        $host = $arn->getResourceId() . '-' . $arn->getAccountId()
-            . '.s3-accesspoint';
-        if (!empty($this->config['dual_stack'])) {
-            $host .= '.dualstack';
+        if ($arn instanceof OutpostsAccessPointArn) {
+            $accesspointName = $arn->getAccesspointName();
+        } else {
+            $accesspointName = $arn->getResourceId();
         }
+
+        $host = "{$accesspointName}-" . $arn->getAccountId();
+
+        if ($arn instanceof OutpostsAccessPointArn) {
+            $host .= '.' . $arn->getOutpostId() . '.s3-outposts';
+        } else {
+            $host .= '.s3-accesspoint';
+            if (!empty($this->config['dual_stack'])) {
+                $host .= '.dualstack';
+            }
+        }
+
         if (!empty($this->config['use_arn_region']->isUseArnRegion())) {
             $region = $arn->getRegion();
         } else {
             $region = $this->region;
         }
-        $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn);
-
+        $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn, $this->partitionProvider);
         return $host;
-    }
-
-    private function getPartitionSuffix(ArnInterface $arn)
-    {
-        $partition = $this->partitionProvider->getPartition(
-            $arn->getRegion(),
-            $arn->getService()
-        );
-        return $partition->getDnsSuffix();
-    }
-
-    private function getSigningRegion($region)
-    {
-        $partition = PartitionEndpointProvider::defaultProvider()->getPartition($region, 's3');
-        $data = $partition->toArray();
-        if (isset($data['services']['s3']['endpoints'][$region]['credentialScope']['region'])) {
-            return $data['services']['s3']['endpoints'][$region]['credentialScope']['region'];
-        }
-        return $region;
-    }
-
-    private function isMatchingSigningRegion($arnRegion, $clientRegion)
-    {
-        $arnRegion = strtolower($arnRegion);
-        $clientRegion = $this->stripPseudoRegions(strtolower($clientRegion));
-        if ($arnRegion === $clientRegion) {
-            return true;
-        }
-        if ($this->getSigningRegion($clientRegion) === $arnRegion) {
-            return true;
-        }
-        return false;
-    }
-
-    private function stripPseudoRegions($region)
-    {
-        return str_replace(['fips-', '-fips'], ['', ''], $region);
     }
 
     /**
@@ -213,7 +184,18 @@ class BucketEndpointArnMiddleware
      */
     private function validateArn($arn)
     {
-        if ($arn instanceof AccessPointArn) {
+        if ($arn instanceof AccessPointArnInterface) {
+
+            // Dualstack is not supported with Outposts access points
+            if ($arn instanceof OutpostsAccessPointArn
+                && !empty($this->config['dual_stack'])
+            ) {
+                throw new UnresolvedEndpointException(
+                    'Dualstack is currently not supported with S3 Outposts access'
+                    . ' points. Please disable dualstack or do not supply an'
+                    . ' access point ARN.');
+            }
+
             // Accelerate is not supported with access points
             if (!empty($this->config['accelerate'])) {
                 throw new UnresolvedEndpointException(
@@ -269,21 +251,15 @@ class BucketEndpointArnMiddleware
 
             // Ensure ARN region matches client region unless
             // configured for using ARN region over client region
-            if (!($this->isMatchingSigningRegion($arn->getRegion(), $this->region))) {
-                if (empty($this->config['use_arn_region'])
-                    || !($this->config['use_arn_region']->isUseArnRegion())
-                ) {
-                    throw new InvalidRegionException('The region'
-                        . " specified in the ARN (" . $arn->getRegion()
-                        . ") does not match the client region ("
-                        . "{$this->region}).");
-                }
-            }
+            $this->validateMatchingRegion($arn);
+
+            // Ensure it is not resolved to fips pseudo-region for S3 Outposts
+            $this->validateFipsNotUsedWithOutposts($arn);
 
             return $arnPart;
         }
 
-        throw new InvalidArnException('Provided ARN was not'
-            . ' a valid S3 access point ARN');
+        throw new InvalidArnException('Provided ARN was not a valid S3 access'
+            . ' point ARN or S3 Outposts access point ARN.');
     }
 }

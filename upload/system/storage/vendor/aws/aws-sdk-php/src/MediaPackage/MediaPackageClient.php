@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Elemental MediaPackage** service.
+ * @method \Aws\Result configureLogs(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise configureLogsAsync(array $args = [])
  * @method \Aws\Result createChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createChannelAsync(array $args = [])
  * @method \Aws\Result createHarvestJob(array $args = [])

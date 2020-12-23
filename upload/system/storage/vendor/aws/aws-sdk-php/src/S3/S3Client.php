@@ -10,6 +10,7 @@ use Aws\ClientResolver;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
+use Aws\InputValidationMiddleware;
 use Aws\Middleware;
 use Aws\Retry\QuotaManager;
 use Aws\RetryMiddleware;
@@ -46,12 +47,16 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteBucketCorsAsync(array $args = [])
  * @method \Aws\Result deleteBucketEncryption(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketEncryptionAsync(array $args = [])
+ * @method \Aws\Result deleteBucketIntelligentTieringConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteBucketIntelligentTieringConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketInventoryConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketInventoryConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketLifecycle(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketLifecycleAsync(array $args = [])
  * @method \Aws\Result deleteBucketMetricsConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketMetricsConfigurationAsync(array $args = [])
+ * @method \Aws\Result deleteBucketOwnershipControls(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteBucketOwnershipControlsAsync(array $args = [])
  * @method \Aws\Result deleteBucketPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketPolicyAsync(array $args = [])
  * @method \Aws\Result deleteBucketReplication(array $args = [])
@@ -78,6 +83,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getBucketCorsAsync(array $args = [])
  * @method \Aws\Result getBucketEncryption(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketEncryptionAsync(array $args = [])
+ * @method \Aws\Result getBucketIntelligentTieringConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getBucketIntelligentTieringConfigurationAsync(array $args = [])
  * @method \Aws\Result getBucketInventoryConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketInventoryConfigurationAsync(array $args = [])
  * @method \Aws\Result getBucketLifecycle(array $args = [])
@@ -94,6 +101,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getBucketNotificationAsync(array $args = [])
  * @method \Aws\Result getBucketNotificationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketNotificationConfigurationAsync(array $args = [])
+ * @method \Aws\Result getBucketOwnershipControls(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getBucketOwnershipControlsAsync(array $args = [])
  * @method \Aws\Result getBucketPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketPolicyAsync(array $args = [])
  * @method \Aws\Result getBucketPolicyStatus(array $args = [])
@@ -130,6 +139,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise headObjectAsync(array $args = [])
  * @method \Aws\Result listBucketAnalyticsConfigurations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBucketAnalyticsConfigurationsAsync(array $args = [])
+ * @method \Aws\Result listBucketIntelligentTieringConfigurations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBucketIntelligentTieringConfigurationsAsync(array $args = [])
  * @method \Aws\Result listBucketInventoryConfigurations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBucketInventoryConfigurationsAsync(array $args = [])
  * @method \Aws\Result listBucketMetricsConfigurations(array $args = [])
@@ -156,6 +167,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise putBucketCorsAsync(array $args = [])
  * @method \Aws\Result putBucketEncryption(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putBucketEncryptionAsync(array $args = [])
+ * @method \Aws\Result putBucketIntelligentTieringConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putBucketIntelligentTieringConfigurationAsync(array $args = [])
  * @method \Aws\Result putBucketInventoryConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putBucketInventoryConfigurationAsync(array $args = [])
  * @method \Aws\Result putBucketLifecycle(array $args = [])
@@ -170,6 +183,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise putBucketNotificationAsync(array $args = [])
  * @method \Aws\Result putBucketNotificationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putBucketNotificationConfigurationAsync(array $args = [])
+ * @method \Aws\Result putBucketOwnershipControls(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putBucketOwnershipControlsAsync(array $args = [])
  * @method \Aws\Result putBucketPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putBucketPolicyAsync(array $args = [])
  * @method \Aws\Result putBucketReplication(array $args = [])
@@ -208,6 +223,9 @@ use Psr\Http\Message\RequestInterface;
 class S3Client extends AwsClient implements S3ClientInterface
 {
     use S3ClientTrait;
+
+    /** @var array */
+    private static $mandatoryAttributes = ['Bucket', 'Key'];
 
     public static function getArguments()
     {
@@ -367,6 +385,11 @@ class S3Client extends AwsClient implements S3ClientInterface
                 ]
             ),
             's3.bucket_endpoint_arn'
+        );
+
+        $stack->appendValidate(
+            InputValidationMiddleware::wrap($this->getApi(), self::$mandatoryAttributes),
+            'input_validation_middleware'
         );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
         $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');
@@ -711,6 +734,18 @@ class S3Client extends AwsClient implements S3ClientInterface
     {
         $b64 = '<div class="alert alert-info">This value will be base64 encoded on your behalf.</div>';
         $opt = '<div class="alert alert-info">This value will be computed for you it is not supplied.</div>';
+
+        // Add a note on the CopyObject docs
+         $s3ExceptionRetryMessage = "<p>Additional info on response behavior: if there is"
+            . " an internal error in S3 after the request was successfully recieved,"
+            . " a 200 response will be returned with an <code>S3Exception</code> embedded"
+            . " in it; this will still be caught and retried by"
+            . " <code>RetryMiddleware.</code></p>";
+
+        $docs['operations']['CopyObject'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['CompleteMultipartUpload'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPartCopy'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPart'] .=  $s3ExceptionRetryMessage;
 
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';

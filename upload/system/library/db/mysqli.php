@@ -69,6 +69,4 @@ class MySQLi {
 			$this->connection = '';
 		}
 	}
-
-
 }

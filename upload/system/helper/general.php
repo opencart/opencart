@@ -3,12 +3,6 @@
 function oc_setcookie(string $key, string $value, $option = []) {
 	if (version_compare(phpversion(), '7.3.0', '>=')) {
 		// PHP needs to update their setcookie function.
-		if (isset($option['max-age'])) {
-			$option['expires'] = $option['max-age'];
-
-			unset($option['max-age']);
-		}
-
 		setcookie($key, $value, $option);
 	} else {
 		$string = '';

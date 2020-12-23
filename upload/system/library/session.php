@@ -34,9 +34,9 @@ class Session {
 			
 			register_shutdown_function([$this, 'close']);
 		} else {
-			trigger_error('Error: Could not load cache adaptor ' . $adaptor . ' session!');
+			trigger_error('Error: Could not load session adaptor ' . $adaptor . ' session!');
 			exit();
-		}	
+		}
 	}
 	
 	/**

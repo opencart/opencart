@@ -70,7 +70,7 @@ class File {
 			$files = glob(DIR_SESSION . 'sess_*');
 
 			foreach ($files as $file) {
-				if (filemtime($file) < $expire) {
+				if (is_file($file) && filemtime($file) > $expire) {
 					unlink($file);
 				}
 			}

@@ -229,6 +229,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
+			$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 			$this->response->setOutput($this->load->view('checkout/cart', $data));
 		} else {
 			$data['text_error'] = $this->language->get('text_no_results');
@@ -244,6 +245,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
+			$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}

@@ -76,6 +76,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['shipping_required'] = $this->cart->hasShipping();
 
+		$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 		$this->response->setOutput($this->load->view('checkout/register', $data));
 	}
 

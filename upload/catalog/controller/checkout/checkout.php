@@ -88,6 +88,7 @@ class Checkout extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
+		$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 		$this->response->setOutput($this->load->view('checkout/checkout', $data));
 	}
 

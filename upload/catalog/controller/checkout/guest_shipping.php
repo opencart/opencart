@@ -79,6 +79,7 @@ class GuestShipping extends \Opencart\System\Engine\Controller {
 			$data['address_custom_field'] = [];
 		}
 
+		$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 		$this->response->setOutput($this->load->view('checkout/guest_shipping', $data));
 	}
 

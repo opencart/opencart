@@ -231,7 +231,7 @@ function send(url) {
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('#content select, #content input, #content textarea'),
+		data: $('#content form').serialize(),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-send').button('loading');

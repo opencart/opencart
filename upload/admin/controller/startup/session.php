@@ -13,10 +13,15 @@ class Session extends \Opencart\System\Engine\Controller {
 
 		$session->start($session_id);
 
+		// Setting the cookie path to the store front so admin users can login to cutomers accounts.
+		$path = dirname($_SERVER['PHP_SELF']);
+
+		$path = substr($path, 0, strrpos($path, '/')) . '/';
+
 		// Require higher security for session cookies
 		$option = [
 			'expires'  => time() + $this->config->get('session_expire'),
-			'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
+			'path'     => !empty($_SERVER['PHP_SELF']) ? $path : '',
 			'domain'   => $this->request->server['HTTP_HOST'],
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,

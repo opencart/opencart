@@ -45,7 +45,7 @@ class Session extends \Opencart\System\Engine\Controller {
 				'domain'   => $this->request->server['HTTP_HOST'],
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
-				'SameSite' => 'strict'
+				'SameSite' => 'Strict'
 			];
 
 			oc_setcookie($this->config->get('session_name'), $session->getId(), $option);

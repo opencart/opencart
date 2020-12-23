@@ -1070,18 +1070,18 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$theme = basename($this->request->get['theme']);
 
 		if ($theme == 'basic') {
-			$image = HTTP_CATALOG . 'view/template/image/' . $theme . '.png';
+			$image = HTTP_CATALOG . 'catalog/view/image/' . $theme . '.png';
 		} else {
 			$this->load->model('setting/extension');
 
 			$extension_info = $this->model_setting_extension->getExtensionByCode('theme', $theme);
 
 			if ($extension_info) {
-				$image = DIR_EXTENSION . $extension_info['extension'] . '/catalog/view/template/image/' . $extension_info['code'] . '.png';
+				$image = DIR_EXTENSION . $extension_info['extension'] . '/catalog/view/image/' . $extension_info['code'] . '.png';
 			}
 		}
 
-		if (is_file($image)) {
+		if ($image) {
 			$this->response->setOutput($image);
 		} else {
 			$this->response->setOutput(HTTP_CATALOG . 'image/no_image.png');

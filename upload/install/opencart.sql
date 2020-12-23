@@ -727,7 +727,7 @@ INSERT INTO `oc_custom_field_value_description` (`custom_field_value_id`, `langu
 -- Dumping data for table `oc_event`
 --
 
-INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
+INSERT INTO `oc_event` (`code`, `description`, `trigger`, `action`, `status`) VALUES
 ('activity_customer_add', 'catalog/model/account/customer/addCustomer/after', 'event/activity|addCustomer', 1),
 ('activity_customer_edit', 'catalog/model/account/customer/editCustomer/after', 'event/activity|editCustomer', 1),
 ('activity_customer_password', 'catalog/model/account/customer/editPassword/after', 'event/activity|editPassword', 1),

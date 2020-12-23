@@ -1305,8 +1305,6 @@ $('select[name=\'config_theme\']').on('change', function() {
 			$('select[name=\'config_theme\']').prop('disabled', false);
 		},
 		success: function(html) {
-			console.log(html);
-
 			$('#theme-thumb').attr('src', html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

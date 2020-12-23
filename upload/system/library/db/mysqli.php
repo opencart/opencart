@@ -13,8 +13,7 @@ class MySQLi {
 
 			$this->connection->set_charset('utf8');
 
-			// Needs to use register_shutdown_function as __destructors don't automatically trigger at the end of page load.
-			register_shutdown_function([$this, 'close']);
+
 		} else {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
@@ -66,12 +65,10 @@ class MySQLi {
 	public function close() {
 		if (!$this->connection) {
 			$this->connection->close();
+
+			$this->connection = '';
 		}
 	}
 
-	public function __destruct() {
-		if ($this->connection) {
-			$this->connection->close();
-		}
-	}
+
 }

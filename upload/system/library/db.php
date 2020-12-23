@@ -25,11 +25,15 @@ class DB {
 	 * @param	int		$port
 	 *
  	*/
-	public function __construct($adaptor, $hostname, $username, $password, $database, $port = NULL) {
+	public function __construct($adaptor, $hostname, $username, $password, $database, $port = '') {
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class($hostname, $username, $password, $database, $port);
+			try {
+				$this->adaptor = new $class($hostname, $username, $password, $database, $port);
+			} catch (\Exception $e) {
+				throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
+			}
 		} else {
 			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}
@@ -59,7 +63,9 @@ class DB {
 
 	/**
      * Count Affected
-	 * 
+	 *
+	 *
+	 *
 	 * @return	int	returns the total number of affected rows.
      */
 	public function countAffected() {
@@ -68,16 +74,20 @@ class DB {
 
 	/**
      * Get Last ID
-	 * 
-	 * @return	int
+	 *
+	 * Get the last ID gets the primary key that was returned after creating a row in a table.
+	 *
+	 * @return	int returns last ID
      */
 	public function getLastId() {
 		return $this->adaptor->getLastId();
 	}
 	
 	/**
-     * Is Connected
-	 * 
+     * IsConnected
+	 *
+	 * Checks if a DB connection is active.
+	 *
 	 * @return	bool
      */	
 	public function isConnected() {
@@ -87,9 +97,21 @@ class DB {
 	/**
 	 * Close
 	 *
+	 * Closes the DB connection
+	 *
 	 * @return	bool
 	 */
 	public function close() {
 		return $this->adaptor->close();
+	}
+
+	/**
+	 * __destruct
+	 *
+	 * Closes the DB connection when this object is destroyed.
+	 *
+	 */
+	public function __destruct() {
+		$this->adaptor->close();
 	}
 }

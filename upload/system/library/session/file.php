@@ -57,8 +57,14 @@ class File {
 		}
 	}
 
+	/**
+	 * __destruct
+	 *
+	 * Preforms garbage collection when this object is destroyed.
+	 *
+	 */
 	public function __destruct() {
-		if (rand(0, $this->config->get('session_divisor')) == ($this->config->get('session_probability') / $this->config->get('session_divisor'))) {
+		if (round(rand(1, $this->config->get('session_divisor') / $this->config->get('session_probability'))) == 1) {
 			$expire = time() - $this->config->get('session_expire');
 
 			$files = glob(DIR_SESSION . 'sess_*');

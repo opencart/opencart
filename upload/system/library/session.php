@@ -77,6 +77,8 @@ class Session {
 	
 	/**
 	 * Close
+	 *
+	 * Writes the session data to storage
  	*/
 	public function close() {
 		$this->adaptor->write($this->session_id, $this->data);
@@ -84,8 +86,12 @@ class Session {
 	
 	/**
 	 * Destroy
+	 *
+	 * Deletes the current session from storage
  	*/	
 	public function destroy() {
+		$this->data = [];
+
 		$this->adaptor->destroy($this->session_id);
 	}
 }

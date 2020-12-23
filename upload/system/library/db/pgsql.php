@@ -11,6 +11,9 @@ final class PgSQL {
 		}
 
 		pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+
+		// Needs to use register_shutdown_function as __destructors don't automatically trigger at the end of page load.
+		register_shutdown_function([$this, 'close']);
 	}
 
 	public function query($sql) {

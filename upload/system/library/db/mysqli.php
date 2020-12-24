@@ -60,7 +60,7 @@ class MySQLi {
 	}
 	
 	public function close() {
-		if (!$this->connection) {
+		if ($this->connection) {
 			$this->connection->close();
 
 			$this->connection = '';

@@ -51,7 +51,7 @@ class User {
 			}
 
 			if ($rehash) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `salt `= '', `password` = '" . $this->db->escape(password_hash($password, PASSWORD_DEFAULT)) . "' WHERE `user_id` = '" . (int)$user_query->row['user_id'] . "'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `salt` = '', `password` = '" . $this->db->escape(password_hash($password, PASSWORD_DEFAULT)) . "' WHERE `user_id` = '" . (int)$user_query->row['user_id'] . "'");
 			}
 
 			$this->session->data['user_id'] = $user_query->row['user_id'];

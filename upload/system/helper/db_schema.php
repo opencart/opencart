@@ -1062,11 +1062,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'salt',
-				'type' => 'varchar(9)',
-				'not_null' => true
-			],
-			[
 				'name' => 'cart',
 				'type' => 'text',
 				'not_null' => true
@@ -5888,11 +5883,6 @@ function db_schema() {
 			[
 				'name' => 'password',
 				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'salt',
-				'type' => 'varchar(9)',
 				'not_null' => true
 			],
 			[

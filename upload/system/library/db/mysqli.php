@@ -9,7 +9,7 @@ class MySQLi {
 		if (!$connection->connect_error) {
 			$this->connection = $connection;
 
-			$this->connection->report_mode = MYSQLI_REPORT_STRICT;
+			$this->connection->report_mode = MYSQLI_REPORT_ERROR;
 
 			$this->connection->set_charset('utf8');
 

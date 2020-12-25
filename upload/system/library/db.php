@@ -89,15 +89,4 @@ class DB {
 	public function isConnected() {
 		return $this->adaptor->isConnected();
 	}
-
-	/**
-	 * Close
-	 *
-	 * Closes the DB connection
-	 *
-	 * @return	bool
-	 */
-	public function close() {
-		return $this->adaptor->close();
-	}
 }

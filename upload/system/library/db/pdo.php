@@ -22,7 +22,7 @@ class PDO {
 		$this->statement = $this->connection->prepare(preg_replace('/(?:\'\:)([a-f0-9]*.)(?:\')/', ':$1', $sql));
 
 		foreach ($this->data as $key => $value) {
-			$this->statement->bindParam($key, $value, \PDO::PARAM_STR, strlen($value));
+			$this->statement->bindParam($key, $value, \PDO::PARAM_STR);
 		}
 
 		$this->data = [];
@@ -39,8 +39,6 @@ class PDO {
 
 					return $result;
 				}
-
-				return true;
 			}
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
@@ -48,7 +46,7 @@ class PDO {
 	}
 
 	public function escape($value) {
-		$key = ':' . token(5);
+		$key = ':' . token(8);
 
 		$this->data[$key] = $value;
 

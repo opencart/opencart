@@ -104,14 +104,4 @@ class DB {
 	public function close() {
 		return $this->adaptor->close();
 	}
-
-	/**
-	 * __destruct
-	 *
-	 * Closes the DB connection when this object is destroyed.
-	 *
-	 */
-	public function __destruct() {
-		$this->adaptor->close();
-	}
 }

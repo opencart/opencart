@@ -22,7 +22,6 @@ class Session extends \Opencart\System\Engine\Controller {
 		$option = [
 			'expires'  => time() + $this->config->get('session_expire'),
 			'path'     => !empty($_SERVER['PHP_SELF']) ? $path : '',
-			'domain'   => $this->request->server['HTTP_HOST'],
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,
 			'SameSite' => 'Strict'

@@ -29,11 +29,7 @@ class DB {
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
 		if (class_exists($class)) {
-			try {
-				$this->adaptor = new $class($hostname, $username, $password, $database, $port);
-			} catch (\Exception $e) {
-				throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
-			}
+			$this->adaptor = new $class($hostname, $username, $password, $database, $port);
 		} else {
 			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}
@@ -64,7 +60,7 @@ class DB {
 	/**
      * Count Affected
 	 *
-	 *
+	 * Gets the total number of affected rows from the last query
 	 *
 	 * @return	int	returns the total number of affected rows.
      */

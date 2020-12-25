@@ -1,4 +1,4 @@
-<div id="slideshow{{ module }}" class="carousel slide mb-5" data-ride="carousel">
+<div id="slideshow{{ module }}" class="carousel slide mb-5">
   <ol class="carousel-indicators">
     {% for key, banner in banners %}
       <li data-target="#slideshow{{ module }}" data-slide-to="{{ key }}"{% if loop.first %} class="active"{% endif %}></li>

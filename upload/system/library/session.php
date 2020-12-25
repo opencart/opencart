@@ -30,8 +30,8 @@ class Session {
 				$this->adaptor = new $class($registry);
 			} else {
 				$this->adaptor = new $class();
-			}	
-			
+			}
+
 			register_shutdown_function([$this, 'close']);
 		} else {
 			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
@@ -92,5 +92,9 @@ class Session {
 		$this->data = [];
 
 		$this->adaptor->destroy($this->session_id);
+	}
+
+	public function __destruct() {
+
 	}
 }

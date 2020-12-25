@@ -4,12 +4,10 @@ class Carousel extends \Opencart\System\Engine\Controller {
 	public function index($setting) {
 		static $module = 0;
 
+		$this->load->language('extension/opencart/module/carousel');
+
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
-
-		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
-		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
-		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
 
 		$data['banners'] = [];
 

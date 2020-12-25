@@ -1,36 +1,34 @@
-<div class="slideshow swiper-viewport">
-  <div id="slideshow{{ module }}" class="swiper-container">
-    <div class="swiper-wrapper">
-      {% for banner in banners %}
-        <div class="swiper-slide text-center">
-          {% if banner.link %}
-            <a href="{{ banner.link }}">
-              <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
-            </a>
-          {% else %}
+<div id="slideshow{{ module }}" class="carousel slide mb-5" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for key, banner in banners %}
+      <li data-target="#slideshow{{ module }}" data-slide-to="{{ key }}"{% if loop.first %} class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner shadow-sm rounded-lg">
+    {% for banner in banners %}
+      <div class="carousel-item{% if loop.first %} active{% endif %}">
+        {% if banner.link %}
+          <a href="{{ banner.link }}">
             <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
+          </a>
+        {% else %}
+          <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
+        {% endif %}
+      </div>
+    {% endfor %}
   </div>
-  <div class="swiper-pagination slideshow{{ module }}"></div>
-  <div class="swiper-pager">
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
+  <a class="carousel-control-prev" href="#slideshow{{ module }}" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">{{ button_previous }}</span>
+  </a>
+  <a class="carousel-control-next" href="#slideshow{{ module }}" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">{{ button_next }}</span>
+  </a>
 </div>
 <script type="text/javascript"><!--
-$('#slideshow{{ module }}').swiper({
-	mode: 'horizontal',
-	slidesPerView: 1,
-	pagination: '.slideshow{{ module }}',
-	paginationClickable: true,
-	nextButton: '.slideshow .swiper-button-next',
-	prevButton: '.slideshow .swiper-button-prev',
-	spaceBetween: 30,
-	autoplay: $('#slideshow{{ module }} img').length > 1 ? 2500 : 0,
-	autoplayDisableOnInteraction: true,
-	loop: true
+$('#slideshow{{ module }}').carousel({
+	interval: $('#slideshow{{ module }} img').length > 1 ? 2500 : 0,
+	touch: true
 });
 //--></script>

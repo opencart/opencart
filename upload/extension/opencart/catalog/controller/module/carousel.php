@@ -8,6 +8,9 @@ class Carousel extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
+		
+		$this->document->addScript('extension/opencart/catalog/view/javascript/bootstrap/js/carousel.js');
+		$this->document->addStyle('extension/opencart/catalog/view/javascript/bootstrap/css/carousel.css');
 
 		$data['banners'] = [];
 

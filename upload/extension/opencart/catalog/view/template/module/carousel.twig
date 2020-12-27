@@ -1,4 +1,40 @@
-<div class="carousel swiper-viewport">
+<div id="carousel{{ module }}" class="carousel slide mb-5">
+  <ol class="carousel-indicators mb-1">
+    {% for key, banner in banners %}
+      <li data-target="#carousel{{ module }}" data-slide-to="{{ key }}"{% if loop.first %} class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner carousel-items carousel-multiple shadow-sm rounded-lg">
+    {% for banner in banners %}
+      <div class="carousel-item justify-content-around{% if loop.first %} active{% endif %}">
+        <div class="carousel-item-content">
+          {% if banner.link %}
+            <a href="{{ banner.link }}">
+              <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
+            </a>
+          {% else %}
+            <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carousel{{ module }}" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">{{ button_previous }}</span>
+  </a>
+  <a class="carousel-control-next" href="#carousel{{ module }}" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">{{ button_next }}</span>
+  </a>
+</div>
+<script type="text/javascript"><!--
+$('#carousel{{ module }}').carousel({
+  interval: $('#carousel{{ module }} img').length > 5 ? 25001111 : 0,
+  touch: true
+}).opencartCarousel();
+//--></script>
+{#<div class="carousel swiper-viewport">
   <div id="carousel{{ module }}" class="swiper-container">
     <div class="swiper-wrapper">
       {% for banner in banners %}
@@ -32,4 +68,4 @@ $('#carousel{{ module }}').swiper({
 	autoplay: $('#carousel{{ module }} img').length > 5 ? 2500 : 0,
 	loop: true
 });
-//--></script>
+//--></script>#}

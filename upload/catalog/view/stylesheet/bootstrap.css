@@ -4907,7 +4907,7 @@ a.close.disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 15%;
+  width: 5%;
   color: #343a40;
   text-align: center;
   opacity: 0.5;
@@ -4951,8 +4951,8 @@ a.close.disabled {
   display: flex;
   justify-content: center;
   padding-left: 0;
-  margin-right: 15%;
-  margin-left: 15%;
+  margin-right: 5%;
+  margin-left: 5%;
   list-style: none;
 }
 .carousel-indicators li {

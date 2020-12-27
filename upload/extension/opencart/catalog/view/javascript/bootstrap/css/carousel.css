@@ -1,5 +1,6 @@
 :root {
   --translate: 130px;
+  --transition-duration: 0.3s;
 }
 
 .carousel-multiple .carousel-item-right.active,
@@ -12,16 +13,6 @@
   transform: translateX(calc(var(--translate) * -1));
 }
 
-/*@media (max-width: 768px) {
-  .carousel-multiple .carousel-item > div {
-    display: none;
-  }
-
-  .carousel-multiple .carousel-item > div:first-child {
-    display: flex;
-  }
-}*/
-
 .carousel-multiple .carousel-item.active,
 .carousel-multiple .carousel-item-next,
 .carousel-multiple .carousel-item-prev {
@@ -33,22 +24,6 @@
   transform: translateX(0);
 }
 
-.carousel-multiple .carousel-item:nth-child(1) {
-  border: 1px solid red;
-}
-
-.carousel-multiple .carousel-item:nth-child(2) {
-  border: 1px solid blue;
-}
-
-.carousel-multiple .carousel-item:nth-child(3) {
-  border: 1px solid green;
-}
-
-.carousel-multiple .carousel-item:nth-child(4) {
-  border: 1px solid purple;
-}
-
-.carousel-multiple .carousel-item:nth-child(4) {
-  border: 1px solid gold;
+.carousel-multiple .carousel-item {
+  transition-duration: var(--transition-duration);
 }

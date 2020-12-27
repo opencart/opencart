@@ -20,18 +20,19 @@
         slidesPerView: 5
       }
     },
+    transitionDuration: '0.3s',
     resizeTimeout: 0
   };
   var carousel, items, resizeTimeout;
 
   var methods = {
     init: function(options) {
-      self = this;
       settings = $.extend({}, settings, options);
       carousel = $(this).find('.carousel-multiple');
       items = carousel.children('.carousel-item');
 
       return this.each(function () {
+        carousel[0].style.setProperty('--transition-duration', settings.transitionDuration);
         methods._setEventHandler();
         methods._setSlides();
       });

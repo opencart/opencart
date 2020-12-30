@@ -1,4 +1,4 @@
-<div class="slideshow swiper-viewport">
+{# <div class="slideshow swiper-viewport">
   <div id="slideshow{{ module }}" class="swiper-container">
     <div class="swiper-wrapper">
       {% for banner in banners %}
@@ -33,4 +33,32 @@ $('#slideshow{{ module }}').swiper({
 	autoplayDisableOnInteraction: true,
 	loop: true
 });
-//--></script>
+//--></script> #}
+<div class="slider-viewport">
+  <div id="slideshow{{ module }}" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+    {% for banner in banners %}
+      <li data-target="#slideshow{{ module }}" data-slide-to=" {{loop.index }}" class="{% if loop.first %}active{% endif %}"></li>
+    {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+      {% for banner in banners %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          {% if banner.link %}
+            <a href="{{ banner.link }}">
+              <img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block w-100"/>
+            </a>
+          {% else %}
+            <img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block w-100" />
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#slideshow{{ module }}" role="button" data-slide="prev">
+      <i class="fas fa-chevron-left fa-3x text-secondary"></i>
+    </a>
+    <a class="carousel-control-next" href="#slideshow{{ module }}" role="button" data-slide="next">
+      <i class="fas fa-chevron-right fa-3x text-secondary"></i>
+    </a>
+  </div>
+</div>

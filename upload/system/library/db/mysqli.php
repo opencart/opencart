@@ -4,10 +4,10 @@ class MySQLi {
 	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$connection = @new \MySQLi($hostname, $username, $password, $database, $port);
+		$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
 
-		if (!$connection->connect_error) {
-			$this->connection = $connection;
+		if (!$mysqli->connect_error) {
+			$this->connection = $mysqli;
 			$this->connection->report_mode = MYSQLI_REPORT_ERROR;
 			$this->connection->set_charset('utf8');
 			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
@@ -58,14 +58,6 @@ class MySQLi {
 	public function isConnected() {
 		return $this->connection->ping();
 	}
-	
-	public function close() {
-		if (!$this->connection) {
-			$this->connection->close();
-
-			$this->connection = '';
-		}
-	}
 
 	/**
 	 * __destruct
@@ -74,6 +66,6 @@ class MySQLi {
 	 *
 	 */
 	public function __destruct() {
-		$this->close();
+		$this->connection->close();
 	}
 }

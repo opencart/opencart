@@ -36,11 +36,6 @@ $('#slideshow{{ module }}').swiper({
 //--></script> #}
 <div class="slider-viewport">
   <div id="slideshow{{ module }}" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-    {% for banner in banners %}
-      <li data-target="#slideshow{{ module }}" data-slide-to=" {{loop.index }}" class="{% if loop.first %}active{% endif %}"></li>
-    {% endfor %}
-    </ol>
     <div class="carousel-inner">
       {% for banner in banners %}
         <div class="carousel-item {% if loop.first %}active{% endif %}">
@@ -61,4 +56,9 @@ $('#slideshow{{ module }}').swiper({
       <i class="fas fa-chevron-right fa-3x text-secondary"></i>
     </a>
   </div>
+  <ol class="carousel-indicators">
+    {% for banner in banners %}
+      <li data-target="#slideshow{{ module }}" data-slide-to=" {{loop.index }}" class="{% if loop.first %}active{% endif %}"></li>
+    {% endfor %}
+    </ol>
 </div>

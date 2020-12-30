@@ -778,13 +778,37 @@ footer h5 {
 }
 /* Customize bootstrap slider */
 .slider-viewport {
-	margin: 0 0 60px;
-	background: #fff;
-	z-index: 1;
-	border: 4px solid #fff;
-	border-radius: 4px;
-	box-shadow: 0 1px 4px rgba(0,0,0,.2);
-	width: 100%;
-	position: relative;
-	overflow: visible;
+  margin: 0 0 60px;
+  background: #fff;
+  z-index: 1;
+  border: 4px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  position: relative;
+  overflow: visible;
+}
+.slider-viewport .carousel-control-prev, .slider-viewport .carousel-control-next {
+  width: 5%;
+  opacity: 0;
+}
+.slider-viewport .carousel-control-prev .fas, .slider-viewport .carousel-control-next .fas {
+  font-size: 3em;
+}
+.slider-viewport:hover .carousel-control-prev, .slider-viewport:hover .carousel-control-next {
+  opacity: 1;
+}
+.slider-viewport .carousel-indicators {
+  bottom: -50px;
+}
+.slider-viewport .carousel-indicators li {
+  background-color: #6c757d;
+}
+
+.carousel-multiple .carousel-inner {
+  display: flex;
+  justify-content: center;
+}
+.carousel-multiple .carousel-item {
+  margin-right: 0;
 }

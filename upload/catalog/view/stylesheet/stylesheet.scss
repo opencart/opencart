@@ -1091,4 +1091,22 @@ footer {
 	width: 100%;
 	position: relative;
 	overflow: visible;
+	.carousel-control-prev, .carousel-control-next {
+        width: 5%;
+        opacity: 0;
+        .fas {
+            font-size: 3em;
+        }
+    }
+	&:hover {
+	    .carousel-control-prev, .carousel-control-next {
+            opacity: 1;
+	    }
+	}
+	.carousel-indicators {
+	    bottom: -50px;
+	    li {
+	        background-color: #6c757d;
+	    }
+	}
 }

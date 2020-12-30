@@ -1,4 +1,4 @@
-<div class="carousel swiper-viewport">
+{# <div class="carousel swiper-viewport">
   <div id="carousel{{ module }}" class="swiper-container">
     <div class="swiper-wrapper">
       {% for banner in banners %}
@@ -31,5 +31,58 @@ $('#carousel{{ module }}').swiper({
 	prevButton: '.carousel .swiper-button-prev',
 	autoplay: $('#carousel{{ module }} img').length > 5 ? 2500 : 0,
 	loop: true
+});
+//--></script> #}
+
+<div class="slider-viewport">
+  <div id="carousel{{ module }}" class="carousel slide carousel-multiple" data-ride="carousel">
+    <div class="carousel-inner">
+      {% for banner in banners %}
+        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-2 {% if loop.first %}active{% endif %}">
+          {% if banner.link %}
+            <a href="{{ banner.link }}">
+              <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid mx-auto d-block"/>
+            </a>
+          {% else %}
+            <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid mx-auto d-block" />
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#carousel{{ module }}" role="button" data-slide="prev">
+      <i class="fas fa-chevron-left fa-3x text-secondary"></i>
+    </a>
+    <a class="carousel-control-next" href="#carousel{{ module }}" role="button" data-slide="next">
+      <i class="fas fa-chevron-right fa-3x text-secondary"></i>
+    </a>
+  </div>
+  <ol class="carousel-indicators">
+    {% for banner in banners %}
+      <li data-target="#carousel{{ module }}" data-slide-to=" {{loop.index }}" class="{% if loop.first %}active{% endif %}"></li>
+    {% endfor %}
+    </ol>
+</div>
+<script type="text/javascript"><!--
+$('#carousel{{ module }}').on('slide.bs.carousel', function (e) {
+    /*
+        CC 2.0 License Iatek LLC 2018 - Attribution required
+    */
+    var $e = $(e.relatedTarget);
+    var idx = $e.index();
+    var itemsPerSlide = 5;
+    var totalItems = $('.carousel-item').length;
+ 
+    if (idx >= totalItems-(itemsPerSlide-1)) {
+        var it = itemsPerSlide - (totalItems - idx);
+        for (var i=0; i<it; i++) {
+            // append slides to end
+            if (e.direction=="left") {
+                $('.carousel-item').eq(i).appendTo('.carousel-inner');
+            }
+            else {
+                $('.carousel-item').eq(0).appendTo('.carousel-inner');
+            }
+        }
+    }
 });
 //--></script>

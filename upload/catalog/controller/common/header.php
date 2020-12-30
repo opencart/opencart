@@ -31,7 +31,7 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		// Hard coding css so they can be replaced via the events system.
 		$data['bootstrap_css'] = 'catalog/view/stylesheet/bootstrap.css';
-		$data['fonts'] = '//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700';
+		$data['fonts'] = '//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap';
 		$data['icons'] = 'catalog/view/stylesheet/icon/fontawesome/css/all.css';
 		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
 

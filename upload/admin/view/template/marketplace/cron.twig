@@ -3,6 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-right">
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-cron').submit() : false;"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -76,6 +77,7 @@
                       <td class="text-left">{{ cron.date_added }}</td>
                       <td class="text-left">{{ cron.date_modified }}</td>
                       <td class="text-right">
+                        <a href="{{ cron.edit }}" class="btn btn-primary" data-toggle="tooltip" data-title="{{ button_edit }}"><i class="fas fa-pencil-alt"></i></a>
                         <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fas fa-play"></i></button>
                         {% if not cron.enabled %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>

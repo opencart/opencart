@@ -1,4 +1,5 @@
 <?php
+
 namespace Opencart\Application\Controller\Marketplace;
 class Cron extends \Opencart\System\Engine\Controller {
 	private $error = [];
@@ -11,6 +12,41 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/cron');
 
 		$this->getList();
+	}
+	public function add() {
+		$this->load->language('marketplace/cron');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('setting/cron');
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->model_setting_cron->addCron($this->request->post['code'], $this->request->post['cycle'], $this->request->post['action'], $this->request->post['status']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->response->redirect($this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'], true));
+		}
+
+		$this->getForm();
+	}
+
+	public function edit() {
+		$this->load->language('marketplace/cron');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('setting/cron');
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->model_setting_cron->editCron($this->request->get['cron_id'], $this->request->post);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->response->redirect($this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'], true));
+		}
+
+		$this->getForm();
 	}
 
 	public function delete() {
@@ -92,6 +128,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		$data['add'] = $this->url->link('marketplace/cron|add', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('marketplace/cron|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['cron'] = $this->url->link('common/cron');
 
@@ -117,7 +154,9 @@ class Cron extends \Opencart\System\Engine\Controller {
 				'status'        => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
-				'enabled'       => $result['status']
+				'enabled'       => $result['status'],
+				'edit'          => $this->url->link('marketplace/cron|edit', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'], true)
+
 			];
 		}
 
@@ -194,6 +233,16 @@ class Cron extends \Opencart\System\Engine\Controller {
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'marketplace/cron')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (empty($this->error['warning'])) {
+			if (empty($this->request->post['code'])) {
+				$this->error['warning'] = $this->language->get('error_code');
+			} elseif (empty($this->request->post['action'])) {
+				$this->error['warning'] = $this->language->get('error_action');
+			} elseif (empty($this->request->post['cycle'])) {
+				$this->error['warning'] = $this->language->get('error_cycle');
+			}
 		}
 
 		return !$this->error;
@@ -278,5 +327,104 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getForm() {
+		if (isset($this->error)) {
+			foreach($this->error as $key => $error) {
+				$data['error_' . $key] = $error;
+			}
+		}
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+		
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		if (!isset($this->request->get['cron_id'])) {
+			$data['form_action'] = $this->url->link('marketplace/cron|add', 'user_token=' . $this->session->data['user_token'] . $url, true);
+		} else {
+			$data['form_action'] = $this->url->link('marketplace/cron|edit', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $this->request->get['cron_id'] . $url, true);
+		}
+
+		$data['cancel'] = $this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'] . $url, true);
+
+		if (isset($this->request->get['cron_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$cron_info = $this->model_setting_cron->getCron($this->request->get['cron_id']);
+		}
+
+		if (!empty($cron_info)) {
+			$data['cron_id'] = $cron_info['cron_id'];
+		} else {
+			$data['cron_id'] = '';
+		}
+
+		if (isset($this->request->post['code'])) {
+			$data['code'] = $this->request->post['code'];
+		} elseif (!empty($cron_info)) {
+			$data['code'] = $cron_info['code'];
+		} else {
+			$data['code'] = '';
+		}
+
+		if (isset($this->request->post['action'])) {
+			$data['action'] = $this->request->post['action'];
+		} elseif (!empty($cron_info)) {
+			$data['action'] = $cron_info['action'];
+		} else {
+			$data['action'] = '';
+		}
+
+		if (isset($this->request->post['cycle'])) {
+			$data['cycle'] = $this->request->post['cycle'];
+		} elseif (!empty($cron_info)) {
+			$data['cycle'] = $cron_info['cycle'];
+		} else {
+			$data['cycle'] = 'day';
+		}
+
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($cron_info)) {
+			$data['status'] = $cron_info['status'];
+		} else {
+			$data['status'] = 1;
+		}
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('marketplace/cron_form', $data));
+
+
 	}
 }

@@ -38,12 +38,6 @@ final class DB {
 		return true;
 	}
 
-	/**
-	 * __destruct
-	 *
-	 * Preforms garbage collection when this object is destroyed.
-	 *
-	 */
 	public function gc() {
 		if (round(rand(1, $this->config->get('session_divisor') / $this->config->get('session_probability'))) == 1) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE `expire` < '" . $this->db->escape(date('Y-m-d H:i:s', time())) . "'");

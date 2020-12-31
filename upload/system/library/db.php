@@ -8,7 +8,7 @@
 */
 
 /**
-* DB class
+* DB
 */
 namespace Opencart\System\Library;
 class DB {

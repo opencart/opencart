@@ -4,7 +4,6 @@ $_['heading_title']    = 'Themes';
 
 // Text
 $_['text_success']     = 'Success: You have modified themes!';
-$_['text_list']        = 'Theme List';
 
 // Column
 $_['column_name']      = 'Theme Name';

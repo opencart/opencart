@@ -8,7 +8,7 @@
 */
 
 /**
-* Session class
+* Session
 */
 namespace Opencart\System\Library;
 class Session {

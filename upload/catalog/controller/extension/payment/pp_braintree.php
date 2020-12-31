@@ -20,7 +20,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 		$data['payment_pp_braintree_paypal_button_size'] = $this->config->get('payment_pp_braintree_paypal_button_size');
 		$data['payment_pp_braintree_paypal_button_shape'] = $this->config->get('payment_pp_braintree_paypal_button_shape');
 
-		if (!$this->session->data['order_id']) {
+		if (!isset($this->session->data['order_id'])) {
 			return false;
 		}
 
@@ -155,7 +155,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		$success = true;
 
-		if (!$this->session->data['order_id']) {
+		if (!isset($this->session->data['order_id'])) {
 			$this->model_extension_payment_pp_braintree->log('Session data: order_id not found');
 
 			$success = false;

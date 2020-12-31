@@ -120,6 +120,10 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 			$payment_data['VPSProtocol'] = '2.23';
 		}
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';

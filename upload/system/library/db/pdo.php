@@ -2,7 +2,7 @@
 namespace Opencart\System\Library\DB;
 class PDO {
 	private $connection;
-	private $data;
+	private $data = [];
 	private $affected;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
@@ -25,8 +25,6 @@ class PDO {
 			if ($statement && $statement->execute($this->data)) {
 				$this->data = [];
 
-				//$statement->debugDumpParams();
-
 				if ($statement->columnCount()) {
 					$data = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -46,12 +44,10 @@ class PDO {
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
 		}
-
-
 	}
 
 	public function escape($value) {
-		$key = ':a' . substr(token(8), 0, 5);
+		$key = ':' . count($this->data);
 
 		$this->data[$key] = $value;
 
@@ -74,7 +70,13 @@ class PDO {
 		}
 	}
 
+	/**
+	 * __destruct
+	 *
+	 * Closes the DB connection when this object is destroyed.
+	 *
+	 */
 	public function __destruct() {
-		//$this->connection = '';
+		$this->connection = '';
 	}
 }

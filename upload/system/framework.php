@@ -80,67 +80,78 @@ $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 $action = '';
 
-// Pre Actions
-foreach ($config->get('action_pre_action') as $pre_action) {
-	$pre_action = new \Opencart\System\Engine\Action($pre_action);
+try {
+	// Pre Actions
+	foreach ($config->get('action_pre_action') as $pre_action) {
+		$pre_action = new \Opencart\System\Engine\Action($pre_action);
 
-	$result = $pre_action->execute($registry);
+		$result = $pre_action->execute($registry);
 
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
+		if ($result instanceof \Opencart\System\Engine\Action) {
+			$action = $result;
 
-		break;
+			break;
+		}
+
+		// If action can not be executed then we return an action error object.
+		if ($result instanceof \Exception) {
+			$action = $error;
+
+			$error = '';
+			break;
+		}
 	}
 
-	// If action can not be executed then we return an action error object.
-	if ($result instanceof \Exception) {
-		$action = $error;
-
-		$error = '';
-		break;
-	}
-}
-
-// Route
-if (!$action) {
-	if (!empty($request->get['route'])) {
-		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-	} else {
-		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
-	}
-}
-
-// Dispatch
-while ($action) {
-	// Get the route path of the object to be executed.
-	$route = $action->getId();
-
-	$args = [];
-
-	// Keep the original trigger.
-	$trigger = $action->getId();
-
-	$event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
-
-	// Execute the action.
-	$result = $action->execute($registry, $args);
-
-	$action = '';
-
-	if ($result instanceof \Opencart\System\Engine\Action) {
-		$action = $result;
+	// Route
+	if (!$action) {
+		if (!empty($request->get['route'])) {
+			$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
+		} else {
+			$action = new \Opencart\System\Engine\Action($config->get('action_default'));
+		}
 	}
 
-	// If action can not be executed then we return the action error object.
-	if ($result instanceof \Exception) {
-		$action = $error;
+	// Dispatch
+	while ($action) {
+		// Get the route path of the object to be executed.
+		$route = $action->getId();
 
-		// In case there is an error we don't want to infinitely keep calling the action error object.
-		$error = '';
+		$args = [];
+
+		// Keep the original trigger.
+		$trigger = $action->getId();
+
+		$event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+
+		// Execute the action.
+		$result = $action->execute($registry, $args);
+
+		$action = '';
+
+		if ($result instanceof \Opencart\System\Engine\Action) {
+			$action = $result;
+		}
+
+		// If action can not be executed then we return the action error object.
+		if ($result instanceof \Exception) {
+			$action = $error;
+
+			// In case there is an error we don't want to infinitely keep calling the action error object.
+			$error = '';
+		}
+
+		$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 	}
-
-	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+} catch (\Exception $e) {
+	$action = new \Opencart\System\Engine\Action('error/exception');
+	$action->execute($registry, $e);
 }
 
 // Output
 $response->output();
+
+// Post Actions
+foreach ($config->get('action_post_action') as $post_action) {
+	$post_action = new \Opencart\System\Engine\Action($post_action);
+	$post_action->execute($registry);
+}

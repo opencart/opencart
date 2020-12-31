@@ -60,4 +60,5 @@ $_['response_compression']   = 0;
 $_['action_default']         = 'common/home';
 $_['action_error']           = 'error/not_found';
 $_['action_pre_action']      = [];
+$_['action_post_action']     = [];
 $_['action_event']           = [];

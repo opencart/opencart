@@ -31,6 +31,10 @@ $_['action_pre_action']  = [
 	'startup/maintenance'
 ];
 
+$_['action_post_action']  = [
+	'startup/session'
+];
+
 // Action Events
 $_['action_event']      = [
 	'controller/*/before' => [

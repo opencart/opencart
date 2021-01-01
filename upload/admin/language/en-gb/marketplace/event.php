@@ -18,4 +18,4 @@ $_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify extensions!';
+$_['error_permission']  = 'Warning: You do not have permission to modify the events!';

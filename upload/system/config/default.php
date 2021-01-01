@@ -37,8 +37,8 @@ $_['cache_expire']           = 3600;
 // Session
 $_['session_engine']         = 'file'; // db or file
 $_['session_name']           = 'OCSESSID';
-$_['session_domain']         = 'domain';
-$_['session_path']           = 'path';
+$_['session_domain']         = '';
+$_['session_path']           = '/';
 $_['session_expire']         = 360000;
 $_['session_probability']    = 1;
 $_['session_divisor']        = 5;

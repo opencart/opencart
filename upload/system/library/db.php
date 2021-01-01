@@ -80,7 +80,7 @@ class DB {
 	}
 	
 	/**
-     * IsConnected
+     * Is Connected
 	 *
 	 * Checks if a DB connection is active.
 	 *

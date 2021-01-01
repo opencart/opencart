@@ -2,7 +2,7 @@
 namespace Opencart\Application\Controller\Error;
 class Exception extends \Opencart\System\Engine\Controller {
 	public function index($message, $code, $file, $line) {
-		$this->load->language('error/exception');
+		//$this->load->language('error/exception');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

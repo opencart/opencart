@@ -75,12 +75,12 @@ $language->addPath(DIR_LANGUAGE);
 $language->load($config->get('language_code'));
 $registry->set('language', $language);
 
-// Action error object to execute if any other actions can not be executed.
-$error = new \Opencart\System\Engine\Action($config->get('action_error'));
-
-$action = '';
-
 try {
+	// Action error object to execute if any other actions can not be executed.
+	$error = new \Opencart\System\Engine\Action($config->get('action_error'));
+
+	$action = '';
+
 	// Pre Actions
 	foreach ($config->get('action_pre_action') as $pre_action) {
 		$pre_action = new \Opencart\System\Engine\Action($pre_action);
@@ -142,16 +142,25 @@ try {
 
 		$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 	}
+
+	// Output
+	$response->output();
+
+	// Post Actions
+	foreach ($config->get('action_post_action') as $post_action) {
+		$post_action = new \Opencart\System\Engine\Action($post_action);
+		$post_action->execute($registry);
+	}
 } catch (\Exception $e) {
+	$exception_data = [
+		'message'=> $e->getMessage(),
+		'code'   => $e->getCode(),
+		'file'   => $e->getFile(),
+		'line'   => $e->getLine()
+	];
+
+	print_r($exception_data);
+
 	$action = new \Opencart\System\Engine\Action('error/exception');
-	$action->execute($registry, $e);
-}
-
-// Output
-$response->output();
-
-// Post Actions
-foreach ($config->get('action_post_action') as $post_action) {
-	$post_action = new \Opencart\System\Engine\Action($post_action);
-	$post_action->execute($registry);
+	$action->execute($registry, $exception_data);
 }

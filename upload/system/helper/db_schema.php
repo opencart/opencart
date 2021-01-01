@@ -448,7 +448,7 @@ function db_schema() {
 				]
 			]
 		],
-		'engine' => 'InnoDB',
+		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
 	];
@@ -5366,7 +5366,7 @@ function db_schema() {
 		'primary' => [
 			'session_id'
 		],
-		'engine' => 'InnoDB',
+		'engine' => 'MyISAM',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
 	];

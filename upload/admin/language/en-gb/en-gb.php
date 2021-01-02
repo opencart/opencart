@@ -105,7 +105,6 @@ $_['button_ip_add']                 = 'Add IP';
 $_['button_parent']                 = 'Parent';
 $_['button_folder']                 = 'New Folder';
 $_['button_search']                 = 'Search';
-$_['button_view']                   = 'View';
 $_['button_install']                = 'Install';
 $_['button_uninstall']              = 'Uninstall';
 $_['button_link']                   = 'Link';

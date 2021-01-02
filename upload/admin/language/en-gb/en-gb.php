@@ -135,7 +135,6 @@ $_['tab_discount']                  = 'Discount';
 $_['tab_documentation']             = 'Documentation';
 $_['tab_general']                   = 'General';
 $_['tab_history']                   = 'History';
-$_['tab_ftp']                       = 'FTP';
 $_['tab_ip']                        = 'IP Addresses';
 $_['tab_links']                     = 'Links';
 $_['tab_log']                       = 'Log';

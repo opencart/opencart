@@ -28,7 +28,7 @@ $registry->set('log', $log);
 // Error Handler
 set_error_handler(function($code, $message, $file, $line) use ($log, $config) {
 	// error suppressed with @
-	if (error_reporting() === 0) {
+	if (@error_reporting() === 0) {
 		return false;
 	}
 

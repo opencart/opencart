@@ -7,8 +7,7 @@ final class PgSQL {
 		try {
 			$pg = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
 		} catch (\Exception $e) {
-			var_dump($e);
-		//	throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
 		if ($pg) {

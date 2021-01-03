@@ -13,7 +13,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		if (($res = $this->registry->get('cache')->get($this->cacheKey))) {
 			return $res;
 		} else {
-			$query = $this->db->query("SELECT DISTINCT extensions FROM `" . DB_PREFIX . "extension`");
+			$query = $this->db->query("SELECT DISTINCT extension FROM `" . DB_PREFIX . "extension`");
 			$this->registry->get('cache')->set($this->cacheKey, $results = $query->rows);
 
 			return $results;

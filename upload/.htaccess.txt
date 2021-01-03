@@ -28,6 +28,13 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
+#ErrorDocument 400 /index.php?route=error/not_found
+#ErrorDocument 401 /index.php?route=error/permission
+#ErrorDocument 403 /index.php?route=error/not_found
+#ErrorDocument 404 /index.php?route=error/not_found
+#ErrorDocument 500 /index.php?route=error/not_found
+#ErrorDocument 503 /index.php?route=error/not_found
+
 ### Additional Settings that may need to be enabled for some servers
 ### Uncomment the commands by removing the # sign in front of it.
 ### If you get an "Internal Server Error 500" after enabling any of the following settings, restore the # as this means your host doesn't allow that.

@@ -4,16 +4,17 @@ final class PgSQL {
 	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '5432') {
-		$this->connection = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
-
-		if (!$this->connection) {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
+		try {
+			$pg = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
+		} catch (\Exception $e) {
+			var_dump($e);
+		//	throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
-		pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
-
-		// Needs to use register_shutdown_function as __destructors don't automatically trigger at the end of page load.
-		register_shutdown_function([$this, 'close']);
+		if ($pg) {
+			$this->connection = $pg;
+			pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+		}
 	}
 
 	public function query($sql) {
@@ -72,8 +73,10 @@ final class PgSQL {
 	}
 
 	public function __destruct() {
-		if ($this->isConnected()) {
+		if ($this->connection) {
 			pg_close($this->connection);
+
+			$this->connection = '';
 		}
 	}
 }

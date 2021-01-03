@@ -4,9 +4,13 @@ class MySQLi {
 	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
+		try {
+			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
+		} catch (\Exception $e) {
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
+		}
 
-		if (!$mysqli->connect_error) {
+		if (!$mysqli->connect_errno) {
 			$this->connection = $mysqli;
 			$this->connection->report_mode = MYSQLI_REPORT_ERROR;
 			$this->connection->set_charset('utf8');
@@ -34,6 +38,8 @@ class MySQLi {
 
 				$query->close();
 
+				unset($data);
+
 				return $result;
 			} else {
 				return true;
@@ -56,7 +62,11 @@ class MySQLi {
 	}
 	
 	public function isConnected() {
-		return $this->connection->ping();
+		if ($this->connection) {
+			return $this->connection->ping();
+		} else {
+			return false;
+		}
 	}
 
 	/**

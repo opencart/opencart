@@ -15,6 +15,7 @@ class Extension extends \Opencart\System\Engine\Model {
 
 	public function getExtensionByCode($type, $code) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
+		$this->flushCache();
 
 		return $query->row;
 	}
@@ -26,17 +27,19 @@ class Extension extends \Opencart\System\Engine\Model {
 
 		if (!in_array($code, $codes)) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = '" . $this->db->escape($extension) . "', `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
+			$this->flushCache();
 		}
 	}
 
 	public function uninstall($type, $code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
+		$this->flushCache();
 	}
 
 	public function addInstall($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
-	
+
 		return $this->db->getLastId();
 	}
 
@@ -104,7 +107,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		}
 
 		$query = $this->db->query($sql);
-	
+
 		return $query->rows;
 	}
 
@@ -123,11 +126,11 @@ class Extension extends \Opencart\System\Engine\Model {
 	public function addPath($extension_install_id, $path) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "'");
 	}
-		
+
 	public function deletePath($extension_path_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_path` WHERE `extension_path_id` = '" . (int)$extension_path_id . "'");
 	}
-	
+
 	public function getPathsByExtensionInstallId($extension_install_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `extension_path_id` ASC");
 
@@ -144,5 +147,9 @@ class Extension extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
 		return $query->rows;
+	}
+
+	public function flushCache() {
+		$this->registry->get('cache')->delete('extensions');
 	}
 }

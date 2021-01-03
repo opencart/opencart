@@ -1,10 +1,23 @@
 <?php
 namespace Opencart\Application\Model\Setting;
 class Extension extends \Opencart\System\Engine\Model {
+	protected $cacheKey = 'extensions';
+
 	public function getExtensions() {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
 
 		return $query->rows;
+	}
+
+	public function getExtensionsDistinctCached() {
+		if (($res = $this->registry->get('cache')->get($this->cacheKey))) {
+			return $res;
+		} else {
+			$query = $this->db->query("SELECT DISTINCT extensions FROM `" . DB_PREFIX . "extension`");
+			$this->registry->get('cache')->set($this->cacheKey, $results = $query->rows);
+
+			return $results;
+		}
 	}
 
 	public function getExtensionsByType($type) {

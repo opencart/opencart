@@ -72,13 +72,6 @@ div.required .col-form-label:before {
   }
 }
 
-/* cookie */
-#cookie {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-
 /* top */
 #top {
   background-color: #EEEEEE;
@@ -86,6 +79,7 @@ div.required .col-form-label:before {
   padding: 10px 0;
   margin: 0 0 20px 0;
   min-height: 44px;
+
 
   .nav {
     > .list-inline {
@@ -460,11 +454,16 @@ footer {
   padding: 8px 14px 8px 14px;
 }
 
+#top .container {
+  position: relative;
+
+}
+
 /* toast */
-#toast {
-  position: fixed;
-  top: 10px;
-  right: 10px;
+.toast {
+  position: absolute;
+  top: -5px;
+  right: 15px;
   z-index: 999;
 }
 

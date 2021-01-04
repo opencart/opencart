@@ -348,6 +348,8 @@ $('#button-cart').on('click', function() {
 			$('.alert-dismissible, .text-danger, #toast').remove();
 			$('.form-control').removeClass('is-invalid');
 
+			$('.toast').remove();
+
 			if (json['error']) {
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
@@ -390,7 +392,7 @@ $('#button-cart').on('click', function() {
 				html += '  <div class="toast-body">' + json['success'] + '</div>';
 				html += '</div>';
 
-				$('body').append(html);
+				$('#top .container').append(html);
 
 				$('#toast').toast({'delay': 3000});
 				$('#toast').toast('show');

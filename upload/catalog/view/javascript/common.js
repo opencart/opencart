@@ -186,6 +186,8 @@ $(document).ready(function() {
 // Cart add remove functions
 var cart = {
 	'add': function(product_id, quantity) {
+		$('.toast').remove();
+
 		$.ajax({
 			url: 'index.php?route=checkout/cart|add',
 			type: 'post',
@@ -207,13 +209,13 @@ var cart = {
 
 				if (json['success']) {
 
-					html  = '<div class="container"></div> <div id="toast" class="toast">';
+					html  = '<div id="toast-cart" class="toast">';
 					html += '  <div class="toast-header">';
 					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
 					html += '  </div>';
 					html += '  <div class="toast-body">' + json['success'] + '</div>';
-					html += '</div></div>';
+					html += '</div>';
 
 					$('#top').prepend(html);
 

@@ -38,6 +38,18 @@
               <label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
             </div>
             <div class="form-group">
+              <label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
+                <option value=""></option>
+                {% for store in stores %}
+                  {% if store.store_id == filter_store_id %}
+                    <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                  {% else %}
+                    <option value="{{ store.store_id }}">{{ store.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
               <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-control">
                 <option value=""></option>
                 {% if filter_order_status_id == '0' %}
@@ -164,11 +176,17 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+  var filter_store_id = $('select[name=\'filter_store_id\']').val();
 
-	if (filter_order_status_id !== '') {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}
+  if (filter_store_id !== '') {
+    url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+  }
+
+  var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+
+  if (filter_order_status_id !== '') {
+    url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+  }
 
 	var filter_total = $('input[name=\'filter_total\']').val();
 

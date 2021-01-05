@@ -54,6 +54,9 @@ $_['help_debug']			  = 'Enabling debug will write sensitive data to a log file. 
 $_['help_transaction']		  = 'Transaction method MUST be set to Payment to allow subscription payments';
 $_['help_cron_job_token']	  = 'Make this long and hard to guess';
 $_['help_cron_job_url']		  = 'Set a cron job to call this URL';
+$_['text_void']               = 'Void';
+$_['text_payment']            = "Payment";
+$_['text_rebate']             = 'Rebate';
 
 // Button
 $_['button_release']		  = 'Release';

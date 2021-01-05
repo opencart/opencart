@@ -109,9 +109,13 @@ foreach ($config->get('response_header') as $header) {
 $response->setCompression($config->get('response_compression'));
 $registry->set('response', $response);
 
+// Cache
+$registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
+
 // Database
 if ($config->get('db_autostart')) {
 	$db = new \Opencart\System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+	$db->setCacheEngine($registry->get('cache'));
 	$registry->set('db', $db);
 
 	// Sync PHP and DB time zones
@@ -148,9 +152,6 @@ if ($config->get('session_autostart')) {
 
 	oc_setcookie($config->get('session_name'), $session->getId(), $option);
 }
-
-// Cache
-$registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Template
 $template = new \Opencart\System\Library\Template($config->get('template_engine'));

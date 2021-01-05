@@ -13,6 +13,7 @@
 namespace Opencart\System\Library;
 class DB {
 	private $adaptor;
+	private $cache;
 
 	/**
 	 * Constructor
@@ -88,5 +89,38 @@ class DB {
      */	
 	public function isConnected() {
 		return $this->adaptor->isConnected();
+	}
+
+	/**
+	 * Set Cache
+	 *
+	 * Injected Cache Engine Adapter to enable SQL Query cache
+	 *
+	 * @param \Opencart\System\Library\Cache $cache
+	 */
+	public function setCacheEngine(\Opencart\System\Library\Cache $cache){
+		$this->cache = $cache;
+	}
+
+	/**
+	 * QueryCached - should be used for SQL SELECT queries which may be cached
+	 *
+	 * @param string $cacheKey
+	 * @param string $sql
+	 * @param string $expireSeconds Expire time in seconds or default
+	 *
+	 * @return    object
+	 */
+	public function queryCached($cacheKey, $sql, $expireSeconds = NULL) {
+		if (!$this->cache){
+			return $this->adaptor->query($sql);
+		}
+		if (($cached = $this->cache->get($cacheKey))) {
+			return (object)array('rows' => $cached);
+		}
+		$results = $this->adaptor->query($sql);
+		$this->cache->set($cacheKey, $results->rows, $expireSeconds);
+
+		return $results;
 	}
 }

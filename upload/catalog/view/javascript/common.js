@@ -207,11 +207,7 @@ var cart = {
 
 				if (json['success']) {
 					html  = '<div class="toast">';
-					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
-					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
-					html += '  </div>';
-					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
 					html += '</div>';
 
 					$('#toast').prepend(html);
@@ -316,19 +312,15 @@ var wishlist = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('#toast').remove();
+				$('.toast').remove();
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					html = '<div class="toast">';
-					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i>Wishlist</strong>';
-					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
-					html += '  </div>';
-					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html  = '<div class="toast">';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
 					html += '</div>';
 
 					$('#toast').prepend(html);
@@ -358,15 +350,11 @@ var compare = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('#toast').remove();
+				$('.toast').remove();
 
 				if (json['success']) {
-					html = '<div class="toast">';
-					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Compare</strong>';
-					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
-					html += '  </div>';
-					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html  = '<div class="toast">';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
 					html += '</div>';
 
 					$('#toast').prepend(html);

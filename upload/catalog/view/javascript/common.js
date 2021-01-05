@@ -186,8 +186,6 @@ $(document).ready(function() {
 // Cart add remove functions
 var cart = {
 	'add': function(product_id, quantity) {
-		$('.toast').remove();
-
 		$.ajax({
 			url: 'index.php?route=checkout/cart|add',
 			type: 'post',
@@ -208,8 +206,7 @@ var cart = {
 				}
 
 				if (json['success']) {
-
-					html  = '<div id="toast-cart" class="toast">';
+					html  = '<div class="toast">';
 					html += '  <div class="toast-header">';
 					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
@@ -217,11 +214,10 @@ var cart = {
 					html += '  <div class="toast-body">' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('#top').prepend(html);
+					$('#toast').prepend(html);
 
-					$('#toast').toast({'delay': 3000});
-
-					$('#toast').toast('show');
+					$('#toast .toast:first-child').toast({'delay': 3000});
+					$('#toast .toast:first-child').toast('show');
 
 					// Need to set timeout otherwise it wont update the total
 					$('#cart').parent().load('index.php?route=common/cart|info');
@@ -327,19 +323,18 @@ var wishlist = {
 				}
 
 				if (json['success']) {
-					html = '<div id="toast" class="toast">';
+					html = '<div class="toast">';
 					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i>Wishlist</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
 					html += '  </div>';
 					html += '  <div class="toast-body">' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('body').append(html);
+					$('#toast').prepend(html);
 
-					$('#toast').toast({'delay': 3000});
-
-					$('#toast').toast('show');
+					$('#toast:first-child').toast({'delay': 3000});
+					$('#toast:first-child').toast('show');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -366,19 +361,18 @@ var compare = {
 				$('#toast').remove();
 
 				if (json['success']) {
-					html = '<div id="toast" class="toast">';
+					html = '<div class="toast">';
 					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
+					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Compare</strong>';
 					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
 					html += '  </div>';
 					html += '  <div class="toast-body">' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('body').append(html);
+					$('#toast').prepend(html);
 
-					$('#toast').toast({'delay': 3000});
-
-					$('#toast').toast('show');
+					$('#toast:first-child').toast({'delay': 3000});
+					$('#toast:first-child').toast('show');
 
 					$('#compare-total').html(json['total']);
 				}

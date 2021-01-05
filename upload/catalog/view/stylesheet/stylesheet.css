@@ -58,6 +58,21 @@ div.required .col-form-label:before {
     text-align: right;
   }
 }
+/* toast */
+#toast-container {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+#toast-container .container {
+  position: relative;
+}
+#toast {
+  position: absolute;
+  top: 5px;
+  right: 14px;
+  z-index: 1000;
+}
 /* top */
 #top {
   background-color: #EEEEEE;
@@ -338,16 +353,6 @@ footer h5 {
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px;
-}
-#top .container {
-  position: relative;
-}
-/* toast */
-.toast {
-  position: absolute;
-  top: -5px;
-  right: 15px;
-  z-index: 999;
 }
 /* breadcrumb */
 .breadcrumb {

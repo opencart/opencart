@@ -46,6 +46,7 @@ $_['text_name']          = 'Download Name';
 $_['text_progress']      = 'Progress';
 $_['text_available']     = 'Available Installs';
 $_['text_action']        = 'Action';
+$_['text_see_more']      = 'see more replies...';
 
 // Entry
 $_['entry_pin']          = 'PIN';
@@ -63,6 +64,7 @@ $_['button_view_all']    = 'View all extensions';
 $_['button_get_support'] = 'Get Support';
 $_['button_comment']     = 'Comment';
 $_['button_reply']       = 'Reply';
+$_['button_refresh']     = 'Refresh';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';

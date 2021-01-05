@@ -44,6 +44,9 @@ $_['text_void_ok']                               = 'Void was successful, order s
 $_['text_confirm_void']                          = 'Are you sure you want to reverse the authorisation?';
 $_['text_confirm_release']                       = 'Are you sure you want to release the payment?';
 $_['text_confirm_rebate']                        = 'Are you sure you want to rebate the payment?';
+$_['text_reversed']                              = 'Reversed';
+$_['text_payment']                               = "Payment";
+$_['text_rebate']                                = 'Rebate';
 
 $_['entry_site_reference']                       = 'Site reference';
 $_['entry_username']                             = 'Username';

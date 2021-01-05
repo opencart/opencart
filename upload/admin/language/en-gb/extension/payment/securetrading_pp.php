@@ -13,6 +13,9 @@ $_['text_refund_issued']                         = 'Refund was successfully issu
 $_['text_pending_settlement_manually_overriden'] = 'Pending Settlement, manually overriden';
 $_['text_pending_suspended']                     = 'Suspended';
 $_['text_pending_settled']                       = 'Settled';
+$_['text_reversed']                              = 'Reversed';
+$_['text_payment']                               = "Payment";
+$_['text_rebate']                                = 'Rebate';
 
 $_['entry_site_reference']                       = 'Site reference';
 $_['entry_version']                              = 'Version';

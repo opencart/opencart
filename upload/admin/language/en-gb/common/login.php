@@ -17,3 +17,4 @@ $_['button_login']   = 'Login';
 // Error
 $_['error_login']    = 'No match for Username and/or Password.';
 $_['error_token']    = 'Invalid token session. Please login again.';
+$_['error_attempts'] = 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour or reset password.';

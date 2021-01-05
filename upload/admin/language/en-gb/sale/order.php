@@ -68,6 +68,7 @@ $_['text_reward']                = 'Reward Points';
 
 // Column
 $_['column_order_id']            = 'Order ID';
+$_['column_store']               = 'Store';
 $_['column_customer']            = 'Customer';
 $_['column_status']              = 'Status';
 $_['column_date_added']          = 'Date Added';

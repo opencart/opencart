@@ -7,14 +7,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
 
-		$this->load->model('tool/image');
-
-		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-		} else {
-			$data['logo'] = '';
-		}
-
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
 		$this->load->model('account/customer_group');
@@ -34,8 +26,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
-		$data['store_url'] = $this->config->get('config_url');
+
 		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$data['store_url'] = $this->config->get('config_url');
 
 		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
@@ -65,16 +58,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = $args[0]['lastname'];
 
 			$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
-			$data['store_url'] = $this->config->get('config_url');
-			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
 
 			$this->load->model('account/customer_group');
 
@@ -94,6 +77,9 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$data['email'] = $args[0]['email'];
 			$data['telephone'] = $args[0]['telephone'];
+
+			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$data['store_url'] = $this->config->get('config_url');
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');

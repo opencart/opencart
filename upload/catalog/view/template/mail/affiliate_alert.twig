@@ -1,13 +1,12 @@
 {{ text_signup }}
 
-{% if company %}
-{{ text_company }} {{ customer_group }}
-{% endif %}
-{{ text_website }} {{ website }}
+{% if company %}{{ text_company }} {{ company }}{% endif %}
+{% if website %}{{ text_website }} {{ website }}{% endif %}
 {{ text_firstname }} {{ firstname }}
 {{ text_lastname }} {{ lastname }}
-{% if customer_group %}
-{{ text_customer_group }} {{ customer_group }}
-{% endif %}
+{% if customer_group %}{{ text_customer_group }} {{ customer_group }}{% endif %}
 {{ text_email }} {{ email }}
 {{ text_telephone }} {{ telephone }}
+
+{{ store }}
+{{ store_url }}

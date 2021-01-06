@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Application\Controller\Mail;
 class Transaction extends \Opencart\System\Engine\Controller {
-	public function index($route, $args, $output) {
+	public function index(&$route, &$args, &$output) {
 		if (isset($args[0])) {
 			$customer_id = $args[0];
 		} else {

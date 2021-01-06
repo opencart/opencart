@@ -13,6 +13,7 @@ $_['text_order']           = 'Order Information';
 $_['text_product']         = 'Product Information &amp; Reason for Return';
 $_['text_history']         = 'History';
 $_['text_history_add']     = 'Add History';
+$_['text_filter']          = 'Filter';
 
 // Column
 $_['column_return_id']     = 'Return ID';

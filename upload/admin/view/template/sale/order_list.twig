@@ -38,6 +38,18 @@
               <label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
             </div>
             <div class="form-group">
+              <label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
+                <option value=""></option>
+                {% for store in stores %}
+                  {% if store.store_id == filter_store_id %}
+                    <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+                  {% else %}
+                    <option value="{{ store.store_id }}">{{ store.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
               <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-control">
                 <option value=""></option>
                 {% if filter_order_status_id == '0' %}
@@ -92,6 +104,7 @@
                     <tr>
                       <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
                       <td class="text-right">{% if sort == 'o.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'o.store_name' %} <a href="{{ sort_store_name }}" class="{{ order|lower }}">{{ column_store }}</a> {% else %} <a href="{{ sort_store_name }}">{{ column_store }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'order_status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
                       <td class="text-right">{% if sort == 'o.total' %} <a href="{{ sort_total }}" class="{{ order|lower }}">{{ column_total }}</a> {% else %} <a href="{{ sort_total }}">{{ column_total }}</a> {% endif %}</td>
@@ -111,6 +124,7 @@
                             {% endif %}
                             <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
                           <td class="text-right">{{ order.order_id }}</td>
+                          <td class="text-left">{{ order.store_name }}</td>
                           <td class="text-left">{{ order.customer }}</td>
                           <td class="text-left">{{ order.order_status }}</td>
                           <td class="text-right">{{ order.total }}</td>
@@ -129,7 +143,7 @@
                       {% endfor %}
                     {% else %}
                       <tr>
-                        <td class="text-center" colspan="8">{{ text_no_results }}</td>
+                        <td class="text-center" colspan="9">{{ text_no_results }}</td>
                       </tr>
                     {% endif %}
                   </tbody>
@@ -162,11 +176,17 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+  var filter_store_id = $('select[name=\'filter_store_id\']').val();
 
-	if (filter_order_status_id !== '') {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}
+  if (filter_store_id !== '') {
+    url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+  }
+
+  var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+
+  if (filter_order_status_id !== '') {
+    url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+  }
 
 	var filter_total = $('input[name=\'filter_total\']').val();
 

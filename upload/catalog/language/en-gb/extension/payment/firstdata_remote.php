@@ -3,6 +3,7 @@
 $_['text_title']				= 'Credit or Debit Card';
 $_['text_credit_card']			= 'Credit Card Details';
 $_['text_wait']					= 'Please wait!';
+$_['text_store_card']           = 'Store card details?';
 
 // Entry
 $_['entry_cc_number']			= 'Card number';

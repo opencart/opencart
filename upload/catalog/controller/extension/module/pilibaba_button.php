@@ -1,6 +1,7 @@
 <?php
 class ControllerExtensionModulePilibabaButton extends Controller {
 	public function index() {
+		$this->load->language('extension/module/pilibaba_button');
 		$status = true;
 
 		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {

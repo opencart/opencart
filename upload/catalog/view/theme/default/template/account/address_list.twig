@@ -29,8 +29,7 @@
           <tr>
             <td class="text-left">{{ result.address }}</td>
             <td class="text-right"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; 
-            <button type = "button" form="form-address" formaction="{{ result.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ?
-         $('#form-address-{{ result.address_id }}').submit() : false;">{{ button_delete }}</button></td>
+            <a href = "{{ result.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="return confirm('{{ text_confirm }}')">{{ button_delete }}</a></td>
           </tr>
           </form>
           {% endfor %}

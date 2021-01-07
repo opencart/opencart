@@ -12,11 +12,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
-
+				$logo = html_entity_decode($store_info['logo'], ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				$store_url = $store_info['url'];
 			} else {
-
+				$logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				$store_url = HTTP_CATALOG;
 			}
@@ -44,8 +44,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('tool/image');
 
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			if (is_file(DIR_IMAGE . $logo)) {
+				$data['logo'] = $store_url . 'image/' . $logo;
 			} else {
 				$data['logo'] = '';
 			}
@@ -82,26 +82,16 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-
-
-
-
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
+				$logo = html_entity_decode($store_info['logo'], ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				$store_url = $store_info['url'];
 			} else {
+				$logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				$store_url = HTTP_CATALOG;
 			}
@@ -125,6 +115,14 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			foreach ($results as $key => $value) {
 				$data[$key] = $value;
+			}
+
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . $logo)) {
+				$data['logo'] = $store_url . 'image/' . $logo;
+			} else {
+				$data['logo'] = '';
 			}
 
 			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);

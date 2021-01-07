@@ -71,10 +71,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $store_name), ENT_QUOTES, 'UTF-8');
 
-		$this->load->model('tool/image');
-
 		if (is_file(DIR_IMAGE . $logo)) {
-			$data['logo'] = $this->model_tool_image->resize($logo, $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			$data['logo'] = $store_url . 'image/' . $logo;
 		} else {
 			$data['logo'] = '';
 		}
@@ -236,7 +234,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		if (is_file(DIR_IMAGE . $logo)) {
-			$data['logo'] = $this->model_tool_image->resize($logo, $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			$data['logo'] = $store_url . 'image/' . $logo;
 		} else {
 			$data['logo'] = '';
 		}
@@ -314,8 +312,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		if (is_file(DIR_IMAGE . html_entity_decode($logo, ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($logo, ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+		if (is_file(DIR_IMAGE . $logo)) {
+			$data['logo'] = $store_url . 'image/' . $logo;
 		} else {
 			$data['logo'] = '';
 		}
@@ -393,8 +391,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		if (is_file(DIR_IMAGE . html_entity_decode($logo, ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($logo, ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+		if (is_file(DIR_IMAGE . $logo)) {
+			$data['logo'] = $store_url . 'image/' . $logo;
 		} else {
 			$data['logo'] = '';
 		}

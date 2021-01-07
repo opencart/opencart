@@ -57,6 +57,20 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
+
+		if ($store_info) {
+			$logo = html_entity_decode($store_info['logo'], ENT_QUOTES, 'UTF-8');
+			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
+			$store_url = $store_info['url'];
+		} else {
+			$logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$store_url = HTTP_CATALOG;
+		}
+
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
 
 		if ($language_info) {
@@ -78,17 +92,17 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8');
 
-		$data['title'] = sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']);
-
-		$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $order_info['store_name']);
-
 		$this->load->model('tool/image');
 
-		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+		if (is_file(DIR_IMAGE . $logo)) {
+			$data['logo'] = $store_url . 'image/' . $logo;
 		} else {
 			$data['logo'] = '';
 		}
+
+		$data['title'] = sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']);
+
+		$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $order_info['store_name']);
 
 		$data['store'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
 		$data['store_url'] = $order_info['store_url'];
@@ -280,6 +294,18 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function edit($order_info, $order_status_id, $comment, $notify) {
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
+
+		if ($store_info) {
+			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
+			$store_url = $store_info['url'];
+		} else {
+			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$store_url = HTTP_CATALOG;
+		}
+
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
 
 		if ($language_info) {
@@ -389,14 +415,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['order_status'] = $order_status_query->row['name'];
 			} else {
 				$data['order_status'] = '';
-			}
-
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
 			}
 
 			$this->load->model('tool/upload');

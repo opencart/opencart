@@ -646,7 +646,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->editProduct($product_id, $product_data);
 	}
 
-	function editVariants($master_id, $data) {
+	public function editVariants($master_id, $data) {
 		// product_option should not be passed to product variants
 		unset($data['product_option']);
 

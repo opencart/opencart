@@ -325,8 +325,8 @@ var wishlist = {
 
 					$('#toast').prepend(html);
 
-					$('#toast:first-child').toast({'delay': 3000});
-					$('#toast:first-child').toast('show');
+					$('#toast .toast:first-child').toast({'delay': 3000});
+					$('#toast .toast:first-child').toast('show');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -359,8 +359,8 @@ var compare = {
 
 					$('#toast').prepend(html);
 
-					$('#toast:first-child').toast({'delay': 3000});
-					$('#toast:first-child').toast('show');
+					$('#toast .toast:first-child').toast({'delay': 3000});
+					$('#toast .toast:first-child').toast('show');
 
 					$('#compare-total').html(json['total']);
 				}

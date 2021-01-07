@@ -68,7 +68,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-			$store_url = HTTP_CATALOG;
+			$store_url = HTTP_SERVER;
 		}
 
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
@@ -303,7 +303,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store_url = $store_info['url'];
 		} else {
 			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-			$store_url = HTTP_CATALOG;
+			$store_url = HTTP_SERVER;
 		}
 
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);

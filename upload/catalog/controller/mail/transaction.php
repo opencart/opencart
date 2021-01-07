@@ -43,7 +43,7 @@ class Transaction extends \Opencart\System\Engine\Controller {
 				$data[$key] = $value;
 			}
 
-			$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $store_name), ENT_QUOTES, 'UTF-8');
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name;
 
 			$data['text_received'] = sprintf($this->language->get('mail_text_received'), $store_name);
 

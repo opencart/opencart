@@ -31,6 +31,18 @@ class Country extends \Opencart\System\Engine\Model {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
 
+			if (!empty($data['filter_name'])) {
+				$sql .= " AND `name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			}
+
+			if (!empty($data['filter_iso_code_2'])) {
+				$sql .= " AND `iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2']) . "%'";
+			}
+
+			if (!empty($data['filter_iso_code_3'])) {
+				$sql .= " AND `iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3']) . "%'";
+			}
+
 			$sort_data = [
 				'name',
 				'iso_code_2',
@@ -80,7 +92,27 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCountries() {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country`");
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country`";
+
+		$implode = [];
+
+		if (!empty($data['filter_name'])) {
+			$implode[] = " AND `name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+		}
+
+		if (!empty($data['filter_iso_code_2'])) {
+			$implode[] = " AND `iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2']) . "%'";
+		}
+
+		if (!empty($data['filter_iso_code_3'])) {
+			$implode[] = " AND `iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3']) . "%'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}

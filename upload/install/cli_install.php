@@ -366,7 +366,7 @@ class Cli extends \Opencart\System\Engine\Controller {
 
 			$db->query("SET CHARACTER SET utf8");
 
-			$db->query("SET @@session.sql_mode = 'MYSQL40'");
+			$db->query("SET @@session.sql_mode = ''");
 
 			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
 

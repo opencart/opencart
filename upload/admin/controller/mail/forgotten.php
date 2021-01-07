@@ -12,6 +12,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$data['reset'] = $this->url->link('common/reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1], true);
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
+			$data['store'] = $this->config->get('config_name');
+			$data['store_url'] = $this->config->get('config_store_url');
+
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

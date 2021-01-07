@@ -7,9 +7,9 @@ class ControllerEventTranslation extends Controller {
 		
 		foreach ($results as $result) {
 			if (!$key) {
-				$this->language->set($result['key'], $result['value']);
+				$this->language->set($result['key'], html_entity_decode( $result['value'], ENT_QUOTES, 'UTF-8'));
 			} else {
-				$this->language->get($key)->set($result['key'], $result['value']);
+				$this->language->get($key)->set($result['key'], html_entity_decode( $result['value'], ENT_QUOTES, 'UTF-8'));
 			}
 		}	
 	}

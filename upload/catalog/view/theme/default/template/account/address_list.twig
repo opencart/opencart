@@ -27,7 +27,7 @@
           {% for result in addresses %}
           <tr>
             <td class="text-left">{{ result.address }}</td>
-            <td class="text-right"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a id="{{ result.address_id }}" class="btn btn-danger delete">{{ button_delete }}</a></td>
+            <td class="text-right"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
           </tr>
           {% endfor %}
         </table>
@@ -42,22 +42,4 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type= "text/javascript">
-$(document).find('.delete').on('click', function(e) {
-	e.preventDefault();
-	var element = this;
-	if (confirm('{{ text_confirm }}')) {
-    $.ajax({
-			url: 'index.php?route=account/address/delete&address_id=' + $(element).attr('id'),
-			dataType: 'json',
-			success: function(json) {
-        location = json['location'];
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
-});
-</script>
 {{ footer }}

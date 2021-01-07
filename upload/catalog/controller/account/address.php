@@ -93,7 +93,6 @@ class ControllerAccountAddress extends Controller {
 	}
 
 	public function delete() {
-		$json = array();
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', '', true);
 
@@ -125,10 +124,10 @@ class ControllerAccountAddress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_delete');
 
+			$this->response->redirect($this->url->link('account/address', '', true));
 		}
-		$json['location'] = $this->url->link('account/address', '', true);
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+
+		$this->getList();
 	}
 
 	protected function getList() {
@@ -149,9 +148,6 @@ class ControllerAccountAddress extends Controller {
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
-		} else if (isset($this->session->data['warning']) && $this->session->data['warning']) {
-			$data['error_warning'] = $this->session->data['warning'];
-			unset($this->session->data['warning']);
 		} else {
 			$data['error_warning'] = '';
 		}
@@ -482,11 +478,11 @@ class ControllerAccountAddress extends Controller {
 
 	protected function validateDelete() {
 		if ($this->model_account_address->getTotalAddresses() == 1) {
-			$this->error['warning'] = $this->session->data['warning'] = $this->language->get('error_delete');
+			$this->error['warning'] = $this->language->get('error_delete');
 		}
 
 		if ($this->customer->getAddressId() == $this->request->get['address_id']) {
-			$this->error['warning'] = $this->session->data['warning'] = $this->language->get('error_default');
+			$this->error['warning'] = $this->language->get('error_default');
 		}
 
 		return !$this->error;

@@ -164,8 +164,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
 		$voucher_total = $this->model_sale_voucher->getTotalVouchers();
@@ -248,11 +248,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $voucher_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($voucher_total - $this->config->get('config_pagination'))) ? $voucher_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $voucher_total, ceil($voucher_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($voucher_total - $this->config->get('config_pagination_admin'))) ? $voucher_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $voucher_total, ceil($voucher_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -599,12 +599,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 							$this->language->load('mail/voucher', 'mail', $language_code);
 
 							// Add language vars to the template folder
-							$results = $this->language->all();
+							$results = $this->language->all('mail');
 
 							foreach ($results as $key => $value) {
-								if (substr($key, 0, 5) == 'mail_') {
-									$data[substr($key, 5)] = $value;
-								}
+								$data[$key] = $value;
 							}
 
 							$subject = sprintf($this->language->get('mail_text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8'));

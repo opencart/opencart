@@ -293,7 +293,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->language->load('mail/order_edit', 'mail', $language_code);
 
 		// Add language vars to the template folder
-		$results = $this->language->all();
+		$results = $this->language->all('mail');
 
 		foreach ($results as $key => $value) {
 			$data[$key] = $value;
@@ -485,7 +485,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			foreach ($emails as $email) {
 				if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					$mail->setTo($email);
+					$mail->setTo(trim($email));
 					$mail->send();
 				}
 			}

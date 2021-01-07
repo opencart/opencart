@@ -28,12 +28,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				$this->language->load('mail/voucher', 'mail', $language_code);
 
 				// Add language vars to the template folder
-				$results = $this->language->all();
+				$results = $this->language->all('mail');
 
 				foreach ($results as $key => $value) {
-					if (substr($key, 0, 5) == 'mail_') {
-						$data[substr($key, 5)] = $value;
-					}
+					$data[$key] = $value;
 				}
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
@@ -60,9 +58,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 						$data['image'] = '';
 					}
 
+					$data['message'] = nl2br($voucher['message']);
+
 					$data['store_name'] = $order_info['store_name'];
 					$data['store_url'] = $order_info['store_url'];
-					$data['message'] = nl2br($voucher['message']);
 
 					$mail->setTo($voucher['to_email']);
 					$mail->setFrom($this->config->get('config_email'));

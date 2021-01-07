@@ -101,7 +101,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			foreach ($emails as $email) {
 				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					$mail->setTo($email);
+					$mail->setTo(trim($email));
 					$mail->send();
 				}
 			}

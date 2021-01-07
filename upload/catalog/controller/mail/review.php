@@ -17,7 +17,10 @@ class Review extends \Opencart\System\Engine\Controller {
 				$data['reviewer'] = html_entity_decode($args[1]['name'], ENT_QUOTES, 'UTF-8');
 				$data['rating'] = (int)$args[1]['rating'];
 				$data['text'] = $args[1]['text'];
-				
+
+				$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+				$data['store_url'] = $this->config->get('config_url');
+
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -38,7 +41,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 				foreach ($emails as $email) {
 					if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-						$mail->setTo($email);
+						$mail->setTo(trim($email));
 						$mail->send();
 					}
 				}

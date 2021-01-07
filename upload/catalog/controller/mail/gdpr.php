@@ -10,7 +10,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->load->language('mail/gdpr');
 
 		if ($this->config->get('config_logo')) {
-			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+			$data['logo'] = $this->config->get('config_url') . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 		} else {
 			$data['logo'] = '';
 		}

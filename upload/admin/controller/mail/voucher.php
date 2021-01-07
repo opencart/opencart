@@ -40,12 +40,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 					$data = [];
 
 					// Add language vars to the template folder
-					$results = $this->language->all();
+					$results = $this->language->all('mail');
 
 					foreach ($results as $key => $value) {
-						if (substr($key, 0, 5) == 'mail_') {
-							$data[substr($key, 5)] = $value;
-						}
+						$data[$key] = $value;
 					}
 
 					$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $voucher['from_name']), ENT_QUOTES, 'UTF-8');

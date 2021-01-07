@@ -221,7 +221,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 					foreach ($emails as $email) {
 						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-							$mail->setTo($email);
+							$mail->setTo(trim($email));
 							$mail->setFrom($store_email);
 							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
 							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));

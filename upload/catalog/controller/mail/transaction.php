@@ -16,8 +16,10 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 			if ($store_info) {
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
+				$store_url = $store_info['store_url'];
 			} else {
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+				$store_url = $this->config->get('config_url');
 			}
 
 			$this->load->model('localisation/language');
@@ -47,6 +49,9 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 			$data['amount'] = $this->currency->format($args[2], $this->config->get('config_currency'));
 			$data['total'] = $this->currency->format($this->model_account_customer->getTransactionTotal($args[0]), $this->config->get('config_currency'));
+
+			$data['store'] = html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
+			$data['store_url'] = $store_url;
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');

@@ -31,16 +31,22 @@ class Country extends \Opencart\System\Engine\Model {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
 
+			$implode = [];
+
 			if (!empty($data['filter_name'])) {
-				$sql .= " AND `name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+				$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 			}
 
 			if (!empty($data['filter_iso_code_2'])) {
-				$sql .= " AND `iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2']) . "%'";
+				$implode[] = "`iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2']) . "%'";
 			}
 
 			if (!empty($data['filter_iso_code_3'])) {
-				$sql .= " AND `iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3']) . "%'";
+				$implode[] = "`iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3']) . "%'";
+			}
+
+			if ($implode) {
+				$sql .= " WHERE " . implode(" AND ", $implode);
 			}
 
 			$sort_data = [
@@ -91,21 +97,21 @@ class Country extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalCountries() {
+	public function getTotalCountries($data = []) {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country`";
 
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = " AND `name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_iso_code_2'])) {
-			$implode[] = " AND `iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2']) . "%'";
+			$implode[] = "`iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2']) . "%'";
 		}
 
 		if (!empty($data['filter_iso_code_3'])) {
-			$implode[] = " AND `iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3']) . "%'";
+			$implode[] = "`iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3']) . "%'";
 		}
 
 		if ($implode) {

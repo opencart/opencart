@@ -5,9 +5,11 @@ class Register extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/register');
 
-		$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$subject = sprintf($this->language->get('text_subject'), $store_name);
+
+		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $store_name);
 
 		$this->load->model('account/customer_group');
 
@@ -27,7 +29,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 
-		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$data['store'] = $store_name;
 		$data['store_url'] = $this->config->get('config_url');
 
 		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
@@ -40,7 +42,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($args[0]['email']);
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setText($this->load->view('mail/register', $data));
 		$mail->send();
@@ -52,7 +54,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		if (in_array('account', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/register');
 
-			$subject = html_entity_decode($this->language->get('text_new_customer'), ENT_QUOTES, 'UTF-8');
+			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
+			$subject = $this->language->get('text_new_customer');
 
 			$data['firstname'] = $args[0]['firstname'];
 			$data['lastname'] = $args[0]['lastname'];
@@ -78,7 +82,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['email'] = $args[0]['email'];
 			$data['telephone'] = $args[0]['telephone'];
 
-			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$data['store'] = $store_name;
 			$data['store_url'] = $this->config->get('config_url');
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
@@ -91,7 +95,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+			$mail->setSender($store_name);
 			$mail->setSubject($subject);
 			$mail->setText($this->load->view('mail/register_alert', $data));
 			$mail->send();

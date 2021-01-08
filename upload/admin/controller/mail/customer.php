@@ -13,6 +13,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 			if ($store_info) {
 				$logo = html_entity_decode($store_info['logo'], ENT_QUOTES, 'UTF-8');
+
+
+
+
+
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				$store_url = $store_info['url'];
 			} else {

@@ -63,6 +63,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if ($store_info) {
 			$logo = html_entity_decode($store_info['logo'], ENT_QUOTES, 'UTF-8');
+
+			
 			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 			$store_url = $store_info['url'];
 		} else {
@@ -90,7 +92,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8');
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
 		$this->load->model('tool/image');
 
@@ -100,11 +102,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 
-		$data['title'] = sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']);
+		$data['title'] = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
 		$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $order_info['store_name']);
 
-		$data['store'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
+		$data['store'] = $store_name;
 		$data['store_url'] = $order_info['store_url'];
 
 		$data['customer_id'] = $order_info['customer_id'];
@@ -287,7 +289,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($order_info['email']);
 		$mail->setFrom($from);
-		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setHtml($this->load->view('mail/order_add', $data));
 		$mail->send();
@@ -325,7 +327,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8');
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('mail_date_format_short'), strtotime($order_info['date_added']));
@@ -346,8 +348,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['comment'] = strip_tags($comment);
 
-		$data['store'] = $order_info['store_name'];
-		$data['store_url'] = $order_info['store_url'];
+		$data['store'] = $store_name;
+		$data['store_url'] = $store_url;
 
 		$this->load->model('setting/setting');
 
@@ -367,7 +369,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($order_info['email']);
 		$mail->setFrom($from);
-		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setText($this->load->view('mail/order_edit', $data));
 		$mail->send();

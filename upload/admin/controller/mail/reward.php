@@ -58,12 +58,12 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$this->language->load($language_code, 'mail', $language_code);
 			$this->language->load('mail/reward', 'mail', $language_code);
 
-			$subject = sprintf($this->language->get('mail_text_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
 			$data['text_received'] = sprintf($this->language->get('mail_text_received'), $points);
 			$data['text_total'] = sprintf($this->language->get('mail_text_total'), $this->model_customer_customer->getRewardTotal($customer_id));
 
-			$data['store'] = html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
+			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
@@ -77,7 +77,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+			$mail->setSender($store_name);
 			$mail->setSubject($subject);
 			$mail->setText($this->load->view('mail/reward', $data));
 			$mail->send();

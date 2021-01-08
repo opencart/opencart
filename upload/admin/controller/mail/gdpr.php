@@ -69,7 +69,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $store_name), ENT_QUOTES, 'UTF-8');
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
 		if (is_file(DIR_IMAGE . $logo)) {
 			$data['logo'] = $store_url . 'image/' . $logo;
@@ -186,7 +186,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($gdpr_info['email']);
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setHtml($this->load->view('mail/gdpr_export', $data));
 		$mail->send();
@@ -229,7 +229,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $store_name), ENT_QUOTES, 'UTF-8');
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
 		$this->load->model('tool/image');
 
@@ -250,7 +250,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['text_gdpr'] = sprintf($this->language->get('mail_text_gdpr'), $this->config->get('config_gdpr_limit'));
-		$data['text_a'] = sprintf($$this->language->get('mail_text_a'), $this->config->get('config_gdpr_limit'));
+		$data['text_a'] = sprintf($this->language->get('mail_text_a'), $this->config->get('config_gdpr_limit'));
 
 		$data['store_name'] = $store_name;
 		$data['store_url'] = $store_url;
@@ -265,7 +265,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($gdpr_info['email']);
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setHtml($this->load->view('mail/gdpr_approve', $data));
 		$mail->send();
@@ -308,7 +308,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
 		$this->load->model('tool/image');
 
@@ -330,7 +330,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['text_hello'] = sprintf($this->language->get('mail_text_hello'), $this->language->get('mail_text_user'));
 		}
 
-		$data['store_name'] = html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
+		$data['store_name'] = $store_name;
 		$data['store_url'] = $store_url;
 		$data['contact'] = $store_url . 'index.php?route=information/contact';
 
@@ -344,7 +344,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($gdpr_info['email']);
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setHtml($this->load->view('mail/gdpr_deny', $data));
 		$mail->send();
@@ -387,7 +387,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $store_name), ENT_QUOTES, 'UTF-8');
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
 		$this->load->model('tool/image');
 
@@ -407,7 +407,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['text_hello'] = sprintf($this->language->get('mail_text_hello'), $this->language->get('mail_text_user'));
 		}
 
-		$data['store_name'] = html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
+		$data['store_name'] = $store_name;
 		$data['store_url'] = $store_url;
 		$data['contact'] = $store_url . 'index.php?route=information/contact';
 
@@ -421,7 +421,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($gdpr_info['email']);
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setHtml($this->load->view('mail/gdpr_delete', $data));
 		$mail->send();

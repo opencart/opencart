@@ -62,7 +62,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				$data['return_id'] = $return_id;
 				$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_modified']));
 				$data['return_status'] = $return_info['return_status'];
-				$data['comment'] = strip_tags(html_entity_decode($comment, ENT_QUOTES, 'UTF-8'));
+				$data['comment'] = nl2br($comment);
 
 				$data['store'] = $store_name;
 				$data['store_url'] = $store_url;

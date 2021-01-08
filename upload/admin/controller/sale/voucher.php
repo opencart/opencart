@@ -621,11 +621,12 @@ class Voucher extends \Opencart\System\Engine\Controller {
 							} else {
 								$data['image'] = '';
 							}
-			
+
+							$data['message'] = nl2br($voucher_info['message']);
+
 							$data['store_name'] = $order_info['store_name'];
 							$data['store_url'] = $order_info['store_url'];
-							$data['message'] = nl2br($voucher_info['message']);
-			
+
 							$mail->setTo($voucher_info['to_email']);
 							$mail->setFrom($this->config->get('config_email'));
 							$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
@@ -643,9 +644,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			
 							$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));
 							$data['text_from'] = sprintf($this->language->get('text_from'), $voucher_info['from_name']);
-							$data['text_message'] = $this->language->get('text_message');
 							$data['text_redeem'] = sprintf($this->language->get('text_redeem'), $voucher_info['code']);
-							$data['text_footer'] = $this->language->get('text_footer');
 			
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 			
@@ -654,11 +653,12 @@ class Voucher extends \Opencart\System\Engine\Controller {
 							} else {
 								$data['image'] = '';
 							}
-			
+
+							$data['message'] = nl2br($voucher_info['message']);
+
 							$data['store_name'] = $this->config->get('config_name');
 							$data['store_url'] = HTTP_CATALOG;
-							$data['message'] = nl2br($voucher_info['message']);
-			
+
 							$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 							$mail->parameter = $this->config->get('config_mail_parameter');
 							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

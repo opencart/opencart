@@ -105,7 +105,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
 			$mail->setSubject($subject);
-			$mail->setText($this->load->view('mail/affiliate_alert', $data));
+			$mail->setHtml($this->load->view('mail/affiliate_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails if new affiliate email is enabled

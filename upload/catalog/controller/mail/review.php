@@ -18,7 +18,7 @@ class Review extends \Opencart\System\Engine\Controller {
 				$data['product'] = html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8');
 				$data['reviewer'] = html_entity_decode($args[1]['name'], ENT_QUOTES, 'UTF-8');
 				$data['rating'] = (int)$args[1]['rating'];
-				$data['text'] = $args[1]['text'];
+				$data['text'] = nl2br($args[1]['text']);
 
 				$data['store'] = $store_name;
 				$data['store_url'] = $this->config->get('config_url');

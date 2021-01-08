@@ -30,6 +30,24 @@ class Zone extends \Opencart\System\Engine\Model {
 	public function getZones($data = []) {
 		$sql = "SELECT *, z.`name`, c.`name` AS country FROM `" . DB_PREFIX . "zone` z LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
 
+		$implode = [];
+
+		if (!empty($data['filter_name'])) {
+			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+		}
+
+		if (!empty($data['filter_country'])) {
+			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country']) . "%'";
+		}
+
+		if (!empty($data['filter_code'])) {
+			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code']) . "%'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
 		$sort_data = [
 			'c.name',
 			'z.name',
@@ -79,8 +97,32 @@ class Zone extends \Opencart\System\Engine\Model {
 		return $zone_data;
 	}
 
-	public function getTotalZones() {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone`");
+	public function getTotalZones($data = []) {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` z";
+
+		if (!empty($data['filter_country'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
+		}
+
+		$implode = [];
+
+		if (!empty($data['filter_name'])) {
+			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+		}
+
+		if (!empty($data['filter_country'])) {
+			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country']) . "%'";
+		}
+
+		if (!empty($data['filter_code'])) {
+			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code']) . "%'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}

@@ -38,11 +38,13 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
 
 		if ($store_info) {
-			$logo = html_entity_decode($store_info['logo'], ENT_QUOTES, 'UTF-8');
+			$this->load->model('setting/setting');
+
+			$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
 			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 			$store_url = $store_info['url'];
 		} else {
-			$logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+			$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 			$store_url = HTTP_CATALOG;
 		}
@@ -71,8 +73,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 
-		if (is_file(DIR_IMAGE . $logo)) {
-			$data['logo'] = $store_url . 'image/' . $logo;
+		if (is_file(DIR_IMAGE . $store_logo)) {
+			$data['logo'] = $store_url . 'image/' . $store_logo;
 		} else {
 			$data['logo'] = '';
 		}

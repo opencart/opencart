@@ -605,13 +605,15 @@ class Voucher extends \Opencart\System\Engine\Controller {
 								$data[$key] = $value;
 							}
 
-							$subject = sprintf($this->language->get('mail_text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8'));
+							$from_name = html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8');
+
+							$subject = sprintf($this->language->get('mail_text_subject'), $from_name);
 
 							// HTML Mail
-							$data['title'] = sprintf($this->language->get('mail_text_subject'), $voucher_info['from_name']);
+							$data['title'] = sprintf($this->language->get('mail_text_subject'), $from_name);
 			
 							$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $this->currency->format($voucher_info['amount'], (!empty($order_info['currency_code']) ? $order_info['currency_code'] : $this->config->get('config_currency')), (!empty($order_info['currency_value']) ? $order_info['currency_value'] : $this->currency->getValue($this->config->get('config_currency')))));
-							$data['text_from'] = sprintf($this->language->get('mail_text_from'), $voucher_info['from_name']);
+							$data['text_from'] = sprintf($this->language->get('mail_text_from'), $from_name);
 							$data['text_redeem'] = sprintf($this->language->get('mail_text_redeem'), $voucher_info['code']);
 
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
@@ -638,12 +640,16 @@ class Voucher extends \Opencart\System\Engine\Controller {
 						} else {
 							$this->language->load('mail/voucher');
 
-							$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8');
+							$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-							$data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
+							$from_name = html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8');
+
+							$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $from_name), ENT_QUOTES, 'UTF-8');
+
+							$data['title'] = sprintf($this->language->get('text_subject'), $from_name);
 			
 							$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));
-							$data['text_from'] = sprintf($this->language->get('text_from'), $voucher_info['from_name']);
+							$data['text_from'] = sprintf($this->language->get('text_from'), $from_name);
 							$data['text_redeem'] = sprintf($this->language->get('text_redeem'), $voucher_info['code']);
 			
 							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
@@ -669,7 +675,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			
 							$mail->setTo($voucher_info['to_email']);
 							$mail->setFrom($this->config->get('config_email'));
-							$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+							$mail->setSender($store_name);
 							$mail->setSubject($subject);
 							$mail->setHtml($this->load->view('mail/voucher', $data));
 							$mail->send();

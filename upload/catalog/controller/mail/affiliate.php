@@ -48,7 +48,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender($store_name);
 		$mail->setSubject($subject);
-		$mail->setText($this->load->view('mail/affiliate', $data));
+		$mail->setHtml($this->load->view('mail/affiliate', $data));
 		$mail->send();
 	}
 

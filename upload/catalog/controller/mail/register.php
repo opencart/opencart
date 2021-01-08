@@ -44,7 +44,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender($store_name);
 		$mail->setSubject($subject);
-		$mail->setText($this->load->view('mail/register', $data));
+		$mail->setHtml($this->load->view('mail/register', $data));
 		$mail->send();
 	}
 
@@ -97,7 +97,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
 			$mail->setSubject($subject);
-			$mail->setText($this->load->view('mail/register_alert', $data));
+			$mail->setHtml($this->load->view('mail/register_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails if new account email is enabled

@@ -371,7 +371,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$mail->setFrom($from);
 		$mail->setSender($store_name);
 		$mail->setSubject($subject);
-		$mail->setText($this->load->view('mail/order_edit', $data));
+		$mail->setHtml($this->load->view('mail/order_edit', $data));
 		$mail->send();
 	}
 
@@ -497,7 +497,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject($subject);
-			$mail->setText($this->load->view('mail/order_alert', $data));
+			$mail->setHtml($this->load->view('mail/order_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails

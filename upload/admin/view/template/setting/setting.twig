@@ -241,9 +241,9 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="input-admin-language" class="col-sm-2 col-form-label">{{ entry_admin_language }}</label>
+                <label for="input-language-admin" class="col-sm-2 col-form-label">{{ entry_language_admin }}</label>
                 <div class="col-sm-10">
-                  <select name="config_language_admin" id="input-admin-language" class="form-control">
+                  <select name="config_language_admin" id="input-language-admin" class="form-control">
                     {% for language in languages %}
                       {% if language.code == config_language_admin %}
                         <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>

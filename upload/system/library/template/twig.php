@@ -28,7 +28,9 @@ final class Twig {
 		);
 
 		try {
-			$loader = new \Twig\Loader\ArrayLoader(array($filename . '.twig' => $code));
+			$array_loader = new \Twig\Loader\ArrayLoader(array($filename . '.twig' => $code));
+			$filesystem_loader = new \Twig\Loader\FilesystemLoader(DIR_TEMPLATE);
+			$loader = new \Twig\Loader\ChainLoader(array($array_loader, $filesystem_loader));
 
 			$twig = new \Twig\Environment($loader, $config);
 

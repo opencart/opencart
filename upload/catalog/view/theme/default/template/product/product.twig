@@ -343,7 +343,7 @@
         {% endif %}
         {% if tags %}
         <p>{{ text_tags }}
-        {% for i in 0..tags|length %}
+        {% for i in 0..tags|length - 1 %}
         {% if i < (tags|length - 1) %} <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>,
         {% else %} <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a> {% endif %}
         {% endfor %} </p>

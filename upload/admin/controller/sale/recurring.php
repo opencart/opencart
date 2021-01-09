@@ -348,9 +348,9 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
@@ -417,7 +417,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['buttons'] = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/recurringButtons');
+			$data['buttons'] = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/recurring');
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

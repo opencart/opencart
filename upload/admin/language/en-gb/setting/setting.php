@@ -8,7 +8,6 @@ $_['text_success']                     = 'Success: You have modified settings!';
 $_['text_edit']                        = 'Edit Setting';
 $_['text_register']                    = 'Register';
 $_['text_guest']                       = 'Guest Checkout';
-$_['text_return']                      = 'Returns';
 $_['text_contact']                     = 'Contact';
 $_['text_shipping']                    = 'Shipping Address';
 $_['text_payment']                     = 'Payment Address';
@@ -33,7 +32,7 @@ $_['text_account']                     = 'Account';
 $_['text_checkout']                    = 'Checkout';
 $_['text_stock']                       = 'Stock';
 $_['text_affiliate']                   = 'Affiliate';
-$_['text_return']                      = 'Return';
+$_['text_return']                      = 'Returns';
 $_['text_captcha']                     = 'Captcha';
 
 // Entry

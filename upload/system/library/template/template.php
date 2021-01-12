@@ -29,7 +29,7 @@ class Template {
 	 */
 	public function render($filename, $data = [], $code = '') {
 		if (!$code) {
-			$file = $this->directory . $filename . '.tpl';
+			$file = $this->directory . $filename . '.twig';
 
 			$namespace = '';
 
@@ -43,7 +43,7 @@ class Template {
 				}
 
 				if (isset($this->path[$namespace])) {
-					$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.tpl';
+					$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.twig';
 				}
 			}
 
@@ -59,7 +59,7 @@ class Template {
 
 			extract($data);
 
-			include($this->compile($filename . '.tpl', $code));
+			include($this->compile($filename . '.twig', $code));
 
 			return ob_get_clean();
 		}

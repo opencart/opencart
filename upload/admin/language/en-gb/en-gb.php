@@ -123,8 +123,6 @@ $_['button_master']                 = 'Master Product';
 // Tab
 $_['tab_address']                   = 'Addresses';
 $_['tab_additional']                = 'Additional';
-$_['tab_admin']                     = 'Admin';
-$_['tab_affiliate']                 = 'Affiliate';
 $_['tab_attribute']                 = 'Attribute';
 $_['tab_comment']                   = 'Comment';
 $_['tab_data']                      = 'Data';
@@ -146,19 +144,12 @@ $_['tab_special']                   = 'Special';
 $_['tab_session']                   = 'Session';
 $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
-$_['tab_module']                    = 'Module';
 $_['tab_product']                   = 'Products';
 $_['tab_reward']                    = 'Reward Points';
 $_['tab_transaction']               = 'Transactions';
 $_['tab_voucher']                   = 'Vouchers';
-$_['tab_sale']                      = 'Sales';
-$_['tab_marketing']                 = 'Marketing';
-$_['tab_online']                    = 'People Online';
-$_['tab_activity']                  = 'Recent Activity';
 $_['tab_recurring']                 = 'Recurring';
 $_['tab_report']                    = 'Report';
-$_['tab_action']                    = 'Action';
-$_['tab_google']                    = 'Google';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

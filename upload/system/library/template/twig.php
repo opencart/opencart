@@ -81,7 +81,7 @@ class Twig {
 
 		if ($code) {
 			// render from modified template code
-			$loader = new \Twig\Loader\ArrayLoader([$file . '.twig' => $code]);
+			$loader = new \Twig\Loader\ArrayLoader([$file => $code]);
 		} else {
 			$loader = $this->loader;
 		}

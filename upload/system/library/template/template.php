@@ -59,7 +59,7 @@ class Template {
 
 			extract($data);
 
-			include($this->compile($filename . '.tpl', $code));
+			include($this->compile($filename, $code));
 
 			return ob_get_clean();
 		}

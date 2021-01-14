@@ -2,7 +2,7 @@
 namespace Opencart\Application\Model\Tool;
 class Image extends \Opencart\System\Engine\Model {
 	public function resize($filename, $width, $height) {
-		if (!is_file(DIR_IMAGE . $filename) || str_replace('\\', '/', realpath(DIR_IMAGE . $filename)) != utf8_strlen(DIR_IMAGE)) {
+		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != DIR_IMAGE) {
 			return;
 		}
 

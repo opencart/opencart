@@ -38,7 +38,7 @@ function oc_setcookie(string $key, string $value, $option = []) {
 }
 
 function token($length = 32) {
-	if (!isset($length) || intval($length) <= 8) {
+	if (intval($length) <= 8) {
 		$length = 32;
 	}
 
@@ -135,8 +135,4 @@ function date_added($date, $language) {
 	}
 
 	return $date_added;
-}
-
-function get_path($source, $dir) {
-	return utf8_substr(str_replace('\\', '/', realpath($source)), 0, utf8_strlen($dir));
 }

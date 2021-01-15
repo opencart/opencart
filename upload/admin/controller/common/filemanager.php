@@ -77,7 +77,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			'webp'
 		];
 
-		$files = glob($directory . $filter_name . '*', GLOB_NOSORT);
+		$files = glob($directory . $filter_name . '*');
 
 		for ($i = 0; $i < count($files); $i++) {
 			if (!in_array(substr($files[$i], strrpos($files[$i], '.') + 1), $allowed)) {

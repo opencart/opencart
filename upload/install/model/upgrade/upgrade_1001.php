@@ -112,7 +112,10 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 
 		// Update the config.php by adding a DIR_MODIFICATION
 		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+			$files = [];
+
+			$files[] = DIR_OPENCART . 'config.php';
+			$files[] = DIR_OPENCART . 'admin/config.php';
 
 			foreach ($files as $file) {
 				if (!is_writable($file)) {

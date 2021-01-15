@@ -120,8 +120,9 @@ class Upgrade1009 extends \Opencart\System\Engine\Model {
 
 			fclose($handle);
 		}
-	
-		$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+
+		$files[] = DIR_OPENCART . 'config.php';
+		$files[] = DIR_OPENCART . 'admin/config.php';
 
 		foreach ($files as $file) {
 			$lines = file($file);

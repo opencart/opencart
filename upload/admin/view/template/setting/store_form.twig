@@ -257,6 +257,49 @@
               </div>
             </div>
             <div id="tab-option" class="tab-pane">
+
+              <fieldset>
+
+                <legend><a href="#collapse-product" data-toggle="collapse">{{ text_product }}</a></legend>
+                <div id="collapse-product" class="collapse" data-parent="#tab-option">
+                  <div class="form-group row required">
+                    <label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-length" class="form-control"/>
+                      <small class="form-text text-muted">{{ help_product_description_length }}</small>
+                      {% if error_product_description_length %}
+                        <div class="invalid-tooltip">{{ error_product_description_length }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
+                      <small class="form-text text-muted">{{ help_pagination }}</small>
+                      {% if error_pagination %}
+                        <div class="invalid-tooltip">{{ error_pagination }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        {% if config_product_count %}
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_product_count" value="1" checked="checked"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_product_count" value="0"/> {{ text_no }}</label>
+                        {% else %}
+                          <label class="btn btn-outline-secondary"><input type="radio" name="config_product_count" value="1"/> {{ text_yes }}</label>
+                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_product_count" value="0" checked="checked"/> {{ text_no }}</label>
+                        {% endif %}
+                      </div>
+                      <small class="form-text text-muted">{{ help_product_count }}</small>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
               <fieldset>
                 <legend><a href="#collapse-legal" data-toggle="collapse">{{ text_legal }}</a></legend>
                 <div id="collapse-legal" class="collapse" data-parent="#tab-option">
@@ -510,31 +553,200 @@
               </fieldset>
             </div>
             <div id="tab-image" class="tab-pane">
-              <div class="form-group row">
-                <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
-                <div class="col-sm-10">
-                  <div class="card image">
-                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
-                    <div class="card-body">
-                      <button type="button" data-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+              <fieldset>
+                <legend>{{ text_image }}</legend>
+                <div class="form-group row">
+                  <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
+                  <div class="col-sm-10">
+                    <div class="card image">
+                      <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                      <div class="card-body">
+                        <button type="button" data-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                        <button type="button" data-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="form-group row">
-                <label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
-                <div class="col-sm-10">
-                  <div class="card image">
-                    <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
-                    <div class="card-body">
-                      <button type="button" data-toggle="image" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                <div class="form-group row">
+                  <label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
+                  <div class="col-sm-10">
+                    <div class="card image">
+                      <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
+                      <div class="card-body">
+                        <button type="button" data-toggle="image" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                        <button type="button" data-toggle="clear" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                      </div>
                     </div>
+                    <small class="form-text text-muted">{{ help_icon }}</small>
                   </div>
-                  <small class="form-text text-muted">{{ help_icon }}</small>
                 </div>
-              </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_image }}</legend>
+                <div class="alert alert-info"><i class="fas fa-check-circle"></i> {{ success }}</div>
+                <div class="form-group row required">
+                  <label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_category %}
+                      <div class="invalid-tooltip">{{ error_image_category }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_thumb %}
+                      <div class="invalid-tooltip">{{ error_image_thumb }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_popup %}
+                      <div class="invalid-tooltip">{{ error_image_popup }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_product %}
+                      <div class="invalid-tooltip">{{ error_image_product }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_additional %}
+                      <div class="invalid-tooltip">{{ error_image_additional }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-related" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_related %}
+                      <div class="invalid-tooltip">{{ error_image_related }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-compare" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_compare %}
+                      <div class="invalid-tooltip">{{ error_image_compare }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-wishlist" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_wishlist %}
+                      <div class="invalid-tooltip">{{ error_image_wishlist }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-cart" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_cart %}
+                      <div class="invalid-tooltip">{{ error_image_cart }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group row required">
+                  <label for="input-image-location" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                      </div>
+                    </div>
+                    {% if error_image_location %}
+                      <div class="invalid-tooltip">{{ error_image_location }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              </fieldset>
+
+
             </div>
           </div>
         </form>

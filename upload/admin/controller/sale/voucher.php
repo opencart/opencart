@@ -164,8 +164,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
 		$voucher_total = $this->model_sale_voucher->getTotalVouchers();
@@ -248,11 +248,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $voucher_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($voucher_total - $this->config->get('config_pagination'))) ? $voucher_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $voucher_total, ceil($voucher_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($voucher_total - $this->config->get('config_pagination_admin'))) ? $voucher_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $voucher_total, ceil($voucher_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -559,124 +559,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($vouchers) {
-				$this->load->model('sale/order');
-				$this->load->model('sale/voucher_theme');
-				
-				// Mail
-				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-
 				foreach ($vouchers as $voucher_id) {
-					$voucher_info = $this->model_sale_voucher->getVoucher($voucher_id);
-			
-					if ($voucher_info) {
-						if ($voucher_info['order_id']) {
-							$order_id = $voucher_info['order_id'];
-						} else {
-							$order_id = 0;
-						}
-			
-						$order_info = $this->model_sale_order->getOrder($order_id);
-			
-						// If voucher belongs to an order
-						if ($order_info) {
-							$this->load->model('localisation/language');
-
-							$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
-
-							if ($language_info) {
-								$language_code = $language_info['code'];
-							} else {
-								$language_code = $this->config->get('config_language');
-							}
-
-							$this->language->load($language_code, 'mail', $language_code);
-							$this->language->load('mail/voucher', 'mail', $language_code);
-
-							// Add language vars to the template folder
-							$results = $this->language->all();
-
-							foreach ($results as $key => $value) {
-								if (substr($key, 0, 5) == 'mail_') {
-									$data[substr($key, 5)] = $value;
-								}
-							}
-
-							$subject = sprintf($this->language->get('mail_text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8'));
-
-							// HTML Mail
-							$data['title'] = sprintf($this->language->get('mail_text_subject'), $voucher_info['from_name']);
-			
-							$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $this->currency->format($voucher_info['amount'], (!empty($order_info['currency_code']) ? $order_info['currency_code'] : $this->config->get('config_currency')), (!empty($order_info['currency_value']) ? $order_info['currency_value'] : $this->currency->getValue($this->config->get('config_currency')))));
-							$data['text_from'] = sprintf($this->language->get('mail_text_from'), $voucher_info['from_name']);
-							$data['text_redeem'] = sprintf($this->language->get('mail_text_redeem'), $voucher_info['code']);
-
-							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
-			
-							if ($voucher_theme_info && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
-								$data['image'] = HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
-							} else {
-								$data['image'] = '';
-							}
-			
-							$data['store_name'] = $order_info['store_name'];
-							$data['store_url'] = $order_info['store_url'];
-							$data['message'] = nl2br($voucher_info['message']);
-			
-							$mail->setTo($voucher_info['to_email']);
-							$mail->setFrom($this->config->get('config_email'));
-							$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject($subject);
-							$mail->setHtml($this->load->view('mail/voucher', $data));
-							$mail->send();
-			
-						// If voucher does not belong to an order
-						} else {
-							$this->language->load('mail/voucher');
-
-							$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8');
-
-							$data['title'] = sprintf($this->language->get('text_subject'), $voucher_info['from_name']);
-			
-							$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $this->currency->format($voucher_info['amount'], $this->config->get('config_currency')));
-							$data['text_from'] = sprintf($this->language->get('text_from'), $voucher_info['from_name']);
-							$data['text_message'] = $this->language->get('text_message');
-							$data['text_redeem'] = sprintf($this->language->get('text_redeem'), $voucher_info['code']);
-							$data['text_footer'] = $this->language->get('text_footer');
-			
-							$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
-			
-							if ($voucher_theme_info && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
-								$data['image'] = HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
-							} else {
-								$data['image'] = '';
-							}
-			
-							$data['store_name'] = $this->config->get('config_name');
-							$data['store_url'] = HTTP_CATALOG;
-							$data['message'] = nl2br($voucher_info['message']);
-			
-							$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-							$mail->parameter = $this->config->get('config_mail_parameter');
-							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-							$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-							$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
-							$mail->setTo($voucher_info['to_email']);
-							$mail->setFrom($this->config->get('config_email'));
-							$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject($subject);
-							$mail->setHtml($this->load->view('mail/voucher', $data));
-							$mail->send();
-						}
-					}
+					$this->load->controller('mail/voucher', $voucher_id);
 				}
 
 				$json['success'] = $this->language->get('text_sent');

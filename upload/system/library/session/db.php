@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `session` (
   PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 */
-
 namespace Opencart\System\Library\Session;
 final class DB {
 	public function __construct($registry) {
@@ -21,7 +20,7 @@ final class DB {
 		if ($query->num_rows) {
 			return json_decode($query->row['data'], true);
 		} else {
-			return false;
+			return [];
 		}
 	}
 
@@ -40,7 +39,7 @@ final class DB {
 	}
 
 	public function gc() {
-		if (rand(0, $this->config->get('session_divisor')) == ($this->config->get('session_probability') / $this->config->get('session_divisor'))) {
+		if (round(rand(1, $this->config->get('session_divisor') / $this->config->get('session_probability'))) == 1) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE `expire` < '" . $this->db->escape(date('Y-m-d H:i:s', time())) . "'");
 		}
 

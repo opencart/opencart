@@ -12,8 +12,8 @@ $_['text_image']                       = 'Images';
 
 // Entry
 $_['entry_status']                     = 'Status';
-$_['entry_pagination']                 = 'Default Items Per Page';
 $_['entry_product_description_length'] = 'List Description Limit';
+$_['entry_pagination']                 = 'Default Items Per Page';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
 $_['entry_image_thumb']                = 'Product Image Thumb Size (W x H)';
 $_['entry_image_popup']                = 'Product Image Popup Size (W x H)';

@@ -57,14 +57,14 @@ class File {
 		}
 	}
 
-	public function __destruct() {
-		if (rand(0, $this->config->get('session_divisor')) == ($this->config->get('session_probability') / $this->config->get('session_divisor'))) {
+	public function gc() {
+		if (round(rand(1, $this->config->get('session_divisor') / $this->config->get('session_probability'))) == 1) {
 			$expire = time() - $this->config->get('session_expire');
 
 			$files = glob(DIR_SESSION . 'sess_*');
 
 			foreach ($files as $file) {
-				if (filemtime($file) < $expire) {
+				if (is_file($file) && filemtime($file) > $expire) {
 					unlink($file);
 				}
 			}

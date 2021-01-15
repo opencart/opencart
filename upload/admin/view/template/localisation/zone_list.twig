@@ -24,63 +24,111 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
     {% endif %}
-    <div class="card">
-      <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-      <div class="card-body">
-        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-zone">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');"/></td>
-                  <td class="text-left">{% if sort == 'c.name' %}
-                      <a href="{{ sort_country }}" class="{{ order|lower }}">{{ column_country }}</a>
-                    {% else %}
-                      <a href="{{ sort_country }}">{{ column_country }}</a>
-                    {% endif %}</td>
-                  <td class="text-left">{% if sort == 'z.name' %}
-                      <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-                    {% else %}
-                      <a href="{{ sort_name }}">{{ column_name }}</a>
-                    {% endif %}</td>
-                  <td class="text-left">{% if sort == 'z.code' %}
-                      <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
-                    {% else %}
-                      <a href="{{ sort_code }}">{{ column_code }}</a>
-                    {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
-                </tr>
-              </thead>
-              <tbody>
-                {% if zones %}
-                  {% for zone in zones %}
-                    <tr>
-                      <td class="text-center">{% if zone.zone_id in selected %}
-                          <input type="checkbox" name="selected[]" value="{{ zone.zone_id }}" checked="checked"/>
-                        {% else %}
-                          <input type="checkbox" name="selected[]" value="{{ zone.zone_id }}"/>
-                        {% endif %}</td>
-                      <td class="text-left">{{ zone.country }}</td>
-                      <td class="text-left">{{ zone.name }}</td>
-                      <td class="text-left">{{ zone.code }}</td>
-                      <td class="text-right"><a href="{{ zone.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-                    </tr>
-                  {% endfor %}
-                {% else %}
-                  <tr>
-                    <td class="text-center" colspan="5">{{ text_no_results }}</td>
-                  </tr>
-                {% endif %}
-              </tbody>
-            </table>
+    <div class="row">
+      <div id="filter-product" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="col-form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">{{ entry_country }}</label> <input type="text" name="filter_country" value="{{ filter_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+            </div>
+            <div class="form-group text-right">
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+            </div>
           </div>
-        </form>
-        <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-12">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+          <div class="card-body">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-zone">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+                      <td class="text-left">{% if sort == 'c.name' %}
+                          <a href="{{ sort_country }}" class="{{ order|lower }}">{{ column_country }}</a>
+                        {% else %}
+                          <a href="{{ sort_country }}">{{ column_country }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'z.name' %}
+                          <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+                        {% else %}
+                          <a href="{{ sort_name }}">{{ column_name }}</a>
+                        {% endif %}</td>
+                      <td class="text-left">{% if sort == 'z.code' %}
+                          <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
+                        {% else %}
+                          <a href="{{ sort_code }}">{{ column_code }}</a>
+                        {% endif %}</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if zones %}
+                      {% for zone in zones %}
+                        <tr>
+                          <td class="text-center">{% if zone.zone_id in selected %}
+                              <input type="checkbox" name="selected[]" value="{{ zone.zone_id }}" checked="checked"/>
+                            {% else %}
+                              <input type="checkbox" name="selected[]" value="{{ zone.zone_id }}"/>
+                            {% endif %}</td>
+                          <td class="text-left">{{ zone.country }}</td>
+                          <td class="text-left">{{ zone.name }}</td>
+                          <td class="text-left">{{ zone.code }}</td>
+                          <td class="text-right"><a href="{{ zone.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-6 text-left">{{ pagination }}</div>
+              <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+  var url = '';
+
+  var filter_name = $('input[name=\'filter_name\']').val();
+
+  if (filter_name) {
+    url += '&filter_name=' + encodeURIComponent(filter_name);
+  }
+
+  var filter_country = $('input[name=\'filter_country\']').val();
+
+  if (filter_country) {
+    url += '&filter_country=' + encodeURIComponent(filter_country);
+  }
+
+  var filter_code = $('input[name=\'filter_code\']').val();
+
+  if (filter_code) {
+    url += '&filter_code=' + encodeURIComponent(filter_code);
+  }
+
+  location = 'index.php?route=localisation/zone&user_token={{ user_token }}' + url;
+});
+//--></script>
 {{ footer }}

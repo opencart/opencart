@@ -164,8 +164,8 @@ class Language extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
 		$language_total = $this->model_localisation_language->getTotalLanguages();
@@ -231,11 +231,11 @@ class Language extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $language_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($language_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($language_total - $this->config->get('config_pagination'))) ? $language_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $language_total, ceil($language_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($language_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($language_total - $this->config->get('config_pagination_admin'))) ? $language_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $language_total, ceil($language_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -415,7 +415,7 @@ class Language extends \Opencart\System\Engine\Controller {
 					$this->error['warning'] = $this->language->get('error_default');
 				}
 
-				if ($this->config->get('config_admin_language') == $language_info['code']) {
+				if ($this->config->get('config_language_admin') == $language_info['code']) {
 					$this->error['warning'] = $this->language->get('error_admin');
 				}
 

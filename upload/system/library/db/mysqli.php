@@ -4,17 +4,17 @@ class MySQLi {
 	private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$connection = @new \MySQLi($hostname, $username, $password, $database, $port);
+		try {
+			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
+		} catch (mysqli_sql_exception $e) {
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
+		}
 
-		if (!$connection->connect_error) {
-			$this->connection = $connection;
-
-			$this->connection->report_mode = MYSQLI_REPORT_STRICT;
-
+		if (!$mysqli->connect_errno) {
+			$this->connection = $mysqli;
+			$this->connection->report_mode = MYSQLI_REPORT_ERROR;
 			$this->connection->set_charset('utf8');
-
-			// Needs to use register_shutdown_function as __destructors don't automatically trigger at the end of page load.
-			register_shutdown_function([$this, 'close']);
+			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
 		} else {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
@@ -38,6 +38,8 @@ class MySQLi {
 
 				$query->close();
 
+				unset($data);
+
 				return $result;
 			} else {
 				return true;
@@ -60,18 +62,24 @@ class MySQLi {
 	}
 	
 	public function isConnected() {
-		return $this->connection->ping();
-	}
-	
-	public function close() {
-		if (!$this->connection) {
-			$this->connection->close();
+		if ($this->connection) {
+			return $this->connection->ping();
+		} else {
+			return false;
 		}
 	}
 
+	/**
+	 * __destruct
+	 *
+	 * Closes the DB connection when this object is destroyed.
+	 *
+	 */
 	public function __destruct() {
 		if ($this->connection) {
 			$this->connection->close();
+
+			$this->connection = '';
 		}
 	}
 }

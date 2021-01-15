@@ -22,7 +22,7 @@ class Registry {
 	 * @return	mixed
      */
 	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : '');
+		return isset($this->data[$key]) ? $this->data[$key] : '';
 	}
 
     /**
@@ -44,5 +44,20 @@ class Registry {
      */
 	public function has($key) {
 		return isset($this->data[$key]);
+	}
+
+	/**
+	 * Unset
+	 *
+	 * Unsets registry value by key.
+	 *
+	 * @param	string	$key
+	 *
+	 * @return	void
+	 */
+	public function unset($key) {
+		if (isset($this->data[$key])) {
+			unset($this->data[$key]);
+		}
 	}
 }

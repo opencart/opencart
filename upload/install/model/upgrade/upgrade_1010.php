@@ -1,5 +1,5 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1010 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Add missing core events
@@ -258,6 +258,6 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_pagination' WHERE `key` = 'config_limit_admin'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_pagination_admin' WHERE `key` = 'config_limit_admin'");
 	}
 }

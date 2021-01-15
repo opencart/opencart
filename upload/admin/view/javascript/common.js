@@ -86,13 +86,13 @@ $(document).ready(function() {
 	});
 
 	if (!sessionStorage.getItem('menu')) {
-		$('#menu #dashboard').addClass('active');
+		$('#menu #menu-dashboard').addClass('active');
 	} else {
 		// Sets active and open to selected page in the left column menu.
 		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parent().addClass('active');
 	}
 
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').children('a').removeClass('collapsed');
 
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
 

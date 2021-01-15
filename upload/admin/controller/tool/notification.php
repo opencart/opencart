@@ -51,8 +51,8 @@ class Notification extends \Opencart\System\Engine\Controller {
 		$notification_total = $this->model_tool_notification->getTotalNotifications();
 
 		$filter_data = [
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
 
 		$results = $this->model_tool_notification->getNotifications($filter_data);
@@ -71,11 +71,11 @@ class Notification extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $notification_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('tool/notification|list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($notification_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($notification_total - $this->config->get('config_pagination'))) ? $notification_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $notification_total, ceil($notification_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($notification_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($notification_total - $this->config->get('config_pagination_admin'))) ? $notification_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $notification_total, ceil($notification_total / $this->config->get('config_pagination_admin')));
 
 		$this->response->setOutput($this->load->view('tool/notification_list', $data));
 	}

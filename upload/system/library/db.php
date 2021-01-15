@@ -8,7 +8,7 @@
 */
 
 /**
-* DB class
+* DB
 */
 namespace Opencart\System\Library;
 class DB {
@@ -25,7 +25,7 @@ class DB {
 	 * @param	int		$port
 	 *
  	*/
-	public function __construct($adaptor, $hostname, $username, $password, $database, $port = NULL) {
+	public function __construct($adaptor, $hostname, $username, $password, $database, $port = '') {
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
 		if (class_exists($class)) {
@@ -59,7 +59,9 @@ class DB {
 
 	/**
      * Count Affected
-	 * 
+	 *
+	 * Gets the total number of affected rows from the last query
+	 *
 	 * @return	int	returns the total number of affected rows.
      */
 	public function countAffected() {
@@ -68,8 +70,10 @@ class DB {
 
 	/**
      * Get Last ID
-	 * 
-	 * @return	int
+	 *
+	 * Get the last ID gets the primary key that was returned after creating a row in a table.
+	 *
+	 * @return	int returns last ID
      */
 	public function getLastId() {
 		return $this->adaptor->getLastId();
@@ -77,19 +81,12 @@ class DB {
 	
 	/**
      * Is Connected
-	 * 
+	 *
+	 * Checks if a DB connection is active.
+	 *
 	 * @return	bool
      */	
 	public function isConnected() {
 		return $this->adaptor->isConnected();
-	}
-
-	/**
-	 * Close
-	 *
-	 * @return	bool
-	 */
-	public function close() {
-		return $this->adaptor->close();
 	}
 }

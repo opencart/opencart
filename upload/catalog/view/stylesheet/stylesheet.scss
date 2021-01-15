@@ -72,11 +72,22 @@ div.required .col-form-label:before {
   }
 }
 
-/* cookie */
-#cookie {
-  border-top: none;
-  border-left: none;
-  border-right: none;
+/* toast */
+#toast-container {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+#toast-container .container {
+  position: relative;
+}
+
+#toast {
+  position: absolute;
+  top: 5px;
+  right: 14px;
+  z-index: 1000;
 }
 
 /* top */
@@ -458,14 +469,6 @@ footer {
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px;
-}
-
-/* toast */
-#toast {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 999;
 }
 
 /* breadcrumb */

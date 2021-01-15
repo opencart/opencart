@@ -8,7 +8,7 @@
 */
 
 /**
-* Session class
+* Session
 */
 namespace Opencart\System\Library;
 class Session {
@@ -30,13 +30,13 @@ class Session {
 				$this->adaptor = new $class($registry);
 			} else {
 				$this->adaptor = new $class();
-			}	
-			
-			register_shutdown_function([$this, 'close']);
+			}
+
+			register_shutdown_function([&$this, 'close']);
+			register_shutdown_function([&$this, 'gc']);
 		} else {
-			trigger_error('Error: Could not load cache adaptor ' . $adaptor . ' session!');
-			exit();
-		}	
+			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
+		}
 	}
 	
 	/**
@@ -51,9 +51,11 @@ class Session {
 	/**
 	 * Start
 	 *
+	 * Starts a session.
+	 *
 	 * @param	string	$session_id
 	 *
-	 * @return	string
+	 * @return	string	Returns the current session ID.
  	*/	
 	public function start($session_id = '') {
 		if (!$session_id) {
@@ -77,6 +79,8 @@ class Session {
 	
 	/**
 	 * Close
+	 *
+	 * Writes the session data to storage
  	*/
 	public function close() {
 		$this->adaptor->write($this->session_id, $this->data);
@@ -84,8 +88,21 @@ class Session {
 	
 	/**
 	 * Destroy
+	 *
+	 * Deletes the current session from storage
  	*/	
 	public function destroy() {
+		$this->data = [];
+
 		$this->adaptor->destroy($this->session_id);
+	}
+
+	/**
+	 * GC
+	 *
+	 * Garbage Collection
+	 */
+	public function gc() {
+		$this->adaptor->gc($this->session_id);
 	}
 }

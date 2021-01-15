@@ -11,22 +11,17 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			if ($customer_info) {
 				$this->load->language('mail/forgotten');
 
-				$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
+				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
-				$this->load->model('tool/image');
+				$subject = sprintf($this->language->get('text_subject'), $store_name);
 
-				if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-					$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-				} else {
-					$data['logo'] = '';
-				}
-
-				$data['text_greeting'] = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+				$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $store_name);
 
 				$data['reset'] = $this->url->link('account/reset', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($args[0]) . '&code=' . $args[1], true);
 				$data['ip'] = $this->request->server['REMOTE_ADDR'];
+
+				$data['store'] = $store_name;
 				$data['store_url'] = $this->config->get('config_url');
-				$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
@@ -38,9 +33,9 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 				$mail->setTo($args[0]);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+				$mail->setSender($store_name);
 				$mail->setSubject($subject);
-				$mail->setText($this->load->view('mail/forgotten', $data));
+				$mail->setHtml($this->load->view('mail/forgotten', $data));
 				$mail->send();
 			}
 		}

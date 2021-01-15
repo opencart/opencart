@@ -1,10 +1,10 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1006 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Update some language settings
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_admin_language' AND `value` = 'en'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language_admin' AND `value` = 'en'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `code` = 'en-gb' WHERE `code` = 'en'");
 
 		$this->cache->delete('language');
@@ -55,7 +55,8 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 
 		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files = glob(DIR_OPENCART . '{config.php,admin/config.php}', GLOB_BRACE);
+			$files[] = DIR_OPENCART . 'config.php';
+			$files[] = DIR_OPENCART . 'admin/config.php';
 
 			foreach ($files as $file) {
 				$upgrade = true;
@@ -190,13 +191,13 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 
 		// Open the source directory to read in files
 		$i = new \DirectoryIterator($src);
-		
+
 		foreach ($i as $f) {
 			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
 				@rename($f->getRealPath(), "$dest/" . $f->getFilename());
 			} elseif (!$f->isDot() && $f->isDir()) {
 				$this->recursive_move($f->getRealPath(), "$dest/$f");
-				
+
 				@unlink($f->getRealPath());
 			}
 		}

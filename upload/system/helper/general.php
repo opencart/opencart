@@ -3,12 +3,6 @@
 function oc_setcookie(string $key, string $value, $option = []) {
 	if (version_compare(phpversion(), '7.3.0', '>=')) {
 		// PHP needs to update their setcookie function.
-		if (isset($option['max-age'])) {
-			$option['expires'] = $option['max-age'];
-
-			unset($option['max-age']);
-		}
-
 		setcookie($key, $value, $option);
 	} else {
 		$string = '';
@@ -44,7 +38,7 @@ function oc_setcookie(string $key, string $value, $option = []) {
 }
 
 function token($length = 32) {
-	if (!isset($length) || intval($length) <= 8) {
+	if (intval($length) <= 8) {
 		$length = 32;
 	}
 
@@ -141,8 +135,4 @@ function date_added($date, $language) {
 	}
 
 	return $date_added;
-}
-
-function get_path($source, $dir) {
-	return utf8_substr(str_replace('\\', '/', realpath($source)), 0, utf8_strlen($dir));
 }

@@ -9,8 +9,10 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('mail/gdpr');
 
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
 		if ($this->config->get('config_logo')) {
-			$data['logo'] = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+			$data['logo'] = $this->config->get('config_url') . 'image/' . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 		} else {
 			$data['logo'] = '';
 		}
@@ -23,7 +25,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
-		$data['store_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+		$data['store_name'] = $store_name;
 		$data['store_url'] = $this->config->get('config_url');
 
 		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
@@ -36,8 +38,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($args[1]);
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
+		$mail->setSubject(sprintf($this->language->get('text_subject'), $store_name));
 		$mail->setHtml($this->load->view('mail/gdpr', $data));
 		$mail->send();
 	}

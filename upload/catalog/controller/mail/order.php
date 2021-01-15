@@ -57,6 +57,22 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
+
+		if ($store_info) {
+			$this->load->model('setting/setting');
+
+			$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
+			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
+			$store_url = $store_info['url'];
+		} else {
+			$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
+			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$store_url = HTTP_SERVER;
+		}
+
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
 
 		if ($language_info) {
@@ -70,30 +86,29 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->language->load('mail/order_add', 'mail', $language_code);
 
 		// Add language vars to the template folder
-		$results = $this->language->all();
+		$results = $this->language->all('mail');
 
 		foreach ($results as $key => $value) {
-			if (substr($key, 0, 5) == 'mail_') {
-				$data[substr($key, 5)] = $value;
-			}
+			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8');
-
-		$data['title'] = sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']);
-
-		$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $order_info['store_name']);
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
 		$this->load->model('tool/image');
 
-		if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+		if (is_file(DIR_IMAGE . $store_logo)) {
+			$data['logo'] = $store_url . 'image/' . $store_logo;
 		} else {
 			$data['logo'] = '';
 		}
 
-		$data['store_name'] = $order_info['store_name'];
+		$data['title'] = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
+
+		$data['text_greeting'] = sprintf($this->language->get('mail_text_greeting'), $order_info['store_name']);
+
+		$data['store'] = $store_name;
 		$data['store_url'] = $order_info['store_url'];
+
 		$data['customer_id'] = $order_info['customer_id'];
 		$data['link'] = $order_info['store_url'] . 'index.php?route=account/order|info&order_id=' . $order_info['order_id'];
 
@@ -274,13 +289,25 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($order_info['email']);
 		$mail->setFrom($from);
-		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
 		$mail->setHtml($this->load->view('mail/order_add', $data));
 		$mail->send();
 	}
 
 	public function edit($order_info, $order_status_id, $comment, $notify) {
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
+
+		if ($store_info) {
+			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
+			$store_url = $store_info['url'];
+		} else {
+			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$store_url = HTTP_SERVER;
+		}
+
 		$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
 
 		if ($language_info) {
@@ -294,20 +321,16 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->language->load('mail/order_edit', 'mail', $language_code);
 
 		// Add language vars to the template folder
-		$results = $this->language->all();
+		$results = $this->language->all('mail');
 
 		foreach ($results as $key => $value) {
-			if (substr($key, 0, 5) == 'mail_') {
-				$data[substr($key, 5)] = $value;
-			}
+			$data[$key] = $value;
 		}
 
-		$subject = html_entity_decode(sprintf($this->language->get('mail_text_subject'), $order_info['store_name'], $order_info['order_id']), ENT_QUOTES, 'UTF-8');
+		$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('mail_date_format_short'), strtotime($order_info['date_added']));
-		$data['store_url'] = $this->config->get('config_url');
-		$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 
@@ -324,6 +347,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['comment'] = strip_tags($comment);
+
+		$data['store'] = $store_name;
+		$data['store_url'] = $store_url;
 
 		$this->load->model('setting/setting');
 
@@ -343,9 +369,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$mail->setTo($order_info['email']);
 		$mail->setFrom($from);
-		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$mail->setSender($store_name);
 		$mail->setSubject($subject);
-		$mail->setText($this->load->view('mail/order_edit', $data));
+		$mail->setHtml($this->load->view('mail/order_edit', $data));
 		$mail->send();
 	}
 
@@ -391,17 +417,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['order_status'] = $order_status_query->row['name'];
 			} else {
 				$data['order_status'] = '';
-			}
-
-			$data['store_url'] = $this->config->get('config_url');
-			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
 			}
 
 			$this->load->model('tool/upload');
@@ -465,7 +480,10 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['comment'] = strip_tags($order_info['comment']);
+			$data['comment'] = nl2br($order_info['comment']);
+
+			$data['store'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
+			$data['store_url'] = $order_info['store_url'];
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
@@ -479,7 +497,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject($subject);
-			$mail->setText($this->load->view('mail/order_alert', $data));
+			$mail->setHtml($this->load->view('mail/order_alert', $data));
 			$mail->send();
 
 			// Send to additional alert emails
@@ -487,7 +505,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			foreach ($emails as $email) {
 				if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					$mail->setTo($email);
+					$mail->setTo(trim($email));
 					$mail->send();
 				}
 			}

@@ -11,12 +11,17 @@ class Review extends \Opencart\System\Engine\Controller {
 			$product_info = $this->model_catalog_product->getProduct((int)$args[0]);
 
 			if ($product_info) {
-				$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8');
+				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
+				$subject = sprintf($this->language->get('text_subject'), $store_name);
 
 				$data['product'] = html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8');
 				$data['reviewer'] = html_entity_decode($args[1]['name'], ENT_QUOTES, 'UTF-8');
 				$data['rating'] = (int)$args[1]['rating'];
-				$data['text'] = $args[1]['text'];
+				$data['text'] = nl2br($args[1]['text']);
+
+				$data['store'] = $store_name;
+				$data['store_url'] = $this->config->get('config_url');
 
 				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 				$mail->parameter = $this->config->get('config_mail_parameter');
@@ -28,9 +33,9 @@ class Review extends \Opencart\System\Engine\Controller {
 
 				$mail->setTo($this->config->get('config_email'));
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+				$mail->setSender($store_name);
 				$mail->setSubject($subject);
-				$mail->setText($this->load->view('mail/review', $data));
+				$mail->setHtml($this->load->view('mail/review', $data));
 				$mail->send();
 
 				// Send to additional alert emails
@@ -38,7 +43,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 				foreach ($emails as $email) {
 					if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-						$mail->setTo($email);
+						$mail->setTo(trim($email));
 						$mail->send();
 					}
 				}

@@ -1,5 +1,5 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1004 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// custom_field
@@ -200,27 +200,27 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 							$module_data['banner_id'] = $v['banner_id'];
 
 							if (isset($v['image_width'])) {
-								$module_data['width'] = $v['image_width']; 
+								$module_data['width'] = $v['image_width'];
 							}
-							
+
 							if (isset($v['image_height'])) {
-								$module_data['height'] = $v['image_height']; 
+								$module_data['height'] = $v['image_height'];
 							}
-							
+
 							if (isset($v['width'])) {
-								$module_data['width'] = $v['width']; 
+								$module_data['width'] = $v['width'];
 							}
-							
+
 							if (isset($v['height'])) {
-								$module_data['height'] = $v['height']; 
+								$module_data['height'] = $v['height'];
 							}
 
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
-							
+
 							$module_id = $this->db->getLastId();
-							
+
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
-							
+
 							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
 						}
 					} else {
@@ -240,18 +240,18 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 						foreach ($value as $k => $v) {
 							$module_data['name'] = ($result['key'] . '_' . $k);
 							$module_data['status'] = $v['status'];
-							
+
 							foreach ($v['description'] as $language_id => $description) {
 								$module_data['module_description'][$language_id]['title'] = '';
 								$module_data['module_description'][$language_id]['description'] = str_replace('image/data', 'image/catalog', $description);
 							}
 
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
-							
+
 							$module_id = $this->db->getLastId();
-							
+
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
-							
+
 							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = 'welcome'");
 						}
 					} else {

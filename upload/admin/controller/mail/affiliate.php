@@ -34,12 +34,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$this->language->load('mail/affiliate_approve', 'mail', $language_code);
 
 			// Add language vars to the template folder
-			$results = $this->language->all();
+			$results = $this->language->all('mail');
 
 			foreach ($results as $key => $value) {
-				if (substr($key, 0, 5) == 'mail_') {
-					$data[substr($key, 5)] = $value;
-				}
+				$data[$key] = $value;
 			}
 
 			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
@@ -47,7 +45,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['login'] = $store_url . 'index.php?route=affiliate/login';
+
 			$data['store'] = $store_name;
+			$data['store_url'] = $store_url;
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
@@ -61,7 +61,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
 			$mail->setSubject($subject);
-			$mail->setText($this->load->view('mail/affiliate_approve', $data));
+			$mail->setHtml($this->load->view('mail/affiliate_approve', $data));
 			$mail->send();
 		}
 	}
@@ -99,12 +99,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$this->language->load('mail/affiliate_deny', 'mail', $language_code);
 
 			// Add language vars to the template folder
-			$results = $this->language->all();
+			$results = $this->language->all('mail');
 
 			foreach ($results as $key => $value) {
-				if (substr($key, 0, 5) == 'mail_') {
-					$data[substr($key, 5)] = $value;
-				}
+				$data[$key] = $value;
 			}
 
 			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
@@ -112,7 +110,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
+
 			$data['store'] = $store_name;
+			$data['store_url'] = $store_url;
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
@@ -126,7 +126,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
 			$mail->setSubject($subject);
-			$mail->setText($this->load->view('mail/affiliate_deny', $data));
+			$mail->setHtml($this->load->view('mail/affiliate_deny', $data));
 			$mail->send();
 		}
 	}

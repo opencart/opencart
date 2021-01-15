@@ -49,7 +49,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['redirect'])) {
-			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT, 'UTF-8');
+			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT);
 		} else {
 			$redirect = '';
 		}
@@ -57,7 +57,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$option = [
 			'expires'  => time() + 60 * 60 * 24 * 30,
 			'path'     => '/',
-			'SameSite' => 'lax'
+			'SameSite' => 'Lax'
 		];
 
 		oc_setcookie('language', $code, $option);

@@ -30,7 +30,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$files = glob(DIR_APPLICATION . 'controller/extension/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/*.php');
 
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');

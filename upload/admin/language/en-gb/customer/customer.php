@@ -24,6 +24,7 @@ $_['text_ip']               = 'IP';
 $_['text_option']           = 'Options';
 $_['text_login']            = 'Login into Store';
 $_['text_unlock']           = 'Unlock Account';
+$_['text_filter']           = 'Filter';
 
 // Column
 $_['column_name']           = 'Customer Name';
@@ -42,8 +43,8 @@ $_['column_country']        = 'Country';
 $_['column_action']         = 'Action';
 
 // Entry
+$_['entry_store']           = 'Store';
 $_['entry_customer_group']  = 'Customer Group';
-$_['entry_store']           = 'Customer Store';
 $_['entry_firstname']       = 'First Name';
 $_['entry_lastname']        = 'Last Name';
 $_['entry_email']           = 'E-Mail';

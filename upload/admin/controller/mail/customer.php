@@ -7,22 +7,18 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
+				$this->load->model('setting/setting');
+
+				$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				$store_url = $store_info['url'];
 			} else {
+				$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				$store_url = HTTP_CATALOG;
 			}
@@ -42,12 +38,18 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$this->language->load('mail/customer_approve', 'mail', $language_code);
 
 			// Add language vars to the template folder
-			$results = $this->language->all();
+			$results = $this->language->all('mail');
 
 			foreach ($results as $key => $value) {
-				if (substr($key, 0, 5) == 'mail_') {
-					$data[substr($key, 5)] = $value;
-				}
+				$data[$key] = $value;
+			}
+
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . $store_logo)) {
+				$data['logo'] = $store_url . 'image/' . $store_logo;
+			} else {
+				$data['logo'] = '';
 			}
 
 			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
@@ -55,6 +57,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['login'] = $store_url . 'index.php?route=account/login';
+
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
@@ -81,22 +84,18 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
+				$this->load->model('setting/setting');
+
+				$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $customer_info['store_id']), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				$store_url = $store_info['url'];
 			} else {
+				$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				$store_url = HTTP_CATALOG;
 			}
@@ -116,12 +115,18 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$this->language->load('mail/customer_deny', 'mail', $language_code);
 
 			// Add language vars to the template folder
-			$results = $this->language->all();
+			$results = $this->language->all('mail');
 
 			foreach ($results as $key => $value) {
-				if (substr($key, 0, 5) == 'mail_') {
-					$data[substr($key, 5)] = $value;
-				}
+				$data[$key] = $value;
+			}
+
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . $store_logo)) {
+				$data['logo'] = $store_url . 'image/' . $store_logo;
+			} else {
+				$data['logo'] = '';
 			}
 
 			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
@@ -129,6 +134,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
+
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 

@@ -105,7 +105,11 @@
     </div>
     <div class="card">
       <div class="card-header"><i class="fas fa-list"></i> {{ text_transaction }}</div>
-      <div class="card-body"> {{ buttons }}
+      <div class="card-body">
+
+        {{ buttons }}
+
+
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -122,7 +126,7 @@
                   <td class="text-right">{{ transaction.amount }}</td>
                   <td class="text-left">{{ transaction.type }}</td>
                 </tr>
-              {% endfor %}
+              {% endfor %2  }
             {% else %}
               <tr>
                 <td class="text-center" colspan="7">{{ text_no_results }}</td>

@@ -40,14 +40,14 @@ class Session extends \Opencart\System\Engine\Controller {
 			$session->start($session_id);
 
 			$option = [
-				'expires'  => time() + $this->config->get('session_expire'),
+				'expires'  => 0,
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
-				'domain'   => $this->request->server['HTTP_HOST'],
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
-				'SameSite' => 'strict'
+				'SameSite' => 'Strict'
 			];
 
+			$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 			oc_setcookie($this->config->get('session_name'), $session->getId(), $option);
 		}
 	}

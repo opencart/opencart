@@ -8,7 +8,6 @@ $_['text_list']         = 'Startup List';
 
 // Column
 $_['column_code']       = 'Startup Code';
-$_['column_action']     = 'Action';
 $_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';

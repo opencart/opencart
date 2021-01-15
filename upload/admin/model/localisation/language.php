@@ -205,7 +205,7 @@ class Language extends \Opencart\System\Engine\Model {
 
 		if ($language_query->row['code'] != $data['code']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
-			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_admin_language' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language_admin' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
 		}
 
 		$this->cache->delete('catalog.language');

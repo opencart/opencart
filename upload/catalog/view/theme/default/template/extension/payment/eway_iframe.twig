@@ -1,5 +1,5 @@
   {% if error %}
-    <div class="alert alert-danger alert-dismissible">Payment Error: {{ error }}</div>
+    <div class="alert alert-danger alert-dismissible">{{ text_payment_error}}: {{ error }}</div>
   {% else %}
 
   {% if text_testing %}
@@ -30,7 +30,7 @@
 			window.location.href = "{{ callback }}";
 		} else if (result == "Error") {
 			$('#button-confirm').button('reset');
-			alert("There was a problem completing the payment: " + result);
+			alert("{{ error_payment_text }}: " + result);
 		} else {
 			$('#button-confirm').button('reset');
 		}

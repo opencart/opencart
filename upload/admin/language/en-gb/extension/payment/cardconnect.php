@@ -12,6 +12,7 @@ $_['text_success']                  = 'Success: You have modified CardConnect pa
 $_['text_edit']                     = 'Edit CardConnect';
 $_['text_cardconnect']              = '<a href="http://www.cardconnect.com" target="_blank"><img src="view/image/payment/cardconnect.png" alt="CardConnect" title="CardConnect"></a>';
 $_['text_payment']                  = 'Payment';
+$_['text_refund']                   = 'Refund';
 $_['text_authorize']                = 'Authorize';
 $_['text_live']                     = 'Live';
 $_['text_test']                     = 'Test';

@@ -12,3 +12,4 @@ $_['text_amount_payable']      = 'Total payable';
 $_['text_total_interest']      = 'Total interest APR';
 $_['text_monthly_installment'] = 'Monthly installment';
 $_['text_redirection']         = 'You will be redirected to Divido to complete this finance application when you confirm your order';
+$_['text_divido']              = 'Divido';

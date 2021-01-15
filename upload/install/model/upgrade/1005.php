@@ -8,7 +8,7 @@ class ModelUpgrade1005 extends Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer' AND COLUMN_NAME = 'code'");
 
 		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `code` tinyint(1) NOT NULL AFTER `token`");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `code` varchar(40) NOT NULL AFTER `token`");
 		}
 		
 		// custom_field

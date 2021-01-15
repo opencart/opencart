@@ -19,10 +19,10 @@
         {% endfor %}
         
         {% if comment.next %}
-        <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">see more replies...</a></div>
+        <div class="text-center"><a href="{{ comment.next }}" class="btn btn-block">{{ text_see_more }}</a></div>
         {% endif %}
         
-        {% endif %} <a href="{{ comment.refresh }}" class="reply-refresh hide">refresh</a> </div>
+        {% endif %} <a href="{{ comment.refresh }}" class="reply-refresh hide">{{ button_refresh }}</a> </div>
     </div>
     <p class="text-right">
       <button type="button" class="btn btn-link btn-xs">{{ button_reply }}</button>
@@ -31,10 +31,10 @@
       <div class="media">
         <div class="media-body">
           <div class="form-group">
-            <label for="input-comment{{ comment.extension_comment_id }}">Leave your comment</label>
+            <label for="input-comment{{ comment.extension_comment_id }}">{{ text_comment_add }}</label>
             <textarea name="comment" placeholder="Write your comment here..." id="input-comment{{ comment.extension_comment_id }}" class="form-control"></textarea>
           </div>
-          <div class="text-right"><a href="{{ comment.add }}" class="btn btn-primary btn-sm">Comment</a></div>
+          <div class="text-right"><a href="{{ comment.add }}" class="btn btn-primary btn-sm">{{ button_comment }}</a></div>
         </div>
       </div>
     </div>

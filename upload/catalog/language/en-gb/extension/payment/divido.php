@@ -15,3 +15,4 @@ $_['divido_checkout']          = 'Confirm and checkout with Divido';
 $_['deposit_to_low']           = 'Deposit to low';
 $_['credit_amount_to_low']     = 'Credit amount to low';
 $_['no_country']               = 'Country not accepted';
+$_['text_divido']              = 'Divido';

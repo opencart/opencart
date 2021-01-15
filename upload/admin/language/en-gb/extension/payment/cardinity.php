@@ -15,6 +15,8 @@ $_['text_confirm_refund']	= 'Are you sure you want to refund';
 $_['text_na']				= 'N/A';
 $_['text_success_action']	= 'Success';
 $_['text_error_generic']	= 'Error: There was an error with your request. Please check the logs.';
+$_['text_amount']			= 'Amount';
+$_['text_description']	    = 'Description';
 
 // Column
 $_['column_refund']			= 'Refund';
@@ -49,4 +51,5 @@ $_['error_composer']		= 'Unable to load Cardinity SDK. Please download a compile
 $_['error_php_version']		= 'Minimum version of PHP 5.4.0 is required!';
 $_['error_permission']		= 'Warning: You do not have permission to modify payment Cardinity!';
 $_['error_connection']		= 'There was a problem establishing a connection to the Cardinity API. Please check your Key and Secret settings.';
+$_['error_transaction']     = 'Unable to find transaction for this order.';
 $_['error_warning']			= 'Warning: Please check the form carefully for errors!';

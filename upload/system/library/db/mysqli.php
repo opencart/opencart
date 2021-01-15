@@ -12,6 +12,7 @@ final class MySQLi {
 
 		$this->connection->set_charset("utf8");
 		$this->connection->query("SET SQL_MODE = ''");
+		$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
 	}
 
 	public function query($sql) {

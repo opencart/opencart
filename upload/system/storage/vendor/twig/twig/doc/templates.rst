@@ -177,11 +177,6 @@ To apply a filter on a section of code, wrap it with the
 Go to the :doc:`filters<filters/index>` page to learn more about built-in
 filters.
 
-.. note::
-
-    The ``apply`` tag was introduced in Twig 2.9; use the ``filter`` tag with
-    previous versions.
-
 Functions
 ---------
 
@@ -256,7 +251,7 @@ blocks.
 For example, to display a list of users provided in a variable called
 ``users``, use the :doc:`for<tags/for>` tag:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <h1>Members</h1>
     <ul>
@@ -267,7 +262,7 @@ For example, to display a list of users provided in a variable called
 
 The :doc:`if<tags/if>` tag can be used to test an expression:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% if users|length > 0 %}
         <ul>
@@ -345,7 +340,7 @@ document that might be used for a two-column page:
     <html>
         <head>
             {% block head %}
-                <link rel="stylesheet" href="style.css" />
+                <link rel="stylesheet" href="style.css"/>
                 <title>{% block title %}{% endblock %} - My Webpage</title>
             {% endblock %}
         </head>
@@ -366,7 +361,7 @@ template.
 
 A child template might look like this:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% extends "base.html" %}
 
@@ -396,7 +391,7 @@ It's possible to render the contents of the parent block by using the
 :doc:`parent<functions/parent>` function. This gives back the results of the
 parent block:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% block sidebar %}
         <h3>Table Of Contents</h3>
@@ -559,6 +554,11 @@ exist:
 
     {# keys as integer #}
     { 2: 'foo', 4: 'bar' }
+
+    {# keys can be omitted if it is the same as the variable name #}
+    { foo }
+    {# is equivalent to the following #}
+    { 'foo': foo }
 
     {# keys as expressions (the expression must be enclosed into parentheses) #}
     {% set foo = 'foo' %}
@@ -781,9 +781,6 @@ inserted into the string:
 Whitespace Control
 ------------------
 
-.. versionadded:: 2.8
-    Tag level Line whitespace control was added in Twig 2.8.
-
 The first newline after a template tag is removed automatically (like in PHP).
 Whitespace is not further modified by the template engine, so each whitespace
 (spaces, tabs, newlines etc.) is returned unchanged.
@@ -804,7 +801,7 @@ The modifiers can be used on either side of the tags like in ``{%-`` or ``-%}``
 and they consume all whitespace for that side of the tag. It is possible to use
 the modifiers on one side of a tag or on both sides:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% set value = 'no spaces' %}
     {#- No leading/trailing whitespace -#}
@@ -830,7 +827,7 @@ the modifiers on one side of a tag or on both sides:
     In addition to the whitespace modifiers, Twig also has a ``spaceless`` filter
     that removes whitespace **between HTML tags**:
 
-    .. code-block:: twig
+    .. code-block:: html+twig
 
         {% apply spaceless %}
             <div>
@@ -839,9 +836,6 @@ the modifiers on one side of a tag or on both sides:
         {% endapply %}
 
         {# output will be <div><strong>foo bar</strong></div> #}
-
-    The ``apply`` tag was introduced in Twig 2.9; use the ``filter`` tag with
-    previous versions.
 
 Extensions
 ----------

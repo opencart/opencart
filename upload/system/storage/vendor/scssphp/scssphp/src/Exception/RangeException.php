@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -16,6 +17,6 @@ namespace ScssPhp\ScssPhp\Exception;
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */
-class RangeException extends \Exception
+class RangeException extends \Exception implements SassException
 {
 }

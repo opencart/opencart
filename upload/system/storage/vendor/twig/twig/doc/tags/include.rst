@@ -1,7 +1,7 @@
 ``include``
 ===========
 
-The ``include`` statement includes a template and returns the rendered content
+The ``include`` statement includes a template and outputs the rendered content
 of that file:
 
 .. code-block:: twig
@@ -12,9 +12,8 @@ of that file:
 
 .. note::
 
-    As of Twig 1.12, it is recommended to use the
-    :doc:`include<../functions/include>` function instead as it provides the
-    same features with a bit more flexibility:
+    It is recommended to use the :doc:`include<../functions/include>` function
+    instead as it provides the same features with a bit more flexibility:
 
     * The ``include`` function is semantically more "correct" (including a
       template outputs its rendered contents in the current scope; a tag should
@@ -31,10 +30,10 @@ of that file:
           {# vs #}
           {% set content = include('template.html') %}
 
-          {# Filter a rendered template #}
-          {% filter upper %}
+          {# Apply filter on a rendered template #}
+          {% apply upper %}
               {% include 'template.html' %}
-          {% endfilter %}
+          {% endapply %}
           {# vs #}
           {{ include('template.html')|upper }}
 

@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=7.1"
     },
     "autoload": {
         "psr-4": { "Symfony\\Polyfill\\Ctype\\": "" },
@@ -28,7 +28,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.18-dev"
+            "dev-main": "1.22-dev"
         },
         "thanks": {
             "name": "symfony/polyfill",

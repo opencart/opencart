@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -16,6 +17,32 @@ namespace ScssPhp\ScssPhp\Exception;
  *
  * @author Oleksandr Savchenko <traveltino@gmail.com>
  */
-class ParserException extends \Exception
+class ParserException extends \Exception implements SassException
 {
+    /**
+     * @var array
+     */
+    private $sourcePosition;
+
+    /**
+     * Get source position
+     *
+     * @api
+     */
+    public function getSourcePosition()
+    {
+        return $this->sourcePosition;
+    }
+
+    /**
+     * Set source position
+     *
+     * @api
+     *
+     * @param array $sourcePosition
+     */
+    public function setSourcePosition($sourcePosition)
+    {
+        $this->sourcePosition = $sourcePosition;
+    }
 }

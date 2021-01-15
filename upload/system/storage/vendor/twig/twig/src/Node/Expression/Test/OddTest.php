@@ -23,15 +23,13 @@ use Twig\Node\Expression\TestExpression;
  */
 class OddTest extends TestExpression
 {
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $compiler
             ->raw('(')
             ->subcompile($this->getNode('node'))
-            ->raw(' % 2 == 1')
+            ->raw(' % 2 != 0')
             ->raw(')')
         ;
     }
 }
-
-class_alias('Twig\Node\Expression\Test\OddTest', 'Twig_Node_Expression_Test_Odd');

@@ -1,9 +1,6 @@
 ``apply``
 =========
 
-.. versionadded:: 2.9
-    The ``apply`` tag was added in Twig 2.9.
-
 The ``apply`` tag allows you to apply Twig filters on a block of template data:
 
 .. code-block:: twig
@@ -14,7 +11,7 @@ The ``apply`` tag allows you to apply Twig filters on a block of template data:
 
 You can also chain filters and pass arguments to them:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% apply lower|escape('html') %}
         <strong>SOME TEXT</strong>

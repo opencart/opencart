@@ -4,12 +4,18 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
+class ComposerStaticInit0bb2127a2478d06f64e8af6ee5c92e94
 {
     public static $files = array (
-        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
+        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
+        'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -23,31 +29,33 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Php72\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Intl\\Normalizer\\' => 33,
+            'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Symfony\\Contracts\\Translation\\' => 30,
             'Symfony\\Component\\Validator\\' => 28,
-            'Symfony\\Component\\Translation\\' => 30,
             'ScssPhp\\ScssPhp\\' => 16,
-        ),
-        'R' => 
-        array (
-            'React\\Promise\\' => 14,
         ),
         'P' => 
         array (
-            'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
         ),
         'G' => 
         array (
             'GuzzleHttp\\Subscriber\\Oauth\\' => 28,
-            'GuzzleHttp\\Subscriber\\Log\\' => 26,
-            'GuzzleHttp\\Stream\\' => 18,
-            'GuzzleHttp\\Ring\\' => 16,
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
         'C' => 
         array (
             'Cardinity\\' => 10,
+        ),
+        'B' => 
+        array (
+            'Braintree\\' => 10,
         ),
     );
 
@@ -60,49 +68,53 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
         ),
+        'Symfony\\Polyfill\\Php72\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
+        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
+        ),
+        'Symfony\\Polyfill\\Intl\\Idn\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
         ),
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Symfony\\Contracts\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation-contracts',
+        ),
         'Symfony\\Component\\Validator\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/validator',
-        ),
-        'Symfony\\Component\\Translation\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/translation',
         ),
         'ScssPhp\\ScssPhp\\' => 
         array (
             0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
         ),
-        'React\\Promise\\' => 
+        'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/react/promise/src',
-        ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'GuzzleHttp\\Subscriber\\Oauth\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/oauth-subscriber/src',
         ),
-        'GuzzleHttp\\Subscriber\\Log\\' => 
+        'GuzzleHttp\\Psr7\\' => 
         array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/log-subscriber/src',
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'GuzzleHttp\\Stream\\' => 
+        'GuzzleHttp\\Promise\\' => 
         array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
-        ),
-        'GuzzleHttp\\Ring\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/ringphp/src',
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
         'GuzzleHttp\\' => 
         array (
@@ -112,20 +124,13 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         array (
             0 => __DIR__ . '/..' . '/cardinity/cardinity-sdk-php/src',
         ),
-    );
-
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/klarna/kco_rest/src',
+        'Braintree\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
+        ),
     );
 
     public static $prefixesPsr0 = array (
-        'T' => 
-        array (
-            'Twig_' => 
-            array (
-                0 => __DIR__ . '/..' . '/twig/twig/lib',
-            ),
-        ),
         'D' => 
         array (
             'Divido' => 
@@ -133,22 +138,20 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
                 0 => __DIR__ . '/..' . '/divido/divido-php/lib',
             ),
         ),
-        'B' => 
-        array (
-            'Braintree' => 
-            array (
-                0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
-            ),
-        ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0bb2127a2478d06f64e8af6ee5c92e94::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0bb2127a2478d06f64e8af6ee5c92e94::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit0bb2127a2478d06f64e8af6ee5c92e94::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0bb2127a2478d06f64e8af6ee5c92e94::$classMap;
 
         }, null, ClassLoader::class);
     }

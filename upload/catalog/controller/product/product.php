@@ -645,6 +645,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			$quantity = 1;
 		}
 
+		$this->load->model('catalog/product');
+
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		$recurring_info = $this->model_catalog_product->getProfile($product_id, $recurring_id);

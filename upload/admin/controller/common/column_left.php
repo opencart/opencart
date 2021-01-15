@@ -659,8 +659,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			if ($maintenance) {
 				$system[] = [
-					'id'       => 'menu-maintenance',
-					'icon'	   => 'fas fa-cog',
 					'name'	   => $this->language->get('text_maintenance'),
 					'href'     => '',
 					'children' => $maintenance

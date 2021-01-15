@@ -49,7 +49,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('module', $this->request->get['code']);
 
-			$this->model_setting_module->deleteModulesByCode($this->request->get['code']);
+			$this->model_setting_module->deleteModulesByCode($this->request->get['extension'] . '.' . $this->request->get['code']);
 
 			// Call uninstall method if it exists
 			$this->load->controller('extension/' . $this->request->get['extension'] . '/module/' . $this->request->get['code'] . '|uninstall');

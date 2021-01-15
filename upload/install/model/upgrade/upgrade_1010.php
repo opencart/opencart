@@ -1,5 +1,5 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1010 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Add missing core events

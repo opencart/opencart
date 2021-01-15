@@ -64,7 +64,28 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		$data['images'] = [];
 
-		$files = glob($directory . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+		$allowed = [
+			'ico',
+			'jpg',
+			'jpeg',
+			'png',
+			'gif',
+			'JPG',
+			'JPEG',
+			'PNG',
+			'GIF',
+			'webp'
+		];
+
+		$files = glob($directory . $filter_name . '*');
+
+		for ($i = 0; $i < count($files); $i++) {
+			if (!in_array(substr($files[$i], strrpos($files[$i], '.') + 1), $allowed)) {
+				unset($files[$i]);
+			}
+		}
+
+		sort($files);
 
 		if ($files) {
 			// Split the array based on current page number and max number of items per page of 10
@@ -255,23 +276,31 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 					// Allowed file extension types
 					$allowed = [
+						'ico',
 						'jpg',
 						'jpeg',
+						'png',
 						'gif',
-						'png'
+						'JPG',
+						'JPEG',
+						'PNG',
+						'GIF',
+						'webp'
 					];
 
-					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
+					if (!in_array(substr($filename, strrpos($filename, '.') + 1), $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
 					}
 
 					// Allowed file mime types
 					$allowed = [
+						'image/x-icon',
 						'image/jpeg',
 						'image/pjpeg',
 						'image/png',
 						'image/x-png',
-						'image/gif'
+						'image/gif',
+						'image/webp'
 					];
 
 					if (!in_array($file['type'], $allowed)) {

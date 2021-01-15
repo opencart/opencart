@@ -114,7 +114,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		if (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, strlen($directory)) == $directory) {
 			// We grab the files from the default template directory
-			$files = glob(rtrim(DIR_CATALOG . 'view/template/' . $path, '/') . '/*', GLOB_BRACE);
+			$files = glob(rtrim(DIR_CATALOG . 'view/template/' . $path, '/') . '/*');
 
 			foreach ($files as $file) {
 				if (is_dir($file)) {
@@ -183,7 +183,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($safe) {
-				$files = glob(rtrim(DIR_EXTENSION . $extension . '/catalog/view/template/' . $route, '/') . '/*', GLOB_BRACE);
+				$files = glob(rtrim(DIR_EXTENSION . $extension . '/catalog/view/template/' . $route, '/') . '/*');
+
+				sort($files);
 
 				foreach ($files as $file) {
 					if (is_dir($file)) {

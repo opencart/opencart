@@ -67,10 +67,13 @@ class ModelUpgrade1009 extends Model {
 			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_transaction`");
 		}
 	
+		// Api
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
-		
+
 		if ($query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` CHANGE `name` `username` VARCHAR(64) NOT NULL");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` DROP COLUMN `username`");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` CHANGE COLUMN `name` `username` VARCHAR(64) NOT NULL");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` MODIFY `username` VARCHAR(64) NOT NULL AFTER `api_id`");
 		}
 		
 		// Events

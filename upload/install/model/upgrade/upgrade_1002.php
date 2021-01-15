@@ -1,5 +1,5 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1002 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// setting

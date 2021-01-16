@@ -158,7 +158,7 @@
               {% for option in options %}
                 {% if option.type == 'select' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
+                    <label for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control" class="col-form-label">
                       <option value="">{{ text_select }}</option>
                       {% for option_value in option.product_option_value %}
                         <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
@@ -205,12 +205,12 @@
                 {% endif %}
                 {% if option.type == 'text' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'textarea' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+                    <label for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control" class="col-form-label">{{ option.value }}</textarea>
                   </div>
                 {% endif %}
                 {% if option.type == 'file' %}
@@ -222,7 +222,7 @@
                 {% endif %}
                 {% if option.type == 'date' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group date">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
@@ -233,7 +233,7 @@
                 {% endif %}
                 {% if option.type == 'datetime' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group datetime">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
@@ -244,7 +244,7 @@
                 {% endif %}
                 {% if option.type == 'time' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label class="col-form-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group time">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">

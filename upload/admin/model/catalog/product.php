@@ -91,7 +91,6 @@ class Product extends \Opencart\System\Engine\Model {
 		// Recurring
 		if (isset($data['product_recurring'])) {
 			foreach ($data['product_recurring'] as $recurring) {
-
 				$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id = '" . (int)$recurring['customer_group_id'] . "' AND `recurring_id` = '" . (int)$recurring['recurring_id'] . "'");
 
 				if (!$query->num_rows) {

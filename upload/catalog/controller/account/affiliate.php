@@ -273,6 +273,20 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
+		$fields = array(
+			'payment',
+			'cheque',
+			'paypal',
+			'bank_account_name',
+			'bank_account_number'
+		);
+
+		foreach ($fields as $field) {
+			if (!isset($this->request->post[$field])) {
+				$this->request->post[$field] = '';
+			}
+		}
+
 		if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {
 			$this->error['cheque'] = $this->language->get('error_cheque');
 		} elseif (($this->request->post['payment'] == 'paypal') && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {

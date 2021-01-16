@@ -122,6 +122,17 @@ class Login extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
+		$fields = array(
+			'email',
+			'password'
+		);
+
+		foreach ($fields as $field) {
+			if (!isset($this->request->post[$field])) {
+				$this->request->post[$field] = '';
+			}
+		}
+
 		// Check how many login attempts have been made.
 		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
 

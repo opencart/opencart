@@ -227,6 +227,23 @@ class Register extends \Opencart\System\Engine\Controller {
 	}
 
 	private function validate() {
+		$fields = array(
+			'firstname',
+			'lastname',
+			'email',
+			'telephone',
+			'customer_group_id',
+			'password',
+			'confirm',
+			'agree'
+		);
+
+		foreach ($fields as $field) {
+			if (!isset($this->request->post[$field])) {
+				$this->request->post[$field] = '';
+			}
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}

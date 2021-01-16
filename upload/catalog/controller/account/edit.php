@@ -154,6 +154,19 @@ class Edit extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
+		$fields = array(
+			'firstname',
+			'lastname',
+			'email',
+			'telephone'
+		);
+
+		foreach ($fields as $field) {
+			if (!isset($this->request->post[$field])) {
+				$this->request->post[$field] = '';
+			}
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}

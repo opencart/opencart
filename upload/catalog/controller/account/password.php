@@ -80,6 +80,17 @@ class Password extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
+		$fields = array(
+			'password',
+			'confirm'
+		);
+
+		foreach ($fields as $field) {
+			if (!isset($this->request->post[$field])) {
+				$this->request->post[$field] = '';
+			}
+		}
+
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}

@@ -327,6 +327,26 @@ class Register extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
+		$fields = array(
+			'firstname',
+			'lastname',
+			'email',
+			'telephone',
+			'password',
+			'confirm',
+			'payment',
+			'cheque',
+			'paypal',
+			'bank_account_name',
+			'bank_account_number',
+		);
+
+		foreach ($fields as $field) {
+			if (!isset($this->request->post[$field])) {
+				$this->request->post[$field] = '';
+			}
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}

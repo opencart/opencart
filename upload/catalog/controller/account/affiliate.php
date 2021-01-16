@@ -273,17 +273,17 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
-		$fields = array(
+		$keys = [
 			'payment',
 			'cheque',
 			'paypal',
 			'bank_account_name',
 			'bank_account_number'
-		);
+		];
 
-		foreach ($fields as $field) {
-			if (!isset($this->request->post[$field])) {
-				$this->request->post[$field] = '';
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
 			}
 		}
 

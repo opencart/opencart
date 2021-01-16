@@ -461,7 +461,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
-		$fields = array(
+		$keys = [
 			'order_id',
 			'firstname',
 			'lastname',
@@ -471,14 +471,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'model',
 			'reason',
 			'agree'
-		);
+		];
 
-		foreach ($fields as $field) {
-			if (!isset($this->request->post[$field])) {
-				$this->request->post[$field] = '';
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
 			}
 		}
-
 
 		if (!$this->request->post['order_id']) {
 			$this->error['order_id'] = $this->language->get('error_order_id');

@@ -98,6 +98,23 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$keys = [
+				'firstname',
+				'lastname',
+				'company',
+				'address_1',
+				'city',
+				'postcode',
+				'country_id',
+				'zone_id'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
 			$this->load->model('account/address');
 
 			if (isset($this->request->post['shipping_address']) && $this->request->post['shipping_address'] == 'existing') {

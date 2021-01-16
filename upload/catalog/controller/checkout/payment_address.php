@@ -105,6 +105,24 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 					unset($this->session->data['payment_methods']);
 				}
 			} else {
+				$keys = [
+					'firstname',
+					'lastname',
+					'company',
+					'address_1',
+					'address_2',
+					'city',
+					'postcode',
+					'country_id',
+					'zone_id'
+				];
+
+				foreach ($keys as $key) {
+					if (!isset($this->request->post[$key])) {
+						$this->request->post[$key] = '';
+					}
+				}
+
 				if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 					$json['error']['firstname'] = $this->language->get('error_firstname');
 				}

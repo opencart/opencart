@@ -354,6 +354,9 @@ footer h5 {
 .alert {
   padding: 8px 14px 8px 14px;
 }
+.alert-dismissible .close {
+  padding: 9px 14px 9px 14px;
+}
 /* breadcrumb */
 .breadcrumb {
   margin: 0 0 20px 0;

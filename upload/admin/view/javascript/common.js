@@ -22,19 +22,13 @@ function getURLVar(key) {
 	}
 }
 
+// On August 17 2021, Internet Explorer 11 (IE11) will no longer be supported by Microsoft's 365 applications and services.
 function isIE() {
     if (!!window.ActiveXObject || "ActiveXObject" in window) return true;
 }
 
 $(document).ready(function() {
 	$('form').trigger('reset');
-	
-	//Form Submit for IE Browser
-	if (isIE()) {
-		$('button[type=\'submit\']').on('click', function() {
-			$('form[id*=\'form-\']').submit();
-		});
-	}
 
 	// Highlight any found errors
 	$('.invalid-tooltip').each(function() {

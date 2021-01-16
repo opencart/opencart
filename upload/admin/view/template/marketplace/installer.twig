@@ -36,7 +36,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#extension').on('click', '.pagination a', function(e) {
+$('#extension').on('click', 'thead a, .pagination a', function(e) {
 	e.preventDefault();
 
 	$('#extension').load(this.href);

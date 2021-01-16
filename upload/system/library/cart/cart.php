@@ -49,8 +49,12 @@ class Cart {
 					$product_options = (array)json_decode($cart['option'], true);
 
 					// Merge variant code with options
-					foreach (json_decode($product_query->row['variant'], true) as $key => $value) {
-						$product_options[$key] = $value;
+					$variant = json_decode($product_query->row['variant'], true);
+
+					if ($variant) {
+						foreach ($variant as $key => $value) {
+							$product_options[$key] = $value;
+						}
 					}
 
 					foreach ($product_options as $product_option_id => $value) {

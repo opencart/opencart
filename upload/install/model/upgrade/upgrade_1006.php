@@ -1,5 +1,5 @@
 <?php
-namespace Install\Model\Upgrade;
+namespace Opencart\Application\Model\Upgrade;
 class Upgrade1006 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Update some language settings
@@ -192,13 +192,13 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 
 		// Open the source directory to read in files
 		$i = new \DirectoryIterator($src);
-		
+
 		foreach ($i as $f) {
 			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
 				@rename($f->getRealPath(), "$dest/" . $f->getFilename());
 			} elseif (!$f->isDot() && $f->isDir()) {
 				$this->recursive_move($f->getRealPath(), "$dest/$f");
-				
+
 				@unlink($f->getRealPath());
 			}
 		}

@@ -4,14 +4,7 @@ class Upgrade1005 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// customer
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` CHANGE `token` `token` text NOT NULL");
-
-		// customer
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer' AND COLUMN_NAME = 'code'");
-
-		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `code` tinyint(1) NOT NULL AFTER `token`");
-		}
-
+		
 		// custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'validation'");
 

@@ -317,8 +317,6 @@ $('#button-register').on('click', function() {
 				$('.alert-dismissible, .text-danger').remove();
 				$('.is-invalid').removeClass('is-invalid');
 
-				//element.addClass('is-invalid');
-
 				if (json['redirect']) {
 					location = json['redirect'];
 				} else if (json['error']) {

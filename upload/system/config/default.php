@@ -38,7 +38,6 @@ $_['cache_expire']         = 3600;
 $_['session_autostart']    = false;
 $_['session_engine']       = 'file'; // db or file
 $_['session_name']         = 'OCSESSID';
-$_['session_domain']       = '';
 $_['session_path']         = '/';
 $_['session_expire']       = 360000;
 $_['session_probability']  = 1;

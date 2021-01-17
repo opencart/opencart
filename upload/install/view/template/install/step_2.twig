@@ -1,8 +1,8 @@
 {{ header }}
-<div id="content">
-  <div class="page-header">
+<main id="content">
+  <div class="border-bottom my-3">
     <div class="container">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col"><h1>{{ heading_title }}</h1></div>
         <div class="col">{{ language }}</div>
       </div>
@@ -19,7 +19,7 @@
         <div class="card-header"><i class="fas fa-server"></i> {{ text_step_2 }}</div>
         <div class="card-body">
           <fieldset class="table-responsive">
-            <legend>{{ text_install_php }}</legend>
+            <legend class="mb-3">{{ text_install_php }}</legend>
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -118,7 +118,7 @@
             </table>
           </fieldset>
           <fieldset class="table-responsive">
-            <legend>{{ text_install_extension }}</legend>
+            <legend class="mb-3">{{ text_install_extension }}</legend>
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -261,7 +261,7 @@
             </table>
           </fieldset>
           <fieldset class="table-responsive">
-            <legend>{{ text_install_file }}</legend>
+            <legend class="mb-3">{{ text_install_file }}</legend>
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -301,5 +301,5 @@
       </div>
     </form>
   </div>
-</div>
+</main>
 {{ footer }}

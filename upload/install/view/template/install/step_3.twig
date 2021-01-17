@@ -1,8 +1,8 @@
 {{ header }}
-<div id="content">
-  <div class="page-header">
+<main id="content">
+  <div class="border-bottom my-3">
     <div class="container">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col"><h1>{{ heading_title }}</h1></div>
         <div class="col">{{ language }}</div>
       </div>
@@ -19,7 +19,7 @@
       <div class="card-body">
         <form id="form-step-3" action="{{ action }}" method="post" enctype="multipart/form-data">
           <fieldset>
-            <legend>{{ text_db_connection }}</legend>
+            <legend class="mb-3">{{ text_db_connection }}</legend>
             <div class="row">
               <div class="col-12 col-lg-4 order-lg-2">
                 <div class="alert alert-info">
@@ -91,7 +91,7 @@
             </div>
           </fieldset>
           <fieldset>
-            <legend>{{ text_db_administration }}</legend>
+            <legend class="mb-3">{{ text_db_administration }}</legend>
             <div class="form-row">
               <div class="form-group col-12 col-md-6 col-lg-4 required">
                 <label for="input-username" class="col-form-label {% if error_username %}text-danger{% endif %}">{{ entry_username }}</label>
@@ -124,5 +124,5 @@
       </div>
     </div>
   </div>
-</div>
+</main>
 {{ footer }}

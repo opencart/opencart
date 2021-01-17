@@ -1,5 +1,5 @@
 <div class="dropdown text-right">
-  <button class="btn btn-outline-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ text_language }}</button>
+  <button class="btn btn-outline-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-language"></i> {{ text_language }}</button>
   <div class="dropdown-menu dropdown-menu-right">
     {% for language in languages %}
       <a href="{{ language.href }}" class="dropdown-item {% if language == code %}active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png"/> {{ language.text }}</a>

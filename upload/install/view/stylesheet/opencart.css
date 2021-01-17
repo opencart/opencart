@@ -17,12 +17,6 @@ body, p, td, th, input, textarea, select, option {
 }
 /* End general */
 
-/* Begin steps */
-legend {
-    border-bottom: 1px solid #e5e5e5;
-}
-/* End steps */
-
 /* Begin step 1 */
 .form-control-license {
     min-height: 300px;

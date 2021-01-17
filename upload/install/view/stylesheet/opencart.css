@@ -209,3 +209,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     font-weight: 600;
     content: " \f107";
 }
+
+/* test */
+
+.form-control-license {
+    min-height: 300px;
+    overflow-y: scroll;
+}

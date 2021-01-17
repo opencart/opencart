@@ -140,7 +140,6 @@ if ($config->get('session_autostart')) {
 	$option = [
 		'expires'  => time() + $config->get('session_expire'),
 		'path'     => $config->get('session_path'),
-		'domain'   => $config->get('session_domain'),
 		'secure'   => $request->server['HTTPS'],
 		'httponly' => false,
 		'SameSite' => 'Strict'

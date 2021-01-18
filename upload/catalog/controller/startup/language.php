@@ -110,7 +110,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->registry->set('language', $language);
 
 		// Set the config language_id
-		if (isset($language_codes[$code)) {
+		if (isset($language_codes[$code])) {
 			$this->config->set('config_language_id', $language_codes[$code]);
 			$this->config->set('config_language', $code);
 		}

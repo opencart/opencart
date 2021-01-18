@@ -14,7 +14,7 @@
 <div class="container">
   {% for order in orders %}
   <div style="page-break-after: always;">
-    <h1>{{ text_invoice }} #{{ order.order_id }}</h1>
+    <h1>{% if order.invoice_no %}{{ text_invoice }} #{{ order.invoice_no }}{% else %}{{ text_order }}{% endif %}</h1>
     <table class="table table-bordered">
       <thead>
         <tr>

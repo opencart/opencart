@@ -4,6 +4,10 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';

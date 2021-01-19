@@ -80,7 +80,7 @@
                       <td class="text-left">{% if sort == 'or.reference' %} <a href="{{ sort_reference }}" class="{{ order|lower }}">{{ column_reference }}</a> {% else %} <a href="{{ sort_reference }}">{{ column_reference }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'or.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
-                      <td class="text-left">{% if sort == 'or.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
+                      <td class="text-left d-none d-lg-table-cell">{% if sort == 'or.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
                       <td class="text-right">{{ column_action }}</td>
                     </tr>
                   </thead>
@@ -94,7 +94,7 @@
                           <td class="text-left">{{ recurring.reference }}</td>
                           <td class="text-left">{{ recurring.customer }}</td>
                           <td class="text-left">{{ recurring.status }}</td>
-                          <td class="text-left">{{ recurring.date_added }}</td>
+                          <td class="text-left d-none d-lg-table-cell">{{ recurring.date_added }}</td>
                           <td class="text-right"><a href="{{ recurring.view }}" data-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fas fa-eye"></i></a> <a href="{{ recurring.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-shopping-cart"></i></a></td>
                         </tr>
                       {% endfor %}

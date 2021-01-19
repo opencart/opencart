@@ -58,6 +58,10 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login', 'language=' . $this->config->get('config_language')));
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

@@ -472,6 +472,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function getForm() {
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {

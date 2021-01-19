@@ -82,6 +82,7 @@ $_['error_upload_6']        = 'Warning: Missing a temporary folder!';
 $_['error_upload_7']        = 'Warning: Failed to write file to disk!';
 $_['error_upload_8']        = 'Warning: File upload stopped by extension!';
 $_['error_upload_999']      = 'Warning: No error code available!';
+$_['error_upload_size']     = 'Warning: The uploaded file exceeds the %smb max file size!';
 $_['error_curl']            = 'CURL: Error Code(%s): %s';
 
 /* When doing translations only include the matching language code */

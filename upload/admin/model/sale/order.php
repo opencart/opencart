@@ -173,12 +173,12 @@ class Order extends \Opencart\System\Engine\Model {
 			$sql .= " AND o.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
-		if (isset($this->request->get['filter_customer_id'])) {
-			$sql .= " AND o.`customer_id` = '" . (int)$data['filter_customer_id'] . "'";
-		}
-
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " AND o.`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_customer_id'])) {
+			$sql .= " AND o.`customer_id` = '" . (int)$data['filter_customer_id'] . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {
@@ -295,12 +295,12 @@ class Order extends \Opencart\System\Engine\Model {
 			$sql .= " AND `order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
-		if (isset($this->request->get['filter_customer_id'])) {
-			$sql .= " AND o.`customer_id` = '" . (int)$data['filter_customer_id'] . "'";
-		}
-
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " AND `store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_customer_id'])) {
+			$sql .= " AND `customer_id` = '" . (int)$data['filter_customer_id'] . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {
@@ -413,12 +413,12 @@ class Order extends \Opencart\System\Engine\Model {
 			$sql .= " AND `order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
-		if (isset($this->request->get['filter_customer_id'])) {
-			$sql .= " AND customer_id` = '" . (int)$data['filter_customer_id'] . "'";
-		}
-
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
 			$sql .= " AND `store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_customer_id'])) {
+			$sql .= " AND `customer_id` = '" . (int)$data['filter_customer_id'] . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {

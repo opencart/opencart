@@ -113,6 +113,8 @@ $(document).ready(function() {
 
 // Image Manager
 $(document).on('click', '[data-toggle=\'image\']', function(e) {
+	e.preventDefault();
+
 	var element = this;
 
 	$('#modal-image').remove();

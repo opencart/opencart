@@ -1,97 +1,44 @@
 {{ header }}
-<div class="container">
-  <header>
-    <div class="row">
-      <div class="col-sm-6">
-        <h1 class="pull-left">1<small>/2</small></h1>
-        <h3>{{ heading_title }}<br>
-          <small>{{ text_upgrade }}</small></h3>
-      </div>
-      <div class="col-sm-6">
-        <div id="logo" class="pull-right d-none d-sm-block"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+<main id="upgrade">
+  <div class="border-bottom my-3">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1>{{ heading_title }}</h1>
+        </div>
+        <div class="col">{{ language }}</div>
       </div>
     </div>
-  </header>
-  <div class="row">
-    <div class="col-sm-9">
-      <h3>{{ text_server }}</h3>
-      <fieldset>
-        <ol>
-          <li>{{ text_error }}</li>
-          <li>{{ text_clear }}</li>
-          <li>{{ text_admin }}</li>
-          <li>{{ text_user }}</li>
-          <li>{{ text_setting }}</li>
-          <li>{{ text_store }}</li>
-        </ol>
-      </fieldset>
-      <h3>{{ text_steps }}</h3>
-      <fieldset>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">{{ entry_progress }}</label>
-          <div class="col-sm-10">
-            <div class="progress">
-              <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-            </div>
-            <div id="progress-text"></div>
-          </div>
-        </div>
-      </fieldset>
-      <div class="buttons">
-        <div class="text-right">
-          <input type="submit" value="{{ button_continue }}" data-loading="{{ text_loading }}" id="button-continue" class="btn btn-primary" />
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3">{{ column_left }}</div>
   </div>
-  <script type="text/javascript"><!--
-var step = 0;
-
-$('#button-continue').on('click', function() {
-	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
-	$('#progress-text').html('');
-	$('#button-continue').button('loading');
-
-	start('index.php?route=upgrade/upgrade|next');
-});
-
-function start(url) {
-	setTimeout(function(){
-		$.ajax({
-			url: url,
-			type: 'post',
-			dataType: 'json',
-			success: function(json) {
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-
-					$('#button-continue').prop('disabled', false);
-					$('#button-continue').button('reset');
-				}
-
-				if (json['success']) {
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-					$('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
-				}
-
-				if (json['next']) {
-					start(json['next']);
-				} else if (!json['error']) {
-					$('#button-continue').replaceWith('<a href="{{ store }}" class="btn btn-primary">{{ button_continue }}</a>');
-					$('#button-continue').button('reset');
-				}
-
-				step++;
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
-				$('#button-continue').button('reset');
-			}
-		});
-	}, 1000);
-}
-//--></script></div>
+  <div class="container">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-sync"></i> {{ text_upgrade }}</div>
+      <div class="card-body">
+        <h3>{{ text_server }}</h3>
+        <fieldset>
+          <ol>
+            <li>{{ text_error }}</li>
+            <li>{{ text_clear }}</li>
+            <li>{{ text_admin }}</li>
+            <li>{{ text_user }}</li>
+            <li>{{ text_setting }}</li>
+            <li>{{ text_store }}</li>
+          </ol>
+        </fieldset>
+        <h3>{{ text_steps }}</h3>
+        <fieldset>
+          <label>{{ entry_progress }}</label>
+          <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+          </div>
+          <div id="progress-text"></div>
+        </fieldset>
+      </div>
+      <div class="card-footer d-flex justify-content-end">
+        <button id="button-upgrade" class="btn btn-outline-dark" data-loading="{{ text_loading }}" data-total="{{ total }}" type="submit"><i class="fas fa-sync-alt"></i> {{ button_upgrade }}</button>
+        <a id="button-continue" href="{{ store }}" class="btn btn-outline-primary ml-1 d-none">{{ button_continue }} <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</main>
 {{ footer }}

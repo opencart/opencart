@@ -3,6 +3,8 @@ namespace Opencart\Application\Controller\Upgrade;
 class Upgrade extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('upgrade/upgrade');
+		
+		$this->document->addScript('view/javascript/upgrade.js', 'footer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -20,8 +22,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_progress'] = $this->language->get('entry_progress');
-
+		
 		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_upgrade'] = $this->language->get('button_upgrade');
 
 		$data['store'] = HTTP_OPENCART;
 
@@ -29,7 +32,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['language'] = $this->load->controller('common/language');
 
 		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
 	}

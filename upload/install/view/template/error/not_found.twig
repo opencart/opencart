@@ -1,18 +1,24 @@
 {{ header }}
-<div id="error-not-found" class="container">
-  <ul class="breadcrumb">
-    {% for breadcrumb in breadcrumbs %}
-    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-    {% endfor %}
-  </ul>
-  <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
-      <h1>{{ heading_title }}</h1>
-      <p>{{ text_error }}</p>
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+<main id="error-not-found">
+  <div class="border-bottom my-3">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1 class="text-danger"><i class="fas fa-exclamation"></i> {{ heading_title }}</h1>
+        </div>
       </div>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
-</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="card-header text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <p class="card-text text-center text-danger">{{ text_error }}</p>
+      </div>
+      <div class="card-footer d-flex">
+        <a href="{{ continue }}" class="btn btn-outline-primary ml-auto">{{ button_continue }} <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</main>
 {{ footer }}

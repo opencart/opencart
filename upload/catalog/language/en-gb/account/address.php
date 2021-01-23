@@ -8,7 +8,6 @@ $_['text_address_book']  = 'Address Book Entries';
 $_['text_address_add']   = 'Add Address';
 $_['text_address_edit']  = 'Edit Address';
 $_['text_add']           = 'Your address has been successfully added';
-$_['text_edit']          = 'Your address has been successfully updated';
 $_['text_delete']        = 'Your address has been successfully deleted';
 $_['text_no_results']    = 'You have no addresses in your account.';
 

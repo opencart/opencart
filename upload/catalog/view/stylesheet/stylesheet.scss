@@ -44,9 +44,14 @@ a {
   }
 }
 
+/* Chrome border line */
+button:focus {
+  outline: none !important;
+}
+
 legend {
   font-size: 18px;
-  padding: 7px 0px;
+  padding: 7px 0;
   margin-bottom: 20px;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -258,7 +263,7 @@ div.required .col-form-label:before {
 
   .dropdown-menu {
     padding-bottom: 0;
-    margin-top: 0px;
+    margin-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
@@ -469,6 +474,9 @@ footer {
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px;
+}
+.alert-dismissible .close {
+  padding: 9px 14px 9px 14px;
 }
 
 /* breadcrumb */
@@ -856,7 +864,7 @@ footer {
 
         + div {
           //display: inline-block;
-          margin-left: 0%;
+          margin-left: 0;
           //width: 69.5%;
         }
       }

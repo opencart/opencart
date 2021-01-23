@@ -1,36 +1,43 @@
-<div class="slideshow swiper-viewport">
-  <div id="slideshow{{ module }}" class="swiper-container">
-    <div class="swiper-wrapper">
-      {% for banner in banners %}
-        <div class="swiper-slide text-center">
-          {% if banner.link %}
-            <a href="{{ banner.link }}">
-              <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
-            </a>
-          {% else %}
-            <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" />
-          {% endif %}
-        </div>
-      {% endfor %}
-    </div>
+<div id="carousel-slideshow{{ module }}" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% set banner_row = 0 %}
+    {% for banner in banners %}
+      <li data-target="#carousel-slideshow{{ module }}" data-slide-to="{{ banner_row }}"></li>
+      {% set banner_row = banner_row + 1 %}
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner">
+    {% for banner in banners %}
+      <div class="carousel-item">
+        {% if banner.link %}
+          <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block w-100"/></a>
+        {% else %}
+          <img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block w-100"/>
+        {% endif %}
+      </div>
+    {% endfor %}
   </div>
-  <div class="swiper-pagination slideshow{{ module }}"></div>
-  <div class="swiper-pager">
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
+  <a href="#carousel-slideshow{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-slideshow{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
 </div>
 <script type="text/javascript"><!--
-$('#slideshow{{ module }}').swiper({
-	mode: 'horizontal',
-	slidesPerView: 1,
-	pagination: '.slideshow{{ module }}',
-	paginationClickable: true,
-	nextButton: '.slideshow .swiper-button-next',
-	prevButton: '.slideshow .swiper-button-prev',
-	spaceBetween: 30,
-	autoplay: $('#slideshow{{ module }} img').length > 1 ? 2500 : 0,
-	autoplayDisableOnInteraction: true,
-	loop: true
+$('#carousel-slideshow{{ module }} .carousel-indicators li:first').addClass('active');
+$('#carousel-slideshow{{ module }} .carousel-inner .carousel-item:first').addClass('active');
+
+$('#carousel-slideshow{{ module }}').carousel({
+	ride: 'carousel',
+	interval: 2500,
+	wrap: true
+});
+
+$('#carousel-slideshow{{ module }} a[data-slide=\'prev\']').on('click', function(e) {
+	e.preventDefault();
+
+	$('#carousel-slideshow{{ module }}').carousel('prev');
+});
+
+$('#carousel-slideshow{{ module }} a[data-slide=\'next\']').on('click', function(e) {
+	e.preventDefault();
+
+	$('#carousel-slideshow{{ module }}').carousel('next');
 });
 //--></script>

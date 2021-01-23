@@ -417,13 +417,13 @@ class Search extends \Opencart\System\Engine\Controller {
 				}
 
 				$search_data = [
-					'keyword'       => $search,
-					'category_id'   => $category_id,
-					'sub_category'  => $sub_category,
-					'description'   => $description,
-					'products'      => $product_total,
-					'customer_id'   => $customer_id,
-					'ip'            => $ip
+					'keyword'      => $search,
+					'category_id'  => $category_id,
+					'sub_category' => $sub_category,
+					'description'  => $description,
+					'products'     => $product_total,
+					'customer_id'  => $customer_id,
+					'ip'           => $ip
 				];
 
 				$this->model_account_search->addSearch($search_data);

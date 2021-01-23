@@ -31,6 +31,17 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$keys = [
+				'email',
+				'password'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
 			$this->load->model('account/customer');
 
 			// Check how many login attempts have been made.

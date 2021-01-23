@@ -46,6 +46,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
 		}
 
+		if (isset($this->request->get['filter_customer_id'])) {
+			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
+		}
+
 		if (isset($this->request->get['filter_customer'])) {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -94,6 +98,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$filter_order_id = (int)$this->request->get['filter_order_id'];
 		} else {
 			$filter_order_id = '';
+		}
+
+		if (isset($this->request->get['filter_customer_id'])) {
+			$filter_customer_id = $this->request->get['filter_customer_id'];
+		} else {
+			$filter_customer_id = '';
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -162,6 +172,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
 		}
 
+		if (isset($this->request->get['filter_customer_id'])) {
+			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
+		}
+
 		if (isset($this->request->get['filter_customer'])) {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -223,6 +237,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_order_id'        => $filter_order_id,
+			'filter_customer_id'     => $filter_customer_id,
 			'filter_customer'        => $filter_customer,
 			'filter_store_id'        => $filter_store_id,
 			'filter_order_status'    => $filter_order_status,
@@ -283,6 +298,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
 		}
 
+		if (isset($this->request->get['filter_customer_id'])) {
+			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
+		}
+
 		if (isset($this->request->get['filter_customer'])) {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -335,6 +354,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
 		}
 
+		if (isset($this->request->get['filter_customer_id'])) {
+			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
+		}
+
 		if (isset($this->request->get['filter_customer'])) {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -381,6 +404,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($order_total - $this->config->get('config_pagination_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $order_total, ceil($order_total / $this->config->get('config_pagination_admin')));
 
 		$data['filter_order_id'] = $filter_order_id;
+		$data['filter_customer_id'] = $filter_customer_id;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_store_id'] = $filter_store_id;
 		$data['filter_order_status'] = $filter_order_status;
@@ -448,10 +472,18 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function getForm() {
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+		}
+
+		if (isset($this->request->get['filter_customer_id'])) {
+			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -782,6 +814,10 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			if (isset($this->request->get['filter_order_id'])) {
 				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+			}
+
+			if (isset($this->request->get['filter_customer_id'])) {
+				$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
 			}
 
 			if (isset($this->request->get['filter_customer'])) {

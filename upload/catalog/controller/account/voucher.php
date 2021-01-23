@@ -186,6 +186,22 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
+		$keys = [
+			'to_name',
+			'to_email',
+			'from_name',
+			'from_email',
+			'voucher_theme_id',
+			'amount',
+			'agree'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
 		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
 			$this->error['to_name'] = $this->language->get('error_to_name');
 		}

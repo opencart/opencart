@@ -3,7 +3,7 @@
   <div id="collapse-shipping" class="collapse" data-parent="#accordion">
     <div class="card-body">
       <div class="form-group row required">
-        <label class="col-sm-3 col-form-label" for="input-country">{{ entry_country }}</label>
+        <label for="input-country" class="col-sm-3 col-form-label">{{ entry_country }}</label>
         <div class="col-md-9">
           <select name="country_id" id="input-country" class="form-control">
             <option value="">{{ text_select }}</option>
@@ -18,13 +18,13 @@
         </div>
       </div>
       <div class="form-group row required">
-        <label class="col-sm-3 col-form-label" for="input-zone">{{ entry_zone }}</label>
+        <label for="input-zone" class="col-sm-3 col-form-label">{{ entry_zone }}</label>
         <div class="col-md-9">
           <select name="zone_id" id="input-zone" class="form-control"> </select>
         </div>
       </div>
       <div class="form-group row required">
-        <label class="col-md-3 col-form-label" for="input-postcode">{{ entry_postcode }}</label>
+        <label for="input-postcode" class="col-md-3 col-form-label">{{ entry_postcode }}</label>
         <div class="col-md-9">
           <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
         </div>

@@ -58,11 +58,13 @@ class Notification extends \Opencart\System\Engine\Controller {
 		$results = $this->model_tool_notification->getNotifications($filter_data);
 
 		foreach ($results as $result) {
+			[$code, $date_added] = date_added($result['date_added']);
+
 			$data['notifications'][] = [
 				'notification_id' => $result['notification_id'],
 				'title'           => $result['title'],
 				'status'          => $result['status'],
-				'date_added'      => date_added($result['date_added'], $language_data),
+				'date_added'      => sprintf($this->language->get('text_' . $code . '_ago'), $date_added),
 				'view'            => $this->url->link('tool/notification|info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'] . $url),
 				'delete'          => $this->url->link('tool/notification|delete', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'] . $url)
 			];

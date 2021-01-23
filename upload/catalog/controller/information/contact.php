@@ -147,6 +147,19 @@ class Contact extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validate() {
+		$keys = [
+			'name',
+			'email',
+			'telephone',
+			'enquiry'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
 		if (!isset($this->request->post['name']) || (utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
 			$this->error['name'] = $this->language->get('error_name');
 		}

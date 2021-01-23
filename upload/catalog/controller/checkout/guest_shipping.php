@@ -4,6 +4,10 @@ class GuestShipping extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		if (isset($this->session->data['shipping_address']['firstname'])) {
 			$data['firstname'] = $this->session->data['shipping_address']['firstname'];
 		} else {
@@ -103,6 +107,24 @@ class GuestShipping extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$keys = [
+				'firstname',
+				'lastname',
+				'company',
+				'address_1',
+				'address_2',
+				'city',
+				'postcode',
+				'country_id',
+				'zone_id'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -144,8 +166,8 @@ class GuestShipping extends \Opencart\System\Engine\Controller {
 				if ($custom_field['location'] == 'address') {
 					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
-						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
 			}

@@ -140,9 +140,9 @@ $(document).ready(function() {
 	$('body').on('click', '.modal-link', function(e) {
 		e.preventDefault();
 
-		$('#modal-information').remove();
-
 		var element = this;
+
+		$('#modal-information').remove();
 
 		$.ajax({
 			url: $(element).attr('href'),

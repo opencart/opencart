@@ -4,9 +4,15 @@ class Country extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$json = [];
 
+		if (isset($this->request->get['country_id'])) {
+			$country_id = $this->request->get['country_id'];
+		} else {
+			$country_id = 0;
+		}
+
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		$country_info = $this->model_localisation_country->getCountry($country_id);
 
 		if ($country_info) {
 			$this->load->model('localisation/zone');
@@ -18,7 +24,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				'iso_code_3'        => $country_info['iso_code_3'],
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($country_id),
 				'status'            => $country_info['status']
 			];
 		}

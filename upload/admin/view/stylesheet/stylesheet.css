@@ -50,7 +50,7 @@ legend {
 }
 
 /* Desktop */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     #header .navbar-brand {
         padding: 11px 0px;
     }
@@ -84,7 +84,7 @@ legend {
 }
 
 /* Desktop */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     #header #header-notification .nav-link {
         padding: 10px 15px 0px 15px;
         line-height: 50px;
@@ -111,7 +111,7 @@ legend {
 }
 
 /* Desktop */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     #header #header-profile .nav-link {
         padding: 0px 10px;
         line-height: 60px;
@@ -133,7 +133,7 @@ legend {
 }
 
 /* Desktop */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     #header #header-logout > .nav-link {
         padding: 0px 20px 0px 15px;
         line-height: 60px;
@@ -154,7 +154,7 @@ legend {
 }
 
 /* Desktop */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     #button-menu {
         padding: 10px 16px;
     }
@@ -203,7 +203,7 @@ legend {
 }
 
 /* Desktop */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     #column-left {
         left: 0px;
     }
@@ -417,7 +417,7 @@ legend {
     font-weight: bold;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .col-form-label {
         text-align: right;
     }
@@ -554,6 +554,19 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     margin-right: 5px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+
+.card-body {
+
+}
+.bootstrap-datetimepicker-widget {
+    position: absolute;
+    float: right;
+    z-index: 9999;
+    height: 200px;
+    width: 250px;
+}
+
 
 /* Tiles */
 .tile {

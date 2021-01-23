@@ -10,7 +10,7 @@
         {% else %}
           <span class="price-new">{{ special }}</span> <span class="price-old">{{ price }}</span>
         {% endif %}
-        {% if product.tax %}
+        {% if tax %}
           <span class="price-tax">{{ text_tax }} {{ tax }}</span>
         {% endif %}
       </div>
@@ -18,7 +18,7 @@
     {% if review_status and rating %}
       <div class="rating">
         {% for i in 1..5 %}
-          {% if product.rating < i %}
+          {% if rating < i %}
             <span class="fas fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
           {% else %}
             <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="far fa-star fa-stack-2x"></i></span>

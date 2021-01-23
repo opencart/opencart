@@ -34,6 +34,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list() {
+		$this->load->language('common/filemanager');
+
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
 			$directory = DIR_IMAGE . 'catalog/' . html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8') . '/';
@@ -107,11 +109,28 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			'webp'
 		];
 
+		// Validate the file is an image
 		$files = glob($directory . $filter_name . '*');
 
-		for ($i = 0; $i < count($files); $i++) {
-			if (!in_array(substr($files[$i], strrpos($files[$i], '.') + 1), $allowed)) {
-				unset($files[$i]);
+		foreach ($files as $key => $value) {
+			if (!is_file($value)) {
+				unset($files[$key]);
+
+				continue;
+			}
+
+			$pos = strrpos($files[$key], '.');
+
+			if ($pos === false) {
+				unset($files[$key]);
+
+				continue;
+			}
+
+			$extension = substr($files[$key], $pos + 1);
+
+			if (!in_array($extension, $allowed)) {
+				unset($files[$key]);
 			}
 		}
 

@@ -1,14 +1,14 @@
 <div id="modal-image" class="modal">
-  <div id="filemanager" class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ heading_title }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
-      </div>
-      <div class="modal-body"></div>
-    </div>
-  </div>
-  <script type="text/javascript"><!--
+	<div id="filemanager" class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ heading_title }}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body"></div>
+		</div>
+	</div>
+	<script type="text/javascript"><!--
   $('#modal-image .modal-body').load('index.php?route=common/filemanager|list&user_token={{ user_token }}');
 
   $('#modal-image').on('click', '#button-parent', function(e) {
@@ -44,17 +44,17 @@
 		  url += '&filter_name=' + encodeURIComponent(filter_name);
 	  }
 
-    {% if thumb %}
+		{% if thumb %}
 	  url += '&thumb={{ thumb|escape('js') }}';
-    {% endif %}
+		{% endif %}
 
-    {% if target %}
+		{% if target %}
 	  url += '&target={{ target|escape('js') }}';
-    {% endif %}
+		{% endif %}
 
-    {% if ckeditor %}
+		{% if ckeditor %}
 	  url += '&ckeditor={{ ckeditor|escape('js') }}';
-    {% endif %}
+		{% endif %}
 
 	  $('#modal-image .modal-body').load(url);
   });
@@ -123,22 +123,8 @@
 	  }, 500);
   });
 
-  $('#modal-image').popover({
-	  trigger: 'click',
-	  html: true,
-	  container: '#modal-image',
-	  placement: 'bottom',
-	  selector: '#button-folder',
-	  title: '{{ entry_folder }}',
-	  sanitize: false,
-	  content: function() {
-		  html = '<div class="input-group">';
-		  html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
-		  html += '  <div class="input-group-append"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></div>';
-		  html += '</div>';
-
-		  return html;
-	  }
+  $('#modal-image').on('click', '#button-folder', function() {
+		$('#modal-folder').slideToggle();
   });
 
   $('#modal-image').on('click', '#button-create', function() {
@@ -220,15 +206,15 @@
   $('#modal-image').on('click', 'a.thumbnail', function(e) {
 	  e.preventDefault();
 
-    {% if thumb %}
+		{% if thumb %}
 	  $('{{ thumb|escape('js') }}').attr('src', $(this).find('img').attr('src'));
 
 	  $('{{ target|escape('js') }}').val($(this).parent().find('input').val());
-    {% endif %}
+		{% endif %}
 
-    {% if ckeditor %}
+		{% if ckeditor %}
 	  CKEDITOR.instances['{{ ckeditor|escape('js') }}'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
-    {% endif %}
+		{% endif %}
 
 	  $('#modal-image').modal('hide');
   });

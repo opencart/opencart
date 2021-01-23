@@ -162,7 +162,7 @@ class Language extends \Opencart\System\Engine\Model {
 		}
 
 		// Stock Status
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "stock_status WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $stock_status) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status['stock_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($stock_status['name']) . "'");

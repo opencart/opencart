@@ -14,7 +14,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalOrdersByCountry() {
-		$query = $this->db->query("SELECT COUNT(*) AS total, SUM(o.`total`) AS amount, c.`iso_code_2` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "country` c ON (o.`payment_country_id` = c.`country_id`) WHERE o.`order_status_id` > '0' GROUP BY o.`payment_country_id`");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, SUM(o.`total`) AS amount, c.`iso_code_2` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "country` c ON (o.`payment_country_id` = c.`country_id`) WHERE o.`order_status_id` > '0' GROUP BY o.`payment_country_id`");
 
 		return $query->rows;
 	}
@@ -35,7 +35,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, HOUR(`date_added`) AS hour FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, HOUR(`date_added`) AS hour FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
 
 		foreach ($query->rows as $result) {
 			$order_data[$result['hour']] = [
@@ -67,7 +67,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$order_data[date('w', strtotime($result['date_added']))] = [
@@ -97,7 +97,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND DATE(`date_added`) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$order_data[date('j', strtotime($result['date_added']))] = [
@@ -125,7 +125,7 @@ class Sale extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` IN(" . implode(",", $implode) . ") AND YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$order_data[date('n', strtotime($result['date_added']))] = [
@@ -238,7 +238,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTaxes($data = []) {
-		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, ot.`title`, SUM(ot.`value`) AS total, COUNT(o.`order_id`) AS `orders` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (ot.`order_id` = o.`order_id`) WHERE ot.`code` = 'tax'";
+		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, ot.`title`, SUM(ot.`value`) AS `total`, COUNT(o.`order_id`) AS `orders` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (ot.`order_id` = o.`order_id`) WHERE ot.`code` = 'tax'";
 
 		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " AND o.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
@@ -338,7 +338,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	public function getShipping($data = []) {
-		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, ot.`title`, SUM(ot.`value`) AS total, COUNT(o.`order_id`) AS orders FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (o.`order_id` = ot.`order_id`) WHERE ot.`code` = 'shipping'";
+		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, ot.`title`, SUM(ot.`value`) AS `total`, COUNT(o.`order_id`) AS orders FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (o.`order_id` = ot.`order_id`) WHERE ot.`code` = 'shipping'";
 
 		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " AND o.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";

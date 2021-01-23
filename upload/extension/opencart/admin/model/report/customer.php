@@ -11,7 +11,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, HOUR(`date_added`) AS hour FROM `" . DB_PREFIX . "customer` WHERE DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, HOUR(`date_added`) AS hour FROM `" . DB_PREFIX . "customer` WHERE DATE(`date_added`) = DATE(NOW()) GROUP BY HOUR(`date_added`) ORDER BY `date_added` ASC");
 
 		foreach ($query->rows as $result) {
 			$customer_data[$result['hour']] = [
@@ -37,7 +37,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "customer` WHERE DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "customer` WHERE DATE(`date_added`) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$customer_data[date('w', strtotime($result['date_added']))] = [
@@ -61,7 +61,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "customer` WHERE DATE(`date_added`) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "customer` WHERE DATE(`date_added`) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$customer_data[date('j', strtotime($result['date_added']))] = [
@@ -83,7 +83,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			];
 		}
 
-		$query = $this->db->query("SELECT COUNT(*) AS total, `date_added` FROM `" . DB_PREFIX . "customer` WHERE YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
+		$query = $this->db->query("SELECT COUNT(*) AS `total`, `date_added` FROM `" . DB_PREFIX . "customer` WHERE YEAR(`date_added`) = YEAR(NOW()) GROUP BY MONTH(`date_added`)");
 
 		foreach ($query->rows as $result) {
 			$customer_data[date('n', strtotime($result['date_added']))] = [
@@ -96,7 +96,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getOrders($data = []) {
-		$sql = "SELECT c.`customer_id`, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, c.`email`, cgd.`name` AS customer_group, c.`status`, o.`order_id`, SUM(op.`quantity`) AS products, o.`total` AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.`order_id` = op.`order_id`) LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE o.`customer_id` > '0' AND cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT c.`customer_id`, CONCAT(c.`firstname`, ' ', c.`lastname`) AS customer, c.`email`, cgd.`name` AS customer_group, c.`status`, o.`order_id`, SUM(op.`quantity`) AS products, o.`total` AS `total` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.`order_id` = op.`order_id`) LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE o.`customer_id` > '0' AND cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(o.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";

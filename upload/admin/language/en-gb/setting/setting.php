@@ -155,6 +155,7 @@ $_['help_currency']                    = 'Change the default currency. Clear you
 $_['help_currency_auto']               = 'Set your store to automatically update currencies daily.';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
 $_['help_pagination']                  = 'Determines how many catalog items are shown per page (products, categories, etc)';
+$_['help_limit_admin']                 = 'Determines how many admin items are shown per page (orders, customers, etc).';
 $_['help_product_count']               = 'Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
 $_['help_product_category']            = 'Display products in each parent category.';
 $_['help_review']                      = 'Enable/Disable new review entry and display of existing reviews.';

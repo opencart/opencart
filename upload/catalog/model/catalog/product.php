@@ -384,7 +384,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalProducts($data = []) {
-		$sql = "SELECT COUNT(DISTINCT p.`product_id`) AS total";
+		$sql = "SELECT COUNT(DISTINCT p.`product_id`) AS `total`";
 
 		if (!empty($data['filter_category_id'])) {
 			if (!empty($data['filter_sub_category'])) {

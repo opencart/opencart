@@ -95,7 +95,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_tag'");
 
 		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
 
 			foreach ($query->rows as $language) {
 				// Get old tags

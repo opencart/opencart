@@ -1,4 +1,5 @@
-<div id="carousel-banner{{ module }}" class="carousel fade" data-bs-ride="carousel">
+<div id="carousel-banner{{ module }}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  {% if banners > 1 %}
   <ol class="carousel-indicators">
     {% set banner_row = 0 %}
     {% for banner in banners %}
@@ -6,7 +7,7 @@
       {% set banner_row = banner_row + 1 %}
     {% endfor %}
   </ol>
-
+  {% endif %}
   <div class="carousel-inner">
 
     {% for banner in banners %}
@@ -22,16 +23,14 @@
     {% endfor %}
 
   </div>
-  <a href="#carousel-banner{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-banner{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
-
 </div>
 <script type="text/javascript"><!--
 $('#carousel-banner{{ module }} .carousel-indicators li:first').addClass('active');
 $('#carousel-banner{{ module }} .carousel-inner .carousel-item:first').addClass('active');
 
 $('#carousel-banner{{ module }}').carousel({
-	ride: 'fade',
-	interval: 2500,
+	ride: 'carousel',
+	interval: 5000,
 	wrap: true
 });
 //--></script>

@@ -25,19 +25,7 @@ $('#carousel-slideshow{{ module }} .carousel-inner .carousel-item:first').addCla
 
 $('#carousel-slideshow{{ module }}').carousel({
 	ride: 'carousel',
-	interval: 2500,
+	interval: 5000,
 	wrap: true
-});
-
-$('#carousel-slideshow{{ module }} a').on('click', function(e) {
-	e.preventDefault();
-
-	if ($(this).attr('data-slide') == 'prev') {
-		$('#carousel-slideshow{{ module }}').carousel('prev');
-  }
-
-	if ($(this).attr('data-slide') == 'next') {
-		$('#carousel-slideshow{{ module }}').carousel('next');
-	}
 });
 //--></script>

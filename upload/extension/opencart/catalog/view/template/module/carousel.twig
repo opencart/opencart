@@ -30,39 +30,7 @@ $('#carousel-carousel{{ module }} .carousel-indicators li:first').addClass('acti
 $('#carousel-carousel{{ module }} .carousel-inner .carousel-item:first').addClass('active');
 
 $('#carousel-carousel{{ module }}').carousel({
-	interval: 2000,
+	interval: 5000,
 	wrap: false
 });
-/*
-$('.carousel .carousel-item').each(function(){
-	var next = $(this).next();
-
-	if (!next.length) {
-		next = $(this).siblings(':first');
-	}
-
-	next.children(':first-child').clone().appendTo($(this));
-
-	if (next.next().length>0) {
-		next.next().children(':first-child').clone().appendTo($(this));
-	}
-	else {
-		$(this).siblings(':first').children(':first-child').clone().appendTo($(this));
-	}
-});
-
-
-
-$('#carousel{{ module }}').swiper({
-	mode: 'horizontal',
-	slidesPerView: 5,
-	slidesPerGroup: 5,
-	pagination: '.carousel{{ module }}',
-	paginationClickable: true,
-	nextButton: '.carousel .swiper-button-next',
-	prevButton: '.carousel .swiper-button-prev',
-	autoplay: $('#carousel{{ module }} img').length > 5 ? 2500 : 0,
-	loop: true
-});
-*/
 //--></script>

@@ -1,28 +1,27 @@
-<div id="carousel-carousel{{ module }}" class="carousel slide" data-bs-ride="carousel">
+<div id="carousel-carousel{{ module }}" class="carousel slide mb-4" data-bs-ride="carousel">
 	<ol class="carousel-indicators">
 		{% set banner_row = 0 %}
-		{% for banner in banners %}
+		{% for banner in banners|batch((banners|length / 3)|round(1, 'ceil')) %}
 			<li data-target="#carousel-carousel{{ module }}" data-slide-to="{{ banner_row }}"></li>
 			{% set banner_row = banner_row + 1 %}
 		{% endfor %}
 	</ol>
 	<div class="carousel-inner">
-		{% for carousel in banners|batch((banners|length / 4)|round(1, 'ceil')) %}
-			<div class="carousel-item text-center">
-				<div class="row">
+		{% for carousel in banners|batch((banners|length / 3)|round(1, 'ceil')) %}
+			<div class="carousel-item">
+				<div class="row row-cols-{{ carousel|length }}">
 					{% for banner in carousel %}
-						<div class="col-sm-3">
+						<div class="col text-center">
 							{% if banner.link %}
-								<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block"/></a>
+								<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}"/></a>
 							{% else %}
-								<img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block"/>
+								<img src="{{ banner.image }}" alt="{{ banner.title }}"/>
 							{% endif %}
 						</div>
 					{% endfor %}
 				</div>
 			</div>
 		{% endfor %}
-
 	</div>
 	<a href="#carousel-carousel{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-carousel{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
 </div>
@@ -31,7 +30,20 @@ $('#carousel-carousel{{ module }} .carousel-indicators li:first').addClass('acti
 $('#carousel-carousel{{ module }} .carousel-inner .carousel-item:first').addClass('active');
 
 $('#carousel-carousel{{ module }}').carousel({
+	ride: 'carousel',
 	interval: 5000,
-	wrap: false
+	wrap: true
+});
+
+$('#carousel-carousel{{ module }}').on('slide.bs.carousel', function() {
+
+
+	console.log('hi');
+
+		if () {
+
+
+		}
+
 });
 //--></script>

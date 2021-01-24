@@ -156,12 +156,10 @@ class Module extends \Opencart\System\Engine\Controller {
 						$setting_info = [];
 					}
 
-					echo $setting_info['status'] . "\n";
-
 					$module_data[] = [
 						'module_id' => $module['module_id'],
 						'name'      => $module['name'],
-						'status'    => !$module_data && !empty($setting_info['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+						'status'    => $setting_info['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 						'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
 						'delete'    => $this->url->link('extension/module|delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
 					];

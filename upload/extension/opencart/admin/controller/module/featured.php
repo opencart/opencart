@@ -123,14 +123,6 @@ class Featured extends \Opencart\System\Engine\Controller {
 			$data['axis'] ='';
 		}
 
-		if (isset($this->request->post['limit'])) {
-			$data['limit'] = $this->request->post['limit'];
-		} elseif (isset($module_info)) {
-			$data['limit'] = $module_info['limit'];
-		} else {
-			$data['limit'] = 5;
-		}
-
 		if (isset($this->request->post['width'])) {
 			$data['width'] = $this->request->post['width'];
 		} elseif (isset($module_info['width'])) {

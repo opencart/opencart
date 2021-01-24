@@ -13,7 +13,6 @@ $_['text_vertical']    = 'Vertical';
 $_['entry_name']       = 'Module Name';
 $_['entry_product']    = 'Products';
 $_['entry_axis']       = 'Axis';
-$_['entry_limit']      = 'Limit';
 $_['entry_width']      = 'Image Width';
 $_['entry_height']     = 'Image Height';
 $_['entry_status']     = 'Status';

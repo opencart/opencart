@@ -1,29 +1,30 @@
 <div id="carousel-carousel{{ module }}" class="carousel slide" data-bs-ride="carousel">
+	<ol class="carousel-indicators">
+		{% set banner_row = 0 %}
+		{% for banner in banners %}
+			<li data-target="#carousel-carousel{{ module }}" data-slide-to="{{ banner_row }}"></li>
+			{% set banner_row = banner_row + 1 %}
+		{% endfor %}
+	</ol>
+	<div class="carousel-inner">
+		{% for carousel in banners|batch((banners|length / 4)|round(1, 'ceil')) %}
+			<div class="carousel-item text-center">
+				<div class="row">
+					{% for banner in carousel %}
+						<div class="col-sm-3">
+							{% if banner.link %}
+								<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block"/></a>
+							{% else %}
+								<img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block"/>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
 
-  <ol class="carousel-indicators">
-    {% set banner_row = 0 %}
-    {% for banner in banners %}
-      <li data-target="#carousel-carousel{{ module }}" data-slide-to="{{ banner_row }}"></li>
-      {% set banner_row = banner_row + 1 %}
-    {% endfor %}
-  </ol>
-  <div class="carousel-inner row">
-
-    {% for banner in banners %}
-      <div class="carousel-item col text-center">
-
-        {% if banner.link %}
-          <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block"/></a>
-        {% else %}
-          <img src="{{ banner.image }}" alt="{{ banner.title }}" class="d-block"/>
-        {% endif %}
-
-      </div>
-    {% endfor %}
-  </div>
-    <a href="#carousel-carousel{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-carousel{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
-
-
+	</div>
+	<a href="#carousel-carousel{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-carousel{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
 </div>
 <script type="text/javascript"><!--
 $('#carousel-carousel{{ module }} .carousel-indicators li:first').addClass('active');

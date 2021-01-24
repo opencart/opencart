@@ -29,15 +29,15 @@ $('#carousel-slideshow{{ module }}').carousel({
 	wrap: true
 });
 
-$('#carousel-slideshow{{ module }} a[data-slide=\'prev\']').on('click', function(e) {
+$('#carousel-slideshow{{ module }} a').on('click', function(e) {
 	e.preventDefault();
 
-	$('#carousel-slideshow{{ module }}').carousel('prev');
-});
+	if ($(this).attr('data-slide') == 'prev') {
+		$('#carousel-slideshow{{ module }}').carousel('prev');
+  }
 
-$('#carousel-slideshow{{ module }} a[data-slide=\'next\']').on('click', function(e) {
-	e.preventDefault();
-
-	$('#carousel-slideshow{{ module }}').carousel('next');
+	if ($(this).attr('data-slide') == 'next') {
+		$('#carousel-slideshow{{ module }}').carousel('next');
+	}
 });
 //--></script>

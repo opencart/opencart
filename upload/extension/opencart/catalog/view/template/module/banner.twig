@@ -1,26 +1,37 @@
-<div id="banner{{ module }}" class="carousel fade" data-bs-ride="carousel">
-
+<div id="carousel-banner{{ module }}" class="carousel fade" data-bs-ride="carousel">
+  <ol class="carousel-indicators">
+    {% set banner_row = 0 %}
+    {% for banner in banners %}
+      <li data-target="#carousel-banner{{ module }}" data-slide-to="{{ banner_row }}"></li>
+      {% set banner_row = banner_row + 1 %}
+    {% endfor %}
+  </ol>
 
   <div class="carousel-inner">
 
-
     {% for banner in banners %}
-      <div class="carousel-item active">
+      <div class="carousel-item">
+
         {% if banner.link %}
           <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
         {% else %}
           <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
         {% endif %}
       </div>
+
     {% endfor %}
 
-
-
   </div>
+  <a href="#carousel-banner{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-banner{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
+
 </div>
 <script type="text/javascript"><!--
-$('#banner{{ module }}').carousel({
+$('#carousel-banner{{ module }} .carousel-indicators li:first').addClass('active');
+$('#carousel-banner{{ module }} .carousel-inner .carousel-item:first').addClass('active');
+
+$('#carousel-banner{{ module }}').carousel({
+	ride: 'fade',
 	interval: 2500,
-	wrap: false
+	wrap: true
 });
---></script> 
+//--></script>

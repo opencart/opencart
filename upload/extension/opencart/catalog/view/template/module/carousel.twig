@@ -13,9 +13,9 @@
 					{% for banner in carousel %}
 						<div class="col text-center">
 							{% if banner.link %}
-								<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}"/></a>
+								<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
 							{% else %}
-								<img src="{{ banner.image }}" alt="{{ banner.title }}"/>
+								<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
 							{% endif %}
 						</div>
 					{% endfor %}
@@ -33,17 +33,5 @@ $('#carousel-carousel{{ module }}').carousel({
 	ride: 'carousel',
 	interval: 5000,
 	wrap: true
-});
-
-$('#carousel-carousel{{ module }}').on('slide.bs.carousel', function(event) {
-
-
-	console.log(event);
-
-		//if () {
-
-
-		//}
-
 });
 //--></script>

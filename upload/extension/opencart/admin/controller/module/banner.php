@@ -84,7 +84,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
 			$data['name'] = '';
@@ -92,7 +92,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['banner_id'])) {
 			$data['banner_id'] = $this->request->post['banner_id'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['banner_id'])) {
 			$data['banner_id'] = $module_info['banner_id'];
 		} else {
 			$data['banner_id'] = '';
@@ -104,7 +104,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['width'])) {
 			$data['width'] = $this->request->post['width'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['width'])) {
 			$data['width'] = $module_info['width'];
 		} else {
 			$data['width'] = '';
@@ -112,7 +112,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['height'])) {
 			$data['height'] = $this->request->post['height'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['height'])) {
 			$data['height'] = $module_info['height'];
 		} else {
 			$data['height'] = '';
@@ -120,7 +120,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';

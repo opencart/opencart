@@ -86,15 +86,23 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
+		if (isset($this->request->post['axis'])) {
+			$data['axis'] = $this->request->post['axis'];
+		} elseif (isset($module_info['axis'])) {
+			$data['axis'] = $module_info['axis'];
+		} else {
+			$data['axis'] ='';
+		}
+
 		if (isset($this->request->post['limit'])) {
 			$data['limit'] = $this->request->post['limit'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['limit'])) {
 			$data['limit'] = $module_info['limit'];
 		} else {
 			$data['limit'] = 5;
@@ -102,7 +110,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['width'])) {
 			$data['width'] = $this->request->post['width'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['width'])) {
 			$data['width'] = $module_info['width'];
 		} else {
 			$data['width'] = 200;
@@ -110,7 +118,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['height'])) {
 			$data['height'] = $this->request->post['height'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['height'])) {
 			$data['height'] = $module_info['height'];
 		} else {
 			$data['height'] = 200;
@@ -118,7 +126,7 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';

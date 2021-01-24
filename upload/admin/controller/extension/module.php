@@ -155,7 +155,9 @@ class Module extends \Opencart\System\Engine\Controller {
 					} else {
 						$setting_info = [];
 					}
-					
+
+					echo $setting_info['status'] . "\n";
+
 					$module_data[] = [
 						'module_id' => $module['module_id'],
 						'name'      => $module['name'],
@@ -165,9 +167,15 @@ class Module extends \Opencart\System\Engine\Controller {
 					];
 				}
 
+				if ($module_data) {
+					$status = '';
+				} else {
+					$status = $this->config->has('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+				}
+
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
-					'status'    => $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'status'    => $status,
 					'module'    => $module_data,
 					'install'   => $this->url->link('extension/module|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/module|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),

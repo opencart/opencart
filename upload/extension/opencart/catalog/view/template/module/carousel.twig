@@ -1,5 +1,5 @@
 <div id="carousel-carousel{{ module }}" class="carousel slide mb-4" data-bs-ride="carousel">
-	<ol class="carousel-indicators">
+	<ol class="carousel-indicators d-none d-md-flex">
 		{% set banner_row = 0 %}
 		{% for banner in banners|batch((banners|length / 3)|round(1, 'ceil')) %}
 			<li data-target="#carousel-carousel{{ module }}" data-slide-to="{{ banner_row }}"></li>
@@ -35,15 +35,15 @@ $('#carousel-carousel{{ module }}').carousel({
 	wrap: true
 });
 
-$('#carousel-carousel{{ module }}').on('slide.bs.carousel', function() {
+$('#carousel-carousel{{ module }}').on('slide.bs.carousel', function(event) {
 
 
-	console.log('hi');
+	console.log(event);
 
-		if () {
+		//if () {
 
 
-		}
+		//}
 
 });
 //--></script>

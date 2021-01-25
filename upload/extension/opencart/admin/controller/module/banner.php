@@ -102,6 +102,46 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['banners'] = $this->model_design_banner->getBanners();
 
+		if (isset($this->request->post['effect'])) {
+			$data['effect'] = $this->request->post['effect'];
+		} elseif (isset($module_info['effect'])) {
+			$data['effect'] = $module_info['effect'];
+		} else {
+			$data['effect'] = '';
+		}
+
+		if (isset($this->request->post['items'])) {
+			$data['items'] = $this->request->post['items'];
+		} elseif (isset($module_info['items'])) {
+			$data['items'] = $module_info['items'];
+		} else {
+			$data['items'] = 4;
+		}
+
+		if (isset($this->request->post['controls'])) {
+			$data['controls'] = $this->request->post['controls'];
+		} elseif (isset($module_info['controls'])) {
+			$data['controls'] = $module_info['controls'];
+		} else {
+			$data['controls'] = '';
+		}
+
+		if (isset($this->request->post['indicators'])) {
+			$data['indicators'] = $this->request->post['indicators'];
+		} elseif (isset($module_info['indicators'])) {
+			$data['indicators'] = $module_info['indicators'];
+		} else {
+			$data['indicators'] = '';
+		}
+
+		if (isset($this->request->post['interval'])) {
+			$data['interval'] = $this->request->post['interval'];
+		} elseif (isset($module_info['interval'])) {
+			$data['interval'] = $module_info['interval'];
+		} else {
+			$data['interval'] = 5000;
+		}
+
 		if (isset($this->request->post['width'])) {
 			$data['width'] = $this->request->post['width'];
 		} elseif (isset($module_info['width'])) {

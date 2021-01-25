@@ -23,6 +23,12 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['module'] = $module++;
 
+		$data['effect'] = $setting['effect'];
+		$data['controls'] = $setting['controls'];
+		$data['indicators'] = $setting['indicators'];
+		$data['items'] = $setting['items'];
+		$data['interval'] = $setting['interval'];
+
 		return $this->load->view('extension/opencart/module/banner', $data);
 	}
 }

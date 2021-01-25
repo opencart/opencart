@@ -1285,9 +1285,11 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
 (1, 10, 'opencart.account', 'column_right', 1),
 (2, 6, 'opencart.account', 'column_right', 1),
-(5, 1, 'opencart.featured.28', 'content_top', 2),
-(6, 3, 'opencart.category', 'column_left', 1),
-(7, 3, 'opencart.banner.30', 'column_left', 2);
+(5, 3, 'opencart.banner.3', 'content_top', 1),
+(3, 1, 'opencart.featured.2', 'content_top', 2),
+(6, 3, 'opencart.banner.4', 'content_bottom', 1),
+(4, 3, 'opencart.category', 'column_left', 1),
+(7, 3, 'opencart.banner.1', 'column_left', 2);
 
 -----------------------------------------------------------
 
@@ -1368,9 +1370,10 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 --
 
 INSERT INTO `oc_module` (`module_id`, `name`, `code`, `setting`) VALUES
-(30, 'Category', 'opencart.banner', '{"name":"Category","banner_id":"6","width":"182","height":"182","status":"1"}'),
-(28, 'Home Page', 'opencart.featured', '{"name":"Home Page","product":["43","40","42","30"],"limit":"4","width":"200","height":"200","status":"1"}'),
-(31, 'Banner 1', 'opencart.banner', '{"name":"Banner 1","banner_id":"6","width":"182","height":"182","status":"1"}');
+(1, 'Category Banner', 'opencart.banner', '{"name":"Category Banner","banner_id":"6","effect":"fade","items":"1","controls":"0","indicators":"0","interval":"5000","width":"200","height":"180","status":"1"}'),
+(2, 'Featured', 'opencart.featured', '{"name":"Featured","product_name":"","product":["43","40","42","30"],"axis":"horizontal","limit":"4","width":"200","height":"200","status":"1"}'),
+(3, 'Homepage Slideshow', 'opencart.banner', '{"name":"Homepage Slideshow","banner_id":"7","effect":"slide","items":"1","controls":"1","indicators":"1","interval":"5000","width":"1140","height":"380","status":"1"}'),
+(4, 'Homepage Manufacturers', 'opencart.banner', '{"name":"Homepage Manufacturers","banner_id":"6","width":"182","height":"182","status":"1"}');
 
 -----------------------------------------------------------
 

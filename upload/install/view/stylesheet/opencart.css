@@ -28,16 +28,18 @@ body, p, td, th, input, textarea, select, option {
 .col-form-label {
     font-weight: bold;
 }
-
-.form-control:hover {
+.custom-select:hover,
+.custom-select:focus,
+.form-control:hover,
+.form-control:focus {
     border: 1px solid #b9b9b9;
     border-top-color: #a0a0a0;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-div.required .col-form-label:not(span):before, td.required:before {
+div.required .col-form-label:not(span):before,
+td.required:before {
     content: '* ';
-    color: #F00;
-    font-weight: bold;
+    color: #dc3545;
 }
 /* End step 3 */

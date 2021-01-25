@@ -1373,7 +1373,7 @@ INSERT INTO `oc_module` (`module_id`, `name`, `code`, `setting`) VALUES
 (1, 'Category Banner', 'opencart.banner', '{"name":"Category Banner","banner_id":"6","effect":"fade","items":"1","controls":"0","indicators":"0","interval":"5000","width":"200","height":"180","status":"1"}'),
 (2, 'Featured', 'opencart.featured', '{"name":"Featured","product_name":"","product":["43","40","42","30"],"axis":"horizontal","limit":"4","width":"200","height":"200","status":"1"}'),
 (3, 'Homepage Slideshow', 'opencart.banner', '{"name":"Homepage Slideshow","banner_id":"7","effect":"slide","items":"1","controls":"1","indicators":"1","interval":"5000","width":"1140","height":"380","status":"1"}'),
-(4, 'Homepage Manufacturers', 'opencart.banner', '{"name":"Homepage Manufacturers","banner_id":"8","width":"182","height":"182","status":"1"}');
+(4, 'Homepage Manufacturers', 'opencart.banner', '{"name":"Homepage Manufacturers","banner_id":"8","effect":"slide","items":"4","controls":"1","indicators":"1","interval":"5000","width":"182","height":"182","status":"1"}');
 
 -----------------------------------------------------------
 

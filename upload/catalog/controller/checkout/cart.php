@@ -30,7 +30,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
-				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account|register', 'language=' . $this->config->get('config_language')));
+				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 			} else {
 				$data['attention'] = '';
 			}

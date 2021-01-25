@@ -231,7 +231,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['heading_title'] = $product_info['name'];
 
 			$data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
-			$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account|register', 'language=' . $this->config->get('config_language')));
+			$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 
 			$data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);
 

@@ -1285,10 +1285,10 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
 (1, 10, 'opencart.account', 'column_right', 1),
 (2, 6, 'opencart.account', 'column_right', 1),
-(5, 3, 'opencart.banner.3', 'content_top', 1),
-(3, 1, 'opencart.featured.2', 'content_top', 2),
-(6, 3, 'opencart.banner.4', 'content_bottom', 1),
-(4, 3, 'opencart.category', 'column_left', 1),
+(3, 1, 'opencart.banner.3', 'content_top', 1),
+(4, 1, 'opencart.featured.2', 'content_top', 2),
+(5, 1, 'opencart.banner.4', 'content_bottom', 1),
+(6, 3, 'opencart.category', 'column_left', 1),
 (7, 3, 'opencart.banner.1', 'column_left', 2);
 
 -----------------------------------------------------------

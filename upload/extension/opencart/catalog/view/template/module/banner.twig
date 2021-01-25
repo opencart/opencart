@@ -1,17 +1,15 @@
 <div id="carousel-banner{{ module }}" class="carousel slide{% if effect == 'fade' %} carousel-fade{% endif %} mb-4" data-bs-ride="carousel">
-
-	{% if indicators and banners|length > 1 %}
+	{% if indicators and banners|batch(items)|length > 1 %}
 		<ol class="carousel-indicators">
 			{% set banner_row = 0 %}
-			{% for banner in banners|batch((banners|length / items)|round(1, 'ceil')) %}
+			{% for banner in banners|batch(items) %}
 				<li data-target="#carousel-banner{{ module }}" data-slide-to="{{ banner_row }}"></li>
 				{% set banner_row = banner_row + 1 %}
 			{% endfor %}
 		</ol>
 	{% endif %}
-
 	<div class="carousel-inner">
-		{% for carousel in banners|batch((banners|length / items)|round(1, 'ceil')) %}
+		{% for carousel in banners|batch(items) %}
 			<div class="carousel-item">
 				<div class="row">
 					{% for banner in carousel %}
@@ -27,9 +25,8 @@
 			</div>
 		{% endfor %}
 	</div>
-
-	{% if controls and banners|length > 1 %}
-	<a href="#carousel-banner{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-banner{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
+	{% if controls and banners|batch(items)|length > 1 %}
+		<a href="#carousel-banner{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-banner{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
 	{% endif %}
 </div>
 <script type="text/javascript"><!--

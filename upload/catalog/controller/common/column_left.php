@@ -63,7 +63,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (isset($part[0]) && isset($part[1]) && isset($part[2])) {
+			if (isset($part[2])) {
 				$setting_info = $this->model_setting_module->getModule($part[2]);
 
 				if ($setting_info && $setting_info['status']) {

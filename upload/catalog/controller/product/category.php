@@ -175,16 +175,18 @@ class ControllerProductCategory extends Controller {
 					$price = false;
 				}
 
-				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				if (!is_null($product_info['special']) && (float)$product_info['special'] >= 0) {
+					$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$tax_price = (float)$product_info['special'];
 				} else {
-					$special = false;
+					$data['special'] = false;
+					$tax_price = (float)$product_info['price'];
 				}
-
+	
 				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
+					$data['tax'] = $this->currency->format($tax_price, $this->session->data['currency']);
 				} else {
-					$tax = false;
+					$data['tax'] = false;
 				}
 
 				if ($this->config->get('config_review_status')) {

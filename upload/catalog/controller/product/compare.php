@@ -67,7 +67,7 @@ class ControllerProductCompare extends Controller {
 					$price = false;
 				}
 
-				if ((float)$product_info['special']) {
+				if (!is_null($product_info['special']) && (float)$product_info['special'] >= 0) {
 					$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 				} else {
 					$special = false;

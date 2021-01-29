@@ -9,10 +9,6 @@ class Featured extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
-		if (!$setting['limit']) {
-			$setting['limit'] = 4;
-		}
-
 		if (!empty($setting['product'])) {
 			$product_data = [];
 

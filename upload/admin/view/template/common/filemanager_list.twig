@@ -1,0 +1,50 @@
+<div class="row mb-3">
+	<div class="col-sm-5">
+		<a href="{{ parent }}" id="button-parent" data-toggle="tooltip" title="{{ button_parent }}" class="btn btn-light"><i class="fas fa-level-up-alt"></i></a> <a href="{{ refresh }}" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fas fa-sync"></i></a>
+		<button type="button" data-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fas fa-upload"></i></button>
+		<button type="button" data-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="fas fa-folder"></i></button>
+		<button type="button" data-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+		<input type="hidden" name="directory" value="{{ directory }}"/>
+	</div>
+	<div class="col-sm-7">
+		<div class="input-group">
+			<input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
+			<div class="input-group-append">
+				<button type="button" id="button-search" data-toggle="tooltip" title="{{ button_search }}" class="btn btn-primary"><i class="fas fa-search"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-folder" class="row mb-3" style="display: none;">
+	<div class="col-sm-12">
+		<div class="input-group">
+			<div class="input-group">
+				<input type="text" name="folder" value="" placeholder="{{ entry_folder }}" id="input-folder" class="form-control">
+				<div class="input-group-append"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></div>
+			</div>
+		</div>
+	</div>
+</div>
+<hr/>
+<div class="row">
+	{% for directory in directories %}
+		<div class="col-sm-3 col-6 mb-3 text-center">
+			<div class="h-100">
+				<a href="{{ directory.href }}" class="directory mb-1"><i class="fas fa-folder fa-5x"></i></a> <label class="mt-1"><input type="checkbox" name="path[]" value="{{ directory.path }}"/>
+					{{ directory.name }}
+				</label>
+			</div>
+		</div>
+	{% endfor %}
+	{% for image in images %}
+		<div class="col-sm-3 col-6 mb-3 text-center">
+			<div class="h-100">
+				<a href="{{ image.href }}" class="thumbnail mb-1"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-thumbnail"/></a> <label class="mt-1"><input type="checkbox" name="path[]" value="{{ image.path }}"/>
+					{{ image.name }}</label>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+{% if pagination %}
+	<div class="modal-footer">{{ pagination }}</div>
+{% endif %}

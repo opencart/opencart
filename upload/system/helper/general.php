@@ -77,62 +77,76 @@ if (!function_exists('hash_equals')) {
 	}
 }
 
-function date_added($date, $language) {
+function date_added($date) {
 	$second = time() - strtotime($date);
 
 	if ($second < 10) {
-		$date_added = sprintf($language['text_just_now'], $second);
+		$code = 'second';
+		$date_added = $second;
 	} elseif ($second) {
-		$date_added = sprintf($language['text_seconds_ago'], $second);
+		$code = 'seconds';
+		$date_added = $second;
 	}
 
 	$minute = floor($second / 60);
 
 	if ($minute == 1) {
-		$date_added = sprintf($language['text_minute_ago'], $minute);
+		$code = 'minute';
+		$date_added = $minute;
 	} elseif ($minute) {
-		$date_added = sprintf($language['text_minutes_ago'], $minute);
+		$code = 'minutes';
+		$date_added = $minute;
 	}
 
 	$hour = floor($minute / 60);
 
 	if ($hour == 1) {
-		$date_added = sprintf($language['text_hour_ago'], $hour);
+		$code = 'hour';
+		$date_added = $hour;
 	} elseif ($hour) {
-		$date_added = sprintf($language['text_hours_ago'], $hour);
+		$code = 'hours';
+		$date_added = $hour;
 	}
 
 	$day = floor($hour / 24);
 
 	if ($day == 1) {
-		$date_added = sprintf($language['text_day_ago'], $day);
+		$code = 'day';
+		$date_added = $day;
 	} elseif ($day) {
-		$date_added = sprintf($language['text_days_ago'], $day);
+		$code = 'days';
+		$date_added = $day;
 	}
 
 	$week = floor($day / 7);
 
 	if ($week == 1) {
-		$date_added = sprintf($language['text_week_ago'], $week);
+		$code = 'week';
+		$date_added = $week;
 	} elseif ($week) {
-		$date_added = sprintf($language['text_weeks_ago'], $week);
+		$code = 'weeks';
+		$date_added = $week;
 	}
 
 	$month = floor($week / 4);
 
 	if ($month == 1) {
-		$date_added = sprintf($language['text_month_ago'], $month);
+		$code = 'month';
+		$date_added = $month;
 	} elseif ($month) {
-		$date_added = sprintf($language['text_months_ago'], $month);
+		$code = 'months';
+		$date_added = $month;
 	}
 
 	$year = floor($week / 52.1429);
 
 	if ($year == 1) {
-		$date_added = sprintf($language['text_year_ago'], $year);
+		$code = 'year';
+		$date_added = $year;
 	} elseif ($year) {
-		$date_added = sprintf($language['text_years_ago'], $year);
+		$code = 'years';
+		$date_added = $year;
 	}
 
-	return $date_added;
+	return [$code, $date_added];
 }

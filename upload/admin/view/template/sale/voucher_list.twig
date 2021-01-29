@@ -55,17 +55,17 @@
                     {% else %}
                       <a href="{{ sort_amount }}">{{ column_amount }}</a>
                     {% endif %}</td>
-                  <td class="text-left">{% if sort == 'theme' %}
+                  <td class="text-left d-none d-lg-table-cell">{% if sort == 'theme' %}
                       <a href="{{ sort_theme }}" class="{{ order|lower }}">{{ column_theme }}</a>
                     {% else %}
                       <a href="{{ sort_theme }}">{{ column_theme }}</a>
                     {% endif %}</td>
-                  <td class="text-left">{% if sort == 'v.status' %}
+                  <td class="text-lef d-none d-lg-table-cellt">{% if sort == 'v.status' %}
                       <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
                       <a href="{{ sort_status }}">{{ column_status }}</a>
                     {% endif %}</td>
-                  <td class="text-left">{% if sort == 'v.date_added' %}
+                  <td class="text-left d-none d-lg-table-cell">{% if sort == 'v.date_added' %}
                       <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
                     {% else %}
                       <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
@@ -86,9 +86,9 @@
                       <td class="text-left">{{ voucher.from }}</td>
                       <td class="text-left">{{ voucher.to }}</td>
                       <td class="text-right">{{ voucher.amount }}</td>
-                      <td class="text-left">{{ voucher.theme }}</td>
-                      <td class="text-left">{{ voucher.status }}</td>
-                      <td class="text-left">{{ voucher.date_added }}</td>
+                      <td class="text-left d-none d-lg-table-cell">{{ voucher.theme }}</td>
+                      <td class="text-left d-none d-lg-table-cell">{{ voucher.status }}</td>
+                      <td class="text-left d-none d-lg-table-cell">{{ voucher.date_added }}</td>
                       <td class="text-right">
                         {% if voucher.order %}
                           <a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-eye"></i></a>

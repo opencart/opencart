@@ -75,7 +75,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
 			$data['name'] = '';
@@ -83,7 +83,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['module_description'])) {
 			$data['module_description'] = $this->request->post['module_description'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['module_description'])) {
 			$data['module_description'] = $module_info['module_description'];
 		} else {
 			$data['module_description'] = [];
@@ -95,7 +95,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($module_info)) {
+		} elseif (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';

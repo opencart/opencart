@@ -33,7 +33,11 @@ class Error extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->config->get('config_error_log')) {
-			$this->log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
+			$sting  = 'PHP ' . $error . ': ' . $message . "\n";
+			$sting .= 'File: ' . $file . "\n";
+			$sting .= 'Line: ' . $line . "\n";
+
+			$this->log->write($sting);
 		}
 
 		if ($this->config->get('config_error_display')) {
@@ -48,7 +52,11 @@ class Error extends \Opencart\System\Engine\Controller {
 
 	public function exception($e) {
 		if ($this->config->get('config_error_log')) {
-			$this->log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+			$sting  = get_class($e) . ':  ' . $e->getMessage() . "\n";
+			$sting .= 'File: ' . $e->getFile() . "\n";
+			$sting .= 'Line: ' . $e->getLine() . "\n";
+
+			$this->log->write($sting);
 		}
 
 		if ($this->config->get('config_error_display')) {

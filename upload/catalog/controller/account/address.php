@@ -220,6 +220,12 @@ class Address extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm() {
+		$data['text_address'] = !isset($this->request->get['address_id']) ? $this->language->get('text_address_add') : $this->language->get('text_address_edit');
+
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -248,8 +254,6 @@ class Address extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_id=' . $this->request->get['address_id'])
 			];
 		}
-
-		$data['text_address'] = !isset($this->request->get['address_id']) ? $this->language->get('text_address_add') : $this->language->get('text_address_edit');
 
 		if (isset($this->error['firstname'])) {
 			$data['error_firstname'] = $this->error['firstname'];

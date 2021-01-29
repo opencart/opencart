@@ -4,6 +4,10 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['address_id'] = $this->session->data['shipping_address']['address_id'];
 		} else {

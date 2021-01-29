@@ -82,6 +82,8 @@ $(document).ready(function() {
 		}
 	});
 
+
+
 	// Product List
 	$('#list-view').click(function() {
 		$('#content .product-grid > .clearfix').remove();
@@ -136,13 +138,17 @@ $(document).ready(function() {
 		$('#content .product-module').attr('class', 'product-layout product-module col-lg-3 col-md-3 col-sm-6 col-12');
 	}
 
+
+
+
+
 	/* Agree to Terms */
 	$('body').on('click', '.modal-link', function(e) {
 		e.preventDefault();
 
-		$('#modal-information').remove();
-
 		var element = this;
+
+		$('#modal-information').remove();
 
 		$.ajax({
 			url: $(element).attr('href'),

@@ -248,6 +248,10 @@ class Download extends \Opencart\System\Engine\Controller {
 	protected function getForm() {
 		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->error['warning'])) {

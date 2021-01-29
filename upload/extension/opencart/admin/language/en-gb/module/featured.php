@@ -6,13 +6,15 @@ $_['heading_title']    = 'Featured';
 $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified featured module!';
 $_['text_edit']        = 'Edit Featured Module';
+$_['text_horizontal']  = 'Horizontal';
+$_['text_vertical']    = 'Vertical';
 
 // Entry
 $_['entry_name']       = 'Module Name';
 $_['entry_product']    = 'Products';
-$_['entry_limit']      = 'Limit';
-$_['entry_width']      = 'Width';
-$_['entry_height']     = 'Height';
+$_['entry_axis']       = 'Axis';
+$_['entry_width']      = 'Image Width';
+$_['entry_height']     = 'Image Height';
 $_['entry_status']     = 'Status';
 
 // Help

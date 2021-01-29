@@ -35,9 +35,9 @@
 <div id="container">
   <header id="header" class="navbar navbar-expand navbar-light bg-light">
     <div class="container-fluid">
-      <a href="{{ home }}" class="navbar-brand d-none d-md-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
+      <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
       {% if logged %}
-        <a href="#" id="button-menu" class="d-inline-block d-md-none"><span class="fas fa-bars"></span></a>
+        <a href="#" id="button-menu" class="d-inline-block d-lg-none"><span class="fas fa-bars"></span></a>
         <ul class="nav navbar-nav">
           <li id="header-notification" class="nav-item dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i>{% if notification_total %} <span class="badge badge-danger">{{ notification_total }}</span>{% endif %}</a>

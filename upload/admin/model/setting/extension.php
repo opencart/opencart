@@ -2,7 +2,7 @@
 namespace Opencart\Application\Model\Setting;
 class Extension extends \Opencart\System\Engine\Model {
 	public function getExtensions() {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
+		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");
 
 		return $query->rows;
 	}

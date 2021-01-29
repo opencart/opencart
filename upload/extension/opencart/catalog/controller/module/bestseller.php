@@ -7,6 +7,8 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
+		$data['axis'] = $setting['axis'];
+
 		$data['products'] = [];
 
 		$results = $this->model_catalog_product->getBestSeller($setting['limit']);

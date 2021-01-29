@@ -195,7 +195,7 @@ final class Loader {
 			// Create a key to store the library object
 			$this->registry->set(str_replace('/', '_', (string)$route), $library);
 		} else {
-			trigger_error('Error: Could not load library ' . $route . '!');
+			throw \Exception('Error: Could not load library ' . $route . '!');
 		}
 
 		$this->event->trigger('library/' . $trigger . '/after', [&$route, &$args]);
@@ -287,7 +287,7 @@ final class Loader {
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);
 				} else {
-					trigger_error('Error: Could not call model/' . $route . '!');
+					throw \Exception('Error: Could not call model/' . $route . '!');
 				}
 			}
 

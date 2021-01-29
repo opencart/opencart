@@ -113,6 +113,8 @@ $(document).ready(function() {
 
 // Image Manager
 $(document).on('click', '[data-toggle=\'image\']', function(e) {
+	e.preventDefault();
+
 	var element = this;
 
 	$('#modal-image').remove();
@@ -416,5 +418,4 @@ var chain = new Chain();
 		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
 			$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
 		})
-
 }(jQuery);

@@ -281,7 +281,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			if ($position && !feof($handle)) {
 				$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup|restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position));
+				$json['next'] = $this->url->link('tool/backup|restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 

@@ -18,6 +18,7 @@
   border: 4px solid #fff;
   border-radius: 4px;
   box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  margin-bottom: 50px;
 }
 
 .carousel.pointer-event {
@@ -92,7 +93,7 @@
 .carousel-control-prev,
 .carousel-control-next {
   position: absolute;
-  //top: 0;
+  top: 0;
   bottom: 0;
   //z-index: 1;
   // Use flex for alignment (1-3)
@@ -109,6 +110,7 @@
   font-size: 40px;
   width: 40px;
   height: 40px;
+  color: rgba(0,0,0,0.8);
 
   background-image: none;
   text-align: center;
@@ -159,7 +161,8 @@
 .carousel-indicators {
   position: absolute;
   right: 0;
-  bottom: 0;
+  //bottom: 0;
+  bottom: -50px;
   left: 0;
   z-index: 15;
   display: flex;
@@ -170,13 +173,7 @@
   margin-left: $carousel-control-width;
   list-style: none;
 
-  // OpenCart
-  line-height: 45px;
-  margin-bottom: -100px;.
-
   li {
-
-
     box-sizing: content-box;
     flex: 0 1 auto;
     width: $carousel-indicator-width;
@@ -191,6 +188,13 @@
     border-top: $carousel-indicator-hit-area-height solid transparent;
     border-bottom: $carousel-indicator-hit-area-height solid transparent;
     opacity: .5;
+
+    // OpenCart
+    border-radius: 20px;
+    border: 1px solid #000000;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+    background: rgba(0,0,0,.9);
+
     @include transition($carousel-indicator-transition);
   }
 

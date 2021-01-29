@@ -1085,12 +1085,15 @@ $carousel-control-opacity:           .5 !default;
 $carousel-control-hover-opacity:     .9 !default;
 $carousel-control-transition:        opacity .15s ease !default;
 
-$carousel-indicator-width:           30px !default;
-$carousel-indicator-height:          3px !default;
+//$carousel-indicator-width:           30px !default;
+$carousel-indicator-width:           9px !default;
+//$carousel-indicator-height:          3px !default;
+$carousel-indicator-height:          9px !default;
 $carousel-indicator-hit-area-height: 10px !default;
-$carousel-indicator-spacer:          3px !default;
+//$carousel-indicator-spacer:          3px !default;
+$carousel-indicator-spacer:          5px !default;
 //$carousel-indicator-active-bg:       $white !default;
-$carousel-indicator-active-bg:       rgba(0, 0, 0, 0.8) !default;
+$carousel-indicator-active-bg:       rgba(0, 0, 0, 0.5) !default;
 $carousel-indicator-transition:      opacity .6s ease !default;
 
 $carousel-caption-width:             70% !default;

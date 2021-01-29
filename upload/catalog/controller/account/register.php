@@ -8,6 +8,10 @@ class Register extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		$this->load->language('account/register');
 
 		$this->document->setTitle($this->language->get('heading_title'));

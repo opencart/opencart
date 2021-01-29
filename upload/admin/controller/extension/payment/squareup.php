@@ -272,7 +272,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             
             $session->start();
                     
-            $this->model_user_api->deleteApiSessionBySessonId($session->getId());
+            $this->model_user_api->deleteApiSessionBySessionId($session->getId());
             
             $this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
             
@@ -431,7 +431,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             
             $session->start();
                     
-            $this->model_user_api->deleteApiSessionBySessonId($session->getId());
+            $this->model_user_api->deleteApiSessionBySessionId($session->getId());
             
             $this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
             
@@ -799,7 +799,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             
             $session->start();
                     
-            $this->model_user_api->deleteApiSessionBySessonId($session->getId());
+            $this->model_user_api->deleteApiSessionBySessionId($session->getId());
             
             $this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
             
@@ -872,7 +872,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             
             $session->start();
                     
-            $this->model_user_api->deleteApiSessionBySessonId($session->getId());
+            $this->model_user_api->deleteApiSessionBySessionId($session->getId());
             
             $this->model_user_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
             

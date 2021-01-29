@@ -15,6 +15,7 @@ $_['text_refund_ok']			         = 'Rebate was successful';
 $_['text_refund_ok_order']		         = 'Rebate was successful, order status updated to refund';
 $_['text_void_ok']				         = 'Void was successful, order status updated to voided';
 $_['text_refund']                        = 'Refund';
+$_['text_edit']                          = 'Edit Worldpay Online Payments';
 
 // Entry
 $_['entry_service_key']			         = 'Service Key';

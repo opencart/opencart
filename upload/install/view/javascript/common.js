@@ -39,3 +39,4 @@ $(document).ready(function() {
 		$('#menu a[href*=\'index.php?route=' + url + '\']').parents('li[id]').addClass('active');
 	}	
 });
+

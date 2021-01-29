@@ -15,9 +15,9 @@
 					{% for banner in carousel %}
 						<div class="col text-center">
 							{% if banner.link %}
-								<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
+								<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" style="max-width: {{ width }}px; max-height: {{ height }}px;"/></a>
 							{% else %}
-								<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
+								<img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid" style="max-width: {{ width }}px; max-height: {{ height }}px;"/>
 							{% endif %}
 						</div>
 					{% endfor %}
@@ -26,7 +26,7 @@
 		{% endfor %}
 	</div>
 	{% if controls and banners|batch(items)|length > 1 %}
-		<a href="#carousel-banner{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="carousel-control-prev-icon"></span></a> <a href="#carousel-banner{{ module }}" class="carousel-control-next" data-slide="next"><span class="carousel-control-next-icon"></span></a>
+		<a href="#carousel-banner{{ module }}" class="carousel-control-prev" data-slide="prev"><span class="fas fa-chevron-left"></span></a> <a href="#carousel-banner{{ module }}" class="carousel-control-next" data-slide="next"><span class="fas fa-chevron-right"></span></a>
 	{% endif %}
 </div>
 <script type="text/javascript"><!--

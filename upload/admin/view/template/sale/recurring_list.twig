@@ -40,42 +40,19 @@
             </div>
             <div class="form-group">
               <label class="control-label" for="input-order-id">{{ entry_order_id }}</label>
-              <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
+              <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
             </div>
             <div class="form-group">
               <label class="control-label" for="input-status">{{ entry_status }}</label>
               <select name="filter_status" id="input-status" class="form-control">
                 
-                  
-                
-                
-                  {% for recurring_status in recurring_statuses %}
+                {% for recurring_status in recurring_statuses %}
                   {% if filter_status == recurring_status.value %}
-                  
-                
-                
-                  
                 <option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>
-                
-                  
-                
-                
                   {% else %}
-                  
-                
-                
-                  
                 <option value="{{ recurring_status.value }}">{{ recurring_status.text }}</option>
-                
-                  
-                
-                
                   {% endif %}
-                  {% endfor %}
-                
-              
-              
-                
+                  {% endfor %} 
               </select>
             </div>
             <div class="form-group">

@@ -13,6 +13,12 @@
 
 .carousel {
   position: relative;
+
+  // OpenCart
+  border: 4px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  margin-bottom: 50px;
 }
 
 .carousel.pointer-event {
@@ -89,13 +95,24 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  z-index: 1;
+  //z-index: 1;
   // Use flex for alignment (1-3)
   display: flex; // 1. allow flex styles
   align-items: center; // 2. vertically center contents
   justify-content: center; // 3. horizontally center contents
   width: $carousel-control-width;
   color: $carousel-control-color;
+
+  // OpenCart
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all .3s ease;
+  z-index: 2;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: rgba(0,0,0,0.8);
+
+  background-image: none;
   text-align: center;
   opacity: $carousel-control-opacity;
   @include transition($carousel-control-transition);
@@ -121,6 +138,7 @@
   }
 }
 
+
 // Icons for within
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
@@ -136,16 +154,15 @@
   background-image: escape-svg($carousel-control-next-icon-bg);
 }
 
-
 // Optional indicator pips
 //
 // Add an ordered list with the following class and add a list item for each
 // slide your carousel holds.
-
 .carousel-indicators {
   position: absolute;
   right: 0;
-  bottom: 0;
+  //bottom: 0;
+  bottom: -50px;
   left: 0;
   z-index: 15;
   display: flex;
@@ -171,6 +188,13 @@
     border-top: $carousel-indicator-hit-area-height solid transparent;
     border-bottom: $carousel-indicator-hit-area-height solid transparent;
     opacity: .5;
+
+    // OpenCart
+    border-radius: 20px;
+    border: 1px solid #000000;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+    background: rgba(0,0,0,.9);
+
     @include transition($carousel-indicator-transition);
   }
 

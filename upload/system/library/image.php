@@ -46,6 +46,8 @@ class Image {
 				$this->image = imagecreatefrompng($file);
 			} elseif ($this->mime == 'image/jpeg') {
 				$this->image = imagecreatefromjpeg($file);
+			} elseif ($this->mime == 'image/webp') {
+				$this->image = imagecreatefromwebp($file);
 			}
 		} else {
 			error_log('Error: Could not load image ' . $file . '!');
@@ -124,6 +126,8 @@ class Image {
 				imagepng($this->image, $file);
 			} elseif ($extension == 'gif') {
 				imagegif($this->image, $file);
+			} elseif ($extension == 'webp') {
+				imagewebp($this->image, $file);
 			}
 
 			imagedestroy($this->image);
@@ -157,7 +161,7 @@ class Image {
 			$scale = min($scale_w, $scale_h);
 		}
 
-		if ($scale == 1 && $scale_h == $scale_w && $this->mime != 'image/png') {
+		if ($scale == 1 && $scale_h == $scale_w && ($this->mime != 'image/png' && $this->mime != 'image/webp')) {
 			return;
 		}
 
@@ -170,6 +174,14 @@ class Image {
 		$this->image = imagecreatetruecolor($width, $height);
 
 		if ($this->mime == 'image/png') {
+			imagealphablending($this->image, false);
+			imagesavealpha($this->image, true);
+
+			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
+
+			imagecolortransparent($this->image, $background);
+
+		} else if ($this->mime == 'image/webp') {
 			imagealphablending($this->image, false);
 			imagesavealpha($this->image, true);
 

@@ -350,10 +350,6 @@ footer h5 {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-/* default font size */
-.fas, .far, .fab {
-  font-size: 14px;
-}
 /* alert */
 .alert {
   padding: 8px 14px 8px 14px;

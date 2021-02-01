@@ -162,7 +162,7 @@
               {% for option in options %}
                 {% if option.type == 'select' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control" class="col-form-label">
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
                       <option value="">{{ text_select }}</option>
                       {% for option_value in option.product_option_value %}
                         <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
@@ -214,12 +214,12 @@
                 {% endif %}
                 {% if option.type == 'textarea' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control" class="col-form-label">{{ option.value }}</textarea>
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
                   </div>
                 {% endif %}
                 {% if option.type == 'file' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label class="col-form-label">{{ option.name }}</label>
+                    <label for="button-upload{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light btn-block"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}"/>
                   </div>

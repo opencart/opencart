@@ -13,7 +13,7 @@
       {% if reports %}
         {% for report in reports %}
           <tr>
-            <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ report.ip }}" target="_blank">{{ report.ip }}</a></td>
+            <td class="text-left"><a href="https://whatismyipaddress.com/ip/{{ report.ip }}" target="_blank">{{ report.ip }}</a></td>
             <td class="text-right"><a href="{{ report.filter_ip }}" target="_blank">{{ report.account }}</a></td>
             <td class="text-left">{{ report.store }}</td>
             <td class="text-left">{{ report.country }}</td>

@@ -4907,22 +4907,19 @@ a.close.disabled {
   position: absolute;
   top: 0;
   bottom: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 15%;
+  width: 30px;
   color: rgba(0, 0, 0, 0.8);
   text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
-  z-index: 2;
   font-size: 40px;
-  width: 40px;
-  height: 40px;
   color: rgba(0, 0, 0, 0.8);
-  background-image: none;
   text-align: center;
   opacity: 0.5;
-  transition: opacity 0.15s ease;
+  transition: all 0.3s ease;
 }
 @media (prefers-reduced-motion: reduce) {
   .carousel-control-prev, .carousel-control-next {
@@ -4935,11 +4932,21 @@ a.close.disabled {
   outline: 0;
   opacity: 0.9;
 }
-.carousel-control-prev {
-  left: 0;
+.carousel .carousel-control-prev {
+  opacity: 0;
+  left: -20px;
 }
-.carousel-control-next {
-  right: 0;
+.carousel .carousel-control-next {
+  opacity: 0;
+  right: -20px;
+}
+.carousel:hover .carousel-control-prev {
+  opacity: 0.7;
+  left: 0px;
+}
+.carousel:hover .carousel-control-next {
+  opacity: 0.7;
+  right: 0px;
 }
 .carousel-control-prev-icon, .carousel-control-next-icon {
   display: inline-block;
@@ -4962,8 +4969,8 @@ a.close.disabled {
   display: flex;
   justify-content: center;
   padding-left: 0;
-  margin-right: 15%;
-  margin-left: 15%;
+  margin-right: 30px;
+  margin-left: 30px;
   list-style: none;
 }
 .carousel-indicators li {
@@ -4975,7 +4982,7 @@ a.close.disabled {
   margin-left: 5px;
   text-indent: -999px;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
   background-clip: padding-box;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
@@ -4983,7 +4990,6 @@ a.close.disabled {
   border-radius: 20px;
   border: 1px solid #000000;
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
-  background: rgba(0, 0, 0, 0.9);
   transition: opacity 0.6s ease;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -4991,8 +4997,11 @@ a.close.disabled {
     transition: none;
   }
 }
+.carousel-indicators li:hover {
+  opacity: 0.7;
+}
 .carousel-indicators .active {
-  opacity: 1;
+  opacity: 0.9;
 }
 .carousel-caption {
   position: absolute;

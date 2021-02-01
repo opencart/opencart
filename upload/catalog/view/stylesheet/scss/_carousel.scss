@@ -96,6 +96,7 @@
   top: 0;
   bottom: 0;
   //z-index: 1;
+  z-index: 2;
   // Use flex for alignment (1-3)
   display: flex; // 1. allow flex styles
   align-items: center; // 2. vertically center contents
@@ -106,13 +107,9 @@
   // OpenCart
   text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
   transition: all .3s ease;
-  z-index: 2;
   font-size: 40px;
-  width: 40px;
-  height: 40px;
   color: rgba(0,0,0,0.8);
 
-  background-image: none;
   text-align: center;
   opacity: $carousel-control-opacity;
   @include transition($carousel-control-transition);
@@ -126,18 +123,37 @@
   }
 }
 .carousel-control-prev {
-  left: 0;
+  //left: 0;
   @if $enable-gradients {
     background-image: linear-gradient(90deg, rgba($black, .25), rgba($black, .001));
   }
 }
 .carousel-control-next {
-  right: 0;
+  //right: 0;
   @if $enable-gradients {
     background-image: linear-gradient(270deg, rgba($black, .25), rgba($black, .001));
   }
 }
 
+// OpenCart
+.carousel .carousel-control-prev {
+  opacity: 0;
+  left: -20px;
+}
+.carousel .carousel-control-next {
+  opacity: 0;
+  right: -20px;
+}
+
+.carousel:hover .carousel-control-prev {
+  opacity: 0.7;
+  left: 0px;
+
+}
+.carousel:hover .carousel-control-next {
+  opacity: 0.7;
+  right: 0px;
+}
 
 // Icons for within
 .carousel-control-prev-icon,
@@ -193,16 +209,20 @@
     border-radius: 20px;
     border: 1px solid #000000;
     box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-    background: rgba(0,0,0,.9);
 
     @include transition($carousel-indicator-transition);
   }
 
+  // OpenCart
+  li:hover {
+    opacity: 0.7;
+  }
+
   .active {
-    opacity: 1;
+    //opacity: 1;
+    opacity: 0.9;
   }
 }
-
 
 // Optional captions
 //

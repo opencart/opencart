@@ -10,10 +10,10 @@
   {% endif %}
   <div class="carousel-inner">
     {% for carousel in banners|batch(items) %}
-      <div class="carousel-item" style="height: {{ height }}px;">
-        <div class="row">
+      <div class="carousel-item">
+        <div class="row justify-content-center">
           {% for banner in carousel %}
-            <div class="col text-center">
+            <div class="col-{{ (12 / items)|round(floor) }} text-center">
               {% if banner.link %}
                 <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
               {% else %}

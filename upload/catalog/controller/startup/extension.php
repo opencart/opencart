@@ -5,7 +5,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 		// Add extension paths from the DB
 		$this->load->model('setting/extension');
 
-		$results = $this->model_setting_extension->getExtensions();
+		$results = $this->model_setting_extension->getExtensionsDistinctCached();
 
 		foreach ($results as $result) {
 			$extension = str_replace(['_', '/'], ['', '\\'], ucwords($result['extension'], '_/'));

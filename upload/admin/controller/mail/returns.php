@@ -34,7 +34,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			if ($return_info) {
 				$this->load->model('sale/order');
 
-				$order_info = $this->model_sale_order->getorder($return_info['order_id']);
+				$order_info = $this->model_sale_order->getOrder($return_info['order_id']);
 
 				if ($order_info) {
 					$store_name = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');

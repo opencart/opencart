@@ -617,6 +617,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$data['documentation'] = $response_info['documentation'];
 			$data['price'] = $response_info['price'];
 
+			$data['member_payments'] = $response_info['member_payments'];
 			$data['license'] = $response_info['license'];
 			$data['license_period'] = $response_info['license_period'];
 			$data['purchased'] = $response_info['purchased'];
@@ -752,10 +753,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_opencart');
 		}
 
-		if (!$this->request->post['pin']) {
-			$json['error'] = $this->language->get('error_pin');
-		}
-
 		if (!$json) {
 			$time = time();
 
@@ -765,7 +762,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$string .= $this->request->server['HTTP_HOST'] . "\n";
 			$string .= VERSION . "\n";
 			$string .= $extension_id . "\n";
-			$string .= $this->request->post['pin'] . "\n";
 			$string .= $time . "\n";
 
 			$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
@@ -776,6 +772,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$url .= '&extension_id=' . $extension_id;
 			$url .= '&time=' . $time;
 			$url .= '&signature=' . rawurlencode($signature);
+			$url .= '&member_payment_id=' . $this->request->post['member_payment_id'];
 
 			$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/marketplace/purchase' . $url);
 

@@ -177,15 +177,22 @@ $('#button-buy').on('click', function(e) {
 	html += '        <button type="button" class="close" data-dismiss="modal">&times;</button>';
 	html += '      </div>';
 	html += '      <div class="modal-body">';
-	html += '        <p>{{ text_pin }}</p>';
-	html += '        <p>{{ text_secure }}</p>';
+	html += '        <p>{{ text_choose_card }}</p>';
+	{% if member_payments %}
 	html += '        <div class="form-group">';
-	html += '          <label for="input-pin">{{ entry_pin }}</label>';
-	html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
-	html += '        </div>';
-	html += '        <div class="form-group text-right">';
-	html += '          <div class="float-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
-	html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
+	html += '          <label for="payment_method">{{ entry_card }}</label>';
+	html += '          <select name="payment_method" class="form-control">';
+	{% for member_payment in member_payments %}
+	html += '          		<option value="{{ member_payment.member_payment_id }}">{{ member_payment.name }}</option>';
+	{% endfor %}
+	html +=	'			</select></div>'
+	{% else %}
+	html +=	'			<div class="alert alert-danger" role="alert">{{ text_no_cards }}</div>';
+	{% endif %}
+	html += '				<div class="text-right">';
+	html += '          			<button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
+	html += '        		</div>';
+	html += '        	</div>';
 	html += '        </div>';
 	html += '      </div>';
 	html += '    </div>';
@@ -205,7 +212,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 	$.ajax({
 		url: 'index.php?route=marketplace/marketplace|purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
 		type: 'post',
-		data: $('input[name=\'pin\']'),
+		data: {member_payment_id : $('select[name ="payment_method"]').val()},
 		dataType: 'json',
 		beforeSend: function() {
 			$(element).button('loading');
@@ -224,6 +231,8 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#modal-purchase').modal('hide');
+
+				$("#button-buy").remove();
 
 				$('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
 			}

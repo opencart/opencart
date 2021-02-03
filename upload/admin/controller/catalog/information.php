@@ -124,7 +124,7 @@ class ControllerCatalogInformation extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -333,12 +333,12 @@ class ControllerCatalogInformation extends Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = array();
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -379,7 +379,7 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['sort_order'] = '';
 		}
-		
+
 		if (isset($this->request->post['information_seo_url'])) {
 			$data['information_seo_url'] = $this->request->post['information_seo_url'];
 		} elseif (isset($this->request->get['information_id'])) {
@@ -387,7 +387,7 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['information_seo_url'] = array();
 		}
-		
+
 		if (isset($this->request->post['information_layout'])) {
 			$data['information_layout'] = $this->request->post['information_layout'];
 		} elseif (isset($this->request->get['information_id'])) {
@@ -428,16 +428,16 @@ class ControllerCatalogInformation extends Controller {
 
 		if ($this->request->post['information_seo_url']) {
 			$this->load->model('design/seo_url');
-			
+
 			foreach ($this->request->post['information_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if (!empty($keyword)) {
 						if (count(array_keys($language, $keyword)) > 1) {
 							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_unique');
-						}						
-						
+						}
+
 						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
-						
+
 						foreach ($seo_urls as $seo_url) {
 							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['information_id']) || ($seo_url['query'] != 'information_id=' . $this->request->get['information_id']))) {
 								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');

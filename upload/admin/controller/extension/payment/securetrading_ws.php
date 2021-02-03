@@ -263,19 +263,14 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 		$response = $this->model_extension_payment_securetrading_ws->getCsv($csv_data);
 
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="' . $this->language->get('text_transactions') . '.csv"');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-		header('Content-Length: ' . strlen($response));
+		$this->response->addheader('Content-Type: application/octet-stream');
+		$this->response->addheader('Content-Disposition: attachment; filename="' . $this->language->get('text_transactions') . '.csv"');
+		$this->response->addheader('Expires: 0');
+		$this->response->addheader('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		$this->response->addheader('Pragma: public');
+		$this->response->addheader('Content-Length: ' . strlen($response));
 
-		if (ob_get_level()) {
-			ob_end_clean();
-		}
-
-		echo $response;
-		exit();
+		$this->response->setOutput($response);
 	}
 
 	public function showTransactions() {

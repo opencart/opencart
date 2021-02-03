@@ -6,6 +6,10 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 		$this->load->model('localisation/country');
 		$this->load->model('localisation/zone');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($this->config->get('payment_pp_payflow_iframe_test')) {

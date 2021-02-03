@@ -138,7 +138,11 @@ class ModelLocalisationCurrency extends Model {
 			$value = utf8_substr($line[$i], 11, 6);
 			
 			if ((float)$value < 1 && isset($line[$i + 1])) {
-				$value = (1 / utf8_substr($line[$i + 1], 11, 6));
+				if((float)utf8_substr($line[$i + 1], 11, 6) > 0) {
+					$value = (1 / (float)utf8_substr($line[$i + 1], 11, 6));
+				} else {
+					$value = 0;
+				}
 			}	
 						
 			if ((float)$value) {

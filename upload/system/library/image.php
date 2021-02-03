@@ -111,7 +111,7 @@ class Image {
      * @param	string	$file
 	 * @param	int		$quality
      */
-	public function save($file, $quality = 90) {
+	public function save($file, int $quality = 90) {
 		$info = pathinfo($file);
 
 		$extension = strtolower($info['extension']);
@@ -136,7 +136,7 @@ class Image {
 	 * @param	int	$height
 	 * @param	string	$default
      */
-	public function resize($width = 0, $height = 0, $default = '') {
+	public function resize(int $width = 0, int $height = 0, $default = '') {
 		if (!$this->width || !$this->height) {
 			return;
 		}

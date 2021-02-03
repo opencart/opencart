@@ -39,7 +39,7 @@ class ControllerAccountReturn extends Controller {
 		$this->load->model('account/return');
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -323,6 +323,14 @@ class ControllerAccountReturn extends Controller {
 			$data['order_id'] = $order_info['order_id'];
 		} else {
 			$data['order_id'] = '';
+		}
+
+		if (isset($this->request->post['product_id'])) {
+			$data['product_id'] = $this->request->post['product_id'];
+		} elseif (!empty($product_info)) {
+			$data['product_id'] = $product_info['product_id'];
+		} else {
+			$data['product_id'] = '';
 		}
 
 		if (isset($this->request->post['date_ordered'])) {

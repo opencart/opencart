@@ -124,7 +124,7 @@ class ControllerDesignBanner extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -347,7 +347,7 @@ class ControllerDesignBanner extends Controller {
 					$image = '';
 					$thumb = 'no_image.png';
 				}
-				
+
 				$data['banner_images'][$key][] = array(
 					'title'      => $banner_image['title'],
 					'link'       => $banner_image['link'],

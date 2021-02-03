@@ -1203,7 +1203,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						}
 
 						//create new recurring and set to pending status as no payment has been made yet.
-						$recurring_id = $this->model_checkout_recurring->addRecurring($order_id, $recurring_description, $item['recurring']);
+						$recurring_id = $this->model_checkout_recurring->addRecurring($order_id, $recurring_description, $item);
 
 						$data['PROFILEREFERENCE'] = $recurring_id;
 						$data['DESC'] = $recurring_description;
@@ -1263,6 +1263,10 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 		$this->load->model('extension/payment/pp_express');
 		$this->load->model('tool/image');
 		$this->load->model('checkout/order');
+
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -1497,7 +1501,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 					}
 
 					//create new recurring and set to pending status as no payment has been made yet.
-					$recurring_id = $this->model_checkout_recurring->addRecurring($order_id, $recurring_description, $item['recurring']);
+					$recurring_id = $this->model_checkout_recurring->addRecurring($order_id, $recurring_description, $item);
 
 					$data['PROFILEREFERENCE'] = $recurring_id;
 					$data['DESC'] = $recurring_description;

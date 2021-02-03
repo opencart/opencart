@@ -24,7 +24,7 @@ class ControllerDesignTheme extends Controller {
 		$this->load->model('setting/store');
 
 		$results = $this->model_setting_store->getStores();
-		
+
 		foreach ($results as $result) {
 			$data['stores'][] = array(
 				'store_id' => $result['store_id'],
@@ -43,7 +43,7 @@ class ControllerDesignTheme extends Controller {
 		$this->load->language('design/theme');
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -227,11 +227,11 @@ class ControllerDesignTheme extends Controller {
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');
-		} 
+		}
 
 		if (substr($path, -5) != '.twig') {
 			$json['error'] = $this->language->get('error_twig');
-		} 
+		}
 
 		if (!$json) {
 			$this->load->model('design/theme');
@@ -261,7 +261,7 @@ class ControllerDesignTheme extends Controller {
 		$this->load->model('setting/setting');
 
 		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
-		
+
 		// This is only here for compatibility with old themes.
 		if ($theme == 'theme_default') {
 			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);
@@ -295,7 +295,7 @@ class ControllerDesignTheme extends Controller {
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'design/theme')) {
 			$json['error'] = $this->language->get('error_permission');
-		} 
+		}
 
 		if (!$json) {
 			$this->load->model('design/theme');

@@ -11,5 +11,8 @@ $_['text_edit']        = 'Edit Store Module';
 $_['entry_admin']      = 'Admin Users Only';
 $_['entry_status']     = 'Status';
 
+//Help
+$_['help_admin']       = 'If yes, then multi store list will be visible only when admin user login!';
+
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify store module!';

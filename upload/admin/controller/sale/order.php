@@ -140,7 +140,7 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -1425,7 +1425,7 @@ class ControllerSaleOrder extends Controller {
 		$this->load->language('sale/order');
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -1490,7 +1490,8 @@ class ControllerSaleOrder extends Controller {
 
 		foreach ($orders as $order_id) {
 			$order_info = $this->model_sale_order->getOrder($order_id);
-
+			$data['text_order'] = sprintf($this->language->get('text_order'), $order_id);
+			
 			if ($order_info) {
 				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
@@ -1763,7 +1764,7 @@ class ControllerSaleOrder extends Controller {
 				$products = $this->model_sale_order->getOrderProducts($order_id);
 
 				foreach ($products as $product) {
-					$option_weight = '';
+					$option_weight = 0;
 
 					$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 

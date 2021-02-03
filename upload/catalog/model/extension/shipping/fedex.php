@@ -157,7 +157,7 @@ class ModelExtensionShippingFedex extends Model {
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
 			$response = curl_exec($curl);
-			
+
 			curl_close($curl);
 
 			$dom = new DOMDocument('1.0', 'UTF-8');
@@ -177,11 +177,11 @@ class ModelExtensionShippingFedex extends Model {
 				foreach ($rate_reply_details as $rate_reply_detail) {
 					$code = strtolower($rate_reply_detail->getElementsByTagName('ServiceType')->item(0)->nodeValue);
 
-					if (in_array(strtoupper($code), $this->config->get('shipping_fedex_service'))) {
+						if (!empty($this->config->get('shipping_fedex_service')) && is_array($this->config->get('shipping_fedex_service')) && in_array(strtoupper($code), $this->config->get('shipping_fedex_service'))) {
 						$title = $this->language->get('text_' . $code);
 
 						$delivery_time_stamp = $rate_reply_detail->getElementsByTagName('DeliveryTimestamp');
-						
+
 						if ($this->config->get('shipping_fedex_display_time') && $delivery_time_stamp->length) {
 							$title .= ' (' . $this->language->get('text_eta') . ' ' . date($this->language->get('date_format_short') . ' ' . $this->language->get('time_format'), strtotime($delivery_time_stamp->item(0)->nodeValue)) . ')';
 						}

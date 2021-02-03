@@ -13,6 +13,8 @@ $_['text_payment_option']		= 'Payment options';
 $_['text_single_payment']		= 'Single Payment';
 $_['text_monthly_payment']		= '%s - %s per month';
 $_['text_comment']				= 'Klarna\'s Invoice ID: %s' . "\n" . '%s/%s: %.4f';
+$_['text_terms_description']    = 'Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen
+Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen.';
 
 // Entry
 $_['entry_gender']				= 'Gender';

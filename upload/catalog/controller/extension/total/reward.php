@@ -43,7 +43,7 @@ class ControllerExtensionTotalReward extends Controller {
 			}
 		}
 
-		if (empty($this->request->post['reward'])) {
+		if (!isset($this->request->post['reward']) || !is_numeric($this->request->post['reward']) || ($this->request->post['reward'] <= 0)) {
 			$json['error'] = $this->language->get('error_reward');
 		}
 
@@ -63,7 +63,7 @@ class ControllerExtensionTotalReward extends Controller {
 			if (isset($this->request->post['redirect'])) {
 				$json['redirect'] = $this->url->link($this->request->post['redirect']);
 			} else {
-				$json['redirect'] = $this->url->link('checkout/cart');	
+				$json['redirect'] = $this->url->link('checkout/cart');
 			}
 		}
 

@@ -71,6 +71,16 @@ $_['paypal_setting'] = array(
 				'unavailable' => 0,
 				'card_ineligible' => 1
 			)
+		),
+		'message' => array(
+			'status' => true,
+			'message_align' => 'right',
+			'message_size' => 'large',
+			'message_layout' => 'text',
+			'message_text_color' => 'black',
+			'message_text_size' => '12',
+			'message_flex_color' => 'blue',
+			'message_flex_ratio' => '8x1'
 		)
 	),
 	'currency' => array(
@@ -185,6 +195,13 @@ $_['paypal_setting'] = array(
 			'decimal_place' => 2,
 			'express_status' => true,
 			'card_status' => true
+		),
+		'PHP' => array(
+			'code' => 'PHP',
+			'name' => 'text_currency_php',
+			'decimal_place' => 2,
+			'express_status' => true,
+			'card_status' => false
 		),
 		'PLN' => array(
 			'code' => 'PLN',
@@ -417,6 +434,80 @@ $_['paypal_setting'] = array(
 			'error' => 'error_3ds_card_ineligible',
 			'recommended' => 1
 		)
-	)
+	),
+	'message_align' => array(
+		'left' => array(
+			'code' => 'left',
+			'name' => 'text_align_left'
+		),
+		'center' => array(
+			'code' => 'center',
+			'name' => 'text_align_center'
+		),
+		'right' => array(
+			'code' => 'right',
+			'name' => 'text_align_right'
+		)
+	),
+	'message_size' => array(
+		'small' => array(
+			'code' => 'small',
+			'name' => 'text_small'
+		),
+		'medium' => array(
+			'code' => 'medium',
+			'name' => 'text_medium'
+		),
+		'large' => array(
+			'code' => 'large',
+			'name' => 'text_large'
+		),
+		'responsive' => array(
+			'code' => 'responsive',
+			'name' => 'text_responsive'
+		)
+	),
+	'message_width' => array(
+		'small' => '200px',
+		'medium' => '250px',
+		'large' => '350px',
+		'responsive' => ''
+	),
+	'message_layout' => array(
+		'text' => array(
+			'code' => 'text',
+			'name' => 'text_text'
+		),
+		'flex' => array(
+			'code' => 'flex',
+			'name' => 'text_flex'
+		)
+	),
+	'message_text_color' => array(
+		'black' => array(
+			'code' => 'black',
+			'name' => 'text_black'
+		),
+		'white' => array(
+			'code' => 'white',
+			'name' => 'text_white'
+		)
+	),
+	'message_text_size' => array('10', '11', '12', '13', '14', '15', '16'),
+	'message_flex_color' => array(
+		'blue' => array(
+			'code' => 'blue',
+			'name' => 'text_blue'
+		),
+		'black' => array(
+			'code' => 'black',
+			'name' => 'text_black'
+		),
+		'white' => array(
+			'code' => 'white',
+			'name' => 'text_white'
+		)
+	),
+	'message_flex_ratio' => array('1x1', '1x4', '8x1', '20x1')
 );
 ?>

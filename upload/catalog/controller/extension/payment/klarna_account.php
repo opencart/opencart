@@ -3,6 +3,10 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
@@ -269,6 +273,10 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 		$json = array();
 
 		$this->load->model('checkout/order');
+
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 

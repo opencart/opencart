@@ -21,7 +21,7 @@ class ControllerMarketingContact extends Controller {
 			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['cancel'] = $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'], true);
+		$data['cancel'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 
 		$this->load->model('setting/store');
 
@@ -58,6 +58,9 @@ class ControllerMarketingContact extends Controller {
 
 			if (!$json) {
 				$this->load->model('setting/store');
+				$this->load->model('setting/setting');
+				$this->load->model('customer/customer');
+				$this->load->model('sale/order');
 
 				$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
 
@@ -66,19 +69,13 @@ class ControllerMarketingContact extends Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
-				
-				$this->load->model('setting/setting');
+
 				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
+
 				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
-				$this->load->model('customer/customer');
-
-				$this->load->model('customer/customer_group');
-
-				$this->load->model('sale/order');
-
 				if (isset($this->request->get['page'])) {
-					$page = $this->request->get['page'];
+					$page = (int)$this->request->get['page'];
 				} else {
 					$page = 1;
 				}
@@ -134,13 +131,17 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'customer':
 						if (!empty($this->request->post['customer'])) {
-							foreach ($this->request->post['customer'] as $customer_id) {
+							$customers = array_slice($this->request->post['customer'], ($page - 1) * 10, 10);
+
+							foreach ($customers as $customer_id) {
 								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 								if ($customer_info) {
 									$emails[] = $customer_info['email'];
 								}
 							}
+
+							$email_total = count($emails);
 						}
 						break;
 					case 'affiliate_all':
@@ -160,13 +161,17 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'affiliate':
 						if (!empty($this->request->post['affiliate'])) {
-							foreach ($this->request->post['affiliate'] as $affiliate_id) {
+							$affiliates = array_slice($this->request->post['affiliate'], ($page - 1) * 10, 10);
+
+							foreach ($affiliates as $affiliate_id) {
 								$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
 
 								if ($affiliate_info) {
 									$emails[] = $affiliate_info['email'];
 								}
 							}
+
+							$email_total = count($this->request->post['affiliate']);
 						}
 						break;
 					case 'product':
@@ -188,7 +193,15 @@ class ControllerMarketingContact extends Controller {
 					$start = ($page - 1) * 10;
 					$end = $start + 10;
 
-					$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
+					if($page == 1 && $email_total < 10) {
+						$json['success'] = sprintf($this->language->get('text_sent'), $email_total, $email_total);
+					} else if($page == 1 && $email_total > 10) {
+						$json['success'] = sprintf($this->language->get('text_sent'), 10, $email_total);
+					} else if($page > 1 && $email_total < ($page * 10)) {
+						$json['success'] = sprintf($this->language->get('text_sent'), $email_total, $email_total);
+					} else {
+						$json['success'] = sprintf($this->language->get('text_sent'), ($start * $page), $email_total);
+					}
 
 					if ($end < $email_total) {
 						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true));
@@ -196,7 +209,7 @@ class ControllerMarketingContact extends Controller {
 						$json['next'] = '';
 					}
 
-					$message  = '<html dir="ltr" lang="en">' . "\n";
+					$message  = '<html dir="ltr" lang="' . $this->language->get('code') . '">' . "\n";
 					$message .= '  <head>' . "\n";
 					$message .= '    <title>' . $this->request->post['subject'] . '</title>' . "\n";
 					$message .= '    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";

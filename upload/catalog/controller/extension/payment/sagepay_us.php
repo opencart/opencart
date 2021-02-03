@@ -39,6 +39,10 @@ class ControllerExtensionPaymentSagepayUS extends Controller {
 	public function send() {
 		$this->load->model('checkout/order');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$url = 'https://www.sagepayments.net/cgi-bin/eftbankcard.dll?transaction';

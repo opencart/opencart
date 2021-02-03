@@ -87,7 +87,7 @@ class ControllerToolUpload extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -157,6 +157,10 @@ class ControllerToolUpload extends Controller {
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
+		} elseif (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
 		} else {
 			$data['error_warning'] = '';
 		}
@@ -251,10 +255,34 @@ class ControllerToolUpload extends Controller {
 	public function download() {
 		$this->load->model('tool/upload');
 
+		$this->load->language('tool/upload');
+
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
 			$code = 0;
+		}
+
+		$url = '';
+
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$upload_info = $this->model_tool_upload->getUploadByCode($code);
@@ -263,47 +291,24 @@ class ControllerToolUpload extends Controller {
 			$file = DIR_UPLOAD . $upload_info['filename'];
 			$mask = basename($upload_info['name']);
 
-			if (!headers_sent()) {
-				if (is_file($file)) {
-					header('Content-Type: application/octet-stream');
-					header('Content-Description: File Transfer');
-					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
-					header('Content-Transfer-Encoding: binary');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Pragma: public');
-					header('Content-Length: ' . filesize($file));
+			if (file_exists($file) && filesize($file) > 0) {
+				$this->response->addheader('Pragma: public');
+				$this->response->addheader('Expires: 0');
+				$this->response->addheader('Content-Description: File Transfer');
+				$this->response->addheader('Content-Type: application/octet-stream');
+				$this->response->addheader('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
+				$this->response->addheader('Content-Transfer-Encoding: binary');
 
-					readfile($file, 'rb');
-					exit;
-				} else {
-					exit('Error: Could not find file ' . $file . '!');
-				}
+				$this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
 			} else {
-				exit('Error: Headers already sent out!');
+				$this->session->data['error'] = $this->language->get('error_file');
+
+				$this->response->redirect($this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url, true));
 			}
 		} else {
-			$this->load->language('error/not_found');
+			$this->session->data['error'] = $this->language->get('error_upload');
 
-			$this->document->setTitle($this->language->get('heading_title'));
-
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'], true)
-			);
-
-			$data['header'] = $this->load->controller('common/header');
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['footer'] = $this->load->controller('common/footer');
-
-			$this->response->setOutput($this->load->view('error/not_found', $data));
+			$this->response->redirect($this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url, true));
 		}
 	}
 

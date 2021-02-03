@@ -196,7 +196,7 @@ class ControllerCatalogReview extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -470,7 +470,7 @@ class ControllerCatalogReview extends Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-		
+
 		$this->load->model('catalog/product');
 
 		if (isset($this->request->post['product_id'])) {

@@ -24,7 +24,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -259,6 +259,10 @@ class ControllerCommonFileManager extends Controller {
 
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
+					}
+
+					if ($file['size'] > $this->config->get('config_file_max_size')) {
+						$json['error'] = $this->language->get('error_filesize');
 					}
 
 					// Return any upload error

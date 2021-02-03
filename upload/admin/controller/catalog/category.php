@@ -156,7 +156,7 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -311,7 +311,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['error_parent'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -406,12 +406,12 @@ class ControllerCatalogCategory extends Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = array();
-		
+
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		);
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -480,7 +480,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['status'] = true;
 		}
-		
+
 		if (isset($this->request->post['category_seo_url'])) {
 			$data['category_seo_url'] = $this->request->post['category_seo_url'];
 		} elseif (isset($this->request->get['category_id'])) {
@@ -488,7 +488,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['category_seo_url'] = array();
 		}
-				
+
 		if (isset($this->request->post['category_layout'])) {
 			$data['category_layout'] = $this->request->post['category_layout'];
 		} elseif (isset($this->request->get['category_id'])) {
@@ -525,11 +525,11 @@ class ControllerCatalogCategory extends Controller {
 
 		if (isset($this->request->get['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getCategoryPath($this->request->post['parent_id']);
-			
+
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->get['category_id']) {
 					$this->error['parent'] = $this->language->get('error_parent');
-					
+
 					break;
 				}
 			}
@@ -537,7 +537,7 @@ class ControllerCatalogCategory extends Controller {
 
 		if ($this->request->post['category_seo_url']) {
 			$this->load->model('design/seo_url');
-			
+
 			foreach ($this->request->post['category_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
 					if (!empty($keyword)) {
@@ -546,11 +546,11 @@ class ControllerCatalogCategory extends Controller {
 						}
 
 						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
-	
+
 						foreach ($seo_urls as $seo_url) {
-							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['category_id']) || ($seo_url['query'] != 'category_id=' . $this->request->get['category_id']))) {		
+							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['category_id']) || ($seo_url['query'] != 'category_id=' . $this->request->get['category_id']))) {
 								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
-				
+
 								break;
 							}
 						}
@@ -558,11 +558,11 @@ class ControllerCatalogCategory extends Controller {
 				}
 			}
 		}
-		
+
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
-		
+
 		return !$this->error;
 	}
 

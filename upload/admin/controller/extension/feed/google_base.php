@@ -136,7 +136,7 @@ class ControllerExtensionFeedGoogleBase extends Controller {
 		$this->load->language('extension/feed/google_base');
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}

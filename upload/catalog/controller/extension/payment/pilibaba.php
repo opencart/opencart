@@ -8,6 +8,10 @@ class ControllerExtensionPaymentPilibaba extends Controller {
 
 		$this->model_extension_payment_pilibaba->log('Regular called');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$data['version']      = 'V2.0.01';

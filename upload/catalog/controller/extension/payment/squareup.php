@@ -55,6 +55,10 @@ class ControllerExtensionPaymentSquareup extends Controller {
 
         $this->load->library('squareup');
 
+        if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
         $shipping_country_info = $this->model_localisation_country->getCountry($order_info['shipping_country_id']);

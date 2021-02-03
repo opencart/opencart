@@ -25,14 +25,16 @@ class ControllerExtensionModuleBestSeller extends Controller {
 					$price = false;
 				}
 
-				if ((float)$result['special']) {
+				if (!is_null($result['special']) && (float)$result['special'] >= 0) {
 					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$tax_price = (float)$result['special'];
 				} else {
 					$special = false;
+					$tax_price = (float)$result['price'];
 				}
-
+	
 				if ($this->config->get('config_tax')) {
-					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
+					$tax = $this->currency->format($tax_price, $this->session->data['currency']);
 				} else {
 					$tax = false;
 				}

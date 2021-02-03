@@ -124,7 +124,7 @@ class ControllerLocalisationLocation extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -158,7 +158,7 @@ class ControllerLocalisationLocation extends Controller {
 		$data['add'] = $this->url->link('localisation/location/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['delete'] = $this->url->link('localisation/location/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
-		$data['location'] = array();
+		$data['locations'] = array();
 
 		$filter_data = array(
 			'sort'  => $sort,
@@ -172,7 +172,7 @@ class ControllerLocalisationLocation extends Controller {
 		$results = $this->model_localisation_location->getLocations($filter_data);
 
 		foreach ($results as $result) {
-			$data['location'][] =   array(
+			$data['locations'][] =   array(
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],
 				'address'     => $result['address'],

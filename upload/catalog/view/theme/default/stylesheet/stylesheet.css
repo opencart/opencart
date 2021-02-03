@@ -169,6 +169,10 @@ div.required .control-label:before {
 }
 #cart .dropdown-menu {
 	min-width: 100%;
+	overflow-y: auto;
+	max-height: 800px;
+	scrollbar-width: thin;
+	overflow-x: hidden;
 }
 @media (max-width: 478px) {
 	#cart .dropdown-menu {

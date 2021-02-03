@@ -6,7 +6,7 @@ class ControllerDesignLayout extends Controller {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('design/layout');
 
 		$this->getList();
@@ -124,7 +124,7 @@ class ControllerDesignLayout extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -323,7 +323,7 @@ class ControllerDesignLayout extends Controller {
 		$this->load->model('setting/module');
 
 		$data['extensions'] = array();
-		
+
 		// Get a list of installed modules
 		$extensions = $this->model_setting_extension->getInstalled('module');
 
@@ -361,16 +361,13 @@ class ControllerDesignLayout extends Controller {
 		}
 
 		$data['layout_modules'] = array();
-		
+
 		// Add all the modules which have multiple settings for each module
 		foreach ($layout_modules as $layout_module) {
 			$part = explode('.', $layout_module['code']);
-		
-			$this->load->language('extension/module/' . $part[0]);
 
 			if (!isset($part[1])) {
 				$data['layout_modules'][] = array(
-					'name'       => strip_tags($this->language->get('heading_title')),
 					'code'       => $layout_module['code'],
 					'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'], true),
 					'position'   => $layout_module['position'],
@@ -378,19 +375,18 @@ class ControllerDesignLayout extends Controller {
 				);
 			} else {
 				$module_info = $this->model_setting_module->getModule($part[1]);
-				
+
 				if ($module_info) {
 					$data['layout_modules'][] = array(
-						'name'       => strip_tags($module_info['name']),
 						'code'       => $layout_module['code'],
 						'edit'       => $this->url->link('extension/module/' . $part[0], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[1], true),
 						'position'   => $layout_module['position'],
 						'sort_order' => $layout_module['sort_order']
 					);
-				}				
+				}
 			}
-		}		
-		
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

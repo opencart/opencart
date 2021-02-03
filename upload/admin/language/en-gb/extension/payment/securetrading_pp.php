@@ -13,8 +13,12 @@ $_['text_refund_issued']                         = 'Refund was successfully issu
 $_['text_pending_settlement_manually_overriden'] = 'Pending Settlement, manually overriden';
 $_['text_pending_suspended']                     = 'Suspended';
 $_['text_pending_settled']                       = 'Settled';
+$_['text_reversed']                              = 'Reversed';
+$_['text_payment']                               = "Payment";
+$_['text_rebate']                                = 'Rebate';
 
 $_['entry_site_reference']                       = 'Site reference';
+$_['entry_version']                              = 'Version';
 $_['entry_username']                             = 'Username';
 $_['entry_password']                             = 'Password';
 $_['entry_site_security_status']                 = 'Use Site Security hash';
@@ -39,6 +43,7 @@ $_['entry_refund']                               = 'Issue refund (%s):';
 
 $_['error_permission']                           = 'You do not have permissions to modify this module';
 $_['error_site_reference']                       = 'Site Reference is required';
+$_['error_version']                              = 'Version is required';
 $_['error_notification_password']                = 'Notification password is required';
 $_['error_cards_accepted']                       = 'Accepted cards is required';
 $_['error_username']                             = 'Username is required';
@@ -46,6 +51,7 @@ $_['error_password']                             = 'Password is required';
 $_['error_connection']                           = 'Could not connect to Secure Trading';
 $_['error_data_missing']                         = 'Data missing';
 
+$_['help_version']                               = 'Payment Version (e.g. 2)';
 $_['help_username']                              = 'Your webservice username';
 $_['help_password']                              = 'Your webservice password';
 $_['help_refund']                                = 'Please include the decimal point and the decimal part of the amount';

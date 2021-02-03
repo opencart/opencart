@@ -233,3 +233,11 @@ $_['text_card_message_F9032']									= 'Invalid Customer Last Name';
 $_['text_card_message_F9033']									= 'Invalid Billing Street';
 $_['text_card_message_F9034']									= 'Invalid Shipping Street';
 $_['text_card_message_F9037']									= 'Suspicious Customer Email Address';
+
+// Error
+$_['error_payment']                                             = 'Payment Error';
+$_['error_empty_name']                                          = 'Card Holder\'s Name must be entered';
+$_['error_invalid_card']                                        = 'Card Number appears invalid';
+$_['error_expiry_date']                                         = 'This expiry date has passed';
+$_['error_cvv']                                                 = 'CVV/CSV Number appears invalid';
+$_['error_payment_text']                                        = 'There was a problem completing the payment';

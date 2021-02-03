@@ -6,11 +6,16 @@ class ControllerExtensionPaymentSecureTradingPp extends Controller {
 		$this->load->model('localisation/zone');
 		$this->load->language('extension/payment/securetrading_pp');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
 			$data['order_info'] = $order_info;
 			$data['site_reference'] = $this->config->get('payment_securetrading_pp_site_reference');
+			$data['version'] = $this->config->get('payment_securetrading_pp_version');
 			$data['parent_css'] = $this->config->get('payment_securetrading_pp_parent_css');
 			$data['child_css'] = $this->config->get('payment_securetrading_pp_child_css');
 			$data['currency'] = $order_info['currency_code'];

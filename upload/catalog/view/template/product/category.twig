@@ -48,18 +48,18 @@
       {% endif %}
       {% if products %}
         <div id="display-control" class="row">
-          <div class="col-md-3">
+          <div class="col-lg-3">
             <div class="mb-3">
-              <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fas fa-exchange-alt"></i> <span class="d-inline d-md-none d-lg-inline">{{ text_compare }}</span></a>
+              <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fas fa-exchange-alt"></i> <span class="d-none d-xl-inline">{{ text_compare }}</span></a>
             </div>
           </div>
-          <div class="col-md-1 d-none d-md-block">
+          <div class="col-lg-1 d-none d-lg-block">
             <div class="btn-group">
               <button type="button" id="list-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
               <button type="button" id="grid-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
             </div>
           </div>
-          <div class="col-md-4 offset-md-1 col-6">
+          <div class="col-lg-4 offset-lg-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
@@ -75,7 +75,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-3 col-6">
+          <div class="col-lg-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <label for="input-limit" class="input-group-text">{{ text_limit }}</label>

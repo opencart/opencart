@@ -207,7 +207,34 @@ class Activity extends \Opencart\System\Engine\Controller {
 				$this->model_account_activity->addActivity('return_guest', $activity_data);
 			}
 		}
-	}	
+	}
+	
+	// model/account/custom_field/getCustomFields/before
+	public function getCustomFields(&$route, &$args) {
+		if ($this->config->get('config_customer_activity')) {
+			$this->load->model('account/activity');
+
+			if ($this->customer->isLogged()) {
+				$activity_data = [
+					'customer_id' 			=> $this->customer->getId(),
+					'customer_group_id'		=> $args[0],
+					'name'        			=> $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
+					'route'				=> $route
+				];
+
+				$this->model_account_activity->addActivity('custom_fields_customer', $activity_data);
+			} else {
+				$activity_data = [
+					'customer_id' 			=> 0,
+					'customer_group_id'		=> $args[0],
+					'name'      			=> '',
+					'route'				=> $route
+				];
+
+				$this->model_account_activity->addActivity('custom_fields_guest', $activity_data);
+			}
+		}
+	}
 	
 	// catalog/model/checkout/order/addHistory/before
 	public function addHistory(&$route, &$args) {

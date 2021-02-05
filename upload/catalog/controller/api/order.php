@@ -98,10 +98,20 @@ class Order extends \Opencart\System\Engine\Controller {
 				$json['success'] = $this->language->get('text_success');
 
 				$order_data = [];
+				
+				$this->load->model('setting/setting');
+				
+				$store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
+				
+				if ($store_info) {
+					$store_id = $store_info['store_id'];
+				} else {
+					$store_id = $this->config->get('config_store_id');
+				}
 
 				// Store Details
 				$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
-				$order_data['store_id'] = $this->config->get('config_store_id');
+				$order_data['store_id'] = $store_id;
 				$order_data['store_name'] = $this->config->get('config_name');
 				$order_data['store_url'] = $this->config->get('config_url');
 
@@ -461,10 +471,18 @@ class Order extends \Opencart\System\Engine\Controller {
 					$json['success'] = $this->language->get('text_success');
 
 					$order_data = [];
+					
+					$store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
+				
+					if ($store_info) {
+						$store_id = $store_info['store_id'];
+					} else {
+						$store_id = $this->config->get('config_store_id');
+					}
 
 					// Store Details
 					$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
-					$order_data['store_id'] = $this->config->get('config_store_id');
+					$order_data['store_id'] = $store_id;
 					$order_data['store_name'] = $this->config->get('config_name');
 					$order_data['store_url'] = $this->config->get('config_url');
 

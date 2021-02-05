@@ -2204,10 +2204,12 @@ $('#content').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-cu
 	$('#form-upload input[name=\'file\']').trigger('click');
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
-        if (this.files[0].size > {{ config_file_max_size }}) {
-            alert('{{ error_upload_size }}');
-        }
-    });
+		if (this.files[0].size > {{ config_file_max_size }}) {
+			$(this).val('');
+
+			alert('{{ error_upload_size }}');
+		}
+	});
 
 	if (typeof timer != 'undefined') {
 		clearInterval(timer);

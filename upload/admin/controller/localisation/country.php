@@ -349,6 +349,8 @@ class Country extends \Opencart\System\Engine\Controller {
 	protected function getForm() {
 		$data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$url = '';
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

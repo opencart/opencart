@@ -16,11 +16,9 @@ class Featured extends \Opencart\System\Engine\Controller {
 				$product_info = $this->model_catalog_product->getProduct($product_id);
 
 				if ($product_info) {
-					$product_data[] = $product_info;
+					$products[] = $product_info;
 				}
 			}
-
-			$products = array_slice($product_data, 0, (int)$setting['limit']);
 
 			foreach ($products as $product) {
 				if ($product['image']) {

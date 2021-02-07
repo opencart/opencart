@@ -108,7 +108,7 @@ final class Loader {
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
-				trigger_error('Error: Could not load model ' . $class . '!');
+				throw \Exception('Error: Could not load model ' . $class . '!');
 			}
 		}
 	}
@@ -214,7 +214,7 @@ final class Loader {
 		if (is_file($file)) {
 			include_once($file);
 		} else {
-			trigger_error('Error: Could not load helper ' . $route . '!');
+			throw \Exception('Error: Could not load helper ' . $route . '!');
 		}
 	}
 

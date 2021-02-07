@@ -6,8 +6,6 @@
 
 -----------------------------------------------------------
 
-SET sql_mode = '';
-
 --
 -- Table structure for table `oc_address`
 --

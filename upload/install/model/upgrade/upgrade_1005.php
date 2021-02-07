@@ -132,9 +132,9 @@ class Upgrade1005 extends \Opencart\System\Engine\Model {
 		}
 
 		// force some settings to prevent errors
-		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = 'default' WHERE `key` = 'config_template'");
-		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '1' WHERE `key` = 'config_error_display'");
-		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '1' WHERE `key` = 'config_error_log'");
-		$this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '0' WHERE `key` = 'config_compression'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'default' WHERE `key` = 'config_template'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '1' WHERE `key` = 'config_error_display'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '1' WHERE `key` = 'config_error_log'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '0' WHERE `key` = 'config_compression'");
 	}
 }

@@ -62,7 +62,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		$sort_data = ['name'];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
 			$sql .= " ORDER BY `name`";
 		}

@@ -11,7 +11,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		}
 
 		$this->cache->delete('length_class');
-		
+
 		return $length_class_id;
 	}
 
@@ -45,7 +45,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY " . $data['sort'];
+				$sql .= " ORDER BY `" . $data['sort'] . "`";
 			} else {
 				$sql .= " ORDER BY `title`";
 			}

@@ -23,7 +23,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] = "`or`.`status` = '" . (int)$data['filter_status'] . "'";;
+			$implode[] = "`or`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {

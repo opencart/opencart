@@ -117,40 +117,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			$files[] = DIR_OPENCART . 'config.php';
 			$files[] = DIR_OPENCART . 'admin/config.php';
 
-			foreach ($files as $file) {
-				if (!is_writable($file)) {
-					exit(json_encode(['error' => 'File is read only. Please adjust and try again: ' . $file]));
-				}
-
-				$upgrade = true;
-
-				$lines = file($file);
-
-				foreach ($lines as $line) {
-					if (strpos($line, 'DIR_MODIFICATION') !== false) {
-						$upgrade = false;
-						break;
-					}
-				}
-
-				if ($upgrade) {
-					$output = '';
-
-					foreach ($lines as $line_id => $line) {
-						if (strpos($line, 'DIR_LOGS') !== false) {
-							$new_line = "define('DIR_MODIFICATION', '" . str_replace("\\", "/", DIR_SYSTEM) . 'modification/' . "');";
-
-							$output .= $new_line . "\n";
-							$output .= $line;
-						} else {
-							$output .= $line;
-						}
-					}
-
-					file_put_contents($file, $output);
-				}
-			}
-
 			// Update the config.php by adding a DIR_UPLOAD
 			foreach ($files as $file) {
 				if (!is_writable($file)) {

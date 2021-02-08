@@ -312,7 +312,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('checkout/order');
 
-			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			if (!isset($this->session->data['order_id'])) {
+          $this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+      }
 
 			$this->load->model('tool/upload');
 

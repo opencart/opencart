@@ -1,0 +1,186 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-right">
+        <button class="btn btn-primary" data-toggle="tooltip" form="form-fraud" title="{{ button_save }}" type="submit"><i class="fas fa-save"></i></button>
+        <button id="button-purge" class="btn btn-danger" data-toggle="tooltip" form="form-purge" title="Delete All Data" type="button"><i class="fas fa-trash"></i></button>
+        <a class="btn btn-light" data-toggle="tooltip" href="{{ cancel }}" title="{{ button_cancel }}"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button class="close" data-dismiss="alert" type="button">&times;</button>
+      </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> {{ text_signup }}</div>
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-fraud">
+          <div class="form-group row">
+            <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="fraud_fraudlabspro_status" id="input-status" class="form-control">
+                {% if fraud_fraudlabspro_status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="input-key" class="col-sm-2 col-form-label"> {{ entry_key }} </label>
+            <div class="col-sm-10">
+              <input type="text" name="fraud_fraudlabspro_key" value="{{ fraud_fraudlabspro_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control" />
+              {% if error_key %}
+              <div class="text-danger">{{ error_key }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <fieldset>
+            <legend>Rules Validation</legend>
+            <div class="alert alert-info">{{ text_rule_info }}</div>
+            <div class="form-group row">
+              <label for="input-fraud-review-status" class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ help_review_status }}">{{ entry_review_status }}</span></label>
+              <div class="col-sm-10">
+                <select name="fraud_fraudlabspro_review_status_id" id="input-fraud-review-status" class="form-control">
+                  {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == fraud_fraudlabspro_review_status_id %}
+                      <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                      <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-fraud-approve-status" class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ help_approve_status }}">{{ entry_approve_status }}</span></label>
+              <div class="col-sm-10">
+                <select name="fraud_fraudlabspro_approve_status_id" id="input-fraud-approve-status" class="form-control">
+                  {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == fraud_fraudlabspro_approve_status_id %}
+                      <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                      <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="input-fraud-reject-status" class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ help_reject_status }}">{{ entry_reject_status }}</span></label>
+              <div class="col-sm-10">
+                <select name="fraud_fraudlabspro_reject_status_id" id="input-fraud-reject-status" class="form-control">
+                  {% for order_status in order_statuses %}
+                    {% if order_status.order_status_id == fraud_fraudlabspro_reject_status_id %}
+                      <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                    {% else %}
+                      <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Notification Using Zapier</legend>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label" for="input-zapier-notify"><span data-toggle="tooltip" title="{{ help_zapier_notification }}">{{ entry_zapier_notification }}</span></label>
+              <div class="col-sm-10">
+                <div class="checkbox">
+                  <label>
+                    {% if fraud_fraudlabspro_zapier_approve %}
+                    <input type="checkbox" name="fraud_fraudlabspro_zapier_approve" value="1" checked="checked" />
+                    {{ text_zapier_approve }}
+                    {% else %}
+                    <input type="checkbox" name="fraud_fraudlabspro_zapier_approve" value="1" />
+                    {{ text_zapier_approve }}
+                    {% endif %}
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    {% if fraud_fraudlabspro_zapier_review %}
+                    <input type="checkbox" name="fraud_fraudlabspro_zapier_review" value="1" checked="checked" />
+                    {{ text_zapier_review }}
+                    {% else %}
+                    <input type="checkbox" name="fraud_fraudlabspro_zapier_review" value="1" />
+                    {{ text_zapier_review }}
+                    {% endif %}
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    {% if fraud_fraudlabspro_zapier_reject %}
+                    <input type="checkbox" name="fraud_fraudlabspro_zapier_reject" value="1" checked="checked" />
+                    {{ text_zapier_reject }}
+                    {% else %}
+                    <input type="checkbox" name="fraud_fraudlabspro_zapier_reject" value="1" />
+                    {{ text_zapier_reject }}
+                    {% endif %}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Testing Purpose</legend>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label" for="input-ip"><span data-toggle="tooltip" title="{{ help_simulate_ip }}">{{ entry_simulate_ip }}</span></label>
+              <div class="col-sm-10">
+                <input type="text" name="fraud_fraudlabspro_simulate_ip" value="{{ fraud_fraudlabspro_simulate_ip }}" placeholder="{{ entry_simulate_ip }}" id="input-ip" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label" for="input-debug-status"><span data-toggle="tooltip" title="{{ help_debug_status }}">{{ entry_debug }}</span></label>
+              <div class="col-sm-10">
+                <select name="fraud_fraudlabspro_debug_status" id="input-debug-status" class="form-control">
+                  {% if fraud_fraudlabspro_debug_status %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                  {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="form-group row" style="padding-left:15px;">
+                <div>{{ text_information }}</div>
+            </div>
+          </fieldset>
+        </form>
+        <form action="{{ action }}" id="form-purge" method="post">
+            <input type="hidden" name="purge" value="true">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+jQuery(document).ready(function($){
+    $('#button-purge').on('click', function(e) {
+        if (!confirm('WARNING: All data will be permanently deleted from the storage. Are you sure you want to proceed with the deletion?')) {
+            e.preventDefault();
+        }
+        else {
+            $('#form-purge').submit();
+        }
+    });
+});
+//--></script>
+{{ footer }}

@@ -200,6 +200,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['error_encryption'] = '';
 		}
 
+		if (isset($this->error['file_max_size'])) {
+			$data['error_file_max_size'] = $this->error['file_max_size'];
+		} else {
+			$data['error_file_max_size'] = '';
+		}
+
 		if (isset($this->error['extension'])) {
 			$data['error_extension'] = $this->error['extension'];
 		} else {
@@ -1317,6 +1323,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_image_location_width'] || !$this->request->post['config_image_location_height']) {
 			$this->error['image_location'] = $this->language->get('error_image_location');
+		}
+
+		if (!$this->request->post['config_file_max_size']) {
+			$this->error['file_max_size'] = $this->language->get('error_file_max_size');
 		}
 
 		$disallowed = [

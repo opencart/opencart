@@ -67,7 +67,7 @@
 		$('#form-upload input[name=\'file[]\']').trigger('click');
 
 		$('#form-upload input[name=\'file[]\']').on('change', function() {
-    		for (i = 0; i < this.files.length; i++) {
+			for (i = 0; i < this.files.length; i++) {
 				if (this.files[i].size > {{ config_file_max_size }}) {
 					$(this).val('');
 

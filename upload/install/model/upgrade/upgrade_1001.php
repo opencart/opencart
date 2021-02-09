@@ -110,14 +110,13 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Update the config.php by adding a DIR_MODIFICATION
+		// Update the config.php by adding a DIR_UPLOAD
 		if (is_file(DIR_OPENCART . 'config.php')) {
 			$files = [];
 
 			$files[] = DIR_OPENCART . 'config.php';
 			$files[] = DIR_OPENCART . 'admin/config.php';
 
-			// Update the config.php by adding a DIR_UPLOAD
 			foreach ($files as $file) {
 				if (!is_writable($file)) {
 					exit(json_encode(['error' => 'File is read only. Please adjust and try again: ' . $file]));

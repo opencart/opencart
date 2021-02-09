@@ -612,7 +612,6 @@ var chain = new Chain();
 		}
 	}
 
-
 	// BUTTON PLUGIN DEFINITION
 	// ========================
 

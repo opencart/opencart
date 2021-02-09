@@ -44,63 +44,62 @@
 </div>
 <script type="text/javascript"><!--
 var step = 0;
-var next = 'index.php?route=upgrade/upgrade|next';
 
 $('#button-continue').on('click', function() {
-	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
-	$('#progress-text').html('');
-	$('#button-continue').button('loading');
+    step = 0;
+
+    $('#button-continue').button('loading');
+
+    $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
+    $('#progress-text').html('');
 
 
+    upgrade('index.php?route=upgrade/upgrade|next');
 });
 
-function test(next) {
-	$.ajax({
-		url: next,
-		type: 'post',
-		dataType: 'json',
-		success: function(json) {
-			console.log(json);
+var upgrade = function(url) {
+    $.ajax({
+        url: url,
+        type: 'post',
+        dataType: 'json',
+        success: function(json) {
+            console.log(json);
 
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+            if (json['error']) {
+                $('#progress-bar').addClass('progress-bar-danger');
+                $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
-				$('#button-continue').prop('disabled', false);
-				$('#button-continue').button('reset');
-			}
+                $('#button-continue').prop('disabled', false);
+                $('#button-continue').button('reset');
+            }
 
-			if (json['success']) {
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-				$('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
-			}
+            if (json['success']) {
+                $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+                $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
+            }
 
-			if (json['next']) {
-				next = json['next'];
-			} else {
-				next = '';
-			}
+            if (json['next']) {
+                next = json['next'];
+            } else {
+                next ='';
+            }
 
-			if (!json['error']) {
-				$('#button-continue').replaceWith('<a href="{{ store }}" class="btn btn-primary">{{ button_continue }}</a>');
-				$('#button-continue').button('reset');
-			}
+            if (!json['error']) {
+                $('#button-continue').replaceWith('<a href="{{ store }}" class="btn btn-primary">{{ button_continue }}</a>');
+                $('#button-continue').button('reset');
+            }
 
-			step++;
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			$('#progress-bar').addClass('progress-bar-danger');
-			$('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
-			$('#button-continue').button('reset');
-		}
-	}).done(function() {
-		if (next) {
-			test();
-		}
-	});
+            step++;
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            $('#progress-bar').addClass('progress-bar-danger');
+            $('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
+            $('#button-continue').button('reset');
+        }
+    }).done(function() {
+        upgrade(next);
 
+    });
 }
-
-
 //--></script>
 {{ footer }}

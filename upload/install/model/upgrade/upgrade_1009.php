@@ -135,10 +135,6 @@ class Upgrade1009 extends \Opencart\System\Engine\Model {
 					array_splice($lines, $i + 1, 0, ['define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');']);
 				}
 
-				if ((strpos($lines[$i], 'DIR_MODIFICATION') !== false) && (strpos($lines[$i + 1], 'DIR_SESSION') === false)) {
-					array_splice($lines, $i + 1, 0, ['define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');']);
-				}
-
 				if (strpos($lines[$i], 'DIR_CACHE') !== false) {
 					$lines[$i] = 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
 				}
@@ -151,10 +147,10 @@ class Upgrade1009 extends \Opencart\System\Engine\Model {
 					$lines[$i] = 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
 				}
 
-				if (strpos($lines[$i], 'DIR_MODIFICATION') !== false) {
-					$lines[$i] = 'define(\'DIR_MODIFICATION\', DIR_STORAGE . \'modification/\');' . "\n";
+				if ((strpos($lines[$i], 'DIR_LOGS') !== false) && (strpos($lines[$i + 1], 'DIR_SESSION') === false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');']);
 				}
-
+				
 				if (strpos($lines[$i], 'DIR_SESSION') !== false) {
 					$lines[$i] = 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
 				}

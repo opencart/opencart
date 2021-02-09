@@ -70,7 +70,6 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 					$output .= $line;
 				}
 
-				$output = str_replace('system/modification', 'system/storage/modification', $output);
 				$output = str_replace('system/upload', 'system/storage/upload', $output);
 				$output = str_replace('system/logs', 'system/storage/logs', $output);
 				$output = str_replace('system/cache', 'system/storage/cache', $output);
@@ -88,13 +87,8 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Disable any existing ocmods
-		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET `status` = 0");
-
 		// Cleanup files in old directories
 		$directories = [
-			DIR_SYSTEM . 'modification/',
-			DIR_SYSTEM . 'storage/modification/',
 			DIR_SYSTEM . 'logs/',
 			DIR_SYSTEM . 'cache/',
 		];

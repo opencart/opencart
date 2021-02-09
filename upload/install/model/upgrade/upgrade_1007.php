@@ -5,9 +5,6 @@ class Upgrade1007 extends \Opencart\System\Engine\Model {
 		// Download
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `filename` `filename` varchar(140) NOT NULL");
 
-		// Download
-		$this->db->query("ALTER TABLE `" . DB_PREFIX . "modification` CHANGE `xml` `xml` mediumtext NOT NULL");
-
 		// Extension
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'theme'");
 

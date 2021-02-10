@@ -2,79 +2,178 @@
 namespace Opencart\Application\Model\Upgrade;
 class Upgrade1003 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
+		// Convert image/data to image/catalog
+		$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "option_value` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
 
+		// Convert 1.5.x core module format to 2.x (core modules only)
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `serialized` = '1'");
 
+		foreach ($query->rows as $result) {
+			if ($result['serialized']) {
+				$value = json_decode($result['value'], true);
 
-		// Set Product Meta Title default to product name if empty
-		$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `meta_title` = `name` WHERE meta_title = ''");
-		$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `meta_title` = `name` WHERE meta_title = ''");
-		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `meta_title` = `title` WHERE meta_title = ''");
+				$module_data = [];
 
-		//  Option
-		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = 'radio' WHERE `type` = 'image'");
+				if (in_array($result['code'], ['latest', 'bestseller', 'special', 'featured'])) {
+					if ($value) {
+						foreach ($value as $k => $v) {
 
-		// product_option
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_option' AND COLUMN_NAME = 'option_value'");
+							// Since 2.x doesn't look good with modules as side boxes, set to content bottom
+							if ($v['position'] == 'column_left' || $v['position'] == 'column_right') {
+								$v['position'] = 'content_bottom';
+							}
 
-		if ($query->num_rows) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET `option_value` = `value`");
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `option_value`");
-		}
+							$module_data['name'] = ($result['key'] . '_' . $k);
+							$module_data['status'] = $v['status'];
 
-		// tags
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_tag'");
+							if (isset($v['image_width'])) {
+								$module_data['width'] = $v['image_width'];
+							}
 
-		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
+							if (isset($v['image_height'])) {
+								$module_data['height'] = $v['image_height'];
+							}
 
-			foreach ($query->rows as $language) {
-				// Get old tags
-				$query = $this->db->query("SELECT p.`product_id`, GROUP_CONCAT(DISTINCT pt.`tag` order by pt.`tag` ASC SEPARATOR ',') as `tags` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_tag` pt ON (p.`product_id` = pt.`product_id`) WHERE pt.`language_id` = '" . (int)$language['language_id'] . "' GROUP BY p.`product_id`");
+							if (isset($v['limit'])) {
+								$module_data['limit'] = $v['limit'];
+							} else {
+								$module_data['limit'] = 4;
+							}
 
-				if ($query->num_rows) {
-					foreach ($query->rows as $row) {
-						$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `tag` = '" . $this->db->escape(strtolower($row['tags'])) . "' WHERE `product_id` = '" . (int)$row['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
-						$this->db->query("DELETE FROM `" . DB_PREFIX . "product_tag` WHERE `product_id` = '" . (int)$row['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
+							if ($result['code'] == 'featured') {
+								foreach ($query->rows as $result2) {
+									if ($result2['key'] == 'featured_product') {
+										$module_data['product'] = explode(",", $result2['value']);
+										$module_data['limit'] = 4;
+										break;
+									} else {
+										$featured_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'featured_product'");
+
+										if ($featured_product_query->num_rows) {
+											$module_data['product'] = explode(",", $featured_product_query->row['value']);
+											$module_data['limit'] = 4;
+										}
+									}
+								}
+							}
+
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
+
+							$module_id = $this->db->getLastId();
+
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
+
+							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
+						}
+					} else {
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
+					}
+				} elseif (in_array($result['code'], ['category', 'account', 'affiliate', 'filter'])) {
+					foreach ($value as $k => $v) {
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$result['store_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `key` = '" . ($result['code'] . '_status') . "', `value` = '1'");
+
+						if ($v['status']) {
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
+						}
+					}
+				} elseif (in_array($result['code'], ['banner', 'carousel', 'slideshow'])) {
+					if ($value) {
+						foreach ($value as $k => $v) {
+							$module_data['name'] = ($result['key'] . '_' . $k);
+							$module_data['status'] = $v['status'];
+							$module_data['banner_id'] = $v['banner_id'];
+
+							if (isset($v['image_width'])) {
+								$module_data['width'] = $v['image_width'];
+							}
+
+							if (isset($v['image_height'])) {
+								$module_data['height'] = $v['image_height'];
+							}
+
+							if (isset($v['width'])) {
+								$module_data['width'] = $v['width'];
+							}
+
+							if (isset($v['height'])) {
+								$module_data['height'] = $v['height'];
+							}
+
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
+
+							$module_id = $this->db->getLastId();
+
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
+
+							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
+						}
+					} else {
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
+					}
+				} elseif (in_array($result['code'], ['welcome'])) {
+					if ($value) {
+						// Install HTML module if not already installed
+						$html_query = $this->db->query("SELECT count(*) FROM `" . DB_PREFIX . "extension` WHERE `code` = 'html'");
+
+						if ($html_query->row['count(*)'] == '0') {
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'module', `code` = 'html'");
+						}
+
+						$result['code'] = 'html';
+
+						foreach ($value as $k => $v) {
+							$module_data['name'] = ($result['key'] . '_' . $k);
+							$module_data['status'] = $v['status'];
+
+							foreach ($v['description'] as $language_id => $description) {
+								$module_data['module_description'][$language_id]['title'] = '';
+								$module_data['module_description'][$language_id]['description'] = str_replace('image/data', 'image/catalog', $description);
+							}
+
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
+
+							$module_id = $this->db->getLastId();
+
+							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
+
+							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = 'welcome'");
+						}
+					} else {
+						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = 'welcome'");
+					}
+				} else {
+					// Could add code for other types here
+					// If module has position, but not a core module, then disable it because it likely isn't compatible
+					if (!empty($value)) {
+						foreach ($value as $k => $v) {
+							if (isset($v['position'])) {
+								$module_data = $v;
+
+								$module_data['name'] = ($result['key'] . '_' . $k);
+								$module_data['status'] = '0'; // Disable non-core modules
+
+								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
+							}
+						}
+					} else {
+						$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
 					}
 				}
+			} else {
+				// Something should go here?
 			}
-
-			$this->db->query("DROP TABLE `" . DB_PREFIX . "product_tag`");
-		}
-
-		// download
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "download' AND COLUMN_NAME = 'remaining'");
-
-		if ($query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` DROP `remaining`");
-		}
-
-		// Sort the categories to take advantage of the nested set model
-		$this->repairCategories(0);
-	}
-
-	// Function to repair any erroneous categories that are not in the category path table.
-	public function repairCategories($parent_id = 0) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
-
-		foreach ($query->rows as $category) {
-			// Delete the path below the current one
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category['category_id'] . "'");
-
-			// Fix for records with no paths
-			$level = 0;
-
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$parent_id . "' ORDER BY `level` ASC");
-
-			foreach ($query->rows as $result) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', `level` = '" . (int)$level . "'");
-
-				$level++;
-			}
-
-			$this->db->query("REPLACE INTO `" . DB_PREFIX . "category_path` SET `category_id` = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$category['category_id'] . "', `level` = '" . (int)$level . "'");
-
-			$this->repairCategories($category['category_id']);
 		}
 	}
 }

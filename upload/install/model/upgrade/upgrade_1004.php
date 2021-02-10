@@ -3,6 +3,7 @@ namespace Opencart\Application\Model\Upgrade;
 class Upgrade1004 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 
+
 		// affiliate_activity
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
 
@@ -14,14 +15,8 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
 
 		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_activity` DROP `activity_id`");
-			} else {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_activity` CHANGE `activity_id` `customer_activity_id` INT(11) NOT NULL AUTO_INCREMENT");
-			}
+			$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_activity` DROP `activity_id`");
 		}
 
 		// customer
@@ -109,31 +104,6 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 
 
 
-
-
-
-
-
-		// customer
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
-
-		if ($query->num_rows) {
-			$customer_group_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group`");
-
-			foreach ($customer_group_query->rows as $customer_group) {
-				$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
-
-				foreach ($language_query->rows as $language) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
-				}
-			}
-
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");
-		}
-
-
-
-
 		// Api
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
 
@@ -142,5 +112,9 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` CHANGE COLUMN `name` `username` VARCHAR(64) NOT NULL");
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` MODIFY `username` VARCHAR(64) NOT NULL AFTER `api_id`");
 		}
+
+
+
+
 	}
 }

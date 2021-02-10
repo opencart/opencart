@@ -62,9 +62,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				$lines[$i] = 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			}
 
-
-
-
 			if ((strpos($lines[$i], 'DIR_IMAGE') !== false) && $required['DIR_OPENCART']) {
 				array_splice($lines, $i + 1, 0, ['define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');']);
 			}
@@ -170,21 +167,8 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 		}
 
 
-
-
-
-
-
-
-
-
-
 		// OPENCART_SERVER
 		$upgrade = true;
-
-		$file = DIR_OPENCART . 'admin/config.php';
-
-		$lines = file(DIR_OPENCART . 'admin/config.php');
 
 		foreach ($lines as $line) {
 			if (strpos(strtoupper($line), 'OPENCART_SERVER') !== false) {
@@ -213,72 +197,35 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			fclose($handle);
 		}
 
-
-
-
-
-		$catalog = file($file);
-
-		$file = DIR_OPENCART . 'admin/config.php';
-
-		if (!is_file($file)) {
-			exit(json_encode(['error' => 'File is missing. Please add: ' . $file]));
-		}
-
-		if (!is_writable($file)) {
-			exit(json_encode(['error' => 'File is read only. Please adjust and try again: ' . $file]));
-		}
-
-		$admin = file($file);
-
 		$output = '';
 
+		// Update the config.php to change mysql to mysqli
+		$upgrade = false;
 
+		$lines = file($file);
 
+		foreach ($lines as $line) {
+			if (strpos($line, "define('DB_DRIVER', 'mysql'") !== false) {
+				$upgrade = true;
+				break;
+			}
+		}
 
-		foreach ($files as $file) {
+		if ($upgrade) {
+			$output = '';
 
+			foreach ($lines as $line_id => $line) {
+				if (strpos($line, "'mysql'") !== false) {
+					$new_line = "define('DB_DRIVER', 'mysqli');";
 
-
-
-
-
-
-
-
-			// Update the config.php to change mysql to mysqli
-			foreach ($files as $file) {
-
-
-
-				$upgrade = false;
-
-				$lines = file($file);
-
-				foreach ($lines as $line) {
-					if (strpos($line, "define('DB_DRIVER', 'mysql'") !== false) {
-						$upgrade = true;
-						break;
-					}
-				}
-
-				if ($upgrade) {
-					$output = '';
-
-					foreach ($lines as $line_id => $line) {
-						if (strpos($line, "'mysql'") !== false) {
-							$new_line = "define('DB_DRIVER', 'mysqli');";
-
-							$output .= $new_line . "\n";
-						} else {
-							$output .= $line;
-						}
-					}
-
-					file_put_contents($file, $output);
+					$output .= $new_line . "\n";
+				} else {
+					$output .= $line;
 				}
 			}
 
+			file_put_contents($file, $output);
+		}
 
 
 
@@ -291,7 +238,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 		$output = str_replace('system/storage/download', '/download', $output);
 		$output = str_replace('/download', 'system/storage/download', $output);
 
-// Update the config.php to add /storage/ to paths
+		// Update the config.php to add /storage/ to paths
 		if (is_file(DIR_OPENCART . 'config.php')) {
 			$files[] = DIR_OPENCART . 'config.php';
 			$files[] = DIR_OPENCART . 'admin/config.php';
@@ -428,9 +375,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			}
 		}
 
-
-
-
 		// Merge image/data to image/catalog
 		if (is_dir(DIR_IMAGE . 'data') && !file_exists(DIR_IMAGE . 'catalog')) {
 			if (!file_exists(DIR_IMAGE . 'catalog')) {
@@ -441,45 +385,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
 			}
 		}
-
-// Convert image/data to image/catalog
-$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "option_value` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
-$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
-
-
-
-
-
-
-
-
-
-		// Merge system/upload to system/storage/upload
-		if (file_exists(DIR_SYSTEM . 'upload')) {
-			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_SYSTEM . 'storage/upload');
-		}
-
-		// Merge download or system/download to system/storage/download
-		if (file_exists(DIR_OPENCART . 'download')) {
-			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/download');
-		}
-
-		if (file_exists(DIR_SYSTEM . 'download')) {
-			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/download');
-		}
-
-
-
 
 		// If backup storage directory does not exist
 		if (!is_dir(DIR_STORAGE . 'backup')) {
@@ -499,8 +404,19 @@ $this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `descrip
 			fclose($handle);
 		}
 
+		// Merge system/upload to system/storage/upload
+		if (is_dir(DIR_SYSTEM . 'upload')) {
+			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_SYSTEM . 'storage/upload');
+		}
 
+		// Merge download or system/download to system/storage/download
+		if (is_dir(DIR_OPENCART . 'download')) {
+			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/download');
+		}
 
+		if (is_dir(DIR_SYSTEM . 'download')) {
+			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/download');
+		}
 	}
 
 	private function recursive_move($src, $dest) {

@@ -115,7 +115,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensionsByType('shipping');
 
 			foreach ($results as $result) {
 				if ($this->config->get('shipping_' . $result['code'] . '_status')) {

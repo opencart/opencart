@@ -2,6 +2,15 @@
 namespace Opencart\Application\Model\Upgrade;
 class Upgrade1010 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
+
+		// Events
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "event' AND COLUMN_NAME = 'date_added'");
+
+		if ($query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` DROP COLUMN `date_added`");
+		}
+
+
 		// Add missing core events
 		$events = [];
 
@@ -230,34 +239,5 @@ class Upgrade1010 extends \Opencart\System\Engine\Model {
 		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/returns/addHistory/after' WHERE `code` = 'admin_mail_return'");
-
-		// extension_install
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "extension_install' AND COLUMN_NAME = 'extension_id'");
-
-		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "extension_install` ADD `extension_id` int NOT NULL AFTER `extension_install_id`");
-		}
-
-		// If backup storage directory does not exist
-		if (!is_dir(DIR_STORAGE . 'backup')) {
-			mkdir(DIR_STORAGE . 'backup', '0644');
-
-			$handle = fopen(DIR_STORAGE . 'backup/index.html', 'w');
-
-			fclose($handle);
-		}
-
-		// If marketplace storage directory does not exist
-		if (!is_dir(DIR_STORAGE . 'marketplace')) {
-			mkdir(DIR_STORAGE . 'marketplace', '0644');
-
-			$handle = fopen(DIR_STORAGE . 'marketplace/index.html', 'w');
-
-			fclose($handle);
-		}
-
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
-
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_pagination_admin' WHERE `key` = 'config_limit_admin'");
 	}
 }

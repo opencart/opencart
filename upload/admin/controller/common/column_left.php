@@ -151,7 +151,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($this->user->hasPermission('access', 'marketplace/extension')) {
 				$marketplace[] = [
 					'name'	   => $this->language->get('text_extension'),
-					'href'     => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token']),
+					'href'     => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'),
 					'children' => []
 				];
 			}

@@ -22,9 +22,9 @@
                 <select name="type" class="form-control">
                   {% for category in categories %}
                     {% if type == category.code %}
-                      <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
+                      <option value="{{ category.href }}" data-code="{{ category.code }}" selected="selected">{{ category.text }}</option>
                     {% else %}
-                      <option value="{{ category.href }}">{{ category.text }}</option>
+                      <option value="{{ category.href }}" data-code="{{ category.code }}">{{ category.text }}</option>
                     {% endif %}
                   {% endfor %}
                 </select>
@@ -56,6 +56,11 @@ $('select[name=\'type\']').on('change', function() {
             $('select[name=\'type\']').prop('disabled', false);
         },
         success: function(html) {
+            if (window.location.href.includes('type')) {
+                history.pushState(null, null, window.location.href.replace(/(?<=type=)([a-zA-Z]+)/g, $('select[name="type"] option:selected').data('code')));
+            } else {
+                history.pushState(null, null, window.location.href + '&type=' + $('select[name="type"] option:selected').data('code'));
+            }
             $('#extension').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {

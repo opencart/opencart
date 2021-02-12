@@ -33,9 +33,14 @@ $(document).ready(function() {
 			popover: {
            		image: [
 					['custom', ['imageAttributes']],
+					['resize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
 					['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
 					['float', ['floatLeft', 'floatRight', 'floatNone']],
 					['remove', ['removeMedia']]
+				],
+				table: [
+					['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+					['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
 				],
 			},
 			buttons: {

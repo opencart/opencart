@@ -45,9 +45,12 @@ $(document).ready(function(){
     actualizationHref();
 
     function actualizationHref() {
+        var regular = /(?<=type=)([a-zA-Z]+)/g;
+        var type = $('select[name="type"] option:selected').data('code');
+
         var url = window.location.href.includes('type')
-            ? window.location.href.replace(/(?<=type=)([a-zA-Z]+)/g, $('select[name="type"] option:selected').data('code'))
-            : window.location.href + '&type=' + $('select[name="type"] option:selected').data('code');
+            ? window.location.href.replace(regular, type)
+            : window.location.href + '&type=' + type;
         }
 
         history.pushState(null, null, url);

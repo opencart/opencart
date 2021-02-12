@@ -45,12 +45,14 @@ $(document).ready(function(){
     actualizationHref();
 
     function actualizationHref() {
-        let url = '';
+        var url = '';
+
         if (window.location.href.includes('type')) {
             url = window.location.href.replace(/(?<=type=)([a-zA-Z]+)/g, $('select[name="type"] option:selected').data('code'));
         } else {
             url = window.location.href + '&type=' + $('select[name="type"] option:selected').data('code');
         }
+
         history.pushState(null, null, url);
     }
 

@@ -3,7 +3,7 @@ class ModelExtensionPaymentPPPayflowIFrame extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE `" . DB_PREFIX . "paypal_payflow_iframe_order` (
-				`order_id` int(11) DEFAULT NULL,
+				`order_id` int(11) NOT NULL,
 				`secure_token_id` varchar(255) NOT NULL,
 				`transaction_reference` varchar(255) DEFAULT NULL,
 				`transaction_type` varchar(1) DEFAULT NULL,

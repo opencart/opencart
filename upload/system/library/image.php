@@ -29,7 +29,7 @@ class Image {
 			exit('Error: PHP GD is not installed!');
 		}
 		
-		if (file_exists($file)) {
+		if (is_file($file)) {
 			$this->file = $file;
 
 			$info = getimagesize($file);
@@ -45,9 +45,11 @@ class Image {
 				$this->image = imagecreatefrompng($file);
 			} elseif ($this->mime == 'image/jpeg') {
 				$this->image = imagecreatefromjpeg($file);
+			} elseif ($this->mime == 'image/webp') {
+				$this->image = imagecreatefromwebp($file);
 			}
 		} else {
-			exit('Error: Could not load image ' . $file . '!');
+			error_log('Error: Could not load image ' . $file . '!');
 		}
 	}
 	
@@ -116,13 +118,15 @@ class Image {
 
 		$extension = strtolower($info['extension']);
 
-		if (is_resource($this->image)) {
+		if (is_object($this->image) || is_resource($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
 			} elseif ($extension == 'png') {
 				imagepng($this->image, $file);
 			} elseif ($extension == 'gif') {
 				imagegif($this->image, $file);
+			} elseif ($extension == 'webp') {
+				imagewebp($this->image, $file);
 			}
 
 			imagedestroy($this->image);
@@ -156,7 +160,7 @@ class Image {
 			$scale = min($scale_w, $scale_h);
 		}
 
-		if ($scale == 1 && $scale_h == $scale_w && $this->mime != 'image/png') {
+		if ($scale == 1 && $scale_h == $scale_w && ($this->mime != 'image/png' && $this->mime != 'image/webp')) {
 			return;
 		}
 
@@ -171,7 +175,17 @@ class Image {
 		if ($this->mime == 'image/png') {
 			imagealphablending($this->image, false);
 			imagesavealpha($this->image, true);
+
 			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
+
+			imagecolortransparent($this->image, $background);
+
+		} else if ($this->mime == 'image/webp') {
+			imagealphablending($this->image, false);
+			imagesavealpha($this->image, true);
+
+			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
+
 			imagecolortransparent($this->image, $background);
 		} else {
 			$background = imagecolorallocate($this->image, 255, 255, 255);
@@ -232,8 +246,8 @@ class Image {
 				break;
 		}
 		
-		imagealphablending( $this->image, true );
-		imagesavealpha( $this->image, true );
+		imagealphablending( $this->image, true);
+		imagesavealpha( $this->image, true);
 		imagecopy($this->image, $watermark->getImage(), $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark->getWidth(), $watermark->getHeight());
 
 		imagedestroy($watermark->getImage());
@@ -323,9 +337,9 @@ class Image {
 		}
 
 		if (strlen($color) == 6) {
-			list($r, $g, $b) = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);
+			list($r, $g, $b) = [$color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]];
 		} elseif (strlen($color) == 3) {
-			list($r, $g, $b) = array($color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]);
+			list($r, $g, $b) = [$color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]];
 		} else {
 			return false;
 		}
@@ -334,6 +348,6 @@ class Image {
 		$g = hexdec($g);
 		$b = hexdec($b);
 
-		return array($r, $g, $b);
+		return [$r, $g, $b];
 	}
 }

@@ -16,10 +16,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$this->load->model('extension/payment/paypal');
 		$this->load->model('localisation/country');
-
-		if(!isset($this->session->data['order_id'])) {
-			return false;
-		}
+		$this->load->model('checkout/order');
 				
 		$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 				
@@ -39,6 +36,8 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$data['transaction_method'] = $this->config->get('payment_paypal_transaction_method');
 		$data['locale'] = preg_replace('/-(.+?)+/', '', $this->config->get('config_language')) . '_' . $country['iso_code_2'];
 		$data['currency_code'] = $this->config->get('payment_paypal_currency_code');
+		$data['currency_value'] = $this->config->get('payment_paypal_currency_value');
+		$data['decimal_place'] = $setting['currency'][$data['currency_code']]['decimal_place'];
 		
 		$data['express_status'] = $setting['checkout']['express']['status'];
 
@@ -51,7 +50,6 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$data['button_color'] = $setting['checkout']['express']['button_color'];
 		$data['button_shape'] = $setting['checkout']['express']['button_shape'];
 		$data['button_label'] = $setting['checkout']['express']['button_label'];
-
 		$data['button_width'] = $setting['button_width'][$data['button_size']];
 						
 		$data['card_status'] = $setting['checkout']['card']['status'];
@@ -64,8 +62,23 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$data['form_size'] = $setting['checkout']['card']['form_size'];
 		$data['form_width'] = $setting['form_width'][$data['form_size']];
 		$data['secure_status'] = $setting['checkout']['card']['secure_status'];
+		
+		$data['message_status'] = $setting['checkout']['message']['status'];
+		$data['message_align'] = $setting['checkout']['message']['message_align'];
+		$data['message_size'] = $setting['checkout']['message']['message_size'];
+		$data['message_width'] = $setting['message_width'][$data['message_size']];
+		$data['message_layout'] = $setting['checkout']['message']['message_layout'];
+		$data['message_text_color'] = $setting['checkout']['message']['message_text_color'];
+		$data['message_text_size'] = $setting['checkout']['message']['message_text_size'];
+		$data['message_flex_color'] = $setting['checkout']['message']['message_flex_color'];
+		$data['message_flex_ratio'] = $setting['checkout']['message']['message_flex_ratio'];
+		$data['message_placement'] = 'payment';
 				
 		$data['order_id'] = $this->session->data['order_id'];
+		
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+		
+		$data['message_amount'] = number_format($order_info['total'] * $data['currency_value'], $data['decimal_place'], '.', '');
 										
 		require_once DIR_SYSTEM .'library/paypal/paypal.php';
 		
@@ -116,10 +129,6 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		$this->load->model('extension/payment/paypal');
 		$this->load->model('checkout/order');
-
-		if(!isset($this->session->data['order_id'])) {
-			return false;
-		}
 				
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
@@ -450,7 +459,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 	
 	public function webhook() {
 		$this->load->model('extension/payment/paypal');
-		
+				
 		$webhook_data = json_decode(html_entity_decode(file_get_contents('php://input')), true);
 		
 		$this->model_extension_payment_paypal->log($webhook_data, 'Webhook');
@@ -504,7 +513,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			
 			$this->load->model('checkout/order');
 
-			$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
+			$this->model_checkout_order->addOrderHistory($order_id, $order_status_id, '', true);
 		}
 	}
 }

@@ -279,7 +279,7 @@ class ControllerSaleRecurring extends Controller {
 		for ($i = 1; $i <= 6; $i++) {
 			$data['recurring_statuses'][$i] = array(
 				'text'  => $this->language->get('text_status_' . $i),
-				'value' => 1
+				'value' => $i,
 			);		
 		}
 

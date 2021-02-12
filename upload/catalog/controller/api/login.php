@@ -44,8 +44,6 @@ class ControllerApiLogin extends Controller {
 			} else {
 				$json['error']['key'] = $this->language->get('error_key');
 			}
-		} else {
-			$json['error']['key'] = $this->language->get('error_key');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

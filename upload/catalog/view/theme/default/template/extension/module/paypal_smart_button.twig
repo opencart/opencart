@@ -1,5 +1,9 @@
 <style type="text/css">
 
+#paypal_form {
+	position: relative;
+}
+
 #paypal_smart_button {
 	text-align: {{ button_align }};
 }
@@ -11,78 +15,80 @@
 	{% endif %}
 }
 
+#paypal_message {
+	text-align: {{ message_align }};
+}
+
+#paypal_message_container {
+	{% if message_width %}
+	display: inline-block;
+	width: {{ message_width }};
+	{% endif %}
+}
+
 </style>
-<script type="text/javascript" src="https://www.paypal.com/sdk/js?components=buttons&client-id={{ client_id }}&merchant-id={{ merchant_id }}&currency={{ currency_code }}&intent={{ transaction_method }}&commit=false{% if (environment == 'sandbox') %}&buyer-country=NL{% endif %}" data-partner-attribution-id="{{ partner_id }}"></script>
 <script type="text/javascript">
 
-window.onload = function() {
-	setupPayPalSmartButton();
-};
-
 function setupPayPalSmartButton() {
-	if ($('{{ insert_tag }}').length) {
-		$('{{ insert_tag }}').{{ insert_type }}('<div id="paypal_smart_button" class="buttons clearfix"><div id="paypal_smart_button_container"></div></div>');
-			
-		try {		
-			// Render the PayPal button into #paypal_smart_button_container
-			paypal.Buttons({
-				env: '{{ environment }}',
-				locale: '{{ locale }}',
-				style: {
-					layout: 'horizontal',
-					size: '{{ button_size }}',
-					color: '{{ button_color }}',
-					shape: '{{ button_shape }}',
-					label: '{{ button_label }}',
-					tagline: '{{ button_tagline }}'
-				},
-				// Set up the transaction
-				createOrder: function(data, actions) {
-					order_id = false;
+	try {		
+		// Render the PayPal button into #paypal_smart_button_container
+		paypal_sdk.Buttons({
+			env: '{{ environment }}',
+			locale: '{{ locale }}',
+			style: {
+				layout: 'horizontal',
+				size: '{{ button_size }}',
+				color: '{{ button_color }}',
+				shape: '{{ button_shape }}',
+				label: '{{ button_label }}',
+				tagline: '{{ button_tagline }}'
+			},
+			// Set up the transaction
+			createOrder: function(data, actions) {
+				order_id = false;
 					
-					$.ajax({
-						method: 'post',
-						url: 'index.php?route=extension/module/paypal_smart_button/createOrder',
-						data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
-						dataType: 'json',
-						async: false,
-						success: function(json) {							
-							showPayPalSmartButtonAlert(json);
+				$.ajax({
+					method: 'post',
+					url: 'index.php?route=extension/module/paypal_smart_button/createOrder',
+					data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
+					dataType: 'json',
+					async: false,
+					success: function(json) {							
+						showPayPalSmartButtonAlert(json);
 							
-							order_id = json['order_id'];
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-						}
-					});
+						order_id = json['order_id'];
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
 					
-					return order_id;	
-				},
-				// Finalize the transaction
-				onApprove: function(data, actions) {						
-					// Call your server to save the transaction
-					$.ajax({
-						method: 'post',
-						url: 'index.php?route=extension/module/paypal_smart_button/approveOrder',
-						data: {'order_id': data.orderID},
-						dataType: 'json',
-						async: false,
-						success: function(json) {							
-							showPayPalSmartButtonAlert(json);
+				return order_id;	
+			},
+			// Finalize the transaction
+			onApprove: function(data, actions) {						
+				// Call your server to save the transaction
+				$.ajax({
+					method: 'post',
+					url: 'index.php?route=extension/module/paypal_smart_button/approveOrder',
+					data: {'order_id': data.orderID},
+					dataType: 'json',
+					async: false,
+					success: function(json) {							
+						showPayPalSmartButtonAlert(json);
 							
-							if (json['url']) {
-								location = json['url'];
-							}
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						if (json['url']) {
+							location = json['url'];
 						}
-					});
-				}
-			}).render('#paypal_smart_button_container');
-		} catch (error) {
-			console.error('PayPal failed during startup', error);
-		}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			}
+		}).render('#paypal_smart_button_container');
+	} catch (error) {
+		console.error('PayPal failed during startup', error);
 	}
 }
 
@@ -93,5 +99,42 @@ function showPayPalSmartButtonAlert(json) {
 		}
 	}
 }
+
+function paypalReady() {
+	if (typeof paypal_sdk === 'undefined') {
+		setTimeout(paypalReady, 100);
+	} else {
+		setupPayPalSmartButton();
+	}
+}
+
+window.addEventListener('load', function () {
+	if ($('{{ insert_tag }}').length) {
+		var html = '<div id="paypal_form"><div id="paypal_smart_button" class="buttons clearfix"><div id="paypal_smart_button_container"></div></div>';
+		
+		{% if message_status %}
+		html += '<div id="paypal_message"><div id="paypal_message_container"><div data-pp-message data-pp-placement="{{ message_placement }}" data-pp-amount="{{ message_amount }}" data-pp-style-layout="{{ message_layout }}" {% if (message_layout == 'text') %}data-pp-style-text-color="{{ message_text_color }}" data-pp-style-text-size="{{ message_text_size }}"{% else %}data-pp-style-color="{{ message_flex_color }}" data-pp-style-ratio="{{ message_flex_ratio }}"{% endif %}></div></div></div>';
+		{% endif %}
+		
+		html += '</div>';
+		
+		$('{{ insert_tag }}').{{ insert_type }}(html);
+		
+		if (typeof paypal_sdk === 'undefined') {
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = 'https://www.paypal.com/sdk/js?components=buttons,messages&client-id={{ client_id }}&merchant-id={{ merchant_id }}&currency={{ currency_code }}&intent={{ transaction_method }}&commit=false';
+			script.setAttribute('data-partner-attribution-id', '{{ partner_id }}');
+			script.setAttribute('data-namespace', 'paypal_sdk');
+			script.async = false;
+			script.onload = paypalReady();
+	
+			var paypal_form = document.querySelector('#paypal_form');
+			paypal_form.appendChild(script);
+		} else {
+			setupPayPalSmartButton();
+		}
+	}
+});
 
 </script>

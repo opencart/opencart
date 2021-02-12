@@ -31,6 +31,7 @@
 						<li class="nav-tab"><a href="#tab_order_status" data-toggle="tab">{{ text_order_status }}</a></li>
 						<li class="nav-tab"><a href="#tab_checkout_express" data-toggle="tab">{{ text_checkout_express }}</a></li>
 						<li class="nav-tab hidden"><a href="#tab_checkout_card" data-toggle="tab">{{ text_checkout_card }}</a></li>
+						<li class="nav-tab"><a href="#tab_checkout_message" data-toggle="tab">{{ text_checkout_message }}</a></li>
 					</ul>
 		  
 					<div class="tab-content">
@@ -113,6 +114,20 @@
 									<div class="alert alert-warning alert-dismissible hidden"><i class="fa fa-exclamation-circle"></i> {{ help_checkout_card_status }}
 										<button type="button" class="close" data-dismiss="alert">&times;</button>
 									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input_checkout_message_status"><span data-toggle="tooltip" title="{{ help_checkout_message_status }}">{{ entry_checkout_message_status }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][status]" id="input_checkout_message_status" class="form-control">
+										{% if setting['checkout']['message']['status'] %}
+										<option value="1" selected="selected">{{ text_enabled }}</option>
+										<option value="0">{{ text_disabled }}</option>
+										{% else %}
+										<option value="1">{{ text_enabled }}</option>
+										<option value="0" selected="selected">{{ text_disabled }}</option>
+										{% endif %}
+									</select>
 								</div>
 							</div>
 							{% endif %}
@@ -365,6 +380,106 @@
 								</div>
 							</div>
 						</div>
+						<div class="tab-pane" id="tab_checkout_message">
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input_checkout_message_align">{{ entry_message_align }}</label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][message_align]" id="input_checkout_message_align" class="form-control">
+										{% for message_align in setting['message_align'] %}
+										{% if (message_align['code'] == setting['checkout']['message']['message_align']) %}
+										<option value="{{ message_align['code'] }}" selected="selected">{{ attribute(_context, message_align['name']) }}</option>
+										{% else %}
+										<option value="{{ message_align['code'] }}">{{ attribute(_context, message_align['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input_checkout_message_size">{{ entry_message_size }}</label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][message_size]" id="input_checkout_message_size" class="form-control">
+										{% for message_size in setting['message_size'] %}
+										{% if (message_size['code'] == setting['checkout']['message']['message_size']) %}
+										<option value="{{ message_size['code'] }}" selected="selected">{{ attribute(_context, message_size['name']) }}</option>
+										{% else %}
+										<option value="{{ message_size['code'] }}">{{ attribute(_context, message_size['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input_checkout_message_layout">{{ entry_message_layout }}</label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][message_layout]" id="input_checkout_message_layout" class="form-control">
+										{% for message_layout in setting['message_layout'] %}
+										{% if (message_layout['code'] == setting['checkout']['message']['message_layout']) %}
+										<option value="{{ message_layout['code'] }}" selected="selected">{{ attribute(_context, message_layout['name']) }}</option>
+										{% else %}
+										<option value="{{ message_layout['code'] }}">{{ attribute(_context, message_layout['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group {% if (setting['checkout']['message']['message_layout'] == 'flex') %}hidden{% endif %}">
+								<label class="col-sm-2 control-label" for="input_checkout_message_text_color">{{ entry_message_text_color }}</label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][message_text_color]" id="input_checkout_message_text_color" class="form-control">
+										{% for message_text_color in setting['message_text_color'] %}
+										{% if (message_text_color['code'] == setting['checkout']['message']['message_text_color']) %}
+										<option value="{{ message_text_color['code'] }}" selected="selected">{{ attribute(_context, message_text_color['name']) }}</option>
+										{% else %}
+										<option value="{{ message_text_color['code'] }}">{{ attribute(_context, message_text_color['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group {% if (setting['checkout']['message']['message_layout'] == 'flex') %}hidden{% endif %}">
+								<label class="col-sm-2 control-label" for="input_checkout_message_text_size">{{ entry_message_text_size }}</label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][message_text_size]" id="input_checkout_message_text_size" class="form-control">
+										{% for message_text_size in setting['message_text_size'] %}
+										{% if (message_text_size == setting['checkout']['message']['message_text_size']) %}
+										<option value="{{ message_text_size }}" selected="selected">{{ message_text_size }}</option>
+										{% else %}
+										<option value="{{ message_text_size }}">{{ message_text_size }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group {% if (setting['checkout']['message']['message_layout'] == 'text') %}hidden{% endif %}">
+								<label class="col-sm-2 control-label" for="input_checkout_message_flex_color">{{ entry_message_flex_color }}</label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][message_flex_color]" id="input_checkout_message_flex_color" class="form-control">
+										{% for message_flex_color in setting['message_flex_color'] %}
+										{% if (message_flex_color['code'] == setting['checkout']['message']['message_flex_color']) %}
+										<option value="{{ message_flex_color['code'] }}" selected="selected">{{ attribute(_context, message_flex_color['name']) }}</option>
+										{% else %}
+										<option value="{{ message_flex_color['code'] }}">{{ attribute(_context, message_flex_color['name']) }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group {% if (setting['checkout']['message']['message_layout'] == 'text') %}hidden{% endif %}">
+								<label class="col-sm-2 control-label" for="input_checkout_message_flex_ratio">{{ entry_message_flex_ratio }}</label>
+								<div class="col-sm-10">
+									<select name="payment_paypal_setting[checkout][message][message_flex_ratio]" id="input_checkout_message_flex_ratio" class="form-control">
+										{% for message_flex_ratio in setting['message_flex_ratio'] %}
+										{% if (message_flex_ratio == setting['checkout']['message']['message_flex_ratio']) %}
+										<option value="{{ message_flex_ratio }}" selected="selected">{{ message_flex_ratio }}</option>
+										{% else %}
+										<option value="{{ message_flex_ratio }}">{{ message_flex_ratio }}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -437,6 +552,22 @@ $('#input_environment').on('change', function() {
 	$('#input_merchant_id').val('');
 	$('#section_connect').removeClass('hidden');
 	$('#section_disconnect').addClass('hidden');
+});
+
+$('#input_checkout_message_layout').on('change', function() {
+	var layout = $(this).val();
+	
+	if (layout == 'text') {
+		$('#input_checkout_message_flex_color').parents('.form-group').addClass('hidden');
+		$('#input_checkout_message_flex_ratio').parents('.form-group').addClass('hidden');
+		$('#input_checkout_message_text_color').parents('.form-group').removeClass('hidden');
+		$('#input_checkout_message_text_size').parents('.form-group').removeClass('hidden');
+	} else {
+		$('#input_checkout_message_text_color').parents('.form-group').addClass('hidden');
+		$('#input_checkout_message_text_size').parents('.form-group').addClass('hidden');
+		$('#input_checkout_message_flex_color').parents('.form-group').removeClass('hidden');
+		$('#input_checkout_message_flex_ratio').parents('.form-group').removeClass('hidden');
+	}
 });
 
 </script>

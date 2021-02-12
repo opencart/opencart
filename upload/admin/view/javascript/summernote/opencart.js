@@ -34,7 +34,6 @@ $(document).ready(function() {
            		image: [
 					['custom', ['imageAttributes']],
 					['resize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-					['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
 					['float', ['floatLeft', 'floatRight', 'floatNone']],
 					['remove', ['removeMedia']]
 				],

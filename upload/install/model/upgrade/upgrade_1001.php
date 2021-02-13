@@ -56,8 +56,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 
 		$lines = file($file);
 
-		for ($i = 0; $i < count($lines); $i++) {
-
+		for ($i = 0; $i < count($lines); ++$i) {
 			if (strpos($lines[$i], '// DIR') !== false && $required['DIR_OPENCART']) {
 				$lines[$i] = 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			}
@@ -89,15 +88,9 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			if (strpos($lines[$i], 'DIR_UPLOAD') !== false) {
 				$lines[$i] = 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n";
 			}
-
-
-
-
 		}
 
 		$output = 'define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n";
-
-
 		$output = implode('', $lines);
 
 		$handle = fopen($file, 'w');
@@ -106,36 +99,34 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 
 		fclose($handle);
 
-			// DIR_UPLOAD
-			$upgrade = true;
+		// DIR_UPLOAD
+		$upgrade = true;
 
-			$lines = file($file);
+		$lines = file($file);
 
-			foreach ($lines as $line) {
-				if (strpos($line, 'DIR_UPLOAD') !== false) {
-					$upgrade = false;
-					break;
-				}
-			}
-
-			if ($upgrade) {
-				$output = '';
-
-				foreach ($lines as $line_id => $line) {
-					if (strpos($line, 'DIR_LOGS') !== false) {
-						$new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
-
-						$output .= $new_line . "\n";
-						$output .= $line;
-					} else {
-						$output .= $line;
-					}
-				}
-
-				file_put_contents($file, $output);
+		foreach ($lines as $line) {
+			if (strpos($line, 'DIR_UPLOAD') !== false) {
+				$upgrade = false;
+				break;
 			}
 		}
 
+		if ($upgrade) {
+			$output = '';
+
+			foreach ($lines as $line_id => $line) {
+				if (strpos($line, 'DIR_LOGS') !== false) {
+					$new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
+
+					$output .= $new_line . "\n";
+					$output .= $line;
+				} else {
+					$output .= $line;
+				}
+			}
+
+			file_put_contents($file, $output);
+		}	
 
 		// DIR_UPLOAD
 		$lines = file($file);
@@ -166,14 +157,12 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			file_put_contents($file, $output);
 		}
 
-
 		// OPENCART_SERVER
 		$upgrade = true;
 
 		foreach ($lines as $line) {
 			if (strpos(strtoupper($line), 'OPENCART_SERVER') !== false) {
 				$upgrade = false;
-
 				break;
 			}
 		}
@@ -217,7 +206,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			foreach ($lines as $line_id => $line) {
 				if (strpos($line, "'mysql'") !== false) {
 					$new_line = "define('DB_DRIVER', 'mysqli');";
-
+	
 					$output .= $new_line . "\n";
 				} else {
 					$output .= $line;
@@ -226,8 +215,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 
 			file_put_contents($file, $output);
 		}
-
-
 
 		$output = str_replace('system/upload', 'system/storage/upload', $output);
 		$output = str_replace('system/logs', 'system/storage/logs', $output);
@@ -266,67 +253,43 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				$handle = fopen($file, 'w');
 
 				fwrite($handle, $output);
-
+			
 				fclose($handle);
 			}
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		// Update the config.php by adding a DB_PORT
+		foreach ($files as $file) {
+			$upgrade = true;
 
-
-
-			foreach ($files as $file) {
-				$upgrade = true;
-
-				$lines = file($file);
-
-				foreach ($lines as $line) {
-					if (strpos(strtoupper($line), 'DB_PORT') !== false) {
-						$upgrade = false;
-
-						break;
-					}
-				}
-
-				if ($upgrade) {
-					$output = '';
-
-					foreach ($lines as $line_id => $line) {
-						if (strpos($line, 'DB_PREFIX') !== false) {
-							$output .= 'define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n";
-							$output .= $line;
-						} else {
-							$output .= $line;
-						}
-					}
-
-					$handle = fopen($file, 'w');
-
-					fwrite($handle, $output);
-
-					fclose($handle);
+			$lines = file($file);
+	
+			foreach ($lines as $line) {
+				if (strpos(strtoupper($line), 'DB_PORT') !== false) {
+					$upgrade = false;
+					break;
 				}
 			}
-		}
 
+			if ($upgrade) {
+				$output = '';
 
+				foreach ($lines as $line_id => $line) {
+					if (strpos($line, 'DB_PREFIX') !== false) {
+						$output .= 'define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n";
+						$output .= $line;
+					} else {
+						$output .= $line;
+					}
+				}
+
+				$handle = fopen($file, 'w');
+		
+				fwrite($handle, $output);
+
+				fclose($handle);
+			}
+		}			
 
 		// Cleanup files in old directories
 		$directories = [
@@ -379,8 +342,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 		if (is_dir(DIR_IMAGE . 'data') && !file_exists(DIR_IMAGE . 'catalog')) {
 			if (!file_exists(DIR_IMAGE . 'catalog')) {
 				rename(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog'); // Rename data to catalog
-
-
 			} else {
 				$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
 			}
@@ -418,7 +379,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/download');
 		}
 	}
-
+	
 	private function recursive_move($src, $dest) {
 		// If source is not a directory stop processing
 		if (!is_dir($src)) return false;

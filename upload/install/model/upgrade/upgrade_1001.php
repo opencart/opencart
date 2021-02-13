@@ -128,35 +128,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			file_put_contents($file, $output);
 		}	
 
-		// DIR_UPLOAD
-		$lines = file($file);
-
-		$upgrade = true;
-
-		foreach ($lines as $line) {
-			if (strpos($line, 'DIR_UPLOAD') !== false) {
-				$upgrade = false;
-				break;
-			}
-		}
-
-		if ($upgrade) {
-			$output = '';
-
-			foreach ($lines as $line_id => $line) {
-				if (strpos($line, 'DIR_LOGS') !== false) {
-					$new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
-
-					$output .= $new_line . "\n";
-					$output .= $line;
-				} else {
-					$output .= $line;
-				}
-			}
-
-			file_put_contents($file, $output);
-		}
-
 		// OPENCART_SERVER
 		$upgrade = true;
 

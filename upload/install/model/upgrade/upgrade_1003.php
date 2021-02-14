@@ -20,7 +20,7 @@ class Upgrade1003 extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "extension' AND COLUMN_NAME = 'extension'");
 		
 		if (!$query->num_rows) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "extension` ADD `extension` VARCHAR(255) NOT NULL AFTER `extension_id`");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "extension` ADD COLUMN `extension` VARCHAR(255) NOT NULL AFTER `extension_id`");
 		}
 
 		// Convert 1.5.x core module format to 2.x (core modules only)

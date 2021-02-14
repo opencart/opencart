@@ -15,7 +15,8 @@
       </ol>
     </div>
   </div>
-  <div class="container-fluid">{% if error_warning %}
+  <div class="container-fluid">
+    {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>
@@ -46,7 +47,8 @@
               <label class="col-form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
             </div>
             <div class="form-group">
-              <label for="input-return-status" class="col-form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-return-status" class="form-control">
+              <label for="input-return-status" class="col-form-label">{{ entry_return_status }}</label> 
+              <select name="filter_return_status_id" id="input-return-status" class="form-control">
                 <option value=""></option>
                 {% for return_status in return_statuses %}
                   {% if return_status.return_status_id == filter_return_status_id %}
@@ -106,11 +108,13 @@
                     {% if returns %}
                       {% for return in returns %}
                         <tr>
-                          <td class="text-center">{% if return.return_id in selected %}
+                          <td class="text-center">
+                            {% if return.return_id in selected %}
                               <input type="checkbox" name="selected[]" value="{{ return.return_id }}" checked="checked"/>
                             {% else %}
                               <input type="checkbox" name="selected[]" value="{{ return.return_id }}"/>
-                            {% endif %}</td>
+                            {% endif %}
+                          </td>
                           <td class="text-right">{{ return.return_id }}</td>
                           <td class="text-right">{{ return.order_id }}</td>
                           <td class="text-left">{{ return.customer }}</td>

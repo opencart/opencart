@@ -4,7 +4,8 @@
   {% for store in stores %}
     {% if store.store_id == store_id %}<a href="{{ store.url }}"><b>{{ store.name }}</b></a>
       <br/>
-    {% else %}<a href="{{ store.url }}">{{ store.name }}</a>
+    {% else %}
+      <a href="{{ store.url }}">{{ store.name }}</a>
       <br/>
     {% endif %}
   {% endfor %}

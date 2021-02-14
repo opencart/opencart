@@ -26,15 +26,24 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%;">{% if invoice_no %} <b>{{ text_invoice_no }}</b> {{ invoice_no }}
+            <td class="text-left" style="width: 50%;">
+              {% if invoice_no %} <b>
+                {{ text_invoice_no }}</b> {{ invoice_no }}
                 <br/>
-              {% endif %} <b>{{ text_order_id }}</b> #{{ order_id }}
+              {% endif %} 
+              <b>{{ text_order_id }}</b> #{{ order_id }}
               <br/>
-              <b>{{ text_date_added }}</b> {{ date_added }}</td>
-            <td class="text-left" style="width: 50%;">{% if payment_method %} <b>{{ text_payment_method }}</b> {{ payment_method }}
+              <b>{{ text_date_added }}</b> {{ date_added }}
+            </td>
+            <td class="text-left" style="width: 50%;">
+              {% if payment_method %} 
+                <b>{{ text_payment_method }}</b> {{ payment_method }}
                 <br/>
               {% endif %}
-              {% if shipping_method %} <b>{{ text_shipping_method }}</b> {{ shipping_method }} {% endif %}</td>
+              {% if shipping_method %} 
+                <b>{{ text_shipping_method }}</b> {{ shipping_method }} 
+              {% endif %}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -44,14 +53,16 @@
             <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_payment_address }}</td>
             {% if shipping_address %}
               <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_shipping_address }}</td>
-            {% endif %} </tr>
+            {% endif %} 
+          </tr>
         </thead>
         <tbody>
           <tr>
             <td class="text-left">{{ payment_address }}</td>
             {% if shipping_address %}
               <td class="text-left">{{ shipping_address }}</td>
-            {% endif %} </tr>
+            {% endif %} 
+          </tr>
         </tbody>
       </table>
       <div class="table-responsive">
@@ -65,7 +76,8 @@
               <td class="text-right">{{ column_total }}</td>
               {% if products %}
                 <td style="width: 20px;"></td>
-              {% endif %} </tr>
+              {% endif %} 
+            </tr>
           </thead>
           <tbody>
             {% for product in products %}
@@ -74,7 +86,9 @@
                   {% for option in product.option %}
                     <br/>
                     &nbsp;
-                    <small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}</td>
+                    <small> - {{ option.name }}: {{ option.value }}</small> 
+                  {% endfor %}
+                </td>
                 <td class="text-left">{{ product.model }}</td>
                 <td class="text-right">{{ product.quantity }}</td>
                 <td class="text-right">{{ product.price }}</td>
@@ -91,7 +105,8 @@
                 <td class="text-right">{{ voucher.amount }}</td>
                 {% if products %}
                   <td></td>
-                {% endif %} </tr>
+                {% endif %} 
+              </tr>
             {% endfor %}
           </tbody>
           <tfoot>
@@ -102,7 +117,8 @@
                 <td class="text-right">{{ total.text }}</td>
                 {% if products %}
                   <td></td>
-                {% endif %} </tr>
+                {% endif %} 
+              </tr>
             {% endfor %}
           </tfoot>
         </table>

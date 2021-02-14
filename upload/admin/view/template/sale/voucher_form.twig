@@ -138,7 +138,7 @@
 {% if voucher_id %}
   <script type="text/javascript"><!--
   $('#button-send').on('click', function() {
-	    $.ajax({
+	  $.ajax({
 		  url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
 		  type: 'post',
 		  dataType: 'json',

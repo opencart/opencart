@@ -25,11 +25,13 @@
           {% for extension in extensions %}
             <tr>
               <td class="text-left" colspan="2"><b>{{ extension.name }}</b></td>
-              <td class="text-right">{% if not extension.installed %}
-                  <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
-                {% else %}
-                  <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
-                {% endif %}</td>
+              <td class="text-right">
+              {% if not extension.installed %}
+                <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+              {% else %}
+                <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+              {% endif %}
+              </td>
             </tr>
             {% if extension.installed %}
               {% for store in extension.store %}

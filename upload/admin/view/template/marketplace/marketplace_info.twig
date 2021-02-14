@@ -405,9 +405,7 @@ $('#comment').on('click', '.btn-primary', function(e) {
 
 			if (json['success']) {
 				$(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
 				$(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
-
 				$(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val('');
 			}
 		},

@@ -46,9 +46,13 @@
           <table class="table">
             <tr>
               <td style="width: 1%;"><button type="button" data-toggle="tooltip" title="{{ text_customer }}" class="btn btn-info btn-sm"><i class="fas fa-user fa-fw"></i></button></td>
-              <td>{% if customer %} <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a> {% else %}
+              <td>
+                {% if customer %} 
+                  <a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a> 
+                {% else %}
                   {{ firstname }} {{ lastname }}
-                {% endif %}</td>
+                {% endif %}
+              </td>
             </tr>
             <tr>
               <td><button type="button" data-toggle="tooltip" title="{{ text_customer_group }}" class="btn btn-info btn-sm"><i class="fas fa-users fa-fw"></i></button></td>
@@ -73,16 +77,19 @@
               <tr>
                 <td>{{ text_invoice }}</td>
                 <td id="invoice" class="text-right">{{ invoice_no }}</td>
-                <td style="width: 1%;" class="text-center">{% if not invoice_no %}
+                <td style="width: 1%;" class="text-center">
+                  {% if not invoice_no %}
                     <button type="button" id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-sm"><i class="fas fa-cog"></i></button>
                   {% else %}
                     <button type="button" disabled="disabled" class="btn btn-success btn-sm"><i class="fas fa-cog"></i></button>
-                  {% endif %}</td>
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td>{{ text_reward }}</td>
                 <td class="text-right">{{ reward }}</td>
-                <td class="text-center">{% if customer and reward %}
+                <td class="text-center">
+                  {% if customer and reward %}
                     {% if not reward_total %}
                       <button type="button" id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
                     {% else %}
@@ -90,15 +97,18 @@
                     {% endif %}
                   {% else %}
                     <button type="button" disabled="disabled" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
-                  {% endif %}</td>
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td>{{ text_affiliate }}
                   {% if affiliate %}
                     (<a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a>)
-                  {% endif %}</td>
+                  {% endif %}
+                </td>
                 <td class="text-right">{{ commission }}</td>
-                <td class="text-center">{% if affiliate %}
+                <td class="text-center">
+                  {% if affiliate %}
                     {% if not commission_total %}
                       <button type="button" id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
                     {% else %}
@@ -106,7 +116,8 @@
                     {% endif %}
                   {% else %}
                     <button type="button" disabled="disabled" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
-                  {% endif %}</td>
+                  {% endif %}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -148,13 +159,15 @@
                 <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
                   {% for option in product.option %}
                     <br/>
-                    {% if option.type != 'file' %}&nbsp;
+                    {% if option.type != 'file' %}
+                      &nbsp;
                       <small> - {{ option.name }}: {{ option.value }}</small>
                     {% else %}
                       &nbsp;
                       <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
                     {% endif %}
-                  {% endfor %}</td>
+                  {% endfor %}
+                </td>
                 <td class="text-left">{{ product.model }}</td>
                 <td class="text-right">{{ product.quantity }}</td>
                 <td class="text-right">{{ product.price }}</td>
@@ -191,8 +204,10 @@
               </tr>
             </tbody>
           </table>
-        {% endif %}</div>
+        {% endif %}
+      </div>
     </div>
+    
     <div class="card mb-3">
       <div class="card-header"><i class="fas fa-comment"></i> {{ text_history }}</div>
       <div class="card-body">

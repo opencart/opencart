@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="input-status" class="col-sm-2 col-form-label"> {{ entry_status }} </label>
+            <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="fraud_ip_status" id="input-status" class="form-control">
                 {% if fraud_ip_status %}
@@ -52,6 +52,7 @@
               </select>
             </div>
           </div>
+          
           <fieldset>
             <legend> {{ text_ip_add }} </legend>
             <div class="form-group row required">
@@ -66,6 +67,7 @@
               </div>
             </div>
           </fieldset>
+          
           <br/>
           <fieldset>
             <legend> {{ text_ip_list }}</legend>

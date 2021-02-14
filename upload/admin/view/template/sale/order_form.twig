@@ -22,9 +22,8 @@
         </nav>
         <br>
         <div class="tab-content">
-
+        
           <div id="tab-customer" class="tab-pane active">
-
             <fieldset>
               <legend><i class="fas fa-user fa-fw"></i> {{ text_customer_detail }}</legend>
               <div class="form-group row">
@@ -269,7 +268,8 @@
                           {% endfor %}</td>
                         <td class="text-left">{{ order_product.model }}</td>
                         <td class="text-right">{{ order_product.quantity }}
-                          <input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
+                          <input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/>
+                        </td>
                         <td class="text-right"></td>
                         <td class="text-right"></td>
                         <td class="text-right"></td>
@@ -281,7 +281,8 @@
                       <tr>
                         <td class="text-left">{{ order_voucher.description }}
                           <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/>
-                          <input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
+                          <input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/>
+                        </td>
                         <td class="text-left"></td>
                         <td class="text-right">1</td>
                         <td class="text-right"></td>
@@ -380,7 +381,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <br/>
               <div class="row">
                 <div class="col-sm-6 text-left">
@@ -392,7 +393,6 @@
               </div>
             </fieldset>
           </div>
-
 
           <div id="tab-payment" class="tab-pane">
             <fieldset>
@@ -608,7 +608,6 @@
             </fieldset>
           </div>
 
-
           <div id="tab-shipping" class="tab-pane">
             <fieldset>
               <legend><i class="fas fa-truck fa-fw"></i> {{ text_shipping_detail }}</legend>
@@ -811,6 +810,7 @@
                   {% endif %}
                 {% endif %}
               {% endfor %}
+              
               <div class="row">
                 <div class="col-sm-6 text-left">
                   <a href="#tab-payment" data-toggle="collapse" data-parent="#collapse" class="btn btn-light"><i class="fas fa-arrow-left"></i> {{ button_back }}</a>
@@ -1602,10 +1602,10 @@ $('select[name=\'payment_address\']').on('change', function() {
 			payment_zone_id = json['zone_id'];
 
 			for (i in json['custom_field']) {
-				$('#carousel-payment select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-				$('#carousel-payment textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#carousel-payment select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);        
+				$('#carousel-payment textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);        
 				$('#carousel-payment input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
-				$('#carousel-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+				$('#carousel-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);        
 				$('#carousel-payment input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 				$('#carousel-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 
@@ -2191,7 +2191,7 @@ $('#button-save').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['order_id']) {

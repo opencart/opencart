@@ -88,7 +88,8 @@
                         <input type="radio" name="rating" value="4"/>
                         &nbsp;
                         <input type="radio" name="rating" value="5"/>
-                        &nbsp;{{ entry_good }}</div>
+                        &nbsp;{{ entry_good }}
+                      </div>
                     </div>
                     {{ captcha }}
                     <div class="d-inline-block pt-2 pd-2 w-100">
@@ -114,9 +115,7 @@
           <div class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
             <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
-          </div>
-
-
+          </div>          
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
             {% if manufacturer %}
@@ -168,7 +167,7 @@
                         <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
                           {% if option_value.price %}
                             ({{ option_value.price_prefix }}{{ option_value.price }})
-                          {% endif %} </option>
+                          {% endif %}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -201,7 +200,8 @@
                             {{ option_value.name }}
                             {% if option_value.price %}
                               ({{ option_value.price_prefix }}{{ option_value.price }})
-                            {% endif %}</label>
+                            {% endif %}
+                          </label>
                         </div>
                       {% endfor %}
                     </div>
@@ -209,12 +209,14 @@
                 {% endif %}
                 {% if option.type == 'text' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> 
+                    <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'textarea' %}
                   <div class="form-group{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> 
+                    <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
                   </div>
                 {% endif %}
                 {% if option.type == 'file' %}

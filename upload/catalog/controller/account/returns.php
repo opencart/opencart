@@ -100,7 +100,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/returns');
 
-		$return_info = $this->model_account_return->getReturn($return_id);
+		$return_info = $this->model_account_returns->getReturn($return_id);
 
 		if ($return_info) {
 			$this->document->setTitle($this->language->get('text_return'));
@@ -151,7 +151,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			$data['histories'] = [];
 
-			$results = $this->model_account_return->getHistories($this->request->get['return_id']);
+			$results = $this->model_account_returns->getHistories($this->request->get['return_id']);
 
 			foreach ($results as $result) {
 				$data['histories'][] = [
@@ -221,7 +221,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->load->model('account/returns');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_return->addReturn($this->request->post);
+			$this->model_account_returns->addReturn($this->request->post);
 
 			$this->response->redirect($this->url->link('account/returns|success', 'language=' . $this->config->get('config_language')));
 		}

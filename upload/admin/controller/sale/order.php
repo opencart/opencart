@@ -1343,14 +1343,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
-
 	public function createInvoiceNo() {
 		$this->load->language('sale/order');
 

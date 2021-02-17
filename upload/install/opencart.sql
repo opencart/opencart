@@ -2111,7 +2111,6 @@ INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `key`, `value
 (63, 0, 1, 'information_id', '3', 'privacy'),
 (65, 0, 1, 'language', 'en-gb', 'en-gb'),
 (66, 0, 1, 'route', 'product/manufacturer', 'brands'),
-(83, 0, 1, 'product_id', '50', 'apple-4'),
 (90, 0, 1, 'product_id', '42', 'apple-cinema'),
 (94, 0, 1, 'path', '20', 'desktops'),
 (101, 0, 1, 'manufacturer_id', '9', 'canon'),

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Application\Controller\Report;
 class Statistics extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	protected $error = [];
 	
 	public function index() {
 		$this->load->language('report/statistics');

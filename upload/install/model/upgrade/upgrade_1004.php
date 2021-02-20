@@ -3,7 +3,6 @@ namespace Opencart\Install\Model\Upgrade;
 class Upgrade1004 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 
-
 		// Convert 1.5.x core module format to 2.x (core modules only)
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `serialized` = '1'");
 
@@ -14,10 +13,7 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 				$module_data = [];
 
 				if (in_array($result['code'], ['latest', 'bestseller', 'special', 'featured'])) {
-
-
 					if ($value) {
-
 						foreach ($value as $k => $v) {
 
 							// Since 2.x doesn't look good with modules as side boxes, set to content bottom
@@ -73,11 +69,7 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 					}
 
-
-
 				} elseif (in_array($result['code'], ['category', 'account', 'affiliate', 'filter'])) {
-
-
 					foreach ($value as $k => $v) {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$result['store_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `key` = '" . ($result['code'] . '_status') . "', `value` = '1'");
@@ -86,11 +78,7 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 							$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
 						}
 					}
-
-
 				} elseif (in_array($result['code'], ['banner', 'carousel', 'slideshow'])) {
-
-
 					if ($value) {
 						foreach ($value as $k => $v) {
 							$module_data['name'] = ($result['key'] . '_' . $k);
@@ -124,8 +112,6 @@ class Upgrade1004 extends \Opencart\System\Engine\Model {
 					} else {
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 					}
-
-
 				} elseif (in_array($result['code'], ['welcome'])) {
 					if ($value) {
 						// Install HTML module if not already installed

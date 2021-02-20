@@ -81,7 +81,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
 		];
 
-		if ($this->request->get['route'] == 'account/affiliate/add') {
+		if ($this->request->get['route'] == 'account/affiliate|add') {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_affiliate'),
 				'href' => $this->url->link('account/affiliate|add', 'language=' . $this->config->get('config_language'))
@@ -131,7 +131,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link($this->request->get['route'], 'language=' . $this->config->get('config_language'));
 
-		if ($this->request->get['route'] == 'account/affiliate/edit' && $this->request->server['REQUEST_METHOD'] != 'POST') {
+		if ($this->request->get['route'] == 'account/affiliate|edit' && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 		}
 

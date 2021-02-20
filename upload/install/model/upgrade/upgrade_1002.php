@@ -189,9 +189,6 @@ class Upgrade1002 extends \Opencart\System\Engine\Model {
 
 		];
 
-
-
-
 		// force some settings to prevent errors
 		if ($settings['config_template'] == 'basic_default') {
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'default' WHERE `key` = 'config_template'");
@@ -209,10 +206,6 @@ class Upgrade1002 extends \Opencart\System\Engine\Model {
 
 		$this->cache->delete('language');
 
-
-
-
-
 		// Get all setting columns from extension table
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
 
@@ -229,17 +222,8 @@ class Upgrade1002 extends \Opencart\System\Engine\Model {
 					}
 				}
 			}
-
-
 		}
-
-
-
-
-
-
-
-
+		
 		// Extension
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'dashboard'");
 
@@ -281,9 +265,5 @@ class Upgrade1002 extends \Opencart\System\Engine\Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'dashboard_recent', `key` = 'dashboard_recent_width', `value` = '8', `serialized` = '0'");
 
 		}
-
-
-
-
 	}
 }

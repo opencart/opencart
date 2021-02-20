@@ -48,9 +48,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			define('DB_PORT', '3306');
 			define('DB_PREFIX', 'oc_');
 
-
-
-
 			$constants = [];
 
 			$lines = file($file);
@@ -115,9 +112,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
-
-
-
 			// Use a list of constants that are not in the latest version of OpenCart.
 			$required = [
 				'DIR_OPENCART',
@@ -140,8 +134,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 				//	unset($missing[$key]);
 				//}
 			}
-
-
 
 			// Add missing constants
 			for ($i = 0; $i < count($lines); $i++) {

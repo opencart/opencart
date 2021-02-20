@@ -27,10 +27,6 @@ class Success extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('affiliate/success', 'language=' . $this->config->get('config_language'))
 		];
 
-		$this->load->model('account/customer_group');
-
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
-
 		if (!$this->config->get('config_affiliate_approval') && $this->customer->isLogged()) {
 			$data['text_message'] = sprintf($this->language->get('text_success'), $this->config->get('config_name'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		} else {

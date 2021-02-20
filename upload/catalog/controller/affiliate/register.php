@@ -300,24 +300,24 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['captcha'] = '';
 		}
 
-		if ($this->config->get('config_affiliate_id')) {
+		$data['informations'] = [];
+
+		$informations = array_merge((array)$this->config->get('config_account_id'), (array)$this->config->get('config_affiliate_id'));
+
+		if (!empty($informations)) {
 			$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
+			foreach ($informations as $information_id) {
+				$information_info = $this->model_catalog_information->getInformation($information_id);
 
-			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title']);
-			} else {
-				$data['text_agree'] = '';
+				if ($information_info) {
+					$data['informations'][] = [
+						'information_id' => $information_id,
+						'text_agree'     => sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_id), $information_info['title']),
+						'agree'          => isset($this->request->post['agree'][$information_id]) ? true : false
+					];
+				}
 			}
-		} else {
-			$data['text_agree'] = '';
-		}
-
-		if (isset($this->request->post['agree'])) {
-			$data['agree'] = $this->request->post['agree'];
-		} else {
-			$data['agree'] = false;
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -428,13 +428,17 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->config->get('config_affiliate_id')) {
+		$informations = array_merge((array)$this->config->get('config_account_id'), (array)$this->config->get('config_affiliate_id'));
+
+		if (!empty($informations)) {
 			$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
+			foreach ($informations as $information_id) {
+				$information_info = $this->model_catalog_information->getInformation($information_id);
 
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				if ($information_info && !isset($this->request->post['agree'][$information_id])) {
+					$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				}
 			}
 		}
 

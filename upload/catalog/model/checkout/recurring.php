@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Checkout;
+namespace Opencart\Catalog\Model\Checkout;
 class Recurring extends \Opencart\System\Engine\Model {
 	public function addRecurring($order_id, $description, $item) {
 

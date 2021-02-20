@@ -12,6 +12,7 @@
  */
 namespace Opencart\System\Engine;
 final class Loader {
+	protected $application;
 	protected $registry;
 
 	/**
@@ -19,7 +20,8 @@ final class Loader {
 	 *
 	 * @param    object $registry
 	 */
-	public function __construct($registry) {
+	public function __construct($application, $registry) {
+		$this->application = ucwords($application, '_/');
 		$this->registry = $registry;
 	}
 
@@ -94,7 +96,7 @@ final class Loader {
 		// Check if the requested model is already stored in the registry.
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
 			// Converting a route path to a class name
-			$class = 'Opencart\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+			$class = 'Opencart\\' . $this->application . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 			if (class_exists($class)) {
 				$proxy = new \Opencart\System\Engine\Proxy();
@@ -108,7 +110,7 @@ final class Loader {
 
 				$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
 			} else {
-				throw \Exception('Error: Could not load model ' . $class . '!');
+				throw new \Exception('Error: Could not load model ' . $class . '!');
 			}
 		}
 	}
@@ -195,7 +197,7 @@ final class Loader {
 			// Create a key to store the library object
 			$this->registry->set(str_replace('/', '_', (string)$route), $library);
 		} else {
-			throw \Exception('Error: Could not load library ' . $route . '!');
+			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
 
 		$this->event->trigger('library/' . $trigger . '/after', [&$route, &$args]);
@@ -209,12 +211,19 @@ final class Loader {
 	 * @param    string $route
 	 */
 	public function helper($route) {
-		$file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
+		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+
+		$file = DIR_SYSTEM . 'helper/' . $route . '.php';
+
+
+		//$file = 'Opencart\System\Helper\\' . str_replace('/', '\\', $route);
+
+
 
 		if (is_file($file)) {
 			include_once($file);
 		} else {
-			throw \Exception('Error: Could not load helper ' . $route . '!');
+			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
 	}
 
@@ -232,11 +241,11 @@ final class Loader {
 
 		$this->event->trigger('config/' . $trigger . '/before', [&$route]);
 
-		$this->config->load($route);
+		$data = $this->config->load($route);
 
-		$this->event->trigger('config/' . $trigger . '/after', [&$route]);
+		$this->event->trigger('config/' . $trigger . '/after', [&$route, &$data]);
 
-		//return $data;
+		return $data;
 	}
 
 	/**
@@ -270,7 +279,7 @@ final class Loader {
 				// Check if the model has already been initialised or not
 				if (!$this->registry->has($key)) {
 					// Create the class name from the key
-					$class = 'Opencart\Application\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
+					$class = 'Opencart\\' . $this->application . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
 
 					$model = new $class($this->registry);
 
@@ -287,7 +296,7 @@ final class Loader {
 				if (is_callable($callable)) {
 					$output = call_user_func_array($callable, $args);
 				} else {
-					throw \Exception('Error: Could not call model/' . $route . '!');
+					throw new \Exception('Error: Could not call model/' . $route . '!');
 				}
 			}
 

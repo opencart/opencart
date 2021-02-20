@@ -27,6 +27,6 @@ class Session extends \Opencart\System\Engine\Controller {
 			'SameSite' => 'Strict'
 		];
 
-		oc_setcookie($this->config->get('session_name'), $session->getId(), $option);
+		setcookie($this->config->get('session_name'), $session->getId(), $option);
 	}
 }

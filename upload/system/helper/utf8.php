@@ -1,4 +1,5 @@
 <?php
+//namespace Opencart\System\Helper;
 if (extension_loaded('mbstring')) {
 	mb_internal_encoding('UTF-8');
 

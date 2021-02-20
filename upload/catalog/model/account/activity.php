@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Account;
+namespace Opencart\Catalog\Model\Account;
 class Activity extends \Opencart\System\Engine\Model {
 	public function addActivity($key, $data) {
 		if (isset($data['customer_id'])) {

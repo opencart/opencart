@@ -5,9 +5,6 @@ class Application extends \Opencart\System\Engine\Controller {
 		// Url
 		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('site_url')));
 
-		// Document
-		$this->registry->set('document', new \Opencart\System\Library\Document());
-
 		// Response output compression level
 		if ($this->config->get('config_compression')) {
 			$this->response->setCompression($this->config->get('config_compression'));

@@ -58,7 +58,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 				$json['success'] = sprintf($this->language->get('text_progress'), basename($files[$step - 1], '.php'), $step, count($files));
 
 				$json['next'] = $this->url->link('upgrade/upgrade|next', 'step=' . ($step + 1), true);
-			} catch(\Exception $exception) {
+			} catch(\ErrorException $exception) {
 				$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 			}
 		} else {

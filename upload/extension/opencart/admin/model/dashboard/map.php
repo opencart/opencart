@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Dashboard;
+namespace Opencart\Admin\Model\Extension\Opencart\Dashboard;
 class Map extends \Opencart\System\Engine\Model {
 	public function getTotalOrdersByCountry() {
 		$implode = [];

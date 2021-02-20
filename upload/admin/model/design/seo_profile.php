@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Design;
+namespace Opencart\Admin\Model\Design;
 class SeoProfile extends \Opencart\System\Engine\Model {
 	public function addSeoProfile($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_profile` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `regex` = '" . $this->db->escape((string)$data['regex']) . "', `push` = '" . $this->db->escape((string)$data['push']) . "', `remove` = '" . $this->db->escape((string)$data['remove']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");

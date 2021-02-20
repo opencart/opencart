@@ -99,7 +99,7 @@ class Language extends \Opencart\System\Engine\Controller {
 				'SameSite' => 'Lax'
 			];
 
-			oc_setcookie('language', $code, $option);
+			setcookie('language', $code, $option);
 		}
 
 		// Language

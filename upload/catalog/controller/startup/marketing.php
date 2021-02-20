@@ -10,7 +10,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				'SameSite' => 'Strict'
 			];
 
-			oc_setcookie('tracking', $this->request->get['tracking'], $option);
+			setcookie('tracking', $this->request->get['tracking'], $option);
 
 			$this->load->model('marketing/marketing');
 

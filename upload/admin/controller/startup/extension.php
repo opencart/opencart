@@ -12,7 +12,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 			// Register controllers, models and system extension folders
 			$this->autoloader->register('Opencart\Application\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/controller/');
-			$this->autoloader->register('Opencart\Application\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/model/');
+			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/model/');
 			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/system/');
 
 			// Template directory

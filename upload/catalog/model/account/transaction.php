@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Account;
+namespace Opencart\Catalog\Model\Account;
 class Transaction extends \Opencart\System\Engine\Model {
 	public function getTransactions($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";

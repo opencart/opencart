@@ -1,15 +1,16 @@
 <?php
-namespace Opencart\Application\Model\Upgrade;
+namespace Opencart\Install\Model\Upgrade;
 class Upgrade1000 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// This is a generic upgrade script.
 		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema.
-		// The upgrade script is not coherent because of the changes over time to the upgrades so im grouping the changes into different files
 
 		// Structure
 		$this->load->helper('db_schema');
 
 		$tables = db_schema();
+
+		$tables = [];
 
 		foreach ($tables as $table) {
 			$table_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "'");
@@ -28,7 +29,7 @@ class Upgrade1000 extends \Opencart\System\Engine\Model {
 						$primary_data[] = "`" . $primary . "`";
 					}
 
-					$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
+					$sql .= " PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
 				}
 
 				if (isset($table['index'])) {
@@ -39,7 +40,7 @@ class Upgrade1000 extends \Opencart\System\Engine\Model {
 							$index_data[] = "`" . $key . "`";
 						}
 
-						$sql .= "  KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
+						$sql .= " KEY `" . $index['name'] . "` (" . implode(",", $index_data) . "),\n";
 					}
 				}
 

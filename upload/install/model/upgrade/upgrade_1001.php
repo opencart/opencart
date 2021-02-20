@@ -1,332 +1,292 @@
 <?php
-namespace Opencart\Application\Model\Upgrade;
+namespace Opencart\Install\Model\Upgrade;
 class Upgrade1001 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Config and file structure changes
-
-		// Update the config.php by adding a DIR_UPLOAD
+		$files = [];
 
 		$files[] = DIR_OPENCART . 'config.php';
 		$files[] = DIR_OPENCART . 'admin/config.php';
 
-		$file = DIR_OPENCART . 'config.php';
-
-		if (!is_file($file)) {
-			exit(json_encode(['error' => 'File is missing. Please add: ' . $file]));
-		}
-
-		if (!is_writable($file)) {
-			exit(json_encode(['error' => 'File is read only. Please adjust and try again: ' . $file]));
-		}
-
-		$required = [
-			'DIR_OPENCART',
-			'DIR_APPLICATION',
-			'DIR_EXTENSION',
-			'DIR_IMAGE',
-			'DIR_STORAGE',
-			'DIR_LANGUAGE',
-			'DIR_TEMPLATE',
-			'DIR_CONFIG',
-			'DIR_CACHE',
-			'DIR_DOWNLOAD',
-			'DIR_LOGS',
-			'DIR_SESSION',
-			'DIR_UPLOAD',
-			'DB_DRIVER',
-			'DB_HOSTNAME',
-			'DB_USERNAME',
-			'DB_PASSWORD',
-			'DB_DATABASE',
-			'DB_PORT',
-			'DB_PREFIX'
-		];
-
-		$lines = file($file);
-
-		// Remove required keys if the exist
-		foreach ($lines as $line) {
-			if (preg_match('/define\(\'(.+)\', \'(.+)\'/', $line, $match, PREG_OFFSET_CAPTURE)) {
-
-				foreach ($required as $key => $require) {
-					unset($required[$key]);
-				}
-			}
-		}
-
-		$lines = file($file);
-
-		for ($i = 0; $i < count($lines); $i++) {
-
-			if (strpos($lines[$i], '// DIR') !== false && $required['DIR_OPENCART']) {
-				$lines[$i] = 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
+		foreach ($files as $file) {
+			if (!is_file($file)) {
+				exit(json_encode(['error' => 'File is missing. Please add: ' . $file]));
 			}
 
-			if ((strpos($lines[$i], 'DIR_IMAGE') !== false) && $required['DIR_OPENCART']) {
-				array_splice($lines, $i + 1, 0, ['define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');']);
+			if (!is_writable($file)) {
+				exit(json_encode(['error' => 'File is read only. Please adjust and try again: ' . $file]));
 			}
 
-			if (strpos($lines[$i], 'DIR_CACHE') !== false) {
-				$lines[$i] = 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
-			}
+			// HTTP
+			'HTTP_SERVER'
 
-			if (strpos($lines[$i], 'DIR_DOWNLOAD') !== false) {
-				$lines[$i] = 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
-			}
+			// HTTPS
+			define('HTTPS_SERVER', 'http://localhost/opencart-master/upload/');
 
-			if (strpos($lines[$i], 'DIR_LOGS') !== false) {
-				$lines[$i] = 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
-			}
+			// DIR
+			define('DIR_OPENCART', 'C:/xampp/htdocs/opencart-master/upload/');
+			define('DIR_APPLICATION', DIR_OPENCART . 'catalog/');
+			define('DIR_EXTENSION', DIR_OPENCART . 'extension/');
+			define('DIR_IMAGE', DIR_OPENCART . 'image/');
+			define('DIR_SYSTEM', DIR_OPENCART . 'system/');
+			define('DIR_STORAGE', DIR_SYSTEM . 'storage/');
+			define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
+			define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
+			define('DIR_CONFIG', DIR_SYSTEM . 'config/');
+			define('DIR_CACHE', DIR_STORAGE . 'cache/');
+			define('DIR_DOWNLOAD', DIR_STORAGE . 'download/');
+			define('DIR_LOGS', DIR_STORAGE . 'logs/');
+			define('DIR_SESSION', DIR_STORAGE . 'session/');
+			define('DIR_UPLOAD', DIR_STORAGE . 'upload/');
 
-			if ((strpos($lines[$i], 'DIR_LOGS') !== false) && (strpos($lines[$i + 1], 'DIR_SESSION') === false)) {
-				array_splice($lines, $i + 1, 0, ['define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');']);
-			}
-
-			if (strpos($lines[$i], 'DIR_SESSION') !== false) {
-				$lines[$i] = 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
-			}
-
-			if (strpos($lines[$i], 'DIR_UPLOAD') !== false) {
-				$lines[$i] = 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n";
-			}
+			// DB
+			define('DB_DRIVER', 'mysqli');
+			define('DB_HOSTNAME', 'localhost');
+			define('DB_USERNAME', 'root');
+			define('DB_PASSWORD', '');
+			define('DB_DATABASE', 'opencart-master');
+			define('DB_PORT', '3306');
+			define('DB_PREFIX', 'oc_');
 
 
 
 
-		}
-
-		$output = 'define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n";
-
-
-		$output = implode('', $lines);
-
-		$handle = fopen($file, 'w');
-
-		fwrite($handle, $output);
-
-		fclose($handle);
-
-			// DIR_UPLOAD
-			$upgrade = true;
+			$constants = [];
 
 			$lines = file($file);
 
+			// Remove required keys if they exist
 			foreach ($lines as $line) {
-				if (strpos($line, 'DIR_UPLOAD') !== false) {
-					$upgrade = false;
-					break;
-				}
+				if (preg_match('/define\(\'([a-zA-Z0-9_]+)\',\s+\'([a-zA-Z0-9_]+)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+					$constants[$match[1][0]] = $match[2][0];
+				} elseif ()
+
+
 			}
 
-			if ($upgrade) {
-				$output = '';
+			foreach ($lines as $line) {
 
-				foreach ($lines as $line_id => $line) {
-					if (strpos($line, 'DIR_LOGS') !== false) {
-						$new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
-
-						$output .= $new_line . "\n";
-						$output .= $line;
-					} else {
-						$output .= $line;
-					}
-				}
-
-				file_put_contents($file, $output);
-			}
-		}
-
-
-		// DIR_UPLOAD
-		$lines = file($file);
-
-		$upgrade = true;
-
-		foreach ($lines as $line) {
-			if (strpos($line, 'DIR_UPLOAD') !== false) {
-				$upgrade = false;
-				break;
-			}
-		}
-
-		if ($upgrade) {
-			$output = '';
-
-			foreach ($lines as $line_id => $line) {
-				if (strpos($line, 'DIR_LOGS') !== false) {
-					$new_line = "define('DIR_UPLOAD', '" . str_replace("\\", "/", DIR_SYSTEM) . 'upload/' . "');";
-
-					$output .= $new_line . "\n";
-					$output .= $line;
-				} else {
-					$output .= $line;
-				}
 			}
 
-			file_put_contents($file, $output);
-		}
+			// Admin config.php
+			$output  = '<?php' . "\n";
+			$output .= '// HTTP' . "\n";
+			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
+			$output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";
 
+			$output .= '// HTTPS' . "\n";
+			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
+			$output .= 'define(\'HTTPS_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";
 
-		// OPENCART_SERVER
-		$upgrade = true;
+			$output .= '// DIR' . "\n";
 
-		foreach ($lines as $line) {
-			if (strpos(strtoupper($line), 'OPENCART_SERVER') !== false) {
-				$upgrade = false;
-
-				break;
-			}
-		}
-
-		if ($upgrade) {
-			$output = '';
-
-			foreach ($lines as $line_id => $line) {
-				if (strpos($line, 'DB_PREFIX') !== false) {
-					$output .= $line . "\n\n";
-					$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
-				} else {
-					$output .= $line;
-				}
+			if () {
+				$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
+			} else {
+				$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
 			}
 
-			$handle = fopen($file, 'w');
+			$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'admin/\');' . "\n";
+			$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
+			$output .= 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
+			$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
+			$output .= 'define(\'DIR_CATALOG\', DIR_OPENCART . \'catalog/\');' . "\n";
 
-			fwrite($handle, $output);
+			$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 
-			fclose($handle);
-		}
+			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
+			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/template/\');' . "\n";
+			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
+			$output .= 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
+			$output .= 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
+			$output .= 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
+			$output .= 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
+			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
-		$output = '';
+			$output .= '// DB' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_username']) . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
+			$output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n\n";
 
-		// Update the config.php to change mysql to mysqli
-		$upgrade = false;
-
-		$lines = file($file);
-
-		foreach ($lines as $line) {
-			if (strpos($line, "define('DB_DRIVER', 'mysql'") !== false) {
-				$upgrade = true;
-				break;
-			}
-		}
-
-		if ($upgrade) {
-			$output = '';
-
-			foreach ($lines as $line_id => $line) {
-				if (strpos($line, "'mysql'") !== false) {
-					$new_line = "define('DB_DRIVER', 'mysqli');";
-
-					$output .= $new_line . "\n";
-				} else {
-					$output .= $line;
-				}
-			}
-
-			file_put_contents($file, $output);
-		}
+			$output .= '// OpenCart API' . "\n";
+			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
 
 
-		$output = str_replace('system/upload', 'system/storage/upload', $output);
-		$output = str_replace('system/logs', 'system/storage/logs', $output);
-		$output = str_replace('system/cache', 'system/storage/cache', $output);
 
-		// Since the download folder has had multiple locations, first set them all back to /download, then adjust to the new location
-		$output = str_replace('system/download', '/download', $output);
-		$output = str_replace('system/storage/download', '/download', $output);
-		$output = str_replace('/download', 'system/storage/download', $output);
+			// Use a list of constants that are not in the latest version of OpenCart.
+			$required = [
+				'DIR_OPENCART',
+				'DIR_EXTENSION',
+				'DIR_STORAGE',
+				'DIR_SESSION',
+				'DIR_UPLOAD',
+				'DB_PORT',
+				'OPENCART_SERVER'
+			];
 
-		// Update the config.php to add /storage/ to paths
-		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files[] = DIR_OPENCART . 'config.php';
-			$files[] = DIR_OPENCART . 'admin/config.php';
+			foreach ($required as $value) {
+				if (!in_array($value, $constants)) {
 
-			foreach ($files as $file) {
-				$upgrade = true;
-
-				$lines = file($file);
-
-				$output = '';
-
-				foreach ($lines as $line_id => $line) {
-					$output .= $line;
 				}
 
-				$output = str_replace('system/upload', 'system/storage/upload', $output);
-				$output = str_replace('system/logs', 'system/storage/logs', $output);
-				$output = str_replace('system/cache', 'system/storage/cache', $output);
+				$key = array_search($match[0], $missing[0]);
 
-				// Since the download folder has had multiple locations, first set them all back to /download, then adjust to the new location
-				$output = str_replace('system/download', '/download', $output);
-				$output = str_replace('system/storage/download', '/download', $output);
-				$output = str_replace('/download', 'system/storage/download', $output);
+				//if ($key !== false) {
+				//	unset($missing[$key]);
+				//}
+			}
 
-				$handle = fopen($file, 'w');
 
-				fwrite($handle, $output);
+
+			// Add missing constants
+			for ($i = 0; $i < count($lines); $i++) {
+				if (in_array('DIR_OPENCART', $missing) && (strpos($lines[$i], '// DIR') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n"]);
+				}
+
+				if (in_array('DIR_EXTENSION', $missing) && (strpos($lines[$i], 'DIR_APPLICATION') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n"]);
+				}
+
+				if (in_array('DIR_SESSION', $missing) && (strpos($lines[$i], 'DIR_LOGS') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n"]);
+				}
+
+				if (in_array('DIR_UPLOAD', $missing) && (strpos($lines[$i], 'DIR_SESSION') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n"]);
+				}
+
+				// Update the config.php by adding DB_PORT
+				if (in_array('DB_PORT', $missing) && (strpos($lines[$i], 'DB_DATABASE') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n"]);
+				}
+			}
+			// Update the config.php by adding a DB_PORT
+			if (dirname($file) == 'admin' && in_array('OPENCART_SERVER', $missing) && (strpos($lines[$i], 'DB_PREFIX') !== false)) {
+				$replacement[] = '';
+				$replacement[] = '';
+				$replacement[] = '// OpenCart API';
+				$replacement[] = 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');';
+
+				array_splice($lines, $i + 1, 0, $replacement);
+			}
+
+			//define('DIR_OPENCART', 'C:/xampp/htdocs/opencart-master/upload/');
+
+			// Update the config.php to change mysql to mysqli
+			//$new_line = "define('DB_DRIVER', 'mysqli')";
+
+			$replace = [
+				'DIR_APPLICATION'
+			];
+
+			$output = implode('', $lines);
+
+			for ($i = 0; $i < count($lines); $i++) {
+				if (strpos($lines[$i], 'DIR_APPLICATION') !== false) {
+					$lines[$i] = 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'catalog/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_EXTENSION') !== false) {
+					$lines[$i] = 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_IMAGE') !== false) {
+					$lines[$i] = 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_SYSTEM') !== false) {
+					$lines[$i] = 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_LANGUAGE') !== false) {
+					$lines[$i] = 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_TEMPLATE') !== false) {
+					$lines[$i] = 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/template/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_CONFIG') !== false) {
+					$lines[$i] = 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_CACHE') !== false) {
+					$lines[$i] = 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_DOWNLOAD') !== false) {
+					$lines[$i] = 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";
+				}
+
+
+				if (strpos($lines[$i], 'DIR_LOGS') !== false) {
+					$lines[$i] = 'define(\'DIR_LOGS\', DIR_STORAGE . \'logs/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_SESSION') !== false) {
+					$lines[$i] = 'define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n";
+				}
+
+				if (strpos($lines[$i], 'DIR_UPLOAD') !== false) {
+					$lines[$i] = 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n";
+				}
+
+
+				if (strpos($lines[$i], 'DB_DRIVER') !== false) {
+					$new_line = "define('DB_DRIVER', 'mysqli')";
+				}
+
+				//file_put_contents($file, $output);
+			}
+		}
+
+		// Merge image/data to image/catalog
+		if (is_dir(DIR_IMAGE . 'data')) {
+
+			if (!is_dir(DIR_IMAGE . 'catalog')) {
+				rename(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog'); // Rename data to catalog
+			} else {
+				$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
+
+				@unlink(DIR_IMAGE . 'data');
+			}
+		}
+
+		// If create any missing storage directories
+		$directories = [
+			'backup',
+			'cache',
+			'download',
+			'logs',
+			'marketplace',
+			'session',
+			'upload'
+		];
+
+		foreach ($directories as $directory) {
+			if (!is_dir(DIR_STORAGE . $directory)) {
+				mkdir(DIR_STORAGE . $directory, '0644');
+
+				$handle = fopen(DIR_STORAGE . $directory . '/index.html', 'w');
 
 				fclose($handle);
 			}
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// Update the config.php by adding a DB_PORT
-
-
-
-			foreach ($files as $file) {
-				$upgrade = true;
-
-				$lines = file($file);
-
-				foreach ($lines as $line) {
-					if (strpos(strtoupper($line), 'DB_PORT') !== false) {
-						$upgrade = false;
-
-						break;
-					}
-				}
-
-				if ($upgrade) {
-					$output = '';
-
-					foreach ($lines as $line_id => $line) {
-						if (strpos($line, 'DB_PREFIX') !== false) {
-							$output .= 'define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n";
-							$output .= $line;
-						} else {
-							$output .= $line;
-						}
-					}
-
-					$handle = fopen($file, 'w');
-
-					fwrite($handle, $output);
-
-					fclose($handle);
-				}
-			}
+		// Merge system/upload to system/storage/upload
+		if (is_dir(DIR_SYSTEM . 'upload')) {
+			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_STORAGE . 'upload');
 		}
 
-
+		if (is_dir(DIR_SYSTEM . 'download')) {
+			$this->recursive_move(DIR_SYSTEM . 'download', DIR_STORAGE . 'download');
+		}
 
 		// Cleanup files in old directories
 		$directories = [
@@ -373,49 +333,6 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 					}
 				}
 			}
-		}
-
-		// Merge image/data to image/catalog
-		if (is_dir(DIR_IMAGE . 'data') && !file_exists(DIR_IMAGE . 'catalog')) {
-			if (!file_exists(DIR_IMAGE . 'catalog')) {
-				rename(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog'); // Rename data to catalog
-
-
-			} else {
-				$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
-			}
-		}
-
-		// If backup storage directory does not exist
-		if (!is_dir(DIR_STORAGE . 'backup')) {
-			mkdir(DIR_STORAGE . 'backup', '0644');
-
-			$handle = fopen(DIR_STORAGE . 'backup/index.html', 'w');
-
-			fclose($handle);
-		}
-
-		// If marketplace storage directory does not exist
-		if (!is_dir(DIR_STORAGE . 'marketplace')) {
-			mkdir(DIR_STORAGE . 'marketplace', '0644');
-
-			$handle = fopen(DIR_STORAGE . 'marketplace/index.html', 'w');
-
-			fclose($handle);
-		}
-
-		// Merge system/upload to system/storage/upload
-		if (is_dir(DIR_SYSTEM . 'upload')) {
-			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_SYSTEM . 'storage/upload');
-		}
-
-		// Merge download or system/download to system/storage/download
-		if (is_dir(DIR_OPENCART . 'download')) {
-			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/download');
-		}
-
-		if (is_dir(DIR_SYSTEM . 'download')) {
-			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/download');
 		}
 	}
 

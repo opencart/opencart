@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Account;
+namespace Opencart\Catalog\Model\Account;
 class Download extends \Opencart\System\Engine\Model {
 	public function getDownload($download_id) {
 		$implode = [];

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Upgrade;
+namespace Opencart\Admin\Model\Upgrade;
 class Upgrade1001 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Update events because we moved the affiliate functions out of the customer class

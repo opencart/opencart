@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Tool;
+namespace Opencart\Admin\Model\Tool;
 class Backup extends \Opencart\System\Engine\Model {
 	public function getTables() {
 		$table_data = [];

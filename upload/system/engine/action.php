@@ -11,6 +11,7 @@
  * Action class
  */
 namespace Opencart\System\Engine;
+use Opencart\Application as test;
 class Action {
 	private $route;
 	private $class;

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Report;
+namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Product extends \Opencart\System\Engine\Model {
 	public function getProductsViewed($data = []) {
 		$sql = "SELECT pd.`name`, p.`model`, p.`viewed` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND p.`viewed` > '0' ORDER BY p.`viewed` DESC";

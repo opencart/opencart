@@ -2,6 +2,11 @@
 // Autoloader
 $autoloader = new \Opencart\System\Engine\Autoloader();
 $autoloader->register('Opencart\Application', DIR_APPLICATION);
+
+$autoloader->register('Opencart\Catalog', DIR_OPENCART . 'catalog/');
+$autoloader->register('Opencart\Admin', DIR_OPENCART . 'admin/');
+$autoloader->register('Opencart\Install', DIR_OPENCART . 'install/');
+
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
@@ -13,9 +18,11 @@ $registry->set('autoloader', $autoloader);
 $config = new \Opencart\System\Engine\Config();
 $config->addPath(DIR_CONFIG);
 
+$application = basename(DIR_APPLICATION);
+
 // Load the default config
 $config->load('default');
-$config->load(basename(DIR_APPLICATION));
+$config->load($application);
 $registry->set('config', $config);
 
 // Set the default time zone
@@ -92,7 +99,7 @@ if ($config->has('action_event')) {
 }
 
 // Loader
-$loader = new \Opencart\System\Engine\Loader($registry);
+$loader = new \Opencart\System\Engine\Loader($application, $registry);
 $registry->set('load', $loader);
 
 // Request
@@ -146,7 +153,7 @@ if ($config->get('session_autostart')) {
 		'SameSite' => 'Strict'
 	];
 
-	oc_setcookie($config->get('session_name'), $session->getId(), $option);
+	setcookie($config->get('session_name'), $session->getId(), $option);
 }
 
 // Cache
@@ -162,6 +169,12 @@ $language = new \Opencart\System\Library\Language($config->get('language_code'))
 $language->addPath(DIR_LANGUAGE);
 $language->load($config->get('language_code'));
 $registry->set('language', $language);
+
+// Url
+$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
+
+// Document
+$registry->set('document', new \Opencart\System\Library\Document());
 
 // Action error object to execute if any other actions can not be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));

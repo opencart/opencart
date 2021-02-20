@@ -38,7 +38,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 				'SameSite' => 'Strict'
 			];
 
-			oc_setcookie('policy', $agree, $option);
+			setcookie('policy', $agree, $option);
 
 			$json['success'] = $this->language->get('text_success');
 		}

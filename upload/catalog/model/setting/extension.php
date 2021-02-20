@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Setting;
+namespace Opencart\Catalog\Model\Setting;
 class Extension extends \Opencart\System\Engine\Model {
 	public function getExtensions() {
 		$query = $this->db->query("SELECT DISTINCT `extension` FROM `" . DB_PREFIX . "extension`");

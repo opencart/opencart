@@ -40,7 +40,7 @@ class Config {
 	public function get(string $key)  {
 		return (isset($this->data[$key]) ? $this->data[$key] : '');
 	}
-	
+
     /**
      * 
      *
@@ -92,6 +92,8 @@ class Config {
 			require($file);
 
 			$this->data = array_merge($this->data, $_);
+
+			return $this->data;
 		} else {
 			trigger_error('Error: Could not load config ' . $filename . '!');
 			exit();

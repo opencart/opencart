@@ -56,7 +56,7 @@ class Application extends \Opencart\System\Engine\Controller {
 				'SameSite' => 'Lax'
 			];
 
-			oc_setcookie('currency', $code, $option);
+			setcookie('currency', $code, $option);
 		}
 
 		$this->registry->set('currency', new \Opencart\System\Library\Cart\Currency($this->registry));

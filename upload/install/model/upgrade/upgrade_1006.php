@@ -1,8 +1,24 @@
 <?php
-namespace Opencart\Application\Model\Upgrade;
+namespace Opencart\Install  \Model\Upgrade;
 class Upgrade1006 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
-		// Customer
+		// Customer Group
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
+
+		if ($query->num_rows) {
+			$customer_group_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group`");
+
+			foreach ($customer_group_query->rows as $customer_group) {
+				$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
+
+				foreach ($language_query->rows as $language) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
+				}
+			}
+
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");
+		}
+
 		// Affiliate customer merge code
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate'");
 
@@ -69,36 +85,6 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_transaction`");
 		}
 
-
-
-
-
-
-
-
-
-		// Customer Group
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
-
-		if ($query->num_rows) {
-			$customer_group_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group`");
-
-			foreach ($customer_group_query->rows as $customer_group) {
-				$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
-
-				foreach ($language_query->rows as $language) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
-				}
-			}
-
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");
-		}
-
-
-
-
-
-
 		// order_custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_field'");
 
@@ -154,6 +140,14 @@ class Upgrade1006 extends \Opencart\System\Engine\Model {
 		if ($query->num_rows) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring_transaction` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring_transaction` DROP `created`");
+		}
+
+		// Api
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
+
+		if ($query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `name` = `username` WHERE `username` IS NULL or `username` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` DROP COLUMN `name`");
 		}
 	}
 }

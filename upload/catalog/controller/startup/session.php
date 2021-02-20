@@ -48,7 +48,8 @@ class Session extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-			oc_setcookie($this->config->get('session_name'), $session->getId(), $option);
+
+			setcookie($this->config->get('session_name'), $session->getId(), $option);
 		}
 	}
 }

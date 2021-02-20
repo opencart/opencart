@@ -42,7 +42,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'SameSite' => 'Strict'
 			];
 
-			oc_setcookie('notification', true, $option);
+			setcookie('notification', true, $option);
 		}
 	}
 }

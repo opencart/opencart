@@ -1,7 +1,4 @@
 <?php
-// Application Namespace
-$_['application']       = 'Catalog';
-
 // Site
 $_['site_url']           = HTTP_SERVER;
 

@@ -1,7 +1,4 @@
 <?php
-// Application Namespace
-$_['application']          = 'Application';
-
 // Site
 $_['site_url']             = '';
 

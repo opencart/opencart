@@ -6,7 +6,6 @@ $namespace = str_replace(['_', '/'], ['', '\\'], ucwords($application, '_/'));
 
 $autoloader = new \Opencart\System\Engine\Autoloader();
 $autoloader->register('Opencart\\' . $namespace, DIR_APPLICATION);
-
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
@@ -21,6 +20,7 @@ $config->addPath(DIR_CONFIG);
 // Load the default config
 $config->load('default');
 $config->load($application);
+$config->set('application', $namespace);
 $registry->set('config', $config);
 
 // Set the default time zone

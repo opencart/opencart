@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Install  \Model\Upgrade;
+namespace Opencart\Install\Model\Upgrade;
 class Upgrade1006 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
 		// Customer Group

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Localisation;
+namespace Opencart\Catalog\Controller\Localisation;
 class Country extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$json = [];

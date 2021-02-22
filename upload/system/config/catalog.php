@@ -1,9 +1,9 @@
 <?php
-// Site
-$_['site_url']           = HTTP_SERVER;
-
 // Application Namespace
 $_['application']       = 'Catalog';
+
+// Site
+$_['site_url']           = HTTP_SERVER;
 
 // Database
 $_['db_autostart']       = true;

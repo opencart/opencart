@@ -1,9 +1,9 @@
 <?php
-// Site
-$_['site_url']          = HTTP_SERVER;
-
 // Application Namespace
 $_['application']       = 'Install';
+
+// Site
+$_['site_url']          = HTTP_SERVER;
 
 // Language
 $_['language_code']     = 'en-gb';

@@ -1,9 +1,9 @@
 <?php
-// Site
-$_['site_url']             = '';
-
 // Application Namespace
 $_['application']          = 'Application';
+
+// Site
+$_['site_url']             = '';
 
 // Language
 $_['language_code']        = 'en-gb';

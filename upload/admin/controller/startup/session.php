@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
 class Session extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);

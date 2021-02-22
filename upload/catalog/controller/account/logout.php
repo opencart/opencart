@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Logout extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if ($this->customer->isLogged()) {

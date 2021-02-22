@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class Forgotten extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Marketplace;
+namespace Opencart\Admin\Controller\Marketplace;
 class Event extends \Opencart\System\Engine\Controller {
 	private $error = [];
 	

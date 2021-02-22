@@ -1228,8 +1228,8 @@ $('input[name=\'customer\']').autocomplete({
     },
     'select': function(item) {
         // Reset all custom fields
-        $('#tab-customer input[type=\'text\'], #tab-customer textarea').not('#collapse-customer input[name=\'customer\'], #collapse-customer input[name=\'customer_id\']').val('');
-        $('#tab-customer select option').not($('#tab-customer select[name=\'store_id\'] option, #collapse-customer select[name=\'currency\'] option')).removeAttr('selected');
+        $('#tab-customer input[type=\'text\'], #tab-customer textarea').not('#tab-customer input[name=\'customer\'], #tab-customer input[name=\'customer_id\']').val('');
+        $('#tab-customer select option').not($('#tab-customer select[name=\'store_id\'] option, #tab-customer select[name=\'currency\'] option')).removeAttr('selected');
         $('#tab-customer input[type=\'checkbox\'], #tab-customer input[type=\'radio\']').removeAttr('checked');
 
         $('#tab-customer input[name=\'customer\']').val(item['label']);
@@ -1298,7 +1298,7 @@ $('#button-customer').on('click', function() {
     $.ajax({
         url: '{{ catalog }}index.php?route=api/customer&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
-        data: $('#tab-customer input[type=\'text\'], #collapse-customer input[type=\'hidden\'], #collapse-customer input[type=\'radio\']:checked, #collapse-customer input[type=\'checkbox\']:checked, #collapse-customer select, #collapse-customer textarea'),
+        data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea'),
         dataType: 'json',
         crossDomain: true,
         beforeSend: function() {
@@ -1823,21 +1823,21 @@ $('select[name=\'payment_address\']').on('change', function() {
 
 var payment_zone_id = '{{ payment_zone_id }}';
 
-$('#collapse-payment select[name=\'country_id\']').on('change', function() {
+$('#tab-payment select[name=\'country_id\']').on('change', function() {
     $.ajax({
         url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-            $('#collapse-payment select[name=\'country_id\']').prop('disabled', true);
+            $('#tab-payment select[name=\'country_id\']').prop('disabled', true);
         },
         complete: function() {
-            $('#collapse-payment select[name=\'country_id\']').prop('disabled', false);
+            $('#tab-payment select[name=\'country_id\']').prop('disabled', false);
         },
         success: function(json) {
             if (json['postcode_required'] == '1') {
-                $('#collapse-payment input[name=\'postcode\']').closest('.form-group').addClass('required');
+                $('#tab-payment input[name=\'postcode\']').closest('.form-group').addClass('required');
             } else {
-                $('#collapse-payment input[name=\'postcode\']').closest('.form-group').removeClass('required');
+                $('#tab-payment input[name=\'postcode\']').closest('.form-group').removeClass('required');
             }
 
             html = '<option value="">{{ text_select }}</option>';
@@ -1856,7 +1856,7 @@ $('#collapse-payment select[name=\'country_id\']').on('change', function() {
                 html += '<option value="0" selected="selected">{{ text_none }}</option>';
             }
 
-            $('#collapse-payment select[name=\'zone_id\']').html(html);
+            $('#tab-payment select[name=\'zone_id\']').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1864,13 +1864,13 @@ $('#collapse-payment select[name=\'country_id\']').on('change', function() {
     });
 });
 
-$('#collapse-payment select[name=\'country_id\']').trigger('change');
+$('#tab-payment select[name=\'country_id\']').trigger('change');
 
 $('#button-payment-address').on('click', function() {
     $.ajax({
         url: '{{ catalog }}index.php?route=api/payment|address&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
-        data: $('#collapse-payment input[type=\'text\'], #collapse-payment input[type=\'hidden\'], #collapse-payment input[type=\'radio\']:checked, #collapse-payment input[type=\'checkbox\']:checked, #collapse-payment select, #collapse-payment textarea'),
+        data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
         dataType: 'json',
         crossDomain: true,
         beforeSend: function() {
@@ -1886,7 +1886,7 @@ $('#button-payment-address').on('click', function() {
             // Check for errors
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#collapse-payment .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#tab-payment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
                 for (i in json['error']) {
@@ -1967,32 +1967,32 @@ $('select[name=\'shipping_address\']').on('change', function() {
         },
         success: function(json) {
             // Reset all fields
-            $('#collapse-shipping input[type=\'text\'], #collapse-shipping input[type=\'text\'], #collapse-shipping textarea').val('');
-            $('#collapse-shipping select option').not('#collapse-shipping select[name=\'shipping_address\']').removeAttr('selected');
-            $('#collapse-shipping input[type=\'checkbox\'], #collapse-shipping input[type=\'radio\']').removeAttr('checked');
+            $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'text\'], #tab-shipping textarea').val('');
+            $('#tab-shipping select option').not('#tab-shipping select[name=\'shipping_address\']').removeAttr('selected');
+            $('#tab-shipping input[type=\'checkbox\'], #tab-shipping input[type=\'radio\']').removeAttr('checked');
 
-            $('#collapse-shipping input[name=\'firstname\']').val(json['firstname']);
-            $('#collapse-shipping input[name=\'lastname\']').val(json['lastname']);
-            $('#collapse-shipping input[name=\'company\']').val(json['company']);
-            $('#collapse-shipping input[name=\'address_1\']').val(json['address_1']);
-            $('#collapse-shipping input[name=\'address_2\']').val(json['address_2']);
-            $('#collapse-shipping input[name=\'city\']').val(json['city']);
-            $('#collapse-shipping input[name=\'postcode\']').val(json['postcode']);
-            $('#collapse-shipping select[name=\'country_id\']').val(json['country_id']);
+            $('#tab-shipping input[name=\'firstname\']').val(json['firstname']);
+            $('#tab-shipping input[name=\'lastname\']').val(json['lastname']);
+            $('#tab-shipping input[name=\'company\']').val(json['company']);
+            $('#tab-shipping input[name=\'address_1\']').val(json['address_1']);
+            $('#tab-shipping input[name=\'address_2\']').val(json['address_2']);
+            $('#tab-shipping input[name=\'city\']').val(json['city']);
+            $('#tab-shipping input[name=\'postcode\']').val(json['postcode']);
+            $('#tab-shipping select[name=\'country_id\']').val(json['country_id']);
 
             shipping_zone_id = json['zone_id'];
 
             for (i in json['custom_field']) {
-                $('#collapse-shipping select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                $('#collapse-shipping textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                $('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
-                $('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
-                $('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-                $('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+                $('#tab-shipping select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#tab-shipping textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+                $('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+                $('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+                $('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 
                 if (json['custom_field'][i] instanceof Array) {
                     for (j = 0; j < json['custom_field'][i].length; j++) {
-                        $('#collapse-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
+                        $('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
                     }
                 }
             }
@@ -2001,27 +2001,27 @@ $('select[name=\'shipping_address\']').on('change', function() {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     }).done(function() {
-        $('#collapse-shipping select[name=\'country_id\']').trigger('change');
+        $('#tab-shipping select[name=\'country_id\']').trigger('change');
     });
 });
 
 var shipping_zone_id = '{{ shipping_zone_id }}';
 
-$('#collapse-shipping select[name=\'country_id\']').on('change', function() {
+$('#tab-shipping select[name=\'country_id\']').on('change', function() {
     $.ajax({
         url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-            $('#collapse-shipping select[name=\'country_id\']').prop('disabled', true);
+            $('#tab-shipping select[name=\'country_id\']').prop('disabled', true);
         },
         complete: function() {
-            $('#collapse-shipping select[name=\'country_id\']').prop('disabled', false);
+            $('#tab-shipping select[name=\'country_id\']').prop('disabled', false);
         },
         success: function(json) {
             if (json['postcode_required'] == '1') {
-                $('#collapse-shipping input[name=\'postcode\']').closest('.form-group').addClass('required');
+                $('#tab-shipping input[name=\'postcode\']').closest('.form-group').addClass('required');
             } else {
-                $('#collapse-shipping input[name=\'postcode\']').closest('.form-group').removeClass('required');
+                $('#tab-shipping input[name=\'postcode\']').closest('.form-group').removeClass('required');
             }
 
             html = '<option value="">{{ text_select }}</option>';
@@ -2040,7 +2040,7 @@ $('#collapse-shipping select[name=\'country_id\']').on('change', function() {
                 html += '<option value="0" selected="selected">{{ text_none }}</option>';
             }
 
-            $('#collapse-shipping select[name=\'zone_id\']').html(html);
+            $('#tab-shipping select[name=\'zone_id\']').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2048,13 +2048,13 @@ $('#collapse-shipping select[name=\'country_id\']').on('change', function() {
     });
 });
 
-$('#collapse-shipping select[name=\'country_id\']').trigger('change');
+$('#tab-shipping select[name=\'country_id\']').trigger('change');
 
 $('#button-shipping-address').on('click', function() {
     $.ajax({
         url: '{{ catalog }}index.php?route=api/shipping|address&api_token={{ api_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
-        data: $('#collapse-shipping input[type=\'text\'], #collapse-shipping input[type=\'hidden\'], #collapse-shipping input[type=\'radio\']:checked, #collapse-shipping input[type=\'checkbox\']:checked, #collapse-shipping select, #collapse-shipping textarea'),
+        data: $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
         dataType: 'json',
         crossDomain: true,
         beforeSend: function() {
@@ -2070,7 +2070,7 @@ $('#button-shipping-address').on('click', function() {
             // Check for errors
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#tab-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
                 for (i in json['error']) {
@@ -2098,7 +2098,7 @@ $('#button-shipping-address').on('click', function() {
                     },
                     success: function(json) {
                         if (json['error']) {
-                            $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            $('#tab-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         } else {
                             // Shipping Methods
                             html = '<option value="">{{ text_select }}</option>';
@@ -2162,14 +2162,14 @@ $('#button-shipping-method').on('click', function() {
             $('.is-invalid').removeClass('is-invalid');
 
             if (json['error']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Highlight any found errors
                 $('select[name=\'shipping_method\']').addClass('is-invalid');
             }
 
             if (json['success']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -2200,14 +2200,14 @@ $('#button-payment-method').on('click', function() {
             $('.is-invalid').removeClass('is-invalid');
 
             if (json['error']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Highlight any found errors
                 $('select[name=\'payment_method\']').addClass('is-invalid');
             }
 
             if (json['success']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -2238,14 +2238,14 @@ $('#button-coupon').on('click', function() {
             $('.is-invalid').removeClass('is-invalid');
 
             if (json['error']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Highlight any found errors
                 $('input[name=\'coupon\']').addClass('is-invalid');
             }
 
             if (json['success']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -2276,14 +2276,14 @@ $('#button-voucher').on('click', function() {
             $('.is-invalid').removeClass('is-invalid');
 
             if (json['error']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Highlight any found errors
                 $('input[name=\'voucher\']').addClass('is-invalid');
             }
 
             if (json['success']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -2314,14 +2314,14 @@ $('#button-reward').on('click', function() {
             $('.is-invalid').removeClass('is-invalid');
 
             if (json['error']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Highlight any found errors
                 $('input[name=\'reward\']').addClass('is-invalid');
             }
 
             if (json['success']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -2371,7 +2371,7 @@ $('#button-save').on('click', function() {
     $.ajax({
         url: url,
         type: 'post',
-        data: $('select[name=\'payment_method\'] option:selected, select[name=\'shipping_method\'] option:selected,  #collapse-total select[name=\'order_status_id\'], #collapse-total select, textarea[name=\'comment\'], input[name=\'affiliate_id\']'),
+        data: $('select[name=\'payment_method\'] option:selected, select[name=\'shipping_method\'] option:selected,  #tab-total select[name=\'order_status_id\'], #tab-total select, textarea[name=\'comment\'], input[name=\'affiliate_id\']'),
         dataType: 'json',
         crossDomain: true,
         beforeSend: function() {
@@ -2384,11 +2384,11 @@ $('#button-save').on('click', function() {
             $('.alert-dismissible, .invalid-tooltip').remove();
 
             if (json['error']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#collapse-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-total .card-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
 
             if (json['order_id']) {
@@ -2481,46 +2481,46 @@ $('.datetime').datetimepicker({
 //--></script>
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('#collapse-customer .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-customer .form-group').length) {
-        $('#collapse-customer .form-group').eq($(this).attr('data-sort')).before(this);
+$('#tab-customer .form-group[data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .form-group').length) {
+        $('#tab-customer .form-group').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#collapse-customer .form-group').length) {
-        $('#collapse-customer .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#tab-customer .form-group').length) {
+        $('#tab-customer .form-group:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#collapse-customer .form-group').length) {
-        $('#collapse-customer .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#tab-customer .form-group').length) {
+        $('#tab-customer .form-group:first').before(this);
     }
 });
 
 // Sort the custom fields
-$('#collapse-payment .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-payment .form-group').length) {
-        $('#collapse-payment .form-group').eq($(this).attr('data-sort')).before(this);
+$('#tab-payment .form-group[data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-payment .form-group').length) {
+        $('#tab-payment .form-group').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#collapse-payment .form-group').length) {
-        $('#collapse-payment .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#tab-payment .form-group').length) {
+        $('#tab-payment .form-group:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#collapse-payment .form-group').length) {
-        $('#collapse-payment .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#tab-payment .form-group').length) {
+        $('#tab-payment .form-group:first').before(this);
     }
 });
 
-$('#collapse-shipping .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping .form-group').length) {
-        $('#collapse-shipping .form-group').eq($(this).attr('data-sort')).before(this);
+$('#tab-shipping .form-group[data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-shipping .form-group').length) {
+        $('#tab-shipping .form-group').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#collapse-shipping .form-group').length) {
-        $('#collapse-shipping .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#tab-shipping .form-group').length) {
+        $('#tab-shipping .form-group:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#collapse-shipping .form-group').length) {
-        $('#collapse-shipping .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#tab-shipping .form-group').length) {
+        $('#tab-shipping .form-group:first').before(this);
     }
 });
 

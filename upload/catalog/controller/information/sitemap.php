@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Information;
+namespace Opencart\Catalog\Controller\Information;
 class Sitemap extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('information/sitemap');

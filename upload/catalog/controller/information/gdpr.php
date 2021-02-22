@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Information;
+namespace Opencart\Catalog\Controller\Information;
 class Gdpr extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->model('catalog/information');

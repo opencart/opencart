@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
 class Extension extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Add extension paths from the DB
@@ -11,7 +11,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 			$extension = str_replace(['_', '/'], ['', '\\'], ucwords($result['extension'], '_/'));
 
 			// Register controllers, models and system extension folders
-			$this->autoloader->register('Opencart\Application\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/controller/');
+			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/controller/');
 			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/admin/model/');
 			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/system/');
 

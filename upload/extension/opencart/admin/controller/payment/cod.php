@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Payment;
+namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 class Cod extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Admin\Controller\Event;
 class Currency extends \Opencart\System\Engine\Controller {
 	// model/setting/setting/editSetting
 	// model/localisation/currency/addCurrency

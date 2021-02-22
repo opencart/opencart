@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
 class Language extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Added this code so that backup and restore doesn't show text_restore

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
 class Permission extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {

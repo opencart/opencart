@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Coupon extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('total_coupon_status')) {

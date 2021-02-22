@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\User;
+namespace Opencart\Admin\Controller\User;
 class UserPermission extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

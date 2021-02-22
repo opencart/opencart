@@ -100,7 +100,7 @@ class Twig {
 
 			return $twig->render($file, $data);
 		} catch (Twig_Error_Syntax $e) {
-			throw \Exception('Error: Could not load template ' . $filename . '!');
+			throw new \Exception('Error: Could not load template ' . $filename . '!');
 		}
 	}
 }

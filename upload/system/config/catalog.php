@@ -2,6 +2,9 @@
 // Site
 $_['site_url']           = HTTP_SERVER;
 
+// Application Namespace
+$_['application']       = 'Catalog';
+
 // Database
 $_['db_autostart']       = true;
 $_['db_engine']          = DB_DRIVER; // mysqli, pdo or pgsql

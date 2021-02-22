@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Catalog\Controller\Startup;
 class Event extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Add events from the DB

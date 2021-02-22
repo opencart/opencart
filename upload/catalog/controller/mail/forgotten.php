@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Forgotten extends \Opencart\System\Engine\Controller {
 	//catalog/model/account/customer/editCode/after
 	public function index(&$route, &$args, &$output) {

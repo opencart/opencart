@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Report;
+namespace Opencart\Admin\Controller\Report;
 class Statistics extends \Opencart\System\Engine\Controller {
 	private $error = [];
 	

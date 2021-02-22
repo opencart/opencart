@@ -1,11 +1,11 @@
 <?php
 // Autoloader
-$autoloader = new \Opencart\System\Engine\Autoloader();
-$autoloader->register('Opencart\Application', DIR_APPLICATION);
+$application = basename(DIR_APPLICATION);
 
-$autoloader->register('Opencart\Catalog', DIR_OPENCART . 'catalog/');
-$autoloader->register('Opencart\Admin', DIR_OPENCART . 'admin/');
-$autoloader->register('Opencart\Install', DIR_OPENCART . 'install/');
+$namespace = str_replace(['_', '/'], ['', '\\'], ucwords($application, '_/'));
+
+$autoloader = new \Opencart\System\Engine\Autoloader();
+$autoloader->register('Opencart\\' . $namespace, DIR_APPLICATION);
 
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
@@ -17,8 +17,6 @@ $registry->set('autoloader', $autoloader);
 // Config
 $config = new \Opencart\System\Engine\Config();
 $config->addPath(DIR_CONFIG);
-
-$application = basename(DIR_APPLICATION);
 
 // Load the default config
 $config->load('default');
@@ -99,7 +97,7 @@ if ($config->has('action_event')) {
 }
 
 // Loader
-$loader = new \Opencart\System\Engine\Loader($application, $registry);
+$loader = new \Opencart\System\Engine\Loader($registry, $application);
 $registry->set('load', $loader);
 
 // Request

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Api;
+namespace Opencart\Catalog\Controller\Api;
 class Reward extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('api/reward');

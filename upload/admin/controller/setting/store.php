@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Setting;
+namespace Opencart\Admin\Controller\Setting;
 class Store extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

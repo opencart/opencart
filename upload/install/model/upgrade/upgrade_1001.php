@@ -59,7 +59,10 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			foreach ($lines as $line) {
 				if (preg_match('/define\(\'([a-zA-Z0-9_]+)\',\s+\'([a-zA-Z0-9_]+)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
 					$constants[$match[1][0]] = $match[2][0];
-				} elseif ()
+				} elseif () {
+
+
+				}
 
 
 			}
@@ -80,8 +83,8 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 
 			$output .= '// DIR' . "\n";
 
-			if () {
-				$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
+			if ($constants['DIR_OPENCART']) {
+				$output .= 'define(\'DIR_OPENCART\', \'' . addslashes($constants['DIR_OPENCART']) . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_OPENCART\', \'' . addslashes(DIR_OPENCART) . '\');' . "\n";
 			}
@@ -115,7 +118,28 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
 
+			for ($i = 0; $i < count($lines); $i++) {
+				if (in_array('DIR_OPENCART', $missing) && (strpos($lines[$i], '// DIR') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n"]);
+				}
 
+				if (in_array('DIR_EXTENSION', $missing) && (strpos($lines[$i], 'DIR_APPLICATION') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n"]);
+				}
+
+				if (in_array('DIR_SESSION', $missing) && (strpos($lines[$i], 'DIR_LOGS') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n"]);
+				}
+
+				if (in_array('DIR_UPLOAD', $missing) && (strpos($lines[$i], 'DIR_SESSION') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n"]);
+				}
+
+				// Update the config.php by adding DB_PORT
+				if (in_array('DB_PORT', $missing) && (strpos($lines[$i], 'DB_DATABASE') !== false)) {
+					array_splice($lines, $i + 1, 0, ['define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n"]);
+				}
+			}
 
 
 			// Use a list of constants that are not in the latest version of OpenCart.
@@ -144,28 +168,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 
 
 			// Add missing constants
-			for ($i = 0; $i < count($lines); $i++) {
-				if (in_array('DIR_OPENCART', $missing) && (strpos($lines[$i], '// DIR') !== false)) {
-					array_splice($lines, $i + 1, 0, ['define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n"]);
-				}
 
-				if (in_array('DIR_EXTENSION', $missing) && (strpos($lines[$i], 'DIR_APPLICATION') !== false)) {
-					array_splice($lines, $i + 1, 0, ['define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n"]);
-				}
-
-				if (in_array('DIR_SESSION', $missing) && (strpos($lines[$i], 'DIR_LOGS') !== false)) {
-					array_splice($lines, $i + 1, 0, ['define(\'DIR_SESSION\', DIR_STORAGE . \'session/\');' . "\n"]);
-				}
-
-				if (in_array('DIR_UPLOAD', $missing) && (strpos($lines[$i], 'DIR_SESSION') !== false)) {
-					array_splice($lines, $i + 1, 0, ['define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n"]);
-				}
-
-				// Update the config.php by adding DB_PORT
-				if (in_array('DB_PORT', $missing) && (strpos($lines[$i], 'DB_DATABASE') !== false)) {
-					array_splice($lines, $i + 1, 0, ['define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n"]);
-				}
-			}
 			// Update the config.php by adding a DB_PORT
 			if (dirname($file) == 'admin' && in_array('OPENCART_SERVER', $missing) && (strpos($lines[$i], 'DB_PREFIX') !== false)) {
 				$replacement[] = '';

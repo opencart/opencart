@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Report;
+namespace Opencart\Admin\Controller\Report;
 class Report extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('report/report');

@@ -2,6 +2,9 @@
 // Site
 $_['site_url']             = '';
 
+// Application Namespace
+$_['application']          = 'Application';
+
 // Language
 $_['language_code']        = 'en-gb';
 

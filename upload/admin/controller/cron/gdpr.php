@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Cron;
+namespace Opencart\Admin\Controller\Cron;
 class Gdpr extends \Opencart\System\Engine\Controller {
 	public function index($cron_id, $code, $cycle, $date_added, $date_modified) {
 		$this->load->model('customer/gdpr');

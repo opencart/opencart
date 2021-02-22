@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Product;
+namespace Opencart\Catalog\Controller\Product;
 class Thumb extends \Opencart\System\Engine\Controller {
 	public function index($data) {
 		$this->load->language('product/thumb');

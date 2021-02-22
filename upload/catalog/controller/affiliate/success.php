@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Affiliate;
+namespace Opencart\Catalog\Controller\Affiliate;
 class Success extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (!$this->config->get('config_affiliate_status')) {

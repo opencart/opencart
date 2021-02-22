@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Language extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/language');

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Sale;
+namespace Opencart\Admin\Controller\Sale;
 class Voucher extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

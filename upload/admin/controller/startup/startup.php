@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
 class Startup extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Load startup actions

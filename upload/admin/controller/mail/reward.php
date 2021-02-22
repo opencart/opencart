@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Reward extends \Opencart\System\Engine\Controller {
 	public function index($route, $args, $output) {
 		if (isset($args[0])) {

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Reset extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

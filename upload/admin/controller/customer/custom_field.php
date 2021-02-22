@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Customer;
+namespace Opencart\Admin\Controller\Customer;
 class CustomField extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

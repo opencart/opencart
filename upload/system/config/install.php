@@ -1,7 +1,9 @@
 <?php
 // Site
-$_['site_base']         = HTTP_SERVER;
-$_['site_ssl']          = HTTP_SERVER;
+$_['site_url']          = HTTP_SERVER;
+
+// Application Namespace
+$_['application']       = 'Install';
 
 // Language
 $_['language_code']     = 'en-gb';

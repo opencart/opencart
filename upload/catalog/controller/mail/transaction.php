@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Transaction extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addTransaction/after
 	public function index(&$route, &$args, &$output) {

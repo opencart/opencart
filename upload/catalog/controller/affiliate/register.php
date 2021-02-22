@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Affiliate;
+namespace Opencart\Catalog\Controller\Affiliate;
 class Register extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

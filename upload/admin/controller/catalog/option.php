@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Catalog;
+namespace Opencart\Admin\Controller\Catalog;
 class Option extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Report;
+namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 class SaleShipping extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('extension/opencart/report/sale_shipping');

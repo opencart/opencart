@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Marketplace;
+namespace Opencart\Admin\Controller\Marketplace;
 class Installer extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('marketplace/installer');

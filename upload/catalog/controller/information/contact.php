@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Information;
+namespace Opencart\Catalog\Controller\Information;
 class Contact extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

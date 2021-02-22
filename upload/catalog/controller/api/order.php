@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Api;
+namespace Opencart\Catalog\Controller\Api;
 class Order extends \Opencart\System\Engine\Controller {
 	public function add() {
 		$this->load->language('api/order');

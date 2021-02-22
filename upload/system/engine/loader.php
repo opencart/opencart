@@ -11,8 +11,8 @@
  * Loader class
  */
 namespace Opencart\System\Engine;
+use \Opencart\System\Engine\Action as Action;
 final class Loader {
-	protected $application;
 	protected $registry;
 
 	/**
@@ -20,8 +20,7 @@ final class Loader {
 	 *
 	 * @param    object $registry
 	 */
-	public function __construct($application, $registry) {
-		$this->application = ucwords($application, '_/');
+	public function __construct($registry) {
 		$this->registry = $registry;
 	}
 
@@ -96,7 +95,7 @@ final class Loader {
 		// Check if the requested model is already stored in the registry.
 		if (!$this->registry->has('model_' . str_replace('/', '_', $route))) {
 			// Converting a route path to a class name
-			$class = 'Opencart\\' . $this->application . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
+			$class = 'Opencart\\' . $this->config->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 			if (class_exists($class)) {
 				$proxy = new \Opencart\System\Engine\Proxy();
@@ -279,7 +278,7 @@ final class Loader {
 				// Check if the model has already been initialised or not
 				if (!$this->registry->has($key)) {
 					// Create the class name from the key
-					$class = 'Opencart\\' . $this->application . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
+					$class = 'Opencart\\' . $this->config->get('application') . '\Model\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
 
 					$model = new $class($this->registry);
 

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Catalog\Controller\Startup;
 class Application extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Response output compression level

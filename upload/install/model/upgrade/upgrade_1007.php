@@ -2,7 +2,7 @@
 namespace Opencart\Install\Model\Upgrade;
 class Upgrade1007 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
-		// Banners and image path replacment
+		// Banners and image path replacement
 
 		// Convert image/data to image/catalog
 		$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Voucher extends \Opencart\System\Engine\Controller {
 	public function index($voucher_id) {
 		$this->load->model('sale/order');

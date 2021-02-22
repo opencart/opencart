@@ -1,5 +1,5 @@
 <?php
-///namespace Opencart\System\Helper;
+//namespace Opencart\System\Helper;
 function token($length = 32) {
 	if (intval($length) <= 8) {
 		$length = 32;

@@ -214,10 +214,7 @@ final class Loader {
 
 		$file = DIR_SYSTEM . 'helper/' . $route . '.php';
 
-
 		//$file = 'Opencart\System\Helper\\' . str_replace('/', '\\', $route);
-
-
 
 		if (is_file($file)) {
 			include_once($file);

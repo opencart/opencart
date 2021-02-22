@@ -18,7 +18,7 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 			}
 
 			// HTTP
-			'HTTP_SERVER'
+			//'HTTP_SERVER'
 
 			// HTTPS
 			define('HTTPS_SERVER', 'http://localhost/opencart-master/upload/');
@@ -57,12 +57,12 @@ class Upgrade1001 extends \Opencart\System\Engine\Model {
 
 			// Remove required keys if they exist
 			foreach ($lines as $line) {
-				if (preg_match('/define\(\'([a-zA-Z0-9_]+)\',\s+\'([a-zA-Z0-9_]+)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
-					$constants[$match[1][0]] = $match[2][0];
-				} elseif () {
+				//if (preg_match('/define\(\'([a-zA-Z0-9_]+)\',\s+\'([a-zA-Z0-9_]+)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				//	$constants[$match[1][0]] = $match[2][0];
+				//} elseif () {
 
 
-				}
+				//}
 
 
 			}

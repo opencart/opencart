@@ -1,11 +1,7 @@
 <?php
 // Autoloader
-$application = basename(DIR_APPLICATION);
-
-$namespace = str_replace(['_', '/'], ['', '\\'], ucwords($application, '_/'));
-
 $autoloader = new \Opencart\System\Engine\Autoloader();
-$autoloader->register('Opencart\\' . $namespace, DIR_APPLICATION);
+$autoloader->register('Opencart\\' . APPLICATION, DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
@@ -19,8 +15,10 @@ $config->addPath(DIR_CONFIG);
 
 // Load the default config
 $config->load('default');
-$config->load($application);
-$config->set('application', $namespace);
+$config->load(APPLICATION);
+
+// Set the default application
+$config->set('application', APPLICATION);
 $registry->set('config', $config);
 
 // Set the default time zone
@@ -97,7 +95,7 @@ if ($config->has('action_event')) {
 }
 
 // Loader
-$loader = new \Opencart\System\Engine\Loader($registry, $application);
+$loader = new \Opencart\System\Engine\Loader($registry);
 $registry->set('load', $loader);
 
 // Request

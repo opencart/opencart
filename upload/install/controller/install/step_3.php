@@ -13,6 +13,10 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 			// Catalog config.php
 			$output  = '<?php' . "\n";
+
+			$output .= '// APPLICATION' . "\n";
+			$output .= 'define(\'APPLICATION\', \'Catalog\');' . "\n\n";
+
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n\n";
 
@@ -52,6 +56,9 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 			// Admin config.php
 			$output  = '<?php' . "\n";
+			$output .= '// APPLICATION' . "\n";
+			$output .= 'define(\'APPLICATION\', \'Admin\');' . "\n\n";
+
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
 			$output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n\n";

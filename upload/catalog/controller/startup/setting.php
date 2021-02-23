@@ -2,25 +2,31 @@
 namespace Opencart\Catalog\Controller\Startup;
 class Setting extends \Opencart\System\Engine\Controller {
 	public function index() {
-		// Store
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/') . "'");
+		$this->load->model('setting/store');
 
+		$hostname = ($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/';
+
+		$store_info = $this->model_setting_store->getStoreByHostname($hostname);
+
+		// Store
 		if (isset($this->request->get['store_id'])) {
 			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
-		} else if ($query->num_rows) {
-			$this->config->set('config_store_id', $query->row['store_id']);
+		} elseif ($store_info) {
+			$this->config->set('config_store_id', $store_info['store_id']);
 		} else {
 			$this->config->set('config_store_id', 0);
 		}
 
-		if (!$query->num_rows) {
+		if (!$store_info) {
 			$this->config->set('config_url', HTTP_SERVER);
 		}
 
 		// Settings
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' OR `store_id` = '" . (int)$this->config->get('config_store_id') . "' ORDER BY `store_id` ASC");
+		$this->load->model('setting/setting');
 
-		foreach ($query->rows as $result) {
+		$results = $this->model_setting_store->getSettings($this->config->get('config_store_id'));
+
+		foreach ($results as $result) {
 			if (!$result['serialized']) {
 				$this->config->set($result['key'], $result['value']);
 			} else {

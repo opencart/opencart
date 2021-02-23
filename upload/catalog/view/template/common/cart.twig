@@ -6,14 +6,22 @@
       <table class="table table-sm table-striped">
         {% for product in products %}
         <tr>
-          <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</td>
+          <td class="text-center">
+            {% if product.thumb %} 
+              <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> 
+            {% endif %}
+          </td>
           <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
             {% if product.option %}
-            {% for option in product.option %}<br />
-            - <small>{{ option.name }} {{ option.value }}</small> {% endfor %}
+              {% for option in product.option %}<br/>
+                - <small>{{ option.name }} {{ option.value }}</small> 
+              {% endfor %}
             {% endif %}
-            {% if product.recurring %}<br />
-            - <small>{{ text_recurring }} {{ product.recurring }}</small> {% endif %}</td>
+            {% if product.recurring %}
+              <br/>
+              - <small>{{ text_recurring }} {{ product.recurring }}</small> 
+            {% endif %}
+          </td>
           <td class="text-right">x {{ product.quantity }}</td>
           <td class="text-right">{{ product.total }}</td>
           <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
@@ -34,10 +42,10 @@
       <div>
         <table class="table table-sm table-bordered">
           {% for total in totals %}
-          <tr>
-            <td class="text-right"><strong>{{ total.title }}</strong></td>
-            <td class="text-right">{{ total.text }}</td>
-          </tr>
+            <tr>
+              <td class="text-right"><strong>{{ total.title }}</strong></td>
+              <td class="text-right">{{ total.text }}</td>
+            </tr>
           {% endfor %}
         </table>
         <p class="text-right"><a href="{{ cart }}"><strong><i class="fas fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i class="fas fa-share"></i> {{ text_checkout }}</strong></a></p>

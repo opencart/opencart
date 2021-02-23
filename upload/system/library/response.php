@@ -49,16 +49,7 @@ class Response {
 	public function setCompression($level) {
 		$this->level = $level;
 	}
-	
-	/**
-	 * Get Output
-	 *
-	 * @return	array
- 	*/
-	public function getOutput() {
-		return $this->output;
-	}
-	
+
 	/**
 	 * Set Output
 	 *
@@ -67,7 +58,16 @@ class Response {
 	public function setOutput($output) {
 		$this->output = $output;
 	}
-	
+
+	/**
+	 * Get Output
+	 *
+	 * @return	array
+	 */
+	public function getOutput() {
+		return $this->output;
+	}
+
 	/**
 	 * Compress
 	 *

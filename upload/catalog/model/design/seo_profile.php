@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Design;
+namespace Opencart\Catalog\Model\Design;
 class SeoProfile extends \Opencart\System\Engine\Model {
 	public $profile = [];
 

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Admin\Model\Localisation;
 class WeightClass extends \Opencart\System\Engine\Model {
 	public function addWeightClass($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "weight_class` SET `value` = '" . (float)$data['value'] . "'");
@@ -45,7 +45,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY " . $data['sort'];
+				$sql .= " ORDER BY `" . $data['sort'] . "`";
 			} else {
 				$sql .= " ORDER BY `title`";
 			}

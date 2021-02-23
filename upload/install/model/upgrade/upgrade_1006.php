@@ -1,209 +1,153 @@
 <?php
-namespace Opencart\Application\Model\Upgrade;
+namespace Opencart\Install  \Model\Upgrade;
 class Upgrade1006 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
-		// Update some language settings
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language_admin' AND `value` = 'en'");
-		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `code` = 'en-gb' WHERE `code` = 'en'");
+		// Customer Group
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
 
-		$this->cache->delete('language');
+		if ($query->num_rows) {
+			$customer_group_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_group`");
 
-		// Update the template setting for v1.5.x
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_theme', `value` = 'default' WHERE `key` = 'config_template' AND `value` = 'default'");
+			foreach ($customer_group_query->rows as $customer_group) {
+				$language_query = $this->db->query("SELECT `language_id` FROM `" . DB_PREFIX . "language`");
 
-		// update the template setting for v2.x
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'default' WHERE `key` = 'config_theme'");
-
-		// Update the config.php by adding a DB_PORT
-		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files[] = DIR_OPENCART . 'config.php';
-			$files[] = DIR_OPENCART . 'admin/config.php';
-
-			foreach ($files as $file) {
-				$upgrade = true;
-
-				$lines = file($file);
-
-				foreach ($lines as $line) {
-					if (strpos(strtoupper($line), 'DB_PORT') !== false) {
-						$upgrade = false;
-
-						break;
-					}
-				}
-
-				if ($upgrade) {
-					$output = '';
-
-					foreach ($lines as $line_id => $line) {
-						if (strpos($line, 'DB_PREFIX') !== false) {
-							$output .= 'define(\'DB_PORT\', \'' . ini_get('mysqli.default_port') . '\');' . "\n";
-							$output .= $line;
-						} else {
-							$output .= $line;
-						}
-					}
-
-					$handle = fopen($file, 'w');
-
-					fwrite($handle, $output);
-
-					fclose($handle);
+				foreach ($language_query->rows as $language) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
 				}
 			}
+
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");
 		}
 
-		// Update the config.php to add /storage/ to paths
-		if (is_file(DIR_OPENCART . 'config.php')) {
-			$files[] = DIR_OPENCART . 'config.php';
-			$files[] = DIR_OPENCART . 'admin/config.php';
+		// Affiliate customer merge code
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate'");
 
-			foreach ($files as $file) {
-				$upgrade = true;
+		if ($query->num_rows) {
+			// Removing affiliate and moving to the customer account.
+			$config = new \Opencart\System\Engine\Config();
 
-				$lines = file($file);
+			$setting_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0'");
 
-				$output = '';
+			foreach ($setting_query->rows as $setting) {
+				$config->set($setting['key'], $setting['value']);
+			}
 
-				foreach ($lines as $line_id => $line) {
-					$output .= $line;
+			$affiliate_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate`");
+
+			foreach ($affiliate_query->rows as $affiliate) {
+				$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `email` = '" . $this->db->escape($affiliate['email']) . "'");
+
+				if (!$customer_query->num_rows) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `customer_group_id` = '" . (int)$config->get('config_customer_group_id') . "', `language_id` = '" . (int)$config->get('config_customer_group_id') . "', `firstname` = '" . $this->db->escape($affiliate['firstname']) . "', `lastname` = '" . $this->db->escape($affiliate['lastname']) . "', `email` = '" . $this->db->escape($affiliate['email']) . "', `telephone` = '" . $this->db->escape($affiliate['telephone']) . "', `password` = '" . $this->db->escape($affiliate['password']) . "', `cart` = '" . $this->db->escape(json_encode([])) . "', `wishlist` = '" . $this->db->escape(json_encode([])) . "', `newsletter` = '0', `custom_field` = '" . $this->db->escape(json_encode([])) . "', `ip` = '" . $this->db->escape($affiliate['ip']) . "', `status` = '" . $this->db->escape($affiliate['status']) . "', `date_added` = '" . $this->db->escape($affiliate['date_added']) . "'");
+
+					$customer_id = $this->db->getLastId();
+
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "address` SET `customer_id` = '" . (int)$customer_id . "', `firstname` = '" . $this->db->escape($affiliate['firstname']) . "', `lastname` = '" . $this->db->escape($affiliate['lastname']) . "', `company` = '" . $this->db->escape($affiliate['company']) . "', `address_1` = '" . $this->db->escape($affiliate['address_1']) . "', `address_2` = '" . $this->db->escape($affiliate['address_2']) . "', `city` = '" . $this->db->escape($affiliate['city']) . "', `postcode` = '" . $this->db->escape($affiliate['postcode']) . "', `zone_id` = '" . (int)$affiliate['zone_id'] . "', `country_id` = '" . (int)$affiliate['country_id'] . "', `custom_field` = '" . $this->db->escape(json_encode([])) . "'");
+
+					$address_id = $this->db->getLastId();
+
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '" . (int)$address_id . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
+				} else {
+					$customer_id = $customer_query->row['customer_id'];
 				}
 
-				$output = str_replace('system/modification', 'system/storage/modification', $output);
-				$output = str_replace('system/upload', 'system/storage/upload', $output);
-				$output = str_replace('system/logs', 'system/storage/logs', $output);
-				$output = str_replace('system/cache', 'system/storage/cache', $output);
+				$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-				// Since the download folder has had multiple locations, first set them all back to /download, then adjust to the new location
-				$output = str_replace('system/download', '/download', $output);
-				$output = str_replace('system/storage/download', '/download', $output);
-				$output = str_replace('/download', 'system/storage/download', $output);
+				if (!$customer_query->num_rows) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_affiliate` SET `customer_id` = '" . (int)$customer_id . "', `company` = '" . $this->db->escape($affiliate['company']) . "', `tracking` = '" . $this->db->escape($affiliate['code']) . "', `commission` = '" . (float)$affiliate['commission'] . "', `tax` = '" . $this->db->escape($affiliate['tax']) . "', `payment` = '" . $this->db->escape($affiliate['payment']) . "', `cheque` = '" . $this->db->escape($affiliate['cheque']) . "', `paypal` = '" . $this->db->escape($affiliate['paypal']) . "', `bank_name` = '" . $this->db->escape($affiliate['bank_name']) . "', `bank_branch_number` = '" . $this->db->escape($affiliate['bank_branch_number']) . "', `bank_account_name` = '" . $this->db->escape($affiliate['bank_account_name']) . "', `bank_account_number` = '" . $this->db->escape($affiliate['bank_account_number']) . "', `status` = '" . (int)(isset($affiliate['approved']) ? $affiliate['approved'] : $affiliate['status']) . "', `date_added` = '" . $this->db->escape($affiliate['date_added']) . "'");
+				}
 
-				$handle = fopen($file, 'w');
+				$affiliate_transaction_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_transaction` WHERE `affiliate_id` = '" . (int)$affiliate['affiliate_id'] . "'");
 
-				fwrite($handle, $output);
+				foreach ($affiliate_transaction_query->rows as $affiliate_transaction) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$affiliate_transaction['order_id'] . "', `description` = '" . $this->db->escape($affiliate_transaction['description']) . "', `amount` = '" . (float)$affiliate_transaction['amount'] . "', `date_added` = '" . $this->db->escape($affiliate_transaction['date_added']) . "'");
 
-				fclose($handle);
+					$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE `affiliate_transaction_id` = '" . (int)$affiliate_transaction['affiliate_transaction_id'] . "'");
+				}
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `affiliate_id` = '" . (int)$customer_id . "' WHERE `affiliate_id` = '" . (int)$affiliate['affiliate_id'] . "'");
 			}
+
+			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate`");
+
+			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
+
+			if ($affiliate_query->num_rows) {
+				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
+			}
+
+			$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_login'");
+
+			if ($affiliate_query->num_rows) {
+				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_login`");
+			}
+
+			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_transaction`");
 		}
 
-		// Disable any existing ocmods
-		$this->db->query("UPDATE `" . DB_PREFIX . "modification` SET `status` = 0");
+		// order_custom_field
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_field'");
 
-		// Cleanup files in old directories
-		$directories = [
-			DIR_SYSTEM . 'modification/',
-			DIR_SYSTEM . 'storage/modification/',
-			DIR_SYSTEM . 'logs/',
-			DIR_SYSTEM . 'cache/',
-		];
+		if ($query->num_rows) {
+			$order_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_field`");
 
-		$files = [];
+			foreach ($order_field_query->rows as $result) {
+				$order_custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_custom_field` WHERE `order_id` = '" . (int)$result['order_id'] . "' AND `custom_field_id` = '" . (int)$result['custom_field_id'] . "' AND `custom_field_value_id` = '" . (int)$result['custom_field_value_id'] . "' AND `name` = '" . $this->db->escape($result['name']) . "' AND `value` = '" . $this->db->escape($result['value']) . "'");
 
-		foreach ($directories as $dir) {
-			if (is_dir($dir)) {
-				// Make path into an array
-				$path = [$dir . '*'];
-
-				// While the path array is still populated keep looping through
-				while (count($path) != 0) {
-					$next = array_shift($path);
-
-					foreach (glob($next) as $file) {
-						// If directory add to path array
-						if (is_dir($file)) {
-							$path[] = $file . '/*';
-						}
-
-						// Add the file to the files to be deleted array
-						$files[] = $file;
-					}
-
-					// Reverse sort the file array
-					rsort($files);
-
-					// Clear all modification files
-					foreach ($files as $file) {
-						if ($file != $dir . 'index.html') {
-							// If file just delete
-							if (is_file($file)) {
-								@unlink($file);
-
-								// If directory use the remove directory function
-							} elseif (is_dir($file)) {
-								@rmdir($file);
-							}
-						}
-					}
+				if (!$order_custom_field_query->num_rows) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_custom_field` SET `order_id` = '" . (int)$result['order_id'] . "', `custom_field_id` = '" . (int)$result['custom_field_id'] . "', `custom_field_value_id` = '" . (int)$result['custom_field_value_id'] . "', `name` = '" . $this->db->escape($result['name']) . "', `value` = '" . $this->db->escape($result['value']) . "'");
 				}
 			}
+
+			$this->db->query("DROP TABLE `" . DB_PREFIX . "order_field`");
 		}
 
-		// Merge image/data to image/catalog
-		if (file_exists(DIR_IMAGE . 'data')) {
-			if (!file_exists(DIR_IMAGE . 'catalog')) {
-				rename(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog'); // Rename data to catalog
-			} else {
-				$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
-			}
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'created'");
+
+		if ($query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `created`");
 		}
 
-		// Merge system/upload to system/storage/upload
-		if (file_exists(DIR_SYSTEM . 'upload')) {
-			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_SYSTEM . 'storage/upload');
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_id'");
+
+		if ($query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL OR `recurring_id` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_id`");
 		}
 
-		// Merge download or system/download to system/storage/download
-		if (file_exists(DIR_OPENCART . 'download')) {
-			$this->recursive_move(DIR_OPENCART . 'download', DIR_SYSTEM . 'storage/download');
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_name'");
+
+		if ($query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_name` = `profile_name` WHERE `recurring_name` IS NULL or `recurring_name` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_name`");
 		}
 
-		if (file_exists(DIR_SYSTEM . 'download')) {
-			$this->recursive_move(DIR_SYSTEM . 'download', DIR_SYSTEM . 'storage/download');
+		// order_recurring
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_description'");
+
+		if ($query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_description` = `profile_description` WHERE `recurring_description` IS NULL OR `recurring_description` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_description`");
 		}
 
-		// Convert image/data to image/catalog
-		$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "option_value` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `description` = REPLACE (description , 'data/', 'catalog/')");
-	}
+		// order_recurring_transaction
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring_transaction' AND COLUMN_NAME = 'created'");
 
-	private function recursive_move($src, $dest) {
-		// If source is not a directory stop processing
-		if (!is_dir($src)) return false;
-
-		// If the destination directory does not exist create it
-		if (!is_dir($dest)) {
-			if (!@mkdir($dest)) {
-				// If the destination directory could not be created stop processing
-				return false;
-			}
+		if ($query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring_transaction` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring_transaction` DROP `created`");
 		}
 
-		// Open the source directory to read in files
-		$i = new \DirectoryIterator($src);
+		// Api
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
 
-		foreach ($i as $f) {
-			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
-				@rename($f->getRealPath(), "$dest/" . $f->getFilename());
-			} elseif (!$f->isDot() && $f->isDir()) {
-				$this->recursive_move($f->getRealPath(), "$dest/$f");
-
-				@unlink($f->getRealPath());
-			}
+		if ($query->num_rows) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `name` = `username` WHERE `username` IS NULL or `username` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` DROP COLUMN `name`");
 		}
-
-		// Remove source folder after move
-		@unlink($src);
 	}
 }

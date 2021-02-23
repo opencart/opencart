@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Catalog\Controller\Startup;
 class Session extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
@@ -48,7 +48,8 @@ class Session extends \Opencart\System\Engine\Controller {
 			];
 
 			$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-			oc_setcookie($this->config->get('session_name'), $session->getId(), $option);
+
+			setcookie($this->config->get('session_name'), $session->getId(), $option);
 		}
 	}
 }

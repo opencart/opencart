@@ -50,7 +50,7 @@ class Template {
 			if (isset($file) && is_file($file)) {
 				$code = file_get_contents($file);
 			} else {
-				error_log('Error: Could not load template ' . $filename . '!');
+				throw new \Exception('Error: Could not load template ' . $filename . '!');
 			}
 		}
 

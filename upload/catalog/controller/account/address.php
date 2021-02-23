@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Address extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
@@ -431,6 +431,22 @@ class Address extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function validateForm() {
+		$keys = [
+			'firstname',
+			'lastname',
+			'address_1',
+			'city',
+			'postcode',
+			'country_id',
+			'zone_id'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}

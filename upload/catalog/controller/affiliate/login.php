@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Affiliate;
+namespace Opencart\Catalog\Controller\Affiliate;
 class Login extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

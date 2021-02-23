@@ -42,147 +42,144 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {
-	$.ajax({
-		url: $(this).val(),
-		dataType: 'html',
-		beforeSend: function() {
-			$('.fa-filter').addClass('fa-circle-notch fa-spin');
-			$('.fa-filter').removeClass('fa-filter');
-			$('select[name=\'type\']').prop('disabled', true);
-		},
-		complete: function() {
-			$('.fa-circle-notch').addClass('fa-filter');
-			$('.fa-circle-notch').removeClass('fa-circle-notch fa-spin');
-			$('select[name=\'type\']').prop('disabled', false);
-		},
-		success: function(html) {
-			$('#extension').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+    $.ajax({
+        url: $(this).val(),
+        dataType: 'html',
+        beforeSend: function() {
+            $('.fa-filter').addClass('fa-circle-notch fa-spin');
+            $('.fa-filter').removeClass('fa-filter');
+            $('select[name=\'type\']').prop('disabled', true);
+        },
+        complete: function() {
+            $('.fa-circle-notch').addClass('fa-filter');
+            $('.fa-circle-notch').removeClass('fa-circle-notch fa-spin');
+            $('select[name=\'type\']').prop('disabled', false);
+        },
+        success: function(html) {
+            $('#extension').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 // Download promotion extension
 $('#extension').on('click', '#recommended .btn-primary', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	var element = this;
+    var element = this;
 
-	$.ajax({
-		url: $(element).attr('value'),
-		dataType: 'json',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			$('.alert-dismissible').remove();
+    $.ajax({
+        url: $(element).attr('value'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
 
-			if (json['error']) {
-				$('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
-			}
+            if (json['error']) {
+                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+            }
 
-			if (json['success']) {
-				$('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            if (json['success']) {
+                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).prop('disabled', true);
+                $(element).prop('disabled', true);
 
-				// Manually build the url so no need to refresh extensions and can trigger install
-				html = '<a href="index.php?route=marketplace/installer|install&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa fa-plus-circle fa-fw"></i> {{ text_install }}</a>';
-				html += '<a href="index.php?route=marketplace/installer|delete&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="far fa-trash-alt fa-fw"></i> {{ text_delete }}</a>';
+                // Manually build the url so no need to refresh extensions and can trigger install
+                // Once the extension is downloaded we trigger the install
+                $(element).parent().find('.dropdown-menu').html('<a href="index.php?route=marketplace/installer|install&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="index.php?route=marketplace/installer|delete&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="far fa-trash-alt fa-fw"></i> {{ text_delete }}</a>');
 
-				// Once the extension is downloaded we trigger the install
-				$(element).parent().find('.dropdown-menu').html(html);
-
-				$(element).parent().find('.dropdown-item:first').trigger('click');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+                $(element).parent().find('.dropdown-item:first').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 // Download dropdown
 $('#extension').on('click', '.dropdown-item', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	var element = this;
+    var element = this;
 
-	$.ajax({
-		url: $(element).attr('href'),
-		dataType: 'json',
-		success: function(json) {
-			$('.alert-dismissible').remove();
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'json',
+        success: function(json) {
+            $('.alert-dismissible').remove();
 
-			if (json['error']) {
-				$('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
-			}
+            if (json['error']) {
+                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+            }
 
-			if (json['success']) {
-				$('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            if (json['success']) {
+                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$('#extension').load($('select[name=\'type\']').val());
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+                $('#extension').load($('select[name=\'type\']').val());
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 // Install
 $('#extension').on('click', '.btn-success', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	var element = this;
+    var element = this;
 
-	$.ajax({
-		url: $(element).attr('href'),
-		dataType: 'html',
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(html) {
-			$('#extension').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+    $.ajax({
+        url: $(element).attr('href'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(html) {
+            $('#extension').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 // Uninstall / Delete
 $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	if (confirm('{{ text_confirm }}')) {
-		var element = this;
+    if (confirm('{{ text_confirm }}')) {
+        var element = this;
 
-		$.ajax({
-			url: $(element).attr('href'),
-			dataType: 'html',
-			beforeSend: function() {
-				$(element).button('loading');
-			},
-			complete: function() {
-				$(element).button('reset');
-			},
-			success: function(html) {
-				$('#extension').html(html);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
+        $.ajax({
+            url: $(element).attr('href'),
+            dataType: 'html',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(html) {
+                $('#extension').html(html);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
 });
 //--></script>
 {{ footer }}

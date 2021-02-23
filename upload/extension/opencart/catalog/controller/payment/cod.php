@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Payment;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 class Cod extends \Opencart\System\Engine\Controller {
 	public function index() {
 		return $this->load->view('extension/opencart/payment/cod');

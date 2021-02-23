@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Order extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args) {
 		if (isset($args[0])) {

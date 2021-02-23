@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Filter extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (isset($this->request->get['path'])) {

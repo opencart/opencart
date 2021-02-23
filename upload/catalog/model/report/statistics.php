@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Report;
+namespace Opencart\Catalog\Model\Report;
 class Statistics extends \Opencart\System\Engine\Model {
 	public function getStatistics() {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "statistics`");

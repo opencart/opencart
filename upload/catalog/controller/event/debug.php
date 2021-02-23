@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Catalog\Controller\Event;
 class Debug extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args) {
 		//echo $route;

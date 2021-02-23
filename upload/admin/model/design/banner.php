@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Design;
+namespace Opencart\Admin\Model\Design;
 class Banner extends \Opencart\System\Engine\Model {
 	public function addBanner($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (int)$data['status'] . "'");
@@ -51,7 +51,7 @@ class Banner extends \Opencart\System\Engine\Model {
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
 			$sql .= " ORDER BY `name`";
 		}

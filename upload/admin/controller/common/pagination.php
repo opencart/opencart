@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class Pagination extends \Opencart\System\Engine\Controller {
 	public function index($setting) {
 		if (isset($setting['total'])) {

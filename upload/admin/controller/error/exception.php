@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Error;
+namespace Opencart\Admin\Controller\Error;
 class Exception extends \Opencart\System\Engine\Controller {
 	public function index($message, $code, $file, $line) {
 		$this->load->language('error/exception');

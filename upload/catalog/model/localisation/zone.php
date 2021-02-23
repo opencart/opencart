@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Catalog\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
 	public function getZone($zone_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "' AND `status` = '1'");

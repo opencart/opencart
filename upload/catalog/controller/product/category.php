@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Product;
+namespace Opencart\Catalog\Controller\Product;
 class Category extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('product/category');

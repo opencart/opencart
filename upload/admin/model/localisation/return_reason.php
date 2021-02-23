@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Admin\Model\Localisation;
 class ReturnReason extends \Opencart\System\Engine\Model {
 	public function addReturnReason($data) {
 		foreach ($data['return_reason'] as $language_id => $value) {

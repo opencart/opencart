@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$data['lang'] = $this->language->get('code');

@@ -435,6 +435,8 @@ $('button[id^=\'button-upload\']').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		if (this.files[0].size > {{ config_file_max_size }}) {
+			$(this).val('');
+
 			alert('{{ error_upload_size }}');
 		}
 	});

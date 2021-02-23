@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 class Latest extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

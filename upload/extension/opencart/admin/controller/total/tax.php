@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 class Tax extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

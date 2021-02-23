@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Catalog\Controller\Event;
 class Translation extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$prefix) {
 		$this->load->model('design/translation');

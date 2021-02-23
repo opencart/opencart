@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Shipping extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
@@ -115,7 +115,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensionsByType('shipping');
 
 			foreach ($results as $result) {
 				if ($this->config->get('shipping_' . $result['code'] . '_status')) {

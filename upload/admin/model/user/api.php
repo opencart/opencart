@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\User;
+namespace Opencart\Admin\Model\User;
 class Api extends \Opencart\System\Engine\Model {
 	public function addApi($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW(), `date_modified` = NOW()");
@@ -13,7 +13,7 @@ class Api extends \Opencart\System\Engine\Model {
 				}
 			}
 		}
-		
+
 		return $api_id;
 	}
 
@@ -52,7 +52,7 @@ class Api extends \Opencart\System\Engine\Model {
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
 			$sql .= " ORDER BY `username`";
 		}
@@ -104,7 +104,7 @@ class Api extends \Opencart\System\Engine\Model {
 
 	public function addSession($api_id, $session_id, $ip) {
 		$api_ip_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
-		
+
 		if (!$api_ip_query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
 		}
@@ -113,18 +113,18 @@ class Api extends \Opencart\System\Engine\Model {
 
 		return $this->db->getLastId();
 	}
-	
+
 	public function getSessions($api_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE `api_id` = '" . (int)$api_id . "'");
 
 		return $query->rows;
 	}
-	
+
 	public function deleteSession($api_session_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE `api_session_id` = '" . (int)$api_session_id . "'");
 	}
-	
+
 	public function deleteSessionBySessionId($session_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE `session_id` = '" . $this->db->escape($session_id) . "'");
-	}		
+	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Affiliate extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
 		$this->load->language('mail/affiliate');

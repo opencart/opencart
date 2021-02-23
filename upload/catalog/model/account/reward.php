@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Account;
+namespace Opencart\Catalog\Model\Account;
 class Reward extends \Opencart\System\Engine\Model {
 	public function getRewards($data = []) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";
@@ -11,7 +11,7 @@ class Reward extends \Opencart\System\Engine\Model {
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
 			$sql .= " ORDER BY `date_added`";
 		}

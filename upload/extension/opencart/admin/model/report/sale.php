@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Report;
+namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Sale extends \Opencart\System\Engine\Model {
 	public function getTotalSales($data = []) {
 		$sql = "SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` > '0'";

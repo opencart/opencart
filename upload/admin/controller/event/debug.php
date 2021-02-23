@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Admin\Controller\Event;
 class Debug extends \Opencart\System\Engine\Controller {
 	public function before(&$route, &$args) {
 		if ($route == 'common/home') { // add the route you want to test

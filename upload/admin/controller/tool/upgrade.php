@@ -32,7 +32,7 @@ Upgrade
 
 8. Replace the files
 */
-namespace Opencart\Application\Controller\Tool;
+namespace Opencart\Admin\Controller\Tool;
 class Upgrade extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/upgrade');

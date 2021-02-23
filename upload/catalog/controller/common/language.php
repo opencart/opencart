@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Language extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('common/language');
@@ -60,7 +60,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			'SameSite' => 'Lax'
 		];
 
-		oc_setcookie('language', $code, $option);
+		setcookie('language', $code, $option);
 
 		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect($redirect);

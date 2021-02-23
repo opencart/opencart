@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Customer;
+namespace Opencart\Admin\Controller\Customer;
 class CustomField extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
@@ -487,7 +487,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (@preg_match(html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8'), null) === false) {
+		if ($this->request->post['type'] == 'text' && $this->request->post['validation'] && @preg_match(html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8'), null) === false) {
 			$this->error['validation'] = $this->language->get('error_validation');
 		}
 

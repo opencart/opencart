@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Design;
+namespace Opencart\Admin\Controller\Design;
 class Banner extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

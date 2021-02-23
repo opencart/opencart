@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Reward extends \Opencart\System\Engine\Model {
 	public function getTotal(&$totals, &$taxes, &$total) {
 		if (isset($this->session->data['reward'])) {

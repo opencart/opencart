@@ -1887,7 +1887,6 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_return_status_id', '2', 0),
 (0, 'config', 'config_logo', 'catalog/opencart-logo.png', 0),
 (0, 'config', 'config_icon', 'catalog/cart.png', 0),
-
 (0, 'config', 'config_image_thumb_width', '500', 0),
 (0, 'config', 'config_image_thumb_height', '500', 0),
 (0, 'config', 'config_image_popup_width', '800', 0),
@@ -5565,12 +5564,12 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (3503, 220, 'Zakarpats''ka Oblast''', '21', 1),
 (3504, 220, 'Zaporiz''ka Oblast''', '23', 1),
 (3505, 220, 'Zhytomyrs''ka oblast''', '18', 1),
-(3506, 221, 'Abu Dhabi', 'ADH', 1),
-(3507, 221, '''Ajman', 'AJ', 1),
+(3506, 221, 'Abū Z̧aby', 'AZ', 1),
+(3507, 221, '‘Ajmān', 'AJ', 1),
 (3508, 221, 'Al Fujayrah', 'FU', 1),
-(3509, 221, 'Ash Shariqah', 'SH', 1),
+(3509, 221, 'Ash Shāriqah', 'SH', 1),
 (3510, 221, 'Dubai', 'DU', 1),
-(3511, 221, 'R''as al Khaymah', 'RK', 1),
+(3511, 221, 'Ra’s al Khaymah', 'RK', 1),
 (3512, 221, 'Umm al Qaywayn', 'UQ', 1),
 (3513, 222, 'Aberdeen', 'ABN', 1),
 (3514, 222, 'Aberdeenshire', 'ABNS', 1),
@@ -6197,7 +6196,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4235, 100, 'Kepulauan Riau', 'KR', 1),
 (4236, 105, 'Barletta-Andria-Trani', 'BT', 1),
 (4237, 105, 'Fermo', 'FM', 1),
-(4238, 105, 'Monza Brianza', 'MB', 1)
+(4238, 105, 'Monza Brianza', 'MB', 1),
 (4239, 113, 'Seoul-teukbyeolsi', '11', 1),
 (4240, 113, 'Busan-gwangyeoksi', '26', 1),
 (4241, 113, 'Daegu-gwangyeoksi', '27', 1),
@@ -6215,7 +6214,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4253, 113, 'Jeollanam-do', '46', 1),
 (4254, 113, 'Jeju-teukbyeoljachido', '49', 1),
 (4255, 113, 'Sejong-teukbyeoljachisi', '50', 1),
-(4256, 209, 'Phra Nakhon Si Ayutthaya', '14', 1)
+(4256, 209, 'Phra Nakhon Si Ayutthaya', '14', 1),
 (4257, 176, 'Adygeja, Respublika', 'AD', 1),
 (4258, 176, 'Altaj, Respublika', 'AL', 1),
 (4259, 176, 'Baškortostan, Respublika', 'BA', 1),
@@ -6298,7 +6297,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4336, 176, 'Hanty-Mansijskij avtonomnyj okrug (Jugra)', 'KHM', 1),
 (4337, 176, 'Neneckij avtonomnyj okrug', 'NEN', 1),
 (4338, 176, 'Jamalo-Neneckij avtonomnyj okrug', 'YAN', 1),
-(4339, 117, 'Aglonas novads', '001', 1)
+(4339, 117, 'Aglonas novads', '001', 1),
 (4340, 99, 'Chhattisgarh', 'CT', 1),
 (4341, 99, 'Ladakh', 'LA', 1),
 (4342, 99, 'Uttarakhand', 'UT', 1);

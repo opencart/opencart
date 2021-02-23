@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Banner extends \Opencart\System\Engine\Controller {
 	public function index($setting) {
 		static $module = 0;

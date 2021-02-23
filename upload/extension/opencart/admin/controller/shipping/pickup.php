@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Shipping;
+namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 class Pickup extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

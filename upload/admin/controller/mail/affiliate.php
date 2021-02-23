@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Affiliate extends \Opencart\System\Engine\Controller {
 	public function approve(&$route, &$args, &$output) {
 		$this->load->model('customer/customer');

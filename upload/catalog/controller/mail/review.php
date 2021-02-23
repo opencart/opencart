@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Review extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after
 	public function index(&$route, &$args, &$output) {

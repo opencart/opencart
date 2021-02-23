@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Forgotten extends \Opencart\System\Engine\Controller {
 	public function index(&$route, &$args, &$output) {
 		if (isset($args[0]) && isset($args[1]) && $args[0] && $args[1]) {

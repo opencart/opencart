@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Design;
+namespace Opencart\Admin\Model\Design;
 class Theme extends \Opencart\System\Engine\Model {
 	public function editTheme($store_id, $route, $code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");

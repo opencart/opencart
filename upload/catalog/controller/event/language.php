@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Catalog\Controller\Event;
 class Language extends \Opencart\System\Engine\Controller {
 	// view/*/before
 	// Dump all the language vars into the template.

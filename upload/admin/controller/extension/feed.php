@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension;
+namespace Opencart\Admin\Controller\Extension;
 class Feed extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

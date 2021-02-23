@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Coupon extends \Opencart\System\Engine\Model {
 	public function getCoupon($code) {
 		$status = true;

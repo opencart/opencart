@@ -27,10 +27,10 @@ class Action {
 		$pos = strrpos($this->route, '|');
 
 		if ($pos === false) {
-			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
+			$this->class  = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
 			$this->method = 'index';
 		} else {
-			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
+			$this->class  = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
 			$this->method = substr($this->route, $pos + 1);
 		}
 	}
@@ -60,9 +60,12 @@ class Action {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
+		// Get the current name space being used by the config
+		$class = 'Opencart\\' . $registry->get('config')->get('application') . '\\' . $this->class;
+
 		// Initialize the class
-		if (class_exists($this->class)) {
-			$controller = new $this->class($registry);
+		if (class_exists($class)) {
+			$controller = new $class($registry);
 		} else {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}

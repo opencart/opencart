@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Tool;
+namespace Opencart\Admin\Controller\Tool;
 class Notification extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('tool/notification');
@@ -100,7 +100,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			$this->load->helper('bbcode');
 
-			$data['message'] = bbcode_decode($notification_info['message']);
+			$data['message'] = \Opencart\System\Helper\bbcode_decode($notification_info['message']);
 
 			$this->model_tool_notification->editStatus($notification_id, 1);
 

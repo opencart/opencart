@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Currency;
+namespace Opencart\Admin\Controller\Extension\Opencart\Currency;
 class Fixer extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

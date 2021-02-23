@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Catalog;
+namespace Opencart\Admin\Model\Catalog;
 class Manufacturer extends \Opencart\System\Engine\Model {
 	public function addManufacturer($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -104,7 +104,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
 			$sql .= " ORDER BY `name`";
 		}

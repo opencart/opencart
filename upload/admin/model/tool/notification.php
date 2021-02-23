@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Tool;
+namespace Opencart\Admin\Model\Tool;
 class Notification extends \Opencart\System\Engine\Model {
 	public function addNotification($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "notification` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");

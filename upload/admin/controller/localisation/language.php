@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Localisation;
+namespace Opencart\Admin\Controller\Localisation;
 class Language extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

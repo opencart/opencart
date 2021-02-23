@@ -1,12 +1,9 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
 class Application extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Url
 		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('site_url')));
-
-		// Document
-		$this->registry->set('document', new \Opencart\System\Library\Document());
 
 		// Response output compression level
 		if ($this->config->get('config_compression')) {

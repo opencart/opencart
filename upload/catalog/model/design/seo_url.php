@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Design;
+namespace Opencart\Catalog\Model\Design;
 class SeoUrl extends \Opencart\System\Engine\Model {
 	public $keyword = [];
 

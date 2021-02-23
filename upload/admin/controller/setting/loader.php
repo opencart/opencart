@@ -1,10 +1,10 @@
 <?php
-namespace Opencart\Application\Model\Setting;
+namespace Opencart\Admin\Model\Setting;
 class Loader extends \Opencart\System\Engine\Model {
 	public function create($data) {
 		// Autoloader
 		$autoloader = new \Opencart\System\Engine\Autoloader();
-		$autoloader->register('Opencart\Application', DIR_CATALOG);
+		$autoloader->register('Opencart\Admin', DIR_CATALOG);
 		$autoloader->register('Opencart\Extension', DIR_EXTENSION);
 		$autoloader->register('Opencart\System', DIR_SYSTEM);
 
@@ -19,8 +19,8 @@ class Loader extends \Opencart\System\Engine\Model {
 			$extension = str_replace(['_', '/'], ['', '\\'], ucwords($result['extension'], '_/'));
 
 			// Register controllers, models and system extension folders
-			$this->autoloader->register('Opencart\Application\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/catalog/controller/');
-			$this->autoloader->register('Opencart\Application\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/catalog/model/');
+			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/catalog/controller/');
+			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/catalog/model/');
 			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $result['extension'] . '/system/');
 
 			// Template directory

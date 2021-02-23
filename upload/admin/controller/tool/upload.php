@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Tool;
+namespace Opencart\Admin\Controller\Tool;
 class Upload extends \Opencart\System\Engine\Controller {
 	private $error = [];
 

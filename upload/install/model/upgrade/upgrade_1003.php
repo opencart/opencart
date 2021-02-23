@@ -1,46 +1,21 @@
 <?php
-namespace Opencart\Application\Model\Upgrade;
+namespace Opencart\Install\Model\Upgrade;
 class Upgrade1003 extends \Opencart\System\Engine\Model {
 	public function upgrade() {
+
 		// affiliate_activity
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
 
 		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'activity_id'");
-
-			if ($query->num_rows) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity' AND COLUMN_NAME = 'affiliate_activity_id'");
-
-				if ($query->num_rows) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `affiliate_activity_id` = `activity_id` WHERE `affiliate_activity_id` IS NULL or `affiliate_activity_id` = ''");
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate_activity` DROP `activity_id`");
-				} else {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . "affiliate_activity` CHANGE `activity_id` `affiliate_activity_id` INT(11) NOT NULL AUTO_INCREMENT");
-				}
-			}
+			$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
 		}
 
 		// customer_activity
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
 
 		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_activity` DROP `activity_id`");
-			} else {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_activity` CHANGE `activity_id` `customer_activity_id` INT(11) NOT NULL AUTO_INCREMENT");
-			}
-		}
-
-		// setting
-		$query = $this->db->query("SELECT `setting_id`, value FROM `" . DB_PREFIX . "setting` WHERE `serialized` = '1' AND `value` LIKE 'a:%'");
-
-		foreach ($query->rows as $result) {
-			if (preg_match('/^(a:)/', $result['value'])) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode(unserialize($result['value']))) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
-			}
+			$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_activity` DROP `activity_id`");
 		}
 
 		// customer
@@ -92,19 +67,6 @@ class Upgrade1003 extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			if (preg_match('/^(a:)/', $result['permission'])) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode(unserialize($result['permission']))) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
-			}
-		}
-
-		// affiliate_activity
-		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
-
-		if ($query->num_rows) {
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_activity` WHERE `data` LIKE 'a:%'");
-
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['data'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `affiliate_activity_id` = '" . (int)$result['affiliate_activity_id'] . "'");
-				}
 			}
 		}
 

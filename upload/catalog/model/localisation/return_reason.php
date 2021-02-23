@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Catalog\Model\Localisation;
 class ReturnReason extends \Opencart\System\Engine\Model {
 	public function getReturnReasons($data = []) {
 		if ($data) {

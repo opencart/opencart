@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Tracking extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (!$this->config->get('config_affiliate_status')) {

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Admin\Controller\Event;
 class Statistics extends \Opencart\System\Engine\Controller {
 	// admin/model/catalog/review/addReview/after
 	public function addReview(&$route, &$args, &$output) {

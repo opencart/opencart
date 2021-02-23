@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Checkout;
+namespace Opencart\Catalog\Controller\Checkout;
 class Checkout extends \Opencart\System\Engine\Controller {
 	public function index() {
 		// Validate cart has products and has stock.

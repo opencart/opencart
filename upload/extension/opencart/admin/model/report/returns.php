@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Report;
+namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Returns extends \Opencart\System\Engine\Model {
 	public function getReturns($data = []) {
 		$sql = "SELECT MIN(r.`date_added`) AS date_start, MAX(r.`date_added`) AS date_end, COUNT(r.`return_id`) AS returns FROM `" . DB_PREFIX . "return` r";

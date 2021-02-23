@@ -1,6 +1,23 @@
 <?php
 namespace Opencart\Catalog\Model\Setting;
 class Setting extends \Opencart\System\Engine\Model {
+	public function getSettings($store_id = 0) {
+		$setting_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' OR store_id = 0 ORDER BY store_id ASC");
+
+		foreach ($query->rows as $result) {
+			if (!$result['serialized']) {
+				$setting_data[$result['key']] = $result['value'];
+			} else {
+				$setting_data[$result['key']] = json_decode($result['value'], true);
+			}
+		}
+
+		return $setting_data;
+	}
+
+
 	public function getSetting($code, $store_id = 0) {
 		$setting_data = [];
 

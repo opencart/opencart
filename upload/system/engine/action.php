@@ -60,7 +60,7 @@ class Action {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
-		// Get the current name space being used by the config
+		// Get the current namespace being used by the config
 		$class = 'Opencart\\' . $registry->get('config')->get('application') . '\\' . $this->class;
 
 		// Initialize the class

@@ -234,6 +234,12 @@ class Language extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getLanguageByCode($code) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
 	public function getLanguages($data = []) {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "language`";
@@ -296,12 +302,6 @@ class Language extends \Opencart\System\Engine\Model {
 
 			return $language_data;
 		}
-	}
-
-	public function getLanguageByCode($code) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
-
-		return $query->row;
 	}
 
 	public function getTotalLanguages() {

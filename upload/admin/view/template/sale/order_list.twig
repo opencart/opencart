@@ -38,7 +38,8 @@
               <label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
             </div>
             <div class="form-group">
-              <label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
+              <label for="input-store" class="col-form-label">{{ entry_store }}</label> 
+              <select name="filter_store_id" id="input-store" class="form-control">
                 <option value=""></option>
                 {% for store in stores %}
                   {% if store.store_id == filter_store_id %}
@@ -50,7 +51,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-control">
+              <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> 
+              <select name="filter_order_status_id" id="input-order-status" class="form-control">
                 <option value=""></option>
                 {% if filter_order_status_id == '0' %}
                   <option value="0" selected="selected">{{ text_missing }}</option>
@@ -67,7 +69,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="input-total" class="col-form-label">{{ entry_total }}</label> <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+              <label for="input-total" class="col-form-label">{{ entry_total }}</label> 
+              <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
             </div>
             <div class="form-group">
               <label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
@@ -117,12 +120,14 @@
                     {% if orders %}
                       {% for order in orders %}
                         <tr>
-                          <td class="text-center">{% if order.order_id in selected %}
+                          <td class="text-center">
+                            {% if order.order_id in selected %}
                               <input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked"/>
                             {% else %}
                               <input type="checkbox" name="selected[]" value="{{ order.order_id }}"/>
                             {% endif %}
-                            <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
+                            <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/>
+                          </td>
                           <td class="text-right">{{ order.order_id }}</td>
                           <td class="text-left">{{ order.store_name }}</td>
                           <td class="text-left">{{ order.customer }}</td>

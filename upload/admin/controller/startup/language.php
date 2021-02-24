@@ -12,10 +12,12 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		// Language
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($this->config->get('config_language_admin')) . "'");
+		$this->load->model('localisation/language');
 
-		if ($query->num_rows) {
-			$this->config->set('config_language_id', $query->row['language_id']);
+		$language_info = $this->model_localisation_language->getLanguageByCode($this->config->get('config_language_admin'));
+
+		if ($language_info) {
+			$this->config->set('config_language_id', $language_info['language_id']);
 		}
 
 		// Language

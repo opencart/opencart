@@ -102,14 +102,9 @@ class Api extends \Opencart\System\Engine\Controller {
 			$loader->controller($pre_action);
 		}
 
-		if () {
-
-
 		$loader->controller('common/home');
-
-		echo $response->getOutput();
-		}
-		//$this->response->addHeader('Content-Type: application/json');
-		//$this->response->setOutput($response->getOutput());
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($response->getOutput());
 	}
 }

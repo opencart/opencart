@@ -8,7 +8,9 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <p>{{ text_total }} <b>{{ total }}</b>.</p>
+      <p>{{ text_total }} 
+        <b>{{ total }}</b>
+      </p>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
@@ -23,9 +25,13 @@
               {% for reward in rewards %}
                 <tr>
                   <td class="text-left">{{ reward.date_added }}</td>
-                  <td class="text-left">{% if reward.order_id %} <a href="{{ reward.href }}">{{ reward.description }}</a> {% else %}
+                  <td class="text-left">
+                    {% if reward.order_id %} 
+                      <a href="{{ reward.href }}">{{ reward.description }}</a> 
+                    {% else %}
                       {{ reward.description }}
-                    {% endif %}</td>
+                    {% endif %}
+                  </td>
                   <td class="text-right">{{ reward.points }}</td>
                 </tr>
               {% endfor %}

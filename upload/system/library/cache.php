@@ -21,7 +21,7 @@ class Cache {
 	 * @param	int		$expire		Optional parameters
 	 *
  	*/
-	public function __construct(string $adaptor, $expire = 3600) {
+	public function __construct(string $adaptor, int $expire = 3600) {
 		$class = 'Opencart\System\Library\Cache\\' . $adaptor;
 
 		if (class_exists($class)) {
@@ -38,7 +38,7 @@ class Cache {
      *
      * @return	string
      */
-	public function get(string $key) {
+	public function get(string $key): array {
 		return $this->adaptor->get($key);
 	}
 	
@@ -50,8 +50,8 @@ class Cache {
 	 * 
 	 * @return	string
      */
-	public function set(string $key, $value, $expire = '') {
-		return $this->adaptor->set($key, $value, $expire);
+	public function set(string $key, array $value, int $expire = 0): void {
+		$this->adaptor->set($key, $value, $expire);
 	}
    
     /**
@@ -59,7 +59,7 @@ class Cache {
      *
      * @param	string	$key	The cache key
      */
-	public function delete(string $key) {
-		return $this->adaptor->delete($key);
+	public function delete(string $key): void {
+		$this->adaptor->delete($key);
 	}
 }

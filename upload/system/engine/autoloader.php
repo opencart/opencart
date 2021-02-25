@@ -8,11 +8,11 @@ class Autoloader {
 		spl_autoload_extensions('.php');
 	}
 
-	public function register($namespace, $directory) {
+	public function register(string $namespace, string $directory): void {
 		$this->path[$namespace] = $directory;
 	}
 
-	public function load($class) {
+	public function load(string $class): bool {
 		$namespace = '';
 
 		$parts = explode('\\', $class);

@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Cache;
 class File {
 	private $expire;
 
-	public function __construct($expire = 3600) {
+	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 
 		$files = glob(DIR_CACHE . 'cache.*');
@@ -21,7 +21,7 @@ class File {
 		}
 	}
 
-	public function get($key) {
+	public function get(string $key): array {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {
@@ -44,10 +44,10 @@ class File {
 			return json_decode($data, true);
 		}
 
-		return false;
+		return [];
 	}
 
-	public function set($key, $value, $expire = '') {
+	public function set(string $key, mixed $value, int $expire = 0): void {
 		$this->delete($key);
 
 		if (!$expire) {

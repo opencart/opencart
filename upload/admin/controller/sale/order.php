@@ -706,7 +706,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['stores'][] = [
 				'store_id' => $result['store_id'],
-				'name' => $result['name']
+				'name'     => $result['name']
 			];
 		}
 
@@ -722,8 +722,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_status' => 1,
-			'sort' => 'cf.sort_order',
-			'order' => 'ASC'
+			'sort'          => 'cf.sort_order',
+			'order'         => 'ASC'
 		];
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
@@ -731,13 +731,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
 				$data['custom_fields'][] = [
-					'custom_field_id' => $custom_field['custom_field_id'],
+					'custom_field_id'    => $custom_field['custom_field_id'],
 					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
-					'name' => $custom_field['name'],
-					'value' => $custom_field['value'],
-					'type' => $custom_field['type'],
-					'location' => $custom_field['location'],
-					'sort_order' => $custom_field['sort_order']
+					'name'               => $custom_field['name'],
+					'value'              => $custom_field['value'],
+					'type'               => $custom_field['type'],
+					'location'           => $custom_field['location'],
+					'sort_order'         => $custom_field['sort_order']
 				];
 			}
 		}
@@ -1308,12 +1308,14 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
+/*
 			// The URL we send API requests to
 			$data['catalog'] = HTTP_CATALOG;
 
 			// API login
 			$this->load->model('user/api');
+.
+
 
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
@@ -1332,6 +1334,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['api_token'] = '';
 			}
+*/
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

@@ -41,7 +41,7 @@ class Action {
 	 * @return    string
 	 *
 	 */
-	public function getId() {
+	public function getId(): string {
 		return $this->route;
 	}
 
@@ -54,7 +54,7 @@ class Action {
 	 *
 	 * @return	mixed
 	 */
-	public function execute(Registry $registry, array &$args = []) {
+	public function execute(Registry $registry, array &$args = []): mixed {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');

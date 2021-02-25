@@ -15,8 +15,8 @@ class Cron extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function editCron($cron_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE `cron_id` = '" . (int)$cron_id . "'");
+	public function editCron($cron_id, $data) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($data['code']) . "', `cycle` = '" . $this->db->escape($data['cycle']) . "', `action` = '" . $this->db->escape($data['action']) . "', `status` = '" . (int)$this->db->escape($data['status']) . "',  `date_modified` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
 	}
 
 	public function editStatus($cron_id, $status) {

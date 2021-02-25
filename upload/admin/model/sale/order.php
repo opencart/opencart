@@ -241,7 +241,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	public function getProducts($order_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY order_product_id ASC");
 
 		return $query->rows;
 	}

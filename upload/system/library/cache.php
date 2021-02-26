@@ -12,7 +12,7 @@
 */
 namespace Opencart\System\Library;
 class Cache {
-	private $adaptor;
+	private object $adaptor;
 	
 	/**
 	 * Constructor
@@ -27,7 +27,7 @@ class Cache {
 		if (class_exists($class)) {
 			$this->adaptor = new $class($expire);
 		} else {
-			error_log('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
+			throw new \Exception('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
 		}
 	}
 	

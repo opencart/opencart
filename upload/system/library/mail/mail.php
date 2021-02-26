@@ -3,7 +3,7 @@ namespace Opencart\System\Library\Mail;
 class Mail {
 	public $parameter;
 
-	public function send() {
+	public function send(): void {
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
 		} else {

@@ -12,9 +12,9 @@
  */
 namespace Opencart\System\Engine;
 class Action {
-	private $route;
-	private $class;
-	private $method;
+	private string $route;
+	private string $class;
+	private string $method;
 
 	/**
 	 * Constructor
@@ -54,7 +54,7 @@ class Action {
 	 *
 	 * @return	mixed
 	 */
-	public function execute(Registry $registry, array &$args = []): mixed {
+	public function execute(\Opencart\System\Engine\Registry $registry, array &$args = []): mixed {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');

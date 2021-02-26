@@ -12,14 +12,15 @@
 */
 namespace Opencart\System\Library;
 class Mail {
-	protected $to;
-	protected $from;
-	protected $sender;
-	protected $reply_to;
-	protected $subject;
-	protected $text;
-	protected $html;
-	protected $attachments = [];
+	private object $adaptor;
+	protected string $to;
+	protected string $from;
+	protected string $sender;
+	protected string $reply_to;
+	protected string $subject;
+	protected string $text;
+	protected string $html;
+	protected array $attachments = [];
 
 	/**
 	 * Constructor
@@ -27,14 +28,13 @@ class Mail {
 	 * @param	string	$adaptor
 	 *
  	*/
-	public function __construct($adaptor = 'mail') {
+	public function __construct(string $adaptor = 'mail') {
 		$class = 'Opencart\System\Library\Mail\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class();
 		} else {
-			trigger_error('Error: Could not load mail adaptor ' . $adaptor . '!');
-			exit();
+			throw new \Exception('Error: Could not load mail adaptor ' . $adaptor . '!');
 		}
 	}
 
@@ -43,7 +43,7 @@ class Mail {
      *
      * @param	mixed	$to
      */
-	public function setTo($to) {
+	public function setTo($to): void {
 		$this->to = $to;
 	}
 
@@ -52,7 +52,7 @@ class Mail {
      *
      * @param	string	$from
      */
-	public function setFrom($from) {
+	public function setFrom($from): void {
 		$this->from = $from;
 	}
 
@@ -61,7 +61,7 @@ class Mail {
      *
      * @param	string	$sender
      */
-	public function setSender($sender) {
+	public function setSender($sender): void {
 		$this->sender = $sender;
 	}
 
@@ -70,7 +70,7 @@ class Mail {
      *
      * @param	string	$reply_to
      */
-	public function setReplyTo($reply_to) {
+	public function setReplyTo($reply_to): void {
 		$this->reply_to = $reply_to;
 	}
 
@@ -79,7 +79,7 @@ class Mail {
      *
      * @param	string	$subject
      */
-	public function setSubject($subject) {
+	public function setSubject($subject): void {
 		$this->subject = $subject;
 	}
 
@@ -88,7 +88,7 @@ class Mail {
      *
      * @param	string	$text
      */
-	public function setText($text) {
+	public function setText($text): void {
 		$this->text = $text;
 	}
 
@@ -97,7 +97,7 @@ class Mail {
      *
      * @param	string	$html
      */
-	public function setHtml($html) {
+	public function setHtml($html): void {
 		$this->html = $html;
 	}
 
@@ -106,7 +106,7 @@ class Mail {
      *
      * @param	string	$filename
      */
-	public function addAttachment($filename) {
+	public function addAttachment($filename): void {
 		$this->attachments[] = $filename;
 	}
 
@@ -114,7 +114,7 @@ class Mail {
      *
      *
      */
-	public function send() {
+	public function send(): void {
 		if (!$this->to) {
 			throw new \Exception('Error: E-Mail to required!');
 		}

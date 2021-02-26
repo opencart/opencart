@@ -2,6 +2,7 @@
 namespace Opencart\Admin\Controller\Sale;
 class Api extends \Opencart\System\Engine\Controller {
 	public function index() {
+
 		// Autoloader
 		$autoloader = new \Opencart\System\Engine\Autoloader();
 		$autoloader->register('Opencart\Catalog', DIR_CATALOG);
@@ -15,12 +16,12 @@ class Api extends \Opencart\System\Engine\Controller {
 		// Config
 		$config = new \Opencart\System\Engine\Config();
 		$config->addPath(DIR_CONFIG);
+		$registry->set('config', $config);
 
 		// Load the default config
 		$config->load('default');
 		$config->load('catalog');
 		$config->set('application', 'Catalog');
-		$registry->set('config', $config);
 
 		// Logging
 		$registry->set('log', $this->log);
@@ -55,6 +56,18 @@ class Api extends \Opencart\System\Engine\Controller {
 		// Cache
 		$registry->set('cache', $this->cache);
 
+		// Session
+		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
+		$registry->set('session', $session);
+
+		if (isset($request->cookie[$config->get('session_name')])) {
+			$session_id = $request->cookie[$config->get('session_name')];
+		} else {
+			$session_id = '';
+		}
+
+		$session->start($session_id);
+
 		// Template
 		$template = new \Opencart\System\Library\Template($config->get('template_engine'));
 		$template->addPath(DIR_CATALOG . 'view/template/');
@@ -71,7 +84,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$config->set('config_store_id', $this->request->post['store_id']);
 		} else {
 			$config->set('config_store_id', 0);
-
 		}
 
 		// Url
@@ -102,10 +114,9 @@ class Api extends \Opencart\System\Engine\Controller {
 			$loader->controller($pre_action);
 		}
 
-		if () {
-
-
-		$loader->controller('common/home');
+		if (isset($this->request->get['action'])) {
+			$loader->controller($this->request->get['action']);
+		}
 
 		echo $response->getOutput();
 		}

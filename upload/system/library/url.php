@@ -13,10 +13,8 @@
  */
 namespace Opencart\System\Library;
 class Url {
-	/** @var string */
-	private $url;
-	/** @var Controller[] */
-	private $rewrite = [];
+	private string $url;
+	private array $rewrite = [];
 
 	/**
 	 * Constructor.
@@ -24,7 +22,7 @@ class Url {
 	 * @param string $url
 	 * @param string $ssl Depricated
 	 */
-	public function __construct($url) {
+	public function __construct(string $url) {
 		$this->url = $url;
 	}
 
@@ -35,7 +33,7 @@ class Url {
 	 *
 	 * @return void
 	 */
-	public function addRewrite($rewrite) {
+	public function addRewrite(string $rewrite): void {
 		$this->rewrite[] = $rewrite;
 	}
 
@@ -48,20 +46,14 @@ class Url {
 	 *
 	 * @return string
 	 */
-	public function link($route, $args = '', $js = false) {
+	public function link(string $route, string|array $args = '', bool $js = false): string {
 		$url = $this->url . 'index.php?route=' . (string)$route;
 
 		if ($args) {
-			if (!$js) {
-				$amp = '&amp;';
-			} else {
-				$amp = '&';
-			}
-
 			if (is_array($args)) {
-				$url .= $amp . str_replace('%2F', '/', http_build_query($args, '', $amp));
+				$url .= '&' . http_build_query($args);
 			} else {
-				$url .= str_replace('&', $amp, '&' . ltrim($args, '&'));
+				$url .= '&' . ltrim($args, '&');
 			}
 		}
 
@@ -69,6 +61,10 @@ class Url {
 			$url = $rewrite->rewrite($url);
 		}
 
-		return $url;
+		if (!$js) {
+			return str_replace('&', '&amp;', $url);
+		} else {
+			return $url;
+		}
 	}
 }

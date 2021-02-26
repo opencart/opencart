@@ -1,31 +1,31 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class Memcached {
-	private $expire;
-	private $memcached;
+	private int $expire;
+	private object $memcached;
 
 	const CACHEDUMP_LIMIT = 9999;
 
-	public function __construct($expire) {
+	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
-		$this->memcached = new \Memcached();
 
+		$this->memcached = new \Memcached();
 		$this->memcached->addServer(CACHE_HOSTNAME, CACHE_PORT);
 	}
 
-	public function get($key) {
+	public function get(string $key) {
 		return $this->memcached->get(CACHE_PREFIX . $key);
 	}
 
-	public function set($key, $value, $expire = '') {
+	public function set(string $key, array $value, int $expire = 0) {
 		if (!$expire) {
 			$expire = $this->expire;
 		}
 
-		return $this->memcached->set(CACHE_PREFIX . $key, $value, $expire);
+		$this->memcached->set(CACHE_PREFIX . $key, $value, $expire);
 	}
 
-	public function delete($key) {
+	public function delete(string $key) {
 		$this->memcached->delete(CACHE_PREFIX . $key);
 	}
 }

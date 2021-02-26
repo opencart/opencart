@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Cart {
-	private $data = [];
+	private array $data = [];
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');
@@ -341,7 +341,7 @@ class Cart {
 		return $weight;
 	}
 
-	public function getSubTotal() {
+	public function getSubTotal(): float {
 		$total = 0;
 
 		foreach ($this->getProducts() as $product) {
@@ -351,7 +351,7 @@ class Cart {
 		return $total;
 	}
 
-	public function getTaxes() {
+	public function getTaxes(): array {
 		$tax_data = [];
 
 		foreach ($this->getProducts() as $product) {
@@ -371,7 +371,7 @@ class Cart {
 		return $tax_data;
 	}
 
-	public function getTotal() {
+	public function getTotal(): float {
 		$total = 0;
 
 		foreach ($this->getProducts() as $product) {
@@ -381,7 +381,7 @@ class Cart {
 		return $total;
 	}
 
-	public function countProducts() {
+	public function countProducts(): int {
 		$product_total = 0;
 
 		$products = $this->getProducts();
@@ -393,15 +393,15 @@ class Cart {
 		return $product_total;
 	}
 
-	public function hasProducts() {
-		return count($this->getProducts());
+	public function hasProducts(): bool {
+		return count($this->getProducts()) ? true : false;
 	}
 
-	public function hasRecurringProducts() {
-		return count($this->getRecurringProducts());
+	public function hasRecurringProducts(): bool {
+		return count($this->getRecurringProducts()) ? true : false;
 	}
 
-	public function hasStock() {
+	public function hasStock(): bool {
 		foreach ($this->getProducts() as $product) {
 			if (!$product['stock']) {
 				return false;
@@ -411,7 +411,7 @@ class Cart {
 		return true;
 	}
 
-	public function hasShipping() {
+	public function hasShipping(): bool {
 		foreach ($this->getProducts() as $product) {
 			if ($product['shipping']) {
 				return true;
@@ -421,7 +421,7 @@ class Cart {
 		return false;
 	}
 
-	public function hasDownload() {
+	public function hasDownload(): bool {
 		foreach ($this->getProducts() as $product) {
 			if ($product['download']) {
 				return true;

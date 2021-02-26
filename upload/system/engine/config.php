@@ -12,9 +12,9 @@
 */
 namespace Opencart\System\Engine;
 class Config {
-	protected $directory;
-	private $path = [];
-	private $data = [];
+	protected string $directory;
+	private array $path = [];
+	private array $data = [];
 
 	/**
 	 * addPath
@@ -22,7 +22,7 @@ class Config {
 	 * @param    string $namespace
 	 * @param    string $directory
 	 */
-	public function addPath($namespace, $directory = '') {
+	public function addPath(string $namespace, string $directory = '') {
 		if (!$directory) {
 			$this->directory = $namespace;
 		} else {
@@ -37,8 +37,8 @@ class Config {
 	 * 
 	 * @return	mixed
      */
-	public function get(string $key)  {
-		return (isset($this->data[$key]) ? $this->data[$key] : '');
+	public function get(string $key): mixed  {
+		return isset($this->data[$key]) ? $this->data[$key] : '';
 	}
 
     /**
@@ -47,7 +47,7 @@ class Config {
      * @param	string	$key
 	 * @param	string	$value
      */
-	public function set(string $key, $value) {
+	public function set(string $key, mixed $value): void {
 		$this->data[$key] = $value;
 	}
 
@@ -58,7 +58,7 @@ class Config {
 	 *
 	 * @return	mixed
      */
-	public function has(string $key) {
+	public function has(string $key): bool {
 		return isset($this->data[$key]);
 	}
 	
@@ -67,7 +67,7 @@ class Config {
      *
      * @param	string	$filename
      */
-	public function load(string $filename) {
+	public function load(string $filename): array {
 		$file = $this->directory . $filename . '.php';
 
 		$namespace = '';
@@ -95,8 +95,7 @@ class Config {
 
 			return $this->data;
 		} else {
-			trigger_error('Error: Could not load config ' . $filename . '!');
-			exit();
+			return [];
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class File {
-	private $expire;
+	private int $expire;
 
 	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
@@ -47,7 +47,7 @@ class File {
 		return [];
 	}
 
-	public function set(string $key, mixed $value, int $expire = 0): void {
+	public function set(string $key, array $value, int $expire = 0): void {
 		$this->delete($key);
 
 		if (!$expire) {
@@ -69,7 +69,7 @@ class File {
 		fclose($handle);
 	}
 
-	public function delete($key) {
+	public function delete(string $key): void {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {

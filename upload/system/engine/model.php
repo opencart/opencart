@@ -14,7 +14,7 @@ namespace Opencart\System\Engine;
 class Model {
 	protected $registry;
 
-	public function __construct(Registry $registry) {
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
 

@@ -1,10 +1,10 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class APC {
-	private $expire;
-	private $active = false;
+	private int $expire;
+	private bool $active;
 
-	public function __construct(int $expire) {
+	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 		$this->active = function_exists('apc_cache_info') && ini_get('apc.enabled');
 	}

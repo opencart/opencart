@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Engine;
 class Autoloader {
-	private $path = [];
+	private array $path = [];
 
 	public function __construct() {
 		spl_autoload_register([$this, 'load']);

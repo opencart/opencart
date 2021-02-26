@@ -1,15 +1,15 @@
 <?php
 namespace Opencart\System\Library\Mail;
 class Smtp {
-	public $smtp_hostname;
-	public $smtp_username;
-	public $smtp_password;
-	public $smtp_port = 25;
-	public $smtp_timeout = 5;
-	public $max_attempts = 3;
-	public $verp = false;
+	public string $smtp_hostname;
+	public string $smtp_username;
+	public string $smtp_password;
+	public int $smtp_port = 25;
+	public int $smtp_timeout = 5;
+	public int $max_attempts = 3;
+	public bool $verp = false;
 
-	public function send() {
+	public function send(): void {
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
 		} else {

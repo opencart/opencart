@@ -35,7 +35,7 @@ class Cron extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getCrons($data = []): array {
+	public function getCrons(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
 
 		$sort_data = [

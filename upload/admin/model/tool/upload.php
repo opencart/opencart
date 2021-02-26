@@ -25,7 +25,7 @@ class Upload extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getUploads($data = []): array {
+	public function getUploads(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "upload`";
 
 		$implode = [];
@@ -81,7 +81,7 @@ class Upload extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalUploads($data = []): int {
+	public function getTotalUploads(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "upload`";
 
 		$implode = [];

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class OrderStatus extends \Opencart\System\Engine\Model {
-	public function addOrderStatus($data) {
+	public function addOrderStatus(array $data) {
 		foreach ($data['order_status'] as $language_id => $value) {
 			if (isset($order_status_id)) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` SET `order_status_id` = '" . (int)$order_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
@@ -17,7 +17,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		return $order_status_id;
 	}
 
-	public function editOrderStatus($order_status_id, $data) {
+	public function editOrderStatus(int $order_status_id, array $data) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
 
 		foreach ($data['order_status'] as $language_id => $value) {
@@ -27,19 +27,19 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('order_status');
 	}
 
-	public function deleteOrderStatus($order_status_id) {
+	public function deleteOrderStatus(int $order_status_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
 
 		$this->cache->delete('order_status');
 	}
 
-	public function getOrderStatus($order_status_id): array {
+	public function getOrderStatus(int $order_status_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getOrderStatuses($data = []): array {
+	public function getOrderStatuses(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -81,7 +81,7 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getDescriptions($order_status_id): array {
+	public function getDescriptions(int $order_status_id): array {
 		$order_status_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "'");

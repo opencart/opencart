@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Catalog;
 class Review extends \Opencart\System\Engine\Model {
-	public function addReview($product_id, $data): int {
+	public function addReview($product_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['name']) . "', `customer_id` = '" . (int)$this->customer->getId() . "', `product_id` = '" . (int)$product_id . "', `text` = '" . $this->db->escape((string)$data['text']) . "', `rating` = '" . (int)$data['rating'] . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 class Recurring extends \Opencart\System\Engine\Model {
-	public function getRecurrings($data): array {
+	public function getRecurrings(array $data): array {
 		$sql = "SELECT `or`.`order_recurring_id`, `or`.`order_id`, `or`.`reference`, `or`.`status`, `or`.`date_added`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = `o`.`order_id`)";
 
 		$implode = [];
@@ -158,7 +158,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $result;
 	}
 
-	public function getTotalRecurrings($data = []): int {
+	public function getTotalRecurrings(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = o.`order_id`)";
 
 		$implode = [];

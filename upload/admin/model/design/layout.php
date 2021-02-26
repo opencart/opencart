@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 class Layout extends \Opencart\System\Engine\Model {
-	public function addLayout($data) {
+	public function addLayout(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "'");
 
 		$layout_id = $this->db->getLastId();
@@ -21,7 +21,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		return $layout_id;
 	}
 
-	public function editLayout($layout_id, $data) {
+	public function editLayout(int $layout_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "' WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -41,7 +41,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteLayout($layout_id) {
+	public function deleteLayout(int $layout_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -50,13 +50,13 @@ class Layout extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
-	public function getLayout($layout_id): array {
+	public function getLayout(int $layout_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->row;
 	}
 
-	public function getLayouts($data = []): array {
+	public function getLayouts(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "layout`";
 
 		$sort_data = ['name'];
@@ -90,13 +90,13 @@ class Layout extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getRoutes($layout_id): array {
+	public function getRoutes(int $layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getModules($layout_id): array {
+	public function getModules(int $layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "' ORDER BY `position` ASC, `sort_order` ASC");
 
 		return $query->rows;

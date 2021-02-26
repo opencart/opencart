@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Reward extends \Opencart\System\Engine\Model {
-	public function getRewards($data = []) {
+	public function getRewards(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";
 
 		$sort_data = [

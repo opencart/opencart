@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Module extends \Opencart\System\Engine\Model {
-	public function addModule($code, $data) {
+	public function addModule($code, array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape($code) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "'");
 	}
 	
-	public function editModule($module_id, $data) {
+	public function editModule($module_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "' WHERE `module_id` = '" . (int)$module_id . "'");
 	}
 

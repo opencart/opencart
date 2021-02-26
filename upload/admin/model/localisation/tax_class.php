@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class TaxClass extends \Opencart\System\Engine\Model {
-	public function addTaxClass($data) {
+	public function addTaxClass(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_class` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_added` = NOW()");
 
 		$tax_class_id = $this->db->getLastId();
@@ -17,7 +17,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		return $tax_class_id;
 	}
 
-	public function editTaxClass($tax_class_id, $data) {
+	public function editTaxClass(int $tax_class_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "tax_class` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_modified` = NOW() WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
@@ -31,7 +31,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		$this->cache->delete('tax_class');
 	}
 
-	public function deleteTaxClass($tax_class_id) {
+	public function deleteTaxClass(int $tax_class_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
@@ -44,7 +44,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getTaxClasses($data = []): array {
+	public function getTaxClasses(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "tax_class`";
 
@@ -92,13 +92,13 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getTaxRules($tax_class_id): array {
+	public function getTaxRules(int $tax_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "' ORDER BY `priority` ASC");
 
 		return $query->rows;
 	}
 
-	public function getTotalTaxRulesByTaxRateId($tax_rate_id): int {
+	public function getTotalTaxRulesByTaxRateId(int $tax_rate_id): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT `tax_class_id`) AS `total` FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");
 
 		return $query->row['total'];

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class Currency extends \Opencart\System\Engine\Model {
-	public function addCurrency($data) {
+	public function addCurrency(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW()");
 
 		$currency_id = $this->db->getLastId();
@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		return $currency_id;
 	}
 
-	public function editCurrency($currency_id, $data) {
+	public function editCurrency(int $currency_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
@@ -23,13 +23,13 @@ class Currency extends \Opencart\System\Engine\Model {
 		$this->cache->delete('currency');
 	}
 
-	public function deleteCurrency($currency_id) {
+	public function deleteCurrency(int $currency_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}
 
-	public function getCurrency($currency_id): array {
+	public function getCurrency(int $currency_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		return $query->row;
@@ -41,7 +41,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getCurrencies($data = []): array {
+	public function getCurrencies(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "currency`";
 

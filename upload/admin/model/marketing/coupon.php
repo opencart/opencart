@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Marketing;
 class Coupon extends \Opencart\System\Engine\Model {
-	public function addCoupon($data) {
+	public function addCoupon(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `discount` = '" . (float)$data['discount'] . "', `type` = '" . $this->db->escape((string)$data['type']) . "', `total` = '" . (float)$data['total'] . "', `logged` = '" . (int)$data['logged'] . "', `shipping` = '" . (int)$data['shipping'] . "', `date_start` = '" . $this->db->escape((string)$data['date_start']) . "', `date_end` = '" . $this->db->escape((string)$data['date_end']) . "', `uses_total` = '" . (int)$data['uses_total'] . "', `uses_customer` = '" . (int)$data['uses_customer'] . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");
 
 		$coupon_id = $this->db->getLastId();
@@ -21,7 +21,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $coupon_id;
 	}
 
-	public function editCoupon($coupon_id, $data) {
+	public function editCoupon($coupon_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "coupon` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `discount` = '" . (float)$data['discount'] . "', `type` = '" . $this->db->escape((string)$data['type']) . "', `total` = '" . (float)$data['total'] . "', `logged` = '" . (int)$data['logged'] . "', `shipping` = '" . (int)$data['shipping'] . "', `date_start` = '" . $this->db->escape((string)$data['date_start']) . "', `date_end` = '" . $this->db->escape((string)$data['date_end']) . "', `uses_total` = '" . (int)$data['uses_total'] . "', `uses_customer` = '" . (int)$data['uses_customer'] . "', `status` = '" . (int)$data['status'] . "' WHERE `coupon_id` = '" . (int)$coupon_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_product` WHERE `coupon_id` = '" . (int)$coupon_id . "'");
@@ -60,7 +60,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getCoupons($data = []): array {
+	public function getCoupons(array $data = []): array {
 		$sql = "SELECT `coupon_id`, `name`, `code`, `discount`, `date_start`, `date_end`, `status` FROM `" . DB_PREFIX . "coupon`";
 
 		$sort_data = [

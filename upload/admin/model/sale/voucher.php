@@ -1,13 +1,13 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 class Voucher extends \Opencart\System\Engine\Model {
-	public function addVoucher($data): int {
+	public function addVoucher(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	public function editVoucher($voucher_id, $data) {
+	public function editVoucher($voucher_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '" . (int)$data['status'] . "' WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 	}
 
@@ -28,7 +28,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getVouchers($data = []): array {
+	public function getVouchers(array $data = []): array {
 		$sql = "SELECT v.`voucher_id`, v.`order_id`, v.`code`, v.`from_name`, v.`from_email`, v.`to_name`, v.`to_email`, (SELECT vtd.`name` FROM `" . DB_PREFIX . "voucher_theme_description` vtd WHERE vtd.`voucher_theme_id` = v.`voucher_theme_id` AND vtd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS theme, v.`amount`, v.`status`, v.`date_added` FROM `" . DB_PREFIX . "voucher` v";
 
 		$sort_data = [

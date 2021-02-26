@@ -31,7 +31,7 @@ class Event extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getEvents($data = []): array {
+	public function getEvents(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "event`";
 
 		$sort_data = [

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\User;
 class Api extends \Opencart\System\Engine\Model {
-	public function addApi($data) {
+	public function addApi(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$api_id = $this->db->getLastId();
@@ -17,7 +17,7 @@ class Api extends \Opencart\System\Engine\Model {
 		return $api_id;
 	}
 
-	public function editApi($api_id, $data) {
+	public function editApi($api_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `api_id` = '" . (int)$api_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
@@ -41,7 +41,7 @@ class Api extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getApis($data = []): array {
+	public function getApis(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "api`";
 
 		$sort_data = [

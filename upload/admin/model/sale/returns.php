@@ -1,13 +1,13 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 class Returns extends \Opencart\System\Engine\Model {
-	public function addReturn($data): int {
+	public function addReturn(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `product` = '" . $this->db->escape((string)$data['product']) . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_action_id` = '" . (int)$data['return_action_id'] . "', `return_status_id` = '" . (int)$data['return_status_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `date_ordered` = '" . $this->db->escape((string)$data['date_ordered']) . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	public function editReturn($return_id, $data) {
+	public function editReturn($return_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET `order_id` = '" . (int)$data['order_id'] . "', `product_id` = '" . (int)$data['product_id'] . "', `customer_id` = '" . (int)$data['customer_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `product` = '" . $this->db->escape((string)$data['product']) . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `quantity` = '" . (int)$data['quantity'] . "', `opened` = '" . (int)$data['opened'] . "', `return_reason_id` = '" . (int)$data['return_reason_id'] . "', `return_action_id` = '" . (int)$data['return_action_id'] . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `date_ordered` = '" . $this->db->escape((string)$data['date_ordered']) . "', `date_modified` = NOW() WHERE `return_id` = '" . (int)$return_id . "'");
 	}
 
@@ -22,7 +22,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getReturns($data = []): array {
+	public function getReturns(array $data = []): array {
 		$sql = "SELECT *, CONCAT(r.`firstname`, ' ', r.`lastname`) AS customer, (SELECT rs.`name` FROM `" . DB_PREFIX . "return_status` rs WHERE rs.`return_status_id` = r.`return_status_id` AND rs.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS return_status FROM `" . DB_PREFIX . "return` r";
 
 		$implode = [];
@@ -103,7 +103,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalReturns($data = []): int {
+	public function getTotalReturns(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` r";
 
 		$implode = [];

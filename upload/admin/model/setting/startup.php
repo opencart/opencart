@@ -31,7 +31,7 @@ class Startup extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getStartups($data = []): array {
+	public function getStartups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "startup`";
 
 		$sort_data = [

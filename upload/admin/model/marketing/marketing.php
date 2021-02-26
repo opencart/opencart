@@ -1,13 +1,13 @@
 <?php
 namespace Opencart\Admin\Model\Marketing;
 class Marketing extends \Opencart\System\Engine\Model {
-	public function addMarketing($data): int {
+	public function addMarketing(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "marketing` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	public function editMarketing($marketing_id, $data) {
+	public function editMarketing($marketing_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "' WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 	}
 
@@ -27,7 +27,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getMarketings($data = []): array {
+	public function getMarketings(array $data = []): array {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_complete_status');
@@ -91,7 +91,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalMarketings($data = []): int {
+	public function getTotalMarketings(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`";
 
 		$implode = [];

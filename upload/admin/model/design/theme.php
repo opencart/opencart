@@ -1,23 +1,23 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 class Theme extends \Opencart\System\Engine\Model {
-	public function editTheme($store_id, $route, $code) {
+	public function editTheme(int $store_id, $route, $code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
 		
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "theme` SET `store_id` = '" . (int)$store_id . "', `route` = '" . $this->db->escape($route) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
 	}
 
-	public function deleteTheme($theme_id) {
+	public function deleteTheme(int $theme_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `theme_id` = '" . (int)$theme_id . "'");
 	}
 
-	public function getTheme($store_id, $route): array {
+	public function getTheme(int $store_id, $route): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
 
 		return $query->row;
 	}
 	
-	public function getThemes($start = 0, $limit = 10) {
+	public function getThemes(int $start = 0, int $limit = 10) {
 		if ($start < 0) {
 			$start = 0;
 		}

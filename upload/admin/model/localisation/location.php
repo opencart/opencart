@@ -1,27 +1,27 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class Location extends \Opencart\System\Engine\Model {
-	public function addLocation($data): int {
+	public function addLocation(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', address = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `fax` = '" . $this->db->escape((string)$data['fax']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "'");
 
 		return $this->db->getLastId();
 	}
 
-	public function editLocation($location_id, $data) {
+	public function editLocation(int $location_id, array $data) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "location` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `address` = '" . $this->db->escape((string)$data['address']) . "', `geocode` = '" . $this->db->escape((string)$data['geocode']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `fax` = '" . $this->db->escape((string)$data['fax']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `open` = '" . $this->db->escape((string)$data['open']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "' WHERE `location_id` = '" . (int)$location_id . "'");
 	}
 
-	public function deleteLocation($location_id) {
+	public function deleteLocation(int $location_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "location` WHERE `location_id` = '" . (int)$location_id . "'");
 	}
 
-	public function getLocation($location_id): array {
+	public function getLocation(int $location_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "location` WHERE `location_id` = '" . (int)$location_id . "'");
 
 		return $query->row;
 	}
 
-	public function getLocations($data = []): array {
+	public function getLocations(array $data = []): array {
 		$sql = "SELECT `location_id`, `name`, `address` FROM `" . DB_PREFIX . "location`";
 
 		$sort_data = [

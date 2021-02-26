@@ -34,7 +34,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
 	}
 
-	public function addInstall($data): int {
+	public function addInstall(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
 
 		return $this->db->getLastId();
@@ -66,7 +66,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getInstalls($data = []): array {
+	public function getInstalls(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {
@@ -108,7 +108,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalInstalls($data = []): int {
+	public function getTotalInstalls(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install`";
 
 		if (!empty($data['filter_extension_download_id'])) {

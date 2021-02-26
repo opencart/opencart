@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Store extends \Opencart\System\Engine\Model {
-	public function addStore($data) {
+	public function addStore(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "store` SET `name` = '" . $this->db->escape((string)$data['config_name']) . "', `url` = '" . $this->db->escape((string)$data['config_url']) . "'");
 
 		$store_id = $this->db->getLastId();
@@ -18,7 +18,7 @@ class Store extends \Opencart\System\Engine\Model {
 		return $store_id;
 	}
 
-	public function editStore($store_id, $data) {
+	public function editStore($store_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "store` SET `name` = '" . $this->db->escape((string)$data['config_name']) . "', `url` = '" . $this->db->escape((string)$data['config_url']) . "' WHERE `store_id` = '" . (int)$store_id . "'");
 
 		$this->cache->delete('store');
@@ -39,7 +39,7 @@ class Store extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getStores($data = []): array {
+	public function getStores(array $data = []): array {
 		$store_data = $this->cache->get('store');
 
 		if (!$store_data) {

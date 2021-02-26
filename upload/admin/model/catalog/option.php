@@ -25,7 +25,7 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_id;
 	}
 
-	public function editOption($option_id, array $data) {
+	public function editOption(int $option_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `option_id` = '" . (int)$option_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
@@ -54,20 +54,20 @@ class Option extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteOption($option_id) {
+	public function deleteOption(int $option_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option` WHERE `option_id` = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value_description` WHERE `option_id` = '" . (int)$option_id . "'");
 	}
 
-	public function getOption($option_id): array {
+	public function getOption(int $option_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN `" . DB_PREFIX . "option_description` od ON (o.`option_id` = od.`option_id`) WHERE o.`option_id` = '" . (int)$option_id . "' AND od.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getOptions($data = []): array {
+	public function getOptions(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN `" . DB_PREFIX . "option_description` od ON (o.`option_id` = od.`option_id`) WHERE od.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -109,7 +109,7 @@ class Option extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getDescriptions($option_id) {
+	public function getDescriptions(int $option_id) {
 		$option_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
@@ -121,13 +121,13 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_data;
 	}
 
-	public function getValue($option_value_id): array {
+	public function getValue(int $option_value_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` ov LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.`option_value_id` = ovd.`option_value_id`) WHERE ov.`option_value_id` = '" . (int)$option_value_id . "' AND ovd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getValues($option_id) {
+	public function getValues(int $option_id) {
 		$option_value_data = [];
 
 		$option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` ov LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.`option_value_id` = ovd.`option_value_id`) WHERE ov.`option_id` = '" . (int)$option_id . "' AND ovd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.`sort_order`, ovd.`name`");
@@ -144,7 +144,7 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_value_data;
 	}
 
-	public function getValueDescriptions($option_id) {
+	public function getValueDescriptions(int $option_id) {
 		$option_value_data = [];
 
 		$option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "' ORDER BY `sort_order`");

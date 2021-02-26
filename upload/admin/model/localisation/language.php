@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class Language extends \Opencart\System\Engine\Model {
-	public function addLanguage($data) {
+	public function addLanguage(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "'");
 
 		$this->cache->delete('catalog.language');
@@ -198,7 +198,7 @@ class Language extends \Opencart\System\Engine\Model {
 		return $language_id;
 	}
 
-	public function editLanguage($language_id, $data) {
+	public function editLanguage(int $language_id, array $data) {
 		$language_query = $this->db->query("SELECT `code` FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "' WHERE `language_id` = '" . (int)$language_id . "'");
@@ -212,7 +212,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->cache->delete('admin.language');
 	}
 
-	public function deleteLanguage($language_id) {
+	public function deleteLanguage(int $language_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
 
@@ -228,7 +228,7 @@ class Language extends \Opencart\System\Engine\Model {
 		*/
 	}
 
-	public function getLanguage($language_id): array {
+	public function getLanguage(int $language_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->row;
@@ -240,7 +240,7 @@ class Language extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getLanguages($data = []): array {
+	public function getLanguages(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "language`";
 

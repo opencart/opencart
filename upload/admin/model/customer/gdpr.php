@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Model\Customer;
 class Gdpr extends \Opencart\System\Engine\Model {
-	public function deleteGdpr($gdpr_id) {
+	public function deleteGdpr(int $gdpr_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 
-	public function getGdprs($data = []): array {
+	public function getGdprs(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "gdpr`";
 
 		$implode = [];
@@ -49,13 +49,13 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getGdpr($gdpr_id): array {
+	public function getGdpr(int $gdpr_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTotalGdprs($data = []): int {
+	public function getTotalGdprs(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "gdpr`";
 
 		$implode = [];
@@ -91,7 +91,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function editStatus($gdpr_id, $status) {
+	public function editStatus(int $gdpr_id, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (int)$status . "' WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 }

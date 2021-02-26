@@ -1314,8 +1314,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// API login
 			$this->load->model('user/api');
-.
-
 
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 

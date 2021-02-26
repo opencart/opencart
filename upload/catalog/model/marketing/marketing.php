@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Marketing;
 class Marketing extends \Opencart\System\Engine\Model {
-	public function getMarketingByCode($code) {
+	public function getMarketingByCode($code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "marketing` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;

@@ -228,19 +228,19 @@ class Language extends \Opencart\System\Engine\Model {
 		*/
 	}
 
-	public function getLanguage($language_id) {
+	public function getLanguage($language_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
 		return $query->row;
 	}
 
-	public function getLanguageByCode($code) {
+	public function getLanguageByCode($code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}
 
-	public function getLanguages($data = []) {
+	public function getLanguages($data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "language`";
 

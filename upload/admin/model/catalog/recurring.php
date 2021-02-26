@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Recurring extends \Opencart\System\Engine\Model {
-	public function addRecurring($data) {
+	public function addRecurring(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "recurring` SET `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "'");
 
 		$recurring_id = $this->db->getLastId();
@@ -13,7 +13,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $recurring_id;
 	}
 
-	public function editRecurring($recurring_id, $data) {
+	public function editRecurring($recurring_id, array $data) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "recurring_description` WHERE `recurring_id` = '" . (int)$recurring_id . "'");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "recurring` SET `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape((string)$data['frequency']) . "', `duration` = '" . (int)$data['duration'] . "', `cycle` = '" . (int)$data['cycle'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape((string)$data['trial_frequency']) . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_status` = '" . (int)$data['trial_status'] . "' WHERE `recurring_id` = '" . (int)$recurring_id . "'");
@@ -42,13 +42,13 @@ class Recurring extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = 0 WHERE `recurring_id` = '" . (int)$recurring_id . "'");
 	}
 
-	public function getRecurring($recurring_id) {
+	public function getRecurring($recurring_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` WHERE `recurring_id` = '" . (int)$recurring_id . "'");
 
 		return $query->row;
 	}
 
-	public function getDescription($recurring_id) {
+	public function getDescription($recurring_id): array {
 		$recurring_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring_description` WHERE `recurring_id` = '" . (int)$recurring_id . "'");
@@ -101,7 +101,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalRecurrings() {
+	public function getTotalRecurrings(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "recurring`");
 
 		return $query->row['total'];

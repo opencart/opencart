@@ -13,13 +13,13 @@ class Translation extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "translation` WHERE `translation_id` = '" . (int)$translation_id . "'");
 	}
 
-	public function getTranslation($translation_id) {
+	public function getTranslation($translation_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "translation` WHERE `translation_id` = '" . (int)$translation_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTranslations($data = []) {
+	public function getTranslations($data = []): array {
 		$sql = "SELECT *, (SELECT s.`name` FROM `" . DB_PREFIX . "store` s WHERE s.`store_id` = t.`store_id`) AS store, (SELECT l.`name` FROM `" . DB_PREFIX . "language` l WHERE l.`language_id` = t.`language_id`) AS language FROM `" . DB_PREFIX . "translation` t";
 
 		$sort_data = [
@@ -59,7 +59,7 @@ class Translation extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalTranslations() {
+	public function getTotalTranslations(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`");
 
 		return $query->row['total'];

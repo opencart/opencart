@@ -5,7 +5,11 @@ class PDO {
 	private array $data = [];
 	private int $affected;
 
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '3306') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
+			$port = '3306';
+		}
+
 		try {
 			$pdo = @new \PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => false));
 		} catch (\PDOException $e) {

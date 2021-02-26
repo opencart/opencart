@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Startup extends \Opencart\System\Engine\Model {
-	public function addStartup($code, $action, $status = 1, $sort_order = 0) {
+	public function addStartup($code, $action, $status = 1, $sort_order = 0): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "startup` SET `code` = '" . $this->db->escape($code) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
 
 		return $this->db->getLastId();
@@ -19,19 +19,19 @@ class Startup extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "startup` SET `status` = '" . (int)$status . "' WHERE `startup_id` = '" . (int)$startup_id . "'");
 	}
 
-	public function getStartup($startup_id) {
+	public function getStartup($startup_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE `startup_id` = '" . (int)$startup_id . "'");
 
 		return $query->row;
 	}
 
-	public function getStartupByCode($code) {
+	public function getStartupByCode($code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "startup` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
 
 		return $query->row;
 	}
 
-	public function getStartups($data = []) {
+	public function getStartups($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "startup`";
 
 		$sort_data = [
@@ -71,7 +71,7 @@ class Startup extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalStartups() {
+	public function getTotalStartups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "startup`");
 
 		return $query->row['total'];

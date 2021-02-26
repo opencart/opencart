@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class Country extends \Opencart\System\Engine\Model {
-	public function addCountry($data) {
+	public function addCountry($data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (int)$data['status'] . "'");
 
 		$this->cache->delete('country');
@@ -21,13 +21,13 @@ class Country extends \Opencart\System\Engine\Model {
 		$this->cache->delete('country');
 	}
 
-	public function getCountry($country_id) {
+	public function getCountry($country_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCountries($data = []) {
+	public function getCountries($data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
 
@@ -97,7 +97,7 @@ class Country extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalCountries($data = []) {
+	public function getTotalCountries($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country`";
 
 		$implode = [];

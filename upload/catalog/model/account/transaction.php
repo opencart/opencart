@@ -39,13 +39,13 @@ class Transaction extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalTransactions() {
+	public function getTotalTransactions(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalAmount() {
+	public function getTotalAmount(): int {
 		$query = $this->db->query("SELECT SUM(amount) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {

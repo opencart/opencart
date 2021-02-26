@@ -1,13 +1,13 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
 class Currency extends \Opencart\System\Engine\Model {
-	public function getCurrencyByCode($currency) {
+	public function getCurrencyByCode($currency): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "' AND `status` = '1'");
 
 		return $query->row;
 	}
 
-	public function getCurrencies() {
+	public function getCurrencies(): array {
 		$currency_data = $this->cache->get('currency');
 
 		if (!$currency_data) {

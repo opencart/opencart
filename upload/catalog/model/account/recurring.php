@@ -1,13 +1,13 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Recurring extends \Opencart\System\Engine\Model {
-	public function getRecurring($order_recurring_id) {
+	public function getRecurring($order_recurring_id): array {
 		$query = $this->db->query("SELECT `or`.*, `o`.`payment_method`, `o`.`payment_code`, `o`.`currency_code` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = `o`.`order_id`) WHERE `or`.`order_recurring_id` = '" . (int)$order_recurring_id . "' AND `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row;
 	}
 
-	public function getRecurrings($start = 0, $limit = 20) {
+	public function getRecurrings($start = 0, $limit = 20): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -21,19 +21,19 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 	
-	public function getRecurringByReference($reference) {
+	public function getRecurringByReference($reference): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `reference` = '" . $this->db->escape($reference) . "'");
 
 		return $query->row;
 	}
 
-	public function getRecurringTransactions($order_recurring_id) {
+	public function getRecurringTransactions($order_recurring_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getTotalRecurrings() {
+	public function getTotalRecurrings(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row['total'];

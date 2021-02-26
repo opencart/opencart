@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
-	public function addZone($data) {
+	public function addZone($data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `status` = '" . (int)$data['status'] . "', `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "'");
 
 		$this->cache->delete('zone');
@@ -21,13 +21,13 @@ class Zone extends \Opencart\System\Engine\Model {
 		$this->cache->delete('zone');
 	}
 
-	public function getZone($zone_id) {
+	public function getZone($zone_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		return $query->row;
 	}
 
-	public function getZones($data = []) {
+	public function getZones($data = []): array {
 		$sql = "SELECT *, z.`name`, c.`name` AS country FROM `" . DB_PREFIX . "zone` z LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
 
 		$implode = [];
@@ -83,7 +83,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getZonesByCountryId($country_id) {
+	public function getZonesByCountryId($country_id): array {
 		$zone_data = $this->cache->get('zone.' . (int)$country_id);
 
 		if (!$zone_data) {
@@ -97,7 +97,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		return $zone_data;
 	}
 
-	public function getTotalZones($data = []) {
+	public function getTotalZones($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` z";
 
 		if (!empty($data['filter_country'])) {
@@ -127,7 +127,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalZonesByCountryId($country_id) {
+	public function getTotalZonesByCountryId($country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		return $query->row['total'];

@@ -13,13 +13,13 @@ class SeoProfile extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_profile` WHERE `seo_profile_id` = '" . (int)$seo_profile_id . "'");
 	}
 
-	public function getSeoProfile($seo_profile_id) {
+	public function getSeoProfile($seo_profile_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_profile` WHERE `seo_profile_id` = '" . (int)$seo_profile_id . "'");
 
 		return $query->row;
 	}
 
-	public function getSeoProfiles($data = []) {
+	public function getSeoProfiles($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_profile`";
 
 		$sort_data = [
@@ -58,7 +58,7 @@ class SeoProfile extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalSeoProfiles() {
+	public function getTotalSeoProfiles(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "seo_profile`");
 
 		return $query->row['total'];

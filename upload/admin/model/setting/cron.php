@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Cron extends \Opencart\System\Engine\Model {
-	public function addCron($code, $cycle, $action, $status) {
+	public function addCron($code, $cycle, $action, $status): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		return $this->db->getLastId();
@@ -23,19 +23,19 @@ class Cron extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
-	public function getCron($cron_id) {
+	public function getCron($cron_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCronByCode($code) {
+	public function getCronByCode($code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
 
 		return $query->row;
 	}
 
-	public function getCrons($data = []) {
+	public function getCrons($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
 
 		$sort_data = [
@@ -76,7 +76,7 @@ class Cron extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalCrons() {
+	public function getTotalCrons(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cron`");
 
 		return $query->row['total'];

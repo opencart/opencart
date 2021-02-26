@@ -29,19 +29,19 @@ class Currency extends \Opencart\System\Engine\Model {
 		$this->cache->delete('currency');
 	}
 
-	public function getCurrency($currency_id) {
+	public function getCurrency($currency_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCurrencyByCode($currency) {
+	public function getCurrencyByCode($currency): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "'");
 
 		return $query->row;
 	}
 
-	public function getCurrencies($data = []) {
+	public function getCurrencies($data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "currency`";
 
@@ -108,7 +108,7 @@ class Currency extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalCurrencies() {
+	public function getTotalCurrencies(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "currency`");
 
 		return $query->row['total'];

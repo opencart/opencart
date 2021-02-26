@@ -36,13 +36,13 @@ class Banner extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "'");
 	}
 
-	public function getBanner($banner_id) {
+	public function getBanner($banner_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "banner` WHERE `banner_id` = '" . (int)$banner_id . "'");
 
 		return $query->row;
 	}
 
-	public function getBanners($data = []) {
+	public function getBanners($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "banner`";
 
 		$sort_data = [
@@ -79,7 +79,7 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getImages($banner_id) {
+	public function getImages($banner_id): array {
 		$banner_image_data = [];
 
 		$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "' ORDER BY `sort_order` ASC");
@@ -96,7 +96,7 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_image_data;
 	}
 
-	public function getTotalBanners() {
+	public function getTotalBanners(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "banner`");
 
 		return $query->row['total'];

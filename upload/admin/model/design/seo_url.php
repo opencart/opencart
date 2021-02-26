@@ -13,13 +13,13 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 	}
 
-	public function getSeoUrl($seo_url_id) {
+	public function getSeoUrl($seo_url_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 
 		return $query->row;
 	}
 
-	public function getSeoUrls($data = []) {
+	public function getSeoUrls($data = []): array {
 		$sql = "SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "store` s WHERE s.`store_id` = su.`store_id`) AS `store`, (SELECT `name` FROM `" . DB_PREFIX . "language` l WHERE l.`language_id` = su.`language_id`) AS `language` FROM `" . DB_PREFIX . "seo_url` su";
 
 		$implode = [];
@@ -85,7 +85,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalSeoUrls($data = []) {
+	public function getTotalSeoUrls($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "seo_url`";
 
 		$implode = [];
@@ -120,13 +120,13 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getSeoUrlByKeyValue($key, $value, $store_id, $language_id) {
+	public function getSeoUrlByKeyValue($key, $value, $store_id, $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape((string)$value) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
 
 		return $query->row;
 	}
 
-	public function getSeoUrlByKeyword($keyword, $store_id, $language_id) {
+	public function getSeoUrlByKeyword($keyword, $store_id, $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `keyword` = '" . $this->db->escape($keyword) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
 
 		return $query->row;

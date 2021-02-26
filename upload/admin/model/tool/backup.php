@@ -33,7 +33,7 @@ class Backup extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalRecords($table) {
+	public function getTotalRecords($table): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . $table . "`");
 
 		if ($query->num_rows) {

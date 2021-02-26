@@ -86,19 +86,19 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getLengthClass($length_class_id) {
+	public function getLengthClass($length_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` lc LEFT JOIN `" . DB_PREFIX . "length_class_description` lcd ON (lc.`length_class_id` = lcd.`length_class_id`) WHERE lc.`length_class_id` = '" . (int)$length_class_id . "' AND lcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getDescriptionByUnit($unit) {
+	public function getDescriptionByUnit($unit): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getDescriptions($length_class_id) {
+	public function getDescriptions($length_class_id): array {
 		$length_class_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
@@ -113,7 +113,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		return $length_class_data;
 	}
 
-	public function getTotalLengthClasses() {
+	public function getTotalLengthClasses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class`");
 
 		return $query->row['total'];

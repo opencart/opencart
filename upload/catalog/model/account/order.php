@@ -115,55 +115,55 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getProduct($order_id, $order_product_id) {
+	public function getProduct($order_id, $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
 		return $query->row;
 	}
 
-	public function getProducts($order_id) {
+	public function getProducts($order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getOptions($order_id, $order_product_id) {
+	public function getOptions($order_id, $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getVouchers($order_id) {
+	public function getVouchers($order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getTotals($order_id) {
+	public function getTotals($order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order`");
 
 		return $query->rows;
 	}
 
-	public function getHistories($order_id) {
+	public function getHistories($order_id): array {
 		$query = $this->db->query("SELECT `date_added`, os.`name` AS status, oh.`comment`, oh.`notify` FROM `" . DB_PREFIX . "order_history` oh LEFT JOIN `" . DB_PREFIX . "order_status` os ON oh.`order_status_id` = os.`order_status_id` WHERE oh.`order_id` = '" . (int)$order_id . "' AND os.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY oh.`date_added`");
 
 		return $query->rows;
 	}
 
-	public function getTotalOrders() {
+	public function getTotalOrders(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` o WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND o.`order_status_id` > '0' AND o.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalProductsByOrderId($order_id) {
+	public function getTotalProductsByOrderId($order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalVouchersByOrderId($order_id) {
+	public function getTotalVouchersByOrderId($order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->row['total'];

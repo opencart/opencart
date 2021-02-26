@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Manufacturer extends \Opencart\System\Engine\Model {
-	public function addManufacturer($data) {
+	public function addManufacturer(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$manufacturer_id = $this->db->getLastId();
@@ -38,7 +38,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		return $manufacturer_id;
 	}
 
-	public function editManufacturer($manufacturer_id, $data) {
+	public function editManufacturer($manufacturer_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 		if (isset($data['image'])) {
@@ -85,13 +85,13 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$this->cache->delete('manufacturer');
 	}
 
-	public function getManufacturer($manufacturer_id) {
+	public function getManufacturer($manufacturer_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "manufacturer` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
 		return $query->row;
 	}
 
-	public function getManufacturers($data = []) {
+	public function getManufacturers($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
 
 		if (!empty($data['filter_name'])) {
@@ -168,13 +168,13 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		return $manufacturer_layout_data;
 	}
 
-	public function getTotalManufacturers() {
+	public function getTotalManufacturers(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalManufacturersByLayoutId($layout_id) {
+	public function getTotalManufacturersByLayoutId($layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->row['total'];

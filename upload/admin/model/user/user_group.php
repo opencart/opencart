@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\User;
 class UserGroup extends \Opencart\System\Engine\Model {
-	public function addUserGroup($data) {
+	public function addUserGroup($data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_group` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `permission` = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
 	
 		return $this->db->getLastId();
@@ -54,7 +54,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalUserGroups() {
+	public function getTotalUserGroups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_group`");
 
 		return $query->row['total'];

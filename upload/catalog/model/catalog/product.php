@@ -383,7 +383,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalProducts($data = []) {
+	public function getTotalProducts($data = []): int {
 		$sql = "SELECT COUNT(DISTINCT p.`product_id`) AS total";
 
 		if (!empty($data['filter_category_id'])) {
@@ -485,19 +485,19 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getProfile($product_id, $recurring_id) {
+	public function getProfile(int $product_id, int $recurring_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` r JOIN `" . DB_PREFIX . "product_recurring` pr ON (pr.`recurring_id` = r.`recurring_id` AND pr.`product_id` = '" . (int)$product_id . "') WHERE pr.`recurring_id` = '" . (int)$recurring_id . "' AND r.`status` = '1' AND pr.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getProfiles($product_id) {
+	public function getProfiles(int $product_id): array {
 		$query = $this->db->query("SELECT rd.* FROM `" . DB_PREFIX . "product_recurring` pr JOIN `" . DB_PREFIX . "recurring_description` rd ON (rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND rd.`recurring_id` = pr.`recurring_id`) JOIN `" . DB_PREFIX . "recurring` r ON r.`recurring_id` = rd.`recurring_id` WHERE pr.`product_id` = '" . (int)$product_id . "' AND r.`status` = '1' AND pr.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' ORDER BY r.`sort_order` ASC");
 
 		return $query->rows;
 	}
 
-	public function getTotalSpecials() {
+	public function getTotalSpecials(): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT ps.`product_id`) AS `total` FROM `" . DB_PREFIX . "product_special` ps LEFT JOIN `" . DB_PREFIX . "product` p ON (ps.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.`date_start` = '0000-00-00' OR ps.`date_start` < NOW()) AND (ps.`date_end` = '0000-00-00' OR ps.`date_end` > NOW()))");
 
 		if (isset($query->row['total'])) {

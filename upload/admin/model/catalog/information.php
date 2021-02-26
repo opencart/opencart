@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Information extends \Opencart\System\Engine\Model {
-	public function addInformation($data) {
+	public function addInformation(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (int)$data['status'] . "'");
 
 		$information_id = $this->db->getLastId();
@@ -38,7 +38,7 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_id;
 	}
 
-	public function editInformation($information_id, $data) {
+	public function editInformation($information_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (int)$data['status'] . "' WHERE `information_id` = '" . (int)$information_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
@@ -88,13 +88,13 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->cache->delete('information');
 	}
 
-	public function getInformation($information_id) {
+	public function getInformation($information_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "information` WHERE `information_id` = '" . (int)$information_id . "'");
 
 		return $query->row;
 	}
 
-	public function getInformations($data = []) {
+	public function getInformations(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "information` i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -199,13 +199,13 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_layout_data;
 	}
 
-	public function getTotalInformations() {
+	public function getTotalInformations(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information`");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalInformationsByLayoutId($layout_id) {
+	public function getTotalInformationsByLayoutId($layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->row['total'];

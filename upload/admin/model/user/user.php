@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\User;
 class User extends \Opencart\System\Engine\Model {
-	public function addUser($data) {
+	public function addUser($data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "user` SET `username` = '" . $this->db->escape((string)$data['username']) . "', `user_group_id` = '" . (int)$data['user_group_id'] . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `image` = '" . $this->db->escape((string)$data['image']) . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
@@ -27,31 +27,31 @@ class User extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$user_id . "'");
 	}
 
-	public function getUser($user_id) {
+	public function getUser($user_id): array {
 		$query = $this->db->query("SELECT *, (SELECT ug.`name` FROM `" . DB_PREFIX . "user_group` ug WHERE ug.`user_group_id` = u.`user_group_id`) AS user_group FROM `" . DB_PREFIX . "user` u WHERE u.`user_id` = '" . (int)$user_id . "'");
 
 		return $query->row;
 	}
 
-	public function getUserByUsername($username) {
+	public function getUserByUsername($username): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `username` = '" . $this->db->escape($username) . "'");
 
 		return $query->row;
 	}
 
-	public function getUserByEmail($email) {
+	public function getUserByEmail($email): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user` WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row;
 	}
 
-	public function getUserByCode($code) {
+	public function getUserByCode($code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `code` = '" . $this->db->escape($code) . "' AND `code` != ''");
 
 		return $query->row;
 	}
 
-	public function getUsers($data = []) {
+	public function getUsers($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "user`";
 
 		$sort_data = [
@@ -89,19 +89,19 @@ class User extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalUsers() {
+	public function getTotalUsers(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user`");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalUsersByGroupId($user_group_id) {
+	public function getTotalUsersByGroupId($user_group_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE `user_group_id` = '" . (int)$user_group_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalUsersByEmail($email) {
+	public function getTotalUsersByEmail($email): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row['total'];

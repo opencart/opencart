@@ -37,7 +37,7 @@ class Online extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalOnline($data = []) {
+	public function getTotalOnline($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_online` co LEFT JOIN `" . DB_PREFIX . "customer` c ON (co.`customer_id` = c.`customer_id`)";
 
 		$implode = [];

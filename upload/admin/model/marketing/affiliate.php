@@ -14,19 +14,19 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
-	public function getAffiliate($customer_id) {
+	public function getAffiliate($customer_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `customer`, ca.`custom_field` FROM `" . DB_PREFIX . "customer_affiliate` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`) WHERE ca.`customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row;
 	}
 
-	public function getAffiliateByTracking($tracking) {
+	public function getAffiliateByTracking($tracking): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_affiliate` WHERE `tracking` = '" . $this->db->escape($tracking) . "'");
 
 		return $query->row;
 	}
 
-	public function getAffiliates($data = []) {
+	public function getAffiliates($data = []): array {
 		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `name`, ca.`status` FROM `" . DB_PREFIX . "customer_affiliate` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
 		$implode = [];
@@ -92,7 +92,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalAffiliates($data = []) {
+	public function getTotalAffiliates($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_affiliate` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
 		$implode = [];
@@ -126,7 +126,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getReports($customer_id, $start = 0, $limit = 10) {
+	public function getReports($customer_id, $start = 0, $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -140,7 +140,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalReports($customer_id) {
+	public function getTotalReports($customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];

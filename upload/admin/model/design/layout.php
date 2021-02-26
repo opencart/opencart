@@ -50,13 +50,13 @@ class Layout extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 	}
 
-	public function getLayout($layout_id) {
+	public function getLayout($layout_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->row;
 	}
 
-	public function getLayouts($data = []) {
+	public function getLayouts($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "layout`";
 
 		$sort_data = ['name'];
@@ -90,19 +90,19 @@ class Layout extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getRoutes($layout_id) {
+	public function getRoutes($layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getModules($layout_id) {
+	public function getModules($layout_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "' ORDER BY `position` ASC, `sort_order` ASC");
 
 		return $query->rows;
 	}
 
-	public function getTotalLayouts() {
+	public function getTotalLayouts(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "layout`");
 
 		return $query->row['total'];

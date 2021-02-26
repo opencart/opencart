@@ -35,13 +35,13 @@ class Api extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api` WHERE `api_id` = '" . (int)$api_id . "'");
 	}
 
-	public function getApi($api_id) {
+	public function getApi($api_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api` WHERE `api_id` = '" . (int)$api_id . "'");
 
 		return $query->row;
 	}
 
-	public function getApis($data = []) {
+	public function getApis($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "api`";
 
 		$sort_data = [
@@ -80,17 +80,17 @@ class Api extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalApis() {
+	public function getTotalApis(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "api`");
 
 		return $query->row['total'];
 	}
 
-	public function addIp($api_id, $ip) {
+	public function addIp($api_id, $ip): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET `api_id` = '" . (int)$api_id . "', `ip` = '" . $this->db->escape($ip) . "'");
 	}
 
-	public function getIps($api_id) {
+	public function getIps($api_id): array {
 		$ip_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE `api_id` = '" . (int)$api_id . "'");
@@ -102,7 +102,7 @@ class Api extends \Opencart\System\Engine\Model {
 		return $ip_data;
 	}
 
-	public function addSession($api_id, $session_id, $ip) {
+	public function addSession($api_id, $session_id, $ip): int {
 		$api_ip_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
 
 		if (!$api_ip_query->num_rows) {
@@ -114,7 +114,7 @@ class Api extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function getSessions($api_id) {
+	public function getSessions($api_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE `api_id` = '" . (int)$api_id . "'");
 
 		return $query->rows;

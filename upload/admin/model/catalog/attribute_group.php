@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class AttributeGroup extends \Opencart\System\Engine\Model {
-	public function addAttributeGroup($data) {
+	public function addAttributeGroup(array $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$attribute_group_id = $this->db->getLastId();
@@ -13,7 +13,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		return $attribute_group_id;
 	}
 
-	public function editAttributeGroup($attribute_group_id, $data) {
+	public function editAttributeGroup($attribute_group_id, array $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
@@ -28,13 +28,13 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 	}
 
-	public function getAttributeGroup($attribute_group_id) {
+	public function getAttributeGroup($attribute_group_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_group` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
 		return $query->row;
 	}
 
-	public function getAttributeGroups($data = []) {
+	public function getAttributeGroups($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` ag LEFT JOIN `" . DB_PREFIX . "attribute_group_description` agd ON (ag.`attribute_group_id` = agd.`attribute_group_id`) WHERE agd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		$sort_data = [
@@ -83,7 +83,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		return $attribute_group_data;
 	}
 
-	public function getTotalAttributeGroups() {
+	public function getTotalAttributeGroups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group`");
 
 		return $query->row['total'];

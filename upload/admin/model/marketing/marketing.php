@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Marketing;
 class Marketing extends \Opencart\System\Engine\Model {
-	public function addMarketing($data) {
+	public function addMarketing($data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "marketing` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
@@ -15,19 +15,19 @@ class Marketing extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "marketing` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 	}
 
-	public function getMarketing($marketing_id) {
+	public function getMarketing($marketing_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "marketing` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 
 		return $query->row;
 	}
 
-	public function getMarketingByCode($code) {
+	public function getMarketingByCode($code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "marketing` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}
 
-	public function getMarketings($data = []) {
+	public function getMarketings($data = []): array {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_complete_status');
@@ -91,7 +91,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalMarketings($data = []) {
+	public function getTotalMarketings($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`";
 
 		$implode = [];
@@ -117,7 +117,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getReports($marketing_id, $start = 0, $limit = 10) {
+	public function getReports($marketing_id, $start = 0, $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -131,7 +131,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalReports($marketing_id) {
+	public function getTotalReports($marketing_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing_report` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 
 		return $query->row['total'];

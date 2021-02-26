@@ -43,13 +43,13 @@ class CustomerApproval extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getCustomerApproval($customer_approval_id) {
+	public function getCustomerApproval($customer_approval_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_approval` WHERE `customer_approval_id` = '" . (int)$customer_approval_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTotalCustomerApprovals($data = []) {
+	public function getTotalCustomerApprovals($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_approval` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
 		$implode = [];

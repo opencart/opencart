@@ -38,13 +38,13 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		$this->cache->delete('tax_class');
 	}
 
-	public function getTaxClass($tax_class_id) {
+	public function getTaxClass($tax_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTaxClasses($data = []) {
+	public function getTaxClasses($data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "tax_class`";
 
@@ -92,13 +92,13 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getTaxRules($tax_class_id) {
+	public function getTaxRules($tax_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "' ORDER BY `priority` ASC");
 
 		return $query->rows;
 	}
 
-	public function getTotalTaxRulesByTaxRateId($tax_rate_id) {
+	public function getTotalTaxRulesByTaxRateId($tax_rate_id): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT `tax_class_id`) AS `total` FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");
 
 		return $query->row['total'];

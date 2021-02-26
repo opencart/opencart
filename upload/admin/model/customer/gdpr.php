@@ -5,7 +5,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 
-	public function getGdprs($data = []) {
+	public function getGdprs($data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "gdpr`";
 
 		$implode = [];
@@ -49,13 +49,13 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getGdpr($gdpr_id) {
+	public function getGdpr($gdpr_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTotalGdprs($data = []) {
+	public function getTotalGdprs($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "gdpr`";
 
 		$implode = [];

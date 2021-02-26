@@ -11,7 +11,7 @@ class Theme extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `theme_id` = '" . (int)$theme_id . "'");
 	}
 
-	public function getTheme($store_id, $route) {
+	public function getTheme($store_id, $route): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$store_id . "' AND `route` = '" . $this->db->escape($route) . "'");
 
 		return $query->row;
@@ -31,7 +31,7 @@ class Theme extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}	
 	
-	public function getTotalThemes() {
+	public function getTotalThemes(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "theme`");
 
 		return $query->row['total'];

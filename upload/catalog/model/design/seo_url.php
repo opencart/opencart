@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Design;
 class SeoUrl extends \Opencart\System\Engine\Model {
 	public $keyword = [];
 
-	public function getSeoUrlByKeyword($keyword) {
+	public function getSeoUrlByKeyword($keyword): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `keyword` = '" . $this->db->escape($keyword) . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;

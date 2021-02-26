@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Download extends \Opencart\System\Engine\Model {
-	public function getDownload($download_id) {
+	public function getDownload($download_id): array {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_complete_status');
@@ -15,11 +15,11 @@ class Download extends \Opencart\System\Engine\Model {
 
 			return $query->row;
 		} else {
-			return;
+			return [];
 		}
 	}
 
-	public function getDownloads($start = 0, $limit = 20) {
+	public function getDownloads($start = 0, $limit = 20): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -45,7 +45,7 @@ class Download extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalDownloads() {
+	public function getTotalDownloads(): int {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_complete_status');

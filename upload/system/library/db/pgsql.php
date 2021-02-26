@@ -3,7 +3,11 @@ namespace Opencart\System\Library\DB;
 final class PgSQL {
 	private $connection;
 
-	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '5432') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
+			$port = '5432';
+		}
+
 		try {
 			$pg = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
 		} catch (\Exception $e) {

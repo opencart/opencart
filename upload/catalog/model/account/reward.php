@@ -39,13 +39,13 @@ class Reward extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalRewards() {
+	public function getTotalRewards(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalPoints() {
+	public function getTotalPoints(): int {
 		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {

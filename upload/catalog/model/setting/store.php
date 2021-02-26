@@ -1,19 +1,19 @@
 <?php
 namespace Opencart\Catalog\Model\Setting;
 class Store extends \Opencart\System\Engine\Model {
-	public function getStore($store_id) {
+	public function getStore($store_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "store` WHERE `store_id` = '" . (int)$store_id . "'");
 
 		return $query->row;
 	}
 
-	public function getStoreByHostname($url) {
+	public function getStoreByHostname($url): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/') . "'");
 
 		return $query->row;
 	}
 
-	public function getStores() {
+	public function getStores(): array {
 		$store_data = $this->cache->get('store');
 
 		if (!$store_data) {

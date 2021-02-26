@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 class Order extends \Opencart\System\Engine\Model {
-	public function getOrder($order_id) {
+	public function getOrder($order_id): array {
 		$order_query = $this->db->query("SELECT *, (SELECT CONCAT(c.`firstname`, ' ', c.`lastname`) FROM `" . DB_PREFIX . "customer` c WHERE c.`customer_id` = o.`customer_id`) AS customer, (SELECT os.`name` FROM `" . DB_PREFIX . "order_status` os WHERE os.`order_status_id` = o.`order_status_id` AND os.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.`order_id` = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {
@@ -144,11 +144,11 @@ class Order extends \Opencart\System\Engine\Model {
 				'date_modified'           => $order_query->row['date_modified']
 			];
 		} else {
-			return;
+			return [];
 		}
 	}
 
-	public function getOrders($data = []) {
+	public function getOrders($data = []): array {
 		$sql = "SELECT o.`order_id`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer, (SELECT os.`name` FROM `" . DB_PREFIX . "order_status` os WHERE os.`order_status_id` = o.`order_status_id` AND os.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS order_status, o.`store_name`, o.`shipping_code`, o.`total`, o.`currency_code`, o.`currency_value`, o.`date_added`, o.`date_modified` FROM `" . DB_PREFIX . "order` o";
 
 		if (!empty($data['filter_order_status'])) {
@@ -240,37 +240,37 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getProducts($order_id) {
+	public function getProducts($order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY order_product_id ASC");
 
 		return $query->rows;
 	}
 
-	public function getOptions($order_id, $order_product_id) {
+	public function getOptions($order_id, $order_product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getVouchers($order_id) {
+	public function getVouchers($order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getVoucherByVoucherId($voucher_id) {
+	public function getVoucherByVoucherId($voucher_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTotals($order_id) {
+	public function getTotals($order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order`");
 
 		return $query->rows;
 	}
 
-	public function getTotalOrders($data = []) {
+	public function getTotalOrders($data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order`";
 
 		if (!empty($data['filter_order_status'])) {
@@ -328,19 +328,19 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalOrdersByStoreId($store_id) {
+	public function getTotalOrdersByStoreId($store_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `store_id` = '" . (int)$store_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalOrdersByOrderStatusId($order_status_id) {
+	public function getTotalOrdersByOrderStatusId($order_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `order_status_id` > '0'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalOrdersByProcessingStatus() {
+	public function getTotalOrdersByProcessingStatus(): int {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_processing_status');
@@ -358,7 +358,7 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalOrdersByCompleteStatus() {
+	public function getTotalOrdersByCompleteStatus(): int {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_complete_status');
@@ -376,13 +376,13 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalOrdersByLanguageId($language_id) {
+	public function getTotalOrdersByLanguageId($language_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `language_id` = '" . (int)$language_id . "' AND `order_status_id` > '0'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalOrdersByCurrencyId($currency_id) {
+	public function getTotalOrdersByCurrencyId($currency_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `currency_id` = '" . (int)$currency_id . "' AND `order_status_id` > '0'");
 
 		return $query->row['total'];
@@ -478,13 +478,13 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalHistories($order_id) {
+	public function getTotalHistories($order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalHistoriesByOrderStatusId($order_status_id) {
+	public function getTotalHistoriesByOrderStatusId($order_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_history` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
 
 		return $query->row['total'];
@@ -502,7 +502,7 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalEmailsByProductsOrdered($products) {
+	public function getTotalEmailsByProductsOrdered($products): int {
 		$implode = [];
 
 		foreach ($products as $product_id) {

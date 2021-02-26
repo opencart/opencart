@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
 class Recurring extends \Opencart\System\Engine\Model {
-	public function addRecurring($order_id, $description, $item) {
+	public function addRecurring($order_id, $description, $item): int {
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring` SET 
 		`order_id` = '" . (int)$order_id . "', 

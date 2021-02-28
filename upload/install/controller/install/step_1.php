@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Install;
+namespace Opencart\Install\Controller\Install;
 class Step1 extends \Opencart\System\Engine\Controller {
 	public function index() {
 		$this->load->language('install/step_1');

@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Install\Controller\Startup;
 class Database extends \Opencart\System\Engine\Controller {
 	public function index() {
 		if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {

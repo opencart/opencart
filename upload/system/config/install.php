@@ -1,4 +1,4 @@
-<?
+<?php
 // Site
 $_['site_url']          = HTTP_SERVER;
 

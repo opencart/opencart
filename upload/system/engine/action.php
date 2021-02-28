@@ -62,7 +62,7 @@ class Action {
 
 		// Get the current namespace being used by the config
 		$class = 'Opencart\\' . $registry->get('config')->get('application') . '\\' . $this->class;
-		
+
 		// Initialize the class
 		if (class_exists($class)) {
 			$controller = new $class($registry);

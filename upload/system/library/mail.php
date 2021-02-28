@@ -12,7 +12,7 @@
 */
 namespace Opencart\System\Library;
 class Mail {
-	private object $adaptor;
+	private string $adaptor;
 	protected string $to = '';
 	protected string $from = '';
 	protected string $sender = '';
@@ -21,7 +21,7 @@ class Mail {
 	protected string $text = '';
 	protected string $html = '';
 	protected array $attachments = [];
-
+	
 	/**
 	 * Constructor
 	 *
@@ -32,7 +32,7 @@ class Mail {
 		$class = 'Opencart\System\Library\Mail\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->adaptor = new $class();
+			$this->adaptor = $class;
 		} else {
 			throw new \Exception('Error: Could not load mail adaptor ' . $adaptor . '!');
 		}
@@ -114,7 +114,7 @@ class Mail {
      *
      *
      */
-	public function send(): void {
+	public function send(): bool {
 		if (!$this->to) {
 			throw new \Exception('Error: E-Mail to required!');
 		}
@@ -135,10 +135,12 @@ class Mail {
 			throw new \Exception('Error: E-Mail message required!');
 		}
 
-		foreach (get_object_vars($this) as $key => $value) {
-			$this->adaptor->$key = $value;
-		}
+		$mail_data = [];
 
-		$this->adaptor->send();
+		foreach (get_object_vars($this) as $key => $value) $mail_data[$key] = $value;
+
+		$mail = new $this->adaptor($mail_data);
+
+		return $mail->send();
 	}
 }

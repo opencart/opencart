@@ -1,15 +1,31 @@
 <?php
 namespace Opencart\System\Library\Mail;
 class Smtp {
-	public string $smtp_hostname = '';
-	public string $smtp_username = '';
-	public string $smtp_password = '';
-	public int $smtp_port = 25;
-	public int $smtp_timeout = 5;
-	public int $max_attempts = 3;
-	public bool $verp = false;
+	protected string $to = '';
+	protected string $from = '';
+	protected string $sender = '';
+	protected string $reply_to = '';
+	protected string $subject = '';
+	protected string $text = '';
+	protected string $html = '';
+	protected array $attachments = [];
+	protected string $smtp_hostname = '';
+	protected string $smtp_username = '';
+	protected string $smtp_password = '';
+	protected int $smtp_port = 25;
+	protected int $smtp_timeout = 5;
+	protected int $max_attempts = 3;
+	protected bool $verp = false;
 
-	public function send(): void {
+	public function __construct(array $args) {
+		foreach ($args as $key => $value) {
+			if (property_exists($this, $key)) {
+				$this->{$key} = $value;
+			}
+		}
+	}
+
+	public function send(): bool {
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
 		} else {
@@ -214,6 +230,8 @@ class Smtp {
 
 			fclose($handle);
 		}
+
+		return true;
 	}
 
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {

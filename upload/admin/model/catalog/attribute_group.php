@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class AttributeGroup extends \Opencart\System\Engine\Model {
-	public function addAttributeGroup(array $data) {
+	public function addAttributeGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$attribute_group_id = $this->db->getLastId();
@@ -13,7 +13,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		return $attribute_group_id;
 	}
 
-	public function editAttributeGroup(int $attribute_group_id, array $data) {
+	public function editAttributeGroup(int $attribute_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
@@ -23,7 +23,7 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteAttributeGroup(int $attribute_group_id) {
+	public function deleteAttributeGroup(int $attribute_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 	}

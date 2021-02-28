@@ -13,7 +13,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 		return $attribute_id;
 	}
 
-	public function editAttribute(int $attribute_id, array $data) {
+	public function editAttribute(int $attribute_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
@@ -23,7 +23,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteAttribute(int $attribute_id) {
+	public function deleteAttribute(int $attribute_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_description` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 	}

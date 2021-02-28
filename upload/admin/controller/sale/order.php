@@ -1294,10 +1294,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$extensions = $this->model_setting_extension->getExtensionsByType('fraud');
 
 			foreach ($extensions as $extension) {
-				if ($this->config->get('fraud_' . $extension . '_status')) {
-					$this->load->language('extension/fraud/' . $extension, 'extension');
+				if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
+					$this->load->language('extension/fraud/' . $extension['code'], 'extension');
 
-					$content = $this->load->controller('extension/fraud/' . $extension . '/order');
+					$content = $this->load->controller('extension/fraud/' . $extension['code'] . '/order');
 
 					if ($content) {
 						$data['tabs'][] = [

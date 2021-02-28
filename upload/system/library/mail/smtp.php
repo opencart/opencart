@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\System\Library\Mail;
 class Smtp {
-	public string $smtp_hostname;
-	public string $smtp_username;
-	public string $smtp_password;
+	public string $smtp_hostname = '';
+	public string $smtp_username = '';
+	public string $smtp_password = '';
 	public int $smtp_port = 25;
 	public int $smtp_timeout = 5;
 	public int $max_attempts = 3;

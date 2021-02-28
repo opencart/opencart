@@ -13,13 +13,13 @@
 namespace Opencart\System\Library;
 class Mail {
 	private object $adaptor;
-	protected string $to;
-	protected string $from;
-	protected string $sender;
-	protected string $reply_to;
-	protected string $subject;
-	protected string $text;
-	protected string $html;
+	protected string $to = '';
+	protected string $from = '';
+	protected string $sender = '';
+	protected string $reply_to = '';
+	protected string $subject = '';
+	protected string $text = '';
+	protected string $html = '';
 	protected array $attachments = [];
 
 	/**
@@ -43,7 +43,7 @@ class Mail {
      *
      * @param	mixed	$to
      */
-	public function setTo($to): void {
+	public function setTo(string $to): void {
 		$this->to = $to;
 	}
 

@@ -11,13 +11,13 @@ class Redis {
 		$this->cache->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 	}
 
-	public function get(string $key): array {
+	public function get(string $key): array|null {
 		$data = $this->cache->get(CACHE_PREFIX . $key);
 
 		return json_decode($data, true);
 	}
 
-	public function set(string $key, array $value, int $expire = 0) {
+	public function set(string $key, array|null $value, int $expire = 0) {
 		if (!$expire) {
 			$expire = $this->expire;
 		}

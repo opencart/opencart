@@ -68,6 +68,10 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$session->start($session_id);
 
+		$this->model_account_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+
+		$session->data['api_id'] = $api_info['api_id'];
+
 		// Template
 		$template = new \Opencart\System\Library\Template($config->get('template_engine'));
 		$template->addPath(DIR_CATALOG . 'view/template/');
@@ -114,12 +118,23 @@ class Api extends \Opencart\System\Engine\Controller {
 			$loader->controller($pre_action);
 		}
 
+
+
+
+
+
+
+
 		if (isset($this->request->get['action'])) {
 			$loader->controller($this->request->get['action']);
 		}
 
+		$loader->controller('api/login');
+
 		echo $response->getOutput();
-		}
+
+
+		//}
 		//$this->response->addHeader('Content-Type: application/json');
 		//$this->response->setOutput($response->getOutput());
 	}

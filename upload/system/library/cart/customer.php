@@ -2,13 +2,13 @@
 namespace Opencart\System\Library\Cart;
 class Customer {
 	private $customer_id = 0;
-	private $firstname;
-	private $lastname;
+	private $firstname = '';
+	private $lastname = '';
 	private $customer_group_id = 0;
-	private $email;
-	private $telephone;
-	private $newsletter;
-	private $address_id;
+	private $email = '';
+	private $telephone = '';
+	private $newsletter = false;
+	private $address_id = 0;
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');
@@ -78,14 +78,14 @@ class Customer {
 	public function logout(): void {
 		unset($this->session->data['customer_id']);
 
-		$this->customer_id = '';
+		$this->customer_id = 0;
 		$this->firstname = '';
 		$this->lastname = '';
 		$this->customer_group_id = 0;
 		$this->email = '';
 		$this->telephone = '';
-		$this->newsletter = '';
-		$this->address_id = '';
+		$this->newsletter = false;
+		$this->address_id = 0;
 	}
 
 	public function isLogged(): bool {

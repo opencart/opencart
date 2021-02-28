@@ -21,7 +21,7 @@ class File {
 		}
 	}
 
-	public function get(string $key): array {
+	public function get(string $key): array|null {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {
@@ -47,7 +47,7 @@ class File {
 		return [];
 	}
 
-	public function set(string $key, array $value, int $expire = 0): void {
+	public function set(string $key, array|null $value, int $expire = 0): void {
 		$this->delete($key);
 
 		if (!$expire) {

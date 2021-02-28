@@ -81,6 +81,6 @@ class PDO {
 	 *
 	 */
 	public function __destruct() {
-		$this->connection = '';
+		unset($this->connection);
 	}
 }

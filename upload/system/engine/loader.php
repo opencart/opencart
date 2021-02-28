@@ -78,9 +78,7 @@ final class Loader {
 		// Trigger the post events
 		$this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
-		if (!$output instanceof \Exception) {
-			return $output;
-		}
+		return $output;
 	}
 	
 	/**

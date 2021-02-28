@@ -13,11 +13,11 @@ class Mem {
 		$this->memcache->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 	}
 
-	public function get(string $key) {
+	public function get(string $key): array|null {
 		return $this->memcache->get(CACHE_PREFIX . $key);
 	}
 
-	public function set(string $key, array $value, int $expire = 0) {
+	public function set(string $key, array|null $value, int $expire = 0) {
 		if (!$expire) {
 			$expire = $this->expire;
 		}

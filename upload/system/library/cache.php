@@ -38,7 +38,7 @@ class Cache {
      *
      * @return	string
      */
-	public function get(string $key): array {
+	public function get(string $key): array|null {
 		return $this->adaptor->get($key);
 	}
 	
@@ -50,7 +50,7 @@ class Cache {
 	 * 
 	 * @return	string
      */
-	public function set(string $key, array $value, int $expire = 0): void {
+	public function set(string $key, array|null $value, int $expire = 0): void {
 		$this->adaptor->set($key, $value, $expire);
 	}
    

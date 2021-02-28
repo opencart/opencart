@@ -83,7 +83,7 @@ class MySQLi {
 		if ($this->connection) {
 			$this->connection->close();
 
-			$this->connection = '';
+			unset($this->connection);
 		}
 	}
 }

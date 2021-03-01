@@ -1,17 +1,17 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Wishlist extends \Opencart\System\Engine\Model {
-	public function addWishlist($product_id) {
+	public function addWishlist(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `product_id` = '" . (int)$product_id . "'");
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_wishlist` SET `customer_id` = '" . (int)$this->customer->getId() . "', `product_id` = '" . (int)$product_id . "', `date_added` = NOW()");
 	}
 
-	public function deleteWishlist($product_id) {
+	public function deleteWishlist(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `product_id` = '" . (int)$product_id . "'");
 	}
 
-	public function getWishlist() {
+	public function getWishlist(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_wishlist` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->rows;

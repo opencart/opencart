@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class LengthClass extends \Opencart\System\Engine\Model {
-	public function addLengthClass(array $data) {
+	public function addLengthClass(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "'");
 
 		$length_class_id = $this->db->getLastId();
@@ -15,7 +15,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		return $length_class_id;
 	}
 
-	public function editLengthClass(int $length_class_id, array $data) {
+	public function editLengthClass(int $length_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "' WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
@@ -27,7 +27,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$this->cache->delete('length_class');
 	}
 
-	public function deleteLengthClass(int $length_class_id) {
+	public function deleteLengthClass(int $length_class_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 

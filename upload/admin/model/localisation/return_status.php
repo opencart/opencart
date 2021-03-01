@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class ReturnStatus extends \Opencart\System\Engine\Model {
-	public function addReturnStatus(array $data) {
+	public function addReturnStatus(array $data): int {
 		foreach ($data['return_status'] as $language_id => $value) {
 			if (isset($return_status_id)) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_status` SET `return_status_id` = '" . (int)$return_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
@@ -17,7 +17,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		return $return_status_id;
 	}
 
-	public function editReturnStatus(int $return_status_id, array $data) {
+	public function editReturnStatus(int $return_status_id, array $data) : void{
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
 
 		foreach ($data['return_status'] as $language_id => $value) {
@@ -27,7 +27,7 @@ class ReturnStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_status');
 	}
 
-	public function deleteReturnStatus(int $return_status_id) {
+	public function deleteReturnStatus(int $return_status_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
 
 		$this->cache->delete('return_status');

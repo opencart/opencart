@@ -35,15 +35,15 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '" . (int)$address_id . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
-	public function editCode($email, $code): void {
+	public function editCode(string $email, string $code): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `code` = '" . $this->db->escape($code) . "' WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
-	public function editToken($email, $token): void {
+	public function editToken(string $email, string $token): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
-	public function editNewsletter($newsletter): void {
+	public function editNewsletter(bool $newsletter): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `newsletter` = '" . (int)$newsletter . "' WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 	}
 

@@ -1,13 +1,13 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Setting extends \Opencart\System\Engine\Model {
-	public function getSettings($store_id = 0) {
+	public function getSettings(int $store_id = 0) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' OR store_id = 0 ORDER BY store_id ASC");
 
 		return $query->rows;
 	}
 
-	public function getSetting($code, $store_id = 0) {
+	public function getSetting(string $code, int $store_id = 0) {
 		$setting_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
@@ -23,7 +23,7 @@ class Setting extends \Opencart\System\Engine\Model {
 		return $setting_data;
 	}
 
-	public function editSetting($code, $data, $store_id = 0) {
+	public function editSetting(string $code, array $data, int $store_id = 0): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 
 		foreach ($data as $key => $value) {
@@ -37,11 +37,11 @@ class Setting extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteSetting($code, $store_id = 0) {
+	public function deleteSetting(string $code, int $store_id = 0): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function getValue($key, $store_id = 0) {
+	public function getValue(string $key, int $store_id = 0) {
 		$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
 
 		if ($query->num_rows) {
@@ -51,7 +51,7 @@ class Setting extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function editValue($code = '', $key = '', $value = '', $store_id = 0) {
+	public function editValue(string $code = '', string $key = '', string|array $value = '', int $store_id = 0): void {
 		if (!is_array($value)) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape($value) . "', `serialized` = '0'  WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND `store_id` = '" . (int)$store_id . "'");
 		} else {

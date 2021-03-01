@@ -1,31 +1,31 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Startup extends \Opencart\System\Engine\Model {
-	public function addStartup($code, $action, $status = 1, $sort_order = 0): int {
+	public function addStartup(string $code, string $action, bool $status = true, int $sort_order = 0): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "startup` SET `code` = '" . $this->db->escape($code) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
 
 		return $this->db->getLastId();
 	}
 
-	public function deleteStartup($startup_id) {
+	public function deleteStartup(int $startup_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "startup` WHERE `startup_id` = '" . (int)$startup_id . "'");
 	}
 
-	public function deleteStartupByCode($code) {
+	public function deleteStartupByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "startup` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function editStatus($startup_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "startup` SET `status` = '" . (int)$status . "' WHERE `startup_id` = '" . (int)$startup_id . "'");
+	public function editStatus(int $startup_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "startup` SET `status` = '" . (bool)$status . "' WHERE `startup_id` = '" . (int)$startup_id . "'");
 	}
 
-	public function getStartup($startup_id): array {
+	public function getStartup(int $startup_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE `startup_id` = '" . (int)$startup_id . "'");
 
 		return $query->row;
 	}
 
-	public function getStartupByCode($code): array {
+	public function getStartupByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "startup` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
 
 		return $query->row;

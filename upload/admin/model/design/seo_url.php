@@ -1,15 +1,15 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 class SeoUrl extends \Opencart\System\Engine\Model {
-	public function addSeoUrl(array $data) {
+	public function addSeoUrl(array $data): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `keyword` = '" . $this->db->escape((string)$data['keyword']) . "'");
 	}
 
-	public function editSeoUrl(int $seo_url_id, array $data) {
+	public function editSeoUrl(int $seo_url_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$data['store_id'] . "', `language_id` = '" . (int)$data['language_id'] . "', `key` = '" . $this->db->escape((string)$data['key']) . "', `value` = '" . $this->db->escape((string)$data['value']) . "', `keyword` = '" . $this->db->escape((string)$data['keyword']) . "' WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 	}
 
-	public function deleteSeoUrl(int $seo_url_id) {
+	public function deleteSeoUrl(int $seo_url_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `seo_url_id` = '" . (int)$seo_url_id . "'");
 	}
 
@@ -120,13 +120,13 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getSeoUrlByKeyValue($key, $value, int $store_id, int $language_id): array {
+	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape((string)$value) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
 
 		return $query->row;
 	}
 
-	public function getSeoUrlByKeyword($keyword, int $store_id, int $language_id): array {
+	public function getSeoUrlByKeyword(string $keyword, int $store_id, int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `keyword` = '" . $this->db->escape($keyword) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
 
 		return $query->row;

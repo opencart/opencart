@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
 class Recurring extends \Opencart\System\Engine\Model {
-	public function addRecurring($order_id, $description, $item): int {
+	public function addRecurring(int $order_id, string $description, array $item): int {
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring` SET 
 		`order_id` = '" . (int)$order_id . "', 
@@ -19,19 +19,16 @@ class Recurring extends \Opencart\System\Engine\Model {
 		`recurring_price` = '" . (float)$item['recurring']['price'] . "', 
 		`trial` = '" . (int)$item['recurring']['trial'] . "', 
 		`trial_frequency` = '" . $this->db->escape((string)$item['recurring']['trial_frequency']) . "', 
-		`trial_cycle` = '" . (int)$item['recurring']['trial_cycle'] . "', 
-		`trial_duration` = '" . (int)$item['recurring']['trial_duration'] . "', 
-		`trial_price` = '" . (float)$item['recurring']['trial_price'] . "', 
-		`reference` = ''");
+		`trial_cycle` = '" . (int)$item['recurring']['trial_cycle'] . "', `trial_duration` = '" . (int)$item['recurring']['trial_duration'] . "', `trial_price` = '" . (float)$item['recurring']['trial_price'] . "', `reference` = ''");
 
 		return $this->db->getLastId();
 	}
 
-	public function addReference($order_recurring_id, $reference) {
+	public function addReference(int $order_recurring_id, string $reference): void {
 		$this->db->query("REPLACE INTO `" . DB_PREFIX . "order_recurring` SET `reference` = '" . $this->db->escape($reference) . "', `order_recurring_id` = '" . (int)$order_recurring_id . "', `date_added` = NOW()");
 	}
 
-	public function editReference($order_recurring_id, $reference) {
+	public function editReference(int $order_recurring_id, string $reference): bool {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `reference` = '" . $this->db->escape($reference) . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "' LIMIT 1");
 
 		if ($this->db->countAffected() > 0) {

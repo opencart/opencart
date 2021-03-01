@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Information extends \Opencart\System\Engine\Model {
-	public function addInformation(array $data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (int)$data['status'] . "'");
+	public function addInformation(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$information_id = $this->db->getLastId();
 
@@ -38,8 +38,8 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_id;
 	}
 
-	public function editInformation(int $information_id, array $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (int)$data['status'] . "' WHERE `information_id` = '" . (int)$information_id . "'");
+	public function editInformation(int $information_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)$data['status'] . "' WHERE `information_id` = '" . (int)$information_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
 
@@ -78,7 +78,7 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->cache->delete('information');
 	}
 
-	public function deleteInformation(int $information_id) {
+	public function deleteInformation(int $information_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information` WHERE `information_id` = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
@@ -145,7 +145,7 @@ class Information extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getDescriptions(int $information_id) {
+	public function getDescriptions(int $information_id): array {
 		$information_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
@@ -163,7 +163,7 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_description_data;
 	}
 
-	public function getStores(int $information_id) {
+	public function getStores(int $information_id): array {
 		$information_store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_store` WHERE `information_id` = '" . (int)$information_id . "'");
@@ -175,7 +175,7 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_store_data;
 	}
 
-	public function getSeoUrls(int $information_id) {
+	public function getSeoUrls(int $information_id): array {
 		$information_seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'information_id' AND `value` = '" . (int)$information_id . "'");
@@ -187,7 +187,7 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_seo_url_data;
 	}
 
-	public function getLayouts(int $information_id) {
+	public function getLayouts(int $information_id): array {
 		$information_layout_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information_to_layout` WHERE `information_id` = '" . (int)$information_id . "'");

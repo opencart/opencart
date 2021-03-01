@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Option extends \Opencart\System\Engine\Model {
-	public function addOption(array $data) {
+	public function addOption(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$option_id = $this->db->getLastId();
@@ -25,7 +25,7 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_id;
 	}
 
-	public function editOption(int $option_id, array $data) {
+	public function editOption(int $option_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = '" . $this->db->escape((string)$data['type']) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `option_id` = '" . (int)$option_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
@@ -54,7 +54,7 @@ class Option extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteOption(int $option_id) {
+	public function deleteOption(int $option_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option` WHERE `option_id` = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_description` WHERE `option_id` = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "'");
@@ -127,7 +127,7 @@ class Option extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getValues(int $option_id) {
+	public function getValues(int $option_id): array {
 		$option_value_data = [];
 
 		$option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` ov LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.`option_value_id` = ovd.`option_value_id`) WHERE ov.`option_id` = '" . (int)$option_id . "' AND ovd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.`sort_order`, ovd.`name`");
@@ -144,7 +144,7 @@ class Option extends \Opencart\System\Engine\Model {
 		return $option_value_data;
 	}
 
-	public function getValueDescriptions(int $option_id) {
+	public function getValueDescriptions(int $option_id): array {
 		$option_value_data = [];
 
 		$option_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` WHERE `option_id` = '" . (int)$option_id . "' ORDER BY `sort_order`");

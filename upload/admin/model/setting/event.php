@@ -1,31 +1,31 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Event extends \Opencart\System\Engine\Model {
-	public function addEvent($code, $description, $trigger, $action, $status = 1, $sort_order = 0): int {
+	public function addEvent(string $code, string $description, string $trigger, string $action, bool $status = true, int $sort_order = 0): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `description` = '" . $this->db->escape($description) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
 
 		return $this->db->getLastId();
 	}
 
-	public function deleteEvent($event_id) {
+	public function deleteEvent($event_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "'");
 	}
 
-	public function deleteEventByCode($code) {
+	public function deleteEventByCode($code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function editStatus($event_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '" . (int)$status . "' WHERE `event_id` = '" . (int)$event_id . "'");
+	public function editStatus(int $event_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `status` = '" . (bool)$status . "' WHERE `event_id` = '" . (int)$event_id . "'");
 	}
 
-	public function getEvent($event_id): array {
+	public function getEvent(int $event_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "'");
 
 		return $query->row;
 	}
 
-	public function getEventByCode($code): array {
+	public function getEventByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
 
 		return $query->row;

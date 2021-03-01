@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 class Layout extends \Opencart\System\Engine\Model {
-	public function addLayout(array $data) {
+	public function addLayout(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "'");
 
 		$layout_id = $this->db->getLastId();
@@ -21,7 +21,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		return $layout_id;
 	}
 
-	public function editLayout(int $layout_id, array $data) {
+	public function editLayout(int $layout_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "layout` SET `name` = '" . $this->db->escape((string)$data['name']) . "' WHERE `layout_id` = '" . (int)$layout_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
@@ -41,7 +41,7 @@ class Layout extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteLayout(int $layout_id) {
+	public function deleteLayout(int $layout_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_route` WHERE `layout_id` = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "'");

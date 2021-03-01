@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Upgrade;
 class Upgrade1000 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade(): void {
 		// Structure
 		$this->load->helper('db_schema');
 

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class WeightClass extends \Opencart\System\Engine\Model {
-	public function addWeightClass(array $data) {
+	public function addWeightClass(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "weight_class` SET `value` = '" . (float)$data['value'] . "'");
 
 		$weight_class_id = $this->db->getLastId();
@@ -15,7 +15,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 		return $weight_class_id;
 	}
 
-	public function editWeightClass(int $weight_class_id, array $data) {
+	public function editWeightClass(int $weight_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "weight_class` SET `value` = '" . (float)$data['value'] . "' WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "weight_class_description` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
@@ -27,7 +27,7 @@ class WeightClass extends \Opencart\System\Engine\Model {
 		$this->cache->delete('weight_class');
 	}
 
-	public function deleteWeightClass(int $weight_class_id) {
+	public function deleteWeightClass(int $weight_class_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "weight_class` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "weight_class_description` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
 

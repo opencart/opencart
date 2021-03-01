@@ -7,21 +7,21 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function editMarketing($marketing_id, array $data) {
+	public function editMarketing(int $marketing_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "' WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 	}
 
-	public function deleteMarketing($marketing_id) {
+	public function deleteMarketing(int $marketing_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "marketing` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 	}
 
-	public function getMarketing($marketing_id): array {
+	public function getMarketing(int $marketing_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "marketing` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 
 		return $query->row;
 	}
 
-	public function getMarketingByCode($code): array {
+	public function getMarketingByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "marketing` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
@@ -117,7 +117,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getReports($marketing_id, $start = 0, $limit = 10): array {
+	public function getReports(int $marketing_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -131,7 +131,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalReports($marketing_id): int {
+	public function getTotalReports(int $marketing_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing_report` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 
 		return $query->row['total'];

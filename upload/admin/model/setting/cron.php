@@ -1,35 +1,35 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Cron extends \Opencart\System\Engine\Model {
-	public function addCron($code, $cycle, $action, $status): int {
+	public function addCron(string $code, string $cycle, string $action, bool $status): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	public function deleteCron($cron_id) {
+	public function deleteCron(int $cron_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
-	public function deleteCronByCode($code) {
+	public function deleteCronByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
-	public function editCron($cron_id) {
+	public function editCron(int $cron_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `date_modified` = NOW() WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
-	public function editStatus($cron_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE `cron_id` = '" . (int)$cron_id . "'");
+	public function editStatus(int $cron_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (bool)$status . "' WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 
-	public function getCron($cron_id): array {
+	public function getCron(int $cron_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCronByCode($code): array {
+	public function getCronByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
 
 		return $query->row;

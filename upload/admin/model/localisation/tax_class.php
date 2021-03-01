@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class TaxClass extends \Opencart\System\Engine\Model {
-	public function addTaxClass(array $data) {
+	public function addTaxClass(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_class` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_added` = NOW()");
 
 		$tax_class_id = $this->db->getLastId();
@@ -17,7 +17,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		return $tax_class_id;
 	}
 
-	public function editTaxClass(int $tax_class_id, array $data) {
+	public function editTaxClass(int $tax_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "tax_class` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_modified` = NOW() WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
@@ -31,15 +31,15 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		$this->cache->delete('tax_class');
 	}
 
-	public function deleteTaxClass(int $tax_class_id) {
+	public function deleteTaxClass(int $tax_class_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		$this->cache->delete('tax_class');
 	}
 
-	public function getTaxClass($tax_class_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
+	public function getTaxClass(int $tax_class_id): array {
+		$query = $this->db->query("SE m                                             LECT * FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		return $query->row;
 	}
@@ -86,7 +86,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalTaxClasses() {
+	public function getTotalTaxClasses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_class`");
 
 		return $query->row['total'];

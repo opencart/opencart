@@ -7,19 +7,19 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getExtensionsByType($type): array {
+	public function getExtensionsByType(string $type): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY `code` ASC");
 
 		return $query->rows;
 	}
 
-	public function getExtensionByCode($type, $code): array {
+	public function getExtensionByCode(string $type, string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}
 
-	public function install($type, $extension, $code) {
+	public function install(string $type, string $extension, string $code) {
 		$extensions = $this->getExtensionsByType($type);
 
 		$codes = array_column($extensions, 'code');
@@ -29,7 +29,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function uninstall($type, $code) {
+	public function uninstall(string $type, string $code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
 	}
@@ -40,27 +40,27 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function deleteInstall($extension_install_id) {
+	public function deleteInstall(int $extension_install_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
-	public function editStatus($extension_install_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (int)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
+	public function editStatus(int $extension_install_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `status` = '" . (bool)$status . "' WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 	}
 
-	public function getInstall($extension_install_id): array {
+	public function getInstall(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_install_id` = '" . (int)$extension_install_id . "'");
 
 		return $query->row;
 	}
 
-	public function getInstallByExtensionDownloadId($extension_download_id): array {
+	public function getInstallByExtensionDownloadId(int $extension_download_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `extension_download_id` = '" . (int)$extension_download_id . "'");
 
 		return $query->row;
 	}
 
-	public function getInstallByCode($code): array {
+	public function getInstallByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
@@ -120,27 +120,27 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function addPath($extension_install_id, $path) {
+	public function addPath(int $extension_install_id, string $path): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "'");
 	}
 
-	public function deletePath($extension_path_id) {
+	public function deletePath(int $extension_path_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension_path` WHERE `extension_path_id` = '" . (int)$extension_path_id . "'");
 	}
 
-	public function getPathsByExtensionInstallId($extension_install_id): array {
+	public function getPathsByExtensionInstallId(int $extension_install_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `extension_install_id` = '" . (int)$extension_install_id . "' ORDER BY `extension_path_id` ASC");
 
 		return $query->rows;
 	}
 
-	public function getPaths($path): array {
+	public function getPaths(string $path): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "' ORDER BY `path` ASC");
 
 		return $query->rows;
 	}
 
-	public function getTotalPaths($path): array {
+	public function getTotalPaths(string $path): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
 		return $query->rows;

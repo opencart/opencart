@@ -2,27 +2,27 @@
 namespace Opencart\Admin\Model\Sale;
 class Voucher extends \Opencart\System\Engine\Model {
 	public function addVoucher(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '" . (int)$data['status'] . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	public function editVoucher($voucher_id, array $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '" . (int)$data['status'] . "' WHERE `voucher_id` = '" . (int)$voucher_id . "'");
+	public function editVoucher(int $voucher_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 	}
 
-	public function deleteVoucher($voucher_id) {
+	public function deleteVoucher(int $voucher_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 	}
 
-	public function getVoucher($voucher_id): array {
+	public function getVoucher(int $voucher_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "voucher` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 
 		return $query->row;
 	}
 
-	public function getVoucherByCode($code): array {
+	public function getVoucherByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "voucher` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
@@ -70,19 +70,19 @@ class Voucher extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalVouchers() {
+	public function getTotalVouchers(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "voucher`");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalVouchersByVoucherThemeId($voucher_theme_id) {
+	public function getTotalVouchersByVoucherThemeId(int $voucher_theme_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "voucher` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getHistories($voucher_id, $start = 0, $limit = 10): array {
+	public function getHistories(int $voucher_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -96,7 +96,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalHistories($voucher_id) {
+	public function getTotalHistories(int $voucher_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "voucher_history` WHERE `voucher_id` = '" . (int)$voucher_id . "'");
 
 		return $query->row['total'];

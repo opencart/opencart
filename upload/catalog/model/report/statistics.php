@@ -1,31 +1,31 @@
 <?php
 namespace Opencart\Catalog\Model\Report;
 class Statistics extends \Opencart\System\Engine\Model {
-	public function getStatistics() {
+	public function getStatistics(): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "statistics`");
 
 		return $query->rows;
 	}
 	
-	public function getValue($code) {
+	public function getValue(string $code): float {
 		$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "statistics` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return '';
+			return 0;
 		}
 	}
 	
-	public function addValue($code, $value) {
+	public function addValue(string $code, float $value): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "statistics` SET `value` = (`value` + '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 	
-	public function removeValue($code, $value) {
+	public function removeValue(string $code, float $value): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "statistics` SET `value` = (`value` - '" . (float)$value . "') WHERE `code` = '" . $this->db->escape($code) . "'");
 	}	
 	
-	public function editValue($code, $value) {
+	public function editValue(string $code, float $value): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "statistics` SET `value` = '" . (float)$value . "' WHERE `code` = '" . $this->db->escape($code) . "'");
 	}	
 }

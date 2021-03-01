@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class ReturnAction extends \Opencart\System\Engine\Model {
-	public function addReturnAction(array $data) {
+	public function addReturnAction(array $data): int {
 		foreach ($data['return_action'] as $language_id => $value) {
 			if (isset($return_action_id)) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_action` SET `return_action_id` = '" . (int)$return_action_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
@@ -17,7 +17,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		return $return_action_id;
 	}
 
-	public function editReturnAction(int $return_action_id, array $data) {
+	public function editReturnAction(int $return_action_id, array $data): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
 
 		foreach ($data['return_action'] as $language_id => $value) {

@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Category extends \Opencart\System\Engine\Model {
-	public function addCategory(array $data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW(), `date_added` = NOW()");
+	public function addCategory(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)$data['status'] . "', `date_modified` = NOW(), `date_added` = NOW()");
 
 		$category_id = $this->db->getLastId();
 
@@ -59,8 +59,8 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_id;
 	}
 
-	public function editCategory(int $category_id, array $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
+	public function editCategory(int $category_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)$data['status'] . "', `date_modified` = NOW() WHERE `category_id` = '" . (int)$category_id . "'");
 
 		if (isset($data['image'])) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = '" . $this->db->escape((string)$data['image']) . "' WHERE `category_id` = '" . (int)$category_id . "'");
@@ -170,7 +170,7 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteCategory(int $category_id) {
+	public function deleteCategory(int $category_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "'");
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$category_id . "'");
@@ -219,7 +219,7 @@ class Category extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getPath(int $category_id) {
+	public function getPath(int $category_id): string {
 		return implode('_', array_column($this->getPaths($category_id), 'path_id'));
 	}
 
@@ -266,7 +266,7 @@ class Category extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getDescriptions(int $category_id) {
+	public function getDescriptions(int $category_id): array {
 		$category_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_description` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -284,13 +284,13 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_description_data;
 	}
 
-	public function getPaths(int $category_id) {
+	public function getPaths(int $category_id): array {
 		$query = $this->db->query("SELECT `category_id`, `path_id`, `level` FROM `" . DB_PREFIX . "category_path` WHERE `category_id` = '" . (int)$category_id . "' ORDER BY `level` ASC");
 
 		return $query->rows;
 	}
 
-	public function getFilters(int $category_id) {
+	public function getFilters(int $category_id): array {
 		$category_filter_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_filter` WHERE `category_id` = '" . (int)$category_id . "'");
@@ -302,7 +302,7 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_filter_data;
 	}
 
-	public function getSeoUrls(int $category_id) {
+	public function getSeoUrls(int $category_id): array {
 		$category_seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'path' AND `value` = '" . $this->db->escape($this->getPath($category_id)) . "'");
@@ -314,7 +314,7 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_seo_url_data;
 	}
 
-	public function getStores(int $category_id) {
+	public function getStores(int $category_id): array {
 		$category_store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_to_store` WHERE `category_id` = '" . (int)$category_id . "'");

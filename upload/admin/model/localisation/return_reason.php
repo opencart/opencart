@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class ReturnReason extends \Opencart\System\Engine\Model {
-	public function addReturnReason(array $data) {
+	public function addReturnReason(array $data): int {
 		foreach ($data['return_reason'] as $language_id => $value) {
 			if (isset($return_reason_id)) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "return_reason` SET `return_reason_id` = '" . (int)$return_reason_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
@@ -17,7 +17,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		return $return_reason_id;
 	}
 
-	public function editReturnReason(int $return_reason_id, array $data) {
+	public function editReturnReason(int $return_reason_id, array $data): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_reason` WHERE `return_reason_id` = '" . (int)$return_reason_id . "'");
 
 		foreach ($data['return_reason'] as $language_id => $value) {
@@ -27,7 +27,7 @@ class ReturnReason extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_reason');
 	}
 
-	public function deleteReturnReason(int $return_reason_id) {
+	public function deleteReturnReason(int $return_reason_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_reason` WHERE `return_reason_id` = '" . (int)$return_reason_id . "'");
 
 		$this->cache->delete('return_reason');

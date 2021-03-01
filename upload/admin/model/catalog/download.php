@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Download extends \Opencart\System\Engine\Model {
-	public function addDownload(array $data) {
+	public function addDownload(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "', `date_added` = NOW()");
 
 		$download_id = $this->db->getLastId();
@@ -13,7 +13,7 @@ class Download extends \Opencart\System\Engine\Model {
 		return $download_id;
 	}
 
-	public function editDownload(int $download_id, array $data) {
+	public function editDownload(int $download_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "' WHERE `download_id` = '" . (int)$download_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
@@ -23,7 +23,7 @@ class Download extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteDownload(int $download_id) {
+	public function deleteDownload(int $download_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download` WHERE `download_id` = '" . (int)$download_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
 	}

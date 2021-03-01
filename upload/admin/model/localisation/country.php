@@ -2,20 +2,20 @@
 namespace Opencart\Admin\Model\Localisation;
 class Country extends \Opencart\System\Engine\Model {
 	public function addCountry(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (int)$data['status'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$this->cache->delete('country');
 
 		return $this->db->getLastId();
 	}
 
-	public function editCountry(int $country_id, array $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (int)$data['status'] . "' WHERE `country_id` = '" . (int)$country_id . "'");
+	public function editCountry(int $country_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `country_id` = '" . (int)$country_id . "'");
 
 		$this->cache->delete('country');
 	}
 
-	public function deleteCountry(int $country_id) {
+	public function deleteCountry(int $country_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		$this->cache->delete('country');

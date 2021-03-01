@@ -2,20 +2,20 @@
 namespace Opencart\Admin\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
 	public function addZone(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `status` = '" . (int)$data['status'] . "', `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET ``name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$this->cache->delete('zone');
 
 		return $this->db->getLastId();
 	}
 
-	public function editZone(int $zone_id, array $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "zone` SET `status` = '" . (int)$data['status'] . "', `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "' WHERE `zone_id` = '" . (int)$zone_id . "'");
+	public function editZone(int $zone_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		$this->cache->delete('zone');
 	}
 
-	public function deleteZone(int $zone_id) {
+	public function deleteZone(int $zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		$this->cache->delete('zone');

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 class StockStatus extends \Opencart\System\Engine\Model {
-	public function addStockStatus(array $data) {
+	public function addStockStatus(array $data): int {
 		foreach ($data['stock_status'] as $language_id => $value) {
 			if (isset($stock_status_id)) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "stock_status` SET `stock_status_id` = '" . (int)$stock_status_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "'");
@@ -27,7 +27,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 		$this->cache->delete('stock_status');
 	}
 
-	public function deleteStockStatus(int $stock_status_id) {
+	public function deleteStockStatus(int $stock_status_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
 
 		$this->cache->delete('stock_status');

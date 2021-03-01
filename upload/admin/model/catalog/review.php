@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 class Review extends \Opencart\System\Engine\Model {
-	public function addReview(array $data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (int)$data['status'] . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "'");
+	public function addReview(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)$data['status'] . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "'");
 
 		$review_id = $this->db->getLastId();
 
@@ -11,13 +11,13 @@ class Review extends \Opencart\System\Engine\Model {
 		return $review_id;
 	}
 
-	public function editReview(int $review_id, array $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (int)$data['status'] . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "', `date_modified` = NOW() WHERE `review_id` = '" . (int)$review_id . "'");
+	public function editReview(int $review_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)$data['status'] . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "', `date_modified` = NOW() WHERE `review_id` = '" . (int)$review_id . "'");
 
 		$this->cache->delete('product');
 	}
 
-	public function deleteReview(int $review_id) {
+	public function deleteReview(int $review_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "review` WHERE `review_id` = '" . (int)$review_id . "'");
 
 		$this->cache->delete('product');

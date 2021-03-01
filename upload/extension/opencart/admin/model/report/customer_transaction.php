@@ -35,7 +35,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalTransactions(array $data = []): array {
+	public function getTotalTransactions(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT ct.`customer_id`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` ct LEFT JOIN `" . DB_PREFIX . "customer` c ON (ct.`customer_id` = c.`customer_id`)";
 
 		$implode = [];

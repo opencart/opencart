@@ -137,7 +137,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalOrders(array $data = []): array {
+	public function getTotalOrders(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT o.`customer_id`) AS `total` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.`customer_id` = c.`customer_id`) WHERE o.`customer_id` > '0'";
 
 		if (!empty($data['filter_date_start'])) {
@@ -197,7 +197,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalRewardPoints(array $data = []): array {
+	public function getTotalRewardPoints(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT cr.`customer_id`) AS `total` FROM `" . DB_PREFIX . "customer_reward` cr LEFT JOIN `" . DB_PREFIX . "customer` c ON (cr.`customer_id` = c.`customer_id`)";
 
 		$implode = [];
@@ -267,7 +267,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalCustomerActivities(array $data = []): array {
+	public function getTotalCustomerActivities(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_activity` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
 		$implode = [];
@@ -345,7 +345,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalCustomerSearches(array $data = []): array {
+	public function getTotalCustomerSearches(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_search` cs LEFT JOIN `" . DB_PREFIX . "customer` c ON (cs.`customer_id` = c.`customer_id`)";
 
 		$implode = [];

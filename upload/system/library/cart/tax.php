@@ -50,7 +50,7 @@ class Tax {
 		}
 	}
 
-	public function calculate(float $value, int $tax_class_id, bool $calculate = true): float {
+	public function calculate(float $value, int $tax_class_id, string|bool $calculate = true): float {
 		if ($tax_class_id && $calculate) {
 			$amount = 0;
 

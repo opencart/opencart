@@ -21,7 +21,7 @@ class Mail {
 	protected string $text = '';
 	protected string $html = '';
 	protected array $attachments = [];
-	
+
 	/**
 	 * Constructor
 	 *

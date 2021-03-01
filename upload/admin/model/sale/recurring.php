@@ -130,7 +130,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $transactions;
 	}
 
-	private function getStatus($status): string {
+	private function getStatus(int $status): string {
 		switch ($status) {
 			case 1:
 				$result = $this->language->get('text_status_inactive');

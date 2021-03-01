@@ -22,7 +22,7 @@ class Config {
 	 * @param    string $namespace
 	 * @param    string $directory
 	 */
-	public function addPath(string $namespace, string $directory = '') {
+	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
 		} else {

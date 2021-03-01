@@ -20,9 +20,9 @@ class Maintenance extends \Opencart\System\Engine\Controller {
 
 			if (substr($route, 0, 3) != 'api' && !in_array($route, $ignore) && !$user->isLogged()) {
 				return new \Opencart\System\Engine\Action('common/maintenance');
-			} else {
-				return;
 			}
 		}
+
+		return null;
 	}
 }

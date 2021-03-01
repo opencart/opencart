@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 class Currency extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+	public function index(): string {
 		$this->load->language('common/currency');
 
 		$data['action'] = $this->url->link('common/currency|currency', 'language=' . $this->config->get('config_language'));

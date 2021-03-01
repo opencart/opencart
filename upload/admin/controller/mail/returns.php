@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 class Returns extends \Opencart\System\Engine\Controller {
-	public function index(string &$route, array &$args, string &$output): void {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$return_id = $args[0];
 		} else {

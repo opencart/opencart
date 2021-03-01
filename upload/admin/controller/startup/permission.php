@@ -25,9 +25,9 @@ class Permission extends \Opencart\System\Engine\Controller {
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
 				return new \Opencart\System\Engine\Action('error/permission');
-			} else {
-				return;
 			}
 		}
+
+		return null;
 	}
 }

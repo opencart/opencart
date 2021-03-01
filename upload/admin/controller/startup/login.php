@@ -35,7 +35,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		if (!in_array($route, $ignore) && (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token']))) {
 			return new \Opencart\System\Engine\Action('common/login');
 		} else {
-			return '';
+			return null;
 		}
 	}
 }

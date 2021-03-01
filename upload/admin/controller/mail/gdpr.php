@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Mail;
 class Gdpr extends \Opencart\System\Engine\Controller {
 	// admin/model/customer/gdpr/editStatus
-	public function index(&$route, &$args, &$output) {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('customer/gdpr');
 
 		$gdpr_info = $this->model_customer_gdpr->getGdpr($args[0]);
@@ -32,7 +32,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function export($gdpr_info) {
+	public function export(array $gdpr_info): void {
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -194,7 +194,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$mail->send();
 	}
 
-	public function approve($gdpr_info) {
+	public function approve(array $gdpr_info): void {
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -275,7 +275,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$mail->send();
 	}
 
-	public function deny($gdpr_info) {
+	public function deny(array $gdpr_info): void {
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
@@ -356,7 +356,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$mail->send();
 	}
 
-	public function remove($gdpr_info) {
+	public function remove(array $gdpr_info): void {
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);

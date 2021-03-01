@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Information;
 class Contact extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('information/contact');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -146,7 +146,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('information/contact', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'name',
 			'email',
@@ -188,7 +188,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function success() {
+	public function success(): void {
 		$this->load->language('information/contact');
 
 		$this->document->setTitle($this->language->get('heading_title'));

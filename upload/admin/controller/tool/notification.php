@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Tool;
 class Notification extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('tool/notification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -27,7 +27,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/notification', $data));
 	}
 
-	public function list() {
+	public function list(): void {
 		$this->load->language('tool/notification');
 		
 		if (isset($this->request->get['page'])) {
@@ -82,7 +82,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/notification_list', $data));
 	}
 
-	public function info() {
+	public function info(): void {
 		if (isset($this->request->get['notification_id'])) {
 			$notification_id = $this->request->get['notification_id'];
 		} else {
@@ -108,7 +108,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('tool/notification');
 
 		$json = [];

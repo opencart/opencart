@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Event;
 class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after
-	public function addCustomer(&$route, &$args, &$output) {
+	public function addCustomer(string &$route, array &$args, mixed &$output) {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
 

@@ -75,7 +75,7 @@ class Download extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getDescriptions(int $download_id) {
+	public function getDescriptions(int $download_id): array {
 		$download_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "download_description` WHERE `download_id` = '" . (int)$download_id . "'");
@@ -93,7 +93,7 @@ class Download extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 
-	public function getReports(int $download_id, int $start = 0, int $limit = 10) {
+	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}

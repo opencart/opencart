@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Address extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
@@ -19,7 +19,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
@@ -48,7 +48,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
@@ -93,7 +93,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
@@ -131,7 +131,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
@@ -219,7 +219,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/address_list', $data));
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$data['text_address'] = !isset($this->request->get['address_id']) ? $this->language->get('text_address_add') : $this->language->get('text_address_edit');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -430,7 +430,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/address_form', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		$keys = [
 			'firstname',
 			'lastname',
@@ -497,7 +497,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete() {
+	protected function validateDelete(): bool {
 		if ($this->model_account_address->getTotalAddresses() == 1) {
 			$this->error['warning'] = $this->language->get('error_delete');
 		}

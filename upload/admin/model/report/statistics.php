@@ -7,13 +7,13 @@ class Statistics extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 	
-	public function getValue(string $code) {
+	public function getValue(string $code): float {
 		$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "statistics` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		if ($query->num_rows) {
 			return $query->row['value'];
 		} else {
-			return '';
+			return 0;
 		}
 	}
 	

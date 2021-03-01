@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Guest extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));

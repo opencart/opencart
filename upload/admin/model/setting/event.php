@@ -7,11 +7,11 @@ class Event extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function deleteEvent($event_id): void {
+	public function deleteEvent(int $event_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `event_id` = '" . (int)$event_id . "'");
 	}
 
-	public function deleteEventByCode($code): void {
+	public function deleteEventByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 

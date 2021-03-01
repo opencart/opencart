@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 class Extension extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('marketplace/extension');
 
 		$this->document->setTitle($this->language->get('heading_title'));

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 class Application extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		// Response output compression level
 		if ($this->config->get('config_compression')) {
 			$this->response->setCompression($this->config->get('config_compression'));

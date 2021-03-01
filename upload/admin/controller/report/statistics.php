@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Report;
 class Statistics extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 	
-	public function index() {
+	public function index(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();	
 	}
 	
-	public function ordersale() {
+	public function ordersale(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -33,7 +33,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();	
 	}
 		
-	public function orderprocessing() {
+	public function orderprocessing(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -53,7 +53,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();	
 	}
 	
-	public function ordercomplete() {
+	public function ordercomplete(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));		
@@ -73,7 +73,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();	
 	}
 	
-	public function orderother() {
+	public function orderother(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));	
@@ -105,7 +105,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();	
 	}
 
-	public function returns() {
+	public function returns(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));	
@@ -125,7 +125,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();	
 	}
 
-	public function product() {
+	public function product(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));	
@@ -145,7 +145,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}	
 	
-	public function review() {
+	public function review(): void {
 		$this->load->language('report/statistics');
 
 		$this->document->setTitle($this->language->get('heading_title'));	
@@ -165,7 +165,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 	
-	public function getList() {
+	public function getList(): void {
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -213,7 +213,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('report/statistics', $data));
 	}
 	
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'report/statistics')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

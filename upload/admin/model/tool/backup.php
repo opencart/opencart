@@ -15,7 +15,7 @@ class Backup extends \Opencart\System\Engine\Model {
 		return $table_data;
 	}
 
-	public function getRecords(string $table, int $start = 0, int $limit = 100) {
+	public function getRecords(string $table, int $start = 0, int $limit = 100): array {
 		if ($start < 0) {
 			$start = 0;
 		}

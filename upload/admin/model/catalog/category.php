@@ -326,7 +326,7 @@ class Category extends \Opencart\System\Engine\Model {
 		return $category_store_data;
 	}
 
-	public function getLayouts(int $category_id) {
+	public function getLayouts(int $category_id): array {
 		$category_layout_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "'");

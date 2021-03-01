@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Reset extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -99,7 +99,7 @@ class Reset extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/reset', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'password',
 			'confirm'

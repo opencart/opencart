@@ -43,7 +43,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function editToken(int $customer_id, $token): void {
+	public function editToken(int $customer_id, string $token): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
@@ -297,7 +297,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_history` SET `customer_id` = '" . (int)$customer_id . "', `comment` = '" . $this->db->escape(strip_tags($comment)) . "', `date_added` = NOW()");
 	}
 
-	public function getHistories(int $customer_id, int $start = 0, int $limit = 10) {
+	public function getHistories(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -366,7 +366,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > 0");
 	}
 
-	public function getRewards(int $customer_id, int $start = 0, int $limit = 10) {
+	public function getRewards(int $customer_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}

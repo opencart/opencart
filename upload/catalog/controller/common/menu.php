@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 class Menu extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('common/menu');
 
 		// Menu

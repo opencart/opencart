@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Setting;
 class Setting extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -1230,7 +1230,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/setting', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'setting/setting')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -1390,7 +1390,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function theme() {
+	public function theme(): void {
 		$image = '';
 
 		$theme = basename($this->request->get['theme']);

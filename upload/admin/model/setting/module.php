@@ -15,7 +15,7 @@ class Module extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
 	}
 		
-	public function getModule(int $module_id) {
+	public function getModule(int $module_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
 
 		if ($query->row) {
@@ -31,7 +31,7 @@ class Module extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}	
 		
-	public function getModulesByCode(string $code) {
+	public function getModulesByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY `name`");
 
 		return $query->rows;

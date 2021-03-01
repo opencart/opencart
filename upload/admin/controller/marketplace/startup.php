@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 class Startup extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('marketplace/startup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('marketplace/startup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -47,7 +47,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function getList() {
+	public function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -186,7 +186,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/startup', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -194,7 +194,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function enable() {
+	public function enable(): void {
 		$this->load->language('marketplace/startup');
 
 		$json = [];
@@ -219,7 +219,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function disable() {
+	public function disable(): void {
 		$this->load->language('marketplace/startup');
 
 		$json = [];

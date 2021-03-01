@@ -34,7 +34,7 @@ Upgrade
 */
 namespace Opencart\Admin\Controller\Tool;
 class Upgrade extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('tool/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -142,7 +142,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
-	public function modified() {
+	public function modified(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -219,7 +219,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function download() {
+	public function download(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -269,7 +269,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function unzip() {
+	public function unzip(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -310,7 +310,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function move() {
+	public function move(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -402,7 +402,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function remove(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -477,7 +477,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function db() {
+	public function db(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -514,7 +514,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];

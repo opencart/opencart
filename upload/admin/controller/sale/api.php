@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Api extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 
 		// Autoloader
 		$autoloader = new \Opencart\System\Engine\Autoloader();

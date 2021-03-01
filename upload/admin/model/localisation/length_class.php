@@ -34,7 +34,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$this->cache->delete('length_class');
 	}
 
-	public function getLengthClasses(array $data = []) {
+	public function getLengthClasses(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` lc LEFT JOIN `" . DB_PREFIX . "length_class_description` lcd ON (lc.`length_class_id` = lcd.`length_class_id`) WHERE lcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -92,7 +92,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getDescriptionByUnit($unit): array {
+	public function getDescriptionByUnit(string $unit): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Affiliate;
 class Register extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if (!$this->config->get('config_affiliate_status') || $this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -330,7 +330,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('affiliate/register', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'firstname',
 			'lastname',

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Register extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -324,7 +324,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function customfield() {
+	public function customfield(): void {
 		$json = [];
 
 		$this->load->model('account/custom_field');

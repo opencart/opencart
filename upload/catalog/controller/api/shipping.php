@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Api;
 class Shipping extends \Opencart\System\Engine\Controller {
-	public function address() {
+	public function address(): void {
 		$this->load->language('api/shipping');
 
 		// Delete old shipping address, shipping methods and method so not to cause any issues if there is an error
@@ -141,7 +141,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function methods() {
+	public function methods(): void {
 		$this->load->language('api/shipping');
 
 		// Delete past shipping methods and method just in case there is an error
@@ -204,7 +204,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function method() {
+	public function method(): void {
 		$this->load->language('api/shipping');
 
 		// Delete old shipping method so not to cause any issues if there is an error

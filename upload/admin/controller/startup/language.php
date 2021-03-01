@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 class Language extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		// Added this code so that backup and restore doesn't show text_restore
 		$code = $this->config->get('config_language_admin');
 

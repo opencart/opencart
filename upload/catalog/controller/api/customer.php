@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Api;
 class Customer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('api/customer');
 
 		// Delete past customer in case there is an error

@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 class Module extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/module');
 
 		$this->load->model('setting/extension');
@@ -13,7 +13,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function install() {
+	public function install(): void {
 		$this->load->language('extension/module');
 
 		$this->load->model('setting/extension');
@@ -39,7 +39,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function uninstall() {
+	public function uninstall(): void {
 		$this->load->language('extension/module');
 
 		$this->load->model('setting/extension');
@@ -60,7 +60,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 	
-	public function add() {
+	public function add(): void {
 		$this->load->language('extension/module');
 
 		$this->load->model('setting/extension');
@@ -78,7 +78,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('extension/module');
 
 		$this->load->model('setting/extension');
@@ -94,7 +94,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function getList() {
+	public function getList(): void {
 		$this->load->language('extension/module');
 
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token']));
@@ -196,7 +196,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/module', $data);
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

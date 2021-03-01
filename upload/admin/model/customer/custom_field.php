@@ -179,13 +179,13 @@ class CustomField extends \Opencart\System\Engine\Model {
 		return $custom_field_value_data;
 	}
 
-	public function getCustomerGroups(int $custom_field_id) {
+	public function getCustomerGroups(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getValueDescriptions(int $custom_field_id) {
+	public function getValueDescriptions(int $custom_field_id): array {
 		$custom_field_value_data = [];
 
 		$custom_field_value_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_value` WHERE `custom_field_id` = '" . (int)$custom_field_id . "'");

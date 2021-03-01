@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Returns extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language'));
 
@@ -83,7 +83,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/return_list', $data));
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->load->language('account/returns');
 
 		if (isset($this->request->get['return_id'])) {
@@ -215,7 +215,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('account/return');
 
 		$this->load->model('account/returns');
@@ -460,7 +460,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/return_form', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'order_id',
 			'firstname',
@@ -537,7 +537,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function success() {
+	public function success(): void {
 		$this->load->language('account/return');
 
 		$this->document->setTitle($this->language->get('heading_title'));

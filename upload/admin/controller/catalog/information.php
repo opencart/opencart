@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Information extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('catalog/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('catalog/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -45,7 +45,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('catalog/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -77,7 +77,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('catalog/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -111,7 +111,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -245,7 +245,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/information_list', $data));
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
 		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
 
@@ -410,7 +410,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/information_form', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -454,7 +454,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete() {
+	protected function validateDelete(): bool {
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

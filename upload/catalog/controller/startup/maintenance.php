@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 class Maintenance extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if ($this->config->get('config_maintenance')) {
 			// Route
 			if (isset($this->request->get['route'])) {

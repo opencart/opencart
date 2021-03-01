@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Voucher extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -45,7 +45,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -77,7 +77,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -111,7 +111,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -264,7 +264,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_list', $data));
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['voucher_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->request->get['voucher_id'])) {
@@ -438,7 +438,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_form', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -480,7 +480,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete() {
+	protected function validateDelete(): bool {
 		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -500,7 +500,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function history() {
+	public function history(): void {
 		$this->load->language('sale/voucher');
 
 		$this->load->model('sale/voucher');
@@ -538,7 +538,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_history', $data));
 	}
 
-	public function send() {
+	public function send(): void {
 		$this->load->language('mail/voucher');
 
 		$json = [];

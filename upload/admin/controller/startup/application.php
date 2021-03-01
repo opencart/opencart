@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 class Application extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		// Url
 		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('site_url')));
 

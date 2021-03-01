@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Recurring extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 
@@ -84,7 +84,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/recurring_list', $data));
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->load->language('account/recurring');
 
 		if (isset($this->request->get['order_recurring_id'])) {

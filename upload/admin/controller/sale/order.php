@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Order extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -23,7 +23,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -33,7 +33,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -93,7 +93,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->redirect($this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url));
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = (int)$this->request->get['filter_order_id'];
 		} else {
@@ -469,7 +469,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_list', $data));
 	}
 
-	public function getForm() {
+	public function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -791,7 +791,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_form', $data));
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->load->model('sale/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -1346,7 +1346,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -1354,7 +1354,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function createInvoiceNo() {
+	public function createInvoiceNo(): void {
 		$this->load->language('sale/order');
 
 		$json = [];
@@ -1383,7 +1383,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function addReward() {
+	public function addReward(): void {
 		$this->load->language('sale/order');
 
 		$json = [];
@@ -1418,7 +1418,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function removeReward() {
+	public function removeReward(): void {
 		$this->load->language('sale/order');
 
 		$json = [];
@@ -1449,7 +1449,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function addCommission() {
+	public function addCommission(): void {
 		$this->load->language('sale/order');
 
 		$json = [];
@@ -1484,7 +1484,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function removeCommission() {
+	public function removeCommission(): void {
 		$this->load->language('sale/order');
 
 		$json = [];
@@ -1515,7 +1515,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function history() {
+	public function history(): void {
 		$this->load->language('sale/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -1559,7 +1559,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_history', $data));
 	}
 
-	public function invoice() {
+	public function invoice(): void {
 		$this->load->language('sale/order');
 
 		$data['title'] = $this->language->get('text_invoice');
@@ -1772,7 +1772,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_invoice', $data));
 	}
 
-	public function shipping() {
+	public function shipping(): void {
 		$this->load->language('sale/order');
 
 		$data['title'] = $this->language->get('text_shipping');

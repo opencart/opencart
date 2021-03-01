@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 class Cookie extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->model('catalog/information');
 
@@ -20,7 +20,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function confirm() {
+	public function confirm(): void {
 		$json = [];
 
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {

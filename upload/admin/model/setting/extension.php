@@ -19,7 +19,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function install(string $type, string $extension, string $code) {
+	public function install(string $type, string $extension, string $code): void {
 		$extensions = $this->getExtensionsByType($type);
 
 		$codes = array_column($extensions, 'code');
@@ -29,7 +29,7 @@ class Extension extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function uninstall(string $type, string $code) {
+	public function uninstall(string $type, string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $this->db->escape($type . '_' . $code) . "'");
 	}

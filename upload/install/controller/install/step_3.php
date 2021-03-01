@@ -3,7 +3,7 @@ namespace Opencart\Install\Controller\Install;
 class Step3 extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('install/step_3');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -281,7 +281,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('install/step_3', $data));
 	}
 
-	private function validate() {
+	private function validate(): bool {
 		if (!$this->request->post['db_hostname']) {
 			$this->error['db_hostname'] = $this->language->get('error_db_hostname');
 		}

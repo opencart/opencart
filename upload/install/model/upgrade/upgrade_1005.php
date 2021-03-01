@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Model\Upgrade;
 class Upgrade1005 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade(): void {
 		// Convert image/data to image/catalog
 		$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
 		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image , 'data/', 'catalog/')");
@@ -78,7 +78,7 @@ class Upgrade1005 extends \Opencart\System\Engine\Model {
 	}
 
 	// Function to repair any erroneous categories that are not in the category path table.
-	public function repairCategories($parent_id = 0) {
+	public function repairCategories(int $parent_id = 0): void {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
 
 		foreach ($query->rows as $category) {

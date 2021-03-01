@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 class ProductViewed extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/report/product_viewed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -62,7 +62,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/report/product_viewed_form', $data));
 	}
 	
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/report/product_viewed')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

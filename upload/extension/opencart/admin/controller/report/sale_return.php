@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 class SaleReturn extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/report/sale_return');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -62,7 +62,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/report/sale_return_form', $data));
 	}
 	
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/report/sale_return')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

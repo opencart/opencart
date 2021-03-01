@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install  \Model\Upgrade;
 class Upgrade1006 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade(): void {
 		// Customer Group
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
 

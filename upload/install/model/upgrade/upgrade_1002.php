@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Model\Upgrade;
 class Upgrade1002 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade(): void {
 		// Settings extensions and module changes
 
 		// Remove the `group` field

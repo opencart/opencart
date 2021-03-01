@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 class Pickup extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/shipping/pickup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -74,7 +74,7 @@ class Pickup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/shipping/pickup', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/shipping/pickup')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

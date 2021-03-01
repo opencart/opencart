@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 class BankTransfer extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/payment/bank_transfer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -112,7 +112,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/payment/bank_transfer', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/payment/bank_transfer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

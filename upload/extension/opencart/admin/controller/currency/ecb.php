@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Currency;
 class ECB extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/currency/ecb');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -58,7 +58,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/currency/ecb', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/currency/ecb')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -66,7 +66,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function currency($default = '') {
+	public function currency(string $default = ''): void {
 		if ($this->config->get('currency_ecb_status')) {
 			$curl = curl_init();
 

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('common/header');
 		
 		$data['title'] = $this->document->getTitle();

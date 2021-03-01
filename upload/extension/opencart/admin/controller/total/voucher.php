@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 class Voucher extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/total/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -64,7 +64,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/total/voucher', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/total/voucher')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

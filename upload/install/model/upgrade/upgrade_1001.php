@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Model\Upgrade;
 class Upgrade1001 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade(): void {
 		// Config and file structure changes
 		$files = [];
 

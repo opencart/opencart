@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 class Free extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/shipping/free');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -80,7 +80,7 @@ class Free extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/shipping/free', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/shipping/free')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

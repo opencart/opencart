@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 class CustomerReward extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/report/customer_reward');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -62,7 +62,7 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_reward_form', $data));
 	}
 	
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_reward')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

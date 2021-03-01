@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Model\Upgrade;
 class Upgrade1007 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade(): void {
 		// Banners and image path replacement
 
 		// Convert image/data to image/catalog

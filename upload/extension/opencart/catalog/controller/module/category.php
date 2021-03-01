@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Category extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('extension/opencart/module/category');
 
 		if (isset($this->request->get['path'])) {

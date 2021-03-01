@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Controller\Startup;
 class Upgrade extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$upgrade = false;
 		
 		if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {

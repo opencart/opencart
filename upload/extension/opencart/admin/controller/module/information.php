@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 class Information extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/module/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -58,7 +58,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/information', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/module/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Special extends \Opencart\System\Engine\Controller {
-	public function index($setting) {
+	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/special');
 
 		$this->load->model('catalog/product');
@@ -61,6 +61,8 @@ class Special extends \Opencart\System\Engine\Controller {
 			}
 
 			return $this->load->view('extension/opencart/module/special', $data);
+		} else {
+			return '';
 		}
 	}
 }

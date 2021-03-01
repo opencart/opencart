@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 class FreeCheckout extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		return $this->load->view('extension/opencart/payment/free_checkout');
 	}
 
-	public function confirm() {
+	public function confirm(): void {
 		$json = [];
 
 		if ($this->session->data['payment_method']['code'] == 'free_checkout') {

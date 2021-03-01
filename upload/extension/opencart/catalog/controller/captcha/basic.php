@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Captcha;
 class Basic extends \Opencart\System\Engine\Controller {
-	public function index($error = []) {
+	public function index(array $error = []): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
 		if (isset($error['captcha'])) {
@@ -15,15 +15,17 @@ class Basic extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/captcha/basic', $data);
 	}
 
-	public function validate() {
+	public function validate(): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
 		if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 			return $this->language->get('error_captcha');
+		} else {
+			return '';
 		}
 	}
 
-	public function captcha() {
+	public function captcha(): void {
 		$this->session->data['captcha'] = substr(token(100), rand(0, 94), 6);
 
 		$image  = imagecreatetruecolor(150, 35);

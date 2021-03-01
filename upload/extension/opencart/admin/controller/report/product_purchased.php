@@ -70,7 +70,7 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 		
-	public function report() {
+	public function report(): void {
 		$this->load->language('extension/opencart/report/product_purchased');
 
 		if (isset($this->request->get['filter_date_start'])) {

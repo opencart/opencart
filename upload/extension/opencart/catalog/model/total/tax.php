@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Tax extends \Opencart\System\Engine\Model {
-	public function getTotal(&$totals, &$taxes, &$total) {
+	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		foreach ($taxes as $key => $value) {
 			if ($value > 0) {
 				$totals[] = [

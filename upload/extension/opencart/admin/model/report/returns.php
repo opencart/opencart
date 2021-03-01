@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Returns extends \Opencart\System\Engine\Model {
-	public function getReturns($data = []) {
+	public function getReturns(array $data = []): array {
 		$sql = "SELECT MIN(r.`date_added`) AS date_start, MAX(r.`date_added`) AS date_end, COUNT(r.`return_id`) AS returns FROM `" . DB_PREFIX . "return` r";
 
 		if (!empty($data['filter_return_status_id'])) {
@@ -57,7 +57,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalReturns($data = []) {
+	public function getTotalReturns(array $data = []): int {
 		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {

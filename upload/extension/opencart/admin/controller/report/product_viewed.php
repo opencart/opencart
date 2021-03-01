@@ -70,7 +70,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 		
-	public function report() {
+	public function report(): void {
 		$this->load->language('extension/opencart/report/product_viewed');
 
 		if (isset($this->request->get['page'])) {
@@ -129,7 +129,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/report/product_viewed', $data));
 	}
 
-	public function reset() {
+	public function reset(): void {
 		$json = [];
 
 		$this->load->language('extension/opencart/report/product_viewed');

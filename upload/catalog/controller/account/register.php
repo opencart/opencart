@@ -230,7 +230,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/register', $data));
 	}
 
-	private function validate() {
+	private function validate(): bool {
 		$keys = [
 			'firstname',
 			'lastname',

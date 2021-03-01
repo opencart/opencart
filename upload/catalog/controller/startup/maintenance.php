@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 class Maintenance extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+	public function index(): object|null {
 		if ($this->config->get('config_maintenance')) {
 			// Route
 			if (isset($this->request->get['route'])) {
@@ -20,6 +20,8 @@ class Maintenance extends \Opencart\System\Engine\Controller {
 
 			if (substr($route, 0, 3) != 'api' && !in_array($route, $ignore) && !$user->isLogged()) {
 				return new \Opencart\System\Engine\Action('common/maintenance');
+			} else {
+				return;
 			}
 		}
 	}

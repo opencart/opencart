@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Tracking extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+	public function index(): object|void {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}

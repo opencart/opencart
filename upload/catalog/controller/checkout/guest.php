@@ -149,7 +149,7 @@ class Guest extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/guest', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];

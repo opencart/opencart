@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
 class Order extends \Opencart\System\Engine\Controller {
-	public function index(&$route, &$args) {
+	public function index(string &$route, array &$args) {
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {
@@ -42,7 +42,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function add($order_info, $order_status_id, $comment, $notify) {
+	public function add(array $order_info, int $order_status_id, text $comment, bool $notify): void {
 		// Check for any downloadable products
 		$download_status = false;
 
@@ -295,7 +295,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$mail->send();
 	}
 
-	public function edit($order_info, $order_status_id, $comment, $notify) {
+	public function edit(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
@@ -376,7 +376,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	// catalog/model/checkout/order/addHistory/before
-	public function alert(&$route, &$args) {
+	public function alert(string &$route, array &$args): void {
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {

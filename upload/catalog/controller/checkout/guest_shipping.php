@@ -86,7 +86,7 @@ class GuestShipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/guest_shipping', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];

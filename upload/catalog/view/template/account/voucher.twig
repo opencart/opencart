@@ -56,12 +56,14 @@
               {% if voucher_theme.voucher_theme_id == voucher_theme_id %}
                 <div class="form-check">
                   <label> <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" class="form-check-input" checked="checked"/>
-                    {{ voucher_theme.name }}</label>
+                    {{ voucher_theme.name }}
+                  </label>
                 </div>
               {% else %}
                 <div class="form-check">
                   <label><input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" class="form-check-input"/>
-                    {{ voucher_theme.name }}</label>
+                    {{ voucher_theme.name }}
+                  </label>
                 </div>
               {% endif %}
             {% endfor %}

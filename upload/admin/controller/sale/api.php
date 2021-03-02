@@ -1,6 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Api extends \Opencart\System\Engine\Controller {
+
+
+
+
 	public function index(): void {
 
 		// Autoloader
@@ -106,7 +110,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$_['action_pre_action'] = [
 			'startup/setting',
 			//'startup/session',
-			'startup/language',
+			//'startup/language',
 			'startup/application',
 			'startup/extension',
 			'startup/startup',
@@ -118,30 +122,33 @@ class Api extends \Opencart\System\Engine\Controller {
 			$loader->controller($pre_action);
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-		if (isset($this->request->get['action'])) {
-			$loader->controller($this->request->get['action']);
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
 		}
 
-		$loader->controller('api/login');
+		$order_data = array();
 
-		echo $response->getOutput();
+		$order_info = $this->model_sale_order->getOrder($order_id);
 
+		if ($order_info) {
+
+			if (isset($this->request->post['customer_id'])) {
+				$order_data['customer_id'] = $this->request->post['customer_id'];
+			}
+
+			if (isset($this->request->get['action'])) {
+			//	$loader->controller($this->request->get['action']);
+			}
+
+			$loader->controller('api/login');
+
+			echo $response->getOutput();
 
 		//}
-		//$this->response->addHeader('Content-Type: application/json');
-		//$this->response->setOutput($response->getOutput());
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($response->getOutput());
 	}
 }

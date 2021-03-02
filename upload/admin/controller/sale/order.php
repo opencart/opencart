@@ -947,15 +947,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$replace = [
 				'firstname' => $order_info['payment_firstname'],
-				'lastname' => $order_info['payment_lastname'],
-				'company' => $order_info['payment_company'],
+				'lastname'  => $order_info['payment_lastname'],
+				'company'   => $order_info['payment_company'],
 				'address_1' => $order_info['payment_address_1'],
 				'address_2' => $order_info['payment_address_2'],
-				'city' => $order_info['payment_city'],
-				'postcode' => $order_info['payment_postcode'],
-				'zone' => $order_info['payment_zone'],
+				'city'      => $order_info['payment_city'],
+				'postcode'  => $order_info['payment_postcode'],
+				'zone'      => $order_info['payment_zone'],
 				'zone_code' => $order_info['payment_zone_code'],
-				'country' => $order_info['payment_country']
+				'country'   => $order_info['payment_country']
 			];
 
 			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
@@ -1030,14 +1030,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$data['products'][] = [
 					'order_product_id' => $product['order_product_id'],
-					'product_id' => $product['product_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
-					'option'     => $option_data,
-					'quantity'   => $product['quantity'],
-					'price'      => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total'      => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'href'       => $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+					'product_id'       => $product['product_id'],
+					'name'             => $product['name'],
+					'model'            => $product['model'],
+					'option'           => $option_data,
+					'quantity'         => $product['quantity'],
+					'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'href'             => $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
 				];
 			}
 

@@ -50,7 +50,7 @@ class Error extends \Opencart\System\Engine\Controller {
 		return true;
 	}
 
-	public function exception(\TypeError $e): void {
+	public function exception(\Throwable $e): void {
 		if ($this->config->get('config_error_log')) {
 			$sting  = get_class($e) . ':  ' . $e->getMessage() . "\n";
 			$sting .= 'File: ' . $e->getFile() . "\n";

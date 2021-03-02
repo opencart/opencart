@@ -9,11 +9,11 @@ class APC {
 		$this->active = function_exists('apc_cache_info') && ini_get('apc.enabled');
 	}
 
-	public function get(string $key): array|null {
+	public function get(string $key): array|string|null {
 		return $this->active ? apc_fetch(CACHE_PREFIX . $key) : [];
 	}
 
-	public function set(string $key, array|null $value, int $expire = 0): void {
+	public function set(string $key, array|string|null $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
 		}

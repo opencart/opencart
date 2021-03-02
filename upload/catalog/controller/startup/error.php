@@ -46,7 +46,7 @@ class Error extends \Opencart\System\Engine\Controller {
 		return true;
 	}
 
-	public function exception($e): void {
+	public function exception(\Throwable $e): void {
 		if ($this->config->get('config_error_log')) {
 			$this->log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
 		}

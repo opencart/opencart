@@ -69,7 +69,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				// Custom field validation
 				$this->load->model('account/custom_field');
 
-				$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+				$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 				foreach ($custom_fields as $custom_field) {
 					if ($custom_field['location'] == 'address') {

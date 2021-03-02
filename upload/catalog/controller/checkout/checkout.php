@@ -103,7 +103,7 @@ class Checkout extends \Opencart\System\Engine\Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			$json[] = [

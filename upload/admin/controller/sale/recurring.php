@@ -289,7 +289,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/recurring_list', $data));
 	}
 
-	public function info(): void {
+	public function info(): object|null {
 		$this->load->model('sale/recurring');
 		
 		if (isset($this->request->get['order_recurring_id'])) {
@@ -424,6 +424,8 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('sale/recurring_info', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}

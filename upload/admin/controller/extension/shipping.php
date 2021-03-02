@@ -50,7 +50,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function getList(): void {
+	public function getList(): string {
 		$this->load->language('extension/shipping');
 
 		if (isset($this->error['warning'])) {

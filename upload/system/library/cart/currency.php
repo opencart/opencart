@@ -22,6 +22,10 @@ class Currency {
 	}
 
 	public function format(float $number, string $currency, float $value = 0, bool $format = true): string {
+		if (!isset($this->currencies[$currency])) {
+			return '';
+		}
+
 		$symbol_left = $this->currencies[$currency]['symbol_left'];
 		$symbol_right = $this->currencies[$currency]['symbol_right'];
 		$decimal_place = $this->currencies[$currency]['decimal_place'];
@@ -32,7 +36,7 @@ class Currency {
 
 		$amount = $value ? (float)$number * $value : (float)$number;
 		
-		$amount = round($amount, (int)$decimal_place);
+		$amount = round($amount, $decimal_place);
 		
 		if (!$format) {
 			return $amount;
@@ -44,7 +48,7 @@ class Currency {
 			$string .= $symbol_left;
 		}
 
-		$string .= number_format($amount, (int)$decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
+		$string .= number_format($amount, $decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 
 		if ($symbol_right) {
 			$string .= $symbol_right;

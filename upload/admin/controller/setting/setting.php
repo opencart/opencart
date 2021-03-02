@@ -339,12 +339,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_telephone'] = $this->config->get('config_telephone');
 		}
 
-		if (isset($this->request->post['config_fax'])) {
-			$data['config_fax'] = $this->request->post['config_fax'];
-		} else {
-			$data['config_fax'] = $this->config->get('config_fax');
-		}
-
 		if (isset($this->request->post['config_image'])) {
 			$data['config_image'] = $this->request->post['config_image'];
 		} else {

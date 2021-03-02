@@ -47,7 +47,7 @@ class Url {
 	 * @return string
 	 */
 	public function link(string $route, string|array $args = '', bool $js = false): string {
-		$url = $this->url . 'index.php?route=' . (string)$route;
+		$url = $this->url . 'index.php?route=' . $route;
 
 		if ($args) {
 			if (is_array($args)) {

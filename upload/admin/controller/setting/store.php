@@ -470,14 +470,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_telephone'] = '';
 		}
 
-		if (isset($this->request->post['config_fax'])) {
-			$data['config_fax'] = $this->request->post['config_fax'];
-		} elseif (isset($store_info['config_fax'])) {
-			$data['config_fax'] = $store_info['config_fax'];
-		} else {
-			$data['config_fax'] = '';
-		}
-
 		if (isset($this->request->post['config_image'])) {
 			$data['config_image'] = $this->request->post['config_image'];
 		} elseif (isset($store_info['config_image'])) {

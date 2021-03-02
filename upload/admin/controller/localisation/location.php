@@ -346,14 +346,6 @@ class Location extends \Opencart\System\Engine\Controller {
 			$data['telephone'] = '';
 		}
 		
-		if (isset($this->request->post['fax'])) {
-			$data['fax'] = $this->request->post['fax'];
-		} elseif (!empty($location_info)) {
-			$data['fax'] = $location_info['fax'];
-		} else {
-			$data['fax'] = '';
-		}
-		
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($location_info)) {

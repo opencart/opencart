@@ -50,7 +50,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function getList(): void {
+	public function getList(): string {
 		$this->load->language('extension/dashboard');
 
 		if (isset($this->error['warning'])) {

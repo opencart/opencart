@@ -30,11 +30,6 @@
               {{ telephone }}
               <br/>
               <br/>
-              {% if fax %}
-                <strong>{{ text_fax }}</strong>
-                <br>
-                {{ fax }}
-              {% endif %}
             </div>
             <div class="col-sm-3">
               {% if open %}
@@ -81,11 +76,6 @@
                       {{ location.telephone }}
                       <br/>
                       <br/>
-                      {% if location.fax %}
-                        <strong>{{ text_fax }}</strong>
-                        <br>
-                        {{ location.fax }}
-                      {% endif %}
                     </div>
                     <div class="col-sm-3">
                       {% if location.open %}

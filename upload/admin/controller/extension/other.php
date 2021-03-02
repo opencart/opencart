@@ -48,7 +48,7 @@ class Other extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function getList(): void {
+	public function getList(): string {
 		// Had top load again because the method is called directly.
 		$this->load->language('extension/other');
 

@@ -2790,11 +2790,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'fax',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
 				'name' => 'geocode',
 				'type' => 'varchar(32)',
 				'not_null' => true
@@ -3260,11 +3255,6 @@ function db_schema() {
 			],
 			[
 				'name' => 'telephone',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
-				'name' => 'fax',
 				'type' => 'varchar(32)',
 				'not_null' => true
 			],

@@ -394,7 +394,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalRewardsByOrderId(int $order_id): int {
-		$query = (int)$this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > 0");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > 0");
 
 		return (int)$query->row['total'];
 	}

@@ -793,7 +793,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_form', $data));
 	}
 
-	public function info(): object {
+	public function info(): object|null {
 		$this->load->model('sale/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -1343,6 +1343,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('sale/order_info', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}

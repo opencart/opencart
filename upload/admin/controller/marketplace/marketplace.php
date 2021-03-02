@@ -665,6 +665,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('marketplace/marketplace_info', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}

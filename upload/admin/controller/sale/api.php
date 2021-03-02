@@ -111,7 +111,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			'startup/setting',
 			//'startup/session',
 			//'startup/language',
-			'startup/application',
+			//'startup/application',
 			'startup/extension',
 			'startup/startup',
 			'startup/event'
@@ -133,6 +133,10 @@ class Api extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_info) {
+
+			if (isset($this->request->post['customer_id'])) {
+				$order_data['customer_id'] = $this->request->post['customer_id'];
+			}
 
 			if (isset($this->request->post['customer_id'])) {
 				$order_data['customer_id'] = $this->request->post['customer_id'];

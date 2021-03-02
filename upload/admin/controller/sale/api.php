@@ -146,9 +146,13 @@ class Api extends \Opencart\System\Engine\Controller {
 
 			echo $response->getOutput();
 
-		//}
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($response->getOutput());
+	}
+
+	public function gh() {
+
 	}
 }

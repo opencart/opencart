@@ -7,7 +7,7 @@ class Application extends \Opencart\System\Engine\Controller {
 
 		// Response output compression level
 		if ($this->config->get('config_compression')) {
-			$this->response->setCompression($this->config->get('config_compression'));
+			$this->response->setCompression((int)$this->config->get('config_compression'));
 		}
 
 		// Customer
@@ -20,14 +20,14 @@ class Application extends \Opencart\System\Engine\Controller {
 		$this->registry->set('tax', new \Opencart\System\Library\Cart\Tax($this->registry));
 		
 		if ($this->config->get('config_tax_default') == 'shipping') {
-			$this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+			$this->tax->setShippingAddress((int)$this->config->get('config_country_id'), (int)$this->config->get('config_zone_id'));
 		}
 
 		if ($this->config->get('config_tax_default') == 'payment') {
-			$this->tax->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+			$this->tax->setPaymentAddress((int)$this->config->get('config_country_id'), (int)$this->config->get('config_zone_id'));
 		}
 
-		$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+		$this->tax->setStoreAddress((int)$this->config->get('config_country_id'), (int)$this->config->get('config_zone_id'));
 
 		// Weight
 		$this->registry->set('weight', new \Opencart\System\Library\Cart\Weight($this->registry));

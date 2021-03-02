@@ -39,7 +39,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTaxClass(int $tax_class_id): array {
-		$query = $this->db->query("SE m                                             LECT * FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		return $query->row;
 	}

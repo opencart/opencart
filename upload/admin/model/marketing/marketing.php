@@ -114,7 +114,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getReports(int $marketing_id, int $start = 0, int $limit = 10): array {
@@ -134,6 +134,6 @@ class Marketing extends \Opencart\System\Engine\Model {
 	public function getTotalReports(int $marketing_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing_report` WHERE `marketing_id` = '" . (int)$marketing_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

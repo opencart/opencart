@@ -117,7 +117,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id, int $language_id): array {

@@ -125,6 +125,12 @@ class Api extends \Opencart\System\Engine\Controller {
 
 
 
+
+
+
+
+
+
 		if (isset($this->request->get['action'])) {
 			$loader->controller($this->request->get['action']);
 		}

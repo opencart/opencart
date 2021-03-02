@@ -175,6 +175,6 @@ class Filter extends \Opencart\System\Engine\Model {
 	public function getTotalGroups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "filter_group`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

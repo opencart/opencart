@@ -102,7 +102,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	public function getTotalGeoZones(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "geo_zone`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getZoneToGeoZones(int $geo_zone_id): array {
@@ -114,18 +114,18 @@ class GeoZone extends \Opencart\System\Engine\Model {
 	public function getTotalZoneToGeoZoneByGeoZoneId(int $geo_zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$geo_zone_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalZoneToGeoZoneByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `country_id` = '" . (int)$country_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalZoneToGeoZoneByZoneId(int $zone_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

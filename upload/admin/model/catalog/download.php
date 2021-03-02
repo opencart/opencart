@@ -90,7 +90,7 @@ class Download extends \Opencart\System\Engine\Model {
 	public function getTotalDownloads(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {
@@ -110,6 +110,6 @@ class Download extends \Opencart\System\Engine\Model {
 	public function getTotalReports(int $download_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download_report` WHERE `download_id` = '" . (int)$download_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

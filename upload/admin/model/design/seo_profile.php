@@ -61,6 +61,6 @@ class SeoProfile extends \Opencart\System\Engine\Model {
 	public function getTotalSeoProfiles(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "seo_profile`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

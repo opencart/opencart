@@ -95,6 +95,6 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 	public function getTotalVoucherThemes(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "voucher_theme`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

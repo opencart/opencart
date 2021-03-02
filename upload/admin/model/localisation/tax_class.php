@@ -89,7 +89,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	public function getTotalTaxClasses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_class`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTaxRules(int $tax_class_id): array {
@@ -101,6 +101,6 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	public function getTotalTaxRulesByTaxRateId(int $tax_rate_id): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT `tax_class_id`) AS `total` FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

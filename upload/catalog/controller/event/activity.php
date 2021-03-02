@@ -16,7 +16,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	}
 	
 	// catalog/model/account/customer/editCustomer/after
-	public function editCustomer(string &$route, array &$args, mixed, &$output): void {
+	public function editCustomer(string &$route, array &$args, mixed &$output): void {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
 

@@ -79,6 +79,6 @@ class Cron extends \Opencart\System\Engine\Model {
 	public function getTotalCrons(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cron`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

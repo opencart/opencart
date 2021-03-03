@@ -246,7 +246,9 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+$('textarea[data-toggle=\'ckeditor\']').ckeditor({
+    language:'{{ ckeditor }}'
+});
 
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {

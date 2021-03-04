@@ -15,96 +15,88 @@
 		<div class="card mb-3">
 			<div class="card-header"><i class="fas fa-info-circle"></i> {{ text_order }}</div>
 			<div class="card-body">
-
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
-
 					<div class="col">
-						<div class="border rounded mb-3">
-							<div class="row">
-								<div class="col">
-									<p class="lead p-2 mb-0"><strong>{{ text_invoice }} No.</strong>
-										<br/>
-										{{ invoice_no }}</p>
-								</div>
-								<div class="col-3 border-left text-center">
-									{% if not invoice_no %}
-										<button type="button" id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success btn-sm"><i class="fas fa-cog"></i></button>
-									{% else %}
-										<button type="button" disabled="disabled" class="btn btn-success btn-sm"><i class="fas fa-cog"></i></button>
-									{% endif %}
-								</div>
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded-left">
+								<p class="lead p-2 mb-0"><strong>{{ text_invoice }} No.</strong>
+									<br/>
+									{{ invoice_no }}</p>
+							</div>
+							<div class="input-group-append">
+								{% if not invoice_no %}
+									<button type="button" id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success"><i class="fas fa-cog"></i></button>
+								{% else %}
+									<button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-cog"></i></button>
+								{% endif %}
 							</div>
 						</div>
 					</div>
-
 					<div class="col">
-						<div class="border rounded mb-3">
-							<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
-								<br/>
-								<a href="{{ store_url }}" target="_blank" class="">{{ store_name }}</a></p>
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded">
+								<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
+									<br/>
+									<a href="{{ store_url }}" target="_blank" class="">{{ store_name }}</a></p>
+							</div>
 						</div>
 					</div>
-
 					<div class="col">
-						<div class="border rounded mb-3">
-							<p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
-								<br/>
-								{% if customer %}
-									<a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a>
-								{% else %}
-									{{ firstname }} {{ lastname }}
-								{% endif %}
-							</p>
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded">
+								<p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
+									<br/>
+									{% if customer %}
+										<a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a>
+									{% else %}
+										{{ firstname }} {{ lastname }}
+									{% endif %}
+								</p>
+							</div>
 						</div>
 					</div>
-
 					<div class="col">
-						<div class="border rounded mb-3">
+						<div class="form-control-plaintext p-0 border rounded mb-3">
 							<p class="lead p-2 mb-0"><strong>{{ text_customer_group }}</strong>
 								<br/>
 								{{ customer_group }}</p>
 						</div>
 					</div>
-
 					<div class="col">
-						<div class="border rounded mb-3">
+						<div class="form-control-plaintext p-0 border rounded mb-3">
 							<p class="lead p-2 mb-0"><strong>{{ text_email }}</strong>
 								<br/>
 								<a href="mailto:{{ email }}">{{ email }}</a>
 							</p>
 						</div>
 					</div>
-
 					<div class="col">
-						<div class="border rounded mb-3">
+						<div class="form-control-plaintext p-0 border rounded mb-3">
 							<p class="lead p-2 mb-0"><strong>{{ text_telephone }}</strong>
 								<br/>
 								{{ telephone }}
 							</p>
 						</div>
 					</div>
-
 					<div class="col">
-						<div class="border rounded mb-3">
+						<div class="form-control-plaintext p-0 border rounded mb-3">
 							<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
 								<br/>
 								{{ date_added }}
 							</p>
 						</div>
 					</div>
-
 					<div class="col">
-						<div class="border rounded mb-3">
+						<div class="form-control-plaintext p-0 border rounded mb-3">
 							<p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
 								<br/>
 								{{ payment_method }}
 							</p>
 						</div>
 					</div>
-
 					{% if shipping_method %}
 						<div class="col">
-							<div class="border rounded mb-3">
+							<div class="form-control-plaintext p-0 border rounded mb-3">
 								<p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
 									<br/>
 									{{ shipping_method }}
@@ -112,36 +104,29 @@
 							</div>
 						</div>
 					{% endif %}
-
 					<div class="col">
-						<div class="border rounded mb-3">
-							<div class="row">
-								<div class="col">
-									<p class="lead p-2 mb-0"><strong>{{ text_reward }}</strong>
-										<br/>
-										{{ reward }}
-									</p>
-								</div>
-								<div class="col-3 border-left text-center">
-
-									{% if customer and reward %}
-										{% if not reward_total %}
-											<button type="button" id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
-										{% else %}
-											<button type="button" id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button>
-										{% endif %}
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded-left">
+								<p class="lead p-2 mb-0"><strong>{{ text_reward }}</strong>
+									<br/>
+									{{ reward }}</p>
+							</div>
+							<div class="input-group-append">
+								{% if customer and reward %}
+									{% if not reward_total %}
+										<button type="button" id="button-reward-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
 									{% else %}
-										<button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+										<button type="button" id="button-reward-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
 									{% endif %}
-
-								</div>
+								{% else %}
+									<button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+								{% endif %}
 							</div>
 						</div>
 					</div>
-
 					{% if not affiliate %}
 						<div class="col">
-							<div class="border rounded mb-3">
+							<div class="form-control-plaintext p-0 border rounded-left">
 								<p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
 									<br/>
 									(<a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a>)
@@ -149,23 +134,19 @@
 							</div>
 						</div>
 						<div class="col">
-							<div class="border rounded mb-3">
-								<div class="row">
-									<div class="col">
-										<p class="lead p-2 mb-0"><strong>Commission</strong>
-											<br/>
-											{{ commission }}
-										</p>
-									</div>
-									<div class="col-3 border-left text-right">
-
-										{% if not commission_total %}
-											<button type="button" id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
-										{% else %}
-											<button type="button" id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button>
-										{% endif %}
-
-									</div>
+							<div class="input-group mb-3">
+								<div class="form-control-plaintext p-0 border rounded-left">
+									<p class="lead p-2 mb-0"><strong>Commission</strong>
+										<br/>
+										{{ commission }}
+									</p>
+								</div>
+								<div class="input-group-append">
+									{% if not commission_total %}
+										<button type="button" id="button-commission-add" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+									{% else %}
+										<button type="button" id="button-commission-remove" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+									{% endif %}
 								</div>
 							</div>
 						</div>

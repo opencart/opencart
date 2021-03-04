@@ -234,7 +234,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">{{ entry_payment }}</label>
                   <div class="col-sm-10">
-                    <label class="form-check">{% if payment == 'cheque' %}
+                    <label class="form-check">
+                      {% if payment == 'cheque' %}
                         <input type="radio" name="payment" value="cheque" checked="checked" class="form-check-input"/>
                       {% else %}
                         <input type="radio" name="payment" value="cheque" class="form-check-input"/>
@@ -249,7 +250,8 @@
                       {% else %}
                         <input type="radio" name="payment" value="bank" class="form-check-input"/>
                       {% endif %}
-                      {{ text_bank }}</label>
+                      {{ text_bank }}
+                    </label>
                   </div>
                 </div>
                 <div id="payment-cheque" class="payment">
@@ -315,13 +317,13 @@
                   <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <select name="status" id="input-status" class="form-control">
-                      {% if status %}
-                        <option value="1" selected="selected">{{ text_enabled }}</option>
-                        <option value="0">{{ text_disabled }}</option>
-                      {% else %}
-                        <option value="1">{{ text_enabled }}</option>
-                        <option value="0" selected="selected">{{ text_disabled }}</option>
-                      {% endif %}
+                    {% if status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
                     </select>
                   </div>
                 </div>

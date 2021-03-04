@@ -745,22 +745,19 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
 		$this->load->model('localisation/country');
-
+		$this->load->model('localisation/currency');
+		$this->load->model('sale/voucher_theme');
+		
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		$this->load->model('localisation/currency');
-
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
+		
+		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		$data['voucher_min'] = $this->config->get('config_voucher_min');
-
-		$this->load->model('sale/voucher_theme');
-
-		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		// API login
 		$data['catalog'] = HTTP_CATALOG;
@@ -1067,6 +1064,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['comment'] = nl2br($order_info['comment']);
 
 			$this->load->model('customer/customer');
+			$this->load->model('localisation/order_status');
 
 			$data['reward'] = $order_info['reward'];
 
@@ -1084,8 +1082,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 
 			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($this->request->get['order_id']);
-
-			$this->load->model('localisation/order_status');
 
 			$order_status_info = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
 
@@ -1582,7 +1578,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
-
 		$this->load->model('setting/setting');
 
 		$data['orders'] = [];
@@ -1792,9 +1787,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
-
 		$this->load->model('catalog/product');
-
 		$this->load->model('setting/setting');
 
 		$data['orders'] = [];

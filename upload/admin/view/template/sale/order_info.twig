@@ -19,31 +19,34 @@
 					<div class="col">
 						<div class="input-group mb-3">
 							<div class="form-control-plaintext p-0 border rounded-left">
-								<p class="lead p-2 mb-0"><strong>{{ text_invoice }} No.</strong>
+								<p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
 									<br/>
 									{{ invoice_no }}</p>
 							</div>
 							<div class="input-group-append">
 								{% if not invoice_no %}
-									<button type="button" id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-success"><i class="fas fa-cog"></i></button>
+									<button type="button" id="button-invoice" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 								{% else %}
-									<button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-cog"></i></button>
+									<button type="button" disabled="disabled" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 								{% endif %}
 							</div>
 						</div>
 					</div>
 					<div class="col">
 						<div class="input-group mb-3">
-							<div class="form-control-plaintext p-0 border rounded">
+							<div class="form-control-plaintext p-0 border rounded-left">
 								<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
 									<br/>
 									<a href="{{ store_url }}" target="_blank" class="">{{ store_name }}</a></p>
+							</div>
+							<div class="input-group-append">
+								<button type="button" id="button-store" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 							</div>
 						</div>
 					</div>
 					<div class="col">
 						<div class="input-group mb-3">
-							<div class="form-control-plaintext p-0 border rounded">
+							<div class="form-control-plaintext p-0 border rounded-left">
 								<p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
 									<br/>
 									{% if customer %}
@@ -53,31 +56,51 @@
 									{% endif %}
 								</p>
 							</div>
+							<div class="input-group-append">
+								<button type="button" id="button-customer" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+							</div>
 						</div>
 					</div>
 					<div class="col">
-						<div class="form-control-plaintext p-0 border rounded mb-3">
-							<p class="lead p-2 mb-0"><strong>{{ text_customer_group }}</strong>
-								<br/>
-								{{ customer_group }}</p>
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded-left">
+								<p class="lead p-2 mb-0"><strong>{{ text_customer_group }}</strong>
+									<br/>
+									{{ customer_group }}</p>
+							</div>
+							<div class="input-group-append">
+								<button type="button" id="button-customer-group" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+							</div>
 						</div>
 					</div>
 					<div class="col">
-						<div class="form-control-plaintext p-0 border rounded mb-3">
-							<p class="lead p-2 mb-0"><strong>{{ text_email }}</strong>
-								<br/>
-								<a href="mailto:{{ email }}">{{ email }}</a>
-							</p>
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded-left">
+								<p class="lead p-2 mb-0"><strong>{{ text_email }}</strong>
+									<br/>
+									<a href="mailto:{{ email }}">{{ email }}</a>
+								</p>
+							</div>
+							<div class="input-group-append">
+								<button type="button" id="button-customer-group" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+							</div>
 						</div>
 					</div>
+
 					<div class="col">
-						<div class="form-control-plaintext p-0 border rounded mb-3">
-							<p class="lead p-2 mb-0"><strong>{{ text_telephone }}</strong>
-								<br/>
-								{{ telephone }}
-							</p>
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded-left">
+								<p class="lead p-2 mb-0"><strong>{{ text_telephone }}</strong>
+									<br/>
+									{{ telephone }}
+								</p>
+							</div>
+							<div class="input-group-append">
+								<button type="button" id="button-telephone" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+							</div>
 						</div>
 					</div>
+
 					<div class="col">
 						<div class="form-control-plaintext p-0 border rounded mb-3">
 							<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
@@ -86,24 +109,38 @@
 							</p>
 						</div>
 					</div>
+
 					<div class="col">
-						<div class="form-control-plaintext p-0 border rounded mb-3">
-							<p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
-								<br/>
-								{{ payment_method }}
-							</p>
+						<div class="input-group mb-3">
+							<div class="form-control-plaintext p-0 border rounded-left">
+								<p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
+									<br/>
+									{{ payment_method }}
+								</p>
+							</div>
+							<div class="input-group-append">
+								<button type="button" id="button-payment-method" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+							</div>
 						</div>
 					</div>
+
 					{% if shipping_method %}
 						<div class="col">
-							<div class="form-control-plaintext p-0 border rounded mb-3">
-								<p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
-									<br/>
-									{{ shipping_method }}
-								</p>
+							<div class="input-group mb-3">
+								<div class="form-control-plaintext p-0 border rounded-left">
+									<p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
+										<br/>
+										{{ shipping_method }}
+									</p>
+								</div>
+								<div class="input-group-append">
+									<button type="button" id="button-shipping-method" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+								</div>
 							</div>
 						</div>
 					{% endif %}
+
+
 					<div class="col">
 						<div class="input-group mb-3">
 							<div class="form-control-plaintext p-0 border rounded-left">
@@ -124,15 +161,22 @@
 							</div>
 						</div>
 					</div>
+
 					{% if not affiliate %}
 						<div class="col">
-							<div class="form-control-plaintext p-0 border rounded-left">
-								<p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
-									<br/>
-									(<a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a>)
-								</p>
+							<div class="input-group mb-3">
+								<div class="form-control-plaintext p-0 border rounded-left">
+									<p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
+										<br/>
+										<a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a>
+									</p>
+								</div>
+								<div class="input-group-append">
+									<button type="button" id="button-affiliate" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+								</div>
 							</div>
 						</div>
+
 						<div class="col">
 							<div class="input-group mb-3">
 								<div class="form-control-plaintext p-0 border rounded-left">
@@ -150,16 +194,19 @@
 								</div>
 							</div>
 						</div>
+
 					{% endif %}
-
 				</div>
-
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<td style="width: 50%;" class="text-left">{{ text_payment_address }}</td>
+							<td style="width: 50%;" class="text-left">{{ text_payment_address }}
+								<div class="float-right"><a href=""><i class="fas fa-cog"></i></a></div>
+							</td>
 							{% if shipping_method %}
-								<td style="width: 50%;" class="text-left">{{ text_shipping_address }}</td>
+								<td style="width: 50%;" class="text-left">{{ text_shipping_address }}
+									<div class="float-right"><i class="fas fa-cog"></i>
+								</td>
 							{% endif %}
 						</tr>
 					</thead>
@@ -175,7 +222,9 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<td class="text-left">{{ column_product }}</td>
+							<td class="text-left">{{ column_product }}
+								<div class="float-right"><i class="fas fa-cog"></i>
+							</td>
 							<td class="text-left">{{ column_model }}</td>
 							<td class="text-right">{{ column_quantity }}</td>
 							<td class="text-right">{{ column_price }}</td>

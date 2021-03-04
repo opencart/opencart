@@ -14,6 +14,7 @@ $_['text_cart']                  = 'Shopping Cart';
 $_['text_payment_detail']        = 'Payment Details';
 $_['text_shipping_detail']       = 'Shipping Details';
 $_['text_total_detail']          = 'Total';
+
 $_['text_option']                = 'Options';
 $_['text_store']                 = 'Store';
 $_['text_date_added']            = 'Date Added';

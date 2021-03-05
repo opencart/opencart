@@ -177,6 +177,7 @@ class Language extends \Opencart\System\Engine\Controller {
 				'language_id' => $result['language_id'],
 				'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : ''),
 				'code'        => $result['code'],
+				'status'	  => $result['status'],
 				'sort_order'  => $result['sort_order'],
 				'edit'        => $this->url->link('localisation/language|edit', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $result['language_id'] . $url)
 			];
@@ -248,6 +249,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+
 		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->error['warning'])) {
@@ -272,6 +274,12 @@ class Language extends \Opencart\System\Engine\Controller {
 			$data['error_locale'] = $this->error['locale'];
 		} else {
 			$data['error_locale'] = '';
+		}
+		
+		if (isset($this->error['status'])) {
+			$data['error_status'] = $this->error['status'];
+		} else {
+			$data['error_status'] = '';
 		}
 		
 		$url = '';
@@ -395,7 +403,23 @@ class Language extends \Opencart\System\Engine\Controller {
 				$this->error['warning'] = $this->language->get('error_exists');
 			}
 		}
-
+		
+		// get all status
+		$results = $this->model_localisation_language->getLanguages();
+		
+		$status_exists = false;
+		foreach ($results as $result) {
+			if ($result['language_id'] == $this->request->get['language_id']) {
+				$status_exists |= (bool) $this->request->post['status'];
+			} else {
+				$status_exists |= (bool) $result['status'];
+			} 
+		}
+		
+		if (!$status_exists) {
+			$this->error['status'] = $this->language->get('error_status');
+		}
+		
 		return !$this->error;
 	}
 

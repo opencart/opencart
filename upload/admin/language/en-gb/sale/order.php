@@ -8,26 +8,33 @@ $_['text_list']                  = 'Order List';
 $_['text_add']                   = 'Add Order';
 $_['text_edit']                  = 'Edit Order';
 $_['text_filter']                = 'Filter';
+$_['text_order']                 = 'Order (#%s)';
 $_['text_order_detail']          = 'Order Details';
-$_['text_customer_detail']       = 'Customer Details';
-$_['text_cart']                  = 'Shopping Cart';
-$_['text_payment_detail']        = 'Payment Details';
-$_['text_shipping_detail']       = 'Shipping Details';
-$_['text_total_detail']          = 'Total';
-
-$_['text_option']                = 'Options';
+$_['text_invoice']               = 'Invoice';
 $_['text_store']                 = 'Store';
-$_['text_date_added']            = 'Date Added';
-$_['text_payment_method']        = 'Payment Method';
-$_['text_shipping_method']       = 'Shipping Method';
+$_['text_currency']              = 'Currency';
+$_['text_total']                 = 'Total';
 $_['text_customer']              = 'Customer';
 $_['text_customer_group']        = 'Customer Group';
 $_['text_email']                 = 'E-Mail';
 $_['text_telephone']             = 'Telephone';
-$_['text_invoice']               = 'Invoice';
+$_['text_date_added']            = 'Date Added';
+
+$_['text_coupon']                = 'Coupon';
+$_['text_voucher']               = 'Voucher';
+
+$_['text_payment_method']        = 'Payment Method';
+$_['text_shipping_method']       = 'Shipping Method';
 $_['text_reward']                = 'Reward Points';
 $_['text_affiliate']             = 'Affiliate';
-$_['text_order']                 = 'Order (#%s)';
+$_['text_commission']            = 'Commission';
+$_['text_contact']               = 'Contact Tel';
+
+
+
+$_['text_more']                  = 'More..';
+$_['text_less']                  = 'Less..';
+
 $_['text_payment_address']       = 'Payment Address';
 $_['text_shipping_address']      = 'Shipping Address';
 $_['text_comment']               = 'Customer Comment';
@@ -41,10 +48,11 @@ $_['text_ip']                    = 'IP Address';
 $_['text_forwarded_ip']          = 'Forwarded IP';
 $_['text_user_agent']            = 'User Agent';
 $_['text_accept_language']       = 'Accept Language';
-$_['text_order_id']              = 'Order ID:';
-$_['text_website']               = 'Web Site:';
+
+$_['text_order_id']              = 'Order ID';
+$_['text_website']               = 'Web Site';
+
 $_['text_invoice_no']            = 'Invoice No.';
-$_['text_invoice_date']          = 'Invoice Date:';
 $_['text_sku']                   = 'SKU:';
 $_['text_upc']                   = 'UPC:';
 $_['text_ean']                   = 'EAN:';
@@ -53,10 +61,13 @@ $_['text_isbn']                  = 'ISBN:';
 $_['text_mpn']                   = 'MPN:';
 $_['text_missing']               = 'Missing Orders';
 $_['text_default']               = 'Default';
-$_['text_product']               = 'Add Product(s)';
-$_['text_voucher']               = 'Add Voucher(s)';
+
+$_['text_product_add']           = 'Add Product(s)';
+$_['text_voucher_add']           = 'Add Voucher(s)';
+
 $_['text_shipping']              = 'Shipping';
 $_['text_contact']               = 'Contact';
+
 $_['text_reward_added']          = 'Success: Reward points added!';
 $_['text_reward_removed']        = 'Success: Reward points removed!';
 $_['text_commission_added']      = 'Success: Commission added!';
@@ -64,7 +75,7 @@ $_['text_commission_removed']    = 'Success: Commission removed!';
 $_['text_restock']               = 'Success: Products have been restocked!';
 $_['text_upload']                = 'Your file was successfully uploaded!';
 $_['text_picklist']              = 'Dispatch Note';
-$_['text_reward']                = 'Reward Points';
+
 
 // Column
 $_['column_order_id']            = 'Order ID';

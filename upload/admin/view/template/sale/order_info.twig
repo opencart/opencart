@@ -489,13 +489,13 @@ $(document).on('click', '#button-collapse', function(e) {
     var element = this;
 
     if ($('#collapse-order').css('max-height') == '78px') {
-        $('#collapse-order').animate({'max-height': $('#container').height() + 'px'}, 'slow');
-
         $('#button-collapse').html('{{ text_less }} <i class="fas fa-angle-up"></i>');
-    } else {
-        $('#collapse-order').animate({'max-height': '78px'}, 'slow');
 
+        $('#collapse-order').animate({'max-height': $('#container').height() + 'px'});
+    } else {
         $('#button-collapse').html('{{ text_more }} <i class="fas fa-angle-down"></i>');
+
+        $('#collapse-order').animate({'max-height': '78px'});
     }
 });
 

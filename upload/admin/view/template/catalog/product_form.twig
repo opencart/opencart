@@ -1740,7 +1740,6 @@
                 </div>
               </fieldset>
             </div>
-
             <div id="tab-reward" class="tab-pane">
               <fieldset>
                 <legend>{{ text_reward }}</legend>
@@ -1768,7 +1767,6 @@
                   </div>
                 </div>
               </fieldset>
-
               <fieldset>
                 <legend>{{ text_points }}</legend>
                 <div class="table-responsive">
@@ -1802,7 +1800,6 @@
                 </div>
               </fieldset>
             </div>
-
             <div id="tab-seo" class="tab-pane">
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div id="product-seo" class="table-responsive">
@@ -1835,7 +1832,6 @@
                 </table>
               </div>
             </div>
-
             <div id="tab-design" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-layout" class="table table-bordered table-hover">
@@ -1876,7 +1872,6 @@
                 </table>
               </div>
             </div>
-
           </div>
         </form>
       </div>
@@ -1884,7 +1879,9 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+$('textarea[data-toggle=\'ckeditor\']').ckeditor({
+    language:'{{ ckeditor }}'
+});
 
 // Manufacturer
 $('input[name=\'manufacturer\']').autocomplete({

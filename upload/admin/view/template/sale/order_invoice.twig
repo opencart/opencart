@@ -29,6 +29,24 @@
 
 			<div class="col">
 				<div class="form-control-plaintext p-0 border rounded mb-3">
+					<p class="lead p-2 mb-0"><strong>{{ text_order_id }}</strong>
+						<br/>
+						{{ order.order_id }}
+					</p>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="form-control-plaintext p-0 border rounded mb-3">
+					<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
+						<br/>
+						{{ order.date_added }}
+					</p>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="form-control-plaintext p-0 border rounded mb-3">
 					<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
 						<br/>
 						{{ order.store_name }}
@@ -59,24 +77,6 @@
 					<p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
 						<br/>
 						{{ order.shipping_method }}
-					</p>
-				</div>
-			</div>
-
-			<div class="col">
-				<div class="form-control-plaintext p-0 border rounded mb-3">
-					<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
-						<br/>
-						{{ order.date_added }}
-					</p>
-				</div>
-			</div>
-
-			<div class="col">
-				<div class="form-control-plaintext p-0 border rounded mb-3">
-					<p class="lead p-2 mb-0"><strong>{{ text_order_id }}</strong>
-						<br/>
-						{{ order.order_id }}
 					</p>
 				</div>
 			</div>

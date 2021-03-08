@@ -12,25 +12,22 @@ $_['text_order']                 = 'Order (#%s)';
 $_['text_order_detail']          = 'Order Details';
 $_['text_invoice']               = 'Invoice';
 $_['text_store']                 = 'Store';
-$_['text_currency']              = 'Currency';
-$_['text_total']                 = 'Total';
+$_['text_date_added']            = 'Date Added';
 $_['text_customer']              = 'Customer';
 $_['text_customer_group']        = 'Customer Group';
 $_['text_email']                 = 'E-Mail';
 $_['text_telephone']             = 'Telephone';
-$_['text_date_added']            = 'Date Added';
-
-$_['text_coupon']                = 'Coupon';
-$_['text_voucher']               = 'Voucher';
-
 $_['text_payment_method']        = 'Payment Method';
 $_['text_shipping_method']       = 'Shipping Method';
+$_['text_coupon']                = 'Coupon';
+$_['text_voucher']               = 'Voucher';
+$_['text_currency']              = 'Currency';
+$_['text_total']                 = 'Total';
 $_['text_reward']                = 'Reward Points';
 $_['text_affiliate']             = 'Affiliate';
 $_['text_commission']            = 'Commission';
+
 $_['text_contact']               = 'Contact Tel';
-
-
 
 $_['text_more']                  = 'More..';
 $_['text_less']                  = 'Less..';
@@ -62,10 +59,10 @@ $_['text_mpn']                   = 'MPN:';
 $_['text_missing']               = 'Missing Orders';
 $_['text_default']               = 'Default';
 
-$_['text_product_add']           = 'Add Product(s)';
-$_['text_voucher_add']           = 'Add Voucher(s)';
+$_['text_product_add']           = 'Add Product';
+$_['text_voucher_add']           = 'Add Voucher';
 
-$_['text_shipping']              = 'Shipping';
+
 $_['text_contact']               = 'Contact';
 
 $_['text_reward_added']          = 'Success: Reward points added!';
@@ -75,7 +72,6 @@ $_['text_commission_removed']    = 'Success: Commission removed!';
 $_['text_restock']               = 'Success: Products have been restocked!';
 $_['text_upload']                = 'Your file was successfully uploaded!';
 $_['text_picklist']              = 'Dispatch Note';
-
 
 // Column
 $_['column_order_id']            = 'Order ID';

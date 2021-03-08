@@ -487,7 +487,17 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
-			$data['text_order'] = sprintf($this->language->get('text_order'), $order_id);
+			$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : sprintf($this->language->get('text_edit'), $order_id);
+
+			$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+			$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
+
+
+
+
+
 
 			$url = '';
 
@@ -606,6 +616,216 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['currency'] = $order_info['currency_code'];
 			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
+
+
+
+
+
+
+			$data['order_id'] = (int)$this->request->get['order_id'];
+			$data['store_id'] = $order_info['store_id'];
+			$data['store_url'] = HTTP_CATALOG;
+
+			$data['customer'] = $order_info['customer'];
+			$data['customer_id'] = $order_info['customer_id'];
+			$data['customer_group_id'] = $order_info['customer_group_id'];
+			$data['firstname'] = $order_info['firstname'];
+			$data['lastname'] = $order_info['lastname'];
+			$data['email'] = $order_info['email'];
+			$data['telephone'] = $order_info['telephone'];
+			$data['account_custom_field'] = $order_info['custom_field'];
+
+			$this->load->model('customer/customer');
+
+			$data['addresses'] = $this->model_customer_customer->getAddresses($order_info['customer_id']);
+
+			$data['payment_firstname'] = $order_info['payment_firstname'];
+			$data['payment_lastname'] = $order_info['payment_lastname'];
+			$data['payment_company'] = $order_info['payment_company'];
+			$data['payment_address_1'] = $order_info['payment_address_1'];
+			$data['payment_address_2'] = $order_info['payment_address_2'];
+			$data['payment_city'] = $order_info['payment_city'];
+			$data['payment_postcode'] = $order_info['payment_postcode'];
+			$data['payment_country_id'] = $order_info['payment_country_id'];
+			$data['payment_zone_id'] = $order_info['payment_zone_id'];
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
+			$data['payment_method'] = $order_info['payment_method'];
+			$data['payment_code'] = $order_info['payment_code'];
+
+			$data['shipping_firstname'] = $order_info['shipping_firstname'];
+			$data['shipping_lastname'] = $order_info['shipping_lastname'];
+			$data['shipping_company'] = $order_info['shipping_company'];
+			$data['shipping_address_1'] = $order_info['shipping_address_1'];
+			$data['shipping_address_2'] = $order_info['shipping_address_2'];
+			$data['shipping_city'] = $order_info['shipping_city'];
+			$data['shipping_postcode'] = $order_info['shipping_postcode'];
+			$data['shipping_country_id'] = $order_info['shipping_country_id'];
+			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
+			$data['shipping_method'] = $order_info['shipping_method'];
+			$data['shipping_code'] = $order_info['shipping_code'];
+
+			// Products
+			$data['order_products'] = [];
+
+			$products = $this->model_sale_order->getProducts($this->request->get['order_id']);
+
+			foreach ($products as $product) {
+				$data['order_products'][] = [
+					'product_id' => $product['product_id'],
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $this->model_sale_order->getOptions($this->request->get['order_id'], $product['order_product_id']),
+					'quantity'   => $product['quantity'],
+					'price'      => $product['price'],
+					'total'      => $product['total'],
+					'reward'     => $product['reward']
+				];
+			}
+
+			// Vouchers
+			$data['order_vouchers'] = $this->model_sale_order->getVouchers($this->request->get['order_id']);
+
+			$data['coupon'] = '';
+			$data['voucher'] = '';
+			$data['reward'] = '';
+
+			$data['order_totals'] = [];
+
+			$order_totals = $this->model_sale_order->getTotals($this->request->get['order_id']);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start && $end) {
+					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
+				}
+			}
+
+			$data['order_status_id'] = $order_info['order_status_id'];
+			$data['comment'] = $order_info['comment'];
+			$data['affiliate_id'] = $order_info['affiliate_id'];
+			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
+			$data['currency_code'] = $order_info['currency_code'];
+
+
+
+
+			// Stores
+			$this->load->model('setting/store');
+
+			$data['stores'] = [];
+
+			$data['stores'][] = [
+				'store_id' => 0,
+				'name' => $this->language->get('text_default')
+			];
+
+			$results = $this->model_setting_store->getStores();
+
+			foreach ($results as $result) {
+				$data['stores'][] = [
+					'store_id' => $result['store_id'],
+					'name'     => $result['name']
+				];
+			}
+
+
+
+
+
+			// Customer Groups
+			$this->load->model('customer/customer_group');
+
+			$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
+
+
+
+
+			// Custom Fields
+			$this->load->model('customer/custom_field');
+
+			$data['custom_fields'] = [];
+
+			$filter_data = [
+				'filter_status' => 1,
+				'sort'          => 'cf.sort_order',
+				'order'         => 'ASC'
+			];
+
+			$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['status']) {
+					$data['custom_fields'][] = [
+						'custom_field_id'    => $custom_field['custom_field_id'],
+						'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
+						'name'               => $custom_field['name'],
+						'value'              => $custom_field['value'],
+						'type'               => $custom_field['type'],
+						'location'           => $custom_field['location'],
+						'sort_order'         => $custom_field['sort_order']
+					];
+				}
+			}
+
+
+
+
+			$this->load->model('localisation/order_status');
+
+			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+
+
+
+
+			$this->load->model('localisation/country');
+
+			$data['countries'] = $this->model_localisation_country->getCountries();
+
+
+
+
+			$this->load->model('localisation/currency');
+
+			$data['currencies'] = $this->model_localisation_currency->getCurrencies();
+
+
+
+			$data['voucher_min'] = $this->config->get('config_voucher_min');
+
+			$this->load->model('sale/voucher_theme');
+
+			$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			$data['coupon'] = '';
 			$data['voucher'] = '';

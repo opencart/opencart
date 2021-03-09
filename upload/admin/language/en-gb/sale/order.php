@@ -6,16 +6,16 @@ $_['heading_title']              = 'Orders';
 $_['text_success']               = 'Success: You have modified orders!';
 $_['text_list']                  = 'Order List';
 $_['text_add']                   = 'Add Order';
-$_['text_edit']                  = 'Edit Order';
+$_['text_edit']                  = 'Order (#%s)';
 $_['text_filter']                = 'Filter';
-$_['text_order']                 = 'Order (#%s)';
-$_['text_order_detail']          = 'Order Details';
+
 $_['text_invoice']               = 'Invoice';
 $_['text_store']                 = 'Store';
 $_['text_date_added']            = 'Date Added';
 $_['text_customer']              = 'Customer';
 $_['text_customer_group']        = 'Customer Group';
 $_['text_email']                 = 'E-Mail';
+$_['text_telephone_edit']        = 'Edit Telephone';
 $_['text_telephone']             = 'Telephone';
 $_['text_payment_method']        = 'Payment Method';
 $_['text_shipping_method']       = 'Shipping Method';
@@ -37,9 +37,11 @@ $_['text_shipping_address']      = 'Shipping Address';
 $_['text_comment']               = 'Customer Comment';
 $_['text_history']               = 'Order History';
 $_['text_history_add']           = 'Add Order History';
+
 $_['text_account_custom_field']  = 'Account Custom Fields';
 $_['text_payment_custom_field']  = 'Payment Address Custom Fields';
 $_['text_shipping_custom_field'] = 'Shipping Address Custom Fields';
+
 $_['text_browser']               = 'Browser';
 $_['text_ip']                    = 'IP Address';
 $_['text_forwarded_ip']          = 'Forwarded IP';
@@ -61,7 +63,6 @@ $_['text_default']               = 'Default';
 
 $_['text_product_add']           = 'Add Product';
 $_['text_voucher_add']           = 'Add Voucher';
-
 
 $_['text_contact']               = 'Contact';
 

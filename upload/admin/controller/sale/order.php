@@ -25,16 +25,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit(): void {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-
-		$this->getForm();
-	}
-
 	public function delete(): void {
 		$this->load->language('sale/order');
 
@@ -493,12 +483,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
-
-
-
-
-
-
 			$url = '';
 
 			if (isset($this->request->get['filter_order_id'])) {
@@ -570,6 +554,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['order_id'] = (int)$this->request->get['order_id'];
 
+			// Invoice
+			if ($order_info['invoice_no']) {
+				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
+			} else {
+				$data['invoice_no'] = '';
+			}
+
+			// Store
 			$data['store_id'] = $order_info['store_id'];
 			$data['store_name'] = $order_info['store_name'];
 
@@ -579,22 +571,42 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['store_url'] = $order_info['store_url'];
 			}
 
-			if ($order_info['invoice_no']) {
-				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
-			} else {
-				$data['invoice_no'] = '';
+			$this->load->model('setting/store');
+
+			$data['stores'] = [];
+
+			$data['stores'][] = [
+				'store_id' => 0,
+				'name'     => $this->language->get('text_default')
+			];
+
+			$results = $this->model_setting_store->getStores();
+
+			foreach ($results as $result) {
+				$data['stores'][] = [
+					'store_id' => $result['store_id'],
+					'name'     => $result['name']
+				];
 			}
 
+			// Date Added
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
-			$data['firstname'] = $order_info['firstname'];
-			$data['lastname'] = $order_info['lastname'];
-
+			// Customer
 			if ($order_info['customer_id']) {
 				$data['customer'] = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 			} else {
 				$data['customer'] = '';
 			}
+
+			$data['customer_id'] = $order_info['customer_id'];
+			$data['firstname'] = $order_info['firstname'];
+			$data['lastname'] = $order_info['lastname'];
+
+			$data['account_custom_field'] = $order_info['custom_field'];
+			
+			// Customer Groups
+			$data['customer_group_id'] = $order_info['customer_group_id'];
 
 			$this->load->model('customer/customer_group');
 
@@ -606,64 +618,49 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['customer_group'] = '';
 			}
 
+			$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
+			// E-Mail
 			$data['email'] = $order_info['email'];
+
+			// Telephone
 			$data['telephone'] = $order_info['telephone'];
 
-
-
-			$data['shipping_method'] = $order_info['shipping_method'];
-			$data['payment_method'] = $order_info['payment_method'];
-
-			$data['currency'] = $order_info['currency_code'];
-			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
-
-
-
-
-
-
-			$data['order_id'] = (int)$this->request->get['order_id'];
-			$data['store_id'] = $order_info['store_id'];
-			$data['store_url'] = HTTP_CATALOG;
-
-			$data['customer'] = $order_info['customer'];
-			$data['customer_id'] = $order_info['customer_id'];
-			$data['customer_group_id'] = $order_info['customer_group_id'];
-			$data['firstname'] = $order_info['firstname'];
-			$data['lastname'] = $order_info['lastname'];
-			$data['email'] = $order_info['email'];
-			$data['telephone'] = $order_info['telephone'];
-			$data['account_custom_field'] = $order_info['custom_field'];
-
-			$this->load->model('customer/customer');
-
-			$data['addresses'] = $this->model_customer_customer->getAddresses($order_info['customer_id']);
-
-			$data['payment_firstname'] = $order_info['payment_firstname'];
-			$data['payment_lastname'] = $order_info['payment_lastname'];
-			$data['payment_company'] = $order_info['payment_company'];
-			$data['payment_address_1'] = $order_info['payment_address_1'];
-			$data['payment_address_2'] = $order_info['payment_address_2'];
-			$data['payment_city'] = $order_info['payment_city'];
-			$data['payment_postcode'] = $order_info['payment_postcode'];
-			$data['payment_country_id'] = $order_info['payment_country_id'];
-			$data['payment_zone_id'] = $order_info['payment_zone_id'];
-			$data['payment_custom_field'] = $order_info['payment_custom_field'];
 			$data['payment_method'] = $order_info['payment_method'];
 			$data['payment_code'] = $order_info['payment_code'];
 
-			$data['shipping_firstname'] = $order_info['shipping_firstname'];
-			$data['shipping_lastname'] = $order_info['shipping_lastname'];
-			$data['shipping_company'] = $order_info['shipping_company'];
-			$data['shipping_address_1'] = $order_info['shipping_address_1'];
-			$data['shipping_address_2'] = $order_info['shipping_address_2'];
-			$data['shipping_city'] = $order_info['shipping_city'];
-			$data['shipping_postcode'] = $order_info['shipping_postcode'];
-			$data['shipping_country_id'] = $order_info['shipping_country_id'];
-			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
-			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['shipping_code'] = $order_info['shipping_code'];
+
+
+			$data['coupon'] = '';
+			$data['voucher'] = '';
+			$data['reward'] = '';
+
+			$data['order_totals'] = [];
+
+			$order_totals = $this->model_sale_order->getTotals($this->request->get['order_id']);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start && $end) {
+					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
+				}
+			}
+
+
+			$data['affiliate_id'] = $order_info['affiliate_id'];
+
+			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
+
+
+
+
+
+
 
 			// Products
 			$data['order_products'] = [];
@@ -686,62 +683,96 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Vouchers
 			$data['order_vouchers'] = $this->model_sale_order->getVouchers($this->request->get['order_id']);
 
-			$data['coupon'] = '';
-			$data['voucher'] = '';
-			$data['reward'] = '';
+			$data['order_status_id'] = $order_info['order_status_id'];
 
-			$data['order_totals'] = [];
+			$data['comment'] = $order_info['comment'];
 
-			$order_totals = $this->model_sale_order->getTotals($this->request->get['order_id']);
 
-			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
-				$start = strpos($order_total['title'], '(') + 1;
-				$end = strrpos($order_total['title'], ')');
 
-				if ($start && $end) {
-					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
-				}
+			$data['reward'] = $order_info['reward'];
+
+			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+
+
+			if ($order_info['affiliate_id']) {
+				$data['affiliate'] = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['affiliate_id']);
+			} else {
+				$data['affiliate'] = '';
 			}
 
-			$data['order_status_id'] = $order_info['order_status_id'];
-			$data['comment'] = $order_info['comment'];
-			$data['affiliate_id'] = $order_info['affiliate_id'];
-			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
+			$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
+			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
+
+
+
+
+			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
+
+			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
+
+
+
+			$data['currency'] = $order_info['currency_code'];
 			$data['currency_code'] = $order_info['currency_code'];
 
+			$this->load->model('localisation/currency');
 
+			$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
-
-			// Stores
-			$this->load->model('setting/store');
-
-			$data['stores'] = [];
-
-			$data['stores'][] = [
-				'store_id' => 0,
-				'name' => $this->language->get('text_default')
-			];
-
-			$results = $this->model_setting_store->getStores();
-
-			foreach ($results as $result) {
-				$data['stores'][] = [
-					'store_id' => $result['store_id'],
-					'name'     => $result['name']
-				];
-			}
+			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
 
 
 
 
 
-			// Customer Groups
-			$this->load->model('customer/customer_group');
-
-			$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 
+
+
+
+
+
+
+
+			$data['voucher_min'] = $this->config->get('config_voucher_min');
+
+			$this->load->model('sale/voucher_theme');
+
+			$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
+
+
+
+			// Payment and shipping address
+			$this->load->model('customer/customer');
+
+			$data['addresses'] = $this->model_customer_customer->getAddresses($order_info['customer_id']);
+
+			$this->load->model('localisation/country');
+
+			$data['countries'] = $this->model_localisation_country->getCountries();
+
+			$data['payment_firstname'] = $order_info['payment_firstname'];
+			$data['payment_lastname'] = $order_info['payment_lastname'];
+			$data['payment_company'] = $order_info['payment_company'];
+			$data['payment_address_1'] = $order_info['payment_address_1'];
+			$data['payment_address_2'] = $order_info['payment_address_2'];
+			$data['payment_city'] = $order_info['payment_city'];
+			$data['payment_postcode'] = $order_info['payment_postcode'];
+			$data['payment_country_id'] = $order_info['payment_country_id'];
+			$data['payment_zone_id'] = $order_info['payment_zone_id'];
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
+
+
+			$data['shipping_firstname'] = $order_info['shipping_firstname'];
+			$data['shipping_lastname'] = $order_info['shipping_lastname'];
+			$data['shipping_company'] = $order_info['shipping_company'];
+			$data['shipping_address_1'] = $order_info['shipping_address_1'];
+			$data['shipping_address_2'] = $order_info['shipping_address_2'];
+			$data['shipping_city'] = $order_info['shipping_city'];
+			$data['shipping_postcode'] = $order_info['shipping_postcode'];
+			$data['shipping_country_id'] = $order_info['shipping_country_id'];
+			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
 
 
 
@@ -771,80 +802,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 			}
-
-
-
-
-			$this->load->model('localisation/order_status');
-
-			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-
-
-
-
-			$this->load->model('localisation/country');
-
-			$data['countries'] = $this->model_localisation_country->getCountries();
-
-
-
-
-			$this->load->model('localisation/currency');
-
-			$data['currencies'] = $this->model_localisation_currency->getCurrencies();
-
-
-
-			$data['voucher_min'] = $this->config->get('config_voucher_min');
-
-			$this->load->model('sale/voucher_theme');
-
-			$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			$data['coupon'] = '';
-			$data['voucher'] = '';
-			$data['reward'] = '';
-
-			$data['order_totals'] = [];
-
-			$order_totals = $this->model_sale_order->getTotals($order_id);
-
-			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
-				$start = strpos($order_total['title'], '(') + 1;
-				$end = strrpos($order_total['title'], ')');
-
-				if ($start && $end) {
-					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
-				}
-			}
-
 			// Payment Address
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -988,23 +945,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('customer/customer');
 
-			$data['reward'] = $order_info['reward'];
 
-			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
 
-			$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
-			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
-
-			if ($order_info['affiliate_id']) {
-				$data['affiliate'] = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['affiliate_id']);
-			} else {
-				$data['affiliate'] = '';
-			}
-
-			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
-
-			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
-
+			// Order Status
 			$this->load->model('localisation/order_status');
 
 			$order_status_info = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
@@ -1019,7 +962,71 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['order_status_id'] = $order_info['order_status_id'];
 
-			$data['account_custom_field'] = $order_info['custom_field'];
+
+
+			/*
+						$data['order_id'] = 0;
+						$data['store_id'] = 0;
+						$data['store_url'] = HTTP_CATALOG;
+
+						$data['customer'] = '';
+						$data['customer_id'] = '';
+						$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+						$data['firstname'] = '';
+						$data['lastname'] = '';
+						$data['email'] = '';
+						$data['telephone'] = '';
+						$data['customer_custom_field'] = [];
+
+						$data['addresses'] = [];
+
+						$data['payment_firstname'] = '';
+						$data['payment_lastname'] = '';
+						$data['payment_company'] = '';
+						$data['payment_address_1'] = '';
+						$data['payment_address_2'] = '';
+						$data['payment_city'] = '';
+						$data['payment_postcode'] = '';
+						$data['payment_country_id'] = '';
+						$data['payment_zone_id'] = '';
+						$data['payment_custom_field'] = [];
+						$data['payment_method'] = '';
+						$data['payment_code'] = '';
+
+						$data['shipping_firstname'] = '';
+						$data['shipping_lastname'] = '';
+						$data['shipping_company'] = '';
+						$data['shipping_address_1'] = '';
+						$data['shipping_address_2'] = '';
+						$data['shipping_city'] = '';
+						$data['shipping_postcode'] = '';
+						$data['shipping_country_id'] = '';
+						$data['shipping_zone_id'] = '';
+						$data['shipping_custom_field'] = [];
+						$data['shipping_method'] = '';
+						$data['shipping_code'] = '';
+
+						$data['order_products'] = [];
+						$data['order_vouchers'] = [];
+						$data['order_totals'] = [];
+
+						$data['order_status_id'] = $this->config->get('config_order_status_id');
+						$data['comment'] = '';
+						$data['affiliate_id'] = 0;
+						$data['affiliate'] = '';
+						$data['currency_code'] = $this->config->get('config_currency');
+
+						$data['coupon'] = '';
+						$data['voucher'] = '';
+						$data['reward'] = '';
+
+			*/
+
+
+
+
+		
+
 
 			// Custom Fields
 			$this->load->model('customer/custom_field');
@@ -1215,25 +1222,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$this->load->model('setting/extension');
 
-			$extensions = $this->model_setting_extension->getExtensionsByType('fraud');
-
-			foreach ($extensions as $extension) {
-				if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
-					$this->load->language('extension/fraud/' . $extension['code'], 'extension');
-
-					$content = $this->load->controller('extension/fraud/' . $extension['code'] . '/order');
-
-					if ($content) {
-						$data['tabs'][] = [
-							'code'    => $extension,
-							'title'   => $this->language->get('extension')->get('heading_title'),
-							'content' => $content
-						];
-					}
-				}
-			}
 /*
 			// The URL we send API requests to
 			$data['catalog'] = HTTP_CATALOG;
@@ -1262,6 +1251,32 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 */
 
+
+
+
+
+
+			// Extension Order Tabs can are called here.
+			$this->load->model('setting/extension');
+
+			$extensions = $this->model_setting_extension->getExtensionsByType('fraud');
+
+			foreach ($extensions as $extension) {
+				if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
+					$this->load->language('extension/fraud/' . $extension['code'], 'extension');
+
+					$content = $this->load->controller('extension/fraud/' . $extension['code'] . '/order');
+
+					if ($content) {
+						$data['tabs'][] = [
+							'code'    => $extension,
+							'title'   => $this->language->get('extension')->get('heading_title'),
+							'content' => $content
+						];
+					}
+				}
+			}
+
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
@@ -1274,334 +1289,29 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	public function edit(): void {
+		$this->load->language('sale/order');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/order');
+
+
+
+
+
+
+
+
+
+	}
+
 	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;
-	}
-
-	public function getForm(): void {
-		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
-
-		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
-
-		$url = '';
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_customer_id'])) {
-			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
-		}
-
-		if (isset($this->request->get['filter_order_status'])) {
-			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-		}
-
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . (int)$this->request->get['filter_order_status_id'];
-		}
-
-		if (isset($this->request->get['filter_total'])) {
-			$url .= '&filter_total=' . $this->request->get['filter_total'];
-		}
-
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-		}
-
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['cancel'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
-		}
-
-		if (!empty($order_info)) {
-			$data['order_id'] = (int)$this->request->get['order_id'];
-			$data['store_id'] = $order_info['store_id'];
-			$data['store_url'] = HTTP_CATALOG;
-
-			$data['customer'] = $order_info['customer'];
-			$data['customer_id'] = $order_info['customer_id'];
-			$data['customer_group_id'] = $order_info['customer_group_id'];
-			$data['firstname'] = $order_info['firstname'];
-			$data['lastname'] = $order_info['lastname'];
-			$data['email'] = $order_info['email'];
-			$data['telephone'] = $order_info['telephone'];
-			$data['account_custom_field'] = $order_info['custom_field'];
-
-			$this->load->model('customer/customer');
-
-			$data['addresses'] = $this->model_customer_customer->getAddresses($order_info['customer_id']);
-
-			$data['payment_firstname'] = $order_info['payment_firstname'];
-			$data['payment_lastname'] = $order_info['payment_lastname'];
-			$data['payment_company'] = $order_info['payment_company'];
-			$data['payment_address_1'] = $order_info['payment_address_1'];
-			$data['payment_address_2'] = $order_info['payment_address_2'];
-			$data['payment_city'] = $order_info['payment_city'];
-			$data['payment_postcode'] = $order_info['payment_postcode'];
-			$data['payment_country_id'] = $order_info['payment_country_id'];
-			$data['payment_zone_id'] = $order_info['payment_zone_id'];
-			$data['payment_custom_field'] = $order_info['payment_custom_field'];
-			$data['payment_method'] = $order_info['payment_method'];
-			$data['payment_code'] = $order_info['payment_code'];
-
-			$data['shipping_firstname'] = $order_info['shipping_firstname'];
-			$data['shipping_lastname'] = $order_info['shipping_lastname'];
-			$data['shipping_company'] = $order_info['shipping_company'];
-			$data['shipping_address_1'] = $order_info['shipping_address_1'];
-			$data['shipping_address_2'] = $order_info['shipping_address_2'];
-			$data['shipping_city'] = $order_info['shipping_city'];
-			$data['shipping_postcode'] = $order_info['shipping_postcode'];
-			$data['shipping_country_id'] = $order_info['shipping_country_id'];
-			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
-			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
-			$data['shipping_method'] = $order_info['shipping_method'];
-			$data['shipping_code'] = $order_info['shipping_code'];
-
-			// Products
-			$data['order_products'] = [];
-
-			$products = $this->model_sale_order->getProducts($this->request->get['order_id']);
-
-			foreach ($products as $product) {
-				$data['order_products'][] = [
-					'product_id' => $product['product_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
-					'option'     => $this->model_sale_order->getOptions($this->request->get['order_id'], $product['order_product_id']),
-					'quantity'   => $product['quantity'],
-					'price'      => $product['price'],
-					'total'      => $product['total'],
-					'reward'     => $product['reward']
-				];
-			}
-
-			// Vouchers
-			$data['order_vouchers'] = $this->model_sale_order->getVouchers($this->request->get['order_id']);
-
-			$data['coupon'] = '';
-			$data['voucher'] = '';
-			$data['reward'] = '';
-
-			$data['order_totals'] = [];
-
-			$order_totals = $this->model_sale_order->getTotals($this->request->get['order_id']);
-
-			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
-				$start = strpos($order_total['title'], '(') + 1;
-				$end = strrpos($order_total['title'], ')');
-
-				if ($start && $end) {
-					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
-				}
-			}
-
-			$data['order_status_id'] = $order_info['order_status_id'];
-			$data['comment'] = $order_info['comment'];
-			$data['affiliate_id'] = $order_info['affiliate_id'];
-			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
-			$data['currency_code'] = $order_info['currency_code'];
-		} else {
-			$data['order_id'] = 0;
-			$data['store_id'] = 0;
-			$data['store_url'] = HTTP_CATALOG;
-
-			$data['customer'] = '';
-			$data['customer_id'] = '';
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
-			$data['firstname'] = '';
-			$data['lastname'] = '';
-			$data['email'] = '';
-			$data['telephone'] = '';
-			$data['customer_custom_field'] = [];
-
-			$data['addresses'] = [];
-
-			$data['payment_firstname'] = '';
-			$data['payment_lastname'] = '';
-			$data['payment_company'] = '';
-			$data['payment_address_1'] = '';
-			$data['payment_address_2'] = '';
-			$data['payment_city'] = '';
-			$data['payment_postcode'] = '';
-			$data['payment_country_id'] = '';
-			$data['payment_zone_id'] = '';
-			$data['payment_custom_field'] = [];
-			$data['payment_method'] = '';
-			$data['payment_code'] = '';
-
-			$data['shipping_firstname'] = '';
-			$data['shipping_lastname'] = '';
-			$data['shipping_company'] = '';
-			$data['shipping_address_1'] = '';
-			$data['shipping_address_2'] = '';
-			$data['shipping_city'] = '';
-			$data['shipping_postcode'] = '';
-			$data['shipping_country_id'] = '';
-			$data['shipping_zone_id'] = '';
-			$data['shipping_custom_field'] = [];
-			$data['shipping_method'] = '';
-			$data['shipping_code'] = '';
-
-			$data['order_products'] = [];
-			$data['order_vouchers'] = [];
-			$data['order_totals'] = [];
-
-			$data['order_status_id'] = $this->config->get('config_order_status_id');
-			$data['comment'] = '';
-			$data['affiliate_id'] = 0;
-			$data['affiliate'] = '';
-			$data['currency_code'] = $this->config->get('config_currency');
-
-			$data['coupon'] = '';
-			$data['voucher'] = '';
-			$data['reward'] = '';
-		}
-
-		// Stores
-		$this->load->model('setting/store');
-
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name' => $this->language->get('text_default')
-		];
-
-		$results = $this->model_setting_store->getStores();
-
-		foreach ($results as $result) {
-			$data['stores'][] = [
-				'store_id' => $result['store_id'],
-				'name'     => $result['name']
-			];
-		}
-
-		// Customer Groups
-		$this->load->model('customer/customer_group');
-
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
-
-		// Custom Fields
-		$this->load->model('customer/custom_field');
-
-		$data['custom_fields'] = [];
-
-		$filter_data = [
-			'filter_status' => 1,
-			'sort'          => 'cf.sort_order',
-			'order'         => 'ASC'
-		];
-
-		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['status']) {
-				$data['custom_fields'][] = [
-					'custom_field_id'    => $custom_field['custom_field_id'],
-					'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
-					'name'               => $custom_field['name'],
-					'value'              => $custom_field['value'],
-					'type'               => $custom_field['type'],
-					'location'           => $custom_field['location'],
-					'sort_order'         => $custom_field['sort_order']
-				];
-			}
-		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		$this->load->model('localisation/currency');
-
-		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
-
-		$data['voucher_min'] = $this->config->get('config_voucher_min');
-
-		$this->load->model('sale/voucher_theme');
-
-		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
-
-		// API login
-		$data['catalog'] = HTTP_CATALOG;
-
-		// API login
-		$this->load->model('user/api');
-
-		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-
-		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
-
-			$session->start();
-
-			$this->model_user_api->deleteSessionBySessionId($session->getId());
-
-			$this->model_user_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
-
-			$session->data['api_id'] = $api_info['api_id'];
-
-			$data['api_token'] = $session->getId();
-		} else {
-			$data['api_token'] = '';
-		}
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('sale/order_form', $data));
 	}
 
 	public function createInvoiceNo(): void {

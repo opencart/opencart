@@ -23,15 +23,6 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-user">
-          <div class="form-group row required">
-            <label for="input-username" class="col-sm-2 col-form-label">{{ entry_username }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
-              {% if error_username %}
-                <div class="invalid-tooltip">{{ error_username }}</div>
-              {% endif %}
-            </div>
-          </div>
           <div class="form-group row">
             <label for="input-user-group" class="col-sm-2 col-form-label">{{ entry_user_group }}</label>
             <div class="col-sm-10">
@@ -44,6 +35,42 @@
                   {% endif %}
                 {% endfor %}
               </select>
+            </div>
+          </div>
+           <div class="form-group row required">
+            <label for="input-username" class="col-sm-2 col-form-label">{{ entry_username }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+              {% if error_username %}
+                <div class="invalid-tooltip">{{ error_username }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
+            <div class="col-sm-10">
+              <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="off"/>
+              {% if error_password %}
+                <div class="invalid-tooltip">{{ error_password }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label for="input-confirm" class="col-sm-2 col-form-label">{{ entry_confirm }}</label>
+            <div class="col-sm-10">
+              <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"/>
+              {% if error_confirm %}
+                <div class="invalid-tooltip">{{ error_confirm }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="form-group row required">
+            <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              {% if error_email %}
+                <div class="invalid-tooltip">{{ error_email }}</div>
+              {% endif %}
             </div>
           </div>
           <div class="form-group row required">
@@ -64,15 +91,6 @@
               {% endif %}
             </div>
           </div>
-          <div class="form-group row required">
-            <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
-              {% if error_email %}
-                <div class="invalid-tooltip">{{ error_email }}</div>
-              {% endif %}
-            </div>
-          </div>
           <div class="form-group row">
             <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
             <div class="col-sm-10">
@@ -83,24 +101,6 @@
                   <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
-            <div class="col-sm-10">
-              <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="off"/>
-              {% if error_password %}
-                <div class="invalid-tooltip">{{ error_password }}</div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label for="input-confirm" class="col-sm-2 col-form-label">{{ entry_confirm }}</label>
-            <div class="col-sm-10">
-              <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"/>
-              {% if error_confirm %}
-                <div class="invalid-tooltip">{{ error_confirm }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="form-group row">

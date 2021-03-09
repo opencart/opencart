@@ -436,7 +436,6 @@ class ControllerMarketplaceInstall extends Controller {
 
 			rsort($results);
 
-
 			foreach ($results as $result) {
 				$source = '';
 
@@ -486,10 +485,10 @@ class ControllerMarketplaceInstall extends Controller {
 
 					foreach ($files as $file) {
 						if (is_dir($file)) {
-							if ($this->isDirEmpty($file)) {
-								rmdir($file);
+								if ($this->isDirEmpty($file)) {
+									rmdir($file);
+								}
 							}
-						}
 					}
 
 					if (is_file($source)) {
@@ -500,7 +499,6 @@ class ControllerMarketplaceInstall extends Controller {
 						if ($this->isDirEmpty($source)) {
 							rmdir($source);
 						}
-
 					}
 				}
 

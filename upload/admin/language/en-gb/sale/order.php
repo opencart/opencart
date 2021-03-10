@@ -11,9 +11,12 @@ $_['text_filter']                = 'Filter';
 
 $_['text_invoice']               = 'Invoice';
 $_['text_store']                 = 'Store';
+$_['text_store_edit']            = 'Edit Store';
 $_['text_date_added']            = 'Date Added';
 $_['text_customer']              = 'Customer';
+$_['text_customer_edit']         = 'Edit Customer';
 $_['text_customer_group']        = 'Customer Group';
+$_['text_customer_group_edit']   = 'Edit Customer Group';
 $_['text_email']                 = 'E-Mail';
 $_['text_telephone_edit']        = 'Edit Telephone';
 $_['text_telephone']             = 'Telephone';

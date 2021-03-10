@@ -293,59 +293,86 @@
 							<td class="text-right">{{ column_action }}</td>
 						</tr>
 					</thead>
-					<tbody>
-
-						{% for product in products %}
+					<tbody id="cart">
+						{% if order_products or order_vouchers %}
+						{% set product_row = 0 %}
+						{% for order_product in order_products %}
 							<tr>
-								<td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a>
-									{% for option in product.option %}
-										<br/>
-										{% if option.type != 'file' %}&nbsp;
+								<td class="text-left"><a href="{{ order_product.href }}">{{ order_product.name }}</a>
+									<br/>
+									<input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}"/>
+									{% for option in order_product.option %}
+										{% if option.type != 'file' %}
+											&nbsp;
 											<small> - {{ option.name }}: {{ option.value }}</small>
 										{% else %}
 											&nbsp;
 											<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
 										{% endif %}
+										<br/>
+										{% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
+											<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
+										{% endif %}
+										{% if option.type == 'checkbox' %}
+											<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
+										{% endif %}
+										{% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+											<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
+										{% endif %}
 									{% endfor %}</td>
-								<td class="text-left">{{ product.model }}</td>
-								<td class="text-right">{{ product.quantity }}</td>
-								<td class="text-right">{{ product.price }}</td>
-								<td class="text-right">{{ product.total }}</td>
+								<td class="text-left">{{ order_product.model }}</td>
+								<td class="text-right">{{ order_product.quantity }}
+									<input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
+								<td class="text-right">{{ order_product.price }}</td>
+								<td class="text-right">{{ order_product.total }}</td>
 								<td class="text-right"><button type="button" id="modal-cart" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 							</tr>
+							{% set product_row = product_row + 1 %}
 						{% endfor %}
-
-						{% for voucher in vouchers %}
+						{% set voucher_row = 0 %}
+						{% for order_voucher in order_vouchers %}
 							<tr>
-								<td class="text-left"><a href="{{ voucher.href }}">{{ voucher.description }}</a></td>
+								<td class="text-left"><a href="{{ order_voucher.href }}">{{ order_voucher.description }}</a>
+									<input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/>
+									<input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
 								<td class="text-left"></td>
 								<td class="text-right">1</td>
-								<td class="text-right">{{ voucher.amount }}</td>
-								<td class="text-right">{{ voucher.amount }}</td>
+								<td class="text-right">{{ order_voucher.amount }}</td>
+								<td class="text-right">{{ order_voucher.amount }}</td>
+								<td class="text-right"><button type="button" id="modal-cart" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 							</tr>
+							{% set voucher_row = voucher_row + 1 %}
 						{% endfor %}
 
+						{% else %}
 						<tr>
-							<td colspan="4"></td>
-							<td colspan="2">
-								<div class="input-group input-group-sm">
-									<select class="form-control ">
-										<option value="product">{{ text_product_add }}</option>
-										<option value="voucher">{{ text_voucher_add }}</option>
-									</select>
-									<div class="input-group-append">
-										<button type="button" id="modal-cart" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
-									</div>
-								</div>
-							</td>
+							<td class="text-center" colspan="6">{{ text_no_results }}</td>
 						</tr>
+					</tbody>
+					{% endif %}
 
-						{% for total in totals %}
-							<tr>
-								<td colspan="5" class="text-right">{{ total.title }}</td>
-								<td class="text-right">{{ total.text }}</td>
-							</tr>
-						{% endfor %}
+
+					<tr>
+						<td colspan="4"></td>
+						<td colspan="2">
+							<div class="input-group input-group-sm">
+								<select class="form-control ">
+									<option value="product">{{ text_product_add }}</option>
+									<option value="voucher">{{ text_voucher_add }}</option>
+								</select>
+								<div class="input-group-append">
+									<button type="button" id="modal-cart" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></button>
+								</div>
+							</div>
+						</td>
+					</tr>
+
+					{% for total in totals %}
+						<tr>
+							<td colspan="5" class="text-right">{{ total.title }}</td>
+							<td class="text-right">{{ total.text }}</td>
+						</tr>
+					{% endfor %}
 
 					</tbody>
 				</table>
@@ -364,7 +391,6 @@
 						</tbody>
 					</table>
 				{% endif %}
-
 			</div>
 		</div>
 		<div class="card mb-3">
@@ -569,7 +595,7 @@
 
 		<div id="modal-customer">
 			<div class="form-group">
-				<label for="input-customer" class="col-form-label">{{ entry_customer }}</label> <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+				<label for="input-customer" class="col-form-label">{{ entry_customer }}</label> <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
 			</div>
 
 			<div class="form-group required">
@@ -708,73 +734,6 @@
 			</div>
 		</div>
 
-		<div id="modal-cart">
-
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<td class="text-left">{{ column_product }}</td>
-						<td class="text-left">{{ column_model }}</td>
-						<td class="text-right">{{ column_quantity }}</td>
-						<td class="text-right">{{ column_price }}</td>
-						<td class="text-right">{{ column_total }}</td>
-						<td>{{ column_action }}</td>
-					</tr>
-				</thead>
-				<tbody id="cart">
-					{% if order_products or order_vouchers %}
-					{% set product_row = 0 %}
-					{% for order_product in order_products %}
-						<tr>
-							<td class="text-left">{{ order_product.name }}
-								<br/>
-								<input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}"/>
-								{% for option in order_product.option %}
-									-
-									<small>{{ option.name }}: {{ option.value }}</small>
-									<br/>
-									{% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
-										<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
-									{% endif %}
-									{% if option.type == 'checkbox' %}
-										<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
-									{% endif %}
-									{% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
-										<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
-									{% endif %}
-								{% endfor %}</td>
-							<td class="text-left">{{ order_product.model }}</td>
-							<td class="text-right">{{ order_product.quantity }}
-								<input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
-							<td class="text-right"></td>
-							<td class="text-right"></td>
-							<td class="text-right"></td>
-						</tr>
-						{% set product_row = product_row + 1 %}
-					{% endfor %}
-					{% set voucher_row = 0 %}
-					{% for order_voucher in order_vouchers %}
-						<tr>
-							<td class="text-left">{{ order_voucher.description }}
-								<input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/>
-								<input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
-							<td class="text-left"></td>
-							<td class="text-right">1</td>
-							<td class="text-right"></td>
-							<td class="text-right"></td>
-							<td class="text-right"></td>
-						</tr>
-						{% set voucher_row = voucher_row + 1 %}
-					{% endfor %}
-
-					{% else %}
-					<tr>
-						<td class="text-center" colspan="6">{{ text_no_results }}</td>
-					</tr>
-				</tbody>
-				{% endif %}
-			</table>
-		</div>
 
 		<div id="modal-product">
 
@@ -793,34 +752,34 @@
 
 		<div id="modal-voucher">
 
-			<fieldset>
-				<legend>{{ text_voucher_add }}</legend>
-				<div class="form-group required">
-					<label for="input-to-name" class="col-form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" id="input-to-name" class="form-control"/>
-				</div>
-				<div class="form-group required">
-					<label for="input-to-email" class="col-form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" id="input-to-email" class="form-control"/>
-				</div>
-				<div class="form-group required">
-					<label for="input-from-name" class="col-form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" id="input-from-name" class="form-control"/>
-				</div>
-				<div class="form-group required">
-					<label for="input-from-email" class="col-form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" id="input-from-email" class="form-control"/>
-				</div>
-				<div class="form-group required">
-					<label for="input-theme" class="col-form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-control">
-						{% for voucher_theme in voucher_themes %}
-							<option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="input-message" class="col-form-label">{{ entry_message }}</label> <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
-				</div>
-				<div class="form-group required">
-					<label for="input-amount" class="col-form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" id="input-amount" class="form-control"/>
-				</div>
-			</fieldset>
+
+			<legend>{{ text_voucher_add }}</legend>
+			<div class="form-group required">
+				<label for="input-to-name" class="col-form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" id="input-to-name" class="form-control"/>
+			</div>
+			<div class="form-group required">
+				<label for="input-to-email" class="col-form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" id="input-to-email" class="form-control"/>
+			</div>
+			<div class="form-group required">
+				<label for="input-from-name" class="col-form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" id="input-from-name" class="form-control"/>
+			</div>
+			<div class="form-group required">
+				<label for="input-from-email" class="col-form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" id="input-from-email" class="form-control"/>
+			</div>
+			<div class="form-group required">
+				<label for="input-theme" class="col-form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-control">
+					{% for voucher_theme in voucher_themes %}
+						<option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="input-message" class="col-form-label">{{ entry_message }}</label> <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
+			</div>
+			<div class="form-group required">
+				<label for="input-amount" class="col-form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" id="input-amount" class="form-control"/>
+			</div>
+
 
 		</div>
 
@@ -1034,8 +993,7 @@
 				</select>
 			</div>
 			<div class="form-group required">
-				<label for="input-shipping-zone" class="col-form-label">{{ entry_zone }}</label>
-				<select name="zone_id" id="input-shipping-zone" class="form-control"></select>
+				<label for="input-shipping-zone" class="col-form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-shipping-zone" class="form-control"></select>
 			</div>
 
 			{% for custom_field in custom_fields %}
@@ -1220,7 +1178,7 @@
 
 	<div id="modal-affiliate">
 		<div class="form-group">
-			<label for="input-affiliate" class="col-form-label">{{ entry_affiliate }}</label> <input type="text" name="affiliate" value="{{ affiliate }}" id="input-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}"/>
+			<label for="input-affiliate" class="col-form-label">{{ entry_affiliate }}</label> <input type="text" name="affiliate" value="{{ affiliate_firstname }} {{ affiliate_lastname }}" id="input-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}"/>
 		</div>
 	</div>
 
@@ -1231,7 +1189,7 @@
 	</div>
 
 </div>
-</div>
+
 
 <script type="text/javascript"><!--
 $(document).on('click', '#button-collapse', function(e) {
@@ -1860,7 +1818,6 @@ $(document).on('click', '#button-reward-add, #button-reward-remove, #button-comm
         }
     });
 });
-
 
 
 // Payment Address
@@ -2802,30 +2759,6 @@ $('#button-refresh').on('click', function() {
         }
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 $('#history').on('click', '.pagination a', function(e) {

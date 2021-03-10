@@ -484,10 +484,10 @@ class ControllerMarketplaceInstall extends Controller {
 					rsort($files);
 
 					foreach ($files as $file) {
-						if (is_file($file)) {
-							unlink($file);
-						} elseif (is_dir($file)) {
-							rmdir($file);
+						if (is_dir($file)) {
+							if ($this->isDirEmpty($file)) {
+								rmdir($file);
+							}
 						}
 					}
 
@@ -496,7 +496,9 @@ class ControllerMarketplaceInstall extends Controller {
 					}
 		
 					if (is_dir($source)) {
-						rmdir($source);
+						if ($this->isDirEmpty($source)) {
+							rmdir($source);
+						}
 					}					
 				}
 
@@ -517,4 +519,16 @@ class ControllerMarketplaceInstall extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}	
+	private function isDirEmpty ($dir_name) {
+		if (!is_dir($dir_name)) {
+			return false;
+		}
+		foreach (scandir($dir_name) as $dir_file)
+		{
+			if (!in_array($dir_file, array('.','..'))) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

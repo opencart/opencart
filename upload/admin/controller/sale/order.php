@@ -794,7 +794,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['countries'] = $this->model_localisation_country->getCountries();
 
-
 			// Custom Fields
 			$this->load->model('customer/custom_field');
 
@@ -987,7 +986,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			// Products
 			$data['order_products'] = [];
 
@@ -1058,8 +1056,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-
-
 			$data['comment'] = $order_info['comment'];
 			$data['comment'] = nl2br($order_info['comment']);
 
@@ -1125,7 +1121,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
 
 			/*
 			// The URL we send API requests to
@@ -1237,11 +1232,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if ($order_info) {
 			$this->load->language('sale/order');
-
-
-
 		} else {
-
 			/*
 						$data['order_id'] = 0;
 						$data['store_id'] = 0;

@@ -1,12 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Api extends \Opencart\System\Engine\Controller {
-
-
-
-
 	public function index(): void {
-
 		// Autoloader
 		$autoloader = new \Opencart\System\Engine\Autoloader();
 		$autoloader->register('Opencart\Catalog', DIR_CATALOG);
@@ -133,7 +128,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_info) {
-
 			if (isset($this->request->post['customer_id'])) {
 				$order_data['customer_id'] = $this->request->post['customer_id'];
 			}
@@ -149,7 +143,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$loader->controller('api/login');
 
 			echo $response->getOutput();
-
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

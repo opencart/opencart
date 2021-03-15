@@ -60,8 +60,11 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 			if (!$json) {
 				$this->load->model('setting/store');
+				
 				$this->load->model('setting/setting');
+				
 				$this->load->model('customer/customer');
+				
 				$this->load->model('sale/order');
 
 				$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);

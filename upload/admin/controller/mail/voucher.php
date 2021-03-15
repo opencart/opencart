@@ -33,12 +33,12 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				$this->language->load($language_code, 'mail', $language_code);
 				$this->language->load('mail/voucher', 'mail', $language_code);
 
-				$this->load->model('setting/setting');
+				$this->load->model('setting/store');
 
-				$store_info = $this->model_setting_setting->getValue('config_store_id', $order_info['store_id']);
+				$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
 
 				if ($store_info) {
-					$store_name = html_entity_decode($store_info['store_name'], ENT_QUOTES, 'UTF-8');
+					$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				} else {
 					$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				}

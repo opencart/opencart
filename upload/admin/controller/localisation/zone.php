@@ -412,11 +412,11 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+			$data['status'] = (int)$this->request->post['status'];
 		} elseif (!empty($zone_info)) {
 			$data['status'] = $zone_info['status'];
 		} else {
-			$data['status'] = '1';
+			$data['status'] = 1;
 		}
 
 		if (isset($this->request->post['name'])) {

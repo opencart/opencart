@@ -20,8 +20,8 @@ class Event extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/event');
 
-		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $event_id) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !empty($this->request->post['selected']) && is_array($this->request->post['selected']) && $this->validate()) {
+			foreach ((array)$this->request->post['selected'] as $event_id) {
 				$this->model_setting_event->deleteEvent($event_id);
 			}
 

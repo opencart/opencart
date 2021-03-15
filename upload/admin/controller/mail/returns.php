@@ -5,13 +5,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (isset($args[0])) {
 			$return_id = $args[0];
 		} else {
-			$return_id = '';
+			$return_id = 0;
 		}
 
 		if (isset($args[1])) {
 			$return_status_id = $args[1];
 		} else {
-			$return_status_id = '';
+			$return_status_id = 0;
 		}
 
 		if (isset($args[2])) {

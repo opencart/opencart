@@ -35,7 +35,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('setting/store');
 
-				$store_info = $this->model_setting_store->getStore($gdpr_info['store_id']);
+				$store_info = $this->model_setting_store->getStore($order_info['store_id']);
 
 				if ($store_info) {
 					$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');

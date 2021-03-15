@@ -392,11 +392,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+			$data['status'] = (int)$this->request->post['status'];
 		} elseif (!empty($currency_info)) {
 			$data['status'] = $currency_info['status'];
 		} else {
-			$data['status'] = '';
+			$data['status'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -428,6 +428,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
+		
 		$this->load->model('sale/order');
 
 		foreach ($this->request->post['selected'] as $currency_id) {

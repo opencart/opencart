@@ -452,11 +452,11 @@ class Country extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+			$data['status'] = (int)$this->request->post['status'];
 		} elseif (!empty($country_info)) {
 			$data['status'] = $country_info['status'];
 		} else {
-			$data['status'] = '1';
+			$data['status'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

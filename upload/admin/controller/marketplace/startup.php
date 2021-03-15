@@ -20,8 +20,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/startup');
 
-		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $startup_id) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !empty($this->request->post['selected']) && is_array($this->request->post['selected']) && $this->validate()) {
+			foreach ((array)$this->request->post['selected'] as $startup_id) {
 				$this->model_setting_startup->deleteStartup($startup_id);
 			}
 

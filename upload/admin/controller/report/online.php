@@ -53,6 +53,7 @@ class Online extends \Opencart\System\Engine\Controller {
 		$data['refresh'] = $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('report/online');
+		
 		$this->load->model('customer/customer');		
 
 		$data['customers'] = [];

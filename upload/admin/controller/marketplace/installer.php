@@ -413,10 +413,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-
-
-
-
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

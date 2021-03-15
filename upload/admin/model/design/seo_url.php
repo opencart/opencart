@@ -115,8 +115,20 @@ class ModelDesignSeoUrl extends Model {
 		return $query->rows;
 	}	
 	
-	public function getSeoUrlsByQuery($keyword) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "'");
+	public function getSeoUrlsByQuery($query) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE query = '" . $this->db->escape($query) . "'");
+
+		return $query->rows;
+	}
+	
+	public function getSeoUrlsByQueryId($seo_url_id, $query) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE query = '" . $this->db->escape($query) . "' AND seo_url_id != '" . (int)$seo_url_id . "'");
+
+		return $query->rows;
+	}	
+
+	public function getSeoUrlsByKeywordId($seo_url_id, $keyword) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE keyword = '" . $this->db->escape($keyword) . "' AND seo_url_id != '" . (int)$seo_url_id . "'");
 
 		return $query->rows;
 	}	

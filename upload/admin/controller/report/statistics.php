@@ -180,8 +180,6 @@ class Statistics extends \Opencart\System\Engine\Controller {
 
 		$data['statistics'] = [];
 		
-		$this->load->model('report/statistics');
-		
 		$results = $this->model_report_statistics->getStatistics();
 		
 		foreach ($results as $result) {

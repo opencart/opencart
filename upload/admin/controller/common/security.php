@@ -22,7 +22,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		rsort($data['paths']);
 
-		$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
+		$data['document_root'] = explode('/', str_replace('\\', '/', rtrim(realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/', '/')));
 
 		return $this->load->view('common/security', $data);
 	}

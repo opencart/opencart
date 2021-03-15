@@ -1252,6 +1252,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('customer/customer');
+		
 		$this->load->model('setting/store');
 
 		$data['ips'] = [];

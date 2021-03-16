@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Password extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 
@@ -79,7 +79,7 @@ class Password extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/password', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'password',
 			'confirm'

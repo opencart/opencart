@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Affiliate extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function add() {
+	public function add(): void {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -31,7 +31,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -59,7 +59,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
@@ -226,7 +226,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'affiliate') {
@@ -276,7 +276,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/affiliate', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'payment',
 			'cheque',
@@ -308,7 +308,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'affiliate') {

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Coupon extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if ($this->config->get('total_coupon_status')) {
 			$this->load->language('extension/opencart/total/coupon');
 
@@ -15,7 +15,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function coupon() {
+	public function coupon(): void {
 		$this->load->language('extension/opencart/total/coupon');
 
 		$json = [];
@@ -47,7 +47,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function remove(): void {
 		$this->load->language('extension/opencart/total/coupon');
 
 		$json = [];

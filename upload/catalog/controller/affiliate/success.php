@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Affiliate;
 class Success extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}

@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 class Reset extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->response->redirect($this->url->link('common/dashboard'));
 		}
@@ -100,7 +100,7 @@ class Reset extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/reset', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}

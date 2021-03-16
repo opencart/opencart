@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 class Cheque extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('extension/opencart/payment/cheque');
 
 		$data['payable'] = $this->config->get('payment_cheque_payable');
@@ -10,7 +10,7 @@ class Cheque extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/payment/cheque', $data);
 	}
 
-	public function confirm() {
+	public function confirm(): void {
 		$json = [];
 
 		if (isset($this->session->data['payment_method']) && $this->session->data['payment_method']['code'] == 'cheque') {

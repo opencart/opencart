@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 class Cart extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('common/cart');
 
 		// Totals
@@ -130,7 +130,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $this->load->view('common/cart', $data);
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->response->setOutput($this->index());
 	}
 }

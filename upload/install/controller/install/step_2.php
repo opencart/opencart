@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Application\Controller\Install;
+namespace Opencart\Install\Controller\Install;
 class Step2 extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('install/step_2');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -121,7 +121,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('install/step_2', $data));
 	}
 
-	private function validate() {
+	private function validate(): bool {
 		if (version_compare(phpversion(), '8.0.0', '<')) {
 			$this->error['warning'] = $this->language->get('error_version');
 		}

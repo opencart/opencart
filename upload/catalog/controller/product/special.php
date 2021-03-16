@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 class Special extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('product/special');
 
 		$this->load->model('catalog/product');

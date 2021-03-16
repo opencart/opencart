@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Marketing extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -57,7 +57,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -101,7 +101,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -147,7 +147,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
@@ -352,7 +352,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/marketing_list', $data));
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['marketing_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -466,7 +466,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/marketing_form', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		if (!$this->user->hasPermission('modify', 'marketing/marketing')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -488,7 +488,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete() {
+	protected function validateDelete(): bool {
 		if (!$this->user->hasPermission('modify', 'marketing/marketing')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -496,7 +496,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function report() {
+	public function report(): void {
 		$this->load->language('marketing/marketing');
 
 		if (isset($this->request->get['marketing_id'])) {

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Newsletter extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
 

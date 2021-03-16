@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 class Profile extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('common/profile');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -162,7 +162,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/profile', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		if (!$this->user->hasPermission('modify', 'common/profile')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 class Manufacturer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
@@ -54,7 +54,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('product/manufacturer_list', $data));
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->load->language('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');

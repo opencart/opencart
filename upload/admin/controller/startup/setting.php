@@ -1,15 +1,17 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 class Setting extends \Opencart\System\Engine\Controller {
-	public function index() {
-		// Settings
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0'");
+	public function index(): void {
+		$this->load->model('setting/setting');
 
-		foreach ($query->rows as $setting) {
-			if (!$setting['serialized']) {
-				$this->config->set($setting['key'], $setting['value']);
+		// Settings
+		$results = $this->model_setting_setting->getSettings(0);
+
+		foreach ($results as $result) {
+			if (!$result['serialized']) {
+				$this->config->set($result['key'], $result['value']);
 			} else {
-				$this->config->set($setting['key'], json_decode($setting['value'], true));
+				$this->config->set($result['key'], json_decode($result['value'], true));
 			}
 		}
 

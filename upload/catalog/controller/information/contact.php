@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Information;
 class Contact extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('information/contact');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -75,7 +75,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$data['geocode'] = $this->config->get('config_geocode');
 		$data['geocode_hl'] = $this->config->get('config_language');
 		$data['telephone'] = $this->config->get('config_telephone');
-		$data['fax'] = $this->config->get('config_fax');
 		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
 
@@ -84,7 +83,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/location');
 
 		foreach ((array)$this->config->get('config_location') as $location_id) {
-			$location_info = $this->model_localisation_location->getLocation($location_id);
+			$location_info = $this->model_localisation_location->getLocation((int)$location_id);
 
 			if ($location_info) {
 				if (is_file(DIR_IMAGE . html_entity_decode($location_info['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -99,7 +98,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 					'address'     => nl2br($location_info['address']),
 					'geocode'     => $location_info['geocode'],
 					'telephone'   => $location_info['telephone'],
-					'fax'         => $location_info['fax'],
 					'image'       => $image,
 					'open'        => nl2br($location_info['open']),
 					'comment'     => $location_info['comment']
@@ -146,7 +144,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('information/contact', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'name',
 			'email',
@@ -188,7 +186,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function success() {
+	public function success(): void {
 		$this->load->language('information/contact');
 
 		$this->document->setTitle($this->language->get('heading_title'));

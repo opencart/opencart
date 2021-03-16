@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Product;
 class Product extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('product/product');
 
 		$data['breadcrumbs'] = [];
@@ -544,7 +544,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function review() {
+	public function review(): void {
 		$this->load->language('product/product');
 
 		$this->load->model('catalog/review');
@@ -582,7 +582,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('product/review', $data));
 	}
 
-	public function write() {
+	public function write(): void {
 		$this->load->language('product/product');
 
 		$json = [];
@@ -626,7 +626,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getRecurringDescription() {
+	public function getRecurringDescription(): void {
 		$this->load->language('product/product');
 
 		if (isset($this->request->post['product_id'])) {

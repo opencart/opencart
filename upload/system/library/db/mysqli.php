@@ -1,12 +1,16 @@
 <?php
 namespace Opencart\System\Library\DB;
 class MySQLi {
-	private $connection;
+	private object $connection;
 
-	public function __construct($hostname, $username, $password, $database, $port = '3306') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
+			$port = '3306';
+		}
+
 		try {
 			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
-		} catch (mysqli_sql_exception $e) {
+		} catch (\mysqli_sql_exception $e) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
 
@@ -20,7 +24,7 @@ class MySQLi {
 		}
 	}
 
-	public function query($sql) {
+	public function query(string $sql): bool|object {
 		$query = $this->connection->query($sql);
 
 		if (!$this->connection->errno) {
@@ -49,19 +53,19 @@ class MySQLi {
 		}
 	}
 
-	public function escape($value) {
+	public function escape(string $value): string {
 		return $this->connection->real_escape_string($value);
 	}
 	
-	public function countAffected() {
+	public function countAffected(): int {
 		return $this->connection->affected_rows;
 	}
 
-	public function getLastId() {
+	public function getLastId(): int {
 		return $this->connection->insert_id;
 	}
 	
-	public function isConnected() {
+	public function isConnected(): bool {
 		if ($this->connection) {
 			return $this->connection->ping();
 		} else {
@@ -79,7 +83,7 @@ class MySQLi {
 		if ($this->connection) {
 			$this->connection->close();
 
-			$this->connection = '';
+			unset($this->connection);
 		}
 	}
 }

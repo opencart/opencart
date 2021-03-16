@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 class Banner extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/module/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -173,7 +173,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/banner', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/module/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

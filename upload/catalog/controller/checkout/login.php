@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Login extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
 
 		$data['checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
@@ -17,7 +17,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/login', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];

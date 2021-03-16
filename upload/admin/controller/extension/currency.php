@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 class Currency extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/currency');
 
 		$this->load->model('setting/extension');
@@ -11,7 +11,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function install() {
+	public function install(): void {
 		$this->load->language('extension/currency');
 
 		$this->load->model('setting/extension');
@@ -33,7 +33,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function uninstall() {
+	public function uninstall(): void {
 		$this->load->language('extension/currency');
 
 		$this->load->model('setting/extension');
@@ -50,7 +50,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function getList() {
+	public function getList(): string {
 		$this->load->language('extension/currency');
 
 		if (isset($this->error['warning'])) {
@@ -113,7 +113,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/currency', $data);
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/currency')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

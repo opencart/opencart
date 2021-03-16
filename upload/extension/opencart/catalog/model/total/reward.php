@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Reward extends \Opencart\System\Engine\Model {
-	public function getTotal(&$totals, &$taxes, &$total) {
+	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if (isset($this->session->data['reward'])) {
 			$this->load->language('extension/opencart/total/reward', 'reward');
 
@@ -53,7 +53,7 @@ class Reward extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function confirm($order_info, $order_total) {
+	public function confirm(array $order_info, array $order_total): int {
 		$this->load->language('extension/opencart/total/reward');
 
 		$points = 0;
@@ -72,9 +72,11 @@ class Reward extends \Opencart\System\Engine\Model {
 		} else {
 			return $this->config->get('config_fraud_status_id');
 		}
+
+		return 0;
 	}
 
-	public function unconfirm($order_id) {
+	public function unconfirm(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` < '0'");
 	}
 }

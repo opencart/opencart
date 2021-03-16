@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class ShippingMethod extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
 
 		if (isset($this->session->data['shipping_address'])) {
@@ -67,7 +67,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/shipping_method', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];

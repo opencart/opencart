@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Register extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
 
 		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
@@ -83,7 +83,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/register', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
@@ -212,7 +212,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {

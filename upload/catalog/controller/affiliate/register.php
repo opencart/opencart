@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Affiliate;
 class Register extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if (!$this->config->get('config_affiliate_status') || $this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -300,24 +300,24 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['captcha'] = '';
 		}
 
-		$data['informations'] = [];
-
-		$informations = array_merge((array)$this->config->get('config_account_id'), (array)$this->config->get('config_affiliate_id'));
-
-		if (!empty($informations)) {
+		if ($this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
 
-			foreach ($informations as $information_id) {
-				$information_info = $this->model_catalog_information->getInformation($information_id);
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
-				if ($information_info) {
-					$data['informations'][] = [
-						'information_id' => $information_id,
-						'text_agree'     => sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_id), $information_info['title']),
-						'agree'          => isset($this->request->post['agree'][$information_id]) ? true : false
-					];
-				}
+			if ($information_info) {
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title']);
+			} else {
+				$data['text_agree'] = '';
 			}
+		} else {
+			$data['text_agree'] = '';
+		}
+
+		if (isset($this->request->post['agree'])) {
+			$data['agree'] = $this->request->post['agree'];
+		} else {
+			$data['agree'] = false;
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -330,7 +330,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('affiliate/register', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'firstname',
 			'lastname',
@@ -381,7 +381,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account' || $custom_field['location'] == 'affiliate') {
@@ -428,17 +428,14 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$informations = array_merge((array)$this->config->get('config_account_id'), (array)$this->config->get('config_affiliate_id'));
-
-		if (!empty($informations)) {
+		// Agree to terms
+		if ($this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
 
-			foreach ($informations as $information_id) {
-				$information_info = $this->model_catalog_information->getInformation($information_id);
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
-				if ($information_info && !isset($this->request->post['agree'][$information_id])) {
-					$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-				}
+			if ($information_info && !isset($this->request->post['agree'])) {
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
 

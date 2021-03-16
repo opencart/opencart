@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class Country extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -57,7 +57,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -101,7 +101,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -147,7 +147,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = (string)$this->request->get['filter_name'];
 		} else {
@@ -346,7 +346,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/country_list', $data));
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->error['warning'])) {
@@ -466,7 +466,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/country_form', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		if (!$this->user->hasPermission('modify', 'localisation/country')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -478,7 +478,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete() {
+	protected function validateDelete(): bool {
 		if (!$this->user->hasPermission('modify', 'localisation/country')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -521,12 +521,18 @@ class Country extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function country() {
+	public function country(): void {
 		$json = [];
+
+		if (isset($this->request->get['country_id'])) {
+			$country_id = (int)$this->request->get['country_id'];
+		} else {
+			$country_id = 0;
+		}
 
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		$country_info = $this->model_localisation_country->getCountry($country_id);
 
 		if ($country_info) {
 			$this->load->model('localisation/zone');

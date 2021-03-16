@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Model\Upgrade;
 class Upgrade1004 extends \Opencart\System\Engine\Model {
-	public function upgrade() {
+	public function upgrade(): void {
 
 
 		// Convert 1.5.x core module format to 2.x (core modules only)

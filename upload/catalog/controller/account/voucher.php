@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Voucher extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('account/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -156,7 +156,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/voucher', $data));
 	}
 
-	public function success() {
+	public function success(): void {
 		$this->load->language('account/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -185,7 +185,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/success', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		$keys = [
 			'to_name',
 			'to_email',

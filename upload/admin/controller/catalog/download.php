@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Download extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -45,7 +45,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -77,7 +77,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -111,7 +111,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -245,7 +245,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/download_list', $data));
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -359,7 +359,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/download_form', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		if (!$this->user->hasPermission('modify', 'catalog/download')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -389,7 +389,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete() {
+	protected function validateDelete(): bool {
 		if (!$this->user->hasPermission('modify', 'catalog/download')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -407,7 +407,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function report() {
+	public function report(): void {
 		$this->load->language('catalog/download');
 
 		if (isset($this->request->get['download_id'])) {
@@ -465,7 +465,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/download_report', $data));
 	}
 
-	public function upload() {
+	public function upload(): void {
 		$this->load->language('catalog/download');
 
 		$json = [];
@@ -546,7 +546,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function autocomplete() {
+	public function autocomplete(): void {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 class Chart extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/chart');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -76,7 +76,7 @@ class Chart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/chart_form', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/chart')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -84,7 +84,7 @@ class Chart extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function dashboard() {
+	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/chart');
 
 		$data['user_token'] = $this->session->data['user_token'];

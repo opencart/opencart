@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class PaymentAddress extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -39,7 +39,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
@@ -58,7 +58,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/payment_address', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
@@ -162,7 +162,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				// Custom field validation
 				$this->load->model('account/custom_field');
 
-				$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+				$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 				foreach ($custom_fields as $custom_field) {
 					if ($custom_field['location'] == 'address') {

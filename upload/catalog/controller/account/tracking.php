@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Tracking extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): object|void {
 		if (!$this->config->get('config_affiliate_status')) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -57,7 +57,7 @@ class Tracking extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function autocomplete() {
+	public function autocomplete(): void {
 		$json = [];
 
 		if (isset($this->request->get['filter_name'])) {

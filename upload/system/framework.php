@@ -29,7 +29,7 @@ $log = new \Opencart\System\Library\Log($config->get('error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function($code, $message, $file, $line) use ($log, $config) {
+set_error_handler(function(string $code, string $message, string $file, string $line) use ($log, $config) {
 	// error suppressed with @
 	if (@error_reporting() === 0) {
 		return false;
@@ -68,7 +68,7 @@ set_error_handler(function($code, $message, $file, $line) use ($log, $config) {
 });
 
 // Exception Handler
-set_exception_handler(function($e) use ($log, $config)  {
+set_exception_handler(function(\Throwable $e) use ($log, $config)  {
 	if ($config->get('error_log')) {
 		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
 	}

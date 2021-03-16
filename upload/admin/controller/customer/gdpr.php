@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Customer;
 class Gdpr extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('customer/gdpr');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -33,7 +33,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/gdpr', $data));
 	}
 
-	public function gdpr() {
+	public function list(): void {
 		$this->load->language('customer/gdpr');
 
 		if (isset($this->request->get['filter_email'])) {
@@ -159,7 +159,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *	processing = 2
 	 *	denied     = -1
 	*/
-	public function approve() {
+	public function approve(): void {
 		$this->load->language('customer/gdpr');
 
 		$json = [];
@@ -200,7 +200,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function deny() {
+	public function deny(): void {
 		$this->load->language('customer/gdpr');
 
 		$json = [];
@@ -231,7 +231,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('customer/gdpr');
 
 		$json = [];

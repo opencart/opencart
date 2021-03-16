@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 class FileManager extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('common/filemanager');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -33,7 +33,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
 
-	public function list() {
+	public function list(): void {
 		$this->load->language('common/filemanager');
 
 		// Make sure we have the correct directory
@@ -255,7 +255,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/filemanager_list', $data));
 	}
 
-	public function upload() {
+	public function upload(): void {
 		$this->load->language('common/filemanager');
 
 		$json = [];
@@ -358,7 +358,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function folder() {
+	public function folder(): void {
 		$this->load->language('common/filemanager');
 
 		$json = [];
@@ -409,7 +409,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('common/filemanager');
 
 		$json = [];

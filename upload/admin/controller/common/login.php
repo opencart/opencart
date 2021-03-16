@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 class Login extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('common/login');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -87,7 +87,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/login', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!isset($this->request->post['username']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
 			$this->error['warning'] = $this->language->get('error_login');
 		}

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Banner extends \Opencart\System\Engine\Controller {
-	public function index($setting) {
+	public function index(array $setting): string {
 		static $module = 0;
 
 		$this->load->model('design/banner');

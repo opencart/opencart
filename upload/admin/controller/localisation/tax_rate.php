@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class TaxRate extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('localisation/tax_rate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -13,7 +13,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('localisation/tax_rate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -45,7 +45,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('localisation/tax_rate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -77,7 +77,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('localisation/tax_rate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -111,7 +111,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	protected function getList() {
+	protected function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -253,7 +253,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/tax_rate_list', $data));
 	}
 
-	protected function getForm() {
+	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['tax_rate_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->error['warning'])) {
@@ -367,7 +367,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/tax_rate_form', $data));
 	}
 
-	protected function validateForm() {
+	protected function validateForm(): bool {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_rate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -383,7 +383,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete() {
+	protected function validateDelete(): bool {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_rate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

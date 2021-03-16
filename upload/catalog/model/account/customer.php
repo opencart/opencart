@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Customer extends \Opencart\System\Engine\Model {
-	public function addCustomer($data) {
+	public function addCustomer(array $data): int {
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $data['customer_group_id'];
 		} else {
@@ -23,49 +23,49 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $customer_id;
 	}
 
-	public function editCustomer($customer_id, $data) {
+	public function editCustomer(int $customer_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']['account']) ? json_encode($data['custom_field']['account']) : '') . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
-	public function editPassword($email, $password) {
+	public function editPassword(string $email, string $password): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `password` = '" . $this->db->escape(password_hash(html_entity_decode($password, ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `code` = '' WHERE LOWER(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
-	public function editAddressId($customer_id, $address_id) {
+	public function editAddressId(int $customer_id, int $address_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '" . (int)$address_id . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
 	}
 
-	public function editCode($email, $code) {
+	public function editCode(string $email, string $code): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `code` = '" . $this->db->escape($code) . "' WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
-	public function editToken($email, $token) {
+	public function editToken(string $email, string $token): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
-	public function editNewsletter($newsletter) {
+	public function editNewsletter(bool $newsletter): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `newsletter` = '" . (int)$newsletter . "' WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 	}
 
-	public function getCustomer($customer_id) {
+	public function getCustomer(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCustomerByEmail($email) {
+	public function getCustomerByEmail(string $email): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LOWER(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row;
 	}
 
-	public function getCustomerByCode($code) {
+	public function getCustomerByCode(string $code): array {
 		$query = $this->db->query("SELECT `customer_id`, `firstname`, `lastname`, `email` FROM `" . DB_PREFIX . "customer` WHERE `code` = '" . $this->db->escape($code) . "' AND `code` != ''");
 
 		return $query->row;
 	}
 
-	public function getCustomerByToken($token) {
+	public function getCustomerByToken(string $token): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `token` = '" . $this->db->escape($token) . "' AND `token` != ''");
 
 		if ($query->num_rows) {
@@ -75,55 +75,55 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getTotalCustomersByEmail($email) {
+	public function getTotalCustomersByEmail(string $email): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` WHERE LOWER(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row['total'];
 	}
 
-	public function addTransaction($customer_id, $description, $amount = '', $order_id = 0) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (float)$order_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
+	public function addTransaction(int $customer_id, string $description, float $amount = 0, int $order_id = 0): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_transaction` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `date_added` = NOW()");
 	}
 
-	public function deleteTransactionByOrderId($order_id) {
+	public function deleteTransactionByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
-	public function getTransactionTotal($customer_id) {
+	public function getTransactionTotal(int $customer_id): int {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalTransactionsByOrderId($order_id) {
+	public function getTotalTransactionsByOrderId(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getRewardTotal($customer_id) {
+	public function getRewardTotal(int $customer_id): int {
 		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getIps($customer_id) {
+	public function getIps(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getTotalIps($customer_id) {
+	public function getTotalIps(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_ip` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
 	}
 
-	public function addLogin($customer_id, $ip, $country = '') {
+	public function addLogin(int $customer_id, string $ip, string $country = ''): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_ip` SET `customer_id` = '" . (int)$customer_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `ip` = '" . $this->db->escape($ip) . "', `country` = '" . $this->db->escape($country) . "', `date_added` = NOW()");
 	}
 
-	public function addLoginAttempt($email) {
+	public function addLoginAttempt(string $email): void {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_login` WHERE LOWER(`email`) = '" . $this->db->escape(utf8_strtolower((string)$email)) . "' AND `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
 
 		if (!$query->num_rows) {
@@ -133,13 +133,13 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getLoginAttempts($email) {
+	public function getLoginAttempts(string $email): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_login` WHERE LOWER(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row;
 	}
 
-	public function deleteLoginAttempts($email) {
+	public function deleteLoginAttempts(string $email): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_login` WHERE LOWER(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 }

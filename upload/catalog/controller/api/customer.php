@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Api;
 class Customer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('api/customer');
 
 		// Delete past customer in case there is an error
@@ -65,7 +65,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {

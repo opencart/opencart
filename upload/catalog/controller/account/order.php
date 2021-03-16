@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Order extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 
@@ -85,7 +85,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/order_list', $data));
 	}
 
-	public function info() {
+	public function info(): object|null {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -333,12 +333,14 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('account/order_info', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 
-	public function reorder() {
+	public function reorder(): void {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {

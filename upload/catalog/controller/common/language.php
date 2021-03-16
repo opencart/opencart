@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 class Language extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('common/language');
 
 		$data['code'] = $this->config->get('config_language');
@@ -41,7 +41,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		return $this->load->view('common/language', $data);
 	}
 
-	public function language() {
+	public function language(): void {
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {

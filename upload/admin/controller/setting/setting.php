@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Setting;
 class Setting extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -339,12 +339,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_telephone'] = $this->config->get('config_telephone');
 		}
 
-		if (isset($this->request->post['config_fax'])) {
-			$data['config_fax'] = $this->request->post['config_fax'];
-		} else {
-			$data['config_fax'] = $this->config->get('config_fax');
-		}
-
 		if (isset($this->request->post['config_image'])) {
 			$data['config_image'] = $this->request->post['config_image'];
 		} else {
@@ -428,6 +422,16 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		date_default_timezone_set($this->config->get('config_timezone'));
+/*
+		$_config = new Config();
+		$_config->load('default');
+
+		$date_timezone = $_config->get('date_timezone');
+
+		$config_timezone = array_replace((array)$date_timezone, (array)$this->config->get('config_timezone'));
+
+		date_default_timezone_set($config_timezone);
+*/
 
 		if (isset($this->request->post['config_language'])) {
 			$data['config_language'] = $this->request->post['config_language'];
@@ -1220,7 +1224,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/setting', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'setting/setting')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -1380,7 +1384,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function theme() {
+	public function theme(): void {
 		$image = '';
 
 		$theme = basename($this->request->get['theme']);

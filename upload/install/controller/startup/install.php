@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Install\Controller\Startup;
 class Install extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		// Document
 		$this->registry->set('document', new \Opencart\System\Library\Document(HTTP_SERVER));
 

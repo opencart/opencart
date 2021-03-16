@@ -21,7 +21,7 @@ class Registry {
 	 * 
 	 * @return	mixed
      */
-	public function get($key) {
+	public function get(string $key): object {
 		return isset($this->data[$key]) ? $this->data[$key] : '';
 	}
 
@@ -31,7 +31,7 @@ class Registry {
      * @param	string	$key
 	 * @param	string	$value
      */	
-	public function set($key, $value) {
+	public function set(string $key, object $value): void {
 		$this->data[$key] = $value;
 	}
 	
@@ -42,7 +42,7 @@ class Registry {
 	 *
 	 * @return	bool
      */
-	public function has($key) {
+	public function has(string $key): bool {
 		return isset($this->data[$key]);
 	}
 
@@ -55,7 +55,7 @@ class Registry {
 	 *
 	 * @return	void
 	 */
-	public function unset($key) {
+	public function unset(string $key): void {
 		if (isset($this->data[$key])) {
 			unset($this->data[$key]);
 		}

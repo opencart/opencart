@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Checkout extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
@@ -91,7 +91,7 @@ class Checkout extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/checkout', $data));
 	}
 
-	public function customfield() {
+	public function customfield(): void {
 		$json = [];
 
 		$this->load->model('account/custom_field');
@@ -103,7 +103,7 @@ class Checkout extends \Opencart\System\Engine\Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			$json[] = [

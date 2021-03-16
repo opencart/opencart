@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Mail;
 class Transaction extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addTransaction/after
-	public function index(&$route, &$args, &$output) {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		$this->load->language('mail/transaction');
 
 		$this->load->model('account/customer');

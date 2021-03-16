@@ -1,10 +1,10 @@
 <?php
 namespace Opencart\System\Library\Template;
 class Twig {
-	protected $root;
-	protected $loader;
-	protected $directory;
-	protected $path = [];
+	protected string $root;
+	protected object $loader;
+	protected string $directory;
+	protected array $path = [];
 
 	/**
 	 * Constructor
@@ -28,7 +28,7 @@ class Twig {
 	 * @param    string $namespace
 	 * @param    string $directory
 	 */
-	public function addPath($namespace, $directory = '') {
+	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
 		} else {
@@ -45,7 +45,7 @@ class Twig {
 	 *
 	 * @return	array
 	 */
-	public function render($filename, $data = [], $code = '') {
+	public function render(string $filename, array $data = [], string $code = ''): string {
 		$file = $this->directory . $filename . '.twig';
 
 		/*

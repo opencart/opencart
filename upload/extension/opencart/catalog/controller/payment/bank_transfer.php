@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 class BankTransfer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('extension/opencart/payment/bank_transfer');
 
 		$data['bank'] = nl2br($this->config->get('payment_bank_transfer_bank' . $this->config->get('config_language_id')));
@@ -9,7 +9,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/payment/bank_transfer', $data);
 	}
 
-	public function confirm() {
+	public function confirm(): void {
 		$json = [];
 
 		if (isset($this->session->data['payment_method']['code']) && $this->session->data['payment_method']['code'] == 'bank_transfer') {

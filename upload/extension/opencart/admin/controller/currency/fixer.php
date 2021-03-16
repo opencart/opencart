@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Currency;
 class Fixer extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/currency/fixer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -70,7 +70,7 @@ class Fixer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/currency/fixer', $data));
 	}
 
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/currency/fixer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -82,7 +82,7 @@ class Fixer extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function currency($default = '') {
+	public function currency(string $default = ''): void {
 		if ($this->config->get('currency_fixer_status')) {
 			$curl = curl_init();
 

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 class Marketing extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/report/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -62,7 +62,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/report/marketing_form', $data));
 	}
 	
-	protected function validate() {
+	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/opencart/report/marketing')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -70,7 +70,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 	
-	public function report() {
+	public function report(): void {
 		$this->load->language('extension/opencart/report/marketing');
 
 		if (isset($this->request->get['filter_date_start'])) {

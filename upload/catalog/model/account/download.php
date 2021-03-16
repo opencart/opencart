@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Download extends \Opencart\System\Engine\Model {
-	public function getDownload($download_id) {
+	public function getDownload(int $download_id): array {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_complete_status');
@@ -15,11 +15,11 @@ class Download extends \Opencart\System\Engine\Model {
 
 			return $query->row;
 		} else {
-			return;
+			return [];
 		}
 	}
 
-	public function getDownloads($start = 0, $limit = 20) {
+	public function getDownloads(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -45,7 +45,7 @@ class Download extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalDownloads() {
+	public function getTotalDownloads(): int {
 		$implode = [];
 
 		$order_statuses = $this->config->get('config_complete_status');
@@ -63,7 +63,7 @@ class Download extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function addReport($download_id, $ip, $country = '') {
+	public function addReport(int $download_id, string $ip, string $country = '') {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "download_report` SET `download_id` = '" . (int)$download_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `ip` = '" . $this->db->escape($ip) . "', `country` = '" . $this->db->escape($country) . "', `date_added` = NOW()");
 	}
 }

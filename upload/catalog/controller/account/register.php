@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Register extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
@@ -230,7 +230,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/register', $data));
 	}
 
-	private function validate() {
+	private function validate(): bool {
 		$keys = [
 			'firstname',
 			'lastname',
@@ -277,7 +277,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {
@@ -324,7 +324,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function customfield() {
+	public function customfield(): void {
 		$json = [];
 
 		$this->load->model('account/custom_field');
@@ -336,7 +336,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			$json[] = [

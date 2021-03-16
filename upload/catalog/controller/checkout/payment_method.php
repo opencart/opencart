@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class PaymentMethod extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
 
 		if (isset($this->session->data['payment_address'])) {
@@ -116,7 +116,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/payment_method', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];

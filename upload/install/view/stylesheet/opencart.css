@@ -1,0 +1,45 @@
+/* Begin fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+/* End fonts */
+
+/* Begin general */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #545454;
+    text-rendering: optimizeLegibility;
+}
+
+body, p, td, th, input, textarea, select, option {
+    color: #777777;
+}
+/* End general */
+
+/* Begin step 1 */
+.form-control-license {
+    min-height: 300px;
+    overflow-y: scroll;
+}
+/* End step 1 */
+
+/* Begin step 3 */
+.col-form-label {
+    font-weight: bold;
+}
+.custom-select:hover,
+.custom-select:focus,
+.form-control:hover,
+.form-control:focus {
+    border: 1px solid #b9b9b9;
+    border-top-color: #a0a0a0;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+div.required .col-form-label:not(span):before,
+td.required:before {
+    content: '* ';
+    color: #dc3545;
+}
+/* End step 3 */

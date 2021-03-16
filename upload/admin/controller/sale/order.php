@@ -1074,10 +1074,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['order_status'] = '';
 			}
 
+			// Order History
 			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 			$data['order_status_id'] = $order_info['order_status_id'];
 
+			// Additional information
 			$data['ip'] = $order_info['ip'];
 			$data['forwarded_ip'] = $order_info['forwarded_ip'];
 			$data['user_agent'] = $order_info['user_agent'];
@@ -1231,75 +1233,437 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
+		// Orders
 		$this->load->model('sale/order');
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
-		if ($order_info) {
-			$this->load->language('sale/order');
-
-
-
-		} else {
-
-			/*
-						$data['order_id'] = 0;
-						$data['store_id'] = 0;
-						$data['store_url'] = HTTP_CATALOG;
-
-						$data['customer'] = '';
-						$data['customer_id'] = '';
-						$data['customer_group_id'] = $this->config->get('config_customer_group_id');
-						$data['firstname'] = '';
-						$data['lastname'] = '';
-						$data['email'] = '';
-						$data['telephone'] = '';
-						$data['customer_custom_field'] = [];
-
-						$data['addresses'] = [];
-
-						$data['payment_firstname'] = '';
-						$data['payment_lastname'] = '';
-						$data['payment_company'] = '';
-						$data['payment_address_1'] = '';
-						$data['payment_address_2'] = '';
-						$data['payment_city'] = '';
-						$data['payment_postcode'] = '';
-						$data['payment_country_id'] = '';
-						$data['payment_zone_id'] = '';
-						$data['payment_custom_field'] = [];
-						$data['payment_method'] = '';
-						$data['payment_code'] = '';
-
-						$data['shipping_firstname'] = '';
-						$data['shipping_lastname'] = '';
-						$data['shipping_company'] = '';
-						$data['shipping_address_1'] = '';
-						$data['shipping_address_2'] = '';
-						$data['shipping_city'] = '';
-						$data['shipping_postcode'] = '';
-						$data['shipping_country_id'] = '';
-						$data['shipping_zone_id'] = '';
-						$data['shipping_custom_field'] = [];
-						$data['shipping_method'] = '';
-						$data['shipping_code'] = '';
-
-						$data['order_products'] = [];
-						$data['order_vouchers'] = [];
-						$data['order_totals'] = [];
-
-						$data['order_status_id'] = $this->config->get('config_order_status_id');
-						$data['comment'] = '';
-						$data['affiliate_id'] = 0;
-						$data['affiliate'] = '';
-						$data['currency_code'] = $this->config->get('config_currency');
-
-						$data['coupon'] = '';
-						$data['voucher'] = '';
-						$data['reward'] = '';
-						*/
-
+		if ($order_id && !$order_info)  {
+			$json['error']['warning'] = $this->langage->get('error_order');
 		}
+
+		// Store
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
+
+		if (!empty($this->request->post['store_id']) && !$store_info)  {
+			$json['error']['warning'] = $this->langage->get('error_store');
+		}
+
+		// Customer
+		$this->load->model('customer/customer');
+
+		$customer_group_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
+
+		if (!empty($this->request->post['customer_group_id']) && !$customer_group_info)  {
+			$json['error']['warning'] = $this->langage->get('error_customer_group');
+		}
+
+		// Customer Group
+		$this->load->model('customer/customer_group');
+
+		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($this->request->post['customer_group_id']);
+
+		if (!empty($this->request->post['customer_group_id']) && !$customer_group_info)  {
+			$json['error']['warning'] = $this->langage->get('error_customer_group');
+		}
+
+		// Currency
+		$this->load->model('localisation/currency');
+
+		$currency_info = $this->model_localisation_currency->getCurrency($this->request->post['currency_id']);
+
+		if (!empty($this->request->post['currency_id']) && !$currency_info)  {
+			$json['error']['warning'] = $this->langage->get('error_currency');
+		}
+
+		if (!$json) {
+			$order_data = array();
+
+			$defaults = [
+				'store_id'          => 0,
+				'customer_id'       => 0,
+				'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
+				'firstname'         => '',
+				'lastname'          => '',
+				'email'             => '',
+				'telephone' => '',
+				'custom_field' => [],
+				'payment_firstname' => '',
+				'payment_lastname' => '',
+				'payment_company' => '',
+				'payment_address_1' => '',
+				'payment_address_2' => '',
+				'payment_city' => '',
+				'payment_postcode' => '',
+				'payment_country_id' => 0,
+				'payment_zone_id' => 0,
+				'payment_custom_field' => [],
+				'payment_method' => '',
+				'payment_code' => '',
+				'shipping_firstname' => '',
+				'shipping_lastname' => '',
+				'shipping_company' => '',
+				'shipping_address_1' => '',
+				'shipping_address_2' => '',
+				'shipping_city' => '',
+				'shipping_postcode' => '',
+				'shipping_country_id' => 0,
+				'shipping_zone_id' => 0,
+				'shipping_custom_field' => [],
+				'shipping_method' => '',
+				'shipping_code' => '',
+				'order_status_id' => 0,
+				'comment'         => '',
+				'affiliate_id'    => 0,
+				'currency_code'   => (string)$this->config->get('config_currency'),
+				'coupon'          => '',
+				'voucher'         => '',
+				'reward'          => '',
+			];
+
+			// 1. Merge the old order data with the new data
+			foreach ($defaults as $key => $value) {
+				if (isset($this->request->post[$key])) {
+					$order_data[$key] = $this->request->post[$key];
+				} elseif (isset($order_data[$key])) {
+					$order_data[$key] = $order_info[$key];
+				} else {
+					$order_data[$key] = $value;
+				}
+			}
+
+			$data['order_id'] = $order_id;
+
+			// Customer
+			$data['customer_id'] = $order_info['customer_id'];
+			$data['firstname'] = $order_info['firstname'];
+			$data['lastname'] = $order_info['lastname'];
+
+			$data['account_custom_field'] = $order_info['custom_field'];
+
+			// Customer Groups
+			$data['customer_group_id'] = $order_info['customer_group_id'];
+
+			// E-Mail
+			$data['email'] = $order_info['email'];
+
+			// Telephone
+			$data['telephone'] = $order_info['telephone'];
+
+			// Payment method
+			$data['payment_method'] = $order_info['payment_method'];
+			$data['payment_code'] = $order_info['payment_code'];
+
+			// Shipping method
+			$data['shipping_method'] = $order_info['shipping_method'];
+			$data['shipping_code'] = $order_info['shipping_code'];
+
+			// Coupon, Voucher, Reward
+			$data['coupon'] = '';
+			$data['voucher'] = '';
+			$data['reward'] = '';
+
+			$order_totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start && $end) {
+					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
+				}
+			}
+
+			// Vouchers
+			$data['order_vouchers'] = $this->model_sale_order->getVouchers($order_id);
+
+			$data['voucher_min'] = $this->config->get('config_voucher_min');
+
+			// Currency
+			$data['currency'] = $order_info['currency_code'];
+			$data['currency_code'] = $order_info['currency_code'];
+
+			// Reward Points
+			$data['reward'] = $order_info['reward'];
+
+			// Affiliate
+			$data['affiliate_id'] = $order_info['affiliate_id'];
+
+
+
+			// Addresses
+			$this->load->model('customer/customer');
+
+			// Payment Address
+			$data['payment_firstname'] = $order_info['payment_firstname'];
+			$data['payment_lastname'] = $order_info['payment_lastname'];
+			$data['payment_company'] = $order_info['payment_company'];
+			$data['payment_address_1'] = $order_info['payment_address_1'];
+			$data['payment_address_2'] = $order_info['payment_address_2'];
+			$data['payment_city'] = $order_info['payment_city'];
+			$data['payment_postcode'] = $order_info['payment_postcode'];
+			$data['payment_country_id'] = $order_info['payment_country_id'];
+			$data['payment_zone_id'] = $order_info['payment_zone_id'];
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
+
+			// Shipping Address
+			$data['shipping_firstname'] = $order_info['shipping_firstname'];
+			$data['shipping_lastname'] = $order_info['shipping_lastname'];
+			$data['shipping_company'] = $order_info['shipping_company'];
+			$data['shipping_address_1'] = $order_info['shipping_address_1'];
+			$data['shipping_address_2'] = $order_info['shipping_address_2'];
+			$data['shipping_city'] = $order_info['shipping_city'];
+			$data['shipping_postcode'] = $order_info['shipping_postcode'];
+			$data['shipping_country_id'] = $order_info['shipping_country_id'];
+			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
+
+			$this->load->model('localisation/country');
+
+			$data['countries'] = $this->model_localisation_country->getCountries();
+
+			// Products
+			$data['order_products'] = [];
+
+			$products = $this->model_sale_order->getProducts($order_id);
+
+			foreach ($products as $product) {
+				$option_data = [];
+
+				$options = $this->model_sale_order->getOptions($order_id, $product['order_product_id']);
+
+				foreach ($options as $option) {
+					if ($option['type'] != 'file') {
+						$option_data[] = [
+							'name'  => $option['name'],
+							'value' => $option['value'],
+							'type'  => $option['type']
+						];
+					} else {
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+						if ($upload_info) {
+							$option_data[] = [
+								'name'  => $option['name'],
+								'value' => $upload_info['name'],
+								'type'  => $option['type'],
+								'href'  => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+							];
+						}
+					}
+				}
+
+				$data['order_products'][] = [
+					'order_product_id' => $product['order_product_id'],
+					'product_id'       => $product['product_id'],
+					'name'             => $product['name'],
+					'model'            => $product['model'],
+					'option'           => $option_data,
+					'quantity'         => $product['quantity'],
+					'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'reward'           => $product['reward'],
+					'href'             => $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+				];
+			}
+
+			// Vouchers
+			$data['order_vouchers'] = [];
+
+			$vouchers = $this->model_sale_order->getVouchers($order_id);
+
+			foreach ($vouchers as $voucher) {
+				$data['order_vouchers'][] = [
+					'description' => $voucher['description'],
+					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+					'href'        => $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+				];
+			}
+
+			// Totals
+			$data['order_totals'] = [];
+
+			$totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($totals as $total) {
+				$data['order_totals'][] = [
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
+				];
+			}
+
+			// Order History
+			$data['comment'] = $order_info['comment'];
+
+			$data['order_status_id'] = $order_info['order_status_id'];
+		}
+
+
+		/*
+		 * Create a store instance using loader class to call controllers, models, views.
+		 */
+
+		// Autoloader
+		$autoloader = new \Opencart\System\Engine\Autoloader();
+		$autoloader->register('Opencart\Catalog', DIR_CATALOG);
+		$autoloader->register('Opencart\Extension', DIR_EXTENSION);
+		$autoloader->register('Opencart\System', DIR_SYSTEM);
+
+		// Registry
+		$registry = new \Opencart\System\Engine\Registry();
+		$registry->set('autoloader', $autoloader);
+
+		// Config
+		$config = new \Opencart\System\Engine\Config();
+		$config->addPath(DIR_CONFIG);
+		$registry->set('config', $config);
+
+		// Load the default config
+		$config->load('default');
+		$config->load('catalog');
+		$config->set('application', 'Catalog');
+
+		// Logging
+		$registry->set('log', $this->log);
+
+		// Event
+		$event = new \Opencart\System\Engine\Event($registry);
+		$registry->set('event', $event);
+
+		// Event Register
+		if ($config->has('action_event')) {
+			foreach ($config->get('action_event') as $key => $value) {
+				foreach ($value as $priority => $action) {
+					$event->register($key, new \Opencart\System\Engine\Action($action), $priority);
+				}
+			}
+		}
+
+		// Loader
+		$loader = new \Opencart\System\Engine\Loader($registry);
+		$registry->set('load', $loader);
+
+		// Create a dummy request class so we can feed the data to the order editor
+		$request = new \stdClass();
+		$request->get = '';
+		$request->post = '';
+
+		// Request
+		$registry->set('request', $this->request);
+
+		// Response
+		$response = new \Opencart\System\Library\Response();
+		$registry->set('response', $response);
+
+		// Database
+		$registry->set('db', $this->db);
+
+		// Cache
+		$registry->set('cache', $this->cache);
+
+
+
+
+
+
+		// Session
+		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
+		$registry->set('session', $session);
+
+		if (isset($request->cookie[$config->get('session_name')])) {
+			$session_id = $request->cookie[$config->get('session_name')];
+		} else {
+			$session_id = '';
+		}
+
+		$session->start($session_id);
+
+		$this->model_account_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
+
+		$session->data['api_id'] = $this->config->get('config_api_id');
+
+
+
+
+
+
+		// Template
+		$template = new \Opencart\System\Library\Template($config->get('template_engine'));
+		$template->addPath(DIR_CATALOG . 'view/template/');
+		$registry->set('template', $template);
+
+		// Language
+		$language = new \Opencart\System\Library\Language($config->get('language_code'));
+		$language->addPath(DIR_LANGUAGE);
+		$language->load($config->get('language_code'));
+		$registry->set('language', $language);
+
+		// Store
+		if (isset($this->request->post['store_id'])) {
+			$config->set('config_store_id', $this->request->post['store_id']);
+		} else {
+			$config->set('config_store_id', 0);
+		}
+
+		// Url
+		$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
+
+		// Document
+		$registry->set('document', new \Opencart\System\Library\Document());
+
+		// Event
+		$loader->model('setting/event');
+
+		$results = $this->model_setting_event->getEvents();
+
+		$registry->set('event', $event);
+
+		$_['action_pre_action'] = [
+			'startup/setting',
+			//'startup/session',
+			//'startup/language',
+			//'startup/application',
+			'startup/extension',
+			'startup/startup',
+			'startup/event'
+		];
+
+		// Pre Actions
+		foreach ($config->get('action_pre_action') as $pre_action) {
+			$loader->controller($pre_action);
+		}
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (isset($this->request->post['customer_id'])) {
+			$order_data['customer_id'] = $this->request->post['customer_id'];
+		}
+
+		if (isset($this->request->post['customer_id'])) {
+			$order_data['customer_id'] = $this->request->post['customer_id'];
+		}
+
+		if (isset($this->request->get['action'])) {
+			//	$loader->controller($this->request->get['action']);
+		}
+
+		$loader->controller('api/login');
+
+		$loader->controller('api/login');
+
+		echo $response->getOutput();
+
+
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($response->getOutput());
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -134,7 +134,9 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['error_bank_account_number'] = '';
 		}
 
-		$data['action'] = $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language'));
+		$this->session->data['register_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
 
 		$data['customer_groups'] = [];
 
@@ -349,6 +351,10 @@ class Register extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->post[$key])) {
 				$this->request->post[$key] = '';
 			}
+		}
+
+		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {

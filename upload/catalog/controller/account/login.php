@@ -76,7 +76,10 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+
+		$this->session->data['login_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&login_token=' . $this->session->data['login_token']);
 		$data['register'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'));
 		$data['forgotten'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'));
 
@@ -131,6 +134,10 @@ class Login extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->post[$key])) {
 				$this->request->post[$key] = '';
 			}
+		}
+
+		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || ($this->session->data['login_token'] != $this->request->get['login_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
 		}
 
 		// Check how many login attempts have been made.

@@ -332,7 +332,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		} elseif (!empty($attribute_info)) {
 			$data['sort_order'] = $attribute_info['sort_order'];
 		} else {
-			$data['sort_order'] = '';
+			$data['sort_order'] = 0;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

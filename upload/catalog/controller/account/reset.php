@@ -73,7 +73,9 @@ class Reset extends \Opencart\System\Engine\Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/reset', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($email) . '&code=' . $code);
+		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('account/reset', 'language=' . $this->config->get('config_language') . '&reset_token=' . $this->session->data['reset_token'] . '&email=' . urlencode($email) . '&code=' . $code);
 
 		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
@@ -109,6 +111,10 @@ class Reset extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->post[$key])) {
 				$this->request->post[$key] = '';
 			}
+		}
+
+		if (!isset($this->request->get['reset_token']) || !isset($this->session->data['reset_token']) || ($this->session->data['reset_token'] != $this->request->get['reset_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
 		}
 
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {

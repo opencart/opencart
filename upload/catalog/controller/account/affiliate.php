@@ -129,7 +129,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['error_custom_field'] = [];
 		}
 
-		$data['action'] = $this->url->link($this->request->get['route'], 'language=' . $this->config->get('config_language'));
+		$this->session->data['affiliate_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link($this->request->get['route'], 'language=' . $this->config->get('config_language') . '&affiliate_token=' . $this->session->data['affiliate_token']);
 
 		if ($this->request->get['route'] == 'account/affiliate|edit' && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
@@ -289,6 +291,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->post[$key])) {
 				$this->request->post[$key] = '';
 			}
+		}
+
+		if (!isset($this->request->get['affiliate_token']) || !isset($this->session->data['affiliate_token']) || ($this->session->data['affiliate_token'] != $this->request->get['affiliate_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
 		}
 
 		if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {

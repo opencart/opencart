@@ -52,6 +52,7 @@ $_['entry_fault_detail'] = 'Faulty or other details';
 
 // Error
 $_['text_error']         = 'The returns you requested could not be found!';
+$_['error_token']        = 'Warning: Reset token invalid!';
 $_['error_order_id']     = 'Order ID required!';
 $_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';

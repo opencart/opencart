@@ -794,7 +794,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['countries'] = $this->model_localisation_country->getCountries();
 
-
 			// Custom Fields
 			$this->load->model('customer/custom_field');
 
@@ -987,7 +986,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			// Products
 			$data['order_products'] = [];
 
@@ -1058,8 +1056,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-
-
 			$data['comment'] = $order_info['comment'];
 			$data['comment'] = nl2br($order_info['comment']);
 
@@ -1127,7 +1123,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
 
 			/*
 			// The URL we send API requests to
@@ -1392,8 +1387,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Affiliate
 			$data['affiliate_id'] = $order_info['affiliate_id'];
 
-
-
 			// Addresses
 			$this->load->model('customer/customer');
 
@@ -1501,7 +1494,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_status_id'] = $order_info['order_status_id'];
 		}
 
-
 		/*
 		 * Create a store instance using loader class to call controllers, models, views.
 		 */
@@ -1564,11 +1556,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Cache
 		$registry->set('cache', $this->cache);
 
-
-
-
-
-
 		// Session
 		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
 		$registry->set('session', $session);
@@ -1584,11 +1571,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->model_account_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
 
 		$session->data['api_id'] = $this->config->get('config_api_id');
-
-
-
-
-
 
 		// Template
 		$template = new \Opencart\System\Library\Template($config->get('template_engine'));
@@ -1656,11 +1638,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$loader->controller('api/login');
 
-		$loader->controller('api/login');
-
 		echo $response->getOutput();
-
-
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($response->getOutput());

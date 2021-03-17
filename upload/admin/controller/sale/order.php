@@ -1239,7 +1239,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_id && !$order_info)  {
-			$json['error']['warning'] = $this->langage->get('error_order');
+			$json['error']['warning'] = $this->language->get('error_order');
 		}
 
 		// Store
@@ -1248,7 +1248,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
 
 		if (!empty($this->request->post['store_id']) && !$store_info)  {
-			$json['error']['warning'] = $this->langage->get('error_store');
+			$json['error']['warning'] = $this->language->get('error_store');
 		}
 
 		// Customer
@@ -1257,7 +1257,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$customer_group_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
 
 		if (!empty($this->request->post['customer_group_id']) && !$customer_group_info)  {
-			$json['error']['warning'] = $this->langage->get('error_customer_group');
+			$json['error']['warning'] = $this->language->get('error_customer_group');
 		}
 
 		// Customer Group
@@ -1266,7 +1266,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($this->request->post['customer_group_id']);
 
 		if (!empty($this->request->post['customer_group_id']) && !$customer_group_info)  {
-			$json['error']['warning'] = $this->langage->get('error_customer_group');
+			$json['error']['warning'] = $this->language->get('error_customer_group');
 		}
 
 		// Currency
@@ -1275,7 +1275,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$currency_info = $this->model_localisation_currency->getCurrency($this->request->post['currency_id']);
 
 		if (!empty($this->request->post['currency_id']) && !$currency_info)  {
-			$json['error']['warning'] = $this->langage->get('error_currency');
+			$json['error']['warning'] = $this->language->get('error_currency');
 		}
 
 		if (!$json) {

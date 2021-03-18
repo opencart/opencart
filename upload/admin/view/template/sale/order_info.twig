@@ -290,7 +290,7 @@
 							<td class="text-right">{{ column_quantity }}</td>
 							<td class="text-right">{{ column_price }}</td>
 							<td class="text-right">{{ column_total }}</td>
-							<td class="text-right">{{ column_action }}</td>
+							<td class="text-right" style="width: 1px;">{{ column_action }}</td>
 						</tr>
 					</thead>
 					<tbody id="cart">
@@ -1300,6 +1300,7 @@ $(document).on('click', '#button-save', function(e) {
     });
 });
 
+
 // Customer
 $('input[name=\'customer\']').autocomplete({
     'source': function(request, response) {
@@ -1377,6 +1378,7 @@ $('input[name=\'customer\']').autocomplete({
         $('select[name=\'shipping_address\']').html(html);
     }
 });
+
 
 // Custom Fields
 $('select[name=\'customer_group_id\']').on('change', function() {
@@ -2516,69 +2518,6 @@ $('#content').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-cu
     }, 500);
 });
 
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.time').datetimepicker({
-    'format': 'HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-//--></script>
-<script type="text/javascript"><!--
-// Sort the custom fields
-$('#tab-customer .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .form-group').length) {
-        $('#tab-customer .form-group').eq($(this).attr('data-sort')).before(this);
-    }
-
-    if ($(this).attr('data-sort') > $('#tab-customer .form-group').length) {
-        $('#tab-customer .form-group:last').after(this);
-    }
-
-    if ($(this).attr('data-sort') < -$('#tab-customer .form-group').length) {
-        $('#tab-customer .form-group:first').before(this);
-    }
-});
-
-// Sort the custom fields
-$('#tab-payment .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-payment .form-group').length) {
-        $('#tab-payment .form-group').eq($(this).attr('data-sort')).before(this);
-    }
-
-    if ($(this).attr('data-sort') > $('#tab-payment .form-group').length) {
-        $('#tab-payment .form-group:last').after(this);
-    }
-
-    if ($(this).attr('data-sort') < -$('#tab-payment .form-group').length) {
-        $('#tab-payment .form-group:first').before(this);
-    }
-});
-
-$('#tab-shipping .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-shipping .form-group').length) {
-        $('#tab-shipping .form-group').eq($(this).attr('data-sort')).before(this);
-    }
-
-    if ($(this).attr('data-sort') > $('#tab-shipping .form-group').length) {
-        $('#tab-shipping .form-group:last').after(this);
-    }
-
-    if ($(this).attr('data-sort') < -$('#tab-shipping .form-group').length) {
-        $('#tab-shipping .form-group:first').before(this);
-    }
-});
-
 // Add all products to the cart using the api
 $('#button-refresh').on('click', function() {
     $.ajax({
@@ -2805,6 +2744,24 @@ $('#button-history').on('click', function() {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+$('.date').datetimepicker({
+    'format': 'YYYY-MM-DD',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
+});
+
+$('.time').datetimepicker({
+    'format': 'HH:mm',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
+});
+
+$('.datetime').datetimepicker({
+    'format': 'YYYY-MM-DD HH:mm',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

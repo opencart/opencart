@@ -21,7 +21,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 
 			return $this->keyword[$key][$value];
 		} else {
-			return '';
+			return $this->keyword[$key][$value];
 		}
 	}
 }

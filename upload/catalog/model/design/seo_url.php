@@ -18,10 +18,8 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			} else {
 				$this->keyword[$key][$value] = '';
 			}
-
-			return $this->keyword[$key][$value];
-		} else {
-			return $this->keyword[$key][$value];
 		}
+		
+		return $this->keyword[$key][$value];
 	}
 }

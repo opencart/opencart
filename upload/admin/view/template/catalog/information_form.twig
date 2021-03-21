@@ -204,7 +204,9 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+$('textarea[data-toggle=\'ckeditor\']').ckeditor({
+    language:'{{ ckeditor }}'
+});
 
 $('#language li:first-child a').tab('show');
 //--></script>

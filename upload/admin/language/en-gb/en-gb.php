@@ -89,6 +89,7 @@ $_['button_route_add']              = 'Add Route';
 $_['button_rule_add']               = 'Add Rule';
 $_['button_module_add']             = 'Add Module';
 $_['button_link_add']               = 'Add Link';
+$_['button_customer_add']           = 'Add Customer';
 $_['button_approve']                = 'Approve';
 $_['button_deny']                   = 'Deny';
 $_['button_reset']                  = 'Reset';

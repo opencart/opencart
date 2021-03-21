@@ -178,6 +178,20 @@
 						<div class="col">
 							<div class="input-group mb-3">
 								<div class="form-control-plaintext p-0 border rounded-left">
+									<p class="lead p-2 mb-0"><strong>{{ text_language }}</strong>
+										<br/>
+										{{ language }}
+									</p>
+								</div>
+								<div class="input-group-append">
+									<button type="button" data-target="#modal-language" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+								</div>
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="input-group mb-3">
+								<div class="form-control-plaintext p-0 border rounded-left">
 									<p class="lead p-2 mb-0"><strong>{{ text_currency }}</strong>
 										<br/>
 										{{ currency }}
@@ -568,6 +582,20 @@
 			</div>
 		</div>
 
+		<div id="modal-language">
+			<div class="form-group">
+				<label for="input-language" class="col-form-label">{{ entry_language }}</label> <select name="language" id="input-language" class="form-control">
+					{% for language in languages %}
+						{% if language.code == language_code %}
+							<option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
+						{% else %}
+							<option value="{{ language.code }}">{{ language.name }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+
 		<div id="modal-currency">
 			<div class="form-group">
 				<label for="input-currency" class="col-form-label">{{ entry_currency }}</label> <select name="currency" id="input-currency" class="form-control">
@@ -598,7 +626,13 @@
 
 		<div id="modal-customer">
 			<div class="form-group">
-				<label for="input-customer" class="col-form-label">{{ entry_customer }}</label> <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+				<label for="input-customer" class="col-form-label">{{ entry_customer }}</label>
+				<div class="input-group"><input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+					<input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+					<div class="input-group-append">
+						<a href="{{ customer_add }}" target="_blank" data-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
+					</div>
+				</div>
 			</div>
 
 			<div class="form-group required">
@@ -1271,7 +1305,7 @@ $(document).on('click', '#button-save', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|edit&user_token={{ user_token }}&order_id={{ order_id }}',
+        url: 'index.php?route=sale/order|edit&user_token={{ user_token }}&order_id={{ order_id }}&order_id={{ order_id }}',
         type: 'post',
         dataType: 'json',
         data: $('#modal-order :input'),

@@ -25,6 +25,7 @@ $_['text_payment_method']        = 'Payment Method';
 $_['text_shipping_method']       = 'Shipping Method';
 $_['text_coupon']                = 'Coupon';
 $_['text_voucher']               = 'Voucher';
+$_['text_language']              = 'Language';
 $_['text_currency']              = 'Currency';
 $_['text_total']                 = 'Total';
 $_['text_reward']                = 'Reward Points';

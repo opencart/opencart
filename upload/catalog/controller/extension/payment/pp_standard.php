@@ -76,6 +76,11 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 			} else {
 				$data['discount_amount_cart'] -= $total;
 			}
+			if ($this->cart->hasShipping()) { 
+				$data['no_shipping'] = 2;
+			} else {
+				$data['no_shipping'] = 1;
+			}
 
 			$data['currency_code'] = $order_info['currency_code'];
 			$data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');

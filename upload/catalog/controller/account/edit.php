@@ -119,25 +119,36 @@ class ControllerAccountEdit extends Controller {
 			$data['telephone'] = '';
 		}
 
-		// Custom Fields
-		$data['custom_fields'] = array();
-		
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account') {
-				$data['custom_fields'][] = $custom_field;
-			}
-		}
-
 		if (isset($this->request->post['custom_field']['account'])) {
 			$data['account_custom_field'] = $this->request->post['custom_field']['account'];
 		} elseif (isset($customer_info)) {
 			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 		} else {
 			$data['account_custom_field'] = array();
+		}
+
+		// Custom Fields
+		$data['custom_fields'] = array();
+
+		$this->load->model('tool/upload');
+		$this->load->model('account/custom_field');
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'account') {
+				if($custom_field['type'] == 'file' && isset($data['account_custom_field'][$custom_field['custom_field_id']])) {
+					$upload_result = $this->model_tool_upload->getUploadByCode($data['account_custom_field'][$custom_field['custom_field_id']]);
+					if($upload_result) {
+						$data['account_custom_field'][$custom_field['custom_field_id']] = $upload_result['name'];
+					} else {
+						$data['account_custom_field'][$custom_field['custom_field_id']] = "";
+					}
+					$data['custom_fields'][] = $custom_field;
+				} else {
+					$data['custom_fields'][] = $custom_field;
+				}
+			}
 		}
 
 		$data['back'] = $this->url->link('account/account', '', true);

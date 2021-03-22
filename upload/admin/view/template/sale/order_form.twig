@@ -1037,7 +1037,7 @@ $('input[name=\'customer\']').autocomplete({
 			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
 			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);
 
-			if (item.custom_field[i] instanceof Array) {
+			if (item.custom_field[i]) {
 				for (j = 0; j < item.custom_field[i].length; j++) {
 					$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i][j] + '\']').prop('checked', true);
 				}

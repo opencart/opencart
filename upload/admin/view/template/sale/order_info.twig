@@ -85,7 +85,7 @@
 										{{ customer_group }}</p>
 								</div>
 								<div class="input-group-append">
-									<button type="button" data-toggle="modal" data-target="#modal-customer-group" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+									<button type="button" data-toggle="modal" data-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 								</div>
 							</div>
 						</div>
@@ -98,7 +98,7 @@
 										<a href="mailto:{{ email }}">{{ email }}</a></p>
 								</div>
 								<div class="input-group-append">
-									<button type="button" data-toggle="modal" data-target="#modal-email" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+									<button type="button" data-toggle="modal" data-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 								</div>
 							</div>
 						</div>
@@ -112,7 +112,7 @@
 									</p>
 								</div>
 								<div class="input-group-append">
-									<button type="button" data-toggle="modal" data-target="#modal-telephone" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+									<button type="button" data-toggle="modal" data-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 								</div>
 							</div>
 						</div>
@@ -1320,9 +1320,7 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-
 					<input type="text" name="voucher" value="{{ voucher }}" id="input-voucher" data-loading-text="{{ text_loading }}" class="form-control"/>
-
 				</div>
 				<div class="modal-footer text-right">
 					<button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
@@ -1330,6 +1328,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div id="modal-reward" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -1374,10 +1373,7 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-
-					<div class="form-group">
-						<label for="input-comment" class="col-form-label">{{ entry_comment }}</label> <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
-					</div>
+					<textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
 				</div>
 				<div class="modal-footer text-right">
 					<button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>

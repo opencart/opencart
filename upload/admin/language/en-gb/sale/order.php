@@ -21,16 +21,29 @@ $_['text_email']                 = 'E-Mail';
 $_['text_email_edit']            = 'Edit E-Mail';
 $_['text_telephone']             = 'Telephone';
 $_['text_telephone_edit']        = 'Edit Telephone';
-$_['text_payment_method']        = 'Payment Method';
-$_['text_shipping_method']       = 'Shipping Method';
-$_['text_coupon']                = 'Coupon';
-$_['text_voucher']               = 'Voucher';
 $_['text_language']              = 'Language';
+$_['text_language_edit']         = 'Edit Language';
+$_['text_cart_add']              = 'Add Item';
 $_['text_currency']              = 'Currency';
+$_['text_currency_edit']         = 'Edit Currency';
 $_['text_total']                 = 'Total';
+$_['text_coupon']                = 'Coupon';
+$_['text_coupon_edit']           = 'Edit Coupon';
+$_['text_voucher']               = 'Voucher';
+$_['text_voucher_edit']          = 'Edit Voucher';
 $_['text_reward']                = 'Reward Points';
+$_['text_reward_edit']           = 'Edit Reward Points';
+$_['text_reward_added']          = 'Success: Reward points added!';
+$_['text_reward_removed']        = 'Success: Reward points removed!';
+$_['text_affiliate_edit']        = 'Edit Affiliate';
 $_['text_affiliate']             = 'Affiliate';
 $_['text_commission']            = 'Commission';
+$_['text_commission_added']      = 'Success: Commission added!';
+$_['text_commission_removed']    = 'Success: Commission removed!';
+$_['text_restock']               = 'Success: Products have been restocked!';
+$_['text_upload']                = 'Your file was successfully uploaded!';
+
+
 
 $_['text_contact']               = 'Contact Tel';
 
@@ -38,7 +51,14 @@ $_['text_more']                  = 'More..';
 $_['text_less']                  = 'Less..';
 
 $_['text_payment_address']       = 'Payment Address';
+$_['text_payment_address_edit']  = 'Edit Payment Address';
+$_['text_payment_method']        = 'Payment Method';
+$_['text_payment_method_edit']   = 'Choose Payment Method';
+$_['text_shipping_method']       = 'Shipping Method';
+$_['text_shipping_method_edit']  = 'Choose Shipping Method';
 $_['text_shipping_address']      = 'Shipping Address';
+$_['text_shipping_address_edit'] = 'Edit Shipping Address';
+
 $_['text_comment']               = 'Customer Comment';
 $_['text_history']               = 'Order History';
 $_['text_history_add']           = 'Add Order History';
@@ -46,16 +66,13 @@ $_['text_history_add']           = 'Add Order History';
 $_['text_account_custom_field']  = 'Account Custom Fields';
 $_['text_payment_custom_field']  = 'Payment Address Custom Fields';
 $_['text_shipping_custom_field'] = 'Shipping Address Custom Fields';
-
 $_['text_browser']               = 'Browser';
 $_['text_ip']                    = 'IP Address';
 $_['text_forwarded_ip']          = 'Forwarded IP';
 $_['text_user_agent']            = 'User Agent';
 $_['text_accept_language']       = 'Accept Language';
-
 $_['text_order_id']              = 'Order ID';
 $_['text_website']               = 'Web Site';
-
 $_['text_invoice_no']            = 'Invoice No.';
 $_['text_sku']                   = 'SKU:';
 $_['text_upc']                   = 'UPC:';
@@ -65,18 +82,9 @@ $_['text_isbn']                  = 'ISBN:';
 $_['text_mpn']                   = 'MPN:';
 $_['text_missing']               = 'Missing Orders';
 $_['text_default']               = 'Default';
-
 $_['text_product_add']           = 'Add Product';
 $_['text_voucher_add']           = 'Add Voucher';
-
 $_['text_contact']               = 'Contact';
-
-$_['text_reward_added']          = 'Success: Reward points added!';
-$_['text_reward_removed']        = 'Success: Reward points removed!';
-$_['text_commission_added']      = 'Success: Commission added!';
-$_['text_commission_removed']    = 'Success: Commission removed!';
-$_['text_restock']               = 'Success: Products have been restocked!';
-$_['text_upload']                = 'Your file was successfully uploaded!';
 $_['text_picklist']              = 'Dispatch Note';
 
 // Column

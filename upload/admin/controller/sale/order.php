@@ -530,6 +530,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['cancel'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['customer_add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token']);
 
+		//$data['customer_add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token']);
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if ($order_id) {
@@ -544,7 +546,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['invoice_no'] = '';
 		}
-
 
 		$data['order_id'] = 0;
 		$data['store_id'] = 0;
@@ -753,13 +754,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
-		// Currency
 
-		if (!empty($order_info)) {
-			$data['shipping_code'] = $order_info['shipping_code'];
-		} else {
-			$data['shipping_code'] = '';
-		}
 
 
 		$data['currency'] = $order_info['currency_code'];

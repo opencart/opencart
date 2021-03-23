@@ -42,7 +42,7 @@
 								<div class="form-control-plaintext p-0 border rounded-left">
 									<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
 										<br/>
-										<a href="{{ store_url }}" target="_blank" class="">{{ store_name }}</a></p>
+										<a href="{{ store_url }}" target="_blank">{{ store_name }}</a></p>
 								</div>
 								<div class="input-group-append">
 									<button type="button" data-toggle="modal" data-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
@@ -317,73 +317,73 @@
 					<tbody id="cart">
 						{% if order_products or order_vouchers %}
 
-						{% set product_row = 0 %}
-						{% for order_product in order_products %}
-							<tr>
-								<td class="text-left"><a href="{{ order_product.href }}">{{ order_product.name }}</a>
-									<br/>
-									<input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}"/>
-									{% for option in order_product.option %}
-										{% if option.type != 'file' %}
-											&nbsp;
-											<small> - {{ option.name }}: {{ option.value }}</small>
-										{% else %}
-											&nbsp;
-											<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-										{% endif %}
+							{% set product_row = 0 %}
+							{% for order_product in order_products %}
+								<tr>
+									<td class="text-left"><a href="{{ order_product.href }}">{{ order_product.name }}</a>
 										<br/>
-										{% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
-											<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
-										{% endif %}
-										{% if option.type == 'checkbox' %}
-											<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
-										{% endif %}
-										{% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
-											<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
-										{% endif %}
-									{% endfor %}</td>
-								<td class="text-left">{{ order_product.model }}</td>
-								<td class="text-right">{{ order_product.quantity }}
-									<input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
-								<td class="text-right">{{ order_product.price }}</td>
-								<td class="text-right">{{ order_product.total }}</td>
-								<td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
-							</tr>
-							{% set product_row = product_row + 1 %}
-						{% endfor %}
+										<input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}"/>
+										{% for option in order_product.option %}
+											{% if option.type != 'file' %}
+												&nbsp;
+												<small> - {{ option.name }}: {{ option.value }}</small>
+											{% else %}
+												&nbsp;
+												<small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
+											{% endif %}
+											<br/>
+											{% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
+												<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
+											{% endif %}
+											{% if option.type == 'checkbox' %}
+												<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}][]" value="{{ option.product_option_value_id }}" class="form-check-input"/>
+											{% endif %}
+											{% if option.type == 'text' or option.type == 'textarea' or option.type == 'file' or option.type == 'date' or option.type == 'datetime' or option.type == 'time' %}
+												<input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.value }}"/>
+											{% endif %}
+										{% endfor %}</td>
+									<td class="text-left">{{ order_product.model }}</td>
+									<td class="text-right">{{ order_product.quantity }}
+										<input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
+									<td class="text-right">{{ order_product.price }}</td>
+									<td class="text-right">{{ order_product.total }}</td>
+									<td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+								</tr>
+								{% set product_row = product_row + 1 %}
+							{% endfor %}
 
-						{% set voucher_row = 0 %}
-						{% for order_voucher in order_vouchers %}
-							<tr>
-								<td class="text-left"><a href="{{ order_voucher.href }}">{{ order_voucher.description }}</a> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/>
-									<input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
-								<td class="text-left"></td>
-								<td class="text-right">1</td>
-								<td class="text-right">{{ order_voucher.amount }}</td>
-								<td class="text-right">{{ order_voucher.amount }}</td>
-								<td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
-							</tr>
-							{% set voucher_row = voucher_row + 1 %}
-						{% endfor %}
+							{% set voucher_row = 0 %}
+							{% for order_voucher in order_vouchers %}
+								<tr>
+									<td class="text-left"><a href="{{ order_voucher.href }}">{{ order_voucher.description }}</a> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/>
+										<input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
+									<td class="text-left"></td>
+									<td class="text-right">1</td>
+									<td class="text-right">{{ order_voucher.amount }}</td>
+									<td class="text-right">{{ order_voucher.amount }}</td>
+									<td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+								</tr>
+								{% set voucher_row = voucher_row + 1 %}
+							{% endfor %}
 
 						{% else %}
-						<tr>
-							<td class="text-center" colspan="6">{{ text_no_results }}</td>
-						</tr>
-					</tbody>
-					{% endif %}
+							<tr>
+								<td class="text-center" colspan="6">{{ text_no_results }}</td>
+							</tr>
 
-					<tr>
-						<td colspan="5"></td>
-						<td class="text-right"><button type="button" data-toggle="modal" data-target="#modal-cart" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
-					</tr>
+						{% endif %}
 
-					{% for order_total in order_totals %}
 						<tr>
-							<td colspan="5" class="text-right">{{ order_total.title }}</td>
-							<td class="text-right">{{ order_total.text }}</td>
+							<td colspan="5"></td>
+							<td class="text-right"><button type="button" data-toggle="modal" data-target="#modal-cart" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
 						</tr>
-					{% endfor %}
+
+						{% for order_total in order_totals %}
+							<tr>
+								<td colspan="5" class="text-right">{{ order_total.title }}</td>
+								<td class="text-right">{{ order_total.text }}</td>
+							</tr>
+						{% endfor %}
 
 					</tbody>
 				</table>
@@ -420,45 +420,43 @@
 						<br/>
 						<fieldset>
 							<legend>{{ text_history_add }}</legend>
-							<form>
-								<div class="form-group">
-									<label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
-									<div class="col-sm-10">
-										<select name="order_status_id" id="input-order-status" class="form-control">
-											{% for order_statuses in order_statuses %}
-												{% if order_statuses.order_status_id == order_status_id %}
-													<option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
-												{% else %}
-													<option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
-												{% endif %}
-											{% endfor %}
-										</select>
+							<div class="form-group">
+								<label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
+								<div class="col-sm-10">
+									<select name="order_status_id" id="input-order-status" class="form-control">
+										{% for order_statuses in order_statuses %}
+											{% if order_statuses.order_status_id == order_status_id %}
+												<option value="{{ order_statuses.order_status_id }}" selected="selected">{{ order_statuses.name }}</option>
+											{% else %}
+												<option value="{{ order_statuses.order_status_id }}">{{ order_statuses.name }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
+								<div class="col-sm-10">
+									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<label class="btn btn-outline-secondary"><input type="radio" name="override" value="1"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="override" value="0" checked="checked"/> {{ text_no }}</label>
+									</div>
+									<small class="form-text text-muted">{{ help_override }}</small>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
+								<div class="col-sm-10">
+									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<label class="btn btn-outline-secondary"><input type="radio" name="notify" value="1"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="notify" value="0" checked="checked"/> {{ text_no }}</label>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
-									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
-											<label class="btn btn-outline-secondary"><input type="radio" name="override" value="1"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="override" value="0" checked="checked"/> {{ text_no }}</label>
-										</div>
-										<small class="form-text text-muted">{{ help_override }}</small>
-									</div>
+							</div>
+							<div class="form-group">
+								<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+								<div class="col-sm-10">
+									<textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
 								</div>
-								<div class="form-group">
-									<label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
-									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
-											<label class="btn btn-outline-secondary"><input type="radio" name="notify" value="1"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="notify" value="0" checked="checked"/> {{ text_no }}</label>
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
-									<div class="col-sm-10">
-										<textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
-									</div>
-								</div>
-							</form>
+							</div>
 						</fieldset>
 						<div class="text-right">
 							<button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
@@ -668,16 +666,16 @@
 						</select>
 					</div>
 					<div class="form-group required">
-						<label for="input-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" id="input-firstname" class="form-control"/>
+						<label for="input-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
 					</div>
 					<div class="form-group required">
-						<label for="input-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" id="input-lastname" class="form-control"/>
+						<label for="input-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
 					</div>
 					<div class="form-group required">
-						<label for="input-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
+						<label for="input-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 					</div>
 					<div class="form-group required">
-						<label for="input-telephone" class="col-form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" id="input-telephone" class="form-control"/>
+						<label for="input-telephone" class="col-form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
 					</div>
 
 					{% for custom_field in custom_fields %}
@@ -737,7 +735,8 @@
 
 							{% if custom_field.type == 'text' %}
 								<div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-									<label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+									<label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
+									<input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
 								</div>
 							{% endif %}
 
@@ -819,10 +818,10 @@
 							<fieldset>
 								<legend>{{ text_product_add }}</legend>
 								<div class="form-group">
-									<label for="input-product" class="col-form-label">{{ entry_product }}</label> <input type="text" name="product" value="" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value=""/>
+									<label for="input-product" class="col-form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value=""/>
 								</div>
 								<div class="form-group">
-									<label for="input-quantity" class="col-form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" value="1" id="input-quantity" class="form-control"/>
+									<label for="input-quantity" class="col-form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
 								</div>
 								<div id="option"></div>
 							</fieldset>
@@ -831,16 +830,16 @@
 						<div class="tab-pane" id="tab-voucher">
 							<legend>{{ text_voucher_add }}</legend>
 							<div class="form-group required">
-								<label for="input-to-name" class="col-form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" id="input-to-name" class="form-control"/>
+								<label for="input-to-name" class="col-form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
 							</div>
 							<div class="form-group required">
-								<label for="input-to-email" class="col-form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" id="input-to-email" class="form-control"/>
+								<label for="input-to-email" class="col-form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
 							</div>
 							<div class="form-group required">
-								<label for="input-from-name" class="col-form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" id="input-from-name" class="form-control"/>
+								<label for="input-from-name" class="col-form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
 							</div>
 							<div class="form-group required">
-								<label for="input-from-email" class="col-form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" id="input-from-email" class="form-control"/>
+								<label for="input-from-email" class="col-form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
 							</div>
 							<div class="form-group required">
 								<label for="input-theme" class="col-form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-control">
@@ -850,10 +849,10 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="input-message" class="col-form-label">{{ entry_message }}</label> <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
+								<label for="input-message" class="col-form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
 							</div>
 							<div class="form-group required">
-								<label for="input-amount" class="col-form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" id="input-amount" class="form-control"/>
+								<label for="input-amount" class="col-form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -884,31 +883,31 @@
 					</div>
 
 					<div class="form-group required">
-						<label for="input-payment-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ payment_firstname }}" id="input-payment-firstname" class="form-control"/>
+						<label for="input-payment-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ payment_firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
 					</div>
 
 					<div class="form-group required">
-						<label for="input-payment-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ payment_lastname }}" id="input-payment-lastname" class="form-control"/>
+						<label for="input-payment-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ payment_lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
 					</div>
 
 					<div class="form-group">
-						<label for="input-payment-company" class="col-form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ payment_company }}" id="input-payment-company" class="form-control"/>
+						<label for="input-payment-company" class="col-form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
 					</div>
 
 					<div class="form-group required">
-						<label for="input-payment-address-1" class="col-form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ payment_address_1 }}" id="input-payment-address-1" class="form-control"/>
+						<label for="input-payment-address-1" class="col-form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
 					</div>
 
 					<div class="form-group">
-						<label for="input-payment-address-2" class="col-form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ payment_address_2 }}" id="input-payment-address-2" class="form-control"/>
+						<label for="input-payment-address-2" class="col-form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
 					</div>
 
 					<div class="form-group required">
-						<label for="input-payment-city" class="col-form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ payment_city }}" id="input-payment-city" class="form-control"/>
+						<label for="input-payment-city" class="col-form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
 					</div>
 
 					<div class="form-group required">
-						<label for="input-payment-postcode" class="col-form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ payment_postcode }}" id="input-payment-postcode" class="form-control"/>
+						<label for="input-payment-postcode" class="col-form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
 					</div>
 
 					<div class="form-group required">
@@ -1069,25 +1068,25 @@
 						</select>
 					</div>
 					<div class="form-group required">
-						<label for="input-shipping-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" id="input-shipping-firstname" class="form-control"/>
+						<label for="input-shipping-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
 					</div>
 					<div class="form-group required">
-						<label for="input-shipping-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" id="input-shipping-lastname" class="form-control"/>
+						<label for="input-shipping-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
 					</div>
 					<div class="form-group">
-						<label for="input-shipping-company" class="col-form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" id="input-shipping-company" class="form-control"/>
+						<label for="input-shipping-company" class="col-form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
 					</div>
 					<div class="form-group required">
-						<label for="input-shipping-address-1" class="col-form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+						<label for="input-shipping-address-1" class="col-form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
 					</div>
 					<div class="form-group">
-						<label for="input-shipping-address-2" class="col-form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+						<label for="input-shipping-address-2" class="col-form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
 					</div>
 					<div class="form-group required">
-						<label for="input-shipping-city" class="col-form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" id="input-shipping-city" class="form-control"/>
+						<label for="input-shipping-city" class="col-form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
 					</div>
 					<div class="form-group required">
-						<label for="input-shipping-postcode" class="col-form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ shipping_postcode }}" id="input-shipping-postcode" class="form-control"/>
+						<label for="input-shipping-postcode" class="col-form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
 					</div>
 					<div class="form-group required">
 						<label for="input-shipping-country" class="col-form-label">{{ entry_country }}</label> <select name="country_id" id="input-shipping-country" class="form-control">
@@ -1182,7 +1181,7 @@
 								<div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
 									<label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 									<div class="col-sm-10">
-										<textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+										<textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
 									</div>
 								</div>
 							{% endif %}

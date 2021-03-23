@@ -153,14 +153,15 @@ $('#form-event').on('click', '.btn-info', function() {
 	html += '      </div>';
 	html += '      <div class="modal-body">';
 	html += '        <div class="form-group">';
-	html += '          <label for="input-description" class="col-form-label">{{ text_description }}</label> <textarea id="input-description" class="form-control" disabled>' + $(this).attr('data-description') + '</textarea>';
+	html += '          <label for="input-description" class="col-form-label">{{ text_description }}</label> <textarea placeholder="{{ text_description }}" id="input-description"rows="5" class="form-control" disabled>' + $(this).attr('data-description') + '</textarea>';
 	html += '        </div>';
 	html += '        <div class="form-group">';
-	html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-trigger') + '</textarea>';
+	html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea placeholder="{{ text_trigger }}" id="input-trigger" class="form-control" disabled>' + $(this).attr('data-trigger') + '</textarea>';
 	html += '        </div>';
 	html += '        <div class="form-group">';
-	html += '          <label for="input-trigger" class="col-form-label">{{ text_action }}</label> <textarea id="input-trigger" class="form-control" disabled>' + $(this).attr('data-action') + '</textarea>';
+	html += '          <label for="input-trigger" class="col-form-label">{{ text_action }}</label> <textareaplaceholder="{{ text_action }}" id="input-trigger" class="form-control" disabled>' + $(this).attr('data-action') + '</textarea>';
 	html += '        </div>';
+	html += '      </div>';
 	html += '      </div>';
 	html += '    </div>';
 	html += '  </div>';

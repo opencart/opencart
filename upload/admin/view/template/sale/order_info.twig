@@ -387,20 +387,20 @@
 
 					</tbody>
 				</table>
-
 				{% if comment %}
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<td>{{ text_comment }}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>{{ comment }}</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="row">
+						<div class="col">
+							<div class="input-group mb-3">
+								<div class="form-control-plaintext p-0 border rounded-left">
+									<p class="lead p-2 mb-0"><strong>{{ text_comment }}</strong>
+										<br/>
+										{{ comment }}
+									</p>
+								</div>
+								<div class="input-group-append"><button type="button" data-toggle="modal" data-target="#modal-comment" class="btn btn-outline-primary btn-sm float-right"><i class="fas fa-cog"></i></button></div>
+							</div>
+						</div>
+					</div>
 				{% endif %}
 			</div>
 		</div>
@@ -451,12 +451,17 @@
 									</div>
 								</div>
 							</div>
+
+
 							<div class="form-group">
 								<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+
 								<div class="col-sm-10">
 									<textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
 								</div>
+
 							</div>
+
 						</fieldset>
 						<div class="text-right">
 							<button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
@@ -636,7 +641,6 @@
 		</div>
 	</div>
 
-
 	<div id="modal-customer" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -735,8 +739,7 @@
 
 							{% if custom_field.type == 'text' %}
 								<div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-									<label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
-									<input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+									<label for="input-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
 								</div>
 							{% endif %}
 
@@ -1372,7 +1375,7 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
+					<textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
 				</div>
 				<div class="modal-footer text-right">
 					<button type="button" id="button-save" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
@@ -1380,8 +1383,6 @@
 			</div>
 		</div>
 	</div>
-
-</div>
 </div>
 
 <script type="text/javascript"><!--

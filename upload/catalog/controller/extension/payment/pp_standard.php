@@ -76,20 +76,30 @@ class ControllerExtensionPaymentPPStandard extends Controller {
 			} else {
 				$data['discount_amount_cart'] -= $total;
 			}
+ 
 			if ($this->cart->hasShipping()) { 
-				$data['no_shipping'] = 2;
+				$data['no_shipping']      = 2;
+				$data['address_override'] = 1;
+				$data['first_name'] 	  = html_entity_decode($order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');
+				$data['last_name']        = html_entity_decode($order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8');
+				$data['address1']         = html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8');
+				$data['address2']         = html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
+				$data['city']             = html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
+				$data['zip']              = html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8');
+				$data['country']          = $order_info['shipping_iso_code_2'];
 			} else {
-				$data['no_shipping'] = 1;
+				$data['no_shipping'] 	  = 1;
+				$data['address_override'] = 0;
+				$data['first_name'] 	  = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
+				$data['last_name'] 		  = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+				$data['address1'] 		  = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
+				$data['address2']         = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
+				$data['city']             = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
+				$data['zip']              = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
+				$data['country']          = $order_info['payment_iso_code_2'];
 			}
 
 			$data['currency_code'] = $order_info['currency_code'];
-			$data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
-			$data['last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-			$data['address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
-			$data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
-			$data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
-			$data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
-			$data['country'] = $order_info['payment_iso_code_2'];
 			$data['email'] = $order_info['email'];
 			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 			$data['lc'] = $this->session->data['language'];

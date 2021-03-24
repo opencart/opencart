@@ -380,29 +380,46 @@ class ControllerAccountAddress extends Controller {
 			$data['zone_id'] = '';
 		}
 
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		// Custom fields
-		$data['custom_fields'] = array();
-
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'address') {
-				$data['custom_fields'][] = $custom_field;
-			}
-		}
-
 		if (isset($this->request->post['custom_field']['address'])) {
 			$data['address_custom_field'] = $this->request->post['custom_field']['address'];
 		} elseif (isset($address_info['custom_field'])) {
 			$data['address_custom_field'] = $address_info['custom_field'];
 		} else {
 			$data['address_custom_field'] = array();
+		}
+
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		// Custom fields
+		$data['custom_fields'] = array();
+		
+		$this->load->model('tool/upload');
+		$this->load->model('account/custom_field');
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'address') {
+				if($custom_field['type'] == 'file' && isset($data['address_custom_field'][$custom_field['custom_field_id']])) {
+					$code = $data['address_custom_field'][$custom_field['custom_field_id']];
+
+					$upload_result = $this->model_tool_upload->getUploadByCode($code);
+
+					$data['address_custom_field'][$custom_field['custom_field_id']] = array();
+					if($upload_result) {
+						$data['address_custom_field'][$custom_field['custom_field_id']]['name'] = $upload_result['name'];
+						$data['address_custom_field'][$custom_field['custom_field_id']]['code'] = $upload_result['code'];
+					} else {
+						$data['address_custom_field'][$custom_field['custom_field_id']]['name'] = "";
+						$data['address_custom_field'][$custom_field['custom_field_id']]['code'] = $code;
+					}
+					$data['custom_fields'][] = $custom_field;
+				} else {
+					$data['custom_fields'][] = $custom_field;
+				}
+			}
 		}
 
 		if (isset($this->request->post['default'])) {

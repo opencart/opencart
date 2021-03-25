@@ -1133,7 +1133,7 @@
                                     <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" value="{{ product_option_value.points_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}"/></td>
                                   <td class="text-right">{{ product_option_value.weight_prefix }}{{ product_option_value.weight }}
                                     <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" value="{{ product_option_value.weight_prefix }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}"/></td>
-                                  <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button> <button type="button" onclick="$(this).tooltip('dispose');" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                  <td class="text-right"><button type="button" data-toggle="tooltip" title="{{ button_edit }}" data-option-row="{{ option_row }}" data-option-value-row="{{ option_value_row }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button> <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                 </tr>
                                 {% set option_value_row = option_value_row + 1 %}
                               {% endfor %}
@@ -2258,14 +2258,14 @@
   </tr>
 </template>
 
-<script type="text/javascript"><!--
+<script type="text/javascript">
 $(window).on('load', function () {
-  var user_token = $('#content').data('user_token');
-
   $('textarea[data-toggle=ckeditor]').ckeditor();
 
+  const user_token = $('#content').data('user_token');
+
   function generateTr(id, name, data) {
-    var tr = document.querySelector('#template-tr').content.querySelector('tr').cloneNode(true);
+    let tr = document.querySelector('#template-tr').content.querySelector('tr').cloneNode(true);
     tr.setAttribute('id', id + data['value']);
     tr.querySelector('td > span').textContent = data['label'];
     tr.querySelector('input[type=hidden]').value = data['value'];
@@ -2275,7 +2275,7 @@ $(window).on('load', function () {
   }
 
   // Manufacturer
-  var text_none = $('#input-manufacturer').data('text_none');
+  const text_none = $('#input-manufacturer').data('text_none');
   $('input[name=manufacturer]').autocomplete({
     'source': function(request, response) {
       $.ajax({
@@ -2324,6 +2324,7 @@ $(window).on('load', function () {
       $('#product-category').append(generateTr('product-category', 'product_category[]', item));
     }
   });
+
   $('#product-category').on('click', '.btn', function() {
     $(this).parent().parent().remove();
   });
@@ -2350,6 +2351,7 @@ $(window).on('load', function () {
       $('#product-filter').append(generateTr('product-filter', 'product_filter[]', item));
     }
   });
+
   $('#product-filter').on('click', '.btn', function() {
     $(this).parent().parent().remove();
   });
@@ -2376,6 +2378,7 @@ $(window).on('load', function () {
       $('#product-download').append(generateTr('product-download', 'product_download[]', item));
     }
   });
+
   $('#product-download').on('click', '.btn', function() {
     $(this).parent().parent().remove();
   });
@@ -2407,15 +2410,7 @@ $(window).on('load', function () {
     $(this).parent().parent().remove();
   });
 
-
-
-});
-//--></script>
-
-<script type="text/javascript"><!--
-$(window).on('load', function () {
-  var user_token = $('#content').data('user_token');
-  var attribute_row = $('#product-attribute tfoot').data('attribute_row');
+  let attribute_row = $('#product-attribute tfoot').data('attribute_row');
 
   function attributeAutoComplete(row) {
     $('input[name=\'product_attribute[' + row + '][name]\']').autocomplete({
@@ -2440,14 +2435,15 @@ $(window).on('load', function () {
       }
     });
   }
+
   function generateAttributeRow(row) {
-    var tr = document.querySelector('#template-attribute-row').content.querySelector('tr').cloneNode(true);
+    let tr = document.querySelector('#template-attribute-row').content.querySelector('tr').cloneNode(true);
     tr.setAttribute('id', 'attribute-row' + row);
     tr.querySelector('td input[type=text]').name = 'product_attribute[' + row + '][name]';
     tr.querySelector('td input[type=hidden]').name = 'product_attribute[' + row + '][attribute_id]';
-    var input_groups = tr.querySelector('td[data-input_groups=true]').children;
-    for (var i = 0; i <= input_groups.length - 1; i++) {
-      var language_id = input_groups[i].getAttribute('data-language_id');
+    let input_groups = tr.querySelector('td[data-input_groups=true]').children;
+    for (let i = 0; i <= input_groups.length - 1; i++) {
+      let language_id = input_groups[i].getAttribute('data-language_id');
       input_groups[i].querySelector('textarea').name = 'product_attribute[' + row + '][product_attribute_description][' + language_id + '][text]';
     }
     tr.querySelector('button.btn.btn-danger').setAttribute('data-row_id', row);
@@ -2460,22 +2456,19 @@ $(window).on('load', function () {
     attributeAutoComplete(attribute_row);
     attribute_row++;
   });
+
   $('#product-attribute').on('click', 'button.btn.btn-danger', function(evt) {
     $(this).parent().parent().remove();
   });
+
   $('#product-attribute tr').each(function(index, element) {
     attributeAutoComplete(index);
   });
-});
-//--></script>
 
-<script type="text/javascript"><!--
-$(window).on('load', function () {
-  var user_token = $('#content').data('user_token');
-  var option_row = $('#tab-option>fieldset').data('option_row');
+  let option_row = $('#tab-option>fieldset').data('option_row');
 
   function generateOptionFieldset(row, data) {
-    var fieldset = document.querySelector('#template-option-fieldset').content.querySelector('fieldset').cloneNode(true);
+    let fieldset = document.querySelector('#template-option-fieldset').content.querySelector('fieldset').cloneNode(true);
     fieldset.setAttribute('id', 'option-row' + row);
     fieldset.querySelector('legend > span').textContent = data['label'];
     fieldset.querySelector('legend > button').setAttribute('data-row_id', row);
@@ -2486,12 +2479,13 @@ $(window).on('load', function () {
     fieldset.querySelector('input[type=hidden][name=option_id]').setAttribute('name', 'product_option[' + row + '][option_id]');
     fieldset.querySelector('input[type=hidden][name=type]').setAttribute('value', data['type']);
     fieldset.querySelector('input[type=hidden][name=type]').setAttribute('name', 'product_option[' + row + '][type]');
-    var type_required = fieldset.querySelector('div[data-type=required]');
+    let type_required = fieldset.querySelector('div[data-type=required]');
     type_required.querySelector('label').setAttribute('for', 'input-required' + row);
     type_required.querySelector('select').setAttribute('id', 'input-required' + row);
     type_required.querySelector('select').setAttribute('name', 'product_option[' + row + '][required]');
 
 
+    let field;
     switch (data['type']) {
       case 'text':
       case 'textarea':
@@ -2499,9 +2493,9 @@ $(window).on('load', function () {
       case 'date':
       case 'time':
       case 'datetime':
-        var selector_id = '#template-option-' + data['type']
-        var selector_input = data['type'] == 'textarea' ? 'textarea' : 'input';
-        var field = document.querySelector(selector_id).content.querySelector('div').cloneNode(true);
+        let selector_id = '#template-option-' + data['type']
+        let selector_input = data['type'] == 'textarea' ? 'textarea' : 'input';
+        document.querySelector(selector_id).content.querySelector('div').cloneNode(true);
         field.querySelector('label').setAttribute('for', 'input-option' + row);
         field.querySelector(selector_input).setAttribute('name', 'product_option[' + row + '][value]');
         field.querySelector(selector_input).setAttribute('id', 'input-option' + row);
@@ -2510,21 +2504,20 @@ $(window).on('load', function () {
       case 'radio':
       case 'checkbox':
       case 'image':
-        var template = document.querySelector('#template-option-other').content;
-        var field = template.querySelector('div').cloneNode(true);
+        let template = document.querySelector('#template-option-other').content;
+        template.querySelector('div').cloneNode(true);
         field.querySelector('table').setAttribute('id', 'option-value' + row);
         field.querySelector('button').setAttribute('data-option-row', row);
-        var select = template.querySelector('select').cloneNode(true);
+        let select = template.querySelector('select').cloneNode(true);
         select.setAttribute('id', 'product-option-values' + row);
-        for (var i = 0; i < data['option_value'].length ; i++){
-          var option = document.createElement('option');
+        for (let i = 0; i < data['option_value'].length ; i++){
+          let option = document.createElement('option');
           option.setAttribute('value', data['option_value'][i]['option_value_id']);
           option.textContent = data['option_value'][i]['name'];
           select.appendChild(option);
         }
         field.appendChild(select);
         break;
-
       default:
         // default
         break;
@@ -2583,18 +2576,14 @@ $(window).on('load', function () {
   });
 
   $('#option').on('click', 'fieldset>legend>button.btn.btn-danger', function(evt) {
+    $(this).tooltip('dispose');
     $(this).parent().parent().remove();
   });
-});
-//--></script>
 
-<script type="text/javascript"><!--
-$(window).on('load', function () {
-  var user_token = $('#content').data('user_token');
-  var option_value_row = $('#tab-option>fieldset').data('option_value_row');
+  let option_value_row = $('#tab-option>fieldset').data('option_value_row');
 
   $('#option').on('click', '.btn-primary', function() {
-    var element = this;
+    let element = this;
 
     if ($(element).attr('data-option-value-row')) {
       element.option_value_row = $(element).attr('data-option-value-row');
@@ -2604,12 +2593,12 @@ $(window).on('load', function () {
 
     $('.modal').remove();
 
-    var modal_option = document.querySelector('#template-modal-option').content.querySelector('div').cloneNode(true);
+    let modal_option = document.querySelector('#template-modal-option').content.querySelector('div').cloneNode(true);
     option_value = $('#product-option-values' + $(element).attr('data-option-row') + ' option');
 
-    var select_option_value = modal_option.querySelector('#input-modal-option-value');
-    for (var i = 0; i < option_value.length; i++){
-      var option = document.createElement('option');
+    let select_option_value = modal_option.querySelector('#input-modal-option-value');
+    for (let i = 0; i < option_value.length; i++){
+      let option = document.createElement('option');
       option.setAttribute('value', $(option_value[i]).val());
       option.textContent = $(option_value[i]).text();
       if ($(element).attr('data-option-value-row') && $(option_value[i]).val() == $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]\']').val()) {
@@ -2620,7 +2609,7 @@ $(window).on('load', function () {
     modal_option.querySelector('[name=product_option_value_id]').setAttribute('value', ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : ''));
     modal_option.querySelector('#input-modal-quantity').setAttribute('value', ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : ''));
 
-    var select_subtract = modal_option.querySelector('#input-modal-subtract');
+    let select_subtract = modal_option.querySelector('#input-modal-subtract');
     if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
       select_subtract.querySelector('option[value="1"]').setAttribute('selected', 'selected');
     } else {
@@ -2628,7 +2617,7 @@ $(window).on('load', function () {
     }
 
     modal_option.querySelector('#input-modal-price').setAttribute('value', ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]\']').val() : '0'));
-    var select_price = modal_option.querySelector('[name=price_prefix]');
+    let select_price = modal_option.querySelector('[name=price_prefix]');
     if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
       select_price.querySelector('option[value="+"]').setAttribute('selected', 'selected');
     } else if($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
@@ -2636,7 +2625,7 @@ $(window).on('load', function () {
     }
 
     modal_option.querySelector('#input-modal-points').setAttribute('value', ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]\']').val() : '0'));
-    var select_points = modal_option.querySelector('[name=points_prefix]');
+    let select_points = modal_option.querySelector('[name=points_prefix]');
     if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '+') {
       select_points.querySelector('option[value="+"]').setAttribute('selected', 'selected');
     } else if($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]\']').val() == '-') {
@@ -2644,14 +2633,14 @@ $(window).on('load', function () {
     }
 
     modal_option.querySelector('#input-modal-weight').setAttribute('value', ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]\']').val() : '0'));
-    var select_weight = modal_option.querySelector('[name=weight_prefix]');
+    let select_weight = modal_option.querySelector('[name=weight_prefix]');
     if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '+') {
       select_weight.querySelector('option[value="+"]').setAttribute('selected', 'selected');
     } else if($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]\']').val() == '-') {
       select_weight.querySelector('option[value="-"]').setAttribute('selected', 'selected');
     }
 
-    var modal_button_save = modal_option.querySelector('#button-save')
+    let modal_button_save = modal_option.querySelector('#button-save')
     modal_button_save.setAttribute('data-option-row', $(element).attr('data-option-row'));
     modal_button_save.setAttribute('data-option-value-row', element.option_value_row);
 
@@ -2659,22 +2648,18 @@ $(window).on('load', function () {
 
     $('#modal-option').modal('show');
     $('#modal-option #button-save').on('click', function() {
-      var option_value_tr = document.querySelector('#template-option-value-row').content.querySelector('tr').cloneNode(true);
-
+      let option_value_tr = document.querySelector('#template-option-value-row').content.querySelector('tr').cloneNode(true);
       option_value_tr.setAttribute('id', 'option-value-row' + element.option_value_row);
-
       option_value_tr_td_value = option_value_tr.querySelector('td[data-name=option_value]');
       option_value_tr_td_value.querySelector('span').textContent = $('#modal-option select[name=\'option_value_id\'] option:selected').text();
       option_value_tr_td_value.querySelector('input[name=option_value_id]').setAttribute('value', $('#modal-option select[name=\'option_value_id\']').val());
       option_value_tr_td_value.querySelector('input[name=option_value_id]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]');
       option_value_tr_td_value.querySelector('input[name=product_option_value_id]').setAttribute('value', $('#modal-option input[name=\'product_option_value_id\']').val());
       option_value_tr_td_value.querySelector('input[name=product_option_value_id]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]');
-
       option_value_tr_td_quantity = option_value_tr.querySelector('td[data-name=quantity]');
       option_value_tr_td_quantity.querySelector('span').textContent = $('#modal-option input[name=\'quantity\']').val();
       option_value_tr_td_quantity.querySelector('input[name=quantity]').setAttribute('value', $('#modal-option input[name=\'quantity\']').val());
       option_value_tr_td_quantity.querySelector('input[name=quantity]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]');
-
       option_value_tr_td_subtract = option_value_tr.querySelector('td[data-name=subtract]');
       if ($('#modal-option select[name=\'subtract\'] option:selected').val() == '1') {
         option_value_tr_td_subtract.querySelector('span[data-text="0"]').remove();
@@ -2683,37 +2668,31 @@ $(window).on('load', function () {
       }
       option_value_tr_td_subtract.querySelector('input[name=subtract]').setAttribute('value', $('#modal-option select[name=\'subtract\'] option:selected').val());
       option_value_tr_td_subtract.querySelector('input[name=subtract]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]');
-
       option_value_tr_td_price = option_value_tr.querySelector('td[data-name=price]');
       option_value_tr_td_price.querySelector('span').textContent = $('#modal-option select[name=\'price_prefix\'] option:selected').val() + $('#modal-option input[name=\'price\']').val();
       option_value_tr_td_price.querySelector('input[name=price_prefix]').setAttribute('value', $('#modal-option select[name=\'price_prefix\'] option:selected').val());
       option_value_tr_td_price.querySelector('input[name=price_prefix]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]');
       option_value_tr_td_price.querySelector('input[name=price]').setAttribute('value', $('#modal-option input[name=\'price\']').val());
       option_value_tr_td_price.querySelector('input[name=price]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price]');
-
       option_value_tr_td_points = option_value_tr.querySelector('td[data-name=points]');
       option_value_tr_td_points.querySelector('span').textContent = $('#modal-option select[name=\'points_prefix\'] option:selected').val() + $('#modal-option input[name=\'points\']').val();
       option_value_tr_td_points.querySelector('input[name=points_prefix]').setAttribute('value', $('#modal-option select[name=\'points_prefix\'] option:selected').val());
       option_value_tr_td_points.querySelector('input[name=points_prefix]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points_prefix]');
       option_value_tr_td_points.querySelector('input[name=points]').setAttribute('value', $('#modal-option input[name=\'points\']').val());
       option_value_tr_td_points.querySelector('input[name=points]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][points]');
-
       option_value_tr_td_weight = option_value_tr.querySelector('td[data-name=weight]');
       option_value_tr_td_weight.querySelector('span').textContent = $('#modal-option select[name=\'weight_prefix\'] option:selected').val() + $('#modal-option input[name=\'weight\']').val();
       option_value_tr_td_weight.querySelector('input[name=weight_prefix]').setAttribute('value', $('#modal-option select[name=\'weight_prefix\'] option:selected').val());
       option_value_tr_td_weight.querySelector('input[name=weight_prefix]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight_prefix]');
       option_value_tr_td_weight.querySelector('input[name=weight]').setAttribute('value', $('#modal-option input[name=\'weight\']').val());
       option_value_tr_td_weight.querySelector('input[name=weight]').setAttribute('name', 'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][weight]');
-
       option_value_tr_button = option_value_tr.querySelector('button.btn.btn-primary');
       option_value_tr_button.setAttribute('data-option-row', $(element).attr('data-option-row'));
       option_value_tr_button.setAttribute('data-option-value-row', element.option_value_row);
-
       if ($(element).attr('data-option-value-row')) {
         $('#option-value-row' + element.option_value_row).replaceWith(option_value_tr);
       } else {
         $('#option-value' + $(element).attr('data-option-row')).append(option_value_tr);
-
         option_value_row++;
       }
 
@@ -2726,18 +2705,13 @@ $(window).on('load', function () {
   $('#option').on('click', '.table-responsive>table .btn.btn-danger', function(evt) {
     $(this).parent().parent().remove();
   });
-});
-//--></script>
 
-<script type="text/javascript"><!--
-$(window).on('load', function () {
-  var discount_row = $('#product-discount>tfoot').data('discount_row');
+  let discount_row = $('#product-discount>tfoot').data('discount_row');
 
   $('#button-discount').on('click', function() {
-    var discount_row_tr = document.querySelector('#template-discount-row').content.querySelector('tr').cloneNode(true);
+    let discount_row_tr = document.querySelector('#template-discount-row').content.querySelector('tr').cloneNode(true);
 
     discount_row_tr.setAttribute('id', 'discount-row' + discount_row);
-
     discount_row_tr.querySelector('select[name=customer_group_id]').setAttribute('name', 'product_discount[' + discount_row + '][customer_group_id]');
     discount_row_tr.querySelector('input[name=product_discount_id]').setAttribute('name', 'product_discount[' + discount_row + '][product_discount_id]');
     discount_row_tr.querySelector('input[name=quantity]').setAttribute('name', 'product_discount[' + discount_row + '][quantity]');
@@ -2761,17 +2735,10 @@ $(window).on('load', function () {
     $(this).parent().parent().remove();
   });
 
-});
-
-//--></script>
-
-
-<script type="text/javascript"><!--
-$(window).on('load', function () {
-  var special_row = $('#product-special>tfoot').data('special_row');
+  let special_row = $('#product-special>tfoot').data('special_row');
 
   $('#button-special').on('click', function() {
-    var special_row_tr = document.querySelector('#template-special-row').content.querySelector('tr').cloneNode(true);
+    let special_row_tr = document.querySelector('#template-special-row').content.querySelector('tr').cloneNode(true);
 
     special_row_tr.setAttribute('id', 'special-row' + special_row);
     special_row_tr.querySelector('select[name=customer_group_id]').setAttribute('name', 'product_special[' + special_row + '][customer_group_id]');
@@ -2796,16 +2763,10 @@ $(window).on('load', function () {
     $(this).parent().parent().remove();
   });
 
-});
-//--></script>
-
-
-<script type="text/javascript"><!--
-$(window).on('load', function () {
-  var image_row = $('#product-image>tfoot').data('image_row');
+  let image_row = $('#product-image>tfoot').data('image_row');
 
   $('#button-image').on('click', function() {
-    var image_row_tr = document.querySelector('#template-image-row').content.querySelector('tr').cloneNode(true);
+    let image_row_tr = document.querySelector('#template-image-row').content.querySelector('tr').cloneNode(true);
 
     image_row_tr.setAttribute('id', 'image-row' + image_row);
     image_row_tr.querySelector('img').setAttribute('id', 'thumb-image' + image_row);
@@ -2826,18 +2787,10 @@ $(window).on('load', function () {
     $(this).parent().parent().remove();
   });
 
-});
-//--></script>
-
-
-<script type="text/javascript"><!--
-$(window).on('load', function () {
-  var recurring_row = $('#product-recurring>tfoot').data('recurring_row');
-
-  console.log(recurring_row)
+  let recurring_row = $('#product-recurring>tfoot').data('recurring_row');
 
   $('#button-recurring').on('click', function() {
-    var recurring_row_tr = document.querySelector('#template-recurring-row').content.querySelector('tr').cloneNode(true);
+    let recurring_row_tr = document.querySelector('#template-recurring-row').content.querySelector('tr').cloneNode(true);
 
     recurring_row_tr.setAttribute('id', 'recurring-row' + recurring_row);
     recurring_row_tr.querySelector('select[name=recurring_id]').setAttribute('name', 'product_recurring[' + recurring_row + '][recurring_id]');
@@ -2851,17 +2804,12 @@ $(window).on('load', function () {
   $('#product-recurring').on('click', 'tbody .btn.btn-danger', function(evt) {
     $(this).parent().parent().remove();
   });
-});
-//--></script>
 
-
-<script type="text/javascript"><!--
-$(window).on('load', function () {
   $('#content').on('click', 'button[id^=\'button-upload\']', function() {
-    var element = this;
+    let element = this;
 
     $('#form-upload').remove();
-
+    // @todo
     $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
     $('#form-upload input[name=\'file\']').trigger('click');
@@ -2879,7 +2827,7 @@ $(window).on('load', function () {
     }
 
     timer = setInterval(function() {
-      if ($('#form-upload input[name=\'file\']').val() != '') {
+      if ($('#form-upload input[name=file]').val() != '') {
         clearInterval(timer);
 
         $.ajax({
@@ -2939,9 +2887,8 @@ $(window).on('load', function () {
 
   // Variable products
   $('input[data-toggle=\'switch\']').on('change', function(e) {
-    var element = this;
-
-    var target = $(this).attr('data-target');
+    let element = this;
+    let target = $(this).attr('data-target');
 
     // First we need to grab the default values
     $(target).each(function() {
@@ -2966,7 +2913,7 @@ $(window).on('load', function () {
 
       // CKEditor readonly
       if ($(this).is('[data-toggle=\'ckeditor\']')) {
-        var editor = CKEDITOR.instances[$(this).attr('id')];
+        const editor = CKEDITOR.instances[$(this).attr('id')];
 
         if (editor.editable() == undefined) {
           editor.on('instanceReady', function() {
@@ -3007,10 +2954,7 @@ $(window).on('load', function () {
   });
 
   $('.custom-control-input').trigger('change');
+  $('#language li:first-child a').tab('show');
 });
-//--></script>
-
-<script type="text/javascript"><!--
-$('#language li:first-child a').tab('show');
-//--></script>
+</script>
 {{ footer }}

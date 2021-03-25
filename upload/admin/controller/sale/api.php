@@ -123,11 +123,11 @@ class Api extends \Opencart\System\Engine\Controller {
 
 	public function customer(): void {
 		$this->store->request->post == [
-			'customer_id'       => $this->request->pos['customer_id'],
-			'customer_group_id' => $this->request->pos['customer_group_id'],
-			'firstname'         => $this->request->pos['firstname'],
-			'lastname'          => $this->request->pos['lastname'],
-			'email'             => $this->request->pos['email'],
+			'customer_id'       => $this->request->post['customer_id'],
+			'customer_group_id' => $this->request->post['customer_group_id'],
+			'firstname'         => $this->request->post['firstname'],
+			'lastname'          => $this->request->post['lastname'],
+			'email'             => $this->request->post['email'],
 			'telephone'         => $this->request->post['telephone']
 		];
 
@@ -204,6 +204,14 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->store->response->getOutput());
 	}
 
+	public function getPaymentMethods(): array {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
 	public function shippingmethod(): void {
 		$this->store->request->post = ['shipping_method' => $this->request->post['shipping_method']];
@@ -212,6 +220,14 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($this->store->response->getOutput());
+	}
+	public function getShippingMethods(): array {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addProduct(): void {
@@ -304,7 +320,6 @@ class Api extends \Opencart\System\Engine\Controller {
 
 	}
 
-
 	public function edit(): void {
 		$this->load->language('sale/order');
 
@@ -342,76 +357,16 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$order = array();
 
-		// 1. We set some defaults so there are no undefined indexes.
-		$defaults = [
-			'store_id'              => 0,
-
-			'customer_id'           => 0,
-			'customer_group_id'     => (int)$this->config->get('config_customer_group_id'),
-			'firstname'             => '',
-			'lastname'              => '',
-			'email'                 => '',
-			'telephone'             => '',
-			'custom_field'          => [],
-
-			'payment_firstname'     => '',
-			'payment_lastname'      => '',
-			'payment_company'       => '',
-			'payment_address_1'     => '',
-			'payment_address_2'     => '',
-			'payment_city'          => '',
-			'payment_postcode'      => '',
-			'payment_country_id'    => 0,
-			'payment_zone_id'       => 0,
-			'payment_custom_field'  => [],
-
-			'payment_method'        => '',
-			'payment_code'          => '',
-
-			'shipping_firstname'    => '',
-			'shipping_lastname'     => '',
-			'shipping_company'      => '',
-			'shipping_address_1'    => '',
-			'shipping_address_2'    => '',
-			'shipping_city'         => '',
-			'shipping_postcode'     => '',
-			'shipping_country_id'   => 0,
-			'shipping_zone_id'      => 0,
-			'shipping_custom_field' => [],
-
-			'shipping_method'       => '',
-			'shipping_code'         => '',
-
-			'order_status_id'       => 0,
-			'comment'               => '',
-
-			'affiliate_id'          => 0,
-
-			'currency_id'           => 0,
-			'currency_code'         => (string)$this->config->get('config_currency'),
-			'currency_value'        => (string)$this->config->get('config_currency'),
-
-			'coupon'                => '',
-			'voucher'               => '',
-			'reward'                => '',
-		];
-
-		// 2. Merge the old order data with the new data
-		foreach ($defaults as $key => $value) {
-			if (isset($this->request->post[$key])) {
-				$order[$key] = $this->request->post[$key];
-			} elseif (isset($order_data[$key])) {
-				$order[$key] = $order_info[$key];
-			} else {
-				$order[$key] = $value;
-			}
-		}
-
-
-
-
-
 		if (!$json) {
+
+			// 1. Merge the old order data with the new data
+			foreach ($order_info as $key => $value) {
+				if (isset($this->request->post[$key])) {
+					$order[$key] = $this->request->post[$key];
+				} else {
+					$order[$key] = $order_info[$key];
+				}
+			}
 
 			$data['order_id'] = $order_id;
 
@@ -535,24 +490,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput($store->response->getOutput());
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function getShippingMethods(): array {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function getPaymentMethods(): array {
-		$this->load->language('sale/order');
-
-		$json = [];
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

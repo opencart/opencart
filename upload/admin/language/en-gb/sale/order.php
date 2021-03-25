@@ -43,8 +43,6 @@ $_['text_commission_removed']    = 'Success: Commission removed!';
 $_['text_restock']               = 'Success: Products have been restocked!';
 $_['text_upload']                = 'Your file was successfully uploaded!';
 
-
-
 $_['text_contact']               = 'Contact Tel';
 
 $_['text_more']                  = 'More..';

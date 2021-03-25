@@ -428,11 +428,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		// API login
-		$data['catalog'] = HTTP_CATALOG;
-
-		// API login
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -547,60 +542,14 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['invoice_no'] = '';
 		}
 
-		$data['order_id'] = 0;
-		$data['store_id'] = 0;
-		$data['store_url'] = HTTP_CATALOG;
 
-		$data['customer'] = '';
-		$data['customer_id'] = '';
-		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
-		$data['firstname'] = '';
-		$data['lastname'] = '';
-		$data['email'] = '';
-		$data['telephone'] = '';
-		$data['customer_custom_field'] = [];
 
-		$data['addresses'] = [];
 
-		$data['payment_firstname'] = '';
-		$data['payment_lastname'] = '';
-		$data['payment_company'] = '';
-		$data['payment_address_1'] = '';
-		$data['payment_address_2'] = '';
-		$data['payment_city'] = '';
-		$data['payment_postcode'] = '';
-		$data['payment_country_id'] = '';
-		$data['payment_zone_id'] = '';
-		$data['payment_custom_field'] = [];
-		$data['payment_method'] = '';
-		$data['payment_code'] = '';
 
-		$data['shipping_firstname'] = '';
-		$data['shipping_lastname'] = '';
-		$data['shipping_company'] = '';
-		$data['shipping_address_1'] = '';
-		$data['shipping_address_2'] = '';
-		$data['shipping_city'] = '';
-		$data['shipping_postcode'] = '';
-		$data['shipping_country_id'] = '';
-		$data['shipping_zone_id'] = '';
-		$data['shipping_custom_field'] = [];
-		$data['shipping_method'] = '';
-		$data['shipping_code'] = '';
 
-		$data['order_products'] = [];
-		$data['order_vouchers'] = [];
-		$data['order_totals'] = [];
 
-		$data['order_status_id'] = $this->config->get('config_order_status_id');
-		$data['comment'] = '';
-		$data['affiliate_id'] = 0;
-		$data['affiliate'] = '';
-		$data['currency_code'] = $this->config->get('config_currency');
 
-		$data['coupon'] = '';
-		$data['voucher'] = '';
-		$data['reward'] = '';
+
 
 
 		// Store
@@ -616,6 +565,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 
 		}
+
+	//	$this->store->config->set('config_store_id', $order_info['store_id']);
 
 		$this->load->model('setting/store');
 
@@ -656,6 +607,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
+			$data['customer_group_id'] = $order_info['customer_group_id'];
+		} else {
+			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+		}
+
+		if (!empty($order_info)) {
 			$data['firstname'] = $order_info['firstname'];
 		} else {
 			$data['firstname'] = '';
@@ -683,12 +640,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['account_custom_field'] = $order_info['custom_field'];
 		} else {
 			$data['account_custom_field'] = [];
-		}
-
-		if (!empty($order_info)) {
-			$data['customer_group_id'] = $order_info['customer_group_id'];
-		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 
 		// Customer Groups
@@ -775,12 +726,20 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['language'] = $language_info['name'];
 
+
+
+
 		// Total
 		$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
+
+
+
 
 		// Reward Points
 		$data['reward'] = $order_info['reward'];
 		$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+
+
 
 		// Affiliate
 		if ($order_info['affiliate_id']) {
@@ -792,6 +751,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['affiliate_id'] = $order_info['affiliate_id'];
 		$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
 		$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
+
+
 
 		// Commission
 		$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
@@ -1232,9 +1193,63 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		/*
 		// The URL we send API requests to
-		$data['catalog'] = HTTP_CATALOG;
+		$data['order_id'] = 0;
+		$data['store_id'] = 0;
+		$data['store_url'] = HTTP_CATALOG;
 
+		$data['customer'] = '';
+		$data['customer_id'] = '';
+		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+		$data['firstname'] = '';
+		$data['lastname'] = '';
+		$data['email'] = '';
+		$data['telephone'] = '';
+		$data['customer_custom_field'] = [];
+
+		$data['addresses'] = [];
+
+		$data['payment_firstname'] = '';
+		$data['payment_lastname'] = '';
+		$data['payment_company'] = '';
+		$data['payment_address_1'] = '';
+		$data['payment_address_2'] = '';
+		$data['payment_city'] = '';
+		$data['payment_postcode'] = '';
+		$data['payment_country_id'] = '';
+		$data['payment_zone_id'] = '';
+		$data['payment_custom_field'] = [];
+		$data['payment_method'] = '';
+		$data['payment_code'] = '';
+
+		$data['shipping_firstname'] = '';
+		$data['shipping_lastname'] = '';
+		$data['shipping_company'] = '';
+		$data['shipping_address_1'] = '';
+		$data['shipping_address_2'] = '';
+		$data['shipping_city'] = '';
+		$data['shipping_postcode'] = '';
+		$data['shipping_country_id'] = '';
+		$data['shipping_zone_id'] = '';
+		$data['shipping_custom_field'] = [];
+		$data['shipping_method'] = '';
+		$data['shipping_code'] = '';
+
+		$data['order_products'] = [];
+		$data['order_vouchers'] = [];
+		$data['order_totals'] = [];
+
+		$data['order_status_id'] = $this->config->get('config_order_status_id');
+		$data['comment'] = '';
+		$data['affiliate_id'] = 0;
+		$data['affiliate'] = '';
+		$data['currency_code'] = $this->config->get('config_currency');
+
+		$data['coupon'] = '';
+		$data['voucher'] = '';
+		$data['reward'] = '';
+		*/
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

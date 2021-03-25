@@ -2258,6 +2258,10 @@
   </tr>
 </template>
 
+<template id="template-form-upload">
+  <form enctype="multipart/form-data" id="form-upload" class="hidden"><input type="file" name="file"></form>
+</template>
+
 <script type="text/javascript">
 $(window).on('load', function () {
   $('textarea[data-toggle="ckeditor"]').ckeditor();
@@ -2801,8 +2805,8 @@ $(window).on('load', function () {
     let element = this;
 
     $('#form-upload').remove();
-    // @todo
-    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+    let form_upload = document.querySelector('#template-form-upload').content.querySelector('form').cloneNode(true);
+    $('body').prepend(form_upload);
 
     $('#form-upload input[name="file"]').trigger('click');
 

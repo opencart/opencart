@@ -3,12 +3,12 @@ $(document).ready(function() {
 	$('[data-toggle=\'summernote\']').each(function() {
 		var element = this;
 
-		if ($(this).attr('data-lang')) {
-			$('head').append('<script type="text/javascript" src="view/javascript/summernote/lang/summernote-' + $(this).attr('data-lang') + '.js"></script>');
+		if ($(this).attr('data-lang') && $(this).attr('data-lang')!='en') {
+			$('head').append('<script type="text/javascript" src="view/javascript/summernote/lang/summernote-' + $(this).attr('data-lang') + '-' + $(this).attr('data-lang').toUpperCase() + '.min.js"></script>');
 		}
 
 		$(element).summernote({
-			lang: $(this).attr('data-lang'),
+			lang: $(this).attr('data-lang') + '-' + $(this).attr('data-lang').toUpperCase(),
 			disableDragAndDrop: true,
 			height: 300,
 			emptyPara: '',
@@ -31,11 +31,15 @@ $(document).ready(function() {
 				['view', ['fullscreen', 'codeview', 'help']]
 			],
 			popover: {
-           		image: [
+				image: [
 					['custom', ['imageAttributes']],
-					['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+					['resize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
 					['float', ['floatLeft', 'floatRight', 'floatNone']],
 					['remove', ['removeMedia']]
+				],
+				table: [
+					['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+					['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
 				],
 			},
 			buttons: {

@@ -50,7 +50,7 @@
                   <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control">{{ information_description[language.language_id] ? information_description[language.language_id].description }}</textarea>
+                      <textarea name="information_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="summernote" data-lang="{{ language.locale }}" class="form-control">{{ information_description[language.language_id] ? information_description[language.language_id].description }}</textarea>
                       {% if error_description[language.language_id] %}
                       <div class="text-danger">{{ error_description[language.language_id] }}</div>
                       {% endif %} </div>
@@ -66,7 +66,7 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-meta-description{{ language.language_id }}">{{ entry_meta_description }}</label>
                     <div class="col-sm-10">
-                      <textarea name="information_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{{ information_description[language.language_id] ? information_description[language.language_id].meta_description }}</textarea>
+                      <textarea name="information_description[{{ language.language_id }}][meta_description]" rows="5"  placeholder="{{ entry_meta_description }}" id="input-meta-description{{ language.language_id }}" class="form-control">{{ information_description[language.language_id] ? information_description[language.language_id].meta_description }}</textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -198,8 +198,8 @@
   <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
   <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
-  <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/summernote/summernote.min.js"></script>
+  <link href="view/javascript/summernote/summernote.min.css" rel="stylesheet" />
   <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
   <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
   <script type="text/javascript"><!--

@@ -174,11 +174,13 @@ class User extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['users'][] = [
-				'user_id'    => $result['user_id'],
-				'username'   => $result['username'],
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/user|edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
+				'user_id'        => $result['user_id'],
+				'username'       => $result['username'],
+				'email'          => $result['email'],
+				'user_group_id'  => $result['user_group_id'],
+				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'edit'           => $this->url->link('user/user|edit', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $result['user_id'] . $url)
 			];
 		}
 

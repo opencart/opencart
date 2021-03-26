@@ -33,11 +33,13 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+                  <td class="text-center"></td>
                   <td class="text-left">{% if sort == 'username' %}
                       <a href="{{ sort_username }}" class="{{ order|lower }}">{{ column_username }}</a>
                     {% else %}
                       <a href="{{ sort_username }}">{{ column_username }}</a>
                     {% endif %}</td>
+                  <td class="text-left"><a href="{{ sort_status }}">{{ column_email }}</a></td>
                   <td class="text-left">{% if sort == 'status' %}
                       <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
                     {% else %}
@@ -59,8 +61,17 @@
                           <input type="checkbox" name="selected[]" value="{{ user.user_id }}" checked="checked"/>
                         {% else %}
                           <input type="checkbox" name="selected[]" value="{{ user.user_id }}"/>
-                        {% endif %}</td>
+                        {% endif %}
+                      </td>
+                      <td class="text-center">
+                        {% if user.user_group_id == 1 %}
+                          <i class="fas fa-user-shield"></i>
+                        {% else %}
+                          <div class="fas fa-store-alt"></div>
+                        {% endif %}
+                      </td>
                       <td class="text-left">{{ user.username }}</td>
+                      <td class="text-left">{{ user.email }}</td>
                       <td class="text-left">{{ user.status }}</td>
                       <td class="text-left">{{ user.date_added }}</td>
                       <td class="text-right"><a href="{{ user.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

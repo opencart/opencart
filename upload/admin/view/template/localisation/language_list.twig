@@ -60,7 +60,13 @@
                         {% else %}
                           <input type="checkbox" name="selected[]" value="{{ language.language_id }}"/>
                         {% endif %}</td>
-                      <td class="text-left">{{ language.name }}</td>
+                      <td class="text-left">{{ language.name }}
+                      <br/>
+                      {% if language.status %}
+                        <small class="text-success">{{ text_enabled }}</small>
+                      {% else %}
+                        <small class="text-danger">{{ text_disabled }}</small>
+                      {% endif %}</td>
                       <td class="text-left">{{ language.code }}</td>
                       <td class="text-right">{{ language.sort_order }}</td>
                       <td class="text-right"><a href="{{ language.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

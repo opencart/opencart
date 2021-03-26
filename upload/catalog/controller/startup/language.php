@@ -112,6 +112,9 @@ class Language extends \Opencart\System\Engine\Controller {
 		// Set the config language_id
 		if (isset($language_codes[$code])) {
 			$this->config->set('config_language_id', $language_codes[$code]);
+		} else {
+			// language_codes not exists, set default to en-gb
+			$this->config->set('config_language_id', 1 );
 		}
 
 		$this->config->set('config_language', $code);

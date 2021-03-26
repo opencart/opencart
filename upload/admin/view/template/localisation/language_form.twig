@@ -71,6 +71,9 @@
                   <option value="0" selected="selected">{{ text_disabled }}</option>
                 {% endif %}
               </select>
+              {% if error_status %}
+                <div class="invalid-tooltip">{{ error_status }}</div>
+              {% endif %}
               <small class="form-text text-muted">{{ help_status }}</small>
             </div>
           </div>

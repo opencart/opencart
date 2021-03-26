@@ -536,4 +536,10 @@ class ModelCatalogProduct extends Model {
 			return 0;
 		}
 	}
+
+	public function checkProductCategory($product_id, $category_ids) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_category WHERE product_id = '" . (int)$product_id . "' AND category_id IN(" . implode("', '", $category_ids) . ")");
+
+		return $query->row;
+	}
 }

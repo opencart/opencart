@@ -637,8 +637,15 @@ class ControllerSaleOrder extends Controller {
 
 		// Custom Fields
 		$this->load->model('customer/custom_field');
+		$this->load->model('tool/upload');
 
 		$data['custom_fields'] = array();
+
+		$custom_field_locations = array(
+			'account_custom_field',
+			'payment_custom_field',
+			'shipping_custom_field'
+		);
 
 		$filter_data = array(
 			'sort'  => 'cf.sort_order',
@@ -657,6 +664,25 @@ class ControllerSaleOrder extends Controller {
 				'location'           => $custom_field['location'],
 				'sort_order'         => $custom_field['sort_order']
 			);
+
+			if($custom_field['type'] == 'file') {
+				foreach($custom_field_locations as $location) {
+					if(isset($data[$location][$custom_field['custom_field_id']])) {
+						$code = $data[$location][$custom_field['custom_field_id']];
+
+						$upload_result = $this->model_tool_upload->getUploadByCode($code);
+
+						$data[$location][$custom_field['custom_field_id']] = array();
+						if($upload_result) {
+							$data[$location][$custom_field['custom_field_id']]['name'] = $upload_result['name'];
+							$data[$location][$custom_field['custom_field_id']]['code'] = $upload_result['code'];
+						} else {
+							$data[$location][$custom_field['custom_field_id']]['name'] = "";
+							$data[$location][$custom_field['custom_field_id']]['code'] = $code;
+						}
+					}
+				}
+			}
 		}
 
 		$this->load->model('localisation/order_status');

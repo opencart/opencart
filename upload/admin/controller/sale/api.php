@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Admin\Controller\Sale
+namespace Opencart\Admin\Controller\Sale;
 class Api extends \Opencart\System\Engine\Controller {
 	private object $store;
 
@@ -121,8 +121,37 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->store = $registry;
 	}
 
+	public function createInvoiceNo(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/order');
+
+			$invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
+
+			if ($invoice_no) {
+				$json['invoice_no'] = $invoice_no;
+			} else {
+				$json['error'] = $this->language->get('error_action');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function customer(): void {
-		$this->store->request->post == [
+		$this->store->request->post = [
 			'customer_id'       => $this->request->post['customer_id'],
 			'customer_group_id' => $this->request->post['customer_group_id'],
 			'firstname'         => $this->request->post['firstname'],
@@ -138,9 +167,18 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	public function currency(): void {
-		$this->store->request->post == ['currency' => $this->request->post['currency']];
+		$this->store->request->post = ['currency' => $this->request->post['currency']];
 
 		$this->store->load->controller('api/currency');
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($this->store->response->getOutput());
+	}
+
+	public function language(): void {
+		$this->store->request->post = ['language' => $this->request->post['language']];
+
+		$this->store->load->controller('api/language');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($this->store->response->getOutput());
@@ -155,47 +193,25 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->store->response->getOutput());
 	}
 
-	public function paymentaddress(): void {
-		$this->store->request->post = [
-			'firstname'      => $this->request->post['payment_firstname'],
-			'lastname'       => $this->request->post['payment_lastname'],
-			'company'        => $this->request->post['payment_company'],
-			'address_1'      => $this->request->post['payment_address_1'],
-			'address_2'      => $this->request->post['payment_address_2'],
-			'postcode'       => $this->request->post['payment_postcode'],
-			'city'           => $this->request->post['payment_city'],
-			'zone_id'        => $this->request->post['payment_zone_id'],
-			'country_id'     => $this->request->post['payment_country_id'],
-			'custom_field'   => $this->request->post['payment_custom_field']
-		];
+	public function voucher(): void {
+		$this->store->request->post = ['voucher' => $this->request->post['voucher']];
 
-		$this->store->load->controller('api/payment_address');
+		$this->store->load->controller('api/voucher');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($this->store->response->getOutput());
 	}
 
-	public function shippingaddress(): void {
-		$this->store->request->post = [
-			'firstname'    => $this->request->post['shipping_firstname'],
-			'lastname'     => $this->request->post['shipping_lastname'],
-			'company'      => $this->request->post['shipping_company'],
-			'address_1'    => $this->request->post['shipping_address_1'],
-			'address_2'    => $this->request->post['shipping_address_2'],
-			'postcode'     => $this->request->post['shipping_postcode'],
-			'city'         => $this->request->post['shipping_city'],
-			'zone_id'      => $this->request->post['shipping_zone_id'],
-			'country_id'   => $this->request->post['shipping_country_id'],
-			'custom_field' => $this->request->post['shipping_custom_field']
-		];
+	public function reward(): void {
+		$this->store->request->post = ['reward' => $this->request->post['reward']];
 
-		$this->store->load->controller('api/shipping_address');
+		$this->store->load->controller('api/reward');
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->setOutput($this->store->response->getOutput());
+		$this->response->setOutput($this->store->response->getOutput());
 	}
 
-	public function paymentmethod(): void {
+	public function setPaymentMethod(): void {
 		$this->store->request->post = ['payment_method' => $this->request->post['payment_method']];
 
 		$this->store->load->controller('api/payment_method');
@@ -205,12 +221,10 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getPaymentMethods(): array {
-		$this->load->language('sale/order');
-
-		$json = [];
+		$this->store->load->controller('api/payment_method|getPaymentMethods');
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput($this->store->response->getOutput());
 	}
 
 	public function shippingmethod(): void {
@@ -221,13 +235,216 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($this->store->response->getOutput());
 	}
+
 	public function getShippingMethods(): array {
+		$this->store->load->controller('api/shipping_method|getShippingMethods');
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($this->store->response->getOutput());
+	}
+
+	public function addReward(): void {
 		$this->load->language('sale/order');
 
 		$json = [];
 
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/order');
+
+			$order_info = $this->model_sale_order->getOrder($order_id);
+
+			if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
+				$this->load->model('customer/customer');
+
+				$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+
+				if (!$reward_total) {
+					$this->model_customer_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
+				}
+			}
+
+			$json['success'] = $this->language->get('text_reward_added');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function removeReward(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/order');
+
+			$order_info = $this->model_sale_order->getOrder($order_id);
+
+			if ($order_info) {
+				$this->load->model('customer/customer');
+
+				$this->model_customer_customer->deleteReward($order_id);
+			}
+
+			$json['success'] = $this->language->get('text_reward_removed');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function affiliate(): void {
+		$json = [];
+
+		if (isset($this->request->get['affiliate_id'])) {
+			$affiliate_id = (int)$this->request->get['affiliate_id'];
+		} else {
+			$affiliate_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('marketing/affiliate');
+
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
+
+			if ($affiliate_info) {
+				$this->store->request->post = ['shipping_method' => $this->request->post['shipping_method']];
+
+				$this->store->load->controller('api/affiliate');
+
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput($this->store->response->getOutput());
+
+
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function addCommission(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/order');
+
+			$order_info = $this->model_sale_order->getOrder($order_id);
+
+			if ($order_info) {
+				$this->load->model('customer/customer');
+
+				$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
+
+				if (!$affiliate_total) {
+					$this->model_customer_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
+				}
+			}
+
+			$json['success'] = $this->language->get('text_commission_added');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function removeCommission(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/order');
+
+			$order_info = $this->model_sale_order->getOrder($order_id);
+
+			if ($order_info) {
+				$this->load->model('customer/customer');
+
+				$this->model_customer_customer->deleteTransactionByOrderId($order_id);
+			}
+
+			$json['success'] = $this->language->get('text_commission_removed');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function paymentaddress(): void {
+		$this->store->request->post = [
+			'firstname'    => $this->request->post['firstname'],
+			'lastname'     => $this->request->post['lastname'],
+			'company'      => $this->request->post['company'],
+			'address_1'    => $this->request->post['address_1'],
+			'address_2'    => $this->request->post['address_2'],
+			'postcode'     => $this->request->post['postcode'],
+			'city'         => $this->request->post['city'],
+			'zone_id'      => $this->request->post['zone_id'],
+			'country_id'   => $this->request->post['country_id'],
+			'custom_field' => $this->request->post['custom_field']
+		];
+
+		$this->store->load->controller('api/payment_address');
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($this->store->response->getOutput());
+	}
+
+	public function shippingaddress(): void {
+		$this->store->request->post = [
+			'firstname'    => $this->request->post['firstname'],
+			'lastname'     => $this->request->post['lastname'],
+			'company'      => $this->request->post['company'],
+			'address_1'    => $this->request->post['address_1'],
+			'address_2'    => $this->request->post['address_2'],
+			'postcode'     => $this->request->post['postcode'],
+			'city'         => $this->request->post['city'],
+			'zone_id'      => $this->request->post['zone_id'],
+			'country_id'   => $this->request->post['country_id'],
+			'custom_field' => $this->request->post['custom_field']
+		];
+
+		$this->store->load->controller('api/shipping_address');
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->setOutput($this->store->response->getOutput());
 	}
 
 	public function addProduct(): void {
@@ -489,167 +706,6 @@ class Api extends \Opencart\System\Engine\Controller {
 
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput($store->response->getOutput());
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function createInvoiceNo(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('sale/order');
-
-			$invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
-
-			if ($invoice_no) {
-				$json['invoice_no'] = $invoice_no;
-			} else {
-				$json['error'] = $this->language->get('error_action');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function addReward(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('sale/order');
-
-			$order_info = $this->model_sale_order->getOrder($order_id);
-
-			if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
-				$this->load->model('customer/customer');
-
-				$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
-
-				if (!$reward_total) {
-					$this->model_customer_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
-				}
-			}
-
-			$json['success'] = $this->language->get('text_reward_added');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function removeReward(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('sale/order');
-
-			$order_info = $this->model_sale_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->load->model('customer/customer');
-
-				$this->model_customer_customer->deleteReward($order_id);
-			}
-
-			$json['success'] = $this->language->get('text_reward_removed');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function addCommission(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('sale/order');
-
-			$order_info = $this->model_sale_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->load->model('customer/customer');
-
-				$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
-
-				if (!$affiliate_total) {
-					$this->model_customer_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
-				}
-			}
-
-			$json['success'] = $this->language->get('text_commission_added');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function removeCommission(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('sale/order');
-
-			$order_info = $this->model_sale_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->load->model('customer/customer');
-
-				$this->model_customer_customer->deleteTransactionByOrderId($order_id);
-			}
-
-			$json['success'] = $this->language->get('text_commission_removed');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

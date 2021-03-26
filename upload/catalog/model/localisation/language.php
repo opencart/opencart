@@ -7,6 +7,12 @@ class Language extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getLanguageByCode(string $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
+
+		return $query->row;
+	}
+
 	public function getLanguages(): array {
 		$language_data = $this->cache->get('catalog.language');
 

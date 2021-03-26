@@ -3399,7 +3399,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_affiliate_id', '4', 0),
 (0, 'config', 'config_return_id', '0', 0),
 (0, 'config', 'config_return_status_id', '2', 0),
-(0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(0, 'config', 'config_logo', 'catalog/opencart-logo.png', 0),
 (0, 'config', 'config_icon', 'catalog/cart.png', 0),
 (0, 'config', 'config_comment', '', 0),
 (0, 'config', 'config_open', '', 0),

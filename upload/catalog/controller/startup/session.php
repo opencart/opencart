@@ -43,7 +43,7 @@ class Session extends \Opencart\System\Engine\Controller {
 				'expires'  => 0,
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 				'secure'   => $this->request->server['HTTPS'],
-				'httponly' => false,
+				'httponly' => true,
 				'SameSite' => 'Strict'
 			];
 

@@ -349,7 +349,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['geo_zone_id'])) {
-			$data['geo_zone_id'] = $this->request->post['geo_zone_id'];
+			$data['geo_zone_id'] = (int)$this->request->post['geo_zone_id'];
 		} elseif (!empty($tax_rate_info)) {
 			$data['geo_zone_id'] = $tax_rate_info['geo_zone_id'];
 		} else {

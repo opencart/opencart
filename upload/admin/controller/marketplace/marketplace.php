@@ -164,7 +164,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$response_info = json_decode($response, true);
 
-		$extension_total = $response_info['extension_total'];
+		$extension_total = $response_info['extension_total'] ?? 0;
 
 		$url  = '';
 
@@ -202,7 +202,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$data['promotions'] = array();
 
-		if ($response_info['promotions'] && $page == 1) {
+		if (isset($response_info['promotions']) && $response_info['promotions'] && $page == 1) {
 			foreach ($response_info['promotions'] as $result) {
 				$data['promotions'][] = array(
 					'name'         => $result['name'],
@@ -219,7 +219,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 
 		$data['extensions'] = array();
 
-		if ($response_info['extensions']) {
+		if (isset($response_info['extensions']) && $response_info['extensions']) {
 			foreach ($response_info['extensions'] as $result) {
 				$data['extensions'][] = array(
 					'name'         => utf8_decode($result['name']),

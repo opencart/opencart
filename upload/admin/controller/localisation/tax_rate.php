@@ -313,7 +313,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/tax_rate_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_rate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -326,7 +326,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$this->error['rate'] = $this->language->get('error_rate');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 

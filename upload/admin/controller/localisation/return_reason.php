@@ -237,7 +237,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/return_reason_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/return_reason')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -248,7 +248,8 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

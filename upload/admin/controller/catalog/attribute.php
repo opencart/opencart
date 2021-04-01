@@ -32,7 +32,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/attribute|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('catalog/attribute|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -43,26 +43,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/attribute', $data));
-	}
-
-	public function add(): void {
-		$this->load->language('catalog/attribute');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/attribute');
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('catalog/attribute');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/attribute');
-
-		$this->getForm();
 	}
 
 	public function list(): void {
@@ -127,7 +107,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 				'name'            => $result['name'],
 				'attribute_group' => $result['attribute_group'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/attribute|edit', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)
+				'edit'            => $this->url->link('catalog/attribute|form', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)
 			];
 		}
 
@@ -174,7 +154,13 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/attribute_list', $data);
 	}
 
-	public function getForm(): void {
+	public function form(): void {
+		$this->load->language('catalog/attribute');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('catalog/attribute');
+
 		$data['text_form'] = !isset($this->request->get['attribute_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['user_token'] = $this->session->data['user_token'];

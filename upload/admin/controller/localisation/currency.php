@@ -330,7 +330,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/currency_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -343,7 +343,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

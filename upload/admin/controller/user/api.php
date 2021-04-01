@@ -39,35 +39,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete(): void {
-		$this->load->language('user/api');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'user/api')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('user/api');
-
-			foreach ($selected as $api_id) {
-				$this->model_user_api->deleteApi($api_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	protected function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -325,7 +296,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/api_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'user/api')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -342,7 +313,37 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_ip');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function delete(): void {
+		$this->load->language('user/api');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('user/api');
+
+			foreach ($selected as $api_id) {
+				$this->model_user_api->deleteApi($api_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function deleteSession(): void {

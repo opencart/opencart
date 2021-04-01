@@ -289,7 +289,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/translation_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'design/translation')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -298,7 +298,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

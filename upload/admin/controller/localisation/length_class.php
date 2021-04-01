@@ -259,7 +259,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/length_class_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/length_class')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -274,7 +274,8 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

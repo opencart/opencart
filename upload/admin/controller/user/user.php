@@ -35,41 +35,6 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete(): void {
-		$this->load->language('user/user');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'user/user')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		foreach ($selected as $user_id) {
-			if ($this->user->getId() == $user_id) {
-				$this->error['warning'] = $this->language->get('error_account');
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('user/user');
-
-			foreach ($selected as $user_id) {
-				$this->model_user_user->deleteUser($user_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	protected function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -378,7 +343,7 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'user/user')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -433,6 +398,42 @@ class User extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function delete(): void {
+		$this->load->language('user/user');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'user/user')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		foreach ($selected as $user_id) {
+			if ($this->user->getId() == $user_id) {
+				$this->error['warning'] = $this->language->get('error_account');
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('user/user');
+
+			foreach ($selected as $user_id) {
+				$this->model_user_user->deleteUser($user_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

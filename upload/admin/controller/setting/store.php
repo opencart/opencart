@@ -47,51 +47,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete(): void {
-		$this->load->language('setting/store');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'setting/store')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('sale/order');
-
-		foreach ($selected as $store_id) {
-			if (!$store_id) {
-				$json['error'] = $this->language->get('error_default');
-			}
-
-			$store_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
-
-			if ($store_total) {
-				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('setting/setting');
-
-			foreach ($selected as $store_id) {
-				$this->model_setting_store->deleteStore($store_id);
-
-				$this->model_setting_setting->deleteSetting('config', $store_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	protected function getList(): void {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -926,7 +881,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/store_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -1015,6 +970,52 @@ class Store extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function delete(): void {
+		$this->load->language('setting/store');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'setting/store')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('sale/order');
+
+		foreach ($selected as $store_id) {
+			if (!$store_id) {
+				$json['error'] = $this->language->get('error_default');
+			}
+
+			$store_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
+
+			if ($store_total) {
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			foreach ($selected as $store_id) {
+				$this->model_setting_store->deleteStore($store_id);
+
+				$this->model_setting_setting->deleteSetting('config', $store_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

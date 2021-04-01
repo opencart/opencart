@@ -293,7 +293,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/language_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/language')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -322,7 +322,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

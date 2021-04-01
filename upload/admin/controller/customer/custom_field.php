@@ -386,7 +386,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/custom_field_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -417,7 +417,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$this->error['validation'] = $this->language->get('error_validation');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

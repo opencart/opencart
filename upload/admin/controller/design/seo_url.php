@@ -448,7 +448,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/seo_url_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'design/seo_url')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -479,7 +479,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$this->error['keyword'] = $this->language->get('error_keyword_exists');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

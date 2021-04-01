@@ -37,45 +37,6 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->getForm();
 	}
 
-	public function delete(): void {
-		$this->load->language('user/user_permission');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'user/user_permission')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('user/user');
-
-		foreach ($selected as $user_group_id) {
-			$user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
-
-			if ($user_total) {
-				$json['error'] = sprintf($this->language->get('error_user'), $user_total);
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('user/user_permission');
-
-			foreach ($selected as $user_group_id) {
-				$this->model_user_user_group->deleteUserGroup($user_group_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	protected function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -354,7 +315,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user_group_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'user/user_permission')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -363,6 +324,46 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function delete(): void {
+		$this->load->language('user/user_permission');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'user/user_permission')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('user/user');
+
+		foreach ($selected as $user_group_id) {
+			$user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
+
+			if ($user_total) {
+				$json['error'] = sprintf($this->language->get('error_user'), $user_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('user/user_permission');
+
+			foreach ($selected as $user_group_id) {
+				$this->model_user_user_group->deleteUserGroup($user_group_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -267,7 +267,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/geo_zone_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/geo_zone')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -280,7 +280,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$this->error['description'] = $this->language->get('error_description');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

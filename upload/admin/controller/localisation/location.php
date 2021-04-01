@@ -313,7 +313,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/location_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/location')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -330,7 +330,8 @@ class Location extends \Opencart\System\Engine\Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

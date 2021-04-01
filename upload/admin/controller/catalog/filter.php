@@ -236,25 +236,19 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['filter_group_description'])) {
-			$data['filter_group_description'] = $this->request->post['filter_group_description'];
-		} elseif (!empty($filter_group_info)) {
+		if (!empty($filter_group_info)) {
 			$data['filter_group_description'] = $this->model_catalog_filter->getGroupDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filter_group_description'] = [];
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($filter_group_info)) {
+		if (!empty($filter_group_info)) {
 			$data['sort_order'] = $filter_group_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->post['filter'])) {
-			$data['filters'] = $this->request->post['filter'];
-		} elseif (!empty($filter_group_info)) {
+		if (!empty($filter_group_info)) {
 			$data['filters'] = $this->model_catalog_filter->getDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filters'] = [];
@@ -267,7 +261,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/filter_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'catalog/filter')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -294,7 +288,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

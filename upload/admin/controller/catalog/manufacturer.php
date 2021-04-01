@@ -258,17 +258,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->request->post['manufacturer_store'])) {
-			$data['manufacturer_store'] = $this->request->post['manufacturer_store'];
-		} elseif (!empty($manufacturer_info)) {
+		if (!empty($manufacturer_info)) {
 			$data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_store'] = [0];
 		}
 
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($manufacturer_info)) {
+		if (!empty($manufacturer_info)) {
 			$data['image'] = $manufacturer_info['image'];
 		} else {
 			$data['image'] = '';
@@ -284,9 +280,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$data['thumb'] = $data['placeholder'];
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($manufacturer_info)) {
+		if (!empty($manufacturer_info)) {
 			$data['sort_order'] = $manufacturer_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
@@ -296,17 +290,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['manufacturer_seo_url'])) {
-			$data['manufacturer_seo_url'] = $this->request->post['manufacturer_seo_url'];
-		} elseif (!empty($manufacturer_info)) {
+		if (!empty($manufacturer_info)) {
 			$data['manufacturer_seo_url'] = $this->model_catalog_manufacturer->getSeoUrls($this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_seo_url'] = [];
 		}
 
-		if (isset($this->request->post['manufacturer_layout'])) {
-			$data['manufacturer_layout'] = $this->request->post['manufacturer_layout'];
-		} elseif (!empty($manufacturer_info)) {
+		if (!empty($manufacturer_info)) {
 			$data['manufacturer_layout'] = $this->model_catalog_manufacturer->getLayouts($this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_layout'] = [];
@@ -323,7 +313,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/manufacturer_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -354,7 +344,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

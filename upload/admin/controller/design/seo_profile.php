@@ -293,7 +293,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/seo_profile_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -310,7 +310,8 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			$this->error['regex'] = $this->language->get('error_regex');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

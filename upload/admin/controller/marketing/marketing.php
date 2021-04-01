@@ -356,7 +356,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/marketing_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'marketing/marketing')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -375,7 +375,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$this->error['code'] = $this->language->get('error_exists');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

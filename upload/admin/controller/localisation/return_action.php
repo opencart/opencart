@@ -237,7 +237,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/return_action_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/return_action')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -248,7 +248,8 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

@@ -286,25 +286,19 @@ class Download extends \Opencart\System\Engine\Controller {
 			$data['download_id'] = 0;
 		}
 
-		if (isset($this->request->post['download_description'])) {
-			$data['download_description'] = $this->request->post['download_description'];
-		} elseif (!empty($download_info)) {
+		if (!empty($download_info)) {
 			$data['download_description'] = $this->model_catalog_download->getDescriptions($this->request->get['download_id']);
 		} else {
 			$data['download_description'] = [];
 		}
 
-		if (isset($this->request->post['filename'])) {
-			$data['filename'] = $this->request->post['filename'];
-		} elseif (!empty($download_info)) {
+		if (!empty($download_info)) {
 			$data['filename'] = $download_info['filename'];
 		} else {
 			$data['filename'] = '';
 		}
 
-		if (isset($this->request->post['mask'])) {
-			$data['mask'] = $this->request->post['mask'];
-		} elseif (!empty($download_info)) {
+		if (!empty($download_info)) {
 			$data['mask'] = $download_info['mask'];
 		} else {
 			$data['mask'] = '';
@@ -317,7 +311,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/download_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		$this->load->language('catalog/download');
 
 		$json = [];

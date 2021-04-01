@@ -320,7 +320,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/layout_form', $data));
 	}
 
-	protected function save(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'design/layout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -329,7 +329,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right"><a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></a> <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+			<div class="float-right"><a href="{{ invoice }}" target="_blank" data-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -1381,7 +1381,7 @@
 </div>
 
 <script type="text/javascript"><!--
-$(document).on('click', '#button-collapse', function(e) {
+$(document).on('click', '#button-collapse', function() {
     var element = this;
 
     if ($('#collapse-order').css('max-height') == '78px') {
@@ -2103,7 +2103,7 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
         url: 'index.php?route=sale/api|paymentaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#modal-payment-address input[type=\'text\'], #modal-payment-address input[type=\'hidden\'], #modal-payment-address input[type=\'radio\']:checked, #modal-payment-address input[type=\'checkbox\']:checked, #modal-payment-address select, #modal-payment-address textarea'),
-        dataType: 'json',
+        dataType: 'html',
         beforeSend: function() {
             $(element).button('loading');
         },
@@ -2111,6 +2111,10 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
             $(element).button('reset');
         },
         success: function(json) {
+
+            console.log(json);
+
+
             $('.alert-dismissible, .invalid-tooltip').remove();
             $('.is-invalid').removeClass('is-invalid');
 
@@ -2271,7 +2275,7 @@ $('#modal-shipping-address #button-shipping-address').on('click', function() {
                 }
 
                 for (i in json['error']) {
-                    var element = $('#modal-shipping-address #input-shipping-address-' + i.replace('_', '-'));
+                    var element = $('#modal-shipping-address #input-shipping-' + i.replace('_', '-'));
 
                     // Highlight any found errors
                     $(element).addClass('is-invalid');

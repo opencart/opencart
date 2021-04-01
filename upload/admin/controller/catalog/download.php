@@ -80,35 +80,40 @@ class Download extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('catalog/download');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('catalog/download');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $download_id) {
+		if (!$this->user->hasPermission('modify', 'catalog/download')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('catalog/product');
+
+		foreach ($selected as $download_id) {
+			$product_total = $this->model_catalog_product->getTotalProductsByDownloadId($download_id);
+
+			if ($product_total) {
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/download');
+
+			foreach ($selected as $download_id) {
 				$this->model_catalog_download->deleteDownload($download_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {

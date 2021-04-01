@@ -80,35 +80,30 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('customer/custom_field');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('customer/custom_field');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $custom_field_id) {
+		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/custom_field');
+
+			foreach ($selected as $custom_field_id) {
 				$this->model_customer_custom_field->deleteCustomField($custom_field_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -489,14 +484,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		if ($this->request->post['type'] == 'text' && $this->request->post['validation'] && @preg_match(html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8'), null) === false) {
 			$this->error['validation'] = $this->language->get('error_validation');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
-			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;

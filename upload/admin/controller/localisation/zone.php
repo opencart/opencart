@@ -104,47 +104,58 @@ class Zone extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('localisation/zone');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('localisation/zone');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $zone_id) {
+		if (!$this->user->hasPermission('modify', 'localisation/zone')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/store');
+		$this->load->model('customer/customer');
+		$this->load->model('localisation/geo_zone');
+
+		foreach ($selected as $zone_id) {
+			if ($this->config->get('config_zone_id') == $zone_id) {
+				$json['error'] = $this->language->get('error_default');
+			}
+
+			$store_total = $this->model_setting_store->getTotalStoresByZoneId($zone_id);
+
+			if ($store_total) {
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
+			}
+
+			$address_total = $this->model_customer_customer->getTotalAddressesByZoneId($zone_id);
+
+			if ($address_total) {
+				$json['error'] = sprintf($this->language->get('error_address'), $address_total);
+			}
+
+			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByZoneId($zone_id);
+
+			if ($zone_to_geo_zone_total) {
+				$json['error'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/zone');
+
+			foreach ($selected as $zone_id) {
 				$this->model_localisation_zone->deleteZone($zone_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_country'])) {
-				$url .= '&filter_country=' . urlencode(html_entity_decode($this->request->get['filter_country'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_code'])) {
-				$url .= '&filter_code=' . urlencode(html_entity_decode($this->request->get['filter_code'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -461,42 +472,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'localisation/zone')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('setting/store');
-		$this->load->model('customer/customer');
-		$this->load->model('localisation/geo_zone');
-
-		foreach ($this->request->post['selected'] as $zone_id) {
-			if ($this->config->get('config_zone_id') == $zone_id) {
-				$this->error['warning'] = $this->language->get('error_default');
-			}
-
-			$store_total = $this->model_setting_store->getTotalStoresByZoneId($zone_id);
-
-			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
-			}
-
-			$address_total = $this->model_customer_customer->getTotalAddressesByZoneId($zone_id);
-
-			if ($address_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);
-			}
-
-			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByZoneId($zone_id);
-
-			if ($zone_to_geo_zone_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
-			}
 		}
 
 		return !$this->error;

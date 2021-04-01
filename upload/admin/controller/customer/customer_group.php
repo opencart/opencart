@@ -80,35 +80,51 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('customer/customer_group');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('customer/customer_group');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $customer_group_id) {
+		if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/store');
+		$this->load->model('customer/customer');
+
+		foreach ($this->request->post['selected'] as $customer_group_id) {
+			if ($this->config->get('config_customer_group_id') == $customer_group_id) {
+				$json['error'] = $this->language->get('error_default');
+			}
+
+			$store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
+
+			if ($store_total) {
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
+			}
+
+			$customer_total = $this->model_customer_customer->getTotalCustomersByCustomerGroupId($customer_group_id);
+
+			if ($customer_total) {
+				$json['error'] = sprintf($this->language->get('error_customer'), $customer_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer_group');
+
+			foreach ($selected as $customer_group_id) {
 				$this->model_customer_customer_group->deleteCustomerGroup($customer_group_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -341,35 +357,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
-			}
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('setting/store');
-		$this->load->model('customer/customer');
-
-		foreach ($this->request->post['selected'] as $customer_group_id) {
-			if ($this->config->get('config_customer_group_id') == $customer_group_id) {
-				$this->error['warning'] = $this->language->get('error_default');
-			}
-
-			$store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
-
-			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
-			}
-
-			$customer_total = $this->model_customer_customer->getTotalCustomersByCustomerGroupId($customer_group_id);
-
-			if ($customer_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_customer'), $customer_total);
 			}
 		}
 

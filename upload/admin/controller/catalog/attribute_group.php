@@ -80,35 +80,40 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('catalog/attribute_group');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('catalog/attribute_group');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $attribute_group_id) {
-				$this->model_catalog_attribute_group->deleteAttributeGroup($attribute_group_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		$this->getList();
+		if (!$this->user->hasPermission('modify', 'catalog/attribute_group')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('catalog/attribute');
+
+		foreach ($selected as $attribute_group_id) {
+			$attribute_total = $this->model_catalog_attribute->getTotalAttributesByAttributeGroupId($attribute_group_id);
+
+			if ($attribute_total) {
+				$json['error'] = sprintf($this->language->get('error_attribute'), $attribute_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/attribute_group');
+
+			foreach ($selected as $attribute_group_id) {
+				$this->model_catalogattribute_group->deleteAttributeGroup($attribute_group_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -343,21 +348,4 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'catalog/attribute_group')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('catalog/attribute');
-
-		foreach ($this->request->post['selected'] as $attribute_group_id) {
-			$attribute_total = $this->model_catalog_attribute->getTotalAttributesByAttributeGroupId($attribute_group_id);
-
-			if ($attribute_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_attribute'), $attribute_total);
-			}
-		}
-
-		return !$this->error;
-	}
 }

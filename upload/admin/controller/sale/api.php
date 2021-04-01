@@ -121,6 +121,251 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->store = $registry;
 	}
 
+	public function add(): void {
+		// 1. We set some defaults so there are no undefined indexes.
+		$defaults = [
+			'store_id'              => 0,
+
+			'customer_id'           => 0,
+			'customer_group_id'     => (int)$this->config->get('config_customer_group_id'),
+			'firstname'             => '',
+			'lastname'              => '',
+			'email'                 => '',
+			'telephone'             => '',
+			'custom_field'          => [],
+
+			'payment_firstname'     => '',
+			'payment_lastname'      => '',
+			'payment_company'       => '',
+			'payment_address_1'     => '',
+			'payment_address_2'     => '',
+			'payment_city'          => '',
+			'payment_postcode'      => '',
+			'payment_country_id'    => 0,
+			'payment_zone_id'       => 0,
+			'payment_custom_field'  => [],
+
+			'payment_method'        => '',
+			'payment_code'          => '',
+
+			'shipping_firstname'    => '',
+			'shipping_lastname'     => '',
+			'shipping_company'      => '',
+			'shipping_address_1'    => '',
+			'shipping_address_2'    => '',
+			'shipping_city'         => '',
+			'shipping_postcode'     => '',
+			'shipping_country_id'   => 0,
+			'shipping_zone_id'      => 0,
+			'shipping_custom_field' => [],
+
+			'shipping_method'       => '',
+			'shipping_code'         => '',
+
+			'order_status_id'       => 0,
+			'comment'               => '',
+
+			'affiliate_id'          => 0,
+
+			'currency_id'           => 0,
+			'currency_code'         => (string)$this->config->get('config_currency'),
+			'currency_value'        => (string)$this->config->get('config_currency'),
+
+			'coupon'                => '',
+			'voucher'               => '',
+			'reward'                => '',
+		];
+
+		// 2. Merge the old order data with the new data
+		foreach ($defaults as $key => $value) {
+			if (isset($this->request->post[$key])) {
+				$order[$key] = $this->request->post[$key];
+			} elseif (isset($order_data[$key])) {
+				$order[$key] = $order_info[$key];
+			} else {
+				$order[$key] = $value;
+			}
+		}
+
+	}
+
+	public function edit(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		// Orders
+		$this->load->model('sale/order');
+
+		$order_info = $this->model_sale_order->getOrder($order_id);
+
+		if ($order_id && !$order_info)  {
+			$json['error']['warning'] = $this->langage->get('error_order');
+		}
+
+		// Store
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($store_id);
+
+		if ($store_id && !$store_info) {
+			$json['error']['warning'] = $this->langage->get('error_store');
+		}
+
+		$order = array();
+
+		if (!$json) {
+
+			// 1. Merge the old order data with the new data
+			foreach ($order_info as $key => $value) {
+				if (isset($this->request->post[$key])) {
+					$order[$key] = $this->request->post[$key];
+				} else {
+					$order[$key] = $order_info[$key];
+				}
+			}
+
+			$data['order_id'] = $order_id;
+
+			// Payment method
+			$data['payment_method'] = $order_info['payment_method'];
+			$data['payment_code'] = $order_info['payment_code'];
+
+			// Shipping method
+			$data['shipping_method'] = $order_info['shipping_method'];
+			$data['shipping_code'] = $order_info['shipping_code'];
+
+			// Coupon, Voucher, Reward
+			$data['coupon'] = '';
+			$data['voucher'] = '';
+			$data['reward'] = '';
+
+			$order_totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start && $end) {
+					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
+				}
+			}
+
+			// Vouchers
+			$data['order_vouchers'] = $this->model_sale_order->getVouchers($order_id);
+
+			// Reward Points
+			$data['reward'] = $order_info['reward'];
+
+			// Affiliate
+			$data['affiliate_id'] = $order_info['affiliate_id'];
+
+			// Addresses
+
+
+
+
+			// Products
+			$data['order_products'] = [];
+
+			$products = $this->model_sale_order->getProducts($order_id);
+
+			foreach ($products as $product) {
+				$option_data = [];
+
+				$options = $this->model_sale_order->getOptions($order_id, $product['order_product_id']);
+
+				foreach ($options as $option) {
+					if ($option['type'] != 'file') {
+						$option_data[] = [
+							'name'  => $option['name'],
+							'value' => $option['value'],
+							'type'  => $option['type']
+						];
+					} else {
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+						if ($upload_info) {
+							$option_data[] = [
+								'name'  => $option['name'],
+								'value' => $upload_info['name'],
+								'type'  => $option['type'],
+								'href'  => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+							];
+						}
+					}
+				}
+
+
+
+
+				$data['order_products'][] = [
+					'order_product_id' => $product['order_product_id'],
+					'product_id'       => $product['product_id'],
+					'name'             => $product['name'],
+					'model'            => $product['model'],
+					'option'           => $option_data,
+					'quantity'         => $product['quantity'],
+					'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'reward'           => $product['reward'],
+					'href'             => $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+				];
+			}
+
+			// Vouchers
+			$data['order_vouchers'] = [];
+
+			$vouchers = $this->model_sale_order->getVouchers($order_id);
+
+			foreach ($vouchers as $voucher) {
+				$data['order_vouchers'][] = [
+					'description' => $voucher['description'],
+					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+					'href'        => $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+				];
+			}
+
+			// Totals
+			$data['order_totals'] = [];
+
+			$totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($totals as $total) {
+				$data['order_totals'][] = [
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
+				];
+			}
+
+			// Order History
+			$data['comment'] = $order_info['comment'];
+
+			$data['order_status_id'] = $order_info['order_status_id'];
+
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput($store->response->getOutput());
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+
+
 	public function createInvoiceNo(): void {
 		$this->load->language('sale/order');
 
@@ -157,7 +402,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			'firstname'         => $this->request->post['firstname'],
 			'lastname'          => $this->request->post['lastname'],
 			'email'             => $this->request->post['email'],
-			'telephone'         => $this->request->post['telephone']
+			'telephone'         => $this->request->post['telephone'],
+			'custom_field'      => $this->request->post['custom_field']
 		];
 
 		$this->store->load->controller('api/customer');
@@ -408,6 +654,8 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	public function paymentaddress(): void {
+		print_r($this->request->post);
+
 		$this->store->request->post = [
 			'firstname'    => $this->request->post['firstname'],
 			'lastname'     => $this->request->post['lastname'],
@@ -467,249 +715,6 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($this->store->response->getOutput());
-	}
-
-	public function add(): void {
-		// 1. We set some defaults so there are no undefined indexes.
-		$defaults = [
-			'store_id'              => 0,
-
-			'customer_id'           => 0,
-			'customer_group_id'     => (int)$this->config->get('config_customer_group_id'),
-			'firstname'             => '',
-			'lastname'              => '',
-			'email'                 => '',
-			'telephone'             => '',
-			'custom_field'          => [],
-
-			'payment_firstname'     => '',
-			'payment_lastname'      => '',
-			'payment_company'       => '',
-			'payment_address_1'     => '',
-			'payment_address_2'     => '',
-			'payment_city'          => '',
-			'payment_postcode'      => '',
-			'payment_country_id'    => 0,
-			'payment_zone_id'       => 0,
-			'payment_custom_field'  => [],
-
-			'payment_method'        => '',
-			'payment_code'          => '',
-
-			'shipping_firstname'    => '',
-			'shipping_lastname'     => '',
-			'shipping_company'      => '',
-			'shipping_address_1'    => '',
-			'shipping_address_2'    => '',
-			'shipping_city'         => '',
-			'shipping_postcode'     => '',
-			'shipping_country_id'   => 0,
-			'shipping_zone_id'      => 0,
-			'shipping_custom_field' => [],
-
-			'shipping_method'       => '',
-			'shipping_code'         => '',
-
-			'order_status_id'       => 0,
-			'comment'               => '',
-
-			'affiliate_id'          => 0,
-
-			'currency_id'           => 0,
-			'currency_code'         => (string)$this->config->get('config_currency'),
-			'currency_value'        => (string)$this->config->get('config_currency'),
-
-			'coupon'                => '',
-			'voucher'               => '',
-			'reward'                => '',
-		];
-
-		// 2. Merge the old order data with the new data
-		foreach ($defaults as $key => $value) {
-			if (isset($this->request->post[$key])) {
-				$order[$key] = $this->request->post[$key];
-			} elseif (isset($order_data[$key])) {
-				$order[$key] = $order_info[$key];
-			} else {
-				$order[$key] = $value;
-			}
-		}
-
-	}
-
-	public function edit(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (isset($this->request->get['store_id'])) {
-			$store_id = (int)$this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
-		// Orders
-		$this->load->model('sale/order');
-
-		$order_info = $this->model_sale_order->getOrder($order_id);
-
-		if ($order_id && !$order_info)  {
-			$json['error']['warning'] = $this->langage->get('error_order');
-		}
-
-		// Store
-		$this->load->model('setting/store');
-
-		$store_info = $this->model_setting_store->getStore($store_id);
-
-		if ($store_id && !$store_info) {
-			$json['error']['warning'] = $this->langage->get('error_store');
-		}
-
-		$order = array();
-
-		if (!$json) {
-
-			// 1. Merge the old order data with the new data
-			foreach ($order_info as $key => $value) {
-				if (isset($this->request->post[$key])) {
-					$order[$key] = $this->request->post[$key];
-				} else {
-					$order[$key] = $order_info[$key];
-				}
-			}
-
-			$data['order_id'] = $order_id;
-
-			// Payment method
-			$data['payment_method'] = $order_info['payment_method'];
-			$data['payment_code'] = $order_info['payment_code'];
-
-			// Shipping method
-			$data['shipping_method'] = $order_info['shipping_method'];
-			$data['shipping_code'] = $order_info['shipping_code'];
-
-			// Coupon, Voucher, Reward
-			$data['coupon'] = '';
-			$data['voucher'] = '';
-			$data['reward'] = '';
-
-			$order_totals = $this->model_sale_order->getTotals($order_id);
-
-			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
-				$start = strpos($order_total['title'], '(') + 1;
-				$end = strrpos($order_total['title'], ')');
-
-				if ($start && $end) {
-					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
-				}
-			}
-
-			// Vouchers
-			$data['order_vouchers'] = $this->model_sale_order->getVouchers($order_id);
-
-			// Reward Points
-			$data['reward'] = $order_info['reward'];
-
-			// Affiliate
-			$data['affiliate_id'] = $order_info['affiliate_id'];
-
-			// Addresses
-
-
-
-
-			// Products
-			$data['order_products'] = [];
-
-			$products = $this->model_sale_order->getProducts($order_id);
-
-			foreach ($products as $product) {
-				$option_data = [];
-
-				$options = $this->model_sale_order->getOptions($order_id, $product['order_product_id']);
-
-				foreach ($options as $option) {
-					if ($option['type'] != 'file') {
-						$option_data[] = [
-							'name'  => $option['name'],
-							'value' => $option['value'],
-							'type'  => $option['type']
-						];
-					} else {
-						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
-
-						if ($upload_info) {
-							$option_data[] = [
-								'name'  => $option['name'],
-								'value' => $upload_info['name'],
-								'type'  => $option['type'],
-								'href'  => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
-							];
-						}
-					}
-				}
-
-
-
-
-				$data['order_products'][] = [
-					'order_product_id' => $product['order_product_id'],
-					'product_id'       => $product['product_id'],
-					'name'             => $product['name'],
-					'model'            => $product['model'],
-					'option'           => $option_data,
-					'quantity'         => $product['quantity'],
-					'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'reward'           => $product['reward'],
-					'href'             => $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
-				];
-			}
-
-			// Vouchers
-			$data['order_vouchers'] = [];
-
-			$vouchers = $this->model_sale_order->getVouchers($order_id);
-
-			foreach ($vouchers as $voucher) {
-				$data['order_vouchers'][] = [
-					'description' => $voucher['description'],
-					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-					'href'        => $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
-				];
-			}
-
-			// Totals
-			$data['order_totals'] = [];
-
-			$totals = $this->model_sale_order->getTotals($order_id);
-
-			foreach ($totals as $total) {
-				$data['order_totals'][] = [
-					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
-				];
-			}
-
-			// Order History
-			$data['comment'] = $order_info['comment'];
-
-			$data['order_status_id'] = $order_info['order_status_id'];
-
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput($store->response->getOutput());
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function history(): void {

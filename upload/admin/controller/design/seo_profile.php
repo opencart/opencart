@@ -80,35 +80,30 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('design/seo_profile');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('design/seo_profile');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $seo_profile_id) {
-				$this->model_design_seo_profile->deleteSeoProfile($seo_profile_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . (string)$this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . (string)$this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . (int)$this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		$this->getList();
+		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('design/seo_profile');
+
+			foreach ($selected as $seo_profile_id) {
+				$this->model_design_layout->deleteSeoProfile($seo_profile_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {

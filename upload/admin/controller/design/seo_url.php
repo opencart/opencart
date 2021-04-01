@@ -120,55 +120,30 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('design/seo_url');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('design/seo_url');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $seo_url_id) {
-				$this->model_design_seo_url->deleteSeoUrl($seo_url_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_keyword'])) {
-				$url .= '&filter_keyword=' . urlencode(html_entity_decode((string)$this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_key'])) {
-				$url .= '&filter_key=' . urlencode(html_entity_decode((string)$this->request->get['filter_key'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_value'])) {
-				$url .= '&filter_value=' . urlencode(html_entity_decode((string)$this->request->get['filter_value'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_store_id'])) {
-				$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
-			}
-
-			if (isset($this->request->get['filter_language_id'])) {
-				$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . (string)$this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . (string)$this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . (int)$this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		$this->getList();
+		if (!$this->user->hasPermission('modify', 'design/seo_url')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('design/seo_url');
+
+			foreach ($selected as $seo_url_id) {
+				$this->model_design_seo_url->deleteSeoProfile($seo_url_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -611,14 +586,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != $this->request->get['seo_url_id'])) {
 			$this->error['keyword'] = $this->language->get('error_keyword_exists');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'design/seo_url')) {
-			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;

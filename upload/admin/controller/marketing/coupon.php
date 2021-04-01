@@ -80,35 +80,30 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('marketing/coupon');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('marketing/coupon');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $coupon_id) {
+		if (!$this->user->hasPermission('modify', 'marketing/coupon')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('marketing/coupon');
+
+			foreach ($selected as $coupon_id) {
 				$this->model_marketing_coupon->deleteCoupon($coupon_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -502,14 +497,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			} elseif ($coupon_info['coupon_id'] != (int)$this->request->get['coupon_id']) {
 				$this->error['warning'] = $this->language->get('error_exists');
 			}
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'marketing/coupon')) {
-			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;

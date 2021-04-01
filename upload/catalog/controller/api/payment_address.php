@@ -80,6 +80,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			print_r($this->config->get('config_customer_group_id'));
+			print_r($custom_fields);
+
 			if (!$json) {
 				$this->load->model('localisation/country');
 

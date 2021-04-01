@@ -80,35 +80,40 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('localisation/tax_class');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('localisation/tax_class');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $tax_class_id) {
+		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('catalog/product');
+
+		foreach ($selected as $tax_class_id) {
+			$product_total = $this->model_catalog_product->getTotalProductsByTaxClassId($tax_class_id);
+
+			if ($product_total) {
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/tax_class');
+
+			foreach ($selected as $tax_class_id) {
 				$this->model_localisation_tax_class->deleteTaxClass($tax_class_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -348,24 +353,6 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
 			$this->error['description'] = $this->language->get('error_description');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('catalog/product');
-
-		foreach ($this->request->post['selected'] as $tax_class_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByTaxClassId($tax_class_id);
-
-			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
-			}
 		}
 
 		return !$this->error;

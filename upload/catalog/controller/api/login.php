@@ -8,9 +8,9 @@ class ControllerApiLogin extends Controller {
 		$this->load->model('account/api');
 
 		// Login with API Key
-		if(isset($this->request->post['username'])) {
+		if (isset($this->request->post['username']) && isset($this->request->post['key'])) {
 			$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
-		} elseif(isset($this->request->post['key'])) {
+		} elseif (isset($this->request->post['key'])) {
 			$api_info = $this->model_account_api->login('Default', $this->request->post['key']);
 		}
 

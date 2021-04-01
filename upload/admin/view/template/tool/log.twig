@@ -1,35 +1,59 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <div class="float-right">
-        <a href="{{ download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fas fa-download"></i></a> <button type="button" onclick="confirm('{{ text_confirm }}') ? location.href='{{ clear }}' : false;" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fas fa-eraser"></i></button>
-      </div>
-      <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="container-fluid">
-    {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    {% endif %}
-    {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    {% endif %}
-    <div class="card">
-      <div class="card-header"><i class="fas fa-exclamation-triangle"></i> {{ text_list }}</div>
-      <div class="card-body">
-        <textarea wrap="off" rows="15" readonly class="form-control">{{ log }}</textarea>
-      </div>
-    </div>
-  </div>
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-right">
+				<a href="{{ download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fas fa-download"></i></a> <button type="button" id="button-clear" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fas fa-eraser"></i></button>
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header"><i class="fas fa-exclamation-triangle"></i> {{ text_list }}</div>
+			<div class="card-body">
+				<textarea name="log" wrap="off" rows="15" readonly class="form-control">{{ log }}</textarea>
+			</div>
+		</div>
+	</div>
 </div>
+<script type="text/javascript"><!--
+$('#button-clear').on('click', function() {
+    var element = this;
+
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: 'index.php?route=tool/log|clear&&user_token={{ user_token }}',
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                }
+
+                if (json['success']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                    $('textarea[name=\'log\']').val('');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+//--></script>
 {{ footer }}

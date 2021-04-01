@@ -20,27 +20,9 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/api');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_user_api->addApi($this->request->post);
+		$this->model_user_api->addApi($this->request->post);
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->session->data['success'] = $this->language->get('text_success');
 
 		$this->getForm();
 	}
@@ -52,27 +34,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/api');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
 
 		$this->getForm();
 	}
@@ -80,35 +42,30 @@ class Api extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('user/api');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('user/api');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $api_id) {
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('user/api');
+
+			foreach ($selected as $api_id) {
 				$this->model_user_api->deleteApi($api_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -368,7 +325,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/api_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'user/api')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -383,14 +340,6 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->error['warning']) && !isset($this->request->post['api_ip'])) {
 			$this->error['warning'] = $this->language->get('error_ip');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'user/api')) {
-			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		return !$this->error;

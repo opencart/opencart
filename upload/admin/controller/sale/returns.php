@@ -20,59 +20,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/returns');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_returns->addReturn($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_return_id'])) {
-				$url .= '&filter_return_id=' . $this->request->get['filter_return_id'];
-			}
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_return_status_id'])) {
-				$url .= '&filter_return_status_id=' . $this->request->get['filter_return_status_id'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_sale_returns->addReturn($this->request->post);
 
 		$this->getForm();
 	}
@@ -84,127 +32,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/returns');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_returns->editReturn($this->request->get['return_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_return_id'])) {
-				$url .= '&filter_return_id=' . $this->request->get['filter_return_id'];
-			}
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_return_status_id'])) {
-				$url .= '&filter_return_status_id=' . $this->request->get['filter_return_status_id'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_sale_returns->editReturn($this->request->get['return_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('sale/return');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/returns');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $return_id) {
-				$this->model_sale_returns->deleteReturn($return_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_return_id'])) {
-				$url .= '&filter_return_id=' . $this->request->get['filter_return_id'];
-			}
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_return_status_id'])) {
-				$url .= '&filter_return_status_id=' . $this->request->get['filter_return_status_id'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
 	}
 
 	protected function getList(): void {
@@ -807,7 +637,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/return_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'sale/returns')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -851,12 +681,33 @@ class Returns extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'sale/returns')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	public function delete(): void {
+		$this->load->language('sale/return');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		return !$this->error;
+		if (!$this->user->hasPermission('modify', 'sale/returns')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('sale/returns');
+
+			foreach ($selected as $return_id) {
+				$this->model_sale_returns->deleteReturn($return_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function history(): void {

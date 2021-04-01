@@ -1,112 +1,112 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <div class="float-right">
-        <button id="button-send" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact|send&user_token={{ user_token }}');"><i class="fas fa-envelope"></i></button>
-        <a href="{{ cancel }}" "data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
-      <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-header"><i class="fas fa-envelope"></i> {{ heading_title }}</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group row">
-            <label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
-            <div class="col-sm-10">
-              <select name="store_id" id="input-store" class="form-control">
-                <option value="0">{{ text_default }}</option>
-                {% for store in stores %}
-                  <option value="{{ store.store_id }}">{{ store.name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="input-to" class="col-sm-2 col-form-label">{{ entry_to }}</label>
-            <div class="col-sm-10">
-              <select name="to" id="input-to" class="form-control">
-                <option value="newsletter">{{ text_newsletter }}</option>
-                <option value="customer_all">{{ text_customer_all }}</option>
-                <option value="customer_group">{{ text_customer_group }}</option>
-                <option value="customer">{{ text_customer }}</option>
-                <option value="affiliate_all">{{ text_affiliate_all }}</option>
-                <option value="affiliate">{{ text_affiliate }}</option>
-                <option value="product">{{ text_product }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row to" id="to-customer-group">
-            <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
-            <div class="col-sm-10">
-              <select name="customer_group_id" id="input-customer-group" class="form-control">
-                {% for customer_group in customer_groups %}
-                  <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          <div class="form-group row to" id="to-customer">
-            <label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-              <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-customer" class="table table-sm m-0"></table>
-              </div>
-              <small class="form-text text-muted">{{ help_customer }}</small>
-            </div>
-          </div>
-          <div class="form-group row to" id="to-affiliate">
-            <label class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
-              <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-affiliate" class="table table-sm m-0"></table>
-              </div>
-              <small class="form-text text-muted">{{ help_affiliate }}</small>
-            </div>
-          </div>
-          <div class="form-group row to" id="to-product">
-            <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-              <div class="form-control p-0" style="height: 150px; overflow: auto;">
-                <table id="mail-product" class="table table-sm m-0"></table>
-              </div>
-              <small class="form-text text-muted">{{ help_product }}</small>
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="subject" value="" placeholder="{{ entry_subject }}" id="input-subject" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group row required">
-            <label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
-            <div class="col-sm-10">
-              <textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-right">
+				<button id="button-send" data-loading-text="{{ text_loading }}" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact|send&user_token={{ user_token }}');"><i class="fas fa-envelope"></i></button>
+				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header"><i class="fas fa-envelope"></i> {{ heading_title }}</div>
+			<div class="card-body">
+				<form>
+					<div class="form-group row">
+						<label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
+						<div class="col-sm-10">
+							<select name="store_id" id="input-store" class="form-control">
+								<option value="0">{{ text_default }}</option>
+								{% for store in stores %}
+									<option value="{{ store.store_id }}">{{ store.name }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="input-to" class="col-sm-2 col-form-label">{{ entry_to }}</label>
+						<div class="col-sm-10">
+							<select name="to" id="input-to" class="form-control">
+								<option value="newsletter">{{ text_newsletter }}</option>
+								<option value="customer_all">{{ text_customer_all }}</option>
+								<option value="customer_group">{{ text_customer_group }}</option>
+								<option value="customer">{{ text_customer }}</option>
+								<option value="affiliate_all">{{ text_affiliate_all }}</option>
+								<option value="affiliate">{{ text_affiliate }}</option>
+								<option value="product">{{ text_product }}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row to" id="to-customer-group">
+						<label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
+						<div class="col-sm-10">
+							<select name="customer_group_id" id="input-customer-group" class="form-control">
+								{% for customer_group in customer_groups %}
+									<option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<div class="form-group row to" id="to-customer">
+						<label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+							<div class="form-control p-0" style="height: 150px; overflow: auto;">
+								<table id="mail-customer" class="table table-sm m-0"></table>
+							</div>
+							<small class="form-text text-muted">{{ help_customer }}</small>
+						</div>
+					</div>
+					<div class="form-group row to" id="to-affiliate">
+						<label class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
+							<div class="form-control p-0" style="height: 150px; overflow: auto;">
+								<table id="mail-affiliate" class="table table-sm m-0"></table>
+							</div>
+							<small class="form-text text-muted">{{ help_affiliate }}</small>
+						</div>
+					</div>
+					<div class="form-group row to" id="to-product">
+						<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+							<div class="form-control p-0" style="height: 150px; overflow: auto;">
+								<table id="mail-product" class="table table-sm m-0"></table>
+							</div>
+							<small class="form-text text-muted">{{ help_product }}</small>
+						</div>
+					</div>
+					<div class="form-group row required">
+						<label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="subject" value="" placeholder="{{ entry_subject }}" id="input-subject" class="form-control"/>
+						</div>
+					</div>
+					<div class="form-group row required">
+						<label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
+						<div class="col-sm-10">
+							<textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript"><!--
 $('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
 $('select[name=\'to\']').on('change', function() {
-	$('.to').hide();
+    $('.to').hide();
 
-	$('#to-' + this.value.replace('_', '-')).show();
+    $('#to-' + this.value.replace('_', '-')).show();
 });
 
 $('select[name=\'to\']').trigger('change');
@@ -114,164 +114,165 @@ $('select[name=\'to\']').trigger('change');
 <script type="text/javascript"><!--
 // Customers
 $('input[name=\'customers\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['customer_id']
-					}
-				}));
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'customers\']').val('');
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'customers\']').val('');
 
-		$('#mail-customer' + item['value']).remove();
+        $('#mail-customer' + item['value']).remove();
 
-		html  = '<tr id="mail-customer' + item['value'] + '">';
-		html += '  <td>' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '"/></td>';
-		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
-		html += '</tr>';
+        html = '<tr id="mail-customer' + item['value'] + '">';
+        html += '  <td>' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '"/></td>';
+        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '</tr>';
 
-		$('#mail-customer').append(html);
-	}
+        $('#mail-customer').append(html);
+    }
 });
 
 $('#mail-customer').on('click', '.btn', function() {
-	$(this).parent().parent().remove();
+    $(this).parent().parent().remove();
 });
 
 // Affiliates
 $('input[name=\'affiliates\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_affiliate=1',
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['customer_id']
-					}
-				}));
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'affiliates\']').val('');
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_affiliate=1',
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'affiliates\']').val('');
 
-		$('#mail-affiliate' + item['value']).remove();
+        $('#mail-affiliate' + item['value']).remove();
 
-		html  = '<tr id="mail-affiliate' + item['value'] + '">';
-		html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
-		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
-		html += '</tr>';
+        html = '<tr id="mail-affiliate' + item['value'] + '">';
+        html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
+        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '</tr>';
 
-		$('#mail-affiliate').append(html);
-	}
+        $('#mail-affiliate').append(html);
+    }
 });
 
 $('#input-affiliate').on('click', '.btn', function() {
-	$(this).parent().parent().remove();
+    $(this).parent().parent().remove();
 });
 
 // Products
 $('input[name=\'products\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['product_id']
-					}
-				}));
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'products\']').val('');
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'products\']').val('');
 
-		$('#mail-product' + item['value']).remove();
+        $('#mail-product' + item['value']).remove();
 
-		html  = '<tr id="mail-product' + item['value'] + '">';
-		html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
-		html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
-		html += '</tr>';
+        html = '<tr id="mail-product' + item['value'] + '">';
+        html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
+        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '</tr>';
 
-		$('#mail-product').append(html);
-	}
+        $('#mail-product').append(html);
+    }
 });
 
 $('#mail-product').on('click', '.btn', function() {
-	$(this).parent().parent().remove();
+    $(this).parent().parent().remove();
 });
 
 function send(url) {
-	for (instance in CKEDITOR.instances) {
-		CKEDITOR.instances[instance].updateElement();
-	}
+    for (instance in CKEDITOR.instances) {
+        CKEDITOR.instances[instance].updateElement();
+    }
 
-	$.ajax({
-		url: url,
-		type: 'post',
-		data: $('#content form').serialize(),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-send').button('loading');
-		},
-		complete: function() {
-			$('#button-send').button('reset');
-		},
-		success: function(json) {
-			$('.alert-dismissible, .invalid-tooltip').remove();
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: $('#content form').serialize(),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-send').button('loading');
+        },
+        complete: function() {
+            $('#button-send').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible, .invalid-tooltip').remove();
 
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                }
 
-				if (json['error']['email']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['email'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
+                if (json['error']['email']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['email'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                }
 
-				if (json['error']['subject']) {
-					$('input[name=\'subject\']').after('<div class="invalid-tooltip d-block">' + json['error']['subject'] + '</div>');
-				}
+                if (json['error']['subject']) {
+                    $('input[name=\'subject\']').after('<div class="invalid-tooltip d-block">' + json['error']['subject'] + '</div>');
+                }
 
-				if (json['error']['message']) {
-					$('textarea[name=\'message\']').after('<div class="invalid-tooltip d-block">' + json['error']['message'] + '</div>');
-				}
-			}
+                if (json['error']['message']) {
+                    $('textarea[name=\'message\']').after('<div class="invalid-tooltip d-block">' + json['error']['message'] + '</div>');
+                }
+            }
 
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
+            if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
 
-			if (json['next']) {
-				send(json['next']);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+            if (json['next']) {
+                send(json['next']);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 }
+
 //--></script>
 {{ footer }}

@@ -20,27 +20,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/seo_profile');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_seo_profile->addSeoProfile($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . (string)$this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . (string)$this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . (int)$this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_design_seo_profile->addSeoProfile($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,58 +32,9 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/seo_profile');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_seo_profile->editSeoProfile($this->request->get['seo_profile_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . (string)$this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . (string)$this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . (int)$this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_design_seo_profile->editSeoProfile($this->request->get['seo_profile_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('design/seo_profile');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('design/seo_profile');
-
-			foreach ($selected as $seo_profile_id) {
-				$this->model_design_layout->deleteSeoProfile($seo_profile_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -362,7 +293,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/seo_profile_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -382,11 +313,32 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	public function delete(): void {
+		$this->load->language('design/seo_profile');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		return !$this->error;
+		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('design/seo_profile');
+
+			foreach ($selected as $seo_profile_id) {
+				$this->model_design_layout->deleteSeoProfile($seo_profile_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

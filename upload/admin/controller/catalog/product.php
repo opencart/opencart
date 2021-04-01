@@ -1,16 +1,68 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Product extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/product');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['filter_name'])) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_model'])) {
+			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_price'])) {
+			$url .= '&filter_price=' . $this->request->get['filter_price'];
+		}
+
+		if (isset($this->request->get['filter_quantity'])) {
+			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('catalog/product|add', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('catalog/product ', $data));
 	}
 
 	public function add(): void {
@@ -20,52 +72,12 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			if (!isset($this->request->get['master_id'])) {
-				// Normal product add
-				$this->model_catalog_product->addProduct($this->request->post);
-			} else {
-				// Variant product add
-				$this->model_catalog_product->addVariant($this->request->get['master_id'], $this->request->post);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_price'])) {
-				$url .= '&filter_price=' . $this->request->get['filter_price'];
-			}
-
-			if (isset($this->request->get['filter_quantity'])) {
-				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (!isset($this->request->get['master_id'])) {
+			// Normal product add
+			$this->model_catalog_product->addProduct($this->request->post);
+		} else {
+			// Variant product add
+			$this->model_catalog_product->addVariant($this->request->get['master_id'], $this->request->post);
 		}
 
 		$this->getForm();
@@ -78,87 +90,18 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			if (!isset($this->request->get['master_id'])) {
-				// Normal product edit
-				$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
-			} else {
-				// Variant product edit
-				$this->model_catalog_product->editVariant($this->request->get['master_id'], $this->request->get['product_id'], $this->request->post);
-			}
-
-			// Variant products edit
-			$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_price'])) {
-				$url .= '&filter_price=' . $this->request->get['filter_price'];
-			}
-
-			if (isset($this->request->get['filter_quantity'])) {
-				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (!isset($this->request->get['master_id'])) {
+			// Normal product edit
+			$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+		} else {
+			// Variant product edit
+			$this->model_catalog_product->editVariant($this->request->get['master_id'], $this->request->get['product_id'], $this->request->post);
 		}
+
+		// Variant products edit
+		$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('catalog/product');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/product')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('catalog/product');
-
-			foreach ($selected as $product_id) {
-				$this->model_catalog_product->deleteProduct($product_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function copy(): void {
@@ -1294,7 +1237,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/product_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'catalog/product')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -1348,6 +1291,35 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function delete(): void {
+		$this->load->language('catalog/product');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/product')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/product');
+
+			foreach ($selected as $product_id) {
+				$this->model_catalog_product->deleteProduct($product_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function validateCopy(): bool {

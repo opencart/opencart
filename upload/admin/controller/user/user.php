@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\User;
 class User extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('user/user');
 
@@ -20,27 +18,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_user_user->addUser($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_user_user->addUser($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,27 +30,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
 
 		$this->getForm();
 	}
@@ -80,35 +38,36 @@ class User extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('user/user');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('user/user');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $user_id) {
+		if (!$this->user->hasPermission('modify', 'user/user')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		foreach ($selected as $user_id) {
+			if ($this->user->getId() == $user_id) {
+				$this->error['warning'] = $this->language->get('error_account');
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('user/user');
+
+			foreach ($selected as $user_id) {
 				$this->model_user_user->deleteUser($user_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -419,7 +378,7 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'user/user')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -471,20 +430,6 @@ class User extends \Opencart\System\Engine\Controller {
 
 			if ($this->request->post['password'] != $this->request->post['confirm']) {
 				$this->error['confirm'] = $this->language->get('error_confirm');
-			}
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'user/user')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		foreach ($this->request->post['selected'] as $user_id) {
-			if ($this->user->getId() == $user_id) {
-				$this->error['warning'] = $this->language->get('error_account');
 			}
 		}
 

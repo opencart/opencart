@@ -20,27 +20,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/stock_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_stock_status->addStockStatus($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_stock_status->addStockStatus($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,68 +32,9 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/stock_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_stock_status->editStockStatus($this->request->get['stock_status_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_stock_status->editStockStatus($this->request->get['stock_status_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('localisation/stock_status');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('catalog/product');
-
-		foreach ($selected as $stock_status_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByStockStatusId($stock_status_id);
-
-			if ($product_total) {
-				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('localisation/stock_status');
-
-			foreach ($selected as $stock_status_id) {
-				$this->model_localisation_stock_status->deleteStockStatusId($stock_status_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -316,7 +237,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/stock_status_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -328,5 +249,44 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function delete(): void {
+		$this->load->language('localisation/stock_status');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('catalog/product');
+
+		foreach ($selected as $stock_status_id) {
+			$product_total = $this->model_catalog_product->getTotalProductsByStockStatusId($stock_status_id);
+
+			if ($product_total) {
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/stock_status');
+
+			foreach ($selected as $stock_status_id) {
+				$this->model_localisation_stock_status->deleteStockStatusId($stock_status_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -13,8 +13,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-
-
 	public function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];

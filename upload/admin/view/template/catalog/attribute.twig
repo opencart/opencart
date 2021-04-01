@@ -35,8 +35,8 @@ $('#button-delete').on('click', function() {
 
         $.ajax({
             url: 'index.php?route=catalog/attribute|delete&&user_token={{ user_token }}',
-		        type: 'post',
-		        data:  $('#attribute-list input[name=\'selected[]\']:checked'),
+            type: 'post',
+            data: $('#attribute-list input[name=\'selected[]\']:checked'),
             dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');

@@ -1224,7 +1224,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/setting', $data));
 	}
 
-	protected function validate(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'setting/setting')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -20,27 +20,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/layout');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_layout->addLayout($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_design_layout->addLayout($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,58 +32,9 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('design/layout');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('design/layout');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'design/layout')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('design/layout');
-
-			foreach ($selected as $layout_id) {
-				$this->model_design_layout->deleteLayout($layout_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -389,7 +320,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/layout_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'design/layout')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -401,9 +332,19 @@ class Layout extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	protected function validateDelete(): bool {
+	public function delete(): void {
+		$this->load->language('design/layout');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'design/layout')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('setting/store');
@@ -412,42 +353,53 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/manufacturer');
 		$this->load->model('catalog/information');
 
-		foreach ($this->request->post['selected'] as $layout_id) {
+		foreach ($selected as $layout_id) {
 			if ($this->config->get('config_layout_id') == $layout_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+				$json['error'] = $this->language->get('error_default');
 			}
 
 			$store_total = $this->model_setting_store->getTotalStoresByLayoutId($layout_id);
 
 			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
 			$product_total = $this->model_catalog_product->getTotalProductsByLayoutId($layout_id);
 
 			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 
 			$category_total = $this->model_catalog_category->getTotalCategoriesByLayoutId($layout_id);
 
 			if ($category_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_category'), $category_total);
+				$json['error'] = sprintf($this->language->get('error_category'), $category_total);
 			}
 
 			$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturersByLayoutId($layout_id);
 
 			if ($manufacturer_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_manufacturer'), $manufacturer_total);
+				$json['error'] = sprintf($this->language->get('error_manufacturer'), $manufacturer_total);
 			}
 
 			$information_total = $this->model_catalog_information->getTotalInformationsByLayoutId($layout_id);
 
 			if ($information_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_information'), $information_total);
+				$json['error'] = sprintf($this->language->get('error_information'), $information_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('design/layout');
+
+			foreach ($selected as $layout_id) {
+				$this->model_design_layout->deleteLayout($layout_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

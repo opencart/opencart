@@ -20,27 +20,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/voucher');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_voucher->addVoucher($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_sale_voucher->addVoucher($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,27 +32,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/voucher');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
 
 		$this->getForm();
 	}
@@ -80,35 +40,42 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('sale/voucher');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('sale/voucher');
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $voucher_id) {
+		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('sale/order');
+
+		foreach ($selected as $voucher_id) {
+			$order_voucher_info = $this->model_sale_order->getVoucherByVoucherId($voucher_id);
+
+			if ($order_voucher_info) {
+				$json['error'] = sprintf($this->language->get('error_order'), $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_voucher_info['order_id']));
+
+				break;
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('sale/voucher');
+
+			foreach ($selected as $voucher_id) {
 				$this->model_sale_voucher->deleteVoucher($voucher_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url));
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->getList();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -438,7 +405,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -475,26 +442,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		if ($this->request->post['amount'] < 1) {
 			$this->error['amount'] = $this->language->get('error_amount');
-		}
-
-		return !$this->error;
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('sale/order');
-
-		foreach ($this->request->post['selected'] as $voucher_id) {
-			$order_voucher_info = $this->model_sale_order->getVoucherByVoucherId($voucher_id);
-
-			if ($order_voucher_info) {
-				$this->error['warning'] = sprintf($this->language->get('error_order'), $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_voucher_info['order_id']));
-
-				break;
-			}
 		}
 
 		return !$this->error;

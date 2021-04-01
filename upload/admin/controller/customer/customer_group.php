@@ -20,27 +20,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_customer_customer_group->addCustomerGroup($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_customer_customer_group->addCustomerGroup($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,79 +32,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_customer_customer_group->editCustomerGroup($this->request->get['customer_group_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_customer_customer_group->editCustomerGroup($this->request->get['customer_group_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('customer/customer_group');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('setting/store');
-		$this->load->model('customer/customer');
-
-		foreach ($this->request->post['selected'] as $customer_group_id) {
-			if ($this->config->get('config_customer_group_id') == $customer_group_id) {
-				$json['error'] = $this->language->get('error_default');
-			}
-
-			$store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
-
-			if ($store_total) {
-				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
-			}
-
-			$customer_total = $this->model_customer_customer->getTotalCustomersByCustomerGroupId($customer_group_id);
-
-			if ($customer_total) {
-				$json['error'] = sprintf($this->language->get('error_customer'), $customer_total);
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('customer/customer_group');
-
-			foreach ($selected as $customer_group_id) {
-				$this->model_customer_customer_group->deleteCustomerGroup($customer_group_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -349,7 +259,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/customer_group_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -361,5 +271,55 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function delete(): void {
+		$this->load->language('customer/customer_group');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/store');
+		$this->load->model('customer/customer');
+
+		foreach ($selected as $customer_group_id) {
+			if ($this->config->get('config_customer_group_id') == $customer_group_id) {
+				$json['error'] = $this->language->get('error_default');
+			}
+
+			$store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
+
+			if ($store_total) {
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
+			}
+
+			$customer_total = $this->model_customer_customer->getTotalCustomersByCustomerGroupId($customer_group_id);
+
+			if ($customer_total) {
+				$json['error'] = sprintf($this->language->get('error_customer'), $customer_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer_group');
+
+			foreach ($selected as $customer_group_id) {
+				$this->model_customer_customer_group->deleteCustomerGroup($customer_group_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

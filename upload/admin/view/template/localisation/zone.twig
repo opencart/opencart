@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-country').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
+				<button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-zone').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
 				<a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
 				<button type="button" id="button-delete" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
@@ -16,18 +16,8 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		{% if error_warning %}
-			<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-		{% endif %}
-		{% if success %}
-			<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-		{% endif %}
 		<div class="row">
-			<div id="filter-country" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+			<div id="filter-zone" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
 				<div class="card">
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
@@ -35,10 +25,10 @@
 							<label class="col-form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label">{{ entry_iso_code_2 }}</label> <input type="text" name="filter_iso_code_2" value="{{ filter_iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
+							<label class="col-form-label">{{ entry_country }}</label> <input type="text" name="filter_country" value="{{ filter_country }}" placeholder="{{ entry_country }}" id="input-country" class="form-control"/>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label">{{ entry_iso_code_3 }}</label> <input type="text" name="filter_iso_code_3" value="{{ filter_iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
+							<label class="col-form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
 						</div>
 						<div class="form-group text-right">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
@@ -65,19 +55,19 @@ $('#button-filter').on('click', function() {
         url += '&filter_name=' + encodeURIComponent(filter_name);
     }
 
-    var filter_iso_code_2 = $('input[name=\'filter_iso_code_2\']').val();
+    var filter_country = $('input[name=\'filter_country\']').val();
 
-    if (filter_iso_code_2) {
-        url += '&filter_iso_code_2=' + encodeURIComponent(filter_iso_code_2);
+    if (filter_country) {
+        url += '&filter_country=' + encodeURIComponent(filter_country);
     }
 
-    var filter_iso_code_3 = $('input[name=\'filter_iso_code_3\']').val();
+    var filter_code = $('input[name=\'filter_code\']').val();
 
-    if (filter_iso_code_3) {
-        url += '&filter_iso_code_3=' + encodeURIComponent(filter_iso_code_3);
+    if (filter_code) {
+        url += '&filter_code=' + encodeURIComponent(filter_code);
     }
 
-    location = 'index.php?route=localisation/country&user_token={{ user_token }}' + url;
+    location = 'index.php?route=localisation/zone&user_token={{ user_token }}' + url;
 });
 //--></script>
 {{ footer }}

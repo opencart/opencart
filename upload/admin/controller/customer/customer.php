@@ -20,51 +20,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_customer_customer->addCustomer($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_email'])) {
-				$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_customer_group_id'])) {
-				$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_ip'])) {
-				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_customer_customer->addCustomer($this->request->post);
 
 		$this->getForm();
 	}
@@ -76,82 +32,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_customer_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_email'])) {
-				$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_customer_group_id'])) {
-				$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_ip'])) {
-				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_customer_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('customer/customer');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('customer/customer');
-
-			foreach ($selected as $customer_id) {
-				$this->model_customer_customer->deleteCustomer($customer_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function unlock(): void {
@@ -815,7 +698,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/customer_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -923,6 +806,35 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function delete(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			foreach ($selected as $customer_id) {
+				$this->model_customer_customer->deleteCustomer($customer_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function validateUnlock(): bool {

@@ -20,27 +20,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_manufacturer->addManufacturer($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,68 +32,9 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('catalog/manufacturer');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('catalog/product');
-
-		foreach ($selected as $manufacturer_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
-
-			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('catalog/manufacturer');
-
-			foreach ($selected as $manufacturer_id) {
-				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -402,7 +323,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/manufacturer_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -434,6 +355,45 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function delete(): void {
+		$this->load->language('catalog/manufacturer');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('catalog/product');
+
+		foreach ($selected as $manufacturer_id) {
+			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
+
+			if ($product_total) {
+				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/manufacturer');
+
+			foreach ($selected as $manufacturer_id) {
+				$this->model_catalog_manufacturer->deleteManufacturer($manufacturer_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function autocomplete(): void {

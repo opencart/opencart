@@ -15,11 +15,6 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		{% if error_warning %}
-			<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-		{% endif %}
 		<div class="card">
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
@@ -42,9 +37,6 @@
 											</div>
 											<input type="text" name="download_description[{{ language.language_id }}][name]" value="{{ download_description[language.language_id] ? download_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
 										</div>
-										{% if error_name[language.language_id] %}
-											<div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
-										{% endif %}
 									{% endfor %}
 								</div>
 							</div>
@@ -57,9 +49,6 @@
 											<button type="button" id="button-upload" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
 										</div>
 									</div>
-									{% if error_filename %}
-										<div class="invalid-tooltip">{{ error_filename }}</div>
-									{% endif %}
 									<small class="form-text text-muted">{{ help_filename }}</small>
 								</div>
 							</div>
@@ -67,9 +56,6 @@
 								<label for="input-mask" class="col-sm-2 col-form-label">{{ entry_mask }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="mask" value="{{ mask }}" placeholder="{{ entry_mask }}" id="input-mask" class="form-control"/>
-									{% if error_mask %}
-										<div class="invalid-tooltip">{{ error_mask }}</div>
-									{% endif %}
 									<small class="form-text text-muted">{{ help_mask }}</small>
 								</div>
 							</div>

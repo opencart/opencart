@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<div class="float-right">
 				<button type="submit" form="form-product" formaction="{{ action }}" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ cancel }}" "data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -14,17 +14,12 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		{% if error_warning %}
-			<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
+		{% if master_id %}
+			<div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> {{ text_variant }}</div>
 		{% endif %}
 		<div class="card">
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
-				{% if master_id %}
-					<div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> {{ text_variant }}</div>
-				{% endif %}
 				<form method="post" enctype="multipart/form-data" id="form-product">
 					<ul class="nav nav-tabs">
 						<li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
@@ -70,9 +65,6 @@
 														</div>
 													{% endif %}
 												</div>
-												{% if error_name[language.language_id] %}
-													<div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
-												{% endif %}
 											</div>
 										</div>
 										<div class="form-group row">
@@ -119,9 +111,6 @@
 														</div>
 													{% endif %}
 												</div>
-												{% if error_meta_title[language.language_id] %}
-													<div class="invalid-tooltip">{{ error_meta_title[language.language_id] }}</div>
-												{% endif %}
 											</div>
 										</div>
 										<div class="form-group row">
@@ -219,9 +208,6 @@
 												</div>
 											{% endif %}
 										</div>
-										{% if error_model %}
-											<div class="invalid-tooltip">{{ error_model }}</div>
-										{% endif %}
 									</div>
 								</div>
 								<div class="form-group row">
@@ -1206,9 +1192,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1249,9 +1232,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1292,9 +1272,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1318,9 +1295,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1344,9 +1318,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1369,9 +1340,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1398,9 +1366,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1427,9 +1392,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1456,9 +1418,6 @@
 															</div>
 														</div>
 													</div>
-													{% if error_variant[option.product_option_id] %}
-														<div class="invalid-tooltip">{{ error_variant[option.product_option_id] }}</div>
-													{% endif %}
 												</div>
 											</div>
 										{% endif %}
@@ -1825,9 +1784,6 @@
 															</div>
 															<input type="text" name="product_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if product_seo_url[store.store_id][language.language_id] %}{{ product_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control"/>
 														</div>
-														{% if error_keyword[store.store_id][language.language_id] %}
-															<div class="invalid-tooltip">{{ error_keyword[store.store_id][language.language_id] }}</div>
-														{% endif %}
 													{% endfor %}</td>
 											</tr>
 										{% endfor %}
@@ -1968,7 +1924,7 @@ $('input[name=\'filter\']').autocomplete({
 
         $('#product-filter' + item['value']).remove();
 
-        html  = '<tr id="product-filter' + item['value'] + '">';
+        html = '<tr id="product-filter' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product_filter[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';

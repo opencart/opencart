@@ -20,27 +20,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_language->addLanguage($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_language->addLanguage($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,87 +32,9 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('localisation/language');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'localisation/language')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		$this->load->model('setting/store');
-		$this->load->model('sale/order');
-
-		foreach ($selected as $language_id) {
-			$language_info = $this->model_localisation_language->getLanguage($language_id);
-
-			if ($language_info) {
-				if ($this->config->get('config_language') == $language_info['code']) {
-					$json['error'] = $this->language->get('error_default');
-				}
-
-				if ($this->config->get('config_language_admin') == $language_info['code']) {
-					$json['error'] = $this->language->get('error_admin');
-				}
-
-				$store_total = $this->model_setting_store->getTotalStoresByLanguage($language_info['code']);
-
-				if ($store_total) {
-					$json['error'] = sprintf($this->language->get('error_store'), $store_total);
-				}
-			}
-
-			$order_total = $this->model_sale_order->getTotalOrdersByLanguageId($language_id);
-
-			if ($order_total) {
-				$json['error'] = sprintf($this->language->get('error_order'), $order_total);
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('localisation/language');
-
-			foreach ($selected as $language_id) {
-				$this->model_localisation_language->deleteLanguage($language_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function getList(): void {
@@ -391,7 +293,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/language_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): bool {
 		if (!$this->user->hasPermission('modify', 'localisation/language')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -421,5 +323,63 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function delete(): void {
+		$this->load->language('localisation/language');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'localisation/language')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/store');
+		$this->load->model('sale/order');
+
+		foreach ($selected as $language_id) {
+			$language_info = $this->model_localisation_language->getLanguage($language_id);
+
+			if ($language_info) {
+				if ($this->config->get('config_language') == $language_info['code']) {
+					$json['error'] = $this->language->get('error_default');
+				}
+
+				if ($this->config->get('config_language_admin') == $language_info['code']) {
+					$json['error'] = $this->language->get('error_admin');
+				}
+
+				$store_total = $this->model_setting_store->getTotalStoresByLanguage($language_info['code']);
+
+				if ($store_total) {
+					$json['error'] = sprintf($this->language->get('error_store'), $store_total);
+				}
+			}
+
+			$order_total = $this->model_sale_order->getTotalOrdersByLanguageId($language_id);
+
+			if ($order_total) {
+				$json['error'] = sprintf($this->language->get('error_order'), $order_total);
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/language');
+
+			foreach ($selected as $language_id) {
+				$this->model_localisation_language->deleteLanguage($language_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

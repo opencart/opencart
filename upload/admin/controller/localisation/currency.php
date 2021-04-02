@@ -331,16 +331,20 @@ class Currency extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/currency');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['title']) < 3) || (utf8_strlen($this->request->post['title']) > 32)) {
-			$this->error['title'] = $this->language->get('error_title');
+			$json['title'] = $this->language->get('error_title');
 		}
 
 		if (utf8_strlen($this->request->post['code']) != 3) {
-			$this->error['code'] = $this->language->get('error_code');
+			$json['code'] = $this->language->get('error_code');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

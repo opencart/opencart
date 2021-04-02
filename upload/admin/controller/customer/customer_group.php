@@ -260,13 +260,19 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('customer/customer_group');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
-		foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
-			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+		if (isset($this->request->post['customer_group_description'])) {
+			foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
+				if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
+					$json['name'][$language_id] = $this->language->get('error_name');
+				}
 			}
 		}
 

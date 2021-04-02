@@ -294,31 +294,35 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/language');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'localisation/language')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['name'])) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['code'])) < 2) || (utf8_strlen($this->request->post['code']) > 5)) {
-			$this->error['code'] = $this->language->get('error_code');
+			$json['code'] = $this->language->get('error_code');
 		}
 		
 		if ((utf8_strlen(trim($this->request->post['locale'])) < 2) || (utf8_strlen($this->request->post['locale']) > 255)) {
-			$this->error['locale'] = $this->language->get('error_locale');
+			$json['locale'] = $this->language->get('error_locale');
 		}
 		
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
 
 		if (!isset($this->request->get['language_id'])) {
 			if ($language_info) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['warning'] = $this->language->get('error_exists');
 			}
 		} else {
 			if ($language_info && ($this->request->get['language_id'] != $language_info['language_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['warning'] = $this->language->get('error_exists');
 			}
 		}
 

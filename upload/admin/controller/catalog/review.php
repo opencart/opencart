@@ -415,28 +415,32 @@ class Review extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('catalog/review');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'catalog/review')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->request->post['product_id']) {
-			$this->error['product'] = $this->language->get('error_product');
+			$json['product'] = $this->language->get('error_product');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['author'])) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
-			$this->error['author'] = $this->language->get('error_author');
+			$json['author'] = $this->language->get('error_author');
 		}
 
 		if (utf8_strlen(trim($this->request->post['text'])) < 1) {
-			$this->error['text'] = $this->language->get('error_text');
+			$json['text'] = $this->language->get('error_text');
 		}
 
 		if (!isset($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
-			$this->error['rating'] = $this->language->get('error_rating');
+			$json['rating'] = $this->language->get('error_rating');
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+			$json['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -394,18 +394,18 @@ class Recurring extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('catalog/recurring');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'catalog/recurring')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['recurring_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 3) || (utf8_strlen($value['name']) > 255)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+				$json['name'][$language_id] = $this->language->get('error_name');
 			}
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

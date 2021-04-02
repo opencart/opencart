@@ -1225,112 +1225,116 @@ class Setting extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('setting/setting');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'setting/setting')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->request->post['config_meta_title']) {
-			$this->error['meta_title'] = $this->language->get('error_meta_title');
+			$json['meta_title'] = $this->language->get('error_meta_title');
 		}
 
 		if (!$this->request->post['config_name']) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
-			$this->error['owner'] = $this->language->get('error_owner');
+			$json['owner'] = $this->language->get('error_owner');
 		}
 
 		if ((utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
-			$this->error['address'] = $this->language->get('error_address');
+			$json['address'] = $this->language->get('error_address');
 		}
 
 		if ((utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['email'] = $this->language->get('error_email');
+			$json['email'] = $this->language->get('error_email');
 		}
 
 		if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
+			$json['telephone'] = $this->language->get('error_telephone');
 		}
 
 		if (!$this->request->post['config_product_description_length']) {
-			$this->error['product_description_length'] = $this->language->get('error_product_description_length');
+			$json['product_description_length'] = $this->language->get('error_product_description_length');
 		}
 
 		if (!$this->request->post['config_pagination']) {
-			$this->error['pagination'] = $this->language->get('error_pagination');
+			$json['pagination'] = $this->language->get('error_pagination');
 		}
 
 		if (!$this->request->post['config_pagination_admin']) {
-			$this->error['pagination_admin'] = $this->language->get('error_pagination');
+			$json['pagination_admin'] = $this->language->get('error_pagination');
 		}
 
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
-			$this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
+			$json['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}
 
 		if ($this->request->post['config_login_attempts'] < 1) {
-			$this->error['login_attempts'] = $this->language->get('error_login_attempts');
+			$json['login_attempts'] = $this->language->get('error_login_attempts');
 		}
 
 		if (!$this->request->post['config_voucher_min']) {
-			$this->error['voucher_min'] = $this->language->get('error_voucher_min');
+			$json['voucher_min'] = $this->language->get('error_voucher_min');
 		}
 
 		if (!$this->request->post['config_voucher_max']) {
-			$this->error['voucher_max'] = $this->language->get('error_voucher_max');
+			$json['voucher_max'] = $this->language->get('error_voucher_max');
 		}
 
 		if (!isset($this->request->post['config_processing_status'])) {
-			$this->error['processing_status'] = $this->language->get('error_processing_status');
+			$json['processing_status'] = $this->language->get('error_processing_status');
 		}
 
 		if (!isset($this->request->post['config_complete_status'])) {
-			$this->error['complete_status'] = $this->language->get('error_complete_status');
+			$json['complete_status'] = $this->language->get('error_complete_status');
 		}
 
 		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {
-			$this->error['image_category'] = $this->language->get('error_image_category');
+			$json['image_category'] = $this->language->get('error_image_category');
 		}
 
 		if (!$this->request->post['config_image_thumb_width'] || !$this->request->post['config_image_thumb_height']) {
-			$this->error['image_thumb'] = $this->language->get('error_image_thumb');
+			$json['image_thumb'] = $this->language->get('error_image_thumb');
 		}
 
 		if (!$this->request->post['config_image_popup_width'] || !$this->request->post['config_image_popup_height']) {
-			$this->error['image_popup'] = $this->language->get('error_image_popup');
+			$json['image_popup'] = $this->language->get('error_image_popup');
 		}
 
 		if (!$this->request->post['config_image_product_width'] || !$this->request->post['config_image_product_height']) {
-			$this->error['image_product'] = $this->language->get('error_image_product');
+			$json['image_product'] = $this->language->get('error_image_product');
 		}
 
 		if (!$this->request->post['config_image_additional_width'] || !$this->request->post['config_image_additional_height']) {
-			$this->error['image_additional'] = $this->language->get('error_image_additional');
+			$json['image_additional'] = $this->language->get('error_image_additional');
 		}
 
 		if (!$this->request->post['config_image_related_width'] || !$this->request->post['config_image_related_height']) {
-			$this->error['image_related'] = $this->language->get('error_image_related');
+			$json['image_related'] = $this->language->get('error_image_related');
 		}
 
 		if (!$this->request->post['config_image_compare_width'] || !$this->request->post['config_image_compare_height']) {
-			$this->error['image_compare'] = $this->language->get('error_image_compare');
+			$json['image_compare'] = $this->language->get('error_image_compare');
 		}
 
 		if (!$this->request->post['config_image_wishlist_width'] || !$this->request->post['config_image_wishlist_height']) {
-			$this->error['image_wishlist'] = $this->language->get('error_image_wishlist');
+			$json['image_wishlist'] = $this->language->get('error_image_wishlist');
 		}
 
 		if (!$this->request->post['config_image_cart_width'] || !$this->request->post['config_image_cart_height']) {
-			$this->error['image_cart'] = $this->language->get('error_image_cart');
+			$json['image_cart'] = $this->language->get('error_image_cart');
 		}
 
 		if (!$this->request->post['config_image_location_width'] || !$this->request->post['config_image_location_height']) {
-			$this->error['image_location'] = $this->language->get('error_image_location');
+			$json['image_location'] = $this->language->get('error_image_location');
 		}
 
 		if (!$this->request->post['config_file_max_size']) {
-			$this->error['file_max_size'] = $this->language->get('error_file_max_size');
+			$json['file_max_size'] = $this->language->get('error_file_max_size');
 		}
 
 		$disallowed = [
@@ -1343,7 +1347,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		foreach ($extensions as $extension) {
 			if (in_array(trim($extension), $disallowed)) {
-				$this->error['extension'] = $this->language->get('error_extension');
+				$json['extension'] = $this->language->get('error_extension');
 
 				break;
 			}
@@ -1359,26 +1363,26 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		foreach ($mimes as $mime) {
 			if (in_array(trim($mime), $disallowed)) {
-				$this->error['mime'] = $this->language->get('error_mime');
+				$json['mime'] = $this->language->get('error_mime');
 
 				break;
 			}
 		}
 
 		if (!$this->request->post['config_error_filename']) {
-			$this->error['log'] = $this->language->get('error_log_required');
+			$json['log'] = $this->language->get('error_log_required');
 		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
-			$this->error['log'] = $this->language->get('error_log_invalid');
+			$json['log'] = $this->language->get('error_log_invalid');
 		} elseif (substr($this->request->post['config_error_filename'], strrpos($this->request->post['config_error_filename'], '.')) != '.log') {
-			$this->error['log'] = $this->language->get('error_log_extension');
+			$json['log'] = $this->language->get('error_log_extension');
 		}
 
 		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
-			$this->error['encryption'] = $this->language->get('error_encryption');
+			$json['encryption'] = $this->language->get('error_encryption');
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+			$json['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

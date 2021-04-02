@@ -387,26 +387,30 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->model('customer/custom_field');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['custom_field_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 128)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+				$json['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox')) {
 			if (!isset($this->request->post['custom_field_value'])) {
-				$this->error['warning'] = $this->language->get('error_type');
+				$json['warning'] = $this->language->get('error_type');
 			}
 
 			if (isset($this->request->post['custom_field_value'])) {
 				foreach ($this->request->post['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
 					foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
 						if ((utf8_strlen($custom_field_value_description['name']) < 1) || (utf8_strlen($custom_field_value_description['name']) > 128)) {
-							$this->error['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value');
+							$json['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value');
 						}
 					}
 				}
@@ -414,7 +418,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['type'] == 'text' && $this->request->post['validation'] && @preg_match(html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8'), null) === false) {
-			$this->error['validation'] = $this->language->get('error_validation');
+			$json['validation'] = $this->language->get('error_validation');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

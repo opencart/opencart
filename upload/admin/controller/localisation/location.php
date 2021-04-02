@@ -314,20 +314,24 @@ class Location extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/location');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'localisation/location')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen($this->request->post['address']) < 3) || (utf8_strlen($this->request->post['address']) > 128)) {
-			$this->error['address'] = $this->language->get('error_address');
+			$json['address'] = $this->language->get('error_address');
 		}
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
+			$json['telephone'] = $this->language->get('error_telephone');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

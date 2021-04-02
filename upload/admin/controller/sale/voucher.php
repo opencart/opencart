@@ -365,42 +365,46 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('sale/voucher');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['code']) < 3) || (utf8_strlen($this->request->post['code']) > 10)) {
-			$this->error['code'] = $this->language->get('error_code');
+			$json['code'] = $this->language->get('error_code');
 		}
 
 		$voucher_info = $this->model_sale_voucher->getVoucherByCode($this->request->post['code']);
 
 		if ($voucher_info) {
 			if (!isset($this->request->get['voucher_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['warning'] = $this->language->get('error_exists');
 			} elseif ($voucher_info['voucher_id'] != (int)$this->request->get['voucher_id'])  {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['warning'] = $this->language->get('error_exists');
 			}
 		}
 
 		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
-			$this->error['to_name'] = $this->language->get('error_to_name');
+			$json['to_name'] = $this->language->get('error_to_name');
 		}
 
 		if ((utf8_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['to_email'] = $this->language->get('error_email');
+			$json['to_email'] = $this->language->get('error_email');
 		}
 
 		if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
-			$this->error['from_name'] = $this->language->get('error_from_name');
+			$json['from_name'] = $this->language->get('error_from_name');
 		}
 
 		if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['from_email'] = $this->language->get('error_email');
+			$json['from_email'] = $this->language->get('error_email');
 		}
 
 		if ($this->request->post['amount'] < 1) {
-			$this->error['amount'] = $this->language->get('error_amount');
+			$json['amount'] = $this->language->get('error_amount');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

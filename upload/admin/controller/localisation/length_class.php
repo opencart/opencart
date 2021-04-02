@@ -260,17 +260,21 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/length_class');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'localisation/length_class')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['length_class_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 32)) {
-				$this->error['title'][$language_id] = $this->language->get('error_title');
+				$json['title'][$language_id] = $this->language->get('error_title');
 			}
 
 			if (!$value['unit'] || (utf8_strlen($value['unit']) > 4)) {
-				$this->error['unit'][$language_id] = $this->language->get('error_unit');
+				$json['unit'][$language_id] = $this->language->get('error_unit');
 			}
 		}
 

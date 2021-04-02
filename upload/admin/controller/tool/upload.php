@@ -240,9 +240,13 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upload', $data));
 	}
 
-	protected function validateDelete(): bool {
+	public function validateDelete(): bool {
+		$this->load->language('tool/upload');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'tool/upload')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

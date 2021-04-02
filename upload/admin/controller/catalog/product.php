@@ -1238,37 +1238,41 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('catalog/product');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'catalog/product')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['product_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 255)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+				$json['name'][$language_id] = $this->language->get('error_name');
 			}
 
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$json['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
 		if ((utf8_strlen(trim($this->request->post['model'])) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
-			$this->error['model'] = $this->language->get('error_model');
+			$json['model'] = $this->language->get('error_model');
 		}
 
-		if ($this->request->post['master_id']) {
+		if (isset($this->request->post['master_id'])) {
 			$this->load->model('catalog/product');
 
 			$product_options = $this->model_catalog_product->getOptions($this->request->post['master_id']);
 
 			foreach ($product_options as $product_option) {
 				if (isset($this->request->post['override']['variant'][$product_option['product_option_id']]) && $product_option['required'] && empty($this->request->post['variant'][$product_option['product_option_id']])) {
-					$this->error['variant'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+					$json['variant'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
 		}
 
-		if ($this->request->post['product_seo_url']) {
+		if (!empty($this->request->post['product_seo_url'])) {
 			$this->load->model('design/seo_url');
 
 			foreach ($this->request->post['product_seo_url'] as $store_id => $language) {
@@ -1277,17 +1281,13 @@ class Product extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && ($seo_url_info['key'] != 'product_id' || !isset($this->request->get['product_id']) || $seo_url_info['value'] != (int)$this->request->get['product_id'])) {
-							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
 			}
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

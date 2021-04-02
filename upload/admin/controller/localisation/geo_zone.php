@@ -268,16 +268,20 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/geo_zone');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'localisation/geo_zone')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
-			$this->error['description'] = $this->language->get('error_description');
+			$json['description'] = $this->language->get('error_description');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

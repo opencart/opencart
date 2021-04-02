@@ -449,34 +449,38 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('design/seo_url');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'design/seo_url')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['key'])) < 1) || (utf8_strlen($this->request->post['key']) > 64)) {
-			$this->error['key'] = $this->language->get('error_key');
+			$json['key'] = $this->language->get('error_key');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['value'])) < 1) || (utf8_strlen($this->request->post['value']) > 255)) {
-			$this->error['value'] = $this->language->get('error_value');
+			$json['value'] = $this->language->get('error_value');
 		}
 
 		// Check if there is already a key value pair on the same store using the same language
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($this->request->post['key'], $this->request->post['value'], $this->request->post['store_id'], $this->request->post['language_id']);
 
 		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != (int)$this->request->get['seo_url_id'])) {
-			$this->error['value'] = $this->language->get('error_value_exists');
+			$json['value'] = $this->language->get('error_value_exists');
 		}
 
 		if (preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {
-			$this->error['keyword'] = $this->language->get('error_keyword');
+			$json['keyword'] = $this->language->get('error_keyword');
 		}
 
 		// Check if keyword already exists and on the same store using the same language
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id']);
 
 		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != $this->request->get['seo_url_id'])) {
-			$this->error['keyword'] = $this->language->get('error_keyword_exists');
+			$json['keyword'] = $this->language->get('error_keyword_exists');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

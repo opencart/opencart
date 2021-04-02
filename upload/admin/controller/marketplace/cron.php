@@ -13,40 +13,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$this->getList();
 	}
 
-	public function delete(): void {
-		$this->load->language('marketplace/cron');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/cron');
-
-		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $cron_id) {
-				$this->model_setting_cron->deleteCron($cron_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('marketplace/cron', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
-	}
-
 	public function getList(): void {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -189,14 +155,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('marketplace/cron', $data));
-	}
-
-	protected function validate(): bool {
-		if (!$this->user->hasPermission('modify', 'marketplace/cron')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
 	}
 
 	public function run(): void {

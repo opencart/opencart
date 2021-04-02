@@ -20,27 +20,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_information->addInformation($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_information->addInformation($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,63 +32,9 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('catalog/information');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/information');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $information_id) {
-				$this->model_catalog_information->deleteInformation($information_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
 	}
 
 	protected function getList(): void {
@@ -325,9 +251,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['information_description'])) {
-			$data['information_description'] = $this->request->post['information_description'];
-		} elseif (!empty($information_info)) {
+		if (!empty($information_info)) {
 			$data['information_description'] = $this->model_catalog_information->getDescriptions($this->request->get['information_id']);
 		} else {
 			$data['information_description'] = [];
@@ -351,49 +275,37 @@ class Information extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->request->post['information_store'])) {
-			$data['information_store'] = $this->request->post['information_store'];
-		} elseif (!empty($information_info)) {
+		if (!empty($information_info)) {
 			$data['information_store'] = $this->model_catalog_information->getStores($this->request->get['information_id']);
 		} else {
 			$data['information_store'] = [0];
 		}
 
-		if (isset($this->request->post['bottom'])) {
-			$data['bottom'] = $this->request->post['bottom'];
-		} elseif (!empty($information_info)) {
+		if (!empty($information_info)) {
 			$data['bottom'] = $information_info['bottom'];
 		} else {
 			$data['bottom'] = 0;
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($information_info)) {
+		if (!empty($information_info)) {
 			$data['status'] = $information_info['status'];
 		} else {
 			$data['status'] = true;
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($information_info)) {
+		if (!empty($information_info)) {
 			$data['sort_order'] = $information_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->post['information_seo_url'])) {
-			$data['information_seo_url'] = $this->request->post['information_seo_url'];
-		} elseif (!empty($information_info)) {
+		if (!empty($information_info)) {
 			$data['information_seo_url'] = $this->model_catalog_information->getSeoUrls($this->request->get['information_id']);
 		} else {
 			$data['information_seo_url'] = [];
 		}
 
-		if (isset($this->request->post['information_layout'])) {
-			$data['information_layout'] = $this->request->post['information_layout'];
-		} elseif (!empty($information_info)) {
+		if (!empty($information_info)) {
 			$data['information_layout'] = $this->model_catalog_information->getLayouts($this->request->get['information_id']);
 		} else {
 			$data['information_layout'] = [];
@@ -410,7 +322,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/information_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -451,40 +363,62 @@ class Information extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete(): bool {
+	public function delete(): void {
+		$this->load->language('catalog/information');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('setting/store');
 
-		foreach ($this->request->post['selected'] as $information_id) {
+		foreach ($selected as $information_id) {
 			if ($this->config->get('config_account_id') == $information_id) {
-				$this->error['warning'] = $this->language->get('error_account');
+				$json['error'] = $this->language->get('error_account');
 			}
 
 			if ($this->config->get('config_checkout_id') == $information_id) {
-				$this->error['warning'] = $this->language->get('error_checkout');
+				$json['error'] = $this->language->get('error_checkout');
 			}
 
 			if ($this->config->get('config_affiliate_id') == $information_id) {
-				$this->error['warning'] = $this->language->get('error_affiliate');
+				$json['error'] = $this->language->get('error_affiliate');
 			}
 
 			if ($this->config->get('config_return_id') == $information_id) {
-				$this->error['warning'] = $this->language->get('error_return');
+				$json['error'] = $this->language->get('error_return');
 			}
 
 			$store_total = $this->model_setting_store->getTotalStoresByInformationId($information_id);
 
 			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('catalog/information');
+
+			foreach ($selected as $information_id) {
+				$this->model_catalog_information->deleteInformation($information_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

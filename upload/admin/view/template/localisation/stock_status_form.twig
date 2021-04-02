@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="float-right">
         <button type="submit" form="form-stock-status" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+        <a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
 
         <ol class="breadcrumb">
@@ -35,9 +35,6 @@
                   </div>
                   <input type="text" name="stock_status[{{ language.language_id }}][name]" value="{{ stock_status[language.language_id] ? stock_status[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
                 </div>
-                {% if error_name[language.language_id] %}
-                  <div class="invalid-tooltip">{{ error_name[language.language_id] }}</div>
-                {% endif %}
               {% endfor %}
             </div>
           </div>

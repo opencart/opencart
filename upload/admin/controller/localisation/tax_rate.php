@@ -20,27 +20,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/tax_rate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_tax_rate->addTaxRate($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_tax_rate->addTaxRate($this->request->post);
 
 		$this->getForm();
 	}
@@ -75,40 +55,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('localisation/tax_rate');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/tax_rate');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $tax_rate_id) {
-				$this->model_localisation_tax_rate->deleteTaxRate($tax_rate_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
 	}
 
 	protected function getList(): void {
@@ -367,7 +313,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/tax_rate_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/tax_rate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -380,12 +326,24 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$this->error['rate'] = $this->language->get('error_rate');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete(): bool {
+
+	public function delete(): void {
+		$this->load->language('localisation/tax_rate');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'localisation/tax_rate')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('localisation/tax_class');
@@ -394,10 +352,21 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$tax_rule_total = $this->model_localisation_tax_class->getTotalTaxRulesByTaxRateId($tax_rate_id);
 
 			if ($tax_rule_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_tax_rule'), $tax_rule_total);
+				$json['error'] = sprintf($this->language->get('error_tax_rule'), $tax_rule_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('localisation/tax_rate');
+
+			foreach ($selected as $tax_rate_id) {
+				$this->model_localisation_tax_rate->deleteTaxRate($tax_rate_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

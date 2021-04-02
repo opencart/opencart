@@ -1,7 +1,6 @@
 <?php
 // Text
-$_['text_address']       = 'Success: Shipping address has been set!';
-$_['text_method']        = 'Success: Shipping method has been set!';
+$_['text_success']       = 'Success: Shipping address has been set!';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to access the API!';
@@ -14,6 +13,3 @@ $_['error_country']      = 'Please select a country!';
 $_['error_zone']         = 'Please select a region / state!';
 $_['error_custom_field'] = '%s required!';
 $_['error_regex']        = '%s not a valid input!';
-$_['error_address']      = 'Warning: Shipping address required!';
-$_['error_method']       = 'Warning: Shipping method required!';
-$_['error_no_shipping']  = 'Warning: No Shipping options are available!';

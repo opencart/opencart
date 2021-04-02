@@ -1,7 +1,6 @@
 <?php
 // Text
-$_['text_address']       = 'Success: Payment address has been set!';
-$_['text_method']        = 'Success: Payment method has been set!';
+$_['text_success']       = 'Success: Payment address has been set!';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to access the API!';
@@ -14,6 +13,3 @@ $_['error_country']      = 'Please select a country!';
 $_['error_zone']         = 'Please select a region / state!';
 $_['error_custom_field'] = '%s required!';
 $_['error_regex']        = '%s not a valid input!';
-$_['error_address']      = 'Warning: Payment address required!';
-$_['error_method']       = 'Warning: Payment method required!';
-$_['error_no_payment']   = 'Warning: No Payment options are available!';

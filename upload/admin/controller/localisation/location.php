@@ -20,27 +20,7 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/location');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_location->addLocation($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_location->addLocation($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,63 +32,9 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/location');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_location->editLocation($this->request->get['location_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_location->editLocation($this->request->get['location_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('localisation/location');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/location');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $location_id) {
-				$this->model_localisation_location->deleteLocation($location_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
 	}
 
 	protected function getList(): void {
@@ -387,7 +313,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/location_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/location')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -404,14 +330,36 @@ class Location extends \Opencart\System\Engine\Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'localisation/location')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	public function delete(): void {
+		$this->load->language('localisation/location');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		return !$this->error;
+		if (!$this->user->hasPermission('modify', 'localisation/location')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('localisation/location');
+
+			foreach ($selected as $location_id) {
+				$this->model_localisation_location->deleteLocation($location_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

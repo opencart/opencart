@@ -20,27 +20,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/recurring');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_recurring->addRecurring($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_recurring->addRecurring($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,65 +32,10 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/recurring');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_recurring->editRecurring($this->request->get['recurring_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_recurring->editRecurring($this->request->get['recurring_id'], $this->request->post);
 
 		$this->getForm();
 	}
-
-	public function delete(): void {
-		$this->load->language('catalog/recurring');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/recurring');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $recurring_id) {
-				$this->model_catalog_recurring->deleteRecurring($recurring_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
-	}
-
 	public function copy(): void {
 		$this->load->language('catalog/recurring');
 
@@ -468,7 +393,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/recurring_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'catalog/recurring')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -483,17 +408,28 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete(): bool {
+	public function delete(): void {
+		$this->load->language('catalog/recurring');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'catalog/recurring')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('catalog/product');
 
-		foreach ($this->request->post['selected'] as $recurring_id) {
+		foreach ($selected as $recurring_id) {
 			$product_total = $this->model_catalog_product->getTotalProductsByProfileId($recurring_id);
 
 			if ($product_total) {
@@ -501,7 +437,18 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('catalog/recurring');
+
+			foreach ($selected as $recurring_id) {
+				$this->model_catalog_recurring->deleteRecurring($recurring_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function validateCopy(): bool {

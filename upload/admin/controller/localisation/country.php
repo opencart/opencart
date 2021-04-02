@@ -20,39 +20,7 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_country->addCountry($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_iso_code_2'])) {
-				$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_iso_code_3'])) {
-				$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_country->addCountry($this->request->post);
 
 		$this->getForm();
 	}
@@ -64,87 +32,9 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_country->editCountry($this->request->get['country_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_iso_code_2'])) {
-				$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_iso_code_3'])) {
-				$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_localisation_country->editCountry($this->request->get['country_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('localisation/country');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/country');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $country_id) {
-				$this->model_localisation_country->deleteCountry($country_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_iso_code_2'])) {
-				$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_iso_code_3'])) {
-				$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
 	}
 
 	protected function getList(): void {
@@ -466,7 +356,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/country_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'localisation/country')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -475,12 +365,23 @@ class Country extends \Opencart\System\Engine\Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete(): bool {
+	public function delete(): void {
+		$this->load->language('localisation/country');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'localisation/country')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('setting/store');
@@ -490,35 +391,46 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['selected'] as $country_id) {
 			if ($this->config->get('config_country_id') == $country_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+				$json['error'] = $this->language->get('error_default');
 			}
 
 			$store_total = $this->model_setting_store->getTotalStoresByCountryId($country_id);
 
 			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
 			$address_total = $this->model_customer_customer->getTotalAddressesByCountryId($country_id);
 
 			if ($address_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);
+				$json['error'] = sprintf($this->language->get('error_address'), $address_total);
 			}
 
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId($country_id);
 
 			if ($zone_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_zone'), $zone_total);
+				$json['error'] = sprintf($this->language->get('error_zone'), $zone_total);
 			}
 
 			$zone_to_geo_zone_total = $this->model_localisation_geo_zone->getTotalZoneToGeoZoneByCountryId($country_id);
 
 			if ($zone_to_geo_zone_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
+				$json['error'] = sprintf($this->language->get('error_zone_to_geo_zone'), $zone_to_geo_zone_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('localisation/country');
+
+			foreach ($selected as $country_id) {
+				$this->model_localisation_country->deleteCountry($country_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function country(): void {

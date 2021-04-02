@@ -22,17 +22,11 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$store_id = $this->model_setting_store->addStore($this->request->post);
+		$store_id = $this->model_setting_store->addStore($this->request->post);
 
-			$this->load->model('setting/setting');
+		$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSetting('config', $this->request->post, $store_id);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']));
-		}
+		$this->model_setting_setting->editSetting('config', $this->request->post, $store_id);
 
 		$this->getForm();
 	}
@@ -44,43 +38,13 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_setting_store->editStore($this->request->get['store_id'], $this->request->post);
+		$this->model_setting_store->editStore($this->request->get['store_id'], $this->request->post);
 
-			$this->load->model('setting/setting');
+		$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->get['store_id']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']));
-		}
+		$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->get['store_id']);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('setting/store');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/store');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			$this->load->model('setting/setting');
-
-			foreach ($this->request->post['selected'] as $store_id) {
-				$this->model_setting_store->deleteStore($store_id);
-
-				$this->model_setting_setting->deleteSetting('config', $store_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']));
-		}
-
-		$this->getList();
 	}
 
 	protected function getList(): void {
@@ -917,7 +881,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/store_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	public function save(): void {
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -1006,28 +970,52 @@ class Store extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete(): bool {
+	public function delete(): void {
+		$this->load->language('setting/store');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('sale/order');
 
-		foreach ($this->request->post['selected'] as $store_id) {
+		foreach ($selected as $store_id) {
 			if (!$store_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+				$json['error'] = $this->language->get('error_default');
 			}
 
 			$store_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
 
 			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			foreach ($selected as $store_id) {
+				$this->model_setting_store->deleteStore($store_id);
+
+				$this->model_setting_setting->deleteSetting('config', $store_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

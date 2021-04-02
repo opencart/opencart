@@ -1,16 +1,48 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Category extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/category');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('catalog/category|add', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('catalog/category ', $data));
 	}
 
 	public function add(): void {
@@ -20,27 +52,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/category');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_category->addCategory($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_category->addCategory($this->request->post);
 
 		$this->getForm();
 	}
@@ -52,63 +64,9 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/category');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
+		$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
 
 		$this->getForm();
-	}
-
-	public function delete(): void {
-		$this->load->language('catalog/category');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/category');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $category_id) {
-				$this->model_catalog_category->deleteCategory($category_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
 	}
 
 	public function repair(): void {
@@ -359,25 +317,19 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['category_description'])) {
-			$data['category_description'] = $this->request->post['category_description'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['category_description'] = $this->model_catalog_category->getDescriptions($this->request->get['category_id']);
 		} else {
 			$data['category_description'] = [];
 		}
 
-		if (isset($this->request->post['path'])) {
-			$data['path'] = $this->request->post['path'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['path'] = $category_info['path'];
 		} else {
 			$data['path'] = '';
 		}
 
-		if (isset($this->request->post['parent_id'])) {
-			$data['parent_id'] = $this->request->post['parent_id'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['parent_id'] = $category_info['parent_id'];
 		} else {
 			$data['parent_id'] = 0;
@@ -385,9 +337,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/filter');
 
-		if (isset($this->request->post['category_filter'])) {
-			$filters = $this->request->post['category_filter'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$filters = $this->model_catalog_category->getFilters($this->request->get['category_id']);
 		} else {
 			$filters = [];
@@ -424,17 +374,13 @@ class Category extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->request->post['category_store'])) {
-			$data['category_store'] = $this->request->post['category_store'];
-		} elseif (isset($this->request->get['category_id'])) {
+		if (isset($this->request->get['category_id'])) {
 			$data['category_store'] = $this->model_catalog_category->getStores($this->request->get['category_id']);
 		} else {
 			$data['category_store'] = [0];
 		}
 
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['image'] = $category_info['image'];
 		} else {
 			$data['image'] = '';
@@ -450,49 +396,37 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['thumb'] = $data['placeholder'];
 		}
 
-		if (isset($this->request->post['top'])) {
-			$data['top'] = $this->request->post['top'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['top'] = $category_info['top'];
 		} else {
 			$data['top'] = 0;
 		}
 
-		if (isset($this->request->post['column'])) {
-			$data['column'] = $this->request->post['column'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['column'] = $category_info['column'];
 		} else {
 			$data['column'] = 1;
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['sort_order'] = $category_info['sort_order'];
 		} else {
 			$data['sort_order'] = 0;
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['status'] = $category_info['status'];
 		} else {
 			$data['status'] = true;
 		}
 		
-		if (isset($this->request->post['category_seo_url'])) {
-			$data['category_seo_url'] = $this->request->post['category_seo_url'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['category_seo_url'] = $this->model_catalog_category->getSeoUrls($this->request->get['category_id']);
 		} else {
 			$data['category_seo_url'] = [];
 		}
 				
-		if (isset($this->request->post['category_layout'])) {
-			$data['category_layout'] = $this->request->post['category_layout'];
-		} elseif (!empty($category_info)) {
+		if (!empty($category_info)) {
 			$data['category_layout'] = $this->model_catalog_category->getLayouts($this->request->get['category_id']);
 		} else {
 			$data['category_layout'] = [];
@@ -509,7 +443,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/category_form', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): void {
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -557,16 +491,38 @@ class Category extends \Opencart\System\Engine\Controller {
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
-		
-		return !$this->error;
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'catalog/category')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	public function delete(): void {
+		$this->load->language('catalog/category');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		return !$this->error;
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/category');
+
+			foreach ($selected as $category_id) {
+				$this->model_catalog_category->deleteCategory($category_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function validateRepair(): bool {

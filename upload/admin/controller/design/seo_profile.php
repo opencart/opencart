@@ -294,20 +294,24 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('design/seo_profile');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->request->post['name']) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['name'] = $this->language->get('error_name');
 		}
 
 		if (!$this->request->post['key']) {
-			$this->error['key'] = $this->language->get('error_key');
+			$json['key'] = $this->language->get('error_key');
 		}
 
 		if (@preg_match(html_entity_decode($this->request->post['regex'], ENT_QUOTES, 'UTF-8'), null) === false) {
-			$this->error['regex'] = $this->language->get('error_regex');
+			$json['regex'] = $this->language->get('error_regex');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

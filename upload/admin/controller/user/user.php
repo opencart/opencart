@@ -344,57 +344,61 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('user/user');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'user/user')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
-			$this->error['username'] = $this->language->get('error_username');
+			$json['username'] = $this->language->get('error_username');
 		}
 
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
-				$this->error['warning'] = $this->language->get('error_username_exists');
+				$json['warning'] = $this->language->get('error_username_exists');
 			}
 		} else {
 			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
-				$this->error['warning'] = $this->language->get('error_username_exists');
+				$json['warning'] = $this->language->get('error_username_exists');
 			}
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
+			$json['firstname'] = $this->language->get('error_firstname');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
+			$json['lastname'] = $this->language->get('error_lastname');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['email'] = $this->language->get('error_email');
+			$json['email'] = $this->language->get('error_email');
 		}
 
 		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
-				$this->error['warning'] = $this->language->get('error_exists_email');
+				$json['warning'] = $this->language->get('error_exists_email');
 			}
 		} else {
 			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists_email');
+				$json['warning'] = $this->language->get('error_exists_email');
 			}
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {
 			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-				$this->error['password'] = $this->language->get('error_password');
+				$json['password'] = $this->language->get('error_password');
 			}
 
 			if ($this->request->post['password'] != $this->request->post['confirm']) {
-				$this->error['confirm'] = $this->language->get('error_confirm');
+				$json['confirm'] = $this->language->get('error_confirm');
 			}
 		}
 

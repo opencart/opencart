@@ -290,12 +290,16 @@ class Translation extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('design/translation');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'design/translation')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['key'])) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
-			$this->error['key'] = $this->language->get('error_key');
+			$json['key'] = $this->language->get('error_key');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

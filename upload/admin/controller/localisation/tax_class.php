@@ -264,16 +264,20 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/tax_class');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['title']) < 3) || (utf8_strlen($this->request->post['title']) > 32)) {
-			$this->error['title'] = $this->language->get('error_title');
+			$json['title'] = $this->language->get('error_title');
 		}
 
 		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
-			$this->error['description'] = $this->language->get('error_description');
+			$json['description'] = $this->language->get('error_description');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

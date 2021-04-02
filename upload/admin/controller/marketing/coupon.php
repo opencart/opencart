@@ -428,25 +428,29 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('marketing/coupon');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'marketing/coupon')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 128)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen($this->request->post['code']) < 3) || (utf8_strlen($this->request->post['code']) > 20)) {
-			$this->error['code'] = $this->language->get('error_code');
+			$json['code'] = $this->language->get('error_code');
 		}
 
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($this->request->post['code']);
 
 		if ($coupon_info) {
 			if (!isset($this->request->get['coupon_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['warning'] = $this->language->get('error_exists');
 			} elseif ($coupon_info['coupon_id'] != (int)$this->request->get['coupon_id']) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['warning'] = $this->language->get('error_exists');
 			}
 		}
 

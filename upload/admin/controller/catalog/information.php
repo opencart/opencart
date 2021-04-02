@@ -323,25 +323,29 @@ class Information extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('catalog/information');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['title'])) < 1) || (utf8_strlen($value['title']) > 64)) {
-				$this->error['title'][$language_id] = $this->language->get('error_title');
+				$json['title'][$language_id] = $this->language->get('error_title');
 			}
 
 			if (utf8_strlen(trim($value['description'])) < 3) {
-				$this->error['description'][$language_id] = $this->language->get('error_description');
+				$json['description'][$language_id] = $this->language->get('error_description');
 			}
 
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$json['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
-		if ($this->request->post['information_seo_url']) {
+		if (!empty($this->request->post['information_seo_url'])) {
 			$this->load->model('design/seo_url');
 
 			foreach ($this->request->post['information_seo_url'] as $store_id => $language) {
@@ -350,17 +354,13 @@ class Information extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && (!isset($this->request->get['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->get['information_id'])) {
-							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
 			}
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -336,18 +336,22 @@ class Option extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('catalog/option');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'catalog/option')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 128)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+				$json['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['option_value'])) {
-			$this->error['warning'] = $this->language->get('error_type');
+			$json['warning'] = $this->language->get('error_type');
 		}
 
 		if (isset($this->request->post['option_value'])) {
@@ -366,7 +370,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
-						$this->error['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($product_option_value['option_value_id']));
+						$json['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($product_option_value['option_value_id']));
 					}
 				}
 			}
@@ -376,14 +380,10 @@ class Option extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					if ((utf8_strlen(trim($option_value_description['name'])) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
-						$this->error['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value');
+						$json['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value');
 					}
 				}
 			}
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

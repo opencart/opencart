@@ -238,13 +238,17 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/stock_status');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'localisation/stock_status')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['stock_status'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+				$json['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
 

@@ -357,22 +357,26 @@ class Marketing extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('marketing/marketing');
+		
+		$json = [];
+		
 		if (!$this->user->hasPermission('modify', 'marketing/marketing')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['name'] = $this->language->get('error_name');
 		}
 
 		if (!$this->request->post['code']) {
-			$this->error['code'] = $this->language->get('error_code');
+			$json['code'] = $this->language->get('error_code');
 		}
 
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
 
 		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
-			$this->error['code'] = $this->language->get('error_exists');
+			$json['code'] = $this->language->get('error_exists');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

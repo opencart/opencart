@@ -22,6 +22,7 @@ $_['entry_customer_group'] = 'Customer Group';
 $_['entry_customer']       = 'Customer';
 $_['entry_affiliate']      = 'Affiliate';
 $_['entry_product']        = 'Products';
+$_['entry_status']		   = 'Status';
 $_['entry_subject']        = 'Subject';
 $_['entry_message']        = 'Message';
 

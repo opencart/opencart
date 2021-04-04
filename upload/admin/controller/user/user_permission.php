@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\User;
 class UserPermission extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('user/user_group');
@@ -207,9 +206,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($user_group_info)) {
+		if (!empty($user_group_info)) {
 			$data['name'] = $user_group_info['name'];
 		} else {
 			$data['name'] = '';
@@ -277,17 +274,13 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$data['extensions'][] = 'extension/' . str_replace('admin/controller/', '', substr($result['path'], 0, strrpos($result['path'], '.')));
 		}
 
-		if (isset($this->request->post['permission']['access'])) {
-			$data['access'] = $this->request->post['permission']['access'];
-		} elseif (isset($user_group_info['permission']['access'])) {
+		if (isset($user_group_info['permission']['access'])) {
 			$data['access'] = $user_group_info['permission']['access'];
 		} else {
 			$data['access'] = [];
 		}
 
-		if (isset($this->request->post['permission']['modify'])) {
-			$data['modify'] = $this->request->post['permission']['modify'];
-		} elseif (isset($user_group_info['permission']['modify'])) {
+		if (isset($user_group_info['permission']['modify'])) {
 			$data['modify'] = $user_group_info['permission']['modify'];
 		} else {
 			$data['modify'] = [];

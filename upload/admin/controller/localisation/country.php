@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class Country extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('localisation/country');
@@ -114,8 +113,6 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/country|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['countries'] = [];
 
 		$filter_data = [
@@ -216,6 +213,16 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('localisation/country');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		if (!isset($this->request->get['country_id'])) {
+			$data['country_id'] = $this->request->get['country_id'];
+		} else {
+			$data['country_id'] = 0;
+		}
+
 		$data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -264,53 +271,43 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['country_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['country_id'])) {
+			$this->load->model('localisation/country');
+
 			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['name'] = $country_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['iso_code_2'])) {
-			$data['iso_code_2'] = $this->request->post['iso_code_2'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['iso_code_2'] = $country_info['iso_code_2'];
 		} else {
 			$data['iso_code_2'] = '';
 		}
 
-		if (isset($this->request->post['iso_code_3'])) {
-			$data['iso_code_3'] = $this->request->post['iso_code_3'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['iso_code_3'] = $country_info['iso_code_3'];
 		} else {
 			$data['iso_code_3'] = '';
 		}
 
-		if (isset($this->request->post['address_format'])) {
-			$data['address_format'] = $this->request->post['address_format'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['address_format'] = $country_info['address_format'];
 		} else {
 			$data['address_format'] = '';
 		}
 
-		if (isset($this->request->post['postcode_required'])) {
-			$data['postcode_required'] = $this->request->post['postcode_required'];
-		} elseif (!empty($country_info)) {
+		if (!empty($country_info)) {
 			$data['postcode_required'] = $country_info['postcode_required'];
 		} else {
 			$data['postcode_required'] = 0;
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($country_info)) {
+	    if (!empty($country_info)) {
 			$data['status'] = $country_info['status'];
 		} else {
 			$data['status'] = '1';
@@ -336,10 +333,17 @@ class Country extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		$this->load->model('localisation/country');
+		if (!$json) {
+			$this->load->model('localisation/country');
 
-		$this->model_localisation_country->addCountry($this->request->post);
-		$this->model_localisation_country->editCountry($this->request->get['country_id'], $this->request->post);
+			if (!isset($this->request->get['country_id'])) {
+				$this->model_localisation_country->addTranslation($this->request->post);
+			} else {
+				$this->model_localisation_country->editTranslation($this->request->get['country_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -365,7 +369,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/zone');
 		$this->load->model('localisation/geo_zone');
 
-		foreach ($this->request->post['selected'] as $country_id) {
+		foreach ($selected as $country_id) {
 			if ($this->config->get('config_country_id') == $country_id) {
 				$json['error'] = $this->language->get('error_default');
 			}

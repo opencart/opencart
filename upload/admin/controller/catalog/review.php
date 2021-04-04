@@ -312,57 +312,43 @@ class Review extends \Opencart\System\Engine\Controller {
 		
 		$this->load->model('catalog/product');
 
-		if (isset($this->request->post['product_id'])) {
-			$data['product_id'] = $this->request->post['product_id'];
-		} elseif (!empty($review_info)) {
+		if (!empty($review_info)) {
 			$data['product_id'] = $review_info['product_id'];
 		} else {
 			$data['product_id'] = '';
 		}
 
-		if (isset($this->request->post['product'])) {
-			$data['product'] = $this->request->post['product'];
-		} elseif (!empty($review_info)) {
+		if (!empty($review_info)) {
 			$data['product'] = $review_info['product'];
 		} else {
 			$data['product'] = '';
 		}
 
-		if (isset($this->request->post['author'])) {
-			$data['author'] = $this->request->post['author'];
-		} elseif (!empty($review_info)) {
+		if (!empty($review_info)) {
 			$data['author'] = $review_info['author'];
 		} else {
 			$data['author'] = '';
 		}
 
-		if (isset($this->request->post['text'])) {
-			$data['text'] = $this->request->post['text'];
-		} elseif (!empty($review_info)) {
+		if (!empty($review_info)) {
 			$data['text'] = $review_info['text'];
 		} else {
 			$data['text'] = '';
 		}
 
-		if (isset($this->request->post['rating'])) {
-			$data['rating'] = $this->request->post['rating'];
-		} elseif (!empty($review_info)) {
+		if (!empty($review_info)) {
 			$data['rating'] = $review_info['rating'];
 		} else {
 			$data['rating'] = '';
 		}
 
-		if (isset($this->request->post['date_added'])) {
-			$data['date_added'] = $this->request->post['date_added'];
-		} elseif (!empty($review_info)) {
+		if (!empty($review_info)) {
 			$data['date_added'] = ($review_info['date_added'] != '0000-00-00 00:00' ? $review_info['date_added'] : date('Y-m-d'));
 		} else {
 			$data['date_added'] = date('Y-m-d');
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($review_info)) {
+		if (!empty($review_info)) {
 			$data['status'] = $review_info['status'];
 		} else {
 			$data['status'] = '';
@@ -404,10 +390,17 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
-		$this->load->model('catalog/review');
+		if (!$json) {
+			$this->load->model('catalog/review');
 
-		$this->model_catalog_review->addReview($this->request->post);
-		$this->model_catalog_review->editReview($this->request->get['review_id'], $this->request->post);
+			if (!isset($this->request->get['review_id'])) {
+				$this->model_catalog_review->addReview($this->request->post);
+			} else {
+				$this->model_catalog_review->editReview($this->request->get['review_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

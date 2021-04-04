@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Marketing extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('marketing/marketing');
@@ -298,25 +297,19 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['store'] = HTTP_CATALOG;
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($marketing_info)) {
+		if (!empty($marketing_info)) {
 			$data['name'] = $marketing_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['description'])) {
-			$data['description'] = $this->request->post['description'];
-		} elseif (!empty($marketing_info)) {
+		if (!empty($marketing_info)) {
 			$data['description'] = $marketing_info['description'];
 		} else {
 			$data['description'] = '';
 		}
 
-		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
-		} elseif (!empty($marketing_info)) {
+		if (!empty($marketing_info)) {
 			$data['code'] = $marketing_info['code'];
 		} else {
 			$data['code'] = uniqid();

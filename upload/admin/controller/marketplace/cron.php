@@ -1,8 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 class Cron extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-	
+
 	public function index(): void {
 		$this->load->language('marketplace/cron');
 

@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class TaxClass extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('localisation/tax_class');
@@ -189,17 +188,13 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
 		}
 
-		if (isset($this->request->post['title'])) {
-			$data['title'] = $this->request->post['title'];
-		} elseif (!empty($tax_class_info)) {
+		if (!empty($tax_class_info)) {
 			$data['title'] = $tax_class_info['title'];
 		} else {
 			$data['title'] = '';
 		}
 
-		if (isset($this->request->post['description'])) {
-			$data['description'] = $this->request->post['description'];
-		} elseif (!empty($tax_class_info)) {
+		if (!empty($tax_class_info)) {
 			$data['description'] = $tax_class_info['description'];
 		} else {
 			$data['description'] = '';
@@ -209,9 +204,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['tax_rates'] = $this->model_localisation_tax_rate->getTaxRates();
 
-		if (isset($this->request->post['tax_rule'])) {
-			$data['tax_rules'] = $this->request->post['tax_rule'];
-		} elseif (!empty($tax_class_info)) {
+		if (!empty($tax_class_info)) {
 			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($this->request->get['tax_class_id']);
 		} else {
 			$data['tax_rules'] = [];

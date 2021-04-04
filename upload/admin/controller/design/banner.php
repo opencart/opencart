@@ -191,17 +191,13 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($banner_info)) {
+		if (!empty($banner_info)) {
 			$data['name'] = $banner_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($banner_info)) {
+		if (!empty($banner_info)) {
 			$data['status'] = $banner_info['status'];
 		} else {
 			$data['status'] = true;
@@ -213,9 +209,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		if (isset($this->request->post['banner_image'])) {
-			$banner_images = $this->request->post['banner_image'];
-		} elseif (!empty($banner_info)) {
+		if (!empty($banner_info)) {
 			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id']);
 		} else {
 			$banner_images = [];
@@ -275,10 +269,17 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('design/banner');
+		if (!$json) {
+			$this->load->model('design/banner');
 
-		$this->model_design_banner->addBanner($this->request->post);
-		$this->model_design_banner->editBanner($this->request->get['banner_id'], $this->request->post);
+			if (!isset($this->request->get['banner_id'])) {
+				$this->model_design_banner->addBanner($this->request->post);
+			} else {
+				$this->model_design_banner->editBanner($this->request->get['banner_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

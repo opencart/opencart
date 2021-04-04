@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Returns extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('sale/return');
@@ -430,113 +429,85 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$return_info = $this->model_sale_returns->getReturn($this->request->get['return_id']);
 		}
 
-		if (isset($this->request->post['order_id'])) {
-			$data['order_id'] = $this->request->post['order_id'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['order_id'] = $return_info['order_id'];
 		} else {
 			$data['order_id'] = '';
 		}
 
-		if (isset($this->request->post['date_ordered'])) {
-			$data['date_ordered'] = $this->request->post['date_ordered'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['date_ordered'] = ($return_info['date_ordered'] != '0000-00-00' ? $return_info['date_ordered'] : '');
 		} else {
 			$data['date_ordered'] = '';
 		}
 
-		if (isset($this->request->post['customer'])) {
-			$data['customer'] = $this->request->post['customer'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['customer'] = $return_info['customer'];
 		} else {
 			$data['customer'] = '';
 		}
 
-		if (isset($this->request->post['customer_id'])) {
-			$data['customer_id'] = $this->request->post['customer_id'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['customer_id'] = $return_info['customer_id'];
 		} else {
 			$data['customer_id'] = '';
 		}
 
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['firstname'] = $return_info['firstname'];
 		} else {
 			$data['firstname'] = '';
 		}
 
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['lastname'] = $return_info['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['email'] = $return_info['email'];
 		} else {
 			$data['email'] = '';
 		}
 
-		if (isset($this->request->post['telephone'])) {
-			$data['telephone'] = $this->request->post['telephone'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['telephone'] = $return_info['telephone'];
 		} else {
 			$data['telephone'] = '';
 		}
 
-		if (isset($this->request->post['product'])) {
-			$data['product'] = $this->request->post['product'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['product'] = $return_info['product'];
 		} else {
 			$data['product'] = '';
 		}
 
-		if (isset($this->request->post['product_id'])) {
-			$data['product_id'] = $this->request->post['product_id'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['product_id'] = $return_info['product_id'];
 		} else {
 			$data['product_id'] = '';
 		}
 
-		if (isset($this->request->post['model'])) {
-			$data['model'] = $this->request->post['model'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['model'] = $return_info['model'];
 		} else {
 			$data['model'] = '';
 		}
 
-		if (isset($this->request->post['quantity'])) {
-			$data['quantity'] = $this->request->post['quantity'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['quantity'] = $return_info['quantity'];
 		} else {
 			$data['quantity'] = '';
 		}
 
-		if (isset($this->request->post['opened'])) {
-			$data['opened'] = $this->request->post['opened'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['opened'] = $return_info['opened'];
 		} else {
 			$data['opened'] = '';
 		}
 
-		if (isset($this->request->post['return_reason_id'])) {
-			$data['return_reason_id'] = $this->request->post['return_reason_id'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['return_reason_id'] = $return_info['return_reason_id'];
 		} else {
 			$data['return_reason_id'] = '';
@@ -546,9 +517,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
 
-		if (isset($this->request->post['return_action_id'])) {
-			$data['return_action_id'] = $this->request->post['return_action_id'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['return_action_id'] = $return_info['return_action_id'];
 		} else {
 			$data['return_action_id'] = '';
@@ -558,17 +527,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['return_actions'] = $this->model_localisation_return_action->getReturnActions();
 
-		if (isset($this->request->post['comment'])) {
-			$data['comment'] = $this->request->post['comment'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['comment'] = $return_info['comment'];
 		} else {
 			$data['comment'] = '';
 		}
 
-		if (isset($this->request->post['return_status_id'])) {
-			$data['return_status_id'] = $this->request->post['return_status_id'];
-		} elseif (!empty($return_info)) {
+		if (!empty($return_info)) {
 			$data['return_status_id'] = $return_info['return_status_id'];
 		} else {
 			$data['return_status_id'] = '';

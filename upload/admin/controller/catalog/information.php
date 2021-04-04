@@ -84,20 +84,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['add'] = $this->url->link('catalog/information|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['informations'] = [];
 
 		$filter_data = [
@@ -328,8 +314,17 @@ class Information extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
-		$this->model_catalog_information->addInformation($this->request->post);
-		$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
+		if (!$json) {
+			$this->load->model('catalog/information');
+
+			if (!isset($this->request->post['information_id'])) {
+				$this->model_catalog_information->addInformation($this->request->post);
+			} else {
+				$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

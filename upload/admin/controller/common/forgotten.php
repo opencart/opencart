@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 class Forgotten extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		if ($this->user->isLogged() && isset($this->request->get['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->response->redirect($this->url->link('common/dashboard'));
@@ -42,11 +40,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('common/login');
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} else {
-			$data['email'] = '';
-		}
+		$data['email'] = '';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');

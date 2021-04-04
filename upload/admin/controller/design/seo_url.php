@@ -370,9 +370,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->request->post['store_id'])) {
-			$data['store_id'] = $this->request->post['store_id'];
-		} elseif (!empty($seo_url_info)) {
+		if (!empty($seo_url_info)) {
 			$data['store_id'] = $seo_url_info['store_id'];
 		} else {
 			$data['store_id'] = '';
@@ -382,33 +380,25 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['language_id'])) {
-			$data['language_id'] = $this->request->post['language_id'];
-		} elseif (!empty($seo_url_info)) {
+		if (!empty($seo_url_info)) {
 			$data['language_id'] = $seo_url_info['language_id'];
 		} else {
 			$data['language_id'] = '';
 		}
 
-		if (isset($this->request->post['key'])) {
-			$data['key'] = $this->request->post['key'];
-		} elseif (!empty($seo_url_info)) {
+		if (!empty($seo_url_info)) {
 			$data['key'] = $seo_url_info['key'];
 		} else {
 			$data['key'] = '';
 		}
 
-		if (isset($this->request->post['value'])) {
-			$data['value'] = $this->request->post['value'];
-		} elseif (!empty($seo_url_info)) {
+		if (!empty($seo_url_info)) {
 			$data['value'] = $seo_url_info['value'];
 		} else {
 			$data['value'] = '';
 		}
 
-		if (isset($this->request->post['keyword'])) {
-			$data['keyword'] = $this->request->post['keyword'];
-		} elseif (!empty($seo_url_info)) {
+		if (!empty($seo_url_info)) {
 			$data['keyword'] = $seo_url_info['keyword'];
 		} else {
 			$data['keyword'] = '';

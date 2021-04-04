@@ -187,9 +187,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['order_status'])) {
-			$data['order_status'] = $this->request->post['order_status'];
-		} elseif (isset($this->request->get['order_status_id'])) {
+		if (isset($this->request->get['order_status_id'])) {
 			$data['order_status'] = $this->model_localisation_order_status->getDescriptions($this->request->get['order_status_id']);
 		} else {
 			$data['order_status'] = [];

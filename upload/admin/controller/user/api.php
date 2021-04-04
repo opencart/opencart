@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\User;
 class Api extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('user/api');
@@ -215,34 +214,26 @@ class Api extends \Opencart\System\Engine\Controller {
 			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
 		}
 
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
-		} elseif (!empty($api_info)) {
+		if (!empty($api_info)) {
 			$data['username'] = $api_info['username'];
 		} else {
 			$data['username'] = '';
 		}
 
-		if (isset($this->request->post['key'])) {
-			$data['key'] = $this->request->post['key'];
-		} elseif (!empty($api_info)) {
+		if (!empty($api_info)) {
 			$data['key'] = $api_info['key'];
 		} else {
 			$data['key'] = '';
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($api_info)) {
+		if (!empty($api_info)) {
 			$data['status'] = $api_info['status'];
 		} else {
 			$data['status'] = 0;
 		}
 
 		// IP
-		if (isset($this->request->post['api_ip'])) {
-			$data['api_ips'] = $this->request->post['api_ip'];
-		} elseif (!empty($api_info)) {
+		if (!empty($api_info)) {
 			$data['api_ips'] = $this->model_user_api->getIps($this->request->get['api_id']);
 		} else {
 			$data['api_ips'] = [];

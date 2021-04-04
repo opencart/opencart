@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Coupon extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('marketing/coupon');
@@ -197,65 +196,49 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['name'] = $coupon_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['code'] = $coupon_info['code'];
 		} else {
 			$data['code'] = '';
 		}
 
-		if (isset($this->request->post['type'])) {
-			$data['type'] = $this->request->post['type'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['type'] = $coupon_info['type'];
 		} else {
 			$data['type'] = '';
 		}
 
-		if (isset($this->request->post['discount'])) {
-			$data['discount'] = $this->request->post['discount'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['discount'] = $coupon_info['discount'];
 		} else {
 			$data['discount'] = '';
 		}
 
-		if (isset($this->request->post['logged'])) {
-			$data['logged'] = $this->request->post['logged'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['logged'] = $coupon_info['logged'];
 		} else {
 			$data['logged'] = '';
 		}
 
-		if (isset($this->request->post['shipping'])) {
-			$data['shipping'] = $this->request->post['shipping'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['shipping'] = $coupon_info['shipping'];
 		} else {
 			$data['shipping'] = '';
 		}
 
-		if (isset($this->request->post['total'])) {
-			$data['total'] = $this->request->post['total'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['total'] = $coupon_info['total'];
 		} else {
 			$data['total'] = '';
 		}
 
-		if (isset($this->request->post['coupon_product'])) {
-			$products = $this->request->post['coupon_product'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$products = $this->model_marketing_coupon->getProducts($this->request->get['coupon_id']);
 		} else {
 			$products = [];
@@ -276,9 +259,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['coupon_category'])) {
-			$categories = $this->request->post['coupon_category'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$categories = $this->model_marketing_coupon->getCategories($this->request->get['coupon_id']);
 		} else {
 			$categories = [];
@@ -299,41 +280,31 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['date_start'])) {
-			$data['date_start'] = $this->request->post['date_start'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['date_start'] = ($coupon_info['date_start'] != '0000-00-00' ? $coupon_info['date_start'] : '');
 		} else {
 			$data['date_start'] = date('Y-m-d', time());
 		}
 
-		if (isset($this->request->post['date_end'])) {
-			$data['date_end'] = $this->request->post['date_end'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['date_end'] = ($coupon_info['date_end'] != '0000-00-00' ? $coupon_info['date_end'] : '');
 		} else {
 			$data['date_end'] = date('Y-m-d', strtotime('+1 month'));
 		}
 
-		if (isset($this->request->post['uses_total'])) {
-			$data['uses_total'] = $this->request->post['uses_total'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['uses_total'] = $coupon_info['uses_total'];
 		} else {
 			$data['uses_total'] = 1;
 		}
 
-		if (isset($this->request->post['uses_customer'])) {
-			$data['uses_customer'] = $this->request->post['uses_customer'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['uses_customer'] = $coupon_info['uses_customer'];
 		} else {
 			$data['uses_customer'] = 1;
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($coupon_info)) {
+		if (!empty($coupon_info)) {
 			$data['status'] = $coupon_info['status'];
 		} else {
 			$data['status'] = true;

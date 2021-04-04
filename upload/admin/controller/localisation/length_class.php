@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class LengthClass extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('localisation/length_class');
@@ -193,17 +192,13 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['length_class_description'])) {
-			$data['length_class_description'] = $this->request->post['length_class_description'];
-		} elseif (!empty($length_class_info)) {
+		if (!empty($length_class_info)) {
 			$data['length_class_description'] = $this->model_localisation_length_class->getDescriptions($this->request->get['length_class_id']);
 		} else {
 			$data['length_class_description'] = [];
 		}
 
-		if (isset($this->request->post['value'])) {
-			$data['value'] = $this->request->post['value'];
-		} elseif (!empty($length_class_info)) {
+		if (!empty($length_class_info)) {
 			$data['value'] = $length_class_info['value'];
 		} else {
 			$data['value'] = '';

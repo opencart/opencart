@@ -241,57 +241,43 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);
 		}
 
-		if (isset($this->request->post['title'])) {
-			$data['title'] = $this->request->post['title'];
-		} elseif (!empty($currency_info)) {
+		if (!empty($currency_info)) {
 			$data['title'] = $currency_info['title'];
 		} else {
 			$data['title'] = '';
 		}
 
-		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
-		} elseif (!empty($currency_info)) {
+		if (!empty($currency_info)) {
 			$data['code'] = $currency_info['code'];
 		} else {
 			$data['code'] = '';
 		}
 
-		if (isset($this->request->post['symbol_left'])) {
-			$data['symbol_left'] = $this->request->post['symbol_left'];
-		} elseif (!empty($currency_info)) {
+		if (!empty($currency_info)) {
 			$data['symbol_left'] = $currency_info['symbol_left'];
 		} else {
 			$data['symbol_left'] = '';
 		}
 
-		if (isset($this->request->post['symbol_right'])) {
-			$data['symbol_right'] = $this->request->post['symbol_right'];
-		} elseif (!empty($currency_info)) {
+		if (!empty($currency_info)) {
 			$data['symbol_right'] = $currency_info['symbol_right'];
 		} else {
 			$data['symbol_right'] = '';
 		}
 
-		if (isset($this->request->post['decimal_place'])) {
-			$data['decimal_place'] = $this->request->post['decimal_place'];
-		} elseif (!empty($currency_info)) {
+		if (!empty($currency_info)) {
 			$data['decimal_place'] = $currency_info['decimal_place'];
 		} else {
 			$data['decimal_place'] = '';
 		}
 
-		if (isset($this->request->post['value'])) {
-			$data['value'] = $this->request->post['value'];
-		} elseif (!empty($currency_info)) {
+		if (!empty($currency_info)) {
 			$data['value'] = $currency_info['value'];
 		} else {
 			$data['value'] = '';
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($currency_info)) {
+		if (!empty($currency_info)) {
 			$data['status'] = $currency_info['status'];
 		} else {
 			$data['status'] = '';
@@ -321,10 +307,17 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
-		$this->load->model('localisation/currency');
+		if (!$json) {
+			$this->load->model('localisation/currency');
 
-		$this->model_localisation_currency->addCurrency($this->request->post);
-		$this->model_localisation_currency->editCurrency($this->request->get['currency_id'], $this->request->post);
+			if (!isset($this->request->get['currency_id'])) {
+				$this->model_localisation_currency->addCurrency($this->request->post);
+			} else {
+				$this->model_localisation_currency->editCurrency($this->request->get['currency_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

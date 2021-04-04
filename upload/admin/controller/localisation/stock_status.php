@@ -187,9 +187,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['stock_status'])) {
-			$data['stock_status'] = $this->request->post['stock_status'];
-		} elseif (isset($this->request->get['stock_status_id'])) {
+		if (isset($this->request->get['stock_status_id'])) {
 			$data['stock_status'] = $this->model_localisation_stock_status->getDescriptions($this->request->get['stock_status_id']);
 		} else {
 			$data['stock_status'] = [];

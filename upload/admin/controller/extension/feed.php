@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 class Feed extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/feed');
 

@@ -193,25 +193,19 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['customer_group_description'])) {
-			$data['customer_group_description'] = $this->request->post['customer_group_description'];
-		} elseif (!empty($customer_group_info)) {
+		if (!empty($customer_group_info)) {
 			$data['customer_group_description'] = $this->model_customer_customer_group->getDescriptions($this->request->get['customer_group_id']);
 		} else {
 			$data['customer_group_description'] = [];
 		}
 
-		if (isset($this->request->post['approval'])) {
-			$data['approval'] = $this->request->post['approval'];
-		} elseif (!empty($customer_group_info)) {
+		if (!empty($customer_group_info)) {
 			$data['approval'] = $customer_group_info['approval'];
 		} else {
 			$data['approval'] = '';
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($customer_group_info)) {
+		if (!empty($customer_group_info)) {
 			$data['sort_order'] = $customer_group_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
@@ -239,11 +233,17 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!$json) {
+			$this->load->model('customer/customer_group');
 
-		$this->load->model('customer/customer_group');
+			if (!isset($this->request->get['customer_group_id'])) {
+				$this->model_customer_customer_group->addCustomerGroup($this->request->post);
+			} else {
+				$this->model_customer_customer_group->editCustomerGroup($this->request->get['custom_field_id'], $this->request->post);
+			}
 
-		$this->model_customer_customer_group->addCustomerGroup($this->request->post);
-		$this->model_customer_customer_group->editCustomerGroup($this->request->get['customer_group_id'], $this->request->post);
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class ReturnStatus extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('localisation/return_status');
@@ -189,9 +188,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['return_status'])) {
-			$data['return_status'] = $this->request->post['return_status'];
-		} elseif (isset($this->request->get['return_status_id'])) {
+		if (isset($this->request->get['return_status_id'])) {
 			$data['return_status'] = $this->model_localisation_return_status->getDescriptions($this->request->get['return_status_id']);
 		} else {
 			$data['return_status'] = [];

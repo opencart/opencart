@@ -175,7 +175,13 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('sale/voucher');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['voucher_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['voucher_id'])) {
 			$data['voucher_id'] = (int)$this->request->get['voucher_id'];
@@ -209,55 +215,39 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['voucher_id'])) {
-			$data['action'] = $this->url->link('sale/voucher|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['voucher_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['voucher_id'])) {
+			$this->load->model('sale/voucher');
+
 			$voucher_info = $this->model_sale_voucher->getVoucher($this->request->get['voucher_id']);
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['code'] = $voucher_info['code'];
 		} else {
 			$data['code'] = '';
 		}
 
-		if (isset($this->request->post['from_name'])) {
-			$data['from_name'] = $this->request->post['from_name'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['from_name'] = $voucher_info['from_name'];
 		} else {
 			$data['from_name'] = '';
 		}
 
-		if (isset($this->request->post['from_email'])) {
-			$data['from_email'] = $this->request->post['from_email'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['from_email'] = $voucher_info['from_email'];
 		} else {
 			$data['from_email'] = '';
 		}
 
-		if (isset($this->request->post['to_name'])) {
-			$data['to_name'] = $this->request->post['to_name'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['to_name'] = $voucher_info['to_name'];
 		} else {
 			$data['to_name'] = '';
 		}
 
-		if (isset($this->request->post['to_email'])) {
-			$data['to_email'] = $this->request->post['to_email'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['to_email'] = $voucher_info['to_email'];
 		} else {
 			$data['to_email'] = '';
@@ -267,33 +257,25 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
-		if (isset($this->request->post['voucher_theme_id'])) {
-			$data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['voucher_theme_id'] = $voucher_info['voucher_theme_id'];
 		} else {
 			$data['voucher_theme_id'] = '';
 		}
 
-		if (isset($this->request->post['message'])) {
-			$data['message'] = $this->request->post['message'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['message'] = $voucher_info['message'];
 		} else {
 			$data['message'] = '';
 		}
 
-		if (isset($this->request->post['amount'])) {
-			$data['amount'] = $this->request->post['amount'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['amount'] = $voucher_info['amount'];
 		} else {
 			$data['amount'] = '';
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($voucher_info)) {
+		if (!empty($voucher_info)) {
 			$data['status'] = $voucher_info['status'];
 		} else {
 			$data['status'] = true;
@@ -349,32 +331,13 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['amount'] = $this->language->get('error_amount');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('sale/voucher');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
 		$this->load->model('sale/voucher');
 
 		$this->model_sale_voucher->addVoucher($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('sale/voucher');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/voucher');
-
 		$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
 
-		$this->getForm();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -472,7 +435,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 			if (isset($this->request->post['selected'])) {
 				$vouchers = $this->request->post['selected'];
-			} elseif (isset($this->request->post['voucher_id'])) {
+			}
+
+			if (isset($this->request->post['voucher_id'])) {
 				$vouchers[] = $this->request->post['voucher_id'];
 			}
 

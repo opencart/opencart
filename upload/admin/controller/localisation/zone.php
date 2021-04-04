@@ -266,33 +266,25 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($zone_info)) {
+		if (!empty($zone_info)) {
 			$data['status'] = $zone_info['status'];
 		} else {
 			$data['status'] = '1';
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($zone_info)) {
+		if (!empty($zone_info)) {
 			$data['name'] = $zone_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
-		} elseif (!empty($zone_info)) {
+		if (!empty($zone_info)) {
 			$data['code'] = $zone_info['code'];
 		} else {
 			$data['code'] = '';
 		}
 
-		if (isset($this->request->post['country_id'])) {
-			$data['country_id'] = $this->request->post['country_id'];
-		} elseif (!empty($zone_info)) {
+		if (!empty($zone_info)) {
 			$data['country_id'] = $zone_info['country_id'];
 		} else {
 			$data['country_id'] = '';

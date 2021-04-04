@@ -189,9 +189,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($layout_info)) {
+		if (!empty($layout_info)) {
 			$data['name'] = $layout_info['name'];
 		} else {
 			$data['name'] = '';
@@ -201,9 +199,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		if (isset($this->request->post['layout_route'])) {
-			$data['layout_routes'] = $this->request->post['layout_route'];
-		} elseif (!empty($layout_info)) {
+		if (!empty($layout_info)) {
 			$data['layout_routes'] = $this->model_design_layout->getRoutes($this->request->get['layout_id']);
 		} else {
 			$data['layout_routes'] = [];
@@ -243,9 +239,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		// Modules layout
-		if (isset($this->request->post['layout_module'])) {
-			$layout_modules = $this->request->post['layout_module'];
-		} elseif (!empty($layout_info)) {
+		if (!empty($layout_info)) {
 			$layout_modules = $this->model_design_layout->getModules($this->request->get['layout_id']);
 		} else {
 			$layout_modules = [];

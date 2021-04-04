@@ -166,7 +166,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {
@@ -207,7 +209,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {
@@ -238,7 +242,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {

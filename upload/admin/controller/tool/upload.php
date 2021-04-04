@@ -1,68 +1,55 @@
 <?php
 namespace Opencart\Admin\Controller\Tool;
 class Upload extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('tool/upload');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('tool/upload');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function delete(): void {
-		$this->load->language('tool/upload');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('tool/upload');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $upload_id) {
-				// Remove file before deleting DB record.
-				$upload_info = $this->model_tool_upload->getUpload($upload_id);
-
-				if ($upload_info && is_file(DIR_UPLOAD . $upload_info['filename'])) {
-					unlink(DIR_UPLOAD . $upload_info['filename']);
-				}
-
-				$this->model_tool_upload->deleteUpload($upload_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$this->getList();
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('catalog/attribute|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('tool/upload', $data));
 	}
 
-	protected function getList(): void {
+	public function list(): void {
+		$this->response->setOutput($this->getList());
+	}
+
+	protected function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
@@ -132,13 +119,15 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$data['uploads'] = [];
 
 		$filter_data = [
-			'filter_name'	    	=> $filter_name,
+			'filter_name'	    => $filter_name,
 			'filter_date_added'	=> $filter_date_added,
-			'sort'              	=> $sort,
-			'order'             	=> $order,
-			'start'             	=> ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'             	=> $this->config->get('config_pagination_admin')
+			'sort'              => $sort,
+			'order'             => $order,
+			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'             => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('tool/upload');
 
 		$upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
 
@@ -155,26 +144,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
 
 		$url = '';
 
@@ -240,6 +209,55 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upload', $data));
 	}
 
+	public function delete(): void {
+		$this->load->language('tool/upload');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('tool/upload');
+
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $upload_id) {
+				// Remove file before deleting DB record.
+				$upload_info = $this->model_tool_upload->getUpload($upload_id);
+
+				if ($upload_info && is_file(DIR_UPLOAD . $upload_info['filename'])) {
+					unlink(DIR_UPLOAD . $upload_info['filename']);
+				}
+
+				$this->model_tool_upload->deleteUpload($upload_id);
+			}
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['filter_name'])) {
+				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			}
+
+			if (isset($this->request->get['filter_date_added'])) {
+				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+			}
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url));
+		}
+
+		$this->getList();
+	}
+
 	protected function validateDelete(): bool {
 		if (!$this->user->hasPermission('modify', 'tool/upload')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -291,9 +309,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$data['breadcrumbs'] = [];
 
 			$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),

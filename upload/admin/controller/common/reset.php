@@ -66,21 +66,9 @@ class Reset extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/reset')
 		];
 
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
-		}
-
-		if (isset($this->error['confirm'])) {
-			$data['error_confirm'] = $this->error['confirm'];
-		} else {
-			$data['error_confirm'] = '';
-		}
-
 		$data['action'] = $this->url->link('common/reset', 'email=' . urlencode($email) . '&code=' . $code);
 
-		$data['cancel'] = $this->url->link('common/login');
+		$data['back'] = $this->url->link('common/login');
 
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];

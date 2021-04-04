@@ -111,12 +111,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
-
 		$url = '';
 
 		if ($order == 'ASC') {
@@ -165,6 +159,8 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -191,18 +187,16 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
+		if (isset($this->request->get['attribute_id'])) {
+			$data['attribute_id'] = $this->request->get['attribute_id'];
+		} else {
+			$data['attribute_id'] = 0;
+		}
 
 		if (isset($this->request->get['attribute_id'])) {
 			$this->load->model('catalog/attribute');
 
 			$attribute_info = $this->model_catalog_attribute->getAttribute($this->request->get['attribute_id']);
-		}
-
-		if (isset($this->request->get['attribute_id'])) {
-			$data['attribute_id'] = $this->request->get['attribute_id'];
-		} else {
-			$data['attribute_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');
@@ -264,10 +258,10 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/attribute');
 
-			if (!isset($this->request->post['attribute_id'])) {
+			if (!isset($this->request->get['attribute_id'])) {
 				$this->model_catalog_attribute->addAttribute($this->request->post);
 			} else {
-				$this->model_catalog_attribute->editAttribute($this->request->post['attribute_id'], $this->request->post);
+				$this->model_catalog_attribute->editAttribute($this->request->get['attribute_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

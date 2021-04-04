@@ -65,9 +65,6 @@ $('#button-save').on('click', function() {
         type: 'post',
         dataType: 'json',
         data: $('#attribute-form :input'),
-        cache: false,
-        contentType: false,
-        processData: false,
         beforeSend: function() {
             $(element).button('loading');
         },

@@ -8,38 +8,50 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('user/api');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('user/api|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('user/api', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('user/api');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/api');
-
-		$this->model_user_api->addApi($this->request->post);
-
-		$this->session->data['success'] = $this->language->get('text_success');
-
-		$this->getForm();
+	public function list(): void {
+		$this->response->setOutput($this->getList());
 	}
 
-	public function edit(): void {
-		$this->load->language('user/api');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/api');
-
-		$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -96,6 +108,8 @@ class Api extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
+		$this->load->model('tool/api');
+
 		$user_total = $this->model_user_api->getTotalApis();
 
 		$results = $this->model_user_api->getApis($filter_data);
@@ -109,26 +123,6 @@ class Api extends \Opencart\System\Engine\Controller {
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'edit'          => $this->url->link('user/api|edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -174,7 +168,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('user/api_list', $data));
+		return $this->load->view('user/api_list', $data);
 	}
 
 	protected function getForm(): void {
@@ -182,24 +176,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['username'])) {
-			$data['error_username'] = $this->error['username'];
-		} else {
-			$data['error_username'] = '';
-		}
-
-		if (isset($this->error['key'])) {
-			$data['error_key'] = $this->error['key'];
-		} else {
-			$data['error_key'] = '';
-		}
 
 		$url = '';
 
@@ -233,7 +209,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$data['action'] = $this->url->link('user/api|edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $this->request->get['api_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['api_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
@@ -297,24 +273,54 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('user/api');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'user/api')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['username'])) < 3) || (utf8_strlen(trim($this->request->post['username'])) > 64)) {
-			$this->error['username'] = $this->language->get('error_username');
+			$json['error']['username'] = $this->language->get('error_username');
 		}
 
 		if ((utf8_strlen($this->request->post['key']) < 64) || (utf8_strlen($this->request->post['key']) > 256)) {
-			$this->error['key'] = $this->language->get('error_key');
+			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if (!isset($this->error['warning']) && !isset($this->request->post['api_ip'])) {
-			$this->error['warning'] = $this->language->get('error_ip');
+		if (!isset($json['error']['warning']) && !isset($this->request->post['api_ip'])) {
+			$json['error']['warning'] = $this->language->get('error_ip');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function add(): void {
+		$this->load->language('user/api');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('user/api');
+
+		$this->model_user_api->addApi($this->request->post);
+
+		$this->session->data['success'] = $this->language->get('text_success');
+
+		$this->getForm();
+	}
+
+	public function edit(): void {
+		$this->load->language('user/api');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('user/api');
+
+		$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
+
+		$this->getForm();
 	}
 
 	public function delete(): void {

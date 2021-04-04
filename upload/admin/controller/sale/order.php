@@ -8,22 +8,82 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('sale/order');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['filter_order_id'])) {
+			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+		}
+
+		if (isset($this->request->get['filter_customer_id'])) {
+			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_order_status'])) {
+			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+		}
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$url .= '&filter_order_status_id=' . (int)$this->request->get['filter_order_status_id'];
+		}
+
+		if (isset($this->request->get['filter_total'])) {
+			$url .= '&filter_total=' . $this->request->get['filter_total'];
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		if (isset($this->request->get['filter_date_modified'])) {
+			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('sale/order|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('sale/order', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	protected function getList(): string {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = (int)$this->request->get['filter_order_id'];
 		} else {
@@ -146,22 +206,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token']);
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token']);
 		$data['add'] = $this->url->link('sale/order|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = str_replace('&amp;', '&', $this->url->link('sale/order|delete', 'user_token=' . $this->session->data['user_token'] . $url));
 
 		$data['orders'] = [];
 
@@ -201,26 +248,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
 
 		$url = '';
 
@@ -368,10 +395,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
 		$this->response->setOutput($this->load->view('sale/order_list', $data));
 	}
 
@@ -462,7 +485,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['edit'] = $this->url->link('sale/order|edit', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
-		$data['cancel'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['customer_add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token']);
 
 		//$data['customer_add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token']);
@@ -1195,6 +1218,16 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_info', $data));
+	}
+
+	public function add(): void {
+		$this->load->language('sale/order');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/order');
+
+		$this->getForm();
 	}
 
 	public function delete(): void {

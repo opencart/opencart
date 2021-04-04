@@ -8,36 +8,78 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('sale/returns');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['filter_return_id'])) {
+			$url .= '&filter_return_id=' . $this->request->get['filter_return_id'];
+		}
+
+		if (isset($this->request->get['filter_order_id'])) {
+			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_product'])) {
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_model'])) {
+			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_return_status_id'])) {
+			$url .= '&filter_return_status_id=' . $this->request->get['filter_return_status_id'];
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		if (isset($this->request->get['filter_date_modified'])) {
+			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('sale/return|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('sale/return', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('sale/return');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/returns');
-
-		$this->model_sale_returns->addReturn($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('sale/return');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/returns');
-
-		$this->model_sale_returns->editReturn($this->request->get['return_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	protected function getList(): string {
 		if (isset($this->request->get['filter_return_id'])) {
 			$filter_return_id = (int)$this->request->get['filter_return_id'];
 		} else {
@@ -150,18 +192,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
 		$data['add'] = $this->url->link('sale/returns|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('sale/returns|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -201,30 +231,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
 
 		$url = '';
 
@@ -346,10 +352,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
 		$this->response->setOutput($this->load->view('sale/return_list', $data));
 	}
 
@@ -357,60 +359,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['return_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->get['return_id'])) {
-			$data['return_id'] = (int)$this->request->get['return_id'];
-		} else {
-			$data['return_id'] = 0;
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['order_id'])) {
-			$data['error_order_id'] = $this->error['order_id'];
-		} else {
-			$data['error_order_id'] = '';
-		}
-
-		if (isset($this->error['firstname'])) {
-			$data['error_firstname'] = $this->error['firstname'];
-		} else {
-			$data['error_firstname'] = '';
-		}
-
-		if (isset($this->error['lastname'])) {
-			$data['error_lastname'] = $this->error['lastname'];
-		} else {
-			$data['error_lastname'] = '';
-		}
-
-		if (isset($this->error['email'])) {
-			$data['error_email'] = $this->error['email'];
-		} else {
-			$data['error_email'] = '';
-		}
-
-		if (isset($this->error['telephone'])) {
-			$data['error_telephone'] = $this->error['telephone'];
-		} else {
-			$data['error_telephone'] = '';
-		}
-
-		if (isset($this->error['product'])) {
-			$data['error_product'] = $this->error['product'];
-		} else {
-			$data['error_product'] = '';
-		}
-
-		if (isset($this->error['model'])) {
-			$data['error_model'] = $this->error['model'];
-		} else {
-			$data['error_model'] = '';
-		}
 
 		$url = '';
 
@@ -476,7 +424,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['action'] = $this->url->link('sale/returns|edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $this->request->get['return_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['return_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$return_info = $this->model_sale_returns->getReturn($this->request->get['return_id']);
@@ -638,44 +586,48 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('sale/returns');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'sale/returns')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (empty($this->request->post['order_id'])) {
-			$this->error['order_id'] = $this->language->get('error_order_id');
+			$json['error']['order_id'] = $this->language->get('error_order_id');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
+			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
+			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
+			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
-			$this->error['product'] = $this->language->get('error_product');
+			$json['error']['product'] = $this->language->get('error_product');
 		}
 
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
-			$this->error['model'] = $this->language->get('error_model');
+			$json['error']['model'] = $this->language->get('error_model');
 		}
 
 		if (empty($this->request->post['return_reason_id'])) {
-			$this->error['reason'] = $this->language->get('error_reason');
+			$json['error']['reason'] = $this->language->get('error_reason');
 		}
 
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+		if ($json['error'] && !isset($json['error']['warning'])) {
+			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -709,6 +661,30 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function add(): void {
+		$this->load->language('sale/return');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/returns');
+
+		$this->model_sale_returns->addReturn($this->request->post);
+
+		$this->getForm();
+	}
+
+	public function edit(): void {
+		$this->load->language('sale/return');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/returns');
+
+		$this->model_sale_returns->editReturn($this->request->get['return_id'], $this->request->post);
+
+		$this->getForm();
 	}
 
 	public function history(): void {

@@ -1,43 +1,55 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 class Banner extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('design/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('design/banner');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('design/banner|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('design/banner', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('design/banner');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/banner');
-
-		$this->model_design_banner->addBanner($this->request->post);
-
-		$this->getForm();
+	public function list(): void {
+		$this->response->setOutput($this->getList());
 	}
 
-	public function edit(): void {
-		$this->load->language('design/banner');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/banner');
-
-		$this->model_design_banner->editBanner($this->request->get['banner_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -70,20 +82,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
 		$data['add'] = $this->url->link('design/banner|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/banner|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['banners'] = [];
 
@@ -93,6 +92,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('design/banner');
 
 		$banner_total = $this->model_design_banner->getTotalBanners();
 
@@ -105,26 +106,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 				'status'    => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'edit'      => $this->url->link('design/banner|edit', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -164,33 +145,11 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('design/banner_list', $data));
+		return $this->load->view('design/banner_list', $data);
 	}
 
-	protected function getForm(): void {
+	protected function form(): void {
 		$data['text_form'] = !isset($this->request->get['banner_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['banner_image'])) {
-			$data['error_banner_image'] = $this->error['banner_image'];
-		} else {
-			$data['error_banner_image'] = [];
-		}
 
 		$url = '';
 
@@ -224,7 +183,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$data['action'] = $this->url->link('design/banner|edit', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $this->request->get['banner_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['banner_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$banner_info = $this->model_design_banner->getBanner($this->request->get['banner_id']);
@@ -294,23 +253,32 @@ class Banner extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('design/banner');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'design/banner')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['name'])) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (isset($this->request->post['banner_image'])) {
 			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
 				foreach ($banner_image as $key => $value) {
 					if ((utf8_strlen(trim($value['title'])) < 2) || (utf8_strlen($value['title']) > 64)) {
-						$this->error['banner_image'][$language_id][$key] = $this->language->get('error_title');
+						$json['error']['banner_image'][$language_id][$key] = $this->language->get('error_title');
 					}
 				}
 			}
 		}
+
+		$this->load->model('design/banner');
+
+		$this->model_design_banner->addBanner($this->request->post);
+		$this->model_design_banner->editBanner($this->request->get['banner_id'], $this->request->post);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

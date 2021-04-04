@@ -8,36 +8,50 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('localisation/language');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('localisation/language|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('localisation/language', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('localisation/language');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/language');
-
-		$this->model_localisation_language->addLanguage($this->request->post);
-
-		$this->getForm();
+	public function list(): void {
+		$this->response->setOutput($this->getList());
 	}
 
-	public function edit(): void {
-		$this->load->language('localisation/language');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/language');
-
-		$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -70,20 +84,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
 		$data['add'] = $this->url->link('localisation/language|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/language|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['languages'] = [];
 
@@ -93,6 +94,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('localisation/language');
 
 		$language_total = $this->model_localisation_language->getTotalLanguages();
 
@@ -106,26 +109,6 @@ class Language extends \Opencart\System\Engine\Controller {
 				'sort_order'  => $result['sort_order'],
 				'edit'        => $this->url->link('localisation/language|edit', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $result['language_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -165,41 +148,13 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('localisation/language_list', $data));
+		return $this->load->view('localisation/language_list', $data);
 	}
 
 	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['code'])) {
-			$data['error_code'] = $this->error['code'];
-		} else {
-			$data['error_code'] = '';
-		}
-		
-		if (isset($this->error['locale'])) {
-			$data['error_locale'] = $this->error['locale'];
-		} else {
-			$data['error_locale'] = '';
-		}
-		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -232,7 +187,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$data['action'] = $this->url->link('localisation/language|edit', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $this->request->get['language_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
@@ -294,33 +249,42 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/language');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'localisation/language')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['name'])) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['code'])) < 2) || (utf8_strlen($this->request->post['code']) > 5)) {
-			$this->error['code'] = $this->language->get('error_code');
+			$json['error']['code'] = $this->language->get('error_code');
 		}
 		
 		if ((utf8_strlen(trim($this->request->post['locale'])) < 2) || (utf8_strlen($this->request->post['locale']) > 255)) {
-			$this->error['locale'] = $this->language->get('error_locale');
+			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 		
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
 
 		if (!isset($this->request->get['language_id'])) {
 			if ($language_info) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		} else {
 			if ($language_info && ($this->request->get['language_id'] != $language_info['language_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
+
+		$this->load->model('localisation/language');
+
+		$this->model_localisation_language->addLanguage($this->request->post);
+		$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

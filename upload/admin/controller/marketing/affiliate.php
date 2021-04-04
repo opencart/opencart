@@ -1,43 +1,51 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Affiliate extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('marketing/affiliate');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('marketing/affiliate|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('marketing/affiliate', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('marketing/affiliate');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('marketing/affiliate');
-
-		$this->model_marketing_affiliate->addAffiliate($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('marketing/affiliate');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('marketing/affiliate');
-
-		$this->model_marketing_affiliate->editAffiliate($this->request->get['customer_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	protected function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
@@ -120,20 +128,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
 		$data['add'] = $this->url->link('marketing/affiliate|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('marketing/affiliate|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('customer/customer');
 
@@ -150,6 +145,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'             => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('localisation/affiliate');
 
 		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 
@@ -170,26 +167,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
 
 		$url = '';
 
@@ -277,11 +254,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('marketing/affiliate_list', $data));
+		return $this->load->view('marketing/affiliate_list', $data);
 	}
 
 	protected function getForm(): void {
@@ -292,48 +265,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['tracking'])) {
-			$data['error_tracking'] = $this->error['tracking'];
-		} else {
-			$data['error_tracking'] = '';
-		}
-
-		if (isset($this->error['cheque'])) {
-			$data['error_cheque'] = $this->error['cheque'];
-		} else {
-			$data['error_cheque'] = '';
-		}
-
-		if (isset($this->error['paypal'])) {
-			$data['error_paypal'] = $this->error['paypal'];
-		} else {
-			$data['error_paypal'] = '';
-		}
-
-		if (isset($this->error['bank_account_name'])) {
-			$data['error_bank_account_name'] = $this->error['bank_account_name'];
-		} else {
-			$data['error_bank_account_name'] = '';
-		}
-
-		if (isset($this->error['bank_account_number'])) {
-			$data['error_bank_account_number'] = $this->error['bank_account_number'];
-		} else {
-			$data['error_bank_account_number'] = '';
-		}
-
-		if (isset($this->error['custom_field'])) {
-			$data['error_custom_field'] = $this->error['custom_field'];
-		} else {
-			$data['error_custom_field'] = [];
-		}
 
 		$url = '';
 
@@ -387,7 +318,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['action'] = $this->url->link('marketing/affiliate|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Affiliate
 		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -568,8 +499,12 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('localisation/affiliate');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('customer/customer');
@@ -577,38 +512,38 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
 
 		if (!$customer_info) {
-			$this->error['warning'] = $this->language->get('error_customer');
+			$json['error']['warning'] = $this->language->get('error_customer');
 		}
 
 		// Check to see if customer is already a affiliate
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
 
 		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
-			$this->error['warning'] = $this->language->get('error_already');
+			$json['error']['warning'] = $this->language->get('error_already');
 		}
 
 		if (!$this->request->post['tracking']) {
-			$this->error['tracking'] = $this->language->get('error_tracking');
+			$json['error']['tracking'] = $this->language->get('error_tracking');
 		}
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($this->request->post['tracking']);
 
 		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
-			$this->error['tracking'] = $this->language->get('error_exists');
+			$json['error']['tracking'] = $this->language->get('error_exists');
 		}
 
 		// Payment validation
 		if ($this->request->post['payment'] == 'cheque' && $this->request->post['cheque'] == '') {
-			$this->error['cheque'] = $this->language->get('error_cheque');
+			$json['error']['cheque'] = $this->language->get('error_cheque');
 		} elseif ($this->request->post['payment'] == 'paypal' && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
-			$this->error['paypal'] = $this->language->get('error_paypal');
+			$json['error']['paypal'] = $this->language->get('error_paypal');
 		} elseif ($this->request->post['payment'] == 'bank') {
 			if ($this->request->post['bank_account_name'] == '') {
-				$this->error['bank_account_name'] = $this->language->get('error_bank_account_name');
+				$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
 			}
 
 			if ($this->request->post['bank_account_number'] == '') {
-				$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
+				$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
 			}
 		}
 
@@ -620,19 +555,43 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if (($custom_field['location'] == 'affiliate') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['location'] == 'affiliate') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
 		}
 
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+		if ($json['error'] && !isset($json['error']['warning'])) {
+			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function add(): void {
+		$this->load->language('marketing/affiliate');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('marketing/affiliate');
+
+		$this->model_marketing_affiliate->addAffiliate($this->request->post);
+
+		$this->getForm();
+	}
+
+	public function edit(): void {
+		$this->load->language('marketing/affiliate');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('marketing/affiliate');
+
+		$this->model_marketing_affiliate->editAffiliate($this->request->get['customer_id'], $this->request->post);
+
+		$this->getForm();
 	}
 
 	public function delete(): void {

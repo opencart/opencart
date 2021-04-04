@@ -54,20 +54,6 @@ class Captcha extends \Opencart\System\Engine\Controller {
 		// Had top load again because the method is called directly.
 		$this->load->language('extension/captcha');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		$available = [];
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/captcha/%.php');

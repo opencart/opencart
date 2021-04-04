@@ -53,20 +53,6 @@ class Feed extends \Opencart\System\Engine\Controller {
 	public function getList(): string {
 		$this->load->language('extension/feed');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		$available = [];
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/feed/%.php');

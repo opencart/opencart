@@ -48,6 +48,10 @@ class Registry {
 	 * @return	mixed
      */
 	public function get(string $key): object {
+		if (!$this->data[$key]) {
+			exit('Missing ' . $key);
+		}
+
 		return isset($this->data[$key]) ? $this->data[$key] : '';
 	}
 

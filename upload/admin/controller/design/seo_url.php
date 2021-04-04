@@ -1,43 +1,75 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 class SeoUrl extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('design/seo_url');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('design/seo_url');
+		$url = '';
 
-		$this->getList();
+		if (isset($this->request->get['filter_keyword'])) {
+			$url .= '&filter_keyword=' . urlencode(html_entity_decode((string)$this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_key'])) {
+			$url .= '&filter_key=' . urlencode(html_entity_decode((string)$this->request->get['filter_key'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_value'])) {
+			$url .= '&filter_value=' . urlencode(html_entity_decode((string)$this->request->get['filter_value'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+		}
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . (string)$this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . (string)$this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . (int)$this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('design/seo_url|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('design/seo_url', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('design/seo_url');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/seo_url');
-
-		$this->model_design_seo_url->addSeoUrl($this->request->post);
-
-		$this->getForm();
+	public function list(): void {
+		$this->response->setOutput($this->getList());
 	}
-
-	public function edit(): void {
-		$this->load->language('design/seo_url');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/seo_url');
-
-		$this->model_design_seo_url->editSeoUrl($this->request->get['seo_url_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	
+	protected function getList(): string {
 		if (isset($this->request->get['filter_keyword'])) {
 			$filter_keyword = (string)$this->request->get['filter_keyword'];
 		} else {
@@ -120,20 +152,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
 		$data['add'] = $this->url->link('design/seo_url|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/seo_url|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
 
@@ -150,6 +169,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'              => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('design/seo_url');
 
 		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
@@ -176,26 +197,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
 
 		$url = '';
 
@@ -287,39 +288,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('design/seo_url_list', $data));
+		return $this->load->view('design/seo_url_list', $data);
 	}
 
 	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['seo_url_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['key'])) {
-			$data['error_key'] = $this->error['key'];
-		} else {
-			$data['error_key'] = '';
-		}
-
-		if (isset($this->error['value'])) {
-			$data['error_value'] = $this->error['value'];
-		} else {
-			$data['error_value'] = '';
-		}
-
-		if (isset($this->error['keyword'])) {
-			$data['error_keyword'] = $this->error['keyword'];
-		} else {
-			$data['error_keyword'] = '';
-		}
 
 		$url = '';
 
@@ -373,7 +346,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$data['action'] = $this->url->link('design/seo_url|edit', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $this->request->get['seo_url_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['seo_url_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$seo_url_info = $this->model_design_seo_url->getSeoUrl($this->request->get['seo_url_id']);
@@ -449,38 +422,66 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('design/seo_url');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'design/seo_url')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['key'])) < 1) || (utf8_strlen($this->request->post['key']) > 64)) {
-			$this->error['key'] = $this->language->get('error_key');
+			$json['error']['key'] = $this->language->get('error_key');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['value'])) < 1) || (utf8_strlen($this->request->post['value']) > 255)) {
-			$this->error['value'] = $this->language->get('error_value');
+			$json['error']['value'] = $this->language->get('error_value');
 		}
 
 		// Check if there is already a key value pair on the same store using the same language
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($this->request->post['key'], $this->request->post['value'], $this->request->post['store_id'], $this->request->post['language_id']);
 
 		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != (int)$this->request->get['seo_url_id'])) {
-			$this->error['value'] = $this->language->get('error_value_exists');
+			$json['error']['value'] = $this->language->get('error_value_exists');
 		}
 
 		if (preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {
-			$this->error['keyword'] = $this->language->get('error_keyword');
+			$json['error']['keyword'] = $this->language->get('error_keyword');
 		}
 
 		// Check if keyword already exists and on the same store using the same language
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id']);
 
 		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != $this->request->get['seo_url_id'])) {
-			$this->error['keyword'] = $this->language->get('error_keyword_exists');
+			$json['error']['keyword'] = $this->language->get('error_keyword_exists');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function add(): void {
+		$this->load->language('design/seo_url');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('design/seo_url');
+
+		$this->model_design_seo_url->addSeoUrl($this->request->post);
+
+		$this->getForm();
+	}
+
+	public function edit(): void {
+		$this->load->language('design/seo_url');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('design/seo_url');
+
+		$this->model_design_seo_url->editSeoUrl($this->request->get['seo_url_id'], $this->request->post);
+
+		$this->getForm();
 	}
 
 	public function delete(): void {

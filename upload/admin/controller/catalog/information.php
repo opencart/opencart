@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Information extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('catalog/information');
 
@@ -10,34 +8,50 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/information');
 
-		$this->getList();
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('catalog/information|add', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('catalog/information', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('catalog/information');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/information');
-
-		$this->model_catalog_information->addInformation($this->request->post);
-
-		$this->getForm();
+	public function list(): void {
+		$this->response->setOutput($this->getList());
 	}
 
-	public function edit(): void {
-		$this->load->language('catalog/information');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/information');
-
-		$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -83,7 +97,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/information|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/information|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['informations'] = [];
 
@@ -93,6 +106,8 @@ class Information extends \Opencart\System\Engine\Controller {
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('catalog/information');
 
 		$information_total = $this->model_catalog_information->getTotalInformations();
 
@@ -105,26 +120,6 @@ class Information extends \Opencart\System\Engine\Controller {
 				'sort_order'     => $result['sort_order'],
 				'edit'           => $this->url->link('catalog/information|edit', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -164,48 +159,14 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('catalog/information_list', $data));
+		return $this->load->view('catalog/information_list', $data);
 	}
 
-	protected function getForm(): void {
+	protected function form(): void {
 		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
 		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
 
 		$data['text_form'] = !isset($this->request->get['information_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['title'])) {
-			$data['error_title'] = $this->error['title'];
-		} else {
-			$data['error_title'] = [];
-		}
-
-		if (isset($this->error['description'])) {
-			$data['error_description'] = $this->error['description'];
-		} else {
-			$data['error_description'] = [];
-		}
-
-		if (isset($this->error['meta_title'])) {
-			$data['error_meta_title'] = $this->error['meta_title'];
-		} else {
-			$data['error_meta_title'] = [];
-		}
-
-		if (isset($this->error['keyword'])) {
-			$data['error_keyword'] = $this->error['keyword'];
-		} else {
-			$data['error_keyword'] = [];
-		}
 
 		$url = '';
 
@@ -239,7 +200,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['action'] = $this->url->link('catalog/information|edit', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $this->request->get['information_id'] . $url);
 		}
 
-		$data['cancel'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
@@ -323,21 +284,25 @@ class Information extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('catalog/information');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['title'])) < 1) || (utf8_strlen($value['title']) > 64)) {
-				$this->error['title'][$language_id] = $this->language->get('error_title');
+				$json['error']['title' . $language_id] = $this->language->get('error_title');
 			}
 
 			if (utf8_strlen(trim($value['description'])) < 3) {
-				$this->error['description'][$language_id] = $this->language->get('error_description');
+				$json['error']['description'][$language_id] = $this->language->get('error_description');
 			}
 
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$json['error']['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
@@ -350,18 +315,21 @@ class Information extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && (!isset($this->request->get['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->get['information_id'])) {
-							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
 			}
 		}
 
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+		if ($json['error'] && !isset($json['error']['warning'])) {
+			$json['error']['warning'] = $this->language->get('error_warning');
 		}
+
+		$this->model_catalog_information->addInformation($this->request->post);
+		$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

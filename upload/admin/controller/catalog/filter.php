@@ -1,60 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Filter extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('catalog/filter');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/filter');
-
-		$this->getList();
-	}
-
-	public function add(): void {
-		$this->load->language('catalog/filter');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/filter');
-
-		$this->model_catalog_filter->addFilter($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('catalog/filter');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/filter');
-
-		$this->model_catalog_filter->editFilter($this->request->get['filter_group_id'], $this->request->post);
-
-		$this->getForm();
-	}
-
-	protected function getList(): void {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'fgd.name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
 
 		$url = '';
 
@@ -83,7 +33,55 @@ class Filter extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/filter|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/filter|delete', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('catalog/filter', $data));
+	}
+
+	public function list(): void {
+		$this->response->setOutput($this->getList());
+	}
+
+	protected function getList(): string {
+		if (isset($this->request->get['sort'])) {
+			$sort = $this->request->get['sort'];
+		} else {
+			$sort = 'fgd.name';
+		}
+
+		if (isset($this->request->get['order'])) {
+			$order = $this->request->get['order'];
+		} else {
+			$order = 'ASC';
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;		}
+
+		$url = '';
+
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
+		}
+
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['add'] = $this->url->link('catalog/filter|add', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['filters'] = [];
 
@@ -93,6 +91,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('catalog/filter');
 
 		$filter_total = $this->model_catalog_filter->getTotalGroups();
 
@@ -105,26 +105,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 				'sort_order'      => $result['sort_order'],
 				'edit'            => $this->url->link('catalog/filter|edit', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -164,33 +144,11 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('catalog/filter_list', $data));
+		return $this->load->view('catalog/filter_list', $data);
 	}
 
 	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['filter_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['group'])) {
-			$data['error_group'] = $this->error['group'];
-		} else {
-			$data['error_group'] = [];
-		}
-
-		if (isset($this->error['filter'])) {
-			$data['error_filter'] = $this->error['filter'];
-		} else {
-			$data['error_filter'] = [];
-		}
 
 		$url = '';
 
@@ -219,14 +177,16 @@ class Filter extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['filter_group_id'])) {
-			$data['action'] = $this->url->link('catalog/filter|add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['filter_group_id'] = $this->request->get['filter_group_id'];
 		} else {
-			$data['action'] = $this->url->link('catalog/filter|edit', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $this->request->get['filter_group_id'] . $url);
+			$data['filter_group_id'] = 0;
 		}
 
-		$data['cancel'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['filter_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['filter_group_id'])) {
+			$this->load->model('catalog/filter');
+
 			$filter_group_info = $this->model_catalog_filter->getGroup($this->request->get['filter_group_id']);
 		}
 
@@ -262,13 +222,17 @@ class Filter extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
+		$this->load->language('catalog/filter');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'catalog/filter')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['filter_group_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 64)) {
-				$this->error['group'][$language_id] = $this->language->get('error_group');
+				$json['error']['group'][$language_id] = $this->language->get('error_group');
 			}
 		}
 
@@ -276,16 +240,24 @@ class Filter extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['filter'] as $key => $filter) {
 				foreach ($filter['filter_description'] as $language_id => $filter_description) {
 					if ((utf8_strlen(trim($filter_description['name'])) < 1) || (utf8_strlen($filter_description['name']) > 64)) {
-						$this->error['filter'][$key][$language_id] = $this->language->get('error_name');
+						$json['error']['filter'][$key][$language_id] = $this->language->get('error_name');
 					}
 				}
 			}
 		} else {
-			$this->error['warning']  = $this->language->get('error_values');
+			$json['error']['warning']  = $this->language->get('error_values');
 		}
 
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+		if ($json['error'] && !isset($json['error']['warning'])) {
+			$json['error']['warning'] = $this->language->get('error_warning');
+		}
+
+		$this->load->model('catalog/filter');
+
+		if (!isset($this->request->get['filter_group_id'])) {
+			$this->model_catalog_filter->addFilter($this->request->post);
+		} else {
+			$this->model_catalog_filter->editFilter($this->request->get['filter_group_id'], $this->request->post);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -26,12 +26,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('common/login'));
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -46,7 +40,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('common/forgotten');
 
-		$data['cancel'] = $this->url->link('common/login');
+		$data['back'] = $this->url->link('common/login');
 
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];

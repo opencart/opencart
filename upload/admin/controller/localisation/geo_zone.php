@@ -82,8 +82,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/geo_zone|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['geo_zones'] = [];
 
 		$filter_data = [

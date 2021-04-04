@@ -166,8 +166,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$this->load->model('setting/store');
 
 		$stores = $this->model_setting_store->getStores();

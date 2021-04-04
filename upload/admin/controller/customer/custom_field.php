@@ -82,8 +82,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('customer/custom_field|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['custom_fields'] = [];
 
 		$filter_data = [

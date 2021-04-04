@@ -79,8 +79,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('marketing/coupon|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['coupons'] = [];
 
 		$filter_data = [

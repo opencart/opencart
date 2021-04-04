@@ -82,8 +82,6 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/stock_status|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['stock_statuses'] = [];
 
 		$filter_data = [

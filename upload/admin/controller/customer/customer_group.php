@@ -82,8 +82,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('customer/customer_group|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['customer_groups'] = [];
 
 		$filter_data = [

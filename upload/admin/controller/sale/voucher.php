@@ -90,9 +90,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('sale/voucher|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('sale/voucher|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['vouchers'] = [];
 
 		$filter_data = [

@@ -128,8 +128,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('marketing/affiliate|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$this->load->model('customer/customer');
 
 		$data['affiliates'] = [];

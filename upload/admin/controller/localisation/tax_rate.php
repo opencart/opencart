@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class TaxRate extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('localisation/tax_rate');
@@ -199,33 +198,25 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($tax_rate_info)) {
+	    if (!empty($tax_rate_info)) {
 			$data['name'] = $tax_rate_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['rate'])) {
-			$data['rate'] = $this->request->post['rate'];
-		} elseif (!empty($tax_rate_info)) {
+		if (!empty($tax_rate_info)) {
 			$data['rate'] = $tax_rate_info['rate'];
 		} else {
 			$data['rate'] = '';
 		}
 
-		if (isset($this->request->post['type'])) {
-			$data['type'] = $this->request->post['type'];
-		} elseif (!empty($tax_rate_info)) {
+		if (!empty($tax_rate_info)) {
 			$data['type'] = $tax_rate_info['type'];
 		} else {
 			$data['type'] = '';
 		}
 
-		if (isset($this->request->post['tax_rate_customer_group'])) {
-			$data['tax_rate_customer_group'] = $this->request->post['tax_rate_customer_group'];
-		} elseif (!empty($tax_rate_info)) {
+		if (!empty($tax_rate_info)) {
 			$data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getCustomerGroups($this->request->get['tax_rate_id']);
 		} else {
 			$data['tax_rate_customer_group'] = [$this->config->get('config_customer_group_id')];
@@ -235,9 +226,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['geo_zone_id'])) {
-			$data['geo_zone_id'] = $this->request->post['geo_zone_id'];
-		} elseif (!empty($tax_rate_info)) {
+		if (!empty($tax_rate_info)) {
 			$data['geo_zone_id'] = $tax_rate_info['geo_zone_id'];
 		} else {
 			$data['geo_zone_id'] = '';

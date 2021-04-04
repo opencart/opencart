@@ -191,17 +191,13 @@ class User extends \Opencart\System\Engine\Controller {
 			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
 		}
 
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['username'] = $user_info['username'];
 		} else {
 			$data['username'] = '';
 		}
 
-		if (isset($this->request->post['user_group_id'])) {
-			$data['user_group_id'] = $this->request->post['user_group_id'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['user_group_id'] = $user_info['user_group_id'];
 		} else {
 			$data['user_group_id'] = '';
@@ -211,45 +207,29 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
 
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
+		$data['password'] = '';
+		$data['confirm'] = '';
 
-		if (isset($this->request->post['confirm'])) {
-			$data['confirm'] = $this->request->post['confirm'];
-		} else {
-			$data['confirm'] = '';
-		}
 
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['firstname'] = $user_info['firstname'];
 		} else {
 			$data['firstname'] = '';
 		}
 
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['lastname'] = $user_info['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['email'] = $user_info['email'];
 		} else {
 			$data['email'] = '';
 		}
 
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['image'] = $user_info['image'];
 		} else {
 			$data['image'] = '';
@@ -265,9 +245,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['thumb'] = $data['placeholder'];
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['status'] = $user_info['status'];
 		} else {
 			$data['status'] = 0;

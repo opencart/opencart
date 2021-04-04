@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 class Login extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('common/login');
 

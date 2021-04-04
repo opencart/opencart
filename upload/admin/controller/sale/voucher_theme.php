@@ -145,6 +145,10 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('sale/voucher_theme');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['voucher_theme_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -174,14 +178,16 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['voucher_theme_id'])) {
-			$data['action'] = $this->url->link('sale/voucher_theme|add', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['voucher_theme_id'] = $this->request->get['voucher_theme_id'];
 		} else {
-			$data['action'] = $this->url->link('sale/voucher_theme|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id'] . $url);
+			$data['voucher_theme_id'] = 0;
 		}
 
 		$data['back'] = $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['voucher_theme_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['voucher_theme_id'])) {
+			$this->load->model('sale/voucher_theme');
+
 			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
 		}
 
@@ -191,17 +197,13 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['voucher_theme_description'])) {
-			$data['voucher_theme_description'] = $this->request->post['voucher_theme_description'];
-		} elseif (!empty($voucher_theme_info)) {
+		if (!empty($voucher_theme_info)) {
 			$data['voucher_theme_description'] = $this->model_sale_voucher_theme->getDescriptions($this->request->get['voucher_theme_id']);
 		} else {
 			$data['voucher_theme_description'] = [];
 		}
 
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($voucher_theme_info)) {
+		if (!empty($voucher_theme_info)) {
 			$data['image'] = $voucher_theme_info['image'];
 		} else {
 			$data['image'] = '';
@@ -243,30 +245,19 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$json['error']['image'] = $this->language->get('error_image');
 		}
 
+		$this->load->model('sale/voucher_theme');
+
+		$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
+		$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
 	public function add(): void {
-		$this->load->language('sale/voucher_theme');
 
-		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('sale/voucher_theme');
 
-		$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('sale/voucher_theme');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/voucher_theme');
-
-		$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
 
 		$this->getForm();
 	}

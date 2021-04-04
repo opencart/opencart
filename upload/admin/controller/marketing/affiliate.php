@@ -258,6 +258,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('marketing/affiliate');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['customer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -321,7 +325,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Affiliate
-		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['customer_id'])) {
+			$this->load->model('marketing/affiliate');
+
 			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->get['customer_id']);
 		}
 
@@ -331,129 +337,97 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['customer_id'] = 0;
 		}
 
-		if (isset($this->request->post['customer'])) {
-			$data['customer'] = $this->request->post['customer'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['customer'] = $affiliate_info['customer'];
 		} else {
 			$data['customer'] = '';
 		}
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['customer_group_id'] = $affiliate_info['customer_group_id'];
 		} else {
 			$data['customer_group_id'] = '';
 		}
 
-		if (isset($this->request->post['company'])) {
-			$data['company'] = $this->request->post['company'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['company'] = $affiliate_info['company'];
 		} else {
 			$data['company'] = '';
 		}
 
-		if (isset($this->request->post['website'])) {
-			$data['website'] = $this->request->post['website'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['website'] = $affiliate_info['website'];
 		} else {
 			$data['website'] = '';
 		}
 
-		if (isset($this->request->post['tracking'])) {
-			$data['tracking'] = $this->request->post['tracking'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['tracking'] = $affiliate_info['tracking'];
 		} else {
 			$data['tracking'] = token(10);
 		}
 
-		if (isset($this->request->post['commission'])) {
-			$data['commission'] = $this->request->post['commission'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['commission'] = $affiliate_info['commission'];
 		} else {
 			$data['commission'] = $this->config->get('config_affiliate_commission');
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['status'] = $affiliate_info['status'];
 		} else {
 			$data['status'] = '';
 		}
 
-		if (isset($this->request->post['tax'])) {
-			$data['tax'] = $this->request->post['tax'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['tax'] = $affiliate_info['tax'];
 		} else {
 			$data['tax'] = '';
 		}
 
-		if (isset($this->request->post['payment'])) {
-			$data['payment'] = $this->request->post['payment'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['payment'] = $affiliate_info['payment'];
 		} else {
 			$data['payment'] = 'cheque';
 		}
 
-		if (isset($this->request->post['cheque'])) {
-			$data['cheque'] = $this->request->post['cheque'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['cheque'] = $affiliate_info['cheque'];
 		} else {
 			$data['cheque'] = '';
 		}
 
-		if (isset($this->request->post['paypal'])) {
-			$data['paypal'] = $this->request->post['paypal'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['paypal'] = $affiliate_info['paypal'];
 		} else {
 			$data['paypal'] = '';
 		}
 
-		if (isset($this->request->post['bank_name'])) {
-			$data['bank_name'] = $this->request->post['bank_name'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['bank_name'] = $affiliate_info['bank_name'];
 		} else {
 			$data['bank_name'] = '';
 		}
 
-		if (isset($this->request->post['bank_branch_number'])) {
-			$data['bank_branch_number'] = $this->request->post['bank_branch_number'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['bank_branch_number'] = $affiliate_info['bank_branch_number'];
 		} else {
 			$data['bank_branch_number'] = '';
 		}
 
-		if (isset($this->request->post['bank_swift_code'])) {
-			$data['bank_swift_code'] = $this->request->post['bank_swift_code'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['bank_swift_code'] = $affiliate_info['bank_swift_code'];
 		} else {
 			$data['bank_swift_code'] = '';
 		}
 
-		if (isset($this->request->post['bank_account_name'])) {
-			$data['bank_account_name'] = $this->request->post['bank_account_name'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['bank_account_name'] = $affiliate_info['bank_account_name'];
 		} else {
 			$data['bank_account_name'] = '';
 		}
 
-		if (isset($this->request->post['bank_account_number'])) {
-			$data['bank_account_number'] = $this->request->post['bank_account_number'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['bank_account_number'] = $affiliate_info['bank_account_number'];
 		} else {
 			$data['bank_account_number'] = '';
@@ -483,9 +457,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->request->post['custom_field'])) {
-			$data['affiliate_custom_field'] = $this->request->post['custom_field'];
-		} elseif (!empty($affiliate_info)) {
+		if (!empty($affiliate_info)) {
 			$data['affiliate_custom_field'] = json_decode($affiliate_info['custom_field'], true);
 		} else {
 			$data['affiliate_custom_field'] = [];
@@ -566,32 +538,14 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('marketing/affiliate');
-
-		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('marketing/affiliate');
 
 		$this->model_marketing_affiliate->addAffiliate($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('marketing/affiliate');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('marketing/affiliate');
-
 		$this->model_marketing_affiliate->editAffiliate($this->request->get['customer_id'], $this->request->post);
 
-		$this->getForm();
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {

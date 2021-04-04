@@ -189,17 +189,13 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($geo_zone_info)) {
+		if (!empty($geo_zone_info)) {
 			$data['name'] = $geo_zone_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['description'])) {
-			$data['description'] = $this->request->post['description'];
-		} elseif (!empty($geo_zone_info)) {
+		if (!empty($geo_zone_info)) {
 			$data['description'] = $geo_zone_info['description'];
 		} else {
 			$data['description'] = '';
@@ -209,9 +205,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		if (isset($this->request->post['zone_to_geo_zone'])) {
-			$data['zone_to_geo_zones'] = $this->request->post['zone_to_geo_zone'];
-		} elseif (!empty($geo_zone_info)) {
+		if (!empty($geo_zone_info)) {
 			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones($this->request->get['geo_zone_id']);
 		} else {
 			$data['zone_to_geo_zones'] = [];

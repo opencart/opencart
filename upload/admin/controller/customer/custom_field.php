@@ -236,65 +236,49 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['custom_field_description'])) {
-			$data['custom_field_description'] = $this->request->post['custom_field_description'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$data['custom_field_description'] = $this->model_customer_custom_field->getDescriptions($this->request->get['custom_field_id']);
 		} else {
 			$data['custom_field_description'] = [];
 		}
 
-		if (isset($this->request->post['location'])) {
-			$data['location'] = $this->request->post['location'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$data['location'] = $custom_field_info['location'];
 		} else {
 			$data['location'] = '';
 		}
 
-		if (isset($this->request->post['type'])) {
-			$data['type'] = $this->request->post['type'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$data['type'] = $custom_field_info['type'];
 		} else {
 			$data['type'] = '';
 		}
 
-		if (isset($this->request->post['value'])) {
-			$data['value'] = $this->request->post['value'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$data['value'] = $custom_field_info['value'];
 		} else {
 			$data['value'] = '';
 		}
 
-		if (isset($this->request->post['validation'])) {
-			$data['validation'] = $this->request->post['validation'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$data['validation'] = $custom_field_info['validation'];
 		} else {
 			$data['validation'] = '';
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$data['status'] = $custom_field_info['status'];
 		} else {
 			$data['status'] = '';
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$data['sort_order'] = $custom_field_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
 		}
 
-		if (isset($this->request->post['custom_field_value'])) {
-			$custom_field_values = $this->request->post['custom_field_value'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($this->request->get['custom_field_id']);
 		} else {
 			$custom_field_values = [];
@@ -310,9 +294,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->request->post['custom_field_customer_group'])) {
-			$custom_field_customer_groups = $this->request->post['custom_field_customer_group'];
-		} elseif (!empty($custom_field_info)) {
+		if (!empty($custom_field_info)) {
 			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($this->request->get['custom_field_id']);
 		} else {
 			$custom_field_customer_groups = [];
@@ -380,9 +362,17 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$json['error']['validation'] = $this->language->get('error_validation');
 		}
 
-		$this->load->model('customer/custom_field');
-		$this->model_customer_custom_field->addCustomField($this->request->post);
-		$this->model_customer_custom_field->editCustomField($this->request->get['custom_field_id'], $this->request->post);
+		if (!$json) {
+			$this->load->model('customer/custom_field');
+
+			if (!isset($this->request->get['review_id'])) {
+				$this->model_customer_custom_field->addCustomField($this->request->post);
+			} else {
+				$this->model_customer_custom_field->editCustomField($this->request->get['custom_field_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

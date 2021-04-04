@@ -82,8 +82,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('catalog/manufacturer|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['manufacturers'] = [];
 
 		$filter_data = [
@@ -195,9 +193,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($manufacturer_info)) {
+		if (!empty($manufacturer_info)) {
 			$data['name'] = $manufacturer_info['name'];
 		} else {
 			$data['name'] = '';

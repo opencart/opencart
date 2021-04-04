@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class Location extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('localisation/location');
@@ -195,41 +194,31 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/store');
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($location_info)) {
+		if (!empty($location_info)) {
 			$data['name'] = $location_info['name'];
 		} else {
 			$data['name'] =   '';
 		}
 
-		if (isset($this->request->post['address'])) {
-			$data['address'] = $this->request->post['address'];
-		} elseif (!empty($location_info)) {
+		if (!empty($location_info)) {
 			$data['address'] = $location_info['address'];
 		} else {
 			$data['address'] = '';
 		}
 
-		if (isset($this->request->post['geocode'])) {
-			$data['geocode'] = $this->request->post['geocode'];
-		} elseif (!empty($location_info)) {
+		if (!empty($location_info)) {
 			$data['geocode'] = $location_info['geocode'];
 		} else {
 			$data['geocode'] = '';
 		}
 
-		if (isset($this->request->post['telephone'])) {
-			$data['telephone'] = $this->request->post['telephone'];
-		} elseif (!empty($location_info)) {
+		if (!empty($location_info)) {
 			$data['telephone'] = $location_info['telephone'];
 		} else {
 			$data['telephone'] = '';
 		}
 		
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($location_info)) {
+		if (!empty($location_info)) {
 			$data['image'] = $location_info['image'];
 		} else {
 			$data['image'] = '';
@@ -245,17 +234,13 @@ class Location extends \Opencart\System\Engine\Controller {
 			$data['thumb'] = $data['placeholder'];
 		}
 
-		if (isset($this->request->post['open'])) {
-			$data['open'] = $this->request->post['open'];
-		} elseif (!empty($location_info)) {
+		if (!empty($location_info)) {
 			$data['open'] = $location_info['open'];
 		} else {
 			$data['open'] = '';
 		}
 
-		if (isset($this->request->post['comment'])) {
-			$data['comment'] = $this->request->post['comment'];
-		} elseif (!empty($location_info)) {
+		if (!empty($location_info)) {
 			$data['comment'] = $location_info['comment'];
 		} else {
 			$data['comment'] = '';

@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class Language extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('localisation/language');
@@ -193,17 +192,13 @@ class Language extends \Opencart\System\Engine\Controller {
 			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($language_info)) {
+		if (!empty($language_info)) {
 			$data['name'] = $language_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
-		} elseif (!empty($language_info)) {
+		if (!empty($language_info)) {
 			$data['code'] = $language_info['code'];
 		} else {
 			$data['code'] = '';
@@ -217,25 +212,19 @@ class Language extends \Opencart\System\Engine\Controller {
 			$data['languages'][] = basename($folder);
 		}
 
-		if (isset($this->request->post['locale'])) {
-			$data['locale'] = $this->request->post['locale'];
-		} elseif (!empty($language_info)) {
+		if (!empty($language_info)) {
 			$data['locale'] = $language_info['locale'];
 		} else {
 			$data['locale'] = '';
 		}
 		
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($language_info)) {
+		if (!empty($language_info)) {
 			$data['sort_order'] = $language_info['sort_order'];
 		} else {
 			$data['sort_order'] = 1;
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($language_info)) {
+		if (!empty($language_info)) {
 			$data['status'] = $language_info['status'];
 		} else {
 			$data['status'] = true;

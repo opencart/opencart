@@ -1,8 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 class Event extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-	
+
 	public function index(): void {
 		$this->load->language('marketplace/event');
 
@@ -91,12 +90,6 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
 
 		$url = '';
 

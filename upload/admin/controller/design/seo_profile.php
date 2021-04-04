@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 class SeoProfile extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('design/seo_profile');
 
@@ -83,8 +81,6 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
-
-		$data['add'] = $this->url->link('design/seo_profile|add', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['seo_profiles'] = [];
 
@@ -193,49 +189,37 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			$seo_profile_info = $this->model_design_seo_profile->getSeoProfile($this->request->get['seo_profile_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($seo_profile_info)) {
+		if (!empty($seo_profile_info)) {
 			$data['name'] = $seo_profile_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['key'])) {
-			$data['key'] = $this->request->post['key'];
-		} elseif (!empty($seo_profile_info)) {
+		if (!empty($seo_profile_info)) {
 			$data['key'] = $seo_profile_info['key'];
 		} else {
 			$data['key'] = '';
 		}
 
-		if (isset($this->request->post['regex'])) {
-			$data['regex'] = $this->request->post['regex'];
-		} elseif (!empty($seo_profile_info)) {
+		if (!empty($seo_profile_info)) {
 			$data['regex'] = $seo_profile_info['regex'];
 		} else {
 			$data['regex'] = '';
 		}
 
-		if (isset($this->request->post['push'])) {
-			$data['push'] = $this->request->post['push'];
-		} elseif (!empty($seo_profile_info)) {
+		if (!empty($seo_profile_info)) {
 			$data['push'] = $seo_profile_info['push'];
 		} else {
 			$data['push'] = '';
 		}
 
-		if (isset($this->request->post['remove'])) {
-			$data['remove'] = $this->request->post['remove'];
-		} elseif (!empty($seo_profile_info)) {
+		if (!empty($seo_profile_info)) {
 			$data['remove'] = $seo_profile_info['remove'];
 		} else {
 			$data['remove'] = '';
 		}
 
-		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($seo_profile_info)) {
+		if (!empty($seo_profile_info)) {
 			$data['sort_order'] = $seo_profile_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
@@ -269,11 +253,17 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			$json['error']['regex'] = $this->language->get('error_regex');
 		}
 
+		if (!$json) {
+			$this->load->model('design/seo_profile');
 
-		$this->load->model('design/seo_profile');
+			if (isset($this->request->post['seo_profile_id'])) {
+				$this->model_design_seo_profile->addSeoProfile($this->request->post);
+			} else {
+				$this->model_design_seo_profile->editSeoProfile($this->request->get['seo_profile_id'], $this->request->post);
+			}
 
-		$this->model_design_seo_profile->addSeoProfile($this->request->post);
-		$this->model_design_seo_profile->editSeoProfile($this->request->get['seo_profile_id'], $this->request->post);
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

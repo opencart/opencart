@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 class Translation extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('design/translation');
 
@@ -159,6 +157,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('design/translation');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['translation_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -197,7 +199,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->get['translation_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['translation_id'])) {
+			$this->load->model('design/translation');
+
 			$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
 		}
 
@@ -205,9 +209,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		if (isset($this->request->post['store_id'])) {
-			$data['store_id'] = $this->request->post['store_id'];
-		} elseif (!empty($translation_info)) {
+		if (!empty($translation_info)) {
 			$data['store_id'] = $translation_info['store_id'];
 		} else {
 			$data['store_id'] = '';
@@ -217,33 +219,25 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['language_id'])) {
-			$data['language_id'] = $this->request->post['language_id'];
-		} elseif (!empty($translation_info)) {
+		if (!empty($translation_info)) {
 			$data['language_id'] = $translation_info['language_id'];
 		} else {
 			$data['language_id'] = '';
 		}
 
-		if (isset($this->request->post['route'])) {
-			$data['route'] = $this->request->post['route'];
-		} elseif (!empty($translation_info)) {
+		if (!empty($translation_info)) {
 			$data['route'] = $translation_info['route'];
 		} else {
 			$data['route'] = '';
 		}
 
-		if (isset($this->request->post['key'])) {
-			$data['key'] = $this->request->post['key'];
-		} elseif (!empty($translation_info)) {
+		if (!empty($translation_info)) {
 			$data['key'] = $translation_info['key'];
 		} else {
 			$data['key'] = '';
 		}
 
-		if (isset($this->request->post['value'])) {
-			$data['value'] = $this->request->post['value'];
-		} elseif (!empty($translation_info)) {
+		if (!empty($translation_info)) {
 			$data['value'] = $translation_info['value'];
 		} else {
 			$data['value'] = '';
@@ -269,32 +263,20 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
+		if (!$json) {
+			$this->load->model('design/translation');
+
+			if (!isset($this->request->get['translation_id'])) {
+				$this->model_design_translation->addTranslation($this->request->post);
+			} else {
+				$this->model_design_translation->editTranslation($this->request->get['translation_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('design/translation');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/translation');
-
-		$this->model_design_translation->addTranslation($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('design/translation');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/translation');
-
-		$this->model_design_translation->editTranslation($this->request->get['translation_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

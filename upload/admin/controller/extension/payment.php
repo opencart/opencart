@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 class Payment extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('extension/payment');

@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Order extends \Opencart\System\Engine\Controller {
-	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('sale/order');
@@ -399,15 +398,15 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function info(): void {
-		$this->load->model('sale/order');
+		$this->load->language('sale/order');
+
+
 
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
-
-		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -493,6 +492,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		if ($order_id) {
+			$this->load->model('sale/order');
+
 			$order_info = $this->model_sale_order->getOrder($order_id);
 		}
 
@@ -1220,16 +1221,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_info', $data));
 	}
 
-	public function add(): void {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-
-		$this->getForm();
-	}
-
 	public function delete(): void {
 		$this->load->language('sale/order');
 
@@ -1360,7 +1351,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['selected'])) {
 			$orders = $this->request->post['selected'];
-		} elseif (isset($this->request->get['order_id'])) {
+		}
+
+		if (isset($this->request->get['order_id'])) {
 			$orders[] = (int)$this->request->get['order_id'];
 		}
 
@@ -1572,7 +1565,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['selected'])) {
 			$orders = $this->request->post['selected'];
-		} elseif (isset($this->request->get['order_id'])) {
+		}
+
+		if (isset($this->request->get['order_id'])) {
 			$orders[] = (int)$this->request->get['order_id'];
 		}
 

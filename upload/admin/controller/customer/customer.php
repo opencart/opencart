@@ -447,41 +447,31 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['customer_group_id'] = $customer_info['customer_group_id'];
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['firstname'] = $customer_info['firstname'];
 		} else {
 			$data['firstname'] = '';
 		}
 
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['lastname'] = $customer_info['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['email'] = $customer_info['email'];
 		} else {
 			$data['email'] = '';
 		}
 
-		if (isset($this->request->post['telephone'])) {
-			$data['telephone'] = $this->request->post['telephone'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['telephone'] = $customer_info['telephone'];
 		} else {
 			$data['telephone'] = '';
@@ -513,65 +503,44 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['custom_field'])) {
-			$data['account_custom_field'] = $this->request->post['custom_field'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 		} else {
 			$data['account_custom_field'] = [];
 		}
 
-		if (isset($this->request->post['newsletter'])) {
-			$data['newsletter'] = $this->request->post['newsletter'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['newsletter'] = $customer_info['newsletter'];
 		} else {
 			$data['newsletter'] = '';
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['status'] = $customer_info['status'];
 		} else {
 			$data['status'] = true;
 		}
 
-		if (isset($this->request->post['safe'])) {
-			$data['safe'] = $this->request->post['safe'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['safe'] = $customer_info['safe'];
 		} else {
 			$data['safe'] = 0;
 		}
 
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
-
-		if (isset($this->request->post['confirm'])) {
-			$data['confirm'] = $this->request->post['confirm'];
-		} else {
-			$data['confirm'] = '';
-		}
+		$data['password'] = '';
+		$data['confirm'] = '';
 
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		if (isset($this->request->post['address'])) {
-			$data['addresses'] = $this->request->post['address'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['addresses'] = $this->model_customer_customer->getAddresses($this->request->get['customer_id']);
 		} else {
 			$data['addresses'] = [];
 		}
 
-		if (isset($this->request->post['default'])) {
-			$data['default'] = $this->request->post['default'];
-		} elseif (!empty($customer_info)) {
+		if (!empty($customer_info)) {
 			$data['default'] = array_search($customer_info['address_id'], array_column($data['addresses'], 'address_id'));
 		} else {
 			$data['default'] = '';
@@ -695,10 +664,17 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
-		$this->load->model('customer/customer');
+		if (!$json) {
+			$this->load->model('customer/customer');
 
-		$this->model_customer_customer->addCustomer($this->request->post);
-		$this->model_customer_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
+			if (!isset($this->request->get['customer_id'])) {
+				$this->model_customer_customer->addCustomer($this->request->post);
+			} else {
+				$this->model_customer_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

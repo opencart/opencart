@@ -1,27 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 class Profile extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('common/profile');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/user');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$user_data = array_merge($this->request->post, [
-				'user_group_id' => $this->user->getGroupId(),
-				'status'        => 1,
-			]);
-			
-			$this->model_user_user->editUser($this->user->getId(), $user_data);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']));
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -35,61 +18,40 @@ class Profile extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
 
-		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
-			$user_info = $this->model_user_user->getUser($this->user->getId());
-		}
+		$this->load->model('user/user');
 
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
-		} elseif (!empty($user_info)) {
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+
+		if (!empty($user_info)) {
 			$data['username'] = $user_info['username'];
 		} else {
 			$data['username'] = '';
 		}
 
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
+		$data['password'] = '';
+		$data['confirm'] = '';
 
-		if (isset($this->request->post['confirm'])) {
-			$data['confirm'] = $this->request->post['confirm'];
-		} else {
-			$data['confirm'] = '';
-		}
-
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['firstname'] = $user_info['firstname'];
 		} else {
 			$data['firstname'] = '';
 		}
 
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['lastname'] = $user_info['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['email'] = $user_info['email'];
 		} else {
 			$data['email'] = '';
 		}
 
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($user_info)) {
+		if (!empty($user_info)) {
 			$data['image'] = $user_info['image'];
 		} else {
 			$data['image'] = '';
@@ -112,7 +74,11 @@ class Profile extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/profile', $data));
 	}
 
-	protected function validateForm(): bool {
+	protected function save(): void {
+		$this->load->language('common/profile');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'common/profile')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
@@ -120,6 +86,8 @@ class Profile extends \Opencart\System\Engine\Controller {
 		if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
+
+		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
 
@@ -155,6 +123,18 @@ class Profile extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$user_data = array_merge($this->request->post, [
+				'user_group_id' => $this->user->getGroupId(),
+				'status'        => 1,
+			]);
+
+			$this->model_user_user->editUser($this->user->getId(), $user_data);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

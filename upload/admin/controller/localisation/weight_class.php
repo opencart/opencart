@@ -185,7 +185,8 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['weight_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['weight_class_id'])) {
+
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
 		}
 
@@ -193,17 +194,13 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['weight_class_description'])) {
-			$data['weight_class_description'] = $this->request->post['weight_class_description'];
-		} elseif (!empty($weight_class_info)) {
+		if (isset($this->request->get['weight_class_id'])) {
 			$data['weight_class_description'] = $this->model_localisation_weight_class->getDescriptions($this->request->get['weight_class_id']);
 		} else {
 			$data['weight_class_description'] = [];
 		}
 
-		if (isset($this->request->post['value'])) {
-			$data['value'] = $this->request->post['value'];
-		} elseif (!empty($weight_class_info)) {
+		if (!empty($weight_class_info)) {
 			$data['value'] = $weight_class_info['value'];
 		} else {
 			$data['value'] = '';

@@ -1,53 +1,53 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 class Startup extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('marketplace/startup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/startup');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function delete(): void {
-		$this->load->language('marketplace/startup');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/startup');
-
-		if (isset($this->request->post['selected']) && $this->validate()) {
-			foreach ($this->request->post['selected'] as $startup_id) {
-				$this->model_setting_startup->deleteStartup($startup_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$this->getList();
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('marketplace/startup|form', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['list'] = $this->getList();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('marketplace/startup', $data));
 	}
 
-	public function getList(): void {
+	public function getList(): string {
+		$this->load->model('setting/startup');
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -80,20 +80,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['delete'] = $this->url->link('marketplace/startup|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['startups'] = [];
 
 		$filter_data = [
@@ -117,8 +103,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 				'sort_order' => $result['sort_order']
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -159,19 +143,36 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('marketplace/startup', $data));
+		return $this->load->view('marketplace/startup', $data);
 	}
 
-	protected function validate(): bool {
-		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	public function delete(): void {
+		$this->load->language('marketplace/startup');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
 		}
 
-		return !$this->error;
+		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/startup');
+
+			foreach ($selected as $startup_id) {
+				$this->model_setting_startup->deleteStartup($startup_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function enable(): void {
@@ -187,7 +188,9 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, 1);
@@ -212,7 +215,9 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, 0);

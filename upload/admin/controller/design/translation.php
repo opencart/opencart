@@ -82,8 +82,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('design/translation|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$this->load->model('localisation/language');
 
 		$data['translations'] = [];

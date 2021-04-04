@@ -79,8 +79,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/length_class|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['length_classes'] = [];
 
 		$filter_data = [

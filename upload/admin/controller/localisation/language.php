@@ -83,8 +83,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/language|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['languages'] = [];
 
 		$filter_data = [

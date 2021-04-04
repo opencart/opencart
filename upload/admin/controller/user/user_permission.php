@@ -96,9 +96,6 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('user/user_permission|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('user/user_permission|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['user_groups'] = [];
 
 		$filter_data = [

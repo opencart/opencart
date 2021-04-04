@@ -83,8 +83,6 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/tax_rate|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['tax_rates'] = [];
 
 		$filter_data = [

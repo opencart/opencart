@@ -126,7 +126,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/currency|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('localisation/currency|delete', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['refresh'] = $this->url->link('localisation/currency|refresh', 'user_token=' . $this->session->data['user_token'] . $url);
 

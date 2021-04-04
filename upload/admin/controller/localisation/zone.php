@@ -112,8 +112,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/zone|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['zones'] = [];
 
 		$filter_data = [

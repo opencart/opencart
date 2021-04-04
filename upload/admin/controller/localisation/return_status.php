@@ -83,8 +83,6 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/return_status|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['return_statuses'] = [];
 
 		$filter_data = [

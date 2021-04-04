@@ -152,8 +152,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('design/seo_url|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$this->load->model('localisation/language');
 
 		$data['seo_urls'] = [];

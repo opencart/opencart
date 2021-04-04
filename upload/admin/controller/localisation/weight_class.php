@@ -80,8 +80,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/weight_class|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['weight_classes'] = [];
 
 		$filter_data = [

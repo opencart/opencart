@@ -191,9 +191,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('sale/returns|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('sale/returns|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['returns'] = [];
 
 		$filter_data = [

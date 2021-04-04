@@ -82,8 +82,6 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('design/banner|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['banners'] = [];
 
 		$filter_data = [

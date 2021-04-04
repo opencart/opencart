@@ -82,8 +82,6 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['add'] = $this->url->link('localisation/return_reason|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['return_reasons'] = [];
 
 		$filter_data = [

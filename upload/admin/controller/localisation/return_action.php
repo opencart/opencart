@@ -213,7 +213,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['return_action_id'])) {
 			$data['action'] = $this->url->link('localisation/return_action|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/return_action|edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $this->request->get['return_action_id'] . $url);
+			$data['action'] = $this->url->link('localisation/return_action|edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . (int)$this->request->get['return_action_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -223,7 +223,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->post['return_action'])) {
-			$data['return_action'] = $this->request->post['return_action'];
+			$data['return_action'] = (array)$this->request->post['return_action'];
 		} elseif (isset($this->request->get['return_action_id'])) {
 			$data['return_action'] = $this->model_localisation_return_action->getDescriptions($this->request->get['return_action_id']);
 		} else {

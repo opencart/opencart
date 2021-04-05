@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Affiliate extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('marketing/affiliate');
 
@@ -171,20 +169,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -292,48 +276,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['tracking'])) {
-			$data['error_tracking'] = $this->error['tracking'];
-		} else {
-			$data['error_tracking'] = '';
-		}
-
-		if (isset($this->error['cheque'])) {
-			$data['error_cheque'] = $this->error['cheque'];
-		} else {
-			$data['error_cheque'] = '';
-		}
-
-		if (isset($this->error['paypal'])) {
-			$data['error_paypal'] = $this->error['paypal'];
-		} else {
-			$data['error_paypal'] = '';
-		}
-
-		if (isset($this->error['bank_account_name'])) {
-			$data['error_bank_account_name'] = $this->error['bank_account_name'];
-		} else {
-			$data['error_bank_account_name'] = '';
-		}
-
-		if (isset($this->error['bank_account_number'])) {
-			$data['error_bank_account_number'] = $this->error['bank_account_number'];
-		} else {
-			$data['error_bank_account_number'] = '';
-		}
-
-		if (isset($this->error['custom_field'])) {
-			$data['error_custom_field'] = (array)$this->error['custom_field'];
-		} else {
-			$data['error_custom_field'] = [];
-		}
 
 		$url = '';
 

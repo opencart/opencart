@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Setting;
 class Store extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('setting/store');
 
@@ -103,20 +101,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -141,133 +125,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['store_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['url'])) {
-			$data['error_url'] = $this->error['url'];
-		} else {
-			$data['error_url'] = '';
-		}
-
-		if (isset($this->error['meta_title'])) {
-			$data['error_meta_title'] = $this->error['meta_title'];
-		} else {
-			$data['error_meta_title'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['owner'])) {
-			$data['error_owner'] = $this->error['owner'];
-		} else {
-			$data['error_owner'] = '';
-		}
-
-		if (isset($this->error['address'])) {
-			$data['error_address'] = $this->error['address'];
-		} else {
-			$data['error_address'] = '';
-		}
-
-		if (isset($this->error['email'])) {
-			$data['error_email'] = $this->error['email'];
-		} else {
-			$data['error_email'] = '';
-		}
-
-		if (isset($this->error['telephone'])) {
-			$data['error_telephone'] = $this->error['telephone'];
-		} else {
-			$data['error_telephone'] = '';
-		}
-
-		if (isset($this->error['product_description_length'])) {
-			$data['error_product_description_length'] = $this->error['product_description_length'];
-		} else {
-			$data['error_product_description_length'] = '';
-		}
-
-		if (isset($this->error['pagination'])) {
-			$data['error_pagination'] = $this->error['pagination'];
-		} else {
-			$data['error_pagination'] = '';
-		}
-
-		if (isset($this->error['customer_group_display'])) {
-			$data['error_customer_group_display'] = $this->error['customer_group_display'];
-		} else {
-			$data['error_customer_group_display'] = '';
-		}
-
-		// Image
-		if (isset($this->error['image_category'])) {
-			$data['error_image_category'] = $this->error['image_category'];
-		} else {
-			$data['error_image_category'] = '';
-		}
-
-		if (isset($this->error['image_thumb'])) {
-			$data['error_image_thumb'] = $this->error['image_thumb'];
-		} else {
-			$data['error_image_thumb'] = '';
-		}
-
-		if (isset($this->error['image_popup'])) {
-			$data['error_image_popup'] = $this->error['image_popup'];
-		} else {
-			$data['error_image_popup'] = '';
-		}
-
-		if (isset($this->error['image_product'])) {
-			$data['error_image_product'] = $this->error['image_product'];
-		} else {
-			$data['error_image_product'] = '';
-		}
-
-		if (isset($this->error['image_additional'])) {
-			$data['error_image_additional'] = $this->error['image_additional'];
-		} else {
-			$data['error_image_additional'] = '';
-		}
-
-		if (isset($this->error['image_related'])) {
-			$data['error_image_related'] = $this->error['image_related'];
-		} else {
-			$data['error_image_related'] = '';
-		}
-
-		if (isset($this->error['image_compare'])) {
-			$data['error_image_compare'] = $this->error['image_compare'];
-		} else {
-			$data['error_image_compare'] = '';
-		}
-
-		if (isset($this->error['image_wishlist'])) {
-			$data['error_image_wishlist'] = $this->error['image_wishlist'];
-		} else {
-			$data['error_image_wishlist'] = '';
-		}
-
-		if (isset($this->error['image_cart'])) {
-			$data['error_image_cart'] = $this->error['image_cart'];
-		} else {
-			$data['error_image_cart'] = '';
-		}
-
-		if (isset($this->error['image_location'])) {
-			$data['error_image_location'] = $this->error['image_location'];
-		} else {
-			$data['error_image_location'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -968,10 +825,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_image_location_width'] || !$this->request->post['config_image_location_height']) {
 			$json['error']['image_location'] = $this->language->get('error_image_location');
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

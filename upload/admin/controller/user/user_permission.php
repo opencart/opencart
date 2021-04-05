@@ -293,7 +293,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['permission']['access'])) {
-			$data['access'] = $this->request->post['permission']['access'];
+			$data['access'] = (array)$this->request->post['permission']['access'];
 		} elseif (isset($user_group_info['permission']['access'])) {
 			$data['access'] = $user_group_info['permission']['access'];
 		} else {
@@ -301,7 +301,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['permission']['modify'])) {
-			$data['modify'] = $this->request->post['permission']['modify'];
+			$data['modify'] = (array)$this->request->post['permission']['modify'];
 		} elseif (isset($user_group_info['permission']['modify'])) {
 			$data['modify'] = $user_group_info['permission']['modify'];
 		} else {
@@ -338,7 +338,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

@@ -184,25 +184,25 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->error['title'])) {
-			$data['error_title'] = $this->error['title'];
+			$data['error_title'] = (array)$this->error['title'];
 		} else {
 			$data['error_title'] = [];
 		}
 
 		if (isset($this->error['description'])) {
-			$data['error_description'] = $this->error['description'];
+			$data['error_description'] = (array)$this->error['description'];
 		} else {
 			$data['error_description'] = [];
 		}
 
 		if (isset($this->error['meta_title'])) {
-			$data['error_meta_title'] = $this->error['meta_title'];
+			$data['error_meta_title'] = (array)$this->error['meta_title'];
 		} else {
 			$data['error_meta_title'] = [];
 		}
 
 		if (isset($this->error['keyword'])) {
-			$data['error_keyword'] = $this->error['keyword'];
+			$data['error_keyword'] = (array)$this->error['keyword'];
 		} else {
 			$data['error_keyword'] = [];
 		}
@@ -252,7 +252,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($information_info)) {
-			$data['information_description'] = $this->model_catalog_information->getDescriptions($this->request->get['information_id']);
+			$data['information_description'] = (array)$this->model_catalog_information->getDescriptions($this->request->get['information_id']);
 		} else {
 			$data['information_description'] = [];
 		}
@@ -276,7 +276,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($information_info)) {
-			$data['information_store'] = $this->model_catalog_information->getStores($this->request->get['information_id']);
+			$data['information_store'] = (array)$this->model_catalog_information->getStores($this->request->get['information_id']);
 		} else {
 			$data['information_store'] = [0];
 		}
@@ -290,7 +290,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (!empty($information_info)) {
 			$data['status'] = $information_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		if (!empty($information_info)) {
@@ -300,13 +300,13 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($information_info)) {
-			$data['information_seo_url'] = $this->model_catalog_information->getSeoUrls($this->request->get['information_id']);
+			$data['information_seo_url'] = (array)$this->model_catalog_information->getSeoUrls($this->request->get['information_id']);
 		} else {
 			$data['information_seo_url'] = [];
 		}
 
 		if (!empty($information_info)) {
-			$data['information_layout'] = $this->model_catalog_information->getLayouts($this->request->get['information_id']);
+			$data['information_layout'] = (array)$this->model_catalog_information->getLayouts($this->request->get['information_id']);
 		} else {
 			$data['information_layout'] = [];
 		}
@@ -328,20 +328,20 @@ class Information extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'catalog/information')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['title'])) < 1) || (utf8_strlen($value['title']) > 64)) {
-				$json['title'][$language_id] = $this->language->get('error_title');
+				$json['error']['title'][$language_id] = $this->language->get('error_title');
 			}
 
 			if (utf8_strlen(trim($value['description'])) < 3) {
-				$json['description'][$language_id] = $this->language->get('error_description');
+				$json['error']['description'][$language_id] = $this->language->get('error_description');
 			}
 
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$json['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$json['error']['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
@@ -354,10 +354,10 @@ class Information extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && (!isset($this->request->get['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->get['information_id'])) {
-							$json['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$json['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
 			}
@@ -373,7 +373,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

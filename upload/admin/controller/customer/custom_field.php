@@ -334,7 +334,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['custom_field_value'])) {
-			$custom_field_values = $this->request->post['custom_field_value'];
+			$custom_field_values = (array)$this->request->post['custom_field_value'];
 		} elseif (!empty($custom_field_info)) {
 			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($this->request->get['custom_field_id']);
 		} else {
@@ -352,7 +352,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['custom_field_customer_group'])) {
-			$custom_field_customer_groups = $this->request->post['custom_field_customer_group'];
+			$custom_field_customer_groups = (array)$this->request->post['custom_field_customer_group'];
 		} elseif (!empty($custom_field_info)) {
 			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($this->request->get['custom_field_id']);
 		} else {
@@ -387,30 +387,30 @@ class CustomField extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->model('customer/custom_field');
+		$this->load->language('customer/custom_field');
 		
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'customer/custom_field')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['custom_field_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 128)) {
-				$json['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox')) {
 			if (!isset($this->request->post['custom_field_value'])) {
-				$json['warning'] = $this->language->get('error_type');
+				$json['error']['warning'] = $this->language->get('error_type');
 			}
 
 			if (isset($this->request->post['custom_field_value'])) {
 				foreach ($this->request->post['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
 					foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
 						if ((utf8_strlen($custom_field_value_description['name']) < 1) || (utf8_strlen($custom_field_value_description['name']) > 128)) {
-							$json['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value');
+							$json['error']['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value');
 						}
 					}
 				}
@@ -418,7 +418,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['type'] == 'text' && $this->request->post['validation'] && @preg_match(html_entity_decode($this->request->post['validation'], ENT_QUOTES, 'UTF-8'), null) === false) {
-			$json['validation'] = $this->language->get('error_validation');
+			$json['error']['validation'] = $this->language->get('error_validation');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -431,7 +431,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

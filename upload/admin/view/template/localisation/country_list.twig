@@ -25,11 +25,7 @@
 			{% if countries %}
 				{% for country in countries %}
 					<tr>
-						<td class="text-center">{% if country.country_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ country.country_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ country.country_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ country.country_id }}"/></td>
 						<td class="text-left">{{ country.name }}</td>
 						<td class="text-left">{{ country.iso_code_2 }}</td>
 						<td class="text-left">{{ country.iso_code_3 }}</td>

@@ -14,11 +14,7 @@
 			{% if seo_profiles %}
 				{% for seo_profile in seo_profiles %}
 					<tr>
-						<td class="text-center">{% if seo_profile.seo_profile_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}"/></td>
 						<td class="text-left">{{ seo_profile.name }}</td>
 						<td class="text-left">{{ seo_profile.key }}</td>
 						<td class="text-left d-none d-lg-table-cell">{{ seo_profile.regex }}</td>

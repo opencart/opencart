@@ -35,11 +35,7 @@
 			{% if currencies %}
 				{% for currency in currencies %}
 					<tr>
-						<td class="text-center">{% if currency.currency_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ currency.currency_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ currency.currency_id }}"/></td>
 						<td class="text-left">{{ currency.title }}</td>
 						<td class="text-left">{{ currency.code }}</td>
 						<td class="text-right">{{ currency.value }}</td>

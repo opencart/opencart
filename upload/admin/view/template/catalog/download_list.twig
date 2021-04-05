@@ -20,11 +20,7 @@
 			{% if downloads %}
 				{% for download in downloads %}
 					<tr>
-						<td class="text-center">{% if download.download_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ download.download_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ download.download_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ download.download_id }}"/></td>
 						<td class="text-left">{{ download.name }}</td>
 						<td class="text-right">{{ download.date_added }}</td>
 						<td class="text-right"><a href="{{ download.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

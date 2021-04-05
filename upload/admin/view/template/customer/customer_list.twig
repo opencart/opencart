@@ -15,11 +15,7 @@
 			{% if customers %}
 				{% for customer in customers %}
 					<tr>
-						<td class="text-center">{% if customer.customer_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ customer.customer_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer.customer_id }}"/></td>
 						<td class="text-left">{{ customer.name }}</td>
 						<td class="text-left">{{ customer.email }}</td>
 						<td class="text-left">{{ customer.customer_group }}</td>

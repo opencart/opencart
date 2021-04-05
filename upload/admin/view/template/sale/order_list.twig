@@ -17,12 +17,7 @@
 			{% if orders %}
 				{% for order in orders %}
 					<tr>
-						<td class="text-center">{% if order.order_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ order.order_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ order.order_id }}"/>
-							{% endif %}
-							<input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}"/><input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
 						<td class="text-right">{{ order.order_id }}</td>
 						<td class="text-left">{{ order.store_name }}</td>
 						<td class="text-left">{{ order.customer }}</td>

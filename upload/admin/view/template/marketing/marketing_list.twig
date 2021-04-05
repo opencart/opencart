@@ -15,11 +15,7 @@
 			{% if marketings %}
 				{% for marketing in marketings %}
 					<tr>
-						<td class="text-center">{% if marketing.marketing_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ marketing.marketing_id }}"/></td>
 						<td class="text-left">{{ marketing.name }}</td>
 						<td class="text-left">{{ marketing.code }}</td>
 						<td class="text-right">{{ marketing.clicks }}</td>

@@ -35,11 +35,7 @@
 			{% if custom_fields %}
 				{% for custom_field in custom_fields %}
 					<tr>
-						<td class="text-center">{% if custom_field.custom_field_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}"/></td>
 						<td class="text-left">{{ custom_field.name }}</td>
 						<td class="text-left">{{ custom_field.location }}</td>
 						<td class="text-left">{{ custom_field.type }}</td>

@@ -32,8 +32,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('marketplace/startup|form', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['list'] = $this->getList();
@@ -45,9 +43,13 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/startup', $data));
 	}
 
-	public function getList(): string {
-		$this->load->model('setting/startup');
+	public function list(): void {
+		$this->load->language('marketplace/startup');
 
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -89,6 +91,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
+		$this->load->model('setting/startup');
+
 		$startup_total = $this->model_setting_startup->getTotalStartups();
 
 		$results = $this->model_setting_startup->getStartups($filter_data);
@@ -98,9 +102,10 @@ class Startup extends \Opencart\System\Engine\Controller {
 				'startup_id' => $result['startup_id'],
 				'code'       => $result['code'],
 				'action'     => $result['action'],
-				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'enabled'    => $result['status'],
-				'sort_order' => $result['sort_order']
+				'status'     => $result['status'],
+				'sort_order' => $result['sort_order'],
+				'enable'     => $this->url->link('marketplace/cron|enable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id']),
+				'disable'    => $this->url->link('marketplace/cron|disable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id'])
 			];
 		}
 
@@ -118,7 +123,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 
 		$data['sort_code'] = $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_action'] = $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . '&sort=action' . $url);
-		$data['sort_status'] = $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 		$data['sort_sort_order'] = $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
 		$url = '';
@@ -143,36 +147,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		return $this->load->view('marketplace/startup', $data);
-	}
-
-	public function delete(): void {
-		$this->load->language('marketplace/startup');
-
-		$json = [];
-
-		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('setting/startup');
-
-			foreach ($selected as $startup_id) {
-				$this->model_setting_startup->deleteStartup($startup_id);
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $this->load->view('marketplace/startup_list', $data);
 	}
 
 	public function enable(): void {
@@ -221,6 +196,35 @@ class Startup extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/startup');
 
 			$this->model_setting_startup->editStatus($startup_id, 0);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function delete(): void {
+		$this->load->language('marketplace/startup');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'marketplace/startup')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/startup');
+
+			foreach ($selected as $startup_id) {
+				$this->model_setting_startup->deleteStartup($startup_id);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

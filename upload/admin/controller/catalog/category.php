@@ -102,8 +102,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
 				'sort_order'  => $result['sort_order'],
-				'edit'        => $this->url->link('catalog/category|edit', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url),
-				'delete'      => $this->url->link('catalog/category|delete', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
+				'edit'        => $this->url->link('catalog/category|form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
 			];
 		}
 

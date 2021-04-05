@@ -25,11 +25,7 @@
 			{% if languages %}
 				{% for language in languages %}
 					<tr>
-						<td class="text-center">{% if language.language_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ language.language_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ language.language_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ language.language_id }}"/></td>
 						<td class="text-left">{{ language.name }}</td>
 						<td class="text-left">{{ language.code }}</td>
 						<td class="text-right">{{ language.sort_order }}</td>

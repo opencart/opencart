@@ -20,11 +20,7 @@
 			{% if recurrings %}
 				{% for recurring in recurrings %}
 					<tr>
-						<td class="text-center">{% if recurring.recurring_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}"/></td>
 						<td class="text-left">{{ recurring.name }}</td>
 						<td class="text-right">{{ recurring.sort_order }}</td>
 						<td class="text-right"><a href="{{ recurring.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

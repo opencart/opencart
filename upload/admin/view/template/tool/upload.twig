@@ -67,11 +67,7 @@
                     {% if uploads %}
                       {% for upload in uploads %}
                         <tr>
-                          <td class="text-center">{% if upload.upload_id in selected %}
-                              <input type="checkbox" name="selected[]" value="{{ upload.upload_id }}" checked="checked"/>
-                            {% else %}
-                              <input type="checkbox" name="selected[]" value="{{ upload.upload_id }}"/>
-                            {% endif %}</td>
+                          <td class="text-center"><input type="checkbox" name="selected[]" value="{{ upload.upload_id }}"/></td>
                           <td class="text-left">{{ upload.name }}</td>
                           <td class="text-left">{{ upload.filename }}</td>
                           <td class="text-right">{{ upload.date_added }}</td>

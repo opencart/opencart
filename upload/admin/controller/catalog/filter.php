@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Filter extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('catalog/filter');
 
@@ -107,26 +105,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
-		}
-
 		$url = '';
 
 		if ($order == 'ASC') {
@@ -173,24 +151,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['filter_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['group'])) {
-			$data['error_group'] = $this->error['group'];
-		} else {
-			$data['error_group'] = [];
-		}
-
-		if (isset($this->error['filter'])) {
-			$data['error_filter'] = $this->error['filter'];
-		} else {
-			$data['error_filter'] = [];
-		}
 
 		$url = '';
 

@@ -149,6 +149,10 @@ class User extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('user/user');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -185,7 +189,9 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['user_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['user_id'])) {
+			$this->load->model('user/user');
+
 			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
 		}
 
@@ -207,7 +213,6 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['password'] = '';
 		$data['confirm'] = '';
-
 
 		if (!empty($user_info)) {
 			$data['firstname'] = $user_info['firstname'];
@@ -315,32 +320,20 @@ class User extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!$json) {
+			$this->load->model('user/user');
+
+			if (!isset($this->request->get['user_id'])) {
+				$this->model_user_user->addUser($this->request->post);
+			} else {
+				$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('user/user');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/user');
-
-		$this->model_user_user->addUser($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('user/user');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/user');
-
-		$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

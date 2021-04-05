@@ -82,6 +82,8 @@ class Event extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['refresh'] = $this->url->link('marketplace/event|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['events'] = [];
 
 		$filter_data = [
@@ -209,7 +211,7 @@ class Event extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -219,7 +221,9 @@ class Event extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('marketplace/event');
+		print_r($selected);
+
+			$this->load->model('setting/event');
 
 			foreach ($selected as $event_id) {
 				$this->model_setting_event->deleteEvent($event_id);

@@ -32,7 +32,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/download|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('catalog/download|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -46,6 +46,8 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('catalog/download');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -102,7 +104,7 @@ class Download extends \Opencart\System\Engine\Controller {
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('catalog/download|edit', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $result['download_id'] . $url)
+				'edit'        => $this->url->link('catalog/download|form', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $result['download_id'] . $url)
 			];
 		}
 
@@ -118,8 +120,8 @@ class Download extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . '&sort=dd.name' . $url);
-		$data['sort_date_added'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . '&sort=d.date_added' . $url);
+		$data['sort_name'] = $this->url->link('catalog/download|list', 'user_token=' . $this->session->data['user_token'] . '&sort=dd.name' . $url);
+		$data['sort_date_added'] = $this->url->link('catalog/download|list', 'user_token=' . $this->session->data['user_token'] . '&sort=d.date_added' . $url);
 
 		$url = '';
 
@@ -135,7 +137,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			'total' => $download_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('catalog/download|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($download_total - $this->config->get('config_pagination_admin'))) ? $download_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $download_total, ceil($download_total / $this->config->get('config_pagination_admin')));
@@ -146,14 +148,24 @@ class Download extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/download_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
+		$this->load->language('catalog/download');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
-		$data['user_token'] = $this->session->data['user_token'];
+		if (isset($this->request->get['download_id'])) {
+			$data['download_id'] = (int)$this->request->get['download_id'];
+		} else {
+			$data['download_id'] = 0;
+		}
 
 		$url = '';
 
@@ -181,12 +193,6 @@ class Download extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['download_id'])) {
-			$data['action'] = $this->url->link('catalog/download|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('catalog/download|edit', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $this->request->get['download_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
@@ -195,14 +201,6 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['download_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
-		}
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->get['download_id'])) {
-			$data['download_id'] = (int)$this->request->get['download_id'];
-		} else {
-			$data['download_id'] = 0;
 		}
 
 		if (!empty($download_info)) {
@@ -261,32 +259,21 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
+		if (!$json) {
+			$this->load->model('catalog/download');
+
+			if (!isset($this->request->post['download_id'])) {
+				$this->model_catalog_download->addDownload($this->request->post);
+			} else {
+				$this->model_catalog_download->editDownload($this->request->get['download_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('catalog/download');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/download');
-
-		$this->model_catalog_download->addDownload($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('catalog/download');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('catalog/download');
-
-		$this->model_catalog_download->editDownload($this->request->get['download_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

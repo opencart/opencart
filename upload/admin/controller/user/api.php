@@ -117,7 +117,7 @@ class Api extends \Opencart\System\Engine\Controller {
 				'status'        => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('user/api|edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url)
+				'edit'          => $this->url->link('user/api|form', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $result['api_id'] . $url)
 			];
 		}
 
@@ -168,6 +168,10 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('user/api');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 
@@ -199,15 +203,11 @@ class Api extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['api_id'])) {
-			$data['action'] = $this->url->link('user/api|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('user/api|edit', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $this->request->get['api_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['api_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['api_id'])) {
+			$this->load->model('user/api');
+
 			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
 		}
 

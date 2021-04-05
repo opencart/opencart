@@ -62,6 +62,8 @@ class Review extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('catalog/review');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -251,12 +253,20 @@ class Review extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/review_list', $data);
 	}
 
-	protected function getForm(): void {
+	protected function form(): void {
 		$this->load->language('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['text_form'] = !isset($this->request->get['review_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		if (isset($this->request->get['review_id'])) {
+			$data['review_id'] = $this->request->get['review_id'];
+		} else {
+			$data['review_id'] = 0;
+		}
 
 		$url = '';
 
@@ -299,12 +309,6 @@ class Review extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		if (!isset($this->request->get['review_id'])) {
-			$data['action'] = $this->url->link('catalog/review|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('catalog/review|edit', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $this->request->get['review_id'] . $url);
-		}
 
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
 

@@ -223,7 +223,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->post['return_reason'])) {
-			$data['return_reason'] = $this->request->post['return_reason'];
+			$data['return_reason'] = (array)$this->request->post['return_reason'];
 		} elseif (isset($this->request->get['return_reason_id'])) {
 			$data['return_reason'] = $this->model_localisation_return_reason->getDescriptions($this->request->get['return_reason_id']);
 		} else {

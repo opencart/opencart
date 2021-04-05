@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 class Information extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('catalog/information');
 
@@ -107,20 +105,6 @@ class Information extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -176,36 +160,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
 
 		$data['text_form'] = !isset($this->request->get['information_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['title'])) {
-			$data['error_title'] = (array)$this->error['title'];
-		} else {
-			$data['error_title'] = [];
-		}
-
-		if (isset($this->error['description'])) {
-			$data['error_description'] = (array)$this->error['description'];
-		} else {
-			$data['error_description'] = [];
-		}
-
-		if (isset($this->error['meta_title'])) {
-			$data['error_meta_title'] = (array)$this->error['meta_title'];
-		} else {
-			$data['error_meta_title'] = [];
-		}
-
-		if (isset($this->error['keyword'])) {
-			$data['error_keyword'] = (array)$this->error['keyword'];
-		} else {
-			$data['error_keyword'] = [];
-		}
 
 		$url = '';
 

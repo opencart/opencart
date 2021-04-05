@@ -273,17 +273,17 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'sale/voucher_theme')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['voucher_theme_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$json['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (!$this->request->post['image']) {
-			$json['image'] = $this->language->get('error_image');
+			$json['error']['image'] = $this->language->get('error_image');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -296,7 +296,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

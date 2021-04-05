@@ -249,7 +249,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$data['tax_rates'] = $this->model_localisation_tax_rate->getTaxRates();
 
 		if (isset($this->request->post['tax_rule'])) {
-			$data['tax_rules'] = $this->request->post['tax_rule'];
+			$data['tax_rules'] = (array)$this->request->post['tax_rule'];
 		} elseif (!empty($tax_class_info)) {
 			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($this->request->get['tax_class_id']);
 		} else {

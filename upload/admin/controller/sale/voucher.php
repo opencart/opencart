@@ -270,7 +270,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['voucher_id'])) {
 			$data['action'] = $this->url->link('sale/voucher|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id'] . $url);
+			$data['action'] = $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . (int)$this->request->get['voucher_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -326,7 +326,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		if (isset($this->request->post['voucher_theme_id'])) {
-			$data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
+			$data['voucher_theme_id'] = (int)$this->request->post['voucher_theme_id'];
 		} elseif (!empty($voucher_info)) {
 			$data['voucher_theme_id'] = $voucher_info['voucher_theme_id'];
 		} else {
@@ -350,11 +350,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+			$data['status'] = (int)$this->request->post['status'];
 		} elseif (!empty($voucher_info)) {
 			$data['status'] = $voucher_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -507,7 +507,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->post['selected'])) {
 				$vouchers = (array)$this->request->post['selected'];
 			} elseif (isset($this->request->post['voucher_id'])) {
-				$vouchers[] = $this->request->post['voucher_id'];
+				$vouchers[] = (int)$this->request->post['voucher_id'];
 			}
 
 			if ($vouchers) {

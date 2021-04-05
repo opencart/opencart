@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Coupon extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('marketing/coupon');
 
@@ -131,20 +129,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -208,36 +192,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$data['coupon_id'] = (int)$this->request->get['coupon_id'];
 		} else {
 			$data['coupon_id'] = 0;
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['code'])) {
-			$data['error_code'] = $this->error['code'];
-		} else {
-			$data['error_code'] = '';
-		}
-
-		if (isset($this->error['date_start'])) {
-			$data['error_date_start'] = $this->error['date_start'];
-		} else {
-			$data['error_date_start'] = '';
-		}
-
-		if (isset($this->error['date_end'])) {
-			$data['error_date_end'] = $this->error['date_end'];
-		} else {
-			$data['error_date_end'] = '';
 		}
 
 		$url = '';

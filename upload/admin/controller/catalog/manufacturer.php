@@ -259,7 +259,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($manufacturer_info)) {
-			$data['manufacturer_store'] = $this->model_catalog_manufacturer->getStores($this->request->get['manufacturer_id']);
+			$data['manufacturer_store'] = (array)$this->model_catalog_manufacturer->getStores($this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_store'] = [0];
 		}
@@ -291,13 +291,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($manufacturer_info)) {
-			$data['manufacturer_seo_url'] = $this->model_catalog_manufacturer->getSeoUrls($this->request->get['manufacturer_id']);
+			$data['manufacturer_seo_url'] = (array)$this->model_catalog_manufacturer->getSeoUrls($this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_seo_url'] = [];
 		}
 
 		if (!empty($manufacturer_info)) {
-			$data['manufacturer_layout'] = $this->model_catalog_manufacturer->getLayouts($this->request->get['manufacturer_id']);
+			$data['manufacturer_layout'] = (array)$this->model_catalog_manufacturer->getLayouts($this->request->get['manufacturer_id']);
 		} else {
 			$data['manufacturer_layout'] = [];
 		}
@@ -319,11 +319,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['name'])) < 1) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$json['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!empty($this->request->post['manufacturer_seo_url'])) {
@@ -335,10 +335,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && ($seo_url_info['key'] != 'manufacturer_id' || !isset($this->request->get['manufacturer_id']) || $seo_url_info['value'] != (int)$this->request->get['manufacturer_id'])) {
-							$json['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$json['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
 			}
@@ -354,7 +354,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -369,7 +369,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$product_total = $this->model_catalog_product->getTotalProductsByManufacturerId($manufacturer_id);
 
 			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+				$json['error']['warning'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 		}
 

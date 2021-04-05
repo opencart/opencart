@@ -143,20 +143,6 @@ class Option extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -209,24 +195,6 @@ class Option extends \Opencart\System\Engine\Controller {
 
 	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = [];
-		}
-
-		if (isset($this->error['option_value'])) {
-			$data['error_option_value'] = $this->error['option_value'];
-		} else {
-			$data['error_option_value'] = [];
-		}
 
 		$url = '';
 

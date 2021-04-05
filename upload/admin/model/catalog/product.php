@@ -1055,7 +1055,9 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_related` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
-			$product_related_data[] = $result['related_id'];
+			if ($result['related_id'] != $product_id) {
+				$product_related_data[] = $result['related_id'];
+			}
 		}
 
 		return $product_related_data;

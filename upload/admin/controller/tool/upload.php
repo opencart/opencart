@@ -132,12 +132,12 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$data['uploads'] = [];
 
 		$filter_data = [
-			'filter_name'	    	=> $filter_name,
-			'filter_date_added'	=> $filter_date_added,
-			'sort'              	=> $sort,
-			'order'             	=> $order,
-			'start'             	=> ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'             	=> $this->config->get('config_pagination_admin')
+			'filter_name'	       => $filter_name,
+			'filter_date_added'    => $filter_date_added,
+			'sort'                 => $sort,
+			'order'                => $order,
+			'start'                => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'                => $this->config->get('config_pagination_admin')
 		];
 
 		$upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
@@ -146,11 +146,11 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['uploads'][] = [
-				'upload_id'  => $result['upload_id'],
-				'name'       => $result['name'],
-				'filename'   => $result['filename'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'download'   => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)
+				'upload_id'    => $result['upload_id'],
+				'name'         => $result['name'],
+				'filename'     => $result['filename'],
+				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'download'     => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)
 			];
 		}
 

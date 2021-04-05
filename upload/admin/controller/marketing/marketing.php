@@ -362,21 +362,21 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'marketing/marketing')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['name']) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$json['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$this->request->post['code']) {
-			$json['code'] = $this->language->get('error_code');
+			$json['error']['code'] = $this->language->get('error_code');
 		}
 
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
 
 		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
-			$json['code'] = $this->language->get('error_exists');
+			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -389,7 +389,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

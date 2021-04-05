@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\User;
 class Api extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('user/api');
 
@@ -111,20 +109,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -182,24 +166,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['username'])) {
-			$data['error_username'] = $this->error['username'];
-		} else {
-			$data['error_username'] = '';
-		}
-
-		if (isset($this->error['key'])) {
-			$data['error_key'] = $this->error['key'];
-		} else {
-			$data['error_key'] = '';
-		}
 
 		$url = '';
 
@@ -313,7 +279,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if (!isset($this->error['warning']) && !isset($this->request->post['api_ip'])) {
+		if (!isset($this->request->post['api_ip'])) {
 			$json['error']['warning'] = $this->language->get('error_ip');
 		}
 

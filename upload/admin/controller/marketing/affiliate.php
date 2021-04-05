@@ -601,7 +601,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($this->request->post['tracking']);
 
-		if ($affiliate_info && (!isset($this->request->get['customer_id']) || (int)($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
+		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ((int)$this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
 			$json['error']['tracking'] = $this->language->get('error_exists');
 		}
 

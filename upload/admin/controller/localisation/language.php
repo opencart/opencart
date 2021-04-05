@@ -189,7 +189,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->error['code'])) {
-			$data['error_code'] = $this->error['code'];
+			$data['error_code'] = (string)$this->error['code'];
 		} else {
 			$data['error_code'] = '';
 		}
@@ -247,7 +247,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
+			$data['code'] = (string)$this->request->post['code'];
 		} elseif (!empty($language_info)) {
 			$data['code'] = $language_info['code'];
 		} else {
@@ -271,19 +271,19 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 		
 		if (isset($this->request->post['sort_order'])) {
-			$data['sort_order'] = $this->request->post['sort_order'];
+			$data['sort_order'] = (int)$this->request->post['sort_order'];
 		} elseif (!empty($language_info)) {
 			$data['sort_order'] = $language_info['sort_order'];
 		} else {
-			$data['sort_order'] = 1;
+			$data['sort_order'] = '';
 		}
 
 		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+			$data['status'] = (int)$this->request->post['status'];
 		} elseif (!empty($language_info)) {
 			$data['status'] = $language_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -314,7 +314,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 		
-		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
+		$language_info = $this->model_localisation_language->getLanguageByCode((string)$this->request->post['code']);
 
 		if (!isset($this->request->get['language_id'])) {
 			if ($language_info) {

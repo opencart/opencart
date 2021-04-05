@@ -318,7 +318,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($category_info)) {
-			$data['category_description'] = $this->model_catalog_category->getDescriptions($this->request->get['category_id']);
+			$data['category_description'] = (array)$this->model_catalog_category->getDescriptions($this->request->get['category_id']);
 		} else {
 			$data['category_description'] = [];
 		}
@@ -375,7 +375,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['category_id'])) {
-			$data['category_store'] = $this->model_catalog_category->getStores($this->request->get['category_id']);
+			$data['category_store'] = (array)$this->model_catalog_category->getStores($this->request->get['category_id']);
 		} else {
 			$data['category_store'] = [0];
 		}
@@ -417,17 +417,17 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (!empty($category_info)) {
 			$data['status'] = $category_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 		
 		if (!empty($category_info)) {
-			$data['category_seo_url'] = $this->model_catalog_category->getSeoUrls($this->request->get['category_id']);
+			$data['category_seo_url'] = (array)$this->model_catalog_category->getSeoUrls($this->request->get['category_id']);
 		} else {
 			$data['category_seo_url'] = [];
 		}
 				
 		if (!empty($category_info)) {
-			$data['category_layout'] = $this->model_catalog_category->getLayouts($this->request->get['category_id']);
+			$data['category_layout'] = (array)$this->model_catalog_category->getLayouts($this->request->get['category_id']);
 		} else {
 			$data['category_layout'] = [];
 		}
@@ -449,16 +449,16 @@ class Category extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['category_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 255)) {
-				$json['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name'][$language_id] = $this->language->get('error_name');
 			}
 
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$json['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$json['error']['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
@@ -467,7 +467,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->get['category_id']) {
-					$json['parent'] = $this->language->get('error_parent');
+					$json['error']['parent'] = $this->language->get('error_parent');
 					
 					break;
 				}
@@ -483,10 +483,10 @@ class Category extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && (!isset($this->request->get['category_id']) || $seo_url_info['key'] != 'path' || $seo_url_info['value'] != $this->model_catalog_category->getPath($this->request->get['category_id']))) {
-							$json['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$json['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
 					}
 				}
 			}
@@ -502,7 +502,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

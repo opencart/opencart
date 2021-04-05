@@ -299,7 +299,6 @@
       {% if products %}
       <h3>{{ text_related }}</h3>
       <div class="row"> {% set i = 0 %}
-        {% for product in products %}
         {% if column_left and column_right %}
         {% set class = 'col-xs-8 col-sm-6' %}
         {% elseif column_left or column_right %}
@@ -307,6 +306,7 @@
         {% else %}
         {% set class = 'col-xs-6 col-sm-3' %}
         {% endif %}
+        {% for product in products %}
         <div class="{{ class }}">
           <div class="product-thumb transition">
             <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
@@ -419,9 +419,9 @@ $('#button-cart').on('click', function() {
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}
 		},
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
 	});
 });
 //--></script> 
@@ -452,7 +452,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 	$('#form-upload input[name=\'file\']').trigger('click');
 
 	if (typeof timer != 'undefined') {
-    	clearInterval(timer);
+		clearInterval(timer);
 	}
 
 	timer = setInterval(function() {
@@ -496,13 +496,13 @@ $('button[id^=\'button-upload\']').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
-    e.preventDefault();
+	e.preventDefault();
 
-    $('#review').fadeOut('slow');
+	$('#review').fadeOut('slow');
 
-    $('#review').load(this.href);
+	$('#review').load(this.href);
 
-    $('#review').fadeIn('slow');
+	$('#review').fadeIn('slow');
 });
 
 $('#review').load('index.php?route=product/product/review&product_id={{ product_id }}');
@@ -546,5 +546,5 @@ $(document).ready(function() {
 		}
 	});
 });
-//--></script> 
-{{ footer }} 
+//--></script>
+{{ footer }}

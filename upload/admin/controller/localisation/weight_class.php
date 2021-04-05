@@ -270,11 +270,11 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['weight_class_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 32)) {
-				$json['title'][$language_id] = $this->language->get('error_title');
+				$json['error']['title'][$language_id] = $this->language->get('error_title');
 			}
 
 			if (!$value['unit'] || (utf8_strlen($value['unit']) > 4)) {
-				$json['unit'][$language_id] = $this->language->get('error_unit');
+				$json['error']['unit'][$language_id] = $this->language->get('error_unit');
 			}
 		}
 
@@ -288,7 +288,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -301,7 +301,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($selected as $weight_class_id) {
 			if ($this->config->get('config_weight_class_id') == $weight_class_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+				$json['error']['warning'] = $this->language->get('error_default');
 			}
 
 			$product_total = $this->model_catalog_product->getTotalProductsByWeightClassId($weight_class_id);

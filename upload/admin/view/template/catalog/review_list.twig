@@ -15,11 +15,7 @@
 			{% if reviews %}
 				{% for review in reviews %}
 					<tr>
-						<td class="text-center">{% if review.review_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ review.review_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ review.review_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ review.review_id }}"/></td>
 						<td class="text-left">{{ review.name }}</td>
 						<td class="text-left">{{ review.author }}</td>
 						<td class="text-right d-none d-lg-table-cell">{{ review.rating }}</td>

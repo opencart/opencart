@@ -14,11 +14,7 @@
 			{% if gdprs %}
 				{% for gdpr in gdprs %}
 					<tr>
-						<td class="text-center">{% if gdpr.gdpr_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ gdpr.gdpr_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ gdpr.gdpr_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ gdpr.gdpr_id }}"/></td>
 						<td class="text-left">
 							{% if gdpr.edit %}
 								<a href="{{ gdpr.edit }}">{{ gdpr.email }}</a>

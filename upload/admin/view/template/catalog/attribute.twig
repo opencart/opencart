@@ -16,15 +16,15 @@
 	<div class="container-fluid">
 		<div class="card">
 			<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-			<div id="attribute-list" class="card-body">{{ list }}</div>
+			<div id="attribute" class="card-body">{{ list }}</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#attribute-list').on('click', 'thead a, .pagination a', function(e) {
+$('#attribute').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#attribute-list').load(this.href);
+    $('#attribute').load(this.href);
 });
 
 // Delete
@@ -32,11 +32,10 @@ $('#button-delete').on('click', function() {
     var element = this;
 
     if (confirm('{{ text_confirm }}')) {
-
         $.ajax({
             url: 'index.php?route=catalog/attribute|delete&&user_token={{ user_token }}',
             type: 'post',
-            data: $('#attribute-list input[name=\'selected[]\']:checked'),
+            data: $('#attribute input[name=\'selected[]\']:checked'),
             dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');
@@ -54,7 +53,7 @@ $('#button-delete').on('click', function() {
                 if (json['success']) {
                     $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-                    $('#attribute-list').load('index.php?route=catalog/attribute|list&user_token={{ user_token }}');
+                    $('#button-refresh').trigger('click');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -65,7 +64,3 @@ $('#button-delete').on('click', function() {
 });
 //--></script>
 {{ footer }}
-
-
-
-

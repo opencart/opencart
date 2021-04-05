@@ -15,12 +15,7 @@
 			{% if seo_urls %}
 				{% for seo_url in seo_urls %}
 					<tr>
-						<td class="text-center">
-							{% if seo_url.seo_url_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/></td>
 						<td class="text-left">{{ seo_url.keyword }}</td>
 						<td class="text-left">{{ seo_url.key }}</td>
 						<td class="text-left">{{ seo_url.value }}</td>

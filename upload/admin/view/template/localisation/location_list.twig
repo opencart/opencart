@@ -20,11 +20,7 @@
 			{% if locations %}
 				{% for location in locations %}
 					<tr>
-						<td class="text-center">{% if location.location_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ location.location_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ location.location_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ location.location_id }}"/></td>
 						<td class="text-left">{{ location.name }}</td>
 						<td class="text-left">{{ location.address }}</td>
 						<td class="text-right"><a href="{{ location.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

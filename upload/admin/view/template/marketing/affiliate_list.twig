@@ -16,11 +16,7 @@
 			{% if affiliates %}
 				{% for affiliate in affiliates %}
 					<tr>
-						<td class="text-center">{% if affiliate.customer_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ affiliate.customer_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ affiliate.customer_id }}"/>
-							{% endif %} </td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ affiliate.customer_id }}"/></td>
 						<td class="text-left"><a href="{{ affiliate.customer }}">{{ affiliate.name }}</a></td>
 						<td class="text-left d-none d-lg-table-cell">{{ affiliate.tracking }}</td>
 						<td class="text-right">{{ affiliate.commission }}</td>

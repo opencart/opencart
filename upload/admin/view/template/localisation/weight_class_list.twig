@@ -25,11 +25,7 @@
 			{% if weight_classes %}
 				{% for weight_class in weight_classes %}
 					<tr>
-						<td class="text-center">{% if weight_class.weight_class_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ weight_class.weight_class_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ weight_class.weight_class_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ weight_class.weight_class_id }}"/></td>
 						<td class="text-left">{{ weight_class.title }}</td>
 						<td class="text-left">{{ weight_class.unit }}</td>
 						<td class="text-right">{{ weight_class.value }}</td>

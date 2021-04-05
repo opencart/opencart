@@ -153,6 +153,12 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['attribute_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		if (isset($this->request->get['attribute_group_id'])) {
+			$data['attribute_group_id'] = $this->request->get['attribute_group_id'];
+		} else {
+			$data['attribute_group_id'] = 0;
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -179,11 +185,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (isset($this->request->get['attribute_group_id'])) {
-			$data['attribute_group_id'] = $this->request->get['attribute_group_id'];
-		} else {
-			$data['attribute_group_id'] = 0;
-		}
+
 
 		$data['back'] = $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url);
 

@@ -252,6 +252,10 @@ class Review extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('catalog/review');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['review_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -304,7 +308,9 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['review_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['review_id'])) {
+			$this->load->model('catalog/review');
+
 			$review_info = $this->model_catalog_review->getReview($this->request->get['review_id']);
 		}
 

@@ -25,11 +25,7 @@
 			{% if users %}
 				{% for user in users %}
 					<tr>
-						<td class="text-center">{% if user.user_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ user.user_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ user.user_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ user.user_id }}"/></td>
 						<td class="text-left">{{ user.username }}</td>
 						<td class="text-left">{{ user.status }}</td>
 						<td class="text-left">{{ user.date_added }}</td>

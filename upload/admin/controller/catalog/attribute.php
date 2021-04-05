@@ -159,6 +159,12 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		if (isset($this->request->get['attribute_id'])) {
+			$data['attribute_id'] = $this->request->get['attribute_id'];
+		} else {
+			$data['attribute_id'] = 0;
+		}
+
 		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$url = '';
@@ -186,12 +192,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		if (isset($this->request->get['attribute_id'])) {
-			$data['attribute_id'] = $this->request->get['attribute_id'];
-		} else {
-			$data['attribute_id'] = 0;
-		}
 
 		if (isset($this->request->get['attribute_id'])) {
 			$this->load->model('catalog/attribute');

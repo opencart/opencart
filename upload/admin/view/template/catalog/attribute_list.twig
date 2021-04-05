@@ -25,11 +25,7 @@
 			{% if attributes %}
 				{% for attribute in attributes %}
 					<tr>
-						<td class="text-center">{% if attribute.attribute_id in selected %}
-								<input type="checkbox" name="selected[]" value="{{ attribute.attribute_id }}" checked="checked"/>
-							{% else %}
-								<input type="checkbox" name="selected[]" value="{{ attribute.attribute_id }}"/>
-							{% endif %}</td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ attribute.attribute_id }}"/></td>
 						<td class="text-left">{{ attribute.name }}</td>
 						<td class="text-left">{{ attribute.attribute_group }}</td>
 						<td class="text-right">{{ attribute.sort_order }}</td>

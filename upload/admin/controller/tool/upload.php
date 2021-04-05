@@ -102,20 +102,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['delete'] = $this->url->link('tool/upload|delete', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		$data['uploads'] = [];
 
 		$filter_data = [
@@ -202,11 +188,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('tool/upload', $data));
+		return $this->load->view('tool/upload', $data);
 	}
 
 	public function delete(): void {

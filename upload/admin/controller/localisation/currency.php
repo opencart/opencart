@@ -49,38 +49,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function refresh(): void {
-		$this->load->language('localisation/currency');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/currency');
-
-		if ($this->validateRefresh()) {
-			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '|currency', $this->config->get('config_currency'));
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
-	}
-
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -322,6 +290,25 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function refresh(): void {
+		$this->load->language('localisation/currency');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '|currency', $this->config->get('config_currency'));
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function delete(): void {
 		$this->load->language('localisation/currency');
 
@@ -374,13 +361,5 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	protected function validateRefresh(): bool {
-		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
 	}
 }

@@ -302,19 +302,19 @@ class Api extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'user/api')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['username'])) < 3) || (utf8_strlen(trim($this->request->post['username'])) > 64)) {
-			$json['username'] = $this->language->get('error_username');
+			$json['error']['username'] = $this->language->get('error_username');
 		}
 
 		if ((utf8_strlen($this->request->post['key']) < 64) || (utf8_strlen($this->request->post['key']) > 256)) {
-			$json['key'] = $this->language->get('error_key');
+			$json['error']['key'] = $this->language->get('error_key');
 		}
 
 		if (!isset($this->error['warning']) && !isset($this->request->post['api_ip'])) {
-			$json['warning'] = $this->language->get('error_ip');
+			$json['error']['warning'] = $this->language->get('error_ip');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

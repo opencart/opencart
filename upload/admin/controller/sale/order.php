@@ -227,6 +227,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination_admin')
 		];
 
+		$this->load->model('sale/order');
+
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
 		$results = $this->model_sale_order->getOrders($filter_data);

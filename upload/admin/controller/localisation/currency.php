@@ -276,7 +276,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
+			$data['code'] = (string)$this->request->post['code'];
 		} elseif (!empty($currency_info)) {
 			$data['code'] = $currency_info['code'];
 		} else {
@@ -316,11 +316,11 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+			$data['status'] = (int)$this->request->post['status'];
 		} elseif (!empty($currency_info)) {
 			$data['status'] = $currency_info['status'];
 		} else {
-			$data['status'] = '';
+			$data['status'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

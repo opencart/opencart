@@ -483,7 +483,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['order_id'])) {
-			$data['order_id'] = $this->request->post['order_id'];
+			$data['order_id'] = (int)$this->request->post['order_id'];
 		} elseif (!empty($return_info)) {
 			$data['order_id'] = $return_info['order_id'];
 		} else {
@@ -507,7 +507,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['customer_id'])) {
-			$data['customer_id'] = $this->request->post['customer_id'];
+			$data['customer_id'] = (int)$this->request->post['customer_id'];
 		} elseif (!empty($return_info)) {
 			$data['customer_id'] = $return_info['customer_id'];
 		} else {
@@ -555,7 +555,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['product_id'])) {
-			$data['product_id'] = $this->request->post['product_id'];
+			$data['product_id'] = (int)$this->request->post['product_id'];
 		} elseif (!empty($return_info)) {
 			$data['product_id'] = $return_info['product_id'];
 		} else {
@@ -571,7 +571,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['quantity'])) {
-			$data['quantity'] = $this->request->post['quantity'];
+			$data['quantity'] = (int)$this->request->post['quantity'];
 		} elseif (!empty($return_info)) {
 			$data['quantity'] = $return_info['quantity'];
 		} else {
@@ -587,7 +587,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['return_reason_id'])) {
-			$data['return_reason_id'] = $this->request->post['return_reason_id'];
+			$data['return_reason_id'] = (int)$this->request->post['return_reason_id'];
 		} elseif (!empty($return_info)) {
 			$data['return_reason_id'] = $return_info['return_reason_id'];
 		} else {
@@ -599,7 +599,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
 
 		if (isset($this->request->post['return_action_id'])) {
-			$data['return_action_id'] = $this->request->post['return_action_id'];
+			$data['return_action_id'] = (int)$this->request->post['return_action_id'];
 		} elseif (!empty($return_info)) {
 			$data['return_action_id'] = $return_info['return_action_id'];
 		} else {
@@ -619,7 +619,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['return_status_id'])) {
-			$data['return_status_id'] = $this->request->post['return_status_id'];
+			$data['return_status_id'] = (int)$this->request->post['return_status_id'];
 		} elseif (!empty($return_info)) {
 			$data['return_status_id'] = $return_info['return_status_id'];
 		} else {
@@ -646,8 +646,20 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (empty($this->request->post['order_id'])) {
+		if (empty($this->request->post['order_id']) || !filter_var($this->request->post['order_id'], FILTER_VALIDATE_INT)) {
 			$json['error']['order_id'] = $this->language->get('error_order_id');
+		} else {
+			$this->load->model('sale/order');
+			
+			$order_info = $this->model_sale_order->getOrder($this->request->post['order_id']);
+			
+			if (!$order_info) {
+				$json['error']['order_id'] = $this->language->get('error_order_id');
+			}
+		}
+		
+		if (empty($this->request->post['return_reason_id']) || !filter_var($this->request->post['return_reason_id'], FILTER_VALIDATE_INT)) {
+			$json['error']['reason'] = $this->language->get('error_reason');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
@@ -674,10 +686,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
-		if (empty($this->request->post['return_reason_id'])) {
-			$json['error']['reason'] = $this->language->get('error_reason');
-		}
-
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -688,7 +696,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

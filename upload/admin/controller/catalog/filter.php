@@ -237,7 +237,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($filter_group_info)) {
-			$data['filter_group_description'] = $this->model_catalog_filter->getGroupDescriptions($this->request->get['filter_group_id']);
+			$data['filter_group_description'] = (array)$this->model_catalog_filter->getGroupDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filter_group_description'] = [];
 		}
@@ -249,7 +249,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($filter_group_info)) {
-			$data['filters'] = $this->model_catalog_filter->getDescriptions($this->request->get['filter_group_id']);
+			$data['filters'] = (array)$this->model_catalog_filter->getDescriptions($this->request->get['filter_group_id']);
 		} else {
 			$data['filters'] = [];
 		}
@@ -267,12 +267,12 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'catalog/filter')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['filter_group_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 64)) {
-				$json['group'][$language_id] = $this->language->get('error_group');
+				$json['error']['group'][$language_id] = $this->language->get('error_group');
 			}
 		}
 
@@ -280,7 +280,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['filter'] as $key => $filter) {
 				foreach ($filter['filter_description'] as $language_id => $filter_description) {
 					if ((utf8_strlen(trim($filter_description['name'])) < 1) || (utf8_strlen($filter_description['name']) > 64)) {
-						$json['filter'][$key][$language_id] = $this->language->get('error_name');
+						$json['error']['filter'][$key][$language_id] = $this->language->get('error_name');
 					}
 				}
 			}
@@ -298,7 +298,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

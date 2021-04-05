@@ -265,13 +265,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'customer/customer_group')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (isset($this->request->post['customer_group_description'])) {
 			foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
 				if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-					$json['name'][$language_id] = $this->language->get('error_name');
+					$json['error']['name'][$language_id] = $this->language->get('error_name');
 				}
 			}
 		}
@@ -286,7 +286,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -296,6 +296,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
+		
 		$this->load->model('customer/customer');
 
 		foreach ($selected as $customer_group_id) {

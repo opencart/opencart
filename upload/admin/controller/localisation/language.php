@@ -299,30 +299,30 @@ class Language extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'localisation/language')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['name'])) < 1) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$json['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['code'])) < 2) || (utf8_strlen($this->request->post['code']) > 5)) {
-			$json['code'] = $this->language->get('error_code');
+			$json['error']['code'] = $this->language->get('error_code');
 		}
 		
 		if ((utf8_strlen(trim($this->request->post['locale'])) < 2) || (utf8_strlen($this->request->post['locale']) > 255)) {
-			$json['locale'] = $this->language->get('error_locale');
+			$json['error']['locale'] = $this->language->get('error_locale');
 		}
 		
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
 
 		if (!isset($this->request->get['language_id'])) {
 			if ($language_info) {
-				$json['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		} else {
 			if ($language_info && ($this->request->get['language_id'] != $language_info['language_id'])) {
-				$json['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
 
@@ -336,7 +336,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -346,6 +346,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
+		
 		$this->load->model('sale/order');
 
 		foreach ($selected as $language_id) {

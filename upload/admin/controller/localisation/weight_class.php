@@ -265,7 +265,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'localisation/weight_class')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['weight_class_description'] as $language_id => $value) {

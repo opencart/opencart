@@ -370,41 +370,41 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['code']) < 3) || (utf8_strlen($this->request->post['code']) > 10)) {
-			$json['code'] = $this->language->get('error_code');
+			$json['error']['code'] = $this->language->get('error_code');
 		}
 
 		$voucher_info = $this->model_sale_voucher->getVoucherByCode($this->request->post['code']);
 
 		if ($voucher_info) {
 			if (!isset($this->request->get['voucher_id'])) {
-				$json['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			} elseif ($voucher_info['voucher_id'] != (int)$this->request->get['voucher_id'])  {
-				$json['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
 
 		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
-			$json['to_name'] = $this->language->get('error_to_name');
+			$json['error']['to_name'] = $this->language->get('error_to_name');
 		}
 
 		if ((utf8_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
-			$json['to_email'] = $this->language->get('error_email');
+			$json['error']['to_email'] = $this->language->get('error_email');
 		}
 
 		if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
-			$json['from_name'] = $this->language->get('error_from_name');
+			$json['error']['from_name'] = $this->language->get('error_from_name');
 		}
 
 		if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
-			$json['from_email'] = $this->language->get('error_email');
+			$json['error']['from_email'] = $this->language->get('error_email');
 		}
 
 		if ($this->request->post['amount'] < 1) {
-			$json['amount'] = $this->language->get('error_amount');
+			$json['error']['amount'] = $this->language->get('error_amount');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -417,7 +417,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -505,7 +505,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$vouchers = [];
 
 			if (isset($this->request->post['selected'])) {
-				$vouchers = $this->request->post['selected'];
+				$vouchers = (array)$this->request->post['selected'];
 			} elseif (isset($this->request->post['voucher_id'])) {
 				$vouchers[] = $this->request->post['voucher_id'];
 			}

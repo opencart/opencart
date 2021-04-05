@@ -513,6 +513,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = [];
+		
 		$data['multistore'] = 0;
 
 		$data['stores'][] = [
@@ -562,7 +563,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
+			$data['customer_group_id'] = (int)$this->request->post['customer_group_id'];
 		} elseif (!empty($customer_info)) {
 			$data['customer_group_id'] = $customer_info['customer_group_id'];
 		} else {
@@ -628,7 +629,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['custom_field'])) {
-			$data['account_custom_field'] = $this->request->post['custom_field'];
+			$data['account_custom_field'] = (array)$this->request->post['custom_field'];
 		} elseif (!empty($customer_info)) {
 			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 		} else {
@@ -648,7 +649,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		} elseif (!empty($customer_info)) {
 			$data['status'] = $customer_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		if (isset($this->request->post['safe'])) {
@@ -676,7 +677,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (isset($this->request->post['address'])) {
-			$data['addresses'] = $this->request->post['address'];
+			$data['addresses'] = (array)$this->request->post['address'];
 		} elseif (!empty($customer_info)) {
 			$data['addresses'] = $this->model_customer_customer->getAddresses($this->request->get['customer_id']);
 		} else {
@@ -704,35 +705,35 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$json['firstname'] = $this->language->get('error_firstname');
+			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
 		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$json['lastname'] = $this->language->get('error_lastname');
+			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$json['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($this->request->post['email']);
 
 		if (!isset($this->request->get['customer_id'])) {
 			if ($customer_info) {
-				$json['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		} else {
 			if ($customer_info && ($this->request->get['customer_id'] != $customer_info['customer_id'])) {
-				$json['warning'] = $this->language->get('error_exists');
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$json['telephone'] = $this->language->get('error_telephone');
+			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		// Custom field validation
@@ -743,43 +744,43 @@ class Customer extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['status']) {
 				if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->get['customer_id']))) {
 			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-				$json['password'] = $this->language->get('error_password');
+				$json['error']['password'] = $this->language->get('error_password');
 			}
 
 			if ($this->request->post['password'] != $this->request->post['confirm']) {
-				$json['confirm'] = $this->language->get('error_confirm');
+				$json['error']['confirm'] = $this->language->get('error_confirm');
 			}
 		}
 
 		if (isset($this->request->post['address'])) {
 			foreach ($this->request->post['address'] as $key => $value) {
 				if ((utf8_strlen($value['firstname']) < 1) || (utf8_strlen($value['firstname']) > 32)) {
-					$json['address'][$key]['firstname'] = $this->language->get('error_firstname');
+					$json['error']['address'][$key]['firstname'] = $this->language->get('error_firstname');
 				}
 
 				if ((utf8_strlen($value['lastname']) < 1) || (utf8_strlen($value['lastname']) > 32)) {
-					$json['address'][$key]['lastname'] = $this->language->get('error_lastname');
+					$json['error']['address'][$key]['lastname'] = $this->language->get('error_lastname');
 				}
 
 				if ((utf8_strlen($value['address_1']) < 3) || (utf8_strlen($value['address_1']) > 128)) {
-					$json['address'][$key]['address_1'] = $this->language->get('error_address_1');
+					$json['error']['address'][$key]['address_1'] = $this->language->get('error_address_1');
 				}
 
 				if ((utf8_strlen($value['city']) < 2) || (utf8_strlen($value['city']) > 128)) {
-					$json['address'][$key]['city'] = $this->language->get('error_city');
+					$json['error']['address'][$key]['city'] = $this->language->get('error_city');
 				}
 
 				if (!isset($value['country_id']) || $value['country_id'] == '') {
-					$json['address'][$key]['country'] = $this->language->get('error_country');
+					$json['error']['address'][$key]['country'] = $this->language->get('error_country');
 				} else {
 
 					$this->load->model('localisation/country');
@@ -787,19 +788,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 					$country_info = $this->model_localisation_country->getCountry($value['country_id']);
 
 					if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
-						$json['address'][$key]['postcode'] = $this->language->get('error_postcode');
+						$json['error']['address'][$key]['postcode'] = $this->language->get('error_postcode');
 					}
 				}
 
 				if (!isset($value['zone_id']) || $value['zone_id'] == '') {
-					$json['address'][$key]['zone'] = $this->language->get('error_zone');
+					$json['error']['address'][$key]['zone'] = $this->language->get('error_zone');
 				}
 
 				foreach ($custom_fields as $custom_field) {
 					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($value['custom_field'][$custom_field['custom_field_id']])) {
-						$json['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						$json['error']['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['location'] == 'address') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $value['custom_field'][$custom_field['custom_field_id']])) {
-						$json['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+						$json['error']['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
 			}
@@ -815,7 +816,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -1128,6 +1129,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('customer/customer');
+		
 		$this->load->model('setting/store');
 
 		$data['ips'] = [];
@@ -1248,7 +1250,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			$json[] = [
 				'custom_field_id' => $custom_field['custom_field_id'],
-				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
+				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? 0 : 1
 			];
 		}
 

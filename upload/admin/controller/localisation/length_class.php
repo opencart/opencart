@@ -265,16 +265,16 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'localisation/length_class')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['length_class_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 32)) {
-				$json['title'][$language_id] = $this->language->get('error_title');
+				$json['error']['title'][$language_id] = $this->language->get('error_title');
 			}
 
 			if (!$value['unit'] || (utf8_strlen($value['unit']) > 4)) {
-				$json['unit'][$language_id] = $this->language->get('error_unit');
+				$json['error']['unit'][$language_id] = $this->language->get('error_unit');
 			}
 		}
 
@@ -288,7 +288,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

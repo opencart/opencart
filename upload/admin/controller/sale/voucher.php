@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Voucher extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('sale/voucher');
 
@@ -121,20 +119,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -197,48 +181,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$data['voucher_id'] = (int)$this->request->get['voucher_id'];
 		} else {
 			$data['voucher_id'] = 0;
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['code'])) {
-			$data['error_code'] = $this->error['code'];
-		} else {
-			$data['error_code'] = '';
-		}
-
-		if (isset($this->error['from_name'])) {
-			$data['error_from_name'] = $this->error['from_name'];
-		} else {
-			$data['error_from_name'] = '';
-		}
-
-		if (isset($this->error['from_email'])) {
-			$data['error_from_email'] = $this->error['from_email'];
-		} else {
-			$data['error_from_email'] = '';
-		}
-
-		if (isset($this->error['to_name'])) {
-			$data['error_to_name'] = $this->error['to_name'];
-		} else {
-			$data['error_to_name'] = '';
-		}
-
-		if (isset($this->error['to_email'])) {
-			$data['error_to_email'] = $this->error['to_email'];
-		} else {
-			$data['error_to_email'] = '';
-		}
-
-		if (isset($this->error['amount'])) {
-			$data['error_amount'] = $this->error['amount'];
-		} else {
-			$data['error_amount'] = '';
 		}
 
 		$url = '';

@@ -375,7 +375,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
 
-		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
+		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ((int)$this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
@@ -430,7 +430,9 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$data['reports'] = [];
 
 		$this->load->model('marketing/marketing');
+		
 		$this->load->model('customer/customer');
+		
 		$this->load->model('setting/store');
 
 		$results = $this->model_marketing_marketing->getReports($marketing_id, ($page - 1) * 10, 10);

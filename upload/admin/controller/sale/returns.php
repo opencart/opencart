@@ -643,43 +643,39 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'sale/returns')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (empty($this->request->post['order_id'])) {
-			$json['order_id'] = $this->language->get('error_order_id');
+			$json['error']['order_id'] = $this->language->get('error_order_id');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$json['firstname'] = $this->language->get('error_firstname');
+			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$json['lastname'] = $this->language->get('error_lastname');
+			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$json['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$json['telephone'] = $this->language->get('error_telephone');
+			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
-			$json['product'] = $this->language->get('error_product');
+			$json['error']['product'] = $this->language->get('error_product');
 		}
 
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
-			$json['model'] = $this->language->get('error_model');
+			$json['error']['model'] = $this->language->get('error_model');
 		}
 
 		if (empty($this->request->post['return_reason_id'])) {
-			$json['reason'] = $this->language->get('error_reason');
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$json['warning'] = $this->language->get('error_warning');
+			$json['error']['reason'] = $this->language->get('error_reason');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

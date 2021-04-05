@@ -265,7 +265,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		// IP
 		if (isset($this->request->post['api_ip'])) {
-			$data['api_ips'] = $this->request->post['api_ip'];
+			$data['api_ips'] = (array)$this->request->post['api_ip'];
 		} elseif (!empty($api_info)) {
 			$data['api_ips'] = $this->model_user_api->getIps($this->request->get['api_id']);
 		} else {
@@ -327,7 +327,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

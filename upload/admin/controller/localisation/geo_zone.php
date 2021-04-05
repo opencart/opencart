@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class GeoZone extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
 		$this->load->language('localisation/geo_zone');
 
@@ -107,20 +105,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
@@ -173,24 +157,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 	protected function getForm(): void {
 		$data['text_form'] = !isset($this->request->get['geo_zone_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['description'])) {
-			$data['error_description'] = $this->error['description'];
-		} else {
-			$data['error_description'] = '';
-		}
 
 		$url = '';
 

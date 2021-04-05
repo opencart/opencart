@@ -887,91 +887,91 @@ class Store extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'setting/store')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->request->post['config_url']) {
-			$json['url'] = $this->language->get('error_url');
+			$json['error']['url'] = $this->language->get('error_url');
 		}
 
 		if (!$this->request->post['config_meta_title']) {
-			$json['meta_title'] = $this->language->get('error_meta_title');
+			$json['error']['meta_title'] = $this->language->get('error_meta_title');
 		}
 
 		if (!$this->request->post['config_name']) {
-			$json['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['config_owner'])) < 3) || (utf8_strlen(trim($this->request->post['config_owner'])) > 64)) {
-			$json['owner'] = $this->language->get('error_owner');
+			$json['error']['owner'] = $this->language->get('error_owner');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['config_address'])) < 3) || (utf8_strlen(trim($this->request->post['config_address'])) > 256)) {
-			$json['address'] = $this->language->get('error_address');
+			$json['error']['address'] = $this->language->get('error_address');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['config_email'])) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
-			$json['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['config_telephone'])) < 3) || (utf8_strlen(trim($this->request->post['config_telephone'])) > 32)) {
-			$json['telephone'] = $this->language->get('error_telephone');
+			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
-			$json['customer_group_display'] = $this->language->get('error_customer_group_display');
+			$json['error']['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}
 
 		if (!$this->request->post['config_product_description_length']) {
-			$json['product_description_length'] = $this->language->get('error_product_description_length');
+			$json['error']['product_description_length'] = $this->language->get('error_product_description_length');
 		}
 
 		if (!$this->request->post['config_pagination']) {
-			$json['pagination'] = $this->language->get('error_pagination');
+			$json['error']['pagination'] = $this->language->get('error_pagination');
 		}
 
 		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {
-			$json['image_category'] = $this->language->get('error_image_category');
+			$json['error']['image_category'] = $this->language->get('error_image_category');
 		}
 
 		if (!$this->request->post['config_image_thumb_width'] || !$this->request->post['config_image_thumb_height']) {
-			$json['image_thumb'] = $this->language->get('error_image_thumb');
+			$json['error']['image_thumb'] = $this->language->get('error_image_thumb');
 		}
 
 		if (!$this->request->post['config_image_popup_width'] || !$this->request->post['config_image_popup_height']) {
-			$json['image_popup'] = $this->language->get('error_image_popup');
+			$json['error']['image_popup'] = $this->language->get('error_image_popup');
 		}
 
 		if (!$this->request->post['config_image_product_width'] || !$this->request->post['config_image_product_height']) {
-			$json['image_product'] = $this->language->get('error_image_product');
+			$json['error']['image_product'] = $this->language->get('error_image_product');
 		}
 
 		if (!$this->request->post['config_image_additional_width'] || !$this->request->post['config_image_additional_height']) {
-			$json['image_additional'] = $this->language->get('error_image_additional');
+			$json['error']['image_additional'] = $this->language->get('error_image_additional');
 		}
 
 		if (!$this->request->post['config_image_related_width'] || !$this->request->post['config_image_related_height']) {
-			$json['image_related'] = $this->language->get('error_image_related');
+			$json['error']['image_related'] = $this->language->get('error_image_related');
 		}
 
 		if (!$this->request->post['config_image_compare_width'] || !$this->request->post['config_image_compare_height']) {
-			$json['image_compare'] = $this->language->get('error_image_compare');
+			$json['error']['image_compare'] = $this->language->get('error_image_compare');
 		}
 
 		if (!$this->request->post['config_image_wishlist_width'] || !$this->request->post['config_image_wishlist_height']) {
-			$json['image_wishlist'] = $this->language->get('error_image_wishlist');
+			$json['error']['image_wishlist'] = $this->language->get('error_image_wishlist');
 		}
 
 		if (!$this->request->post['config_image_cart_width'] || !$this->request->post['config_image_cart_height']) {
-			$json['image_cart'] = $this->language->get('error_image_cart');
+			$json['error']['image_cart'] = $this->language->get('error_image_cart');
 		}
 
 		if (!$this->request->post['config_image_location_width'] || !$this->request->post['config_image_location_height']) {
-			$json['image_location'] = $this->language->get('error_image_location');
+			$json['error']['image_location'] = $this->language->get('error_image_location');
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {
-			$json['warning'] = $this->language->get('error_warning');
+			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -984,7 +984,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

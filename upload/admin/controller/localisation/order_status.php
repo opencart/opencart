@@ -243,13 +243,13 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'localisation/order_status')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 		
 		if (isset($this->request->post['order_status'])) {
 			foreach ($this->request->post['order_status'] as $language_id => $value) {
 				if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-					$json['name'][$language_id] = $this->language->get('error_name');
+					$json['error']['name'][$language_id] = $this->language->get('error_name');
 				}
 			}
 		}
@@ -264,7 +264,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -274,6 +274,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
+		
 		$this->load->model('sale/order');
 
 		foreach ($selected as $order_status_id) {

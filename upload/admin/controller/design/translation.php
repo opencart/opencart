@@ -295,11 +295,11 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'design/translation')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['key'])) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
-			$json['key'] = $this->language->get('error_key');
+			$json['error']['key'] = $this->language->get('error_key');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -312,7 +312,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -431,6 +431,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$directory = DIR_EXTENSION . $part[1] . '/catalog/language/';
 
 			array_shift($part);
+			
 			array_shift($part);
 
 			$route = implode('/', $part);

@@ -336,15 +336,15 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['title']) < 3) || (utf8_strlen($this->request->post['title']) > 32)) {
-			$json['title'] = $this->language->get('error_title');
+			$json['error']['title'] = $this->language->get('error_title');
 		}
 
 		if (utf8_strlen($this->request->post['code']) != 3) {
-			$json['code'] = $this->language->get('error_code');
+			$json['error']['code'] = $this->language->get('error_code');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -357,7 +357,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -367,6 +367,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
+		
 		$this->load->model('sale/order');
 
 		foreach ($selected as $currency_id) {

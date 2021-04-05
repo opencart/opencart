@@ -269,15 +269,15 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['title']) < 3) || (utf8_strlen($this->request->post['title']) > 32)) {
-			$json['title'] = $this->language->get('error_title');
+			$json['error']['title'] = $this->language->get('error_title');
 		}
 
 		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
-			$json['description'] = $this->language->get('error_description');
+			$json['error']['description'] = $this->language->get('error_description');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -290,7 +290,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

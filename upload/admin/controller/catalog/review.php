@@ -352,7 +352,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		if (isset($this->request->post['product_id'])) {
-			$data['product_id'] = $this->request->post['product_id'];
+			$data['product_id'] = (int)$this->request->post['product_id'];
 		} elseif (!empty($review_info)) {
 			$data['product_id'] = $review_info['product_id'];
 		} else {
@@ -420,23 +420,23 @@ class Review extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'catalog/review')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->request->post['product_id']) {
-			$json['product'] = $this->language->get('error_product');
+			$json['error']['product'] = $this->language->get('error_product');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['author'])) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
-			$json['author'] = $this->language->get('error_author');
+			$json['error']['author'] = $this->language->get('error_author');
 		}
 
 		if (utf8_strlen(trim($this->request->post['text'])) < 1) {
-			$json['text'] = $this->language->get('error_text');
+			$json['error']['text'] = $this->language->get('error_text');
 		}
 
 		if (!isset($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
-			$json['rating'] = $this->language->get('error_rating');
+			$json['error']['rating'] = $this->language->get('error_rating');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -449,7 +449,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

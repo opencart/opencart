@@ -349,56 +349,56 @@ class User extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'user/user')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
-			$json['username'] = $this->language->get('error_username');
+			$json['error']['username'] = $this->language->get('error_username');
 		}
 
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
-				$json['warning'] = $this->language->get('error_username_exists');
+				$json['error']['warning'] = $this->language->get('error_username_exists');
 			}
 		} else {
 			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
-				$json['warning'] = $this->language->get('error_username_exists');
+				$json['error']['warning'] = $this->language->get('error_username_exists');
 			}
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$json['firstname'] = $this->language->get('error_firstname');
+			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$json['lastname'] = $this->language->get('error_lastname');
+			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$json['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
-				$json['warning'] = $this->language->get('error_exists_email');
+				$json['error']['warning'] = $this->language->get('error_exists_email');
 			}
 		} else {
 			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
-				$json['warning'] = $this->language->get('error_exists_email');
+				$json['error']['warning'] = $this->language->get('error_exists_email');
 			}
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {
 			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-				$json['password'] = $this->language->get('error_password');
+				$json['error']['password'] = $this->language->get('error_password');
 			}
 
 			if ($this->request->post['password'] != $this->request->post['confirm']) {
-				$json['confirm'] = $this->language->get('error_confirm');
+				$json['error']['confirm'] = $this->language->get('error_confirm');
 			}
 		}
 
@@ -423,7 +423,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		foreach ($selected as $user_id) {
 			if ($this->user->getId() == $user_id) {
-				$this->error['warning'] = $this->language->get('error_account');
+				$json['error']['warning'] = $this->language->get('error_account');
 			}
 		}
 

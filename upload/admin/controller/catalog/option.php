@@ -273,7 +273,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->post['option_description'])) {
-			$data['option_description'] = $this->request->post['option_description'];
+			$data['option_description'] = (array)$this->request->post['option_description'];
 		} elseif (!empty($option_info)) {
 			$data['option_description'] = $this->model_catalog_option->getDescriptions($this->request->get['option_id']);
 		} else {
@@ -297,7 +297,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['option_value'])) {
-			$option_values = $this->request->post['option_value'];
+			$option_values = (array)$this->request->post['option_value'];
 		} elseif (!empty($option_info)) {
 			$option_values = $this->model_catalog_option->getValueDescriptions($this->request->get['option_id']);
 		} else {
@@ -311,9 +311,11 @@ class Option extends \Opencart\System\Engine\Controller {
 		foreach ($option_values as $option_value) {
 			if (is_file(DIR_IMAGE . html_entity_decode($option_value['image'], ENT_QUOTES, 'UTF-8'))) {
 				$image = $option_value['image'];
+				
 				$thumb = $option_value['image'];
 			} else {
 				$image = '';
+				
 				$thumb = 'no_image.png';
 			}
 
@@ -341,17 +343,17 @@ class Option extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'catalog/option')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 128)) {
-				$json['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (($this->request->post['type'] == 'select' || $this->request->post['type'] == 'radio' || $this->request->post['type'] == 'checkbox') && !isset($this->request->post['option_value'])) {
-			$json['warning'] = $this->language->get('error_type');
+			$json['error']['warning'] = $this->language->get('error_type');
 		}
 
 		if (isset($this->request->post['option_value'])) {
@@ -370,7 +372,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
-						$json['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($product_option_value['option_value_id']));
+						$json['error']['warning'] = sprintf($this->language->get('error_value'), $this->model_catalog_product->getTotalProductsByOptionValueId($product_option_value['option_value_id']));
 					}
 				}
 			}
@@ -380,7 +382,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					if ((utf8_strlen(trim($option_value_description['name'])) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
-						$json['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value');
+						$json['error']['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value');
 					}
 				}
 			}
@@ -396,7 +398,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}
@@ -411,7 +413,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$product_total = $this->model_catalog_product->getTotalProductsByOptionId($option_id);
 
 			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+				$json['error']['warning'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 		}
 

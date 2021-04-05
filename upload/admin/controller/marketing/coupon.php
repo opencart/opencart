@@ -335,7 +335,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['coupon_product'])) {
-			$products = $this->request->post['coupon_product'];
+			$products = (array)$this->request->post['coupon_product'];
 		} elseif (!empty($coupon_info)) {
 			$products = $this->model_marketing_coupon->getProducts($this->request->get['coupon_id']);
 		} else {
@@ -397,7 +397,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['uses_total'])) {
-			$data['uses_total'] = $this->request->post['uses_total'];
+			$data['uses_total'] = (int)$this->request->post['uses_total'];
 		} elseif (!empty($coupon_info)) {
 			$data['uses_total'] = $coupon_info['uses_total'];
 		} else {
@@ -405,7 +405,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['uses_customer'])) {
-			$data['uses_customer'] = $this->request->post['uses_customer'];
+			$data['uses_customer'] = (int)$this->request->post['uses_customer'];
 		} elseif (!empty($coupon_info)) {
 			$data['uses_customer'] = $coupon_info['uses_customer'];
 		} else {
@@ -413,11 +413,11 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+			$data['status'] = (int)$this->request->post['status'];
 		} elseif (!empty($coupon_info)) {
 			$data['status'] = $coupon_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

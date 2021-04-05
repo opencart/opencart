@@ -146,12 +146,14 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/manufacturer_list', $data);
 	}
 
-	protected function getForm(): void {
+	protected function form(): void {
 		$this->load->language('catalog/manufacturer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['text_form'] = !isset($this->request->get['manufacturer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -179,19 +181,13 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['manufacturer_id'])) {
-			$data['action'] = $this->url->link('catalog/manufacturer|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('catalog/manufacturer|edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['manufacturer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['manufacturer_id'])) {
+			$this->load->model('catalog/manufacturer');
+
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		if (!empty($manufacturer_info)) {
 			$data['name'] = $manufacturer_info['name'];
@@ -309,8 +305,11 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		$this->model_catalog_manufacturer->addManufacturer($this->request->post);
-		$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+		if (!isset($this->request->get['manufacturer_id'])) {
+			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
+		} else {
+			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

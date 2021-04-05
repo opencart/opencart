@@ -46,12 +46,12 @@ class Attribute extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('catalog/attribute');
+
 		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {
-		$this->load->language('catalog/attribute');
-
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -153,8 +153,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/attribute');
-
 		$data['text_form'] = !isset($this->request->get['attribute_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -164,8 +162,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['attribute_id'] = 0;
 		}
-
-		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$url = '';
 
@@ -192,6 +188,8 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
+
+		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['attribute_id'])) {
 			$this->load->model('catalog/attribute');

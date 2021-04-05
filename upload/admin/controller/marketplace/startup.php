@@ -82,6 +82,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['refresh'] = $this->url->link('marketplace/startup|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['startups'] = [];
 
 		$filter_data = [
@@ -104,8 +106,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 				'action'     => $result['action'],
 				'status'     => $result['status'],
 				'sort_order' => $result['sort_order'],
-				'enable'     => $this->url->link('marketplace/cron|enable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id']),
-				'disable'    => $this->url->link('marketplace/cron|disable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id'])
+				'enable'     => $this->url->link('marketplace/startup|enable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id']),
+				'disable'    => $this->url->link('marketplace/startup|disable', 'user_token=' . $this->session->data['user_token'] . '&startup_id=' . $result['startup_id'])
 			];
 		}
 

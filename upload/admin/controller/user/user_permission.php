@@ -48,6 +48,8 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('user/user_group');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -163,7 +165,19 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getForm(): void {
+		$this->load->language('user/user_group');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		if (isset($this->request->get['user_group_id'])) {
+			$data['user_group_id'] = $this->request->get['user_group_id'];
+		} else {
+			$data['user_group_id'] = 0;
+		}
 
 		$url = '';
 
@@ -190,12 +204,6 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		if (!isset($this->request->get['user_group_id'])) {
-			$data['action'] = $this->url->link('user/user_permission|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('user/user_permission|edit', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $this->request->get['user_group_id'] . $url);
-		}
 
 		$data['back'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -303,32 +311,20 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
+		if (!$json) {
+			$this->load->model('user/user_group');
+
+			if (!isset($this->request->get['user_group_id'])) {
+				$this->model_user_user_group->addUserGroup($this->request->post);
+			} else {
+				$this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('user/user_group');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/user_group');
-
-		$this->model_user_user_group->addUserGroup($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('user/user_group');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/user_group');
-
-		$this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

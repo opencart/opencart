@@ -262,7 +262,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('marketplace/cron');
+			$this->load->model('setting/cron');
 
 			foreach ($selected as $cron_id) {
 				$this->model_setting_cron->deleteCron($cron_id);

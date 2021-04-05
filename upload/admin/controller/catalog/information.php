@@ -6,8 +6,6 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('catalog/information');
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -34,7 +32,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/information|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('catalog/information|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -48,6 +46,8 @@ class Information extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('catalog/information');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -104,7 +104,7 @@ class Information extends \Opencart\System\Engine\Controller {
 				'information_id' => $result['information_id'],
 				'title'          => $result['title'],
 				'sort_order'     => $result['sort_order'],
-				'edit'           => $this->url->link('catalog/information|edit', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)
+				'edit'           => $this->url->link('catalog/information|form', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $result['information_id'] . $url)
 			];
 		}
 
@@ -120,8 +120,8 @@ class Information extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_title'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . '&sort=id.title' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . '&sort=i.sort_order' . $url);
+		$data['sort_title'] = $this->url->link('catalog/information|list', 'user_token=' . $this->session->data['user_token'] . '&sort=id.title' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/information|list', 'user_token=' . $this->session->data['user_token'] . '&sort=i.sort_order' . $url);
 
 		$url = '';
 
@@ -137,7 +137,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			'total' => $information_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('catalog/information|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($information_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($information_total - $this->config->get('config_pagination_admin'))) ? $information_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $information_total, ceil($information_total / $this->config->get('config_pagination_admin')));
@@ -148,11 +148,23 @@ class Information extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/information_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
+		$this->load->language('catalog/information');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
 		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
 
 		$data['text_form'] = !isset($this->request->get['information_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		if (!isset($this->request->get['information_id'])) {
+			$data['information_id'] = $this->request->get['information_id'];
+		} else {
+			$data['information_id'] = 0;
+		}
 
 		$url = '';
 
@@ -180,19 +192,13 @@ class Information extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['information_id'])) {
-			$data['action'] = $this->url->link('catalog/information|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('catalog/information|edit', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $this->request->get['information_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['information_id'])) {
+			$this->load->model('catalog/information');
+
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/language');
 

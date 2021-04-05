@@ -179,7 +179,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
+			$data['error_name'] = (array)$this->error['name'];
 		} else {
 			$data['error_name'] = [];
 		}
@@ -213,7 +213,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['order_status_id'])) {
 			$data['action'] = $this->url->link('localisation/order_status|add', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/order_status|edit', 'user_token=' . $this->session->data['user_token'] . '&order_status_id=' . $this->request->get['order_status_id'] . $url);
+			$data['action'] = $this->url->link('localisation/order_status|edit', 'user_token=' . $this->session->data['user_token'] . '&order_status_id=' . (int)$this->request->get['order_status_id'] . $url);
 		}
 
 		$data['cancel'] = $this->url->link('localisation/order_status', 'user_token=' . $this->session->data['user_token'] . $url);

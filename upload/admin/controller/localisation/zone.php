@@ -318,7 +318,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['code'])) {
-			$data['code'] = $this->request->post['code'];
+			$data['code'] = (string)$this->request->post['code'];
 		} elseif (!empty($zone_info)) {
 			$data['code'] = $zone_info['code'];
 		} else {
@@ -326,7 +326,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['country_id'])) {
-			$data['country_id'] = $this->request->post['country_id'];
+			$data['country_id'] = (int)$this->request->post['country_id'];
 		} elseif (!empty($zone_info)) {
 			$data['country_id'] = $zone_info['country_id'];
 		} else {
@@ -377,7 +377,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('setting/store');
+		
 		$this->load->model('customer/customer');
+		
 		$this->load->model('localisation/geo_zone');
 
 		foreach ($selected as $zone_id) {

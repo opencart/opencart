@@ -104,6 +104,12 @@ class Filter extends \Opencart\System\Engine\Controller {
 				'edit'            => $this->url->link('catalog/filter|edit', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)
 			];
 		}
+		
+		if (isset($this->request->post['selected'])) {
+			$data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$data['selected'] = [];
+		}
 
 		$url = '';
 
@@ -119,8 +125,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['sort_name'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . '&sort=fgd.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . '&sort=fg.sort_order' . $url);
-
-		$url = '';
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];

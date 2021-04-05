@@ -299,19 +299,19 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		$json = [];
 		
 		if (!$this->user->hasPermission('modify', 'design/seo_profile')) {
-			$json['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->request->post['name']) {
-			$json['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$this->request->post['key']) {
-			$json['key'] = $this->language->get('error_key');
+			$json['error']['key'] = $this->language->get('error_key');
 		}
 
 		if (@preg_match(html_entity_decode($this->request->post['regex'], ENT_QUOTES, 'UTF-8'), null) === false) {
-			$json['regex'] = $this->language->get('error_regex');
+			$json['error']['regex'] = $this->language->get('error_regex');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -324,7 +324,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['selected'])) {
-			$selected = $this->request->post['selected'];
+			$selected = (array)$this->request->post['selected'];
 		} else {
 			$selected = [];
 		}

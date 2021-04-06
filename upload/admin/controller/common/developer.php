@@ -70,7 +70,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			// Before we delete we need to make sure there is a sass file to regenerate the css
 			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
 			

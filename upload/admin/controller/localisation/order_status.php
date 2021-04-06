@@ -147,7 +147,13 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('localisation/order_status');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['order_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -209,10 +215,17 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('localisation/order_status');
+		if (!$json) {
+			$this->load->model('localisation/order_status');
 
-		$this->model_localisation_order_status->addOrderStatus($this->request->post);
-		$this->model_localisation_order_status->editOrderStatus($this->request->get['order_status_id'], $this->request->post);
+			if (!isset($this->request->get['order_status_id'])) {
+				$this->model_localisation_order_status->addOrderStatus($this->request->post);
+			} else {
+				$this->model_localisation_order_status->editOrderStatus($this->request->get['order_status_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

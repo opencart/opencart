@@ -196,12 +196,22 @@ class Upload extends \Opencart\System\Engine\Controller {
 	public function delete(): void {
 		$this->load->language('tool/upload');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
 
 		$this->load->model('tool/upload');
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $upload_id) {
+		if (!$this->user->hasPermission('modify', 'tool/upload')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			foreach ($selected as $upload_id) {
 				// Remove file before deleting DB record.
 				$upload_info = $this->model_tool_upload->getUpload($upload_id);
 
@@ -212,39 +222,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 				$this->model_tool_upload->deleteUpload($upload_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url));
-		}
-
-		$this->getList();
-	}
-
-	protected function validateDelete(): bool {
-		if (!$this->user->hasPermission('modify', 'tool/upload')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

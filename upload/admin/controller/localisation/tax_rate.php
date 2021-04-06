@@ -158,6 +158,10 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('localisation/tax_class');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['tax_rate_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -188,7 +192,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['tax_rate_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['tax_rate_id'])) {
 			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);
 		}
 
@@ -210,7 +214,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$data['type'] = '';
 		}
 
-		if (!empty($tax_rate_info)) {
+		if (isset($this->request->get['tax_rate_id'])) {
 			$data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getCustomerGroups($this->request->get['tax_rate_id']);
 		} else {
 			$data['tax_rate_customer_group'] = [$this->config->get('config_customer_group_id')];
@@ -254,10 +258,17 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$json['error']['rate'] = $this->language->get('error_rate');
 		}
 
-		$this->load->model('localisation/tax_rate');
+		if (!$json) {
+			$this->load->model('localisation/tax_rate');
 
-		$this->model_localisation_tax_rate->addTaxRate($this->request->post);
-		$this->model_localisation_tax_rate->editTaxRate($this->request->get['tax_rate_id'], $this->request->post);
+			if (!isset($this->request->get['tax_rate_id'])) {
+				$this->model_localisation_tax_rate->addTaxRate($this->request->post);
+			} else {
+				$this->model_localisation_tax_rate->editTaxRate($this->request->get['tax_rate_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

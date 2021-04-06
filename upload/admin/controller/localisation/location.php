@@ -149,7 +149,13 @@ class Location extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('localisation/location');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['location_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -180,10 +186,10 @@ class Location extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['location_id'])) {
+			$this->load->model('localisation/location');
+
 			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('setting/store');
 
@@ -267,10 +273,17 @@ class Location extends \Opencart\System\Engine\Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
-		$this->load->model('localisation/location');
+		if (!$json) {
+			$this->load->model('localisation/location');
 
-		$this->model_localisation_location->addLocation($this->request->post);
-		$this->model_localisation_location->editLocation($this->request->get['location_id'], $this->request->post);
+			if (!isset($this->request->get['location_id'])) {
+				$this->model_localisation_location->addLocation($this->request->post);
+			} else {
+				$this->model_localisation_location->editLocation($this->request->get['location_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

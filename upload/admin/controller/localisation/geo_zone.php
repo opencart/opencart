@@ -177,7 +177,9 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('localisation/geo_zone', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['geo_zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['geo_zone_id'])) {
+			$this->load->model('localisation/geo_zone');
+
 			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);
 		}
 
@@ -229,10 +231,17 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$json['error']['description'] = $this->language->get('error_description');
 		}
 
-		$this->load->model('localisation/geo_zone');
+		if (!$json) {
+			$this->load->model('localisation/geo_zone');
 
-		$this->model_localisation_geo_zone->addGeoZone($this->request->post);
-		$this->model_localisation_geo_zone->editGeoZone($this->request->get['geo_zone_id'], $this->request->post);
+			if (!isset($this->request->get['geo_zone_id'])) {
+				$this->model_localisation_geo_zone->addGeoZone($this->request->post);
+			} else {
+				$this->model_localisation_geo_zone->editGeoZone($this->request->get['geo_zone_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

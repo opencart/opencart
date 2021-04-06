@@ -1,116 +1,116 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <div class="float-right">
-        <button type="submit" form="form-user-group" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
-      <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
-      <div class="card-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-user-group">
-          <div class="form-group row required">
-            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{ entry_permission }}</label>
-            <div class="col-sm-10">
-              <div id="user-group-permission" class="form-control" style="height: 250px; overflow: auto;">
-                <table class="table table-borderless table-striped">
-                  <thead>
-                    <tr>
-                      <td class="w-50"></td>
-                      <td>{{ text_access }}</label></td>
-                      <td>{{ text_modify }}</label></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>{{ text_all }}</strong></td>
-                      <td><input type="checkbox" id="input-permission-access" onchange="$('#user-group-permission input[name^=\'permission[access]\']').prop('checked', $(this).prop('checked'));"/></td>
-                      <td><input type="checkbox" id="input-permission-modify" onchange="$('#user-group-permission input[name^=\'permission[modify]\']').prop('checked', $(this).prop('checked'));"/></td>
-                    </tr>
-                    {% for permission in permissions %}
-                      <tr>
-                        <td><label>{{ permission }}</label></td>
-                        <td>{% if permission in access %}
-                            <input type="checkbox" name="permission[access][]" value="{{ permission }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="permission[access][]" value="{{ permission }}"/>
-                          {% endif %}</td>
-                        <td>{% if permission in modify %}
-                            <input type="checkbox" name="permission[modify][]" value="{{ permission }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="permission[modify][]" value="{{ permission }}"/>
-                          {% endif %}</td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">{{ entry_extension }}</label>
-            <div class="col-sm-10">
-              <div id="user-group-extension" class="form-control" style="height: 250px; overflow: auto;">
-                <table class="table table-borderless table-striped">
-                  <thead>
-                    <tr>
-                      <td class="w-50"></td>
-                      <td>{{ text_access }}</td>
-                      <td>{{ text_modify }}</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>{{ text_all }}</strong></td>
-                      <td><input type="checkbox" id="input-permission-access" onchange="$('#user-group-extension input[name^=\'permission[access]\']').prop('checked', $(this).prop('checked'));"/></td>
-                      <td><input type="checkbox" id="input-permission-modify" onchange="$('#user-group-extension input[name^=\'permission[modify]\']').prop('checked', $(this).prop('checked'));"/></td>
-                    </tr>
-                    {% for extension in extensions %}
-                      <tr>
-                        <td><label>{{ extension }}</label></td>
-                        <td>{% if extension in access %}
-                            <input type="checkbox" name="permission[access][]" value="{{ extension }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="permission[access][]" value="{{ extension }}"/>
-                          {% endif %}</td>
-                        <td>{% if extension in modify %}
-                            <input type="checkbox" name="permission[modify][]" value="{{ extension }}" checked="checked"/>
-                          {% else %}
-                            <input type="checkbox" name="permission[modify][]" value="{{ extension }}"/>
-                          {% endif %}</td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-right">
+				<button type="submit" form="form-user-group" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+			<div class="card-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-user-group">
+					<div class="form-group row required">
+						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">{{ entry_permission }}</label>
+						<div class="col-sm-10">
+							<div id="user-group-permission" class="form-control" style="height: 250px; overflow: auto;">
+								<table class="table table-borderless table-striped">
+									<thead>
+										<tr>
+											<td class="w-50"></td>
+											<td>{{ text_access }}</label></td>
+											<td>{{ text_modify }}</label></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><strong>{{ text_all }}</strong></td>
+											<td><input type="checkbox" id="input-permission-access" onchange="$('#user-group-permission input[name^=\'permission[access]\']').prop('checked', $(this).prop('checked'));"/></td>
+											<td><input type="checkbox" id="input-permission-modify" onchange="$('#user-group-permission input[name^=\'permission[modify]\']').prop('checked', $(this).prop('checked'));"/></td>
+										</tr>
+										{% for permission in permissions %}
+											<tr>
+												<td><label>{{ permission }}</label></td>
+												<td>{% if permission in access %}
+														<input type="checkbox" name="permission[access][]" value="{{ permission }}" checked="checked"/>
+													{% else %}
+														<input type="checkbox" name="permission[access][]" value="{{ permission }}"/>
+													{% endif %}</td>
+												<td>{% if permission in modify %}
+														<input type="checkbox" name="permission[modify][]" value="{{ permission }}" checked="checked"/>
+													{% else %}
+														<input type="checkbox" name="permission[modify][]" value="{{ permission }}"/>
+													{% endif %}</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">{{ entry_extension }}</label>
+						<div class="col-sm-10">
+							<div id="user-group-extension" class="form-control" style="height: 250px; overflow: auto;">
+								<table class="table table-borderless table-striped">
+									<thead>
+										<tr>
+											<td class="w-50"></td>
+											<td>{{ text_access }}</td>
+											<td>{{ text_modify }}</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><strong>{{ text_all }}</strong></td>
+											<td><input type="checkbox" id="input-permission-access" onchange="$('#user-group-extension input[name^=\'permission[access]\']').prop('checked', $(this).prop('checked'));"/></td>
+											<td><input type="checkbox" id="input-permission-modify" onchange="$('#user-group-extension input[name^=\'permission[modify]\']').prop('checked', $(this).prop('checked'));"/></td>
+										</tr>
+										{% for extension in extensions %}
+											<tr>
+												<td><label>{{ extension }}</label></td>
+												<td>{% if extension in access %}
+														<input type="checkbox" name="permission[access][]" value="{{ extension }}" checked="checked"/>
+													{% else %}
+														<input type="checkbox" name="permission[access][]" value="{{ extension }}"/>
+													{% endif %}</td>
+												<td>{% if extension in modify %}
+														<input type="checkbox" name="permission[modify][]" value="{{ extension }}" checked="checked"/>
+													{% else %}
+														<input type="checkbox" name="permission[modify][]" value="{{ extension }}"/>
+													{% endif %}</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript"><!--
 $('table tbody label').on('click', function() {
-	var checked = $(this).parent().parent().find(':checkbox:first').prop('checked');
+    var checked = $(this).parent().parent().find(':checkbox:first').prop('checked');
 
-	$(this).parent().parent().find(':checkbox').prop('checked', !checked);
-	$(this).parent().parent().find(':checkbox').prop('checked', !checked);
+    $(this).parent().parent().find(':checkbox').prop('checked', !checked);
+    $(this).parent().parent().find(':checkbox').prop('checked', !checked);
 });
 //--></script>
 {{ footer }}

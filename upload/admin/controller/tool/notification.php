@@ -20,6 +20,8 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$data['list'] = $this->getList();
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -28,6 +30,12 @@ class Notification extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('tool/upload');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
 		$this->load->language('tool/notification');
 		
 		if (isset($this->request->get['page'])) {
@@ -41,8 +49,6 @@ class Notification extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$language_data = $this->load->language->all();
 
 		$data['notifications'] = [];
 
@@ -79,7 +85,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($notification_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($notification_total - $this->config->get('config_pagination_admin'))) ? $notification_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $notification_total, ceil($notification_total / $this->config->get('config_pagination_admin')));
 
-		$this->response->setOutput($this->load->view('tool/notification_list', $data));
+		return $this->load->view('tool/notification_list', $data);
 	}
 
 	public function info(): void {
@@ -121,7 +127,9 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'tool/notification')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('tool/notification');
 
 			foreach ($selected as $notification_id) {

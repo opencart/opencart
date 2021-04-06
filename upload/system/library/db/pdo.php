@@ -1,6 +1,6 @@
 <?php
 namespace DB;
-final class mPDO {
+final class PDO {
 	private $connection = null;
 	private $statement = null;
 

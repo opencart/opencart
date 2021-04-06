@@ -157,7 +157,7 @@ class User extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/user_list', $data));
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

@@ -10,6 +10,7 @@
 						<i class="fas fa-redo"></i> {{ heading_title }}
 					</div>
 					<div class="card-body">
+						<p>{{ text_email }}</p>
 						<div class="form-group">
 							<label for="input-email" class="col-form-label">{{ entry_email }}</label>
 							<div class="input-group">
@@ -34,7 +35,7 @@ $('#button-reset').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/login|reset',
+        url: 'index.php?route=common/forgotten|reset',
         type: 'post',
         data: $('#login :input'),
         dataType: 'json',

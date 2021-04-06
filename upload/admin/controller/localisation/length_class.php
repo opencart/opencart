@@ -157,7 +157,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/length_class_list', $data));
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['length_class_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

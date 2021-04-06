@@ -153,7 +153,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_theme_list', $data));
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['voucher_theme_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

@@ -304,14 +304,6 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->get['product_id'])) {
-			$data['product_id'] = (int)$this->request->get['product_id'];
-		} elseif (isset($this->request->get['master_id'])) {
-			$data['master_id'] = (int)$this->request->get['master_id'];
-		} else {
-			$data['master_id'] = 0;
-		}
-
 		if (isset($this->request->get['master_id'])) {
 			$this->load->model('catalog/product');
 
@@ -407,6 +399,14 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['back'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		if (isset($this->request->get['product_id'])) {
+			$data['product_id'] = (int)$this->request->get['pro duct_id'];
+		} elseif (isset($this->request->get['master_id'])) {
+			$data['master_id'] = (int)$this->request->get['master_id'];
+		} else {
+			$data['master_id'] = 0;
+		}
 
 		// If master_id then we need to get the variant info
 		if (isset($this->request->get['product_id'])) {

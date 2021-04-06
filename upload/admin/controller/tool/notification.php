@@ -30,14 +30,12 @@ class Notification extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
-		$this->load->language('tool/upload');
+		$this->load->language('tool/notification');
 
 		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {
-		$this->load->language('tool/notification');
-		
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {

@@ -9,7 +9,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['text_version'] = '';
 		}
-		
+
 		return $this->load->view('common/footer', $data);
 	}
 }

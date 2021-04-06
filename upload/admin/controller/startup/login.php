@@ -8,6 +8,13 @@ class Login extends \Opencart\System\Engine\Controller {
 			$route = '';
 		}
 
+		// Remove any method call for checking ignore pages.
+		$pos = strrpos($route, '|');
+
+		if ($pos !== false) {
+			$route = substr($this->request->get['route'], 0, $pos);
+		}
+
 		$ignore = [
 			'common/login',
 			'common/forgotten',

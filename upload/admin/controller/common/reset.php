@@ -95,7 +95,6 @@ class Reset extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('common/login'));
 		}
 
-
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

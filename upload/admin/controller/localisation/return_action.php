@@ -147,7 +147,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/return_action_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['return_action_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

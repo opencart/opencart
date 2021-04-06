@@ -150,7 +150,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/language_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

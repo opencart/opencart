@@ -84,6 +84,8 @@ class Information extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['refresh'] = $this->url->link('catalog/information|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['informations'] = [];
 
 		$filter_data = [

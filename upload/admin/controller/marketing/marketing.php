@@ -230,7 +230,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/marketing_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['marketing_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['user_token'] = $this->session->data['user_token'];

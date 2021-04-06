@@ -189,7 +189,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/custom_field_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$this->load->language('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));

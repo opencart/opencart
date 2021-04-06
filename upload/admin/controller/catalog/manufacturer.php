@@ -84,6 +84,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['refresh'] = $this->url->link('catalog/manufacturer|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['manufacturers'] = [];
 
 		$filter_data = [
@@ -148,7 +150,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/manufacturer_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$this->load->language('catalog/manufacturer');
 
 		$this->document->setTitle($this->language->get('heading_title'));

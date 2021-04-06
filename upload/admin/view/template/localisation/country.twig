@@ -16,16 +16,6 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		{% if error_warning %}
-			<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-		{% endif %}
-		{% if success %}
-			<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-		{% endif %}
 		<div class="row">
 			<div id="filter-country" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
 				<div class="card">

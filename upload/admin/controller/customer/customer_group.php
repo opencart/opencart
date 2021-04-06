@@ -148,8 +148,18 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/customer_group_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
+		$this->load->language('customer/customer_group');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['customer_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+
+		if (isset($this->request->get['customer_group_id'])) {
+			$data['customer_group_id'] = $this->request->get['customer_group_id'];
+		} else {
+			$data['customer_group_id'] = 0;
+		}
 
 		$url = '';
 
@@ -179,7 +189,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['customer_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['customer_group_id'])) {
+			$this->load->model('customer/customer_group');
+
 			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
 		}
 
@@ -187,7 +199,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (!empty($customer_group_info)) {
+		if (isset($this->request->get['customer_group_id'])) {
 			$data['customer_group_description'] = $this->model_customer_customer_group->getDescriptions($this->request->get['customer_group_id']);
 		} else {
 			$data['customer_group_description'] = [];

@@ -255,7 +255,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/affiliate_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$this->load->language('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));

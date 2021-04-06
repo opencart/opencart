@@ -168,7 +168,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/currency_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));

@@ -308,32 +308,20 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
+		if (!$json) {
+			$this->load->model('localisation/zone');
+
+			if (!isset($this->request->get['zone_id'])) {
+				$this->model_localisation_zone->addZone($this->request->post);
+			} else {
+				$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('localisation/zone');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/zone');
-
-		$this->model_localisation_zone->addZone($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('localisation/zone');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/zone');
-
-		$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

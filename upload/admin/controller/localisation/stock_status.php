@@ -147,6 +147,10 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('localisation/stock_status');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -209,9 +213,17 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('localisation/stock_status');
-		$this->model_localisation_stock_status->addStockStatus($this->request->post);
-		$this->model_localisation_stock_status->editStockStatus($this->request->get['stock_status_id'], $this->request->post);
+		if (!$json) {
+			$this->load->model('localisation/stock_status');
+
+			if (!isset($this->request->get['stock_status_id'])) {
+				$this->model_localisation_stock_status->addStockStatus($this->request->post);
+			} else {
+				$this->model_localisation_stock_status->editStockStatus($this->request->get['stock_status_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

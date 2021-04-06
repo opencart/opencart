@@ -226,32 +226,20 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!$json) {
+			$this->load->model('localisation/weight_class');
+
+			if (!isset($this->request->get['weight_class_id'])) {
+				$this->model_localisation_weight_class->addWeightClass($this->request->post);
+			} else {
+				$this->model_localisation_weight_class->editWeightClass($this->request->get['weight_class_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('localisation/weight_class');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/weight_class');
-
-		$this->model_localisation_weight_class->addWeightClass($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('localisation/weight_class');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/weight_class');
-
-		$this->model_localisation_weight_class->editWeightClass($this->request->get['weight_class_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

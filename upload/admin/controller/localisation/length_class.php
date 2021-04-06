@@ -177,6 +177,8 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['length_class_id'])) {
+			$this->load->model('localisation/length_class');
+
 			$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
 		}
 
@@ -222,11 +224,17 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('localisation/length_class');
+		if (!$json) {
+			$this->load->model('localisation/length_class');
 
-		$this->model_localisation_length_class->addLengthClass($this->request->post);
+			if (!isset($this->request->get['length_class_id'])) {
+				$this->model_localisation_length_class->addLengthClass($this->request->post);
+			} else {
+				$this->model_localisation_length_class->editLengthClass($this->request->get['length_class_id'], $this->request->post);
+			}
 
-		$this->model_localisation_length_class->editLengthClass($this->request->get['length_class_id'], $this->request->post);
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

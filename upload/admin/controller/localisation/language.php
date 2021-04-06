@@ -181,7 +181,9 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['language_id'])) {
+			$this->load->model('localisation/language');
+
 			$language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
 		}
 
@@ -263,10 +265,17 @@ class Language extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('localisation/language');
+		if (!$json) {
+			$this->load->model('localisation/language');
 
-		$this->model_localisation_language->addLanguage($this->request->post);
-		$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
+			if (!isset($this->request->get['language_id'])) {
+				$this->model_localisation_language->addLanguage($this->request->post);
+			} else {
+				$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

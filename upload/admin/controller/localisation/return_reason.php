@@ -209,10 +209,17 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('localisation/return_action');
+		if (!$json) {
+			$this->load->model('localisation/return_reason');
 
-		$this->model_localisation_return_action->addReturnAction($this->request->post);
-		$this->model_localisation_return_action->editReturnAction($this->request->get['return_action_id'], $this->request->post);
+			if (!isset($this->request->get['return_reason_id'])) {
+				$this->model_localisation_return_reason->addReturnReason($this->request->post);
+			} else {
+				$this->model_localisation_return_reason->editReturnReason($this->request->get['return_reason_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

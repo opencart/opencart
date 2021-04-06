@@ -320,6 +320,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
 
+		// Captcha
 		$data['config_captcha'] = $this->config->get('config_captcha');
 
 		$this->load->model('setting/extension');

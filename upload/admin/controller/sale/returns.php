@@ -352,6 +352,10 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('sale/return');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['return_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -586,6 +590,18 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
+		if (!$json) {
+			$this->load->model('sale/returns');
+
+			if (!isset($this->request->get['return_id'])) {
+				$this->model_sale_returns->addReturn($this->request->post);
+			} else {
+				$this->model_sale_returns->editReturn($this->request->get['return_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -617,30 +633,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('sale/return');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/returns');
-
-		$this->model_sale_returns->addReturn($this->request->post);
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('sale/return');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/returns');
-
-		$this->model_sale_returns->editReturn($this->request->get['return_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function history(): void {
@@ -688,7 +680,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'sale/returns')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('sale/returns');
 
 			$this->model_sale_returns->addHistory($this->request->get['return_id'], $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);

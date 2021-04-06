@@ -328,10 +328,17 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['amount'] = $this->language->get('error_amount');
 		}
 
-		$this->load->model('sale/voucher');
+		if (!$json) {
+			$this->load->model('sale/voucher');
 
-		$this->model_sale_voucher->addVoucher($this->request->post);
-		$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
+			if (!isset($this->request->get['voucher_id'])) {
+				$this->model_sale_voucher->addVoucher($this->request->post);
+			} else {
+				$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

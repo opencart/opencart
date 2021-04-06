@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Order extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('sale/order');
 
@@ -399,14 +398,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function info(): void {
 		$this->load->language('sale/order');
 
-
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : sprintf($this->language->get('text_edit'), $order_id);
@@ -417,6 +408,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/upload');
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
 
 		$url = '';
 

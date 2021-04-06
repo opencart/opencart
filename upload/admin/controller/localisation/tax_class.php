@@ -147,6 +147,10 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('localisation/tax_class');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['tax_class_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -177,7 +181,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['tax_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['tax_class_id'])) {
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
 		}
 
@@ -197,7 +201,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 
 		$data['tax_rates'] = $this->model_localisation_tax_rate->getTaxRates();
 
-		if (!empty($tax_class_info)) {
+		if (isset($this->request->get['tax_class_id'])) {
 			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($this->request->get['tax_class_id']);
 		} else {
 			$data['tax_rules'] = [];
@@ -227,10 +231,17 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$json['error']['description'] = $this->language->get('error_description');
 		}
 
-		$this->load->model('localisation/tax_class');
+		if (!$json) {
+			$this->load->model('localisation/tax_class');
 
-		$this->model_localisation_tax_class->addTaxClass($this->request->post);
-		$this->model_localisation_tax_class->editTaxClass($this->request->get['tax_class_id'], $this->request->post);
+			if (!isset($this->request->get['tax_class_id'])) {
+				$this->model_localisation_tax_class->addStockStatus($this->request->post);
+			} else {
+				$this->model_localisation_tax_class->editStockStatus($this->request->get['tax_class_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

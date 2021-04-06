@@ -70,6 +70,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('customer/customer');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -226,7 +228,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'unlock'         => $unlock,
 				'store'          => $store_data,
-				'edit'           => $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url)
+				'edit'           => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . $url)
 			];
 		}
 
@@ -268,11 +270,11 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_email'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&sort=c.email' . $url);
-		$data['sort_customer_group'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&sort=customer_group' . $url);
-		$data['sort_status'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&sort=c.status' . $url);
-		$data['sort_date_added'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . '&sort=c.date_added' . $url);
+		$data['sort_name'] = $this->url->link('customer/customer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_email'] = $this->url->link('customer/customer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=c.email' . $url);
+		$data['sort_customer_group'] = $this->url->link('customer/customer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer_group' . $url);
+		$data['sort_status'] = $this->url->link('customer/customer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=c.status' . $url);
+		$data['sort_date_added'] = $this->url->link('customer/customer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=c.date_added' . $url);
 
 		$url = '';
 
@@ -312,7 +314,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'total' => $customer_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('customer/customer|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($customer_total - $this->config->get('config_pagination_admin'))) ? $customer_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $customer_total, ceil($customer_total / $this->config->get('config_pagination_admin')));
@@ -421,12 +423,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['orders'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&filter_customer_id=' . $this->request->get['customer_id']);
 		} else {
 			$data['orders'] = '';
-		}
-
-		if (!isset($this->request->get['customer_id'])) {
-			$data['action'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id'] . $url);
 		}
 
 		$data['back'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url);

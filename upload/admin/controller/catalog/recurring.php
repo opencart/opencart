@@ -155,6 +155,8 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['recurring_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		if (isset($this->request->get['recurring_id'])) {
 			$data['recurring_id'] = $this->request->get['recurring_id'];
 		} else {
@@ -189,8 +191,6 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['recurring_id'])) {
 			$this->load->model('catalog/recurring');
 
@@ -201,7 +201,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (!empty($recurring_info)) {
+		if (isset($this->request->get['recurring_id'])) {
 			$data['recurring_description'] = $this->model_catalog_recurring->getDescription($recurring_info['recurring_id']);
 		} else {
 			$data['recurring_description'] = [];

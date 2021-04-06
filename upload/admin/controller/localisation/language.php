@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class Language extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('localisation/language');
 
@@ -47,6 +46,8 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('localisation/language');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -104,7 +105,7 @@ class Language extends \Opencart\System\Engine\Controller {
 				'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : ''),
 				'code'        => $result['code'],
 				'sort_order'  => $result['sort_order'],
-				'edit'        => $this->url->link('localisation/language|edit', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $result['language_id'] . $url)
+				'edit'        => $this->url->link('localisation/language|form', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $result['language_id'] . $url)
 			];
 		}
 
@@ -120,9 +121,9 @@ class Language extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_code'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_sort_order'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		$data['sort_name'] = $this->url->link('localisation/language|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_code'] = $this->url->link('localisation/language|list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
+		$data['sort_sort_order'] = $this->url->link('localisation/language|list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
 		$url = '';
 
@@ -138,7 +139,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			'total' => $language_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/language|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($language_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($language_total - $this->config->get('config_pagination_admin'))) ? $language_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $language_total, ceil($language_total / $this->config->get('config_pagination_admin')));
@@ -177,12 +178,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		if (!isset($this->request->get['language_id'])) {
-			$data['action'] = $this->url->link('localisation/language|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('localisation/language|edit', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $this->request->get['language_id'] . $url);
-		}
 
 		$data['back'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url);
 

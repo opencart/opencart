@@ -46,6 +46,8 @@ class Store extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('setting/store');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -90,7 +92,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				'store_id' => $result['store_id'],
 				'name'     => $result['name'],
 				'url'      => $result['url'],
-				'edit'     => $this->url->link('setting/store|edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
+				'edit'     => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $result['store_id'])
 			];
 		}
 
@@ -98,7 +100,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			'total' => $store_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('setting/store|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($store_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($store_total - $this->config->get('config_pagination_admin'))) ? $store_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $store_total, ceil($store_total / $this->config->get('config_pagination_admin')));
@@ -129,14 +131,8 @@ class Store extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
+				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
 			];
-		}
-
-		if (!isset($this->request->get['store_id'])) {
-			$data['action'] = $this->url->link('setting/store|add', 'user_token=' . $this->session->data['user_token']);
-		} else {
-			$data['action'] = $this->url->link('setting/store|edit', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
 		}
 
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);

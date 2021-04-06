@@ -47,6 +47,8 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('localisation/return_status');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -102,7 +104,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$data['return_statuses'][] = [
 				'return_status_id' => $result['return_status_id'],
 				'name'             => $result['name'] . (($result['return_status_id'] == $this->config->get('config_return_status_id')) ? $this->language->get('text_default') : ''),
-				'edit'             => $this->url->link('localisation/return_status|edit', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $result['return_status_id'] . $url)
+				'edit'             => $this->url->link('localisation/return_status|form', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $result['return_status_id'] . $url)
 			];
 		}
 
@@ -118,7 +120,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('localisation/return_status|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -134,7 +136,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'total' => $return_status_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/return_status|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_status_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_status_total - $this->config->get('config_pagination_admin'))) ? $return_status_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_status_total, ceil($return_status_total / $this->config->get('config_pagination_admin')));
@@ -173,12 +175,6 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		if (!isset($this->request->get['return_status_id'])) {
-			$data['action'] = $this->url->link('localisation/return_status|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('localisation/return_status|edit', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $this->request->get['return_status_id'] . $url);
-		}
 
 		$data['back'] = $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . $url);
 

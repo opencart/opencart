@@ -241,8 +241,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'shipping_code' => $result['shipping_code'],
-				'view'          => $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url),
-				'edit'          => $this->url->link('sale/order|edit', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
+				'view'          => $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
 			];
 		}
 
@@ -296,13 +295,13 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_order'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url);
-		$data['sort_store_name'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&sort=o.store_name' . $url);
-		$data['sort_customer'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
-		$data['sort_status'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&sort=order_status' . $url);
-		$data['sort_total'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&sort=o.total' . $url);
-		$data['sort_date_added'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_modified' . $url);
+		$data['sort_order'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url);
+		$data['sort_store_name'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.store_name' . $url);
+		$data['sort_customer'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
+		$data['sort_status'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=order_status' . $url);
+		$data['sort_total'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.total' . $url);
+		$data['sort_date_added'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_added' . $url);
+		$data['sort_date_modified'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.date_modified' . $url);
 
 		$url = '';
 
@@ -354,7 +353,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($order_total - $this->config->get('config_pagination_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $order_total, ceil($order_total / $this->config->get('config_pagination_admin')));
@@ -483,7 +482,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
-		$data['edit'] = $this->url->link('sale/order|edit', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['back'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['customer_add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token']);
 
@@ -559,7 +557,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Customer
 		if ($order_info['customer_id']) {
-			$data['customer'] = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
+			$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 		} else {
 			$data['customer'] = '';
 		}
@@ -707,7 +705,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Affiliate
 		if ($order_info['affiliate_id']) {
-			$data['affiliate'] = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['affiliate_id']);
+			$data['affiliate'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['affiliate_id']);
 		} else {
 			$data['affiliate'] = '';
 		}
@@ -1058,7 +1056,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'reward'           => $product['reward'],
-				'href'             => $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+				'href'             => $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
 			];
 		}
 
@@ -1071,7 +1069,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_vouchers'][] = [
 				'description' => $voucher['description'],
 				'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-				'href'        => $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+				'href'        => $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
 			];
 		}
 

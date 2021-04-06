@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class Location extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('localisation/location');
 
@@ -47,6 +46,8 @@ class Location extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('localisation/location');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -103,7 +104,7 @@ class Location extends \Opencart\System\Engine\Controller {
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],
 				'address'     => $result['address'],
-				'edit'        => $this->url->link('localisation/location|edit', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $result['location_id'] . $url)
+				'edit'        => $this->url->link('localisation/location|form', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $result['location_id'] . $url)
 			];
 		}
 
@@ -119,8 +120,8 @@ class Location extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_address'] = $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . '&sort=address' . $url);
+		$data['sort_name'] = $this->url->link('localisation/location|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_address'] = $this->url->link('localisation/location|list', 'user_token=' . $this->session->data['user_token'] . '&sort=address' . $url);
 
 		$url = '';
 
@@ -136,7 +137,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			'total' => $location_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/location|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($location_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($location_total - $this->config->get('config_pagination_admin'))) ? $location_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $location_total, ceil($location_total / $this->config->get('config_pagination_admin')));
@@ -176,15 +177,9 @@ class Location extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['location_id'])) {
-			$data['action'] = $this->url->link('localisation/location|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('localisation/location|edit', 'user_token=' . $this->session->data['user_token'] .  '&location_id=' . $this->request->get['location_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['location_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['location_id'])) {
 			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
 		}
 

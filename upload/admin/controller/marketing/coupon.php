@@ -103,7 +103,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'       => $this->url->link('marketing/coupon|edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'] . $url)
+				'edit'       => $this->url->link('marketing/coupon|form', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $result['coupon_id'] . $url)
 			];
 		}
 
@@ -119,12 +119,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_code'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
-		$data['sort_discount'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . '&sort=discount' . $url);
-		$data['sort_date_start'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . '&sort=date_start' . $url);
-		$data['sort_date_end'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . '&sort=date_end' . $url);
-		$data['sort_status'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_name'] = $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_code'] = $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
+		$data['sort_discount'] = $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . '&sort=discount' . $url);
+		$data['sort_date_start'] = $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_start' . $url);
+		$data['sort_date_end'] = $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_end' . $url);
+		$data['sort_status'] = $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
 		$url = '';
 
@@ -140,7 +140,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'total' => $coupon_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($coupon_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($coupon_total - $this->config->get('config_pagination_admin'))) ? $coupon_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $coupon_total, ceil($coupon_total / $this->config->get('config_pagination_admin')));
@@ -181,12 +181,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		if (!isset($this->request->get['coupon_id'])) {
-			$data['action'] = $this->url->link('marketing/coupon|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('marketing/coupon|edit', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url);
-		}
 
 		$data['back'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url);
 

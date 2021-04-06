@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\User;
 class Api extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('user/api');
 
@@ -47,6 +46,8 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('user/api');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -133,10 +134,10 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_username'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
-		$data['sort_status'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
-		$data['sort_date_added'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url);
+		$data['sort_username'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
+		$data['sort_status'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_date_added'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
+		$data['sort_date_modified'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_modified' . $url);
 
 		$url = '';
 
@@ -152,7 +153,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			'total' => $user_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($user_total - $this->config->get('config_pagination_admin'))) ? $user_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $user_total, ceil($user_total / $this->config->get('config_pagination_admin')));
@@ -160,14 +161,10 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
 		return $this->load->view('user/api_list', $data);
 	}
 
-	protected function getForm(): void {
+	protected function form(): void {
 		$this->load->language('user/api');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -281,34 +278,20 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_ip');
 		}
 
+		if (!$json) {
+			$this->load->model('user/api');
+
+			if (!isset($this->request->get['api_id'])) {
+				$this->model_user_api->addApi($this->request->post);
+			} else {
+				$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-		$this->load->language('user/api');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/api');
-
-		$this->model_user_api->addApi($this->request->post);
-
-		$this->session->data['success'] = $this->language->get('text_success');
-
-		$this->getForm();
-	}
-
-	public function edit(): void {
-		$this->load->language('user/api');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('user/api');
-
-		$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

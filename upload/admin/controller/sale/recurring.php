@@ -238,12 +238,12 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_order_recurring'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . '&sort=or.order_recurring_id' . $url);
-		$data['sort_order'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . '&sort=or.order_id' . $url);
-		$data['sort_reference'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . '&sort=or.reference' . $url);
-		$data['sort_customer'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
-		$data['sort_status'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . '&sort=or.status' . $url);
-		$data['sort_date_added'] = $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . '&sort=or.date_added' . $url);
+		$data['sort_order_recurring'] = $this->url->link('sale/recurring|list', 'user_token=' . $this->session->data['user_token'] . '&sort=or.order_recurring_id' . $url);
+		$data['sort_order'] = $this->url->link('sale/recurring|list', 'user_token=' . $this->session->data['user_token'] . '&sort=or.order_id' . $url);
+		$data['sort_reference'] = $this->url->link('sale/recurring|list', 'user_token=' . $this->session->data['user_token'] . '&sort=or.reference' . $url);
+		$data['sort_customer'] = $this->url->link('sale/recurring|list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
+		$data['sort_status'] = $this->url->link('sale/recurring|list', 'user_token=' . $this->session->data['user_token'] . '&sort=or.status' . $url);
+		$data['sort_date_added'] = $this->url->link('sale/recurring|list', 'user_token=' . $this->session->data['user_token'] . '&sort=or.date_added' . $url);
 
 		$url = '';
 
@@ -283,7 +283,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			'total' => $recurrings_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('sale/recurring|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($recurrings_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($recurrings_total - $this->config->get('config_pagination_admin'))) ? $recurrings_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $recurrings_total, ceil($recurrings_total / $this->config->get('config_pagination_admin')));
@@ -391,7 +391,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$data['recurring_name'] = $order_recurring_info['recurring_name'];
 			
 			if ($order_recurring_info['recurring_id']) {
-				$data['recurring'] = $this->url->link('catalog/recurring|edit', 'user_token=' . $this->session->data['user_token'] . '&recurring_id=' . $order_recurring_info['recurring_id']);
+				$data['recurring'] = $this->url->link('catalog/recurring|form', 'user_token=' . $this->session->data['user_token'] . '&recurring_id=' . $order_recurring_info['recurring_id']);
 			} else {
 				$data['recurring'] = '';
 			}			
@@ -417,7 +417,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$data['lastname'] = $order_info['lastname'];
 			
 			if ($order_info['customer_id']) {
-				$data['customer'] = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
+				$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 			} else {
 				$data['customer'] = '';
 			}

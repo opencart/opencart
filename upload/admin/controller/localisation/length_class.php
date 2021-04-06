@@ -100,7 +100,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 				'title'           => $result['title'] . (($result['length_class_id'] == $this->config->get('config_length_class_id')) ? $this->language->get('text_default') : ''),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
-				'edit'            => $this->url->link('localisation/length_class|edit', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $result['length_class_id'] . $url)
+				'edit'            => $this->url->link('localisation/length_class|form', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $result['length_class_id'] . $url)
 			];
 		}
 
@@ -116,9 +116,9 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_title'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
-		$data['sort_unit'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
-		$data['sort_value'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
+		$data['sort_title'] = $this->url->link('localisation/length_class|list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
+		$data['sort_unit'] = $this->url->link('localisation/length_class|list', 'user_token=' . $this->session->data['user_token'] . '&sort=unit' . $url);
+		$data['sort_value'] = $this->url->link('localisation/length_class|list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
 
 		$url = '';
 
@@ -134,7 +134,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			'total' => $length_class_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/length_class|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($length_class_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($length_class_total - $this->config->get('config_pagination_admin'))) ? $length_class_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $length_class_total, ceil($length_class_total / $this->config->get('config_pagination_admin')));
@@ -174,15 +174,9 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['length_class_id'])) {
-			$data['action'] = $this->url->link('localisation/length_class|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('localisation/length_class|edit', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $this->request->get['length_class_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['length_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['length_class_id'])) {
 			$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
 		}
 

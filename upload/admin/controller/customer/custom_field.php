@@ -142,7 +142,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 				'type'            => $type,
 				'status'          => $result['status'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('customer/custom_field|edit', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . $url)
+				'edit'            => $this->url->link('customer/custom_field|form', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $result['custom_field_id'] . $url)
 			];
 		}
 
@@ -158,11 +158,11 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . '&sort=cfd.name' . $url);
-		$data['sort_location'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.location' . $url);
-		$data['sort_type'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.type' . $url);
-		$data['sort_status'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.status' . $url);
-		$data['sort_sort_order'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.sort_order' . $url);
+		$data['sort_name'] = $this->url->link('customer/custom_field|list', 'user_token=' . $this->session->data['user_token'] . '&sort=cfd.name' . $url);
+		$data['sort_location'] = $this->url->link('customer/custom_field|list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.location' . $url);
+		$data['sort_type'] = $this->url->link('customer/custom_field|list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.type' . $url);
+		$data['sort_status'] = $this->url->link('customer/custom_field|list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.status' . $url);
+		$data['sort_sort_order'] = $this->url->link('customer/custom_field|list', 'user_token=' . $this->session->data['user_token'] . '&sort=cf.sort_order' . $url);
 
 		$url = '';
 
@@ -178,7 +178,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'total' => $custom_field_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('customer/custom_field|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($custom_field_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($custom_field_total - $this->config->get('config_pagination_admin'))) ? $custom_field_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $custom_field_total, ceil($custom_field_total / $this->config->get('config_pagination_admin')));
@@ -230,15 +230,9 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['custom_field_id'])) {
-			$data['action'] = $this->url->link('customer/custom_field|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('customer/custom_field|edit', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url);
-		}
-
 		$data['back'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['custom_field_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['custom_field_id'])) {
 			$custom_field_info = $this->model_customer_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}
 
@@ -248,7 +242,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (!empty($custom_field_info)) {
+		if (isset($this->request->get['custom_field_id'])) {
 			$data['custom_field_description'] = $this->model_customer_custom_field->getDescriptions($this->request->get['custom_field_id']);
 		} else {
 			$data['custom_field_description'] = [];
@@ -290,7 +284,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		if (!empty($custom_field_info)) {
+		if (isset($this->request->get['custom_field_id'])) {
 			$custom_field_values = $this->model_customer_custom_field->getValueDescriptions($this->request->get['custom_field_id']);
 		} else {
 			$custom_field_values = [];
@@ -306,7 +300,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (!empty($custom_field_info)) {
+		if (isset($this->request->get['custom_field_id'])) {
 			$custom_field_customer_groups = $this->model_customer_custom_field->getCustomerGroups($this->request->get['custom_field_id']);
 		} else {
 			$custom_field_customer_groups = [];
@@ -377,7 +371,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/custom_field');
 
-			if (!isset($this->request->get['review_id'])) {
+			if (!isset($this->request->get['custom_field_id'])) {
 				$this->model_customer_custom_field->addCustomField($this->request->post);
 			} else {
 				$this->model_customer_custom_field->editCustomField($this->request->get['custom_field_id'], $this->request->post);

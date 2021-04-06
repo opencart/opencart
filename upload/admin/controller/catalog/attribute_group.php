@@ -201,7 +201,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (!empty($attribute_group_info)) {
+		if (isset($this->request->get['attribute_group_id'])) {
 			$data['attribute_group_description'] = $this->model_catalog_attribute_group->getDescriptions($this->request->get['attribute_group_id']);
 		} else {
 			$data['attribute_group_description'] = [];

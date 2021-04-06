@@ -204,7 +204,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (!empty($information_info)) {
+		if (isset($this->request->get['information_id'])) {
 			$data['information_description'] = $this->model_catalog_information->getDescriptions($this->request->get['information_id']);
 		} else {
 			$data['information_description'] = [];
@@ -228,7 +228,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (!empty($information_info)) {
+		if (isset($this->request->get['information_id'])) {
 			$data['information_store'] = $this->model_catalog_information->getStores($this->request->get['information_id']);
 		} else {
 			$data['information_store'] = [0];
@@ -252,13 +252,13 @@ class Information extends \Opencart\System\Engine\Controller {
 			$data['sort_order'] = '';
 		}
 
-		if (!empty($information_info)) {
+		if (isset($this->request->get['information_id'])) {
 			$data['information_seo_url'] = $this->model_catalog_information->getSeoUrls($this->request->get['information_id']);
 		} else {
 			$data['information_seo_url'] = [];
 		}
 
-		if (!empty($information_info)) {
+		if (isset($this->request->get['information_id'])) {
 			$data['information_layout'] = $this->model_catalog_information->getLayouts($this->request->get['information_id']);
 		} else {
 			$data['information_layout'] = [];

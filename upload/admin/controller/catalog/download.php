@@ -42,7 +42,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/category ', $data));
+		$this->response->setOutput($this->load->view('catalog/download ', $data));
 	}
 
 	public function list(): void {
@@ -83,6 +83,8 @@ class Download extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['refresh'] = $this->url->link('catalog/download|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['downloads'] = [];
 
@@ -200,6 +202,8 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['download_id'])) {
+			$this->load->model('catalog/download');
+
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
 		}
 

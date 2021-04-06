@@ -162,9 +162,9 @@ class Product extends \Opencart\System\Engine\Controller {
 			'limit'           => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('tool/image');
-
 		$this->load->model('catalog/product');
+
+		$this->load->model('tool/image');
 
 		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
@@ -288,7 +288,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/product_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$this->load->language('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));

@@ -84,6 +84,8 @@ class Option extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['refresh'] = $this->url->link('catalog/option|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['options'] = [];
 
 		$filter_data = [
@@ -148,7 +150,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/option_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$this->load->language('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));

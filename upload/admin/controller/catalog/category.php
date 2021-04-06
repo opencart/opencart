@@ -84,6 +84,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['refresh'] = $this->url->link('catalog/category|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['categories'] = [];
 
 		$filter_data = [

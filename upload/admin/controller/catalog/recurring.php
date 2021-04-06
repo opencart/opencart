@@ -148,7 +148,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/recurring_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$this->load->language('catalog/recurring');
 
 		$this->document->setTitle($this->language->get('heading_title'));

@@ -214,7 +214,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/country_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$this->load->language('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));

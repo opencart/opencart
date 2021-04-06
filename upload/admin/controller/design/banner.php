@@ -148,7 +148,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		return $this->load->view('design/banner_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['banner_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

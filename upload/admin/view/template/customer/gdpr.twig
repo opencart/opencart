@@ -17,16 +17,6 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		{% if error_warning %}
-			<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-		{% endif %}
-		{% if success %}
-			<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-		{% endif %}
 		<div class="alert alert-warning"><i class="fas fa-info-circle"></i> {{ text_info }}</div>
 		<div class="row">
 			<div id="filter-gdpr" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
@@ -72,7 +62,7 @@
 				<div class="card">
 					<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
 					<div class="card-body">
-						<div id="gdpr"></div>
+						<div id="gdpr">{{ list }}</div>
 					</div>
 				</div>
 			</div>
@@ -85,8 +75,6 @@ $('#gdpr').on('click', '.pagination a', function(e) {
 
     $('#gdpr').load(this.href);
 });
-
-$('#gdpr').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}');
 
 $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
     e.preventDefault();

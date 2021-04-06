@@ -171,7 +171,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_list', $data));
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$this->load->language('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));

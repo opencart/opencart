@@ -163,7 +163,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		return $this->load->view('user/user_group_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$this->load->language('user/user_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));

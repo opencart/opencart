@@ -164,7 +164,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $this->load->view('user/api_list', $data);
 	}
 
-	protected function form(): void {
+	public function form(): void {
 		$this->load->language('user/api');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -173,6 +173,12 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 
 		$data['user_token'] = $this->session->data['user_token'];
+
+		if (isset($this->request->get['api_id'])) {
+			$data['api_id'] = $this->request->get['api_id'];
+		} else {
+			$data['api_id'] = 0;
+		}
 
 		$url = '';
 

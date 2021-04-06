@@ -336,7 +336,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/customer_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['customer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));

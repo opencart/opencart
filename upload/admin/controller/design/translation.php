@@ -156,7 +156,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		return $this->load->view('design/translation_list', $data);
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$this->load->language('design/translation');
 
 		$this->document->setTitle($this->language->get('heading_title'));

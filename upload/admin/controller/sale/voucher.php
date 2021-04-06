@@ -119,7 +119,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('sale/voucher|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $result['voucher_id'] . $url),
+				'edit'       => $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $result['voucher_id'] . $url),
 				'order'      => $order_href
 			];
 		}
@@ -138,13 +138,13 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_code'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . '&sort=v.code' . $url);
-		$data['sort_from'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . '&sort=v.from_name' . $url);
-		$data['sort_to'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . '&sort=v.to_name' . $url);
-		$data['sort_theme'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . '&sort=theme' . $url);
-		$data['sort_amount'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . '&sort=v.amount' . $url);
-		$data['sort_status'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . '&sort=v.status' . $url);
-		$data['sort_date_added'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . '&sort=v.date_added' . $url);
+		$data['sort_code'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . '&sort=v.code' . $url);
+		$data['sort_from'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . '&sort=v.from_name' . $url);
+		$data['sort_to'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . '&sort=v.to_name' . $url);
+		$data['sort_theme'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . '&sort=theme' . $url);
+		$data['sort_amount'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . '&sort=v.amount' . $url);
+		$data['sort_status'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . '&sort=v.status' . $url);
+		$data['sort_date_added'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . '&sort=v.date_added' . $url);
 
 		$url = '';
 
@@ -160,7 +160,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			'total' => $voucher_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($voucher_total - $this->config->get('config_pagination_admin'))) ? $voucher_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $voucher_total, ceil($voucher_total / $this->config->get('config_pagination_admin')));

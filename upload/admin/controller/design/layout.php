@@ -46,6 +46,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('design/layout');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -101,7 +103,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$data['layouts'][] = [
 				'layout_id' => $result['layout_id'],
 				'name'      => $result['name'],
-				'edit'      => $this->url->link('design/layout|edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)
+				'edit'      => $this->url->link('design/layout|form', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)
 			];
 		}
 
@@ -117,7 +119,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('design/layout|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -133,7 +135,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'total' => $layout_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('design/layout|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($layout_total - $this->config->get('config_pagination_admin'))) ? $layout_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $layout_total, ceil($layout_total / $this->config->get('config_pagination_admin')));
@@ -172,12 +174,6 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
-
-		if (!isset($this->request->get['layout_id'])) {
-			$data['action'] = $this->url->link('design/layout|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('design/layout|edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id'] . $url);
-		}
 
 		$data['back'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
 

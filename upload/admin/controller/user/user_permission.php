@@ -39,7 +39,6 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -117,7 +116,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$data['user_groups'][] = [
 				'user_group_id' => $result['user_group_id'],
 				'name'          => $result['name'],
-				'edit'          => $this->url->link('user/user_permission|edit', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
+				'edit'          => $this->url->link('user/user_permission|form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
 			];
 		}
 
@@ -133,7 +132,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('user/user_permission|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -149,7 +148,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'total' => $user_group_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('user/user_permission|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_group_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($user_group_total - $this->config->get('config_pagination_admin'))) ? $user_group_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $user_group_total, ceil($user_group_total / $this->config->get('config_pagination_admin')));

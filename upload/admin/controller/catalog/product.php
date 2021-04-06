@@ -68,6 +68,8 @@ class Product extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('catalog/product');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -196,7 +198,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
 				'status'     => $result['status'],
-				'edit'       => $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['master_id'] ? '&master_id=' . $result['master_id'] : '') . $url),
+				'edit'       => $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'] . ($result['master_id'] ? '&master_id=' . $result['master_id'] : '') . $url),
 				'variant'    => (!$result['master_id'] ? $this->url->link('catalog/product|add', 'user_token=' . $this->session->data['user_token'] . '&master_id=' . $result['product_id'] . $url) : '')
 			];
 		}
@@ -300,6 +302,14 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
+		if (isset($this->request->get['product_id'])) {
+			$data['product_id'] = (int)$this->request->get['product_id'];
+		} elseif (isset($this->request->get['master_id'])) {
+			$data['master_id'] = (int)$this->request->get['master_id'];
+		} else {
+			$data['master_id'] = 0;
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['master_id'])) {
@@ -353,17 +363,11 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['master_id'])) {
 			$this->load->model('catalog/product');
 
-			$master = $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['master_id']);
+			$master = $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['master_id']);
 
 			$data['text_variant'] = sprintf($this->language->get('text_variant'), $master, $master);
 		} else {
 			$data['text_variant'] = '';
-		}
-
-		if (!isset($this->request->get['product_id'])) {
-			$data['action'] = $this->url->link('catalog/product|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('catalog/product|edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id'] . $url);
 		}
 
 		$url = '';
@@ -412,6 +416,8 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($product_id && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+
+
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 		}
 
@@ -618,7 +624,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Categories
 		$this->load->model('catalog/category');
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$categories = $this->model_catalog_product->getCategories($product_id);
 		} else {
 			$categories = [];
@@ -678,7 +684,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$data['product_store'] = $this->model_catalog_product->getStores($product_id);
 		} else {
 			$data['product_store'] = [0];
@@ -687,7 +693,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Downloads
 		$this->load->model('catalog/download');
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$product_downloads = $this->model_catalog_product->getDownloads($product_id);
 		} else {
 			$product_downloads = [];
@@ -707,7 +713,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Related
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$product_relateds = $this->model_catalog_product->getRelated($product_id);
 		} else {
 			$product_relateds = [];
@@ -729,7 +735,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Attributes
 		$this->load->model('catalog/attribute');
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$product_attributes = $this->model_catalog_product->getAttributes($product_id);
 		} else {
 			$product_attributes = [];
@@ -756,7 +762,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		// Options
 		$this->load->model('catalog/option');
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$product_options = $this->model_catalog_product->getOptions($product_id);
 		} else {
 			$product_options = [];
@@ -865,14 +871,14 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$data['product_recurrings'] = $this->model_catalog_product->getRecurrings($product_id);
 		} else {
 			$data['product_recurrings'] = [];
 		}
 
 		// Discount
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$product_discounts = $this->model_catalog_product->getDiscounts($product_id);
 		} else {
 			$product_discounts = [];
@@ -892,7 +898,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Special
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$product_specials = $this->model_catalog_product->getSpecials($product_id);
 		} else {
 			$product_specials = [];
@@ -928,7 +934,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Images
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$product_images = $this->model_catalog_product->getImages($product_id);
 		} else {
 			$product_images = [];
@@ -959,14 +965,14 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['points'] = '';
 		}
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 		} else {
 			$data['product_reward'] = [];
 		}
 
 		// SEO
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$data['product_seo_url'] = $this->model_catalog_product->getSeoUrls($product_id);
 		} else {
 			$data['product_seo_url'] = [];
@@ -977,7 +983,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
-		if (!empty($product_info)) {
+		if ($product_id) {
 			$data['product_layout'] = $this->model_catalog_product->getLayouts($product_id);
 		} else {
 			$data['product_layout'] = [];
@@ -1047,8 +1053,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
-
 		if (!$json) {
+
+
+
 			if (!isset($this->request->get['master_id'])) {
 				// Normal product add
 				$this->model_catalog_product->addProduct($this->request->post);
@@ -1064,6 +1072,9 @@ class Product extends \Opencart\System\Engine\Controller {
 				// Variant product edit
 				$this->model_catalog_product->editVariant($this->request->get['master_id'], $this->request->get['product_id'], $this->request->post);
 			}
+
+
+
 
 			// Variant products edit
 			$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);

@@ -46,6 +46,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('catalog/manufacturer');
+
 		$this->response->setOutput($this->getList());
 	}
 
@@ -102,7 +104,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'manufacturer_id' => $result['manufacturer_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/manufacturer|edit', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url)
+				'edit'            => $this->url->link('catalog/manufacturer|form', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url)
 			];
 		}
 
@@ -118,8 +120,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
+		$data['sort_name'] = $this->url->link('catalog/manufacturer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/manufacturer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url);
 
 		$url = '';
 
@@ -135,7 +137,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'total' => $manufacturer_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('catalog/manufacturer|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($manufacturer_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($manufacturer_total - $this->config->get('config_pagination_admin'))) ? $manufacturer_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $manufacturer_total, ceil($manufacturer_total / $this->config->get('config_pagination_admin')));
@@ -303,12 +305,16 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
-		$this->load->model('catalog/manufacturer');
+		if (!$json) {
+			$this->load->model('catalog/manufacturer');
 
-		if (!isset($this->request->get['manufacturer_id'])) {
-			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
-		} else {
-			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+			if (!isset($this->request->post['manufacturer_id'])) {
+				$this->model_catalog_manufacturer->addManufacturer($this->request->post);
+			} else {
+				$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

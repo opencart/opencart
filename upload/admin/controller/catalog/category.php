@@ -204,7 +204,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (!empty($category_info)) {
+		if (isset($this->request->get['category_id'])) {
 			$data['category_description'] = $this->model_catalog_category->getDescriptions($this->request->get['category_id']);
 		} else {
 			$data['category_description'] = [];
@@ -224,7 +224,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/filter');
 
-		if (!empty($category_info)) {
+		if (isset($this->request->get['category_id'])) {
 			$filters = $this->model_catalog_category->getFilters($this->request->get['category_id']);
 		} else {
 			$filters = [];
@@ -306,14 +306,14 @@ class Category extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['status'] = true;
 		}
-		
-		if (!empty($category_info)) {
+
+		if (isset($this->request->get['category_id'])) {
 			$data['category_seo_url'] = $this->model_catalog_category->getSeoUrls($this->request->get['category_id']);
 		} else {
 			$data['category_seo_url'] = [];
 		}
-				
-		if (!empty($category_info)) {
+
+		if (isset($this->request->get['category_id'])) {
 			$data['category_layout'] = $this->model_catalog_category->getLayouts($this->request->get['category_id']);
 		} else {
 			$data['category_layout'] = [];

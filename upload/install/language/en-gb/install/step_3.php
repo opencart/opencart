@@ -7,7 +7,7 @@ $_['text_step_3']            = 'Enter your database and administration details';
 $_['text_db_connection']     = '1. Please enter your database connection details.';
 $_['text_db_administration'] = '2. Please enter a username and password for the administration.';
 $_['text_mysqli']            = 'MySQLi';
-$_['text_pdo']               = 'mPDO';
+$_['text_pdo']               = 'PDO';
 $_['text_pgsql']             = 'PostgreSQL';
 
 // Entry

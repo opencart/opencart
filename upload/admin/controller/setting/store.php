@@ -123,7 +123,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/store_list', $data));
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['store_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['breadcrumbs'] = [];

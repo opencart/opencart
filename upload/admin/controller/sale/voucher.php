@@ -174,7 +174,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_list', $data));
 	}
 
-	protected function getForm(): void {
+	public function form(): void {
 		$data['text_form'] = !isset($this->request->get['voucher_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->request->get['voucher_id'])) {

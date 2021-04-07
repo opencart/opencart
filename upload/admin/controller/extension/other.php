@@ -63,7 +63,7 @@ class Other extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/other')) {
-			$json['error'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
@@ -92,7 +92,7 @@ class Other extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/other')) {
-			$json['error'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {

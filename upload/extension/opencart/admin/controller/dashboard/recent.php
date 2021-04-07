@@ -69,8 +69,6 @@ class Recent extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/recent');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		// Last 5 Orders
 		$data['orders'] = [];
 
@@ -95,6 +93,8 @@ class Recent extends \Opencart\System\Engine\Controller {
 				'view'       => $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'])
 			];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/recent_info', $data);
 	}

@@ -44,8 +44,6 @@ class Featured extends \Opencart\System\Engine\Controller {
 			$module_info = $this->model_setting_module->getModule($this->request->get['module_id']);
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
@@ -96,6 +94,8 @@ class Featured extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['status'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

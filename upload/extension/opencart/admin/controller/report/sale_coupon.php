@@ -104,8 +104,6 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_date_start'])) {
@@ -127,6 +125,8 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/sale_coupon', $data));
 	}

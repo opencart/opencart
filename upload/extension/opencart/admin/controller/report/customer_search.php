@@ -141,8 +141,6 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_date_start'])) {
@@ -179,6 +177,8 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 		$data['filter_keyword'] = $filter_keyword;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_search', $data));
 	}

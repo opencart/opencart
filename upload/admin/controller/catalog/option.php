@@ -34,9 +34,9 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('catalog/option|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -157,14 +157,6 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->get['recurring_id'])) {
-			$data['recurring_id'] = $this->request->get['recurring_id'];
-		} else {
-			$data['recurring_id'] = 0;
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -192,6 +184,12 @@ class Option extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		if (isset($this->request->get['recurring_id'])) {
+			$data['recurring_id'] = $this->request->get['recurring_id'];
+		} else {
+			$data['recurring_id'] = 0;
+		}
 
 		if (isset($this->request->get['option_id'])) {
 			$this->load->model('catalog/option');
@@ -250,6 +248,8 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

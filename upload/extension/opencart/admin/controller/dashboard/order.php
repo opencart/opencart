@@ -69,8 +69,6 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/order');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		// Total Orders
 		$this->load->model('sale/order');
 
@@ -101,6 +99,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['order'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token']);
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/order_info', $data);
 	}

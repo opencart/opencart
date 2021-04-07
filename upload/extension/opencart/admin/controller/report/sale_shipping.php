@@ -117,8 +117,6 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			];
 		}
-		
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/order_status');
 
@@ -177,6 +175,8 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 		$data['filter_date_end'] = $filter_date_end;
 		$data['filter_group'] = $filter_group;
 		$data['filter_order_status_id'] = $filter_order_status_id;
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/sale_shipping', $data));
 	}

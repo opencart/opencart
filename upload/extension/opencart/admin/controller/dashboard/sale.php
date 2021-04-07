@@ -69,8 +69,6 @@ class Sale extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/sale');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$this->load->model('extension/opencart/report/sale');
 
 		$today = $this->model_extension_opencart_report_sale->getTotalSales(['filter_date_added' => date('Y-m-d', strtotime('-1 day'))]);
@@ -100,6 +98,8 @@ class Sale extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sale'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token']);
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/sale_info', $data);
 	}

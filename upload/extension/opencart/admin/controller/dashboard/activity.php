@@ -69,8 +69,6 @@ class Activity extends \Opencart\System\Engine\Controller {
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/activity');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['activities'] = [];
 
 		$this->load->model('extension/opencart/report/activity');
@@ -97,6 +95,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/activity_info', $data);
 	}

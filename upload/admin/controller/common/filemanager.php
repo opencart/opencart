@@ -8,8 +8,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		// Return the target ID for the file manager to set the value
 		if (isset($this->request->get['target'])) {
 			$data['target'] = $this->request->get['target'];
@@ -29,6 +27,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['ckeditor'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
@@ -153,8 +153,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['directory'])) {
 			$data['directory'] = urldecode($this->request->get['directory']);

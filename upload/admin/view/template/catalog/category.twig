@@ -39,7 +39,7 @@ $('#button-delete').on('click', function() {
         $.ajax({
             url: 'index.php?route=catalog/category|delete&&user_token={{ user_token }}',
             type: 'post',
-            data: $('#category :input'),
+            data: $('#category input'),
             dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');

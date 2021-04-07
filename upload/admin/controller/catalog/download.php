@@ -157,17 +157,9 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
-
-		if (isset($this->request->get['download_id'])) {
-			$data['download_id'] = (int)$this->request->get['download_id'];
-		} else {
-			$data['download_id'] = 0;
-		}
 
 		$url = '';
 
@@ -197,15 +189,21 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
+		if (isset($this->request->get['download_id'])) {
+			$data['download_id'] = (int)$this->request->get['download_id'];
+		} else {
+			$data['download_id'] = 0;
+		}
 
 		if (isset($this->request->get['download_id'])) {
 			$this->load->model('catalog/download');
 
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
 		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['download_id'])) {
 			$data['download_description'] = $this->model_catalog_download->getDescriptions($this->request->get['download_id']);
@@ -224,6 +222,8 @@ class Download extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['mask'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

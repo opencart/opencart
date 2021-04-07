@@ -3,8 +3,6 @@ namespace Opencart\Admin\Controller\Catalog;
 class Product extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('catalog/product');
-		
-		$this->load->model('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -301,8 +299,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['master_id'])) {
 			$this->load->model('catalog/product');
@@ -988,6 +984,8 @@ class Product extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['product_layout'] = [];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

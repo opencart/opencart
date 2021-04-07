@@ -39,7 +39,7 @@ $('#button-delete').on('click', function() {
         $.ajax({
             url: 'index.php?route=catalog/attribute|delete&&user_token={{ user_token }}',
             type: 'post',
-           data: $('#attribute :input'),
+		        data: $('#attribute :input'),
             dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');

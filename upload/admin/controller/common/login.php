@@ -107,11 +107,11 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || $this->request->get['login_token'] != $this->session->data['login_token']) {
-			$json['error'] = $this->language->get('error_token');
+			$json['error']['token'] = $this->language->get('error_token');
 		}
 
 		if (!$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
-			$json['error'] = $this->language->get('error_login');
+			$json['error']['login'] = $this->language->get('error_login');
 		}
 
 		if (!$json) {

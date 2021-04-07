@@ -34,9 +34,9 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('localisation/geo_zone|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -183,8 +183,6 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (!empty($geo_zone_info)) {
 			$data['name'] = $geo_zone_info['name'];
 		} else {
@@ -206,6 +204,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['zone_to_geo_zones'] = [];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

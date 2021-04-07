@@ -51,8 +51,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['version'] = VERSION;
 		$data['upgrade'] = false;
 
@@ -134,6 +132,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
 		$data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

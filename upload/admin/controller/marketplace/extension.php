@@ -18,8 +18,6 @@ class Extension extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['type'])) {
 			$data['type'] = $this->request->get['type'];
 		} else {
@@ -55,6 +53,8 @@ class Extension extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['extension'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

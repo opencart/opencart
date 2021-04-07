@@ -34,9 +34,9 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('sale/voucher_theme|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -185,8 +185,6 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -212,6 +210,8 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

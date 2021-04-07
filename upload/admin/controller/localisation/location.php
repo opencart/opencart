@@ -34,9 +34,9 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('localisation/location|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -155,8 +155,6 @@ class Location extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['location_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -244,6 +242,8 @@ class Location extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['comment'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

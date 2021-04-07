@@ -34,9 +34,9 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -130,7 +130,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['store_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|add', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'])
 			];
 		} else {
 			$data['breadcrumbs'][] = [
@@ -142,12 +142,16 @@ class Store extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['store_id'])) {
+			$data['store_id'] = $this->request->get['store_id'];
+		} else {
+			$data['store_id'] = 0;
+		}
+
+		if (isset($this->request->get['store_id'])) {
 			$this->load->model('setting/setting');
 
 			$store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($store_info['config_url'])) {
 			$data['config_url'] = $store_info['config_url'];
@@ -585,6 +589,8 @@ class Store extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['config_image_location_height'] = 50;
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

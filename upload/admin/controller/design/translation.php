@@ -34,9 +34,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('design/translation|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -121,8 +121,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if ($order == 'ASC') {
@@ -191,8 +189,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['translation_id'])) {
 			$this->load->model('design/translation');
 
@@ -236,6 +232,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['value'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -58,9 +58,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -232,8 +232,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -342,8 +340,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -539,6 +535,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['default'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

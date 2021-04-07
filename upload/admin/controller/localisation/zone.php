@@ -34,9 +34,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('localisation/zone|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -141,8 +141,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 				'edit'    => $this->url->link('localisation/zone|form', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $result['zone_id'] . $url)
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 

@@ -34,9 +34,9 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('customer/customer_group|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -155,12 +155,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['customer_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		if (isset($this->request->get['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->get['customer_group_id'];
-		} else {
-			$data['customer_group_id'] = 0;
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -188,6 +182,12 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['back'] = $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		if (isset($this->request->get['customer_group_id'])) {
+			$data['customer_group_id'] = $this->request->get['customer_group_id'];
+		} else {
+			$data['customer_group_id'] = 0;
+		}
 
 		if (isset($this->request->get['customer_group_id'])) {
 			$this->load->model('customer/customer_group');

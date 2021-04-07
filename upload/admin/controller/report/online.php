@@ -88,8 +88,6 @@ class Online extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -111,7 +109,9 @@ class Online extends \Opencart\System\Engine\Controller {
 
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;
-		
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -70,9 +70,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('sale/order|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -206,7 +206,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token']);
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token']);
-		$data['add'] = $this->url->link('sale/order|add', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('sale/order|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['orders'] = [];
 
@@ -243,8 +243,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				'view'          => $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -480,11 +478,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['back'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['customer_add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token']);
+		$data['customer_add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 
-		//$data['customer_add'] = $this->url->link('customer/customer|add', 'user_token=' . $this->session->data['user_token']);
-
-		$data['user_token'] = $this->session->data['user_token'];
+		//$data['customer_add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 
 		if ($order_id) {
 			$this->load->model('sale/order');
@@ -1209,6 +1205,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['voucher'] = '';
 		$data['reward'] = '';
 		*/
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

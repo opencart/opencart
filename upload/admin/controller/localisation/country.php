@@ -35,9 +35,9 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('localisation/country|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -142,8 +142,6 @@ class Country extends \Opencart\System\Engine\Controller {
 				'edit'       => $this->url->link('localisation/country|form', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $result['country_id'] . $url)
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 

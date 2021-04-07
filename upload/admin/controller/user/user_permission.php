@@ -35,9 +35,9 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('user/user_group|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -170,14 +170,6 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->get['user_group_id'])) {
-			$data['user_group_id'] = $this->request->get['user_group_id'];
-		} else {
-			$data['user_group_id'] = 0;
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -206,7 +198,13 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['user_group_id']) && $this->request->server['REQUEST_METHOD'] != 'POST') {
+		if (isset($this->request->get['user_group_id'])) {
+			$data['user_group_id'] = $this->request->get['user_group_id'];
+		} else {
+			$data['user_group_id'] = 0;
+		}
+
+		if (isset($this->request->get['user_group_id'])) {
 			$user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
 		}
 
@@ -289,6 +287,8 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['modify'] = [];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

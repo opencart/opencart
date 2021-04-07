@@ -18,8 +18,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$this->load->model('tool/backup');
 
 		$ignore = [
@@ -36,6 +34,8 @@ class Backup extends \Opencart\System\Engine\Controller {
 				$data['tables'][] = $result;
 			}
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

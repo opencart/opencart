@@ -30,9 +30,6 @@ class Profile extends \Opencart\System\Engine\Controller {
 			$data['username'] = '';
 		}
 
-		$data['password'] = '';
-		$data['confirm'] = '';
-
 		if (!empty($user_info)) {
 			$data['firstname'] = $user_info['firstname'];
 		} else {

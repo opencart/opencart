@@ -48,11 +48,11 @@ class Review extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/review|add', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		$data['user_token'] = $this->session->data['user_token'];
+		$data['add'] = $this->url->link('catalog/review|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -170,8 +170,6 @@ class Review extends \Opencart\System\Engine\Controller {
 				'edit'       => $this->url->link('catalog/review|form', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $result['review_id'] . $url)
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -303,7 +301,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
-		
+
 		if (isset($this->request->get['review_id'])) {
 			$data['review_id'] = $this->request->get['review_id'];
 		} else {

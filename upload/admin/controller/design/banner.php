@@ -34,9 +34,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('design/banner|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -180,10 +180,14 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['banner_id'])) {
-			$banner_info = $this->model_design_banner->getBanner($this->request->get['banner_id']);
+			$data['banner_id'] = $this->request->get['banner_id'];
+		} else {
+			$data['banner_id'] = 0;
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
+		if (isset($this->request->get['banner_id'])) {
+			$banner_info = $this->model_design_banner->getBanner($this->request->get['banner_id']);
+		}
 
 		if (!empty($banner_info)) {
 			$data['name'] = $banner_info['name'];
@@ -232,6 +236,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

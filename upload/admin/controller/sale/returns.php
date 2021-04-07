@@ -67,9 +67,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('sale/return|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -226,8 +226,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_return_id'])) {
@@ -357,8 +355,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['text_form'] = !isset($this->request->get['return_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 
@@ -537,6 +533,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

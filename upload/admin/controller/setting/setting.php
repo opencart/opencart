@@ -25,8 +25,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		// General
 		$data['config_meta_title'] = $this->config->get('config_meta_title');
 		$data['config_meta_description'] = $this->config->get('config_meta_description');
@@ -584,6 +582,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_error_display'] = $this->config->get('config_error_display');
 		$data['config_error_log'] = $this->config->get('config_error_log');
 		$data['config_error_filename'] = $this->config->get('config_error_filename');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

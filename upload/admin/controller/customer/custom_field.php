@@ -34,9 +34,9 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('customer/custom_field|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -196,8 +196,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['custom_field_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['custom_field_id'])) {
 			$data['custom_field_id'] = $this->request->get['custom_field_id'];
 		} else {
@@ -235,8 +233,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['custom_field_id'])) {
 			$custom_field_info = $this->model_customer_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('localisation/language');
 
@@ -325,6 +321,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

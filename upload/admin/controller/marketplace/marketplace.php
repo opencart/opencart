@@ -235,8 +235,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($response_info['error'])) {
 			$data['error_signature'] = $response_info['error'];
 		} else {
@@ -505,6 +503,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$data['filter_rating'] = $filter_rating;
 		$data['sort'] = $sort;
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -564,8 +564,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['error_signature'] = '';
 			}
-
-			$data['user_token'] = $this->session->data['user_token'];
 
 			$url = '';
 
@@ -659,6 +657,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 			$this->document->addStyle('view/javascript/jquery/magnific/magnific-popup.css');
 			$this->document->addScript('view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
+
+			$data['user_token'] = $this->session->data['user_token'];
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

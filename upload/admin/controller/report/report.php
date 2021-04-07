@@ -18,8 +18,6 @@ class Report extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['code'])) {
 			$data['code'] = $this->request->get['code'];
 		} else {
@@ -55,6 +53,8 @@ class Report extends \Opencart\System\Engine\Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['reports']);
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

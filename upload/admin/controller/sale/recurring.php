@@ -58,9 +58,9 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('sale/recurring|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -200,8 +200,6 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_order_recurring_id'])) {
@@ -331,8 +329,6 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		
 			$this->document->setTitle($this->language->get('heading_title'));
 
-			$data['user_token'] = $this->session->data['user_token'];
-			
 			$url = '';
 
 			if (isset($this->request->get['filter_order_recurring_id'])) {
@@ -444,6 +440,8 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['buttons'] = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/recurring');
+
+			$data['user_token'] = $this->session->data['user_token'];
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

@@ -34,9 +34,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('catalog/upload|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -130,8 +130,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 				'download'   => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 

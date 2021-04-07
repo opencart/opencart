@@ -34,9 +34,9 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('user/api|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -172,8 +172,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['api_id'])) {
 			$data['api_id'] = $this->request->get['api_id'];
 		} else {
@@ -255,6 +253,8 @@ class Api extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

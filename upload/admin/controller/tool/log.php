@@ -26,8 +26,6 @@ class Log extends \Opencart\System\Engine\Controller {
 
 		$data['download'] = $this->url->link('tool/log|download', 'user_token=' . $this->session->data['user_token']);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['log'] = '';
 
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
@@ -64,6 +62,8 @@ class Log extends \Opencart\System\Engine\Controller {
 
 			fclose($handle);
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -34,9 +34,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('localisation/currency|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -175,14 +175,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['currency_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (!isset($this->request->get['currency_id'])) {
-			$data['currency_id'] = $this->request->get['currency_id'];
-		} else {
-			$data['currency_id'] = 0;
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -210,6 +202,12 @@ class Currency extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['back'] = $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		if (!isset($this->request->get['currency_id'])) {
+			$data['currency_id'] = $this->request->get['currency_id'];
+		} else {
+			$data['currency_id'] = 0;
+		}
 
 		if (isset($this->request->get['currency_id'])) {
 			$this->load->model('localisation/currency');
@@ -258,6 +256,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['status'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -34,9 +34,9 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('design/seo_profile|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -109,8 +109,6 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 				'edit'           => $this->url->link('design/seo_profile|form', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $result['seo_profile_id'] . $url)
 			];
 		}
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$url = '';
 

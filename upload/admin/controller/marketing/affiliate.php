@@ -34,9 +34,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['add'] = $this->url->link('marketing/affiliate|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -164,8 +164,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -266,8 +264,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -316,17 +312,17 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		if (isset($this->request->get['customer_id'])) {
+			$data['customer_id'] = (int)$this->request->get['customer_id'];
+		} else {
+			$data['customer_id'] = 0;
+		}
+
 		// Affiliate
 		if (isset($this->request->get['customer_id'])) {
 			$this->load->model('marketing/affiliate');
 
 			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->get['customer_id']);
-		}
-
-		if (isset($this->request->get['customer_id'])) {
-			$data['customer_id'] = (int)$this->request->get['customer_id'];
-		} else {
-			$data['customer_id'] = 0;
 		}
 
 		if (!empty($affiliate_info)) {
@@ -454,6 +450,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['affiliate_custom_field'] = [];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

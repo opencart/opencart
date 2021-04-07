@@ -140,15 +140,19 @@ $('#extension').on('click', '.btn-success', function(e) {
 
     $.ajax({
         url: $(element).attr('href'),
-        dataType: 'html',
+        dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
         },
         complete: function() {
             $(element).button('reset');
         },
-        success: function(html) {
-            $('#extension').html(html);
+        success: function(json) {
+
+
+            $('#extension').html(json);
+
+
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -165,15 +169,19 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 
         $.ajax({
             url: $(element).attr('href'),
-            dataType: 'html',
+            dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');
             },
             complete: function() {
                 $(element).button('reset');
             },
-            success: function(html) {
+            success: function(json) {
+
                 $('#extension').html(html);
+
+
+
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

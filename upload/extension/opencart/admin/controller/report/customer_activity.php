@@ -6,22 +6,6 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('report_customer_activity', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -41,19 +25,10 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('extension/opencart/report/customer_activity', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
-		if (isset($this->request->post['report_customer_activity_status'])) {
-			$data['report_customer_activity_status'] = $this->request->post['report_customer_activity_status'];
-		} else {
-			$data['report_customer_activity_status'] = $this->config->get('report_customer_activity_status');
-		}
-
-		if (isset($this->request->post['report_customer_activity_sort_order'])) {
-			$data['report_customer_activity_sort_order'] = $this->request->post['report_customer_activity_sort_order'];
-		} else {
-			$data['report_customer_activity_sort_order'] = $this->config->get('report_customer_activity_sort_order');
-		}
+		$data['report_customer_activity_status'] = $this->config->get('report_customer_activity_status');
+		$data['report_customer_activity_sort_order'] = $this->config->get('report_customer_activity_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -61,13 +36,26 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_activity_form', $data));
 	}
-		
-	protected function validate(): bool {
+
+	public function save(): void {
+		$this->load->language('extension/opencart/report/customer_activity');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/report/customer_activity')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('report_customer_activity', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 		
 	public function report(): void {

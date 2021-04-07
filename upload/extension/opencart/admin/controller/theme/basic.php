@@ -1,28 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Theme;
 class Basic extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/theme/basic');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('theme_basic', $this->request->post, $this->request->get['store_id']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -43,15 +25,15 @@ class Basic extends \Opencart\System\Engine\Controller {
 
 		$data['action'] = $this->url->link('extension/opencart/theme/basic', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme');
 
-		if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['store_id'])) {
+			$this->load->model('setting/setting');
+
 			$setting_info = $this->model_setting_setting->getSetting('theme_basic', $this->request->get['store_id']);
 		}
 
-		if (isset($this->request->post['theme_basic_status'])) {
-			$data['theme_basic_status'] = $this->request->post['theme_basic_status'];
-		} elseif (isset($setting_info['theme_basic_status'])) {
+		if (isset($setting_info['theme_basic_status'])) {
 			$data['theme_basic_status'] = $setting_info['theme_basic_status'];
 		} else {
 			$data['theme_basic_status'] = '';
@@ -64,11 +46,24 @@ class Basic extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/theme/basic', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/theme/basic');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/theme/basic')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('theme_basic', $this->request->post, $this->request->get['store_id']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

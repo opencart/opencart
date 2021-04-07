@@ -54,7 +54,7 @@ class Featured extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
-		if (!empty($module_info['product'])) {
+		if (isset($module_info['product'])) {
 			$products = $module_info['product'];
 		} else {
 			$products = [];
@@ -71,10 +71,10 @@ class Featured extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!empty($module_info['axis'])) {
+		if (isset($module_info['axis'])) {
 			$data['axis'] = $module_info['axis'];
 		} else {
-			$data['axis'] ='';
+			$data['axis'] = '';
 		}
 
 		if (isset($module_info['width'])) {

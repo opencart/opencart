@@ -72,7 +72,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/dashboard')) {
-			$json['error'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
@@ -101,7 +101,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/dashboard')) {
-			$json['error'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {

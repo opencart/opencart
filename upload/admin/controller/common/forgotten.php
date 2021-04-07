@@ -61,7 +61,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->load->model('user/user');
 
 		if (!$this->model_user_user->getTotalUsersByEmail($email)) {
-			$json['error'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		if (!$json) {

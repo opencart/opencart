@@ -28,19 +28,6 @@ function isIE() {
 }
 
 $(document).ready(function() {
-    $('form').trigger('reset');
-
-    // Highlight any found errors
-    $('.invalid-tooltip').each(function() {
-        var element = $(this).parent().find(':input');
-
-        if (element.hasClass('form-control')) {
-            element.addClass('is-invalid');
-        }
-    });
-
-    $('.invalid-tooltip').show();
-
     // tooltips on hover
     $('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
@@ -67,7 +54,9 @@ $(document).ready(function() {
             }
         }
     }
+});
 
+$(document).ready(function() {
     $('#button-menu').on('click', function(e) {
         e.preventDefault();
 
@@ -91,7 +80,9 @@ $(document).ready(function() {
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
 
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
+});
 
+$(document).ready(function() {
     $('#header-notification [data-toggle=\'modal\']').on('click', function(e) {
         e.preventDefault();
 
@@ -111,18 +102,17 @@ $(document).ready(function() {
     });
 });
 
-
 // Forms
 $(document).on('click', '[data-event=\'submit\']', function() {
     var element = this;
 
-    var url = $(element).attr('data-target');
+    var form = $(element).attr('data-form');
 
     $.ajax({
-        url: url,
+        url: $(element).attr('data-url'),
         type: 'post',
         dataType: 'json',
-        data: new FormData($($(element).attr('data-target'))[0]),
+        data: new FormData($(form)[0]),
         cache: false,
         contentType: false,
         processData: false,
@@ -136,26 +126,44 @@ $(document).on('click', '[data-event=\'submit\']', function() {
             $('.invalid-tooltip, .alert-dismissible').remove();
 
             if (json['error']) {
-                if (json['error']['warning']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                }
 
-                for (key in json['error']) {
-                    var element = $('#input-' + key.replace('_', '-'));
+                if (!Array.isArray(json['error'])) {
 
-                    // Highlight any found errors
-                    $(element).addClass('is-invalid');
+                    if (json['error']) {
+                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    }
 
-                    if ($(element).parent().hasClass('input-group')) {
-                        $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
-                    } else {
-                        $(element).after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
+                } else {
+
+                    if (json['error']['warning']) {
+                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    }
+
+                    for (key in json['error']) {
+                        var element = $('#input-' + key.replace('_', '-'));
+
+                        // Highlight any found errors
+                        $(element).addClass('is-invalid');
+
+                        if ($(element).parent().hasClass('input-group')) {
+                            $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
+                        } else {
+                            $(element).after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
+                        }
+
                     }
                 }
             }
 
             if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                var action = $(form).prop('action');
+                var target = $(form).prop('data-target');
+
+                if (action !== 'undefined' && target !== 'undefined') {
+                    $(target).load(action);
+                }
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -163,7 +171,6 @@ $(document).on('click', '[data-event=\'submit\']', function() {
         }
     });
 });
-
 
 // Image Manager
 $(document).on('click', '[data-toggle=\'image\']', function(e) {
@@ -195,10 +202,6 @@ $(document).on('click', '[data-toggle=\'clear\']', function() {
 
     $($(this).attr('data-target')).val('');
 });
-
-
-
-
 
 
 // Chain ajax calls.

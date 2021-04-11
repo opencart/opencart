@@ -33,6 +33,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/attribute|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/attribute|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -84,7 +85,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['refresh'] = $this->url->link('catalog/attribute|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('catalog/attribute|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['attributes'] = [];
 
@@ -183,10 +184,10 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['attribute_id'])) {
-			$data['attribute_id'] = $this->request->get['attribute_id'];
+		if (!isset($this->request->get['attribute_id'])) {
+			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['attribute_id'] = 0;
+			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id']);
 		}
 
 		if (isset($this->request->get['attribute_id'])) {

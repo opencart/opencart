@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class Country extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('localisation/country');
 
@@ -34,6 +33,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('localisation/country|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/country|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

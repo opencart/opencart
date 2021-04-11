@@ -8,8 +8,6 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	public function getCustomFields(int $customer_group_id = 0): array {
-		echo $customer_group_id;
-
 		$custom_field_data = [];
 
 		if (!$customer_group_id) {
@@ -45,8 +43,6 @@ class CustomField extends \Opencart\System\Engine\Model {
 			];
 		}
 
-
-		print_r($custom_field_data);
 		return $custom_field_data;
 	}
 }

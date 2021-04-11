@@ -121,16 +121,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		date_default_timezone_set($this->config->get('config_timezone'));
-		/*
-		$_config = new Config();
-		$_config->load('default');
-
-		$date_timezone = $_config->get('date_timezone');
-
-		$config_timezone = array_replace((array)$date_timezone, (array)$this->config->get('config_timezone'));
-
-		date_default_timezone_set($config_timezone);
-		*/
 
 		$data['config_language'] = $this->config->get('config_language');
 

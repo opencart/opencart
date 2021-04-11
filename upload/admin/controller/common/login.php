@@ -12,26 +12,8 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check to see if user is using incorrect token
-		if (isset($this->request->get['user_token']) && !isset($this->session->data['user_token']) && ($this->request->get['user_token'] != $this->session->data['user_token'])) {
-			$data['warning_error'] = $this->language->get('error_token');
-
-			unset($this->session->data['user_token']);
-
-		} elseif (isset($this->session->data['error'])) {
-			$data['warning_error'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} else {
-			$data['warning_error'] = '';
-		}
-
-/*
-		if (isset($this->request->get['user_token']) && !isset($this->session->data['user_token'])) {
+		if (isset($this->request->get['user_token']) && (!isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token']))) {
 			$data['error_warning'] = $this->language->get('error_token');
-		} elseif (isset($this->request->get['user_token']) && ($this->request->get['user_token'] != $this->session->data['user_token'])) {
-			$data['error_warning'] = $this->language->get('error_token');
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
 		} elseif (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
@@ -39,8 +21,6 @@ class Login extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-*/
-
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
@@ -107,7 +87,9 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || $this->request->get['login_token'] != $this->session->data['login_token']) {
-			$json['error'] = $this->language->get('error_token');
+			$this->session->data['error'] = $this->language->get('error_login');
+
+			$json['redirect'] = $this->url->link('common/login');
 		}
 
 		if (!$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
@@ -117,7 +99,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['user_token'] = token(32);
 
-			//c Remove login token so it can not be used again.
+			// Remove login token so it can not be used again.
 			unset($this->session->data['login_token']);
 
 			if ($this->request->post['redirect'] && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {

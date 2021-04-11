@@ -8,6 +8,12 @@
 				<div class="card">
 					<div class="card-header"><i class="fas fa-lock"></i> {{ text_login }}</div>
 					<div id="login" class="card-body">
+						{% if error_warning %}
+							<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+						{% endif %}
+						{% if success %}
+							<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ success }}</div>
+						{% endif %}
 						<div class="form-group">
 							<label for="input-username" class="col-form-label">{{ entry_username }}</label>
 							<div class="input-group">

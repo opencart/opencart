@@ -88,7 +88,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('localisation/coupon');
+		$this->load->model('marketing/coupon');
 
 		$coupon_total = $this->model_marketing_coupon->getTotalCoupons();
 

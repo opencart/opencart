@@ -33,6 +33,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('design/seo_profile|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/seo_profile|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -83,6 +84,8 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('design/seo_profile|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['seo_profiles'] = [];
 
@@ -149,6 +152,10 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('design/seo_profile');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['seo_profile_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -179,7 +186,9 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['seo_profile_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['seo_profile_id'])) {
+			$this->load->model('design/seo_profile');
+
 			$seo_profile_info = $this->model_design_seo_profile->getSeoProfile($this->request->get['seo_profile_id']);
 		}
 

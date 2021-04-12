@@ -53,6 +53,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/product|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -145,6 +146,8 @@ class Product extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('catalog/product|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['products'] = [];
 

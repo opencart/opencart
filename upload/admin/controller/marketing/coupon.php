@@ -34,6 +34,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('marketing/coupon|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('marketing/coupon|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -78,6 +79,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('marketing/coupon|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['coupons'] = [];
 
@@ -152,6 +155,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('marketing/coupon');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['coupon_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

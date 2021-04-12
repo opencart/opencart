@@ -33,6 +33,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('design/layout|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/layout|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -83,6 +84,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('design/layout|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['layouts'] = [];
 
@@ -147,6 +150,10 @@ class Layout extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('design/layout');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -177,7 +184,9 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['layout_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['layout_id'])) {
+			$this->load->model('design/layout');
+
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
 		}
 

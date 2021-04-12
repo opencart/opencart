@@ -53,6 +53,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('design/seo_url|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/seo_url|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -154,7 +155,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
-		$this->load->model('localisation/language');
+		$data['action'] = $this->url->link('design/seo_url|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['seo_urls'] = [];
 
@@ -171,6 +172,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		];
 
 		$this->load->model('design/seo_url');
+		$this->load->model('localisation/language');
 
 		$seo_url_total = $this->model_design_seo_url->getTotalSeoUrls($filter_data);
 
@@ -290,6 +292,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('design/seo_url');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['seo_url_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -340,7 +346,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['seo_url_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['seo_url_id'])) {
+			$this->load->model('design/seo_url');
+
 			$seo_url_info = $this->model_design_seo_url->getSeoUrl($this->request->get['seo_url_id']);
 		}
 

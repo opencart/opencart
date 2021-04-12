@@ -33,6 +33,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('customer/customer_group|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('customer/customer_group|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -83,6 +84,8 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('customer/customer_group|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['customer_groups'] = [];
 

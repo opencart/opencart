@@ -126,15 +126,11 @@ $(document).on('click', '[data-event=\'submit\']', function() {
             $('.invalid-tooltip, .alert-dismissible').remove();
 
             if (json['error']) {
+                if (typeof json['error'] == 'string') {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                }
 
-                if (!Array.isArray(json['error'])) {
-
-                    if (json['error']) {
-                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    }
-
-                } else {
-
+                if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
                         $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                     }
@@ -150,7 +146,6 @@ $(document).on('click', '[data-event=\'submit\']', function() {
                         } else {
                             $(element).after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
                         }
-
                     }
                 }
             }
@@ -158,6 +153,7 @@ $(document).on('click', '[data-event=\'submit\']', function() {
             if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
+                // Refresh
                 var action = $(form).prop('action');
                 var target = $(form).prop('data-target');
 

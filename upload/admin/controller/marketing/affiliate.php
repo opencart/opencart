@@ -33,6 +33,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('marketing/affiliate|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('marketing/affiliate|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -128,6 +129,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('marketing/affiliate|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$this->load->model('customer/customer');
 
 		$data['affiliates'] = [];
@@ -144,7 +147,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('localisation/affiliate');
+		$this->load->model('marketing/affiliate');
 
 		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 
@@ -478,6 +481,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check to see if customer is already a affiliate
+		$this->load->model('marketing/affiliate');
+
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
 
 		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
@@ -529,8 +534,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('marketing/affiliate');
-
 			if (!isset($this->request->get['customer_id'])) {
 				$this->model_marketing_affiliate->addAffiliate($this->request->post);
 			} else {

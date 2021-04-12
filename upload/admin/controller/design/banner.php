@@ -33,6 +33,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('design/banner|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/banner|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -83,6 +84,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('design/banner|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['banners'] = [];
 
@@ -149,6 +152,10 @@ class Banner extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('design/banner');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['banner_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';

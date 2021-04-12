@@ -33,6 +33,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('localisation/stock_status|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/stock_status|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -83,6 +84,8 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('localisation/stock_status|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['stock_statuses'] = [];
 

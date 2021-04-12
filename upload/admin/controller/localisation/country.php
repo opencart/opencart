@@ -115,6 +115,8 @@ class Country extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('localisation/country|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['countries'] = [];
 
 		$filter_data = [

@@ -33,6 +33,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('setting/store|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

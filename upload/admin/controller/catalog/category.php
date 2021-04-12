@@ -33,6 +33,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/category|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/category|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -84,7 +85,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['refresh'] = $this->url->link('catalog/category|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('catalog/category|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['categories'] = [];
 
@@ -349,6 +350,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('catalog/category');
+
 		if (isset($this->request->get['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getPaths($this->request->post['parent_id']);
 			
@@ -384,8 +387,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('catalog/category');
-
 			if (!isset($this->request->post['category_id'])) {
 				$this->model_catalog_category->addCategory($this->request->post);
 			} else {

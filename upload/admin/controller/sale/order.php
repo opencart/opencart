@@ -69,6 +69,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('sale/order|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/order|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -206,7 +207,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token']);
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token']);
-		$data['add'] = $this->url->link('sale/order|form', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['orders'] = [];
 
@@ -225,6 +225,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			'start'                  => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'                  => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('sale/order');
 
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
 
@@ -390,7 +392,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		$this->response->setOutput($this->load->view('sale/order_list', $data));
+		return $this->load->view('sale/order_list', $data);
 	}
 
 	public function info(): void {

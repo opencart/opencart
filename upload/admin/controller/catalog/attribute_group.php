@@ -33,6 +33,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/attribute_group|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/attribute_group|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -84,7 +85,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['refresh'] = $this->url->link('catalog/attribute_group|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('catalog/attribute_group|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['attribute_groups'] = [];
 

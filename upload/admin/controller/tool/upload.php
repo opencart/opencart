@@ -29,10 +29,11 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/upload', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('tool/upload', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/upload|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('tool/upload|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('tool/upload|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

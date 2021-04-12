@@ -33,6 +33,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('sale/voucher_theme|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/voucher_theme|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 

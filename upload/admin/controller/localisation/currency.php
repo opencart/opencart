@@ -33,7 +33,8 @@ class Currency extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('localisation/currency|form', 'user_token=' . $this->session->data['user_token'] . $url);
-
+		$data['delete'] = $this->url->link('localisation/currency|delete', 'user_token=' . $this->session->data['user_token']);
+		
 		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -96,7 +97,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['refresh'] = $this->url->link('localisation/currency|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/currency|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['currencies'] = [];
 

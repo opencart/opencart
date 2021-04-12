@@ -66,6 +66,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('sale/return|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/return|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -207,6 +208,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'start'                   => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'                   => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('sale/returns');
 
 		$return_total = $this->model_sale_returns->getTotalReturns($filter_data);
 
@@ -416,7 +419,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['return_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['return_id'])) {
+			$this->load->model('sale/returns');
+
 			$return_info = $this->model_sale_returns->getReturn($this->request->get['return_id']);
 		}
 

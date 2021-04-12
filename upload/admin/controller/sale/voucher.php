@@ -33,6 +33,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/voucher|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -77,6 +78,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('sale/voucher|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['breadcrumbs'] = [];
 

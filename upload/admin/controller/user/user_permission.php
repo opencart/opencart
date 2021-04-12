@@ -34,6 +34,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('user/user_group|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('user/user_group|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -155,10 +156,6 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
 
 		return $this->load->view('user/user_group_list', $data);
 	}

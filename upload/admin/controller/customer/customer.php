@@ -57,6 +57,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('customer/customer|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -167,6 +168,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('customer/customer|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('setting/store');
 
@@ -335,6 +338,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
+		$this->load->language('customer/customer');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['customer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -423,7 +430,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['customer_id'])) {
+			$this->load->model('customer/customer');
+
 			$customer_info = $this->model_customer_customer->getCustomer($this->request->get['customer_id']);
 		}
 
@@ -800,27 +809,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login|token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
 			}
 		} else {
-			$this->load->language('error/not_found');
-
-			$this->document->setTitle($this->language->get('heading_title'));
-
-			$data['breadcrumbs'] = [];
-
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-			];
-
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'])
-			];
-
-			$data['header'] = $this->load->controller('common/header');
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['footer'] = $this->load->controller('common/footer');
-
-			$this->response->setOutput($this->load->view('error/not_found', $data));
+			return new \System\Engine\Action('error/not_found');
 		}
 	}
 

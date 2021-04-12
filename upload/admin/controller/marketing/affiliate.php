@@ -144,7 +144,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('localisation/affiliate');
+		$this->load->model('marketing/affiliate');
 
 		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 

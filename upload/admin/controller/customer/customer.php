@@ -774,7 +774,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
-	public function login(): void {
+	public function login(): object|null {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -808,8 +808,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			} else {
 				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login|token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
 			}
+
+			return null;
 		} else {
-			return new \System\Engine\Action('error/not_found');
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 

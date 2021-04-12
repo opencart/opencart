@@ -208,9 +208,6 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
 
-		$data['password'] = '';
-		$data['confirm'] = '';
-
 		if (!empty($user_info)) {
 			$data['firstname'] = $user_info['firstname'];
 		} else {
@@ -271,6 +268,8 @@ class User extends \Opencart\System\Engine\Controller {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
+		$this->load->model('user/user');
+
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
 
 		if (!isset($this->request->get['user_id'])) {
@@ -318,8 +317,6 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('user/user');
-
 			if (!isset($this->request->get['user_id'])) {
 				$this->model_user_user->addUser($this->request->post);
 			} else {

@@ -103,7 +103,7 @@ $(document).ready(function() {
 });
 
 // Forms
-$(document).on('click', '[data-event=\'submit\']', function() {
+$(document).on('click', '[data-oc-toggle=\'submit\']', function() {
     var element = this;
 
     var form = $(element).attr('data-form');
@@ -120,7 +120,7 @@ $(document).on('click', '[data-event=\'submit\']', function() {
             $(element).button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).button('`reset');
         },
         success: function(json) {
             $('.invalid-tooltip, .alert-dismissible').remove();

@@ -67,6 +67,12 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
+$('#recurring').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#recurring').load(this.href);
+});
+
 $('#button-filter').on('click', function() {
     url = 'index.php?route=sale/recurring&user_token={{ user_token }}';
 

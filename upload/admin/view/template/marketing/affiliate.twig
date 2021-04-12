@@ -70,6 +70,12 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
+$('#affiliate').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#affiliate').load(this.href);
+});
+
 $('#button-filter').on('click', function() {
     url = 'index.php?route=marketing/affiliate&user_token={{ user_token }}';
 

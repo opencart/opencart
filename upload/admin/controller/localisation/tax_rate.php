@@ -196,6 +196,8 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['tax_rate_id'])) {
+			$this->load->model('localisation/tax_rate');
+
 			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);
 		}
 

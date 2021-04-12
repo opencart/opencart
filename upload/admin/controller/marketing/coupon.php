@@ -91,7 +91,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('localisation/coupon');
+		$this->load->model('marketing/coupon');
 
 		$coupon_total = $this->model_marketing_coupon->getTotalCoupons();
 
@@ -189,7 +189,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['coupon_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['coupon_id'])) {
+			$this->load->model('marketing/coupon');
+
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
 		}
 
@@ -333,6 +335,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
+		$this->load->model('marketing/coupon');
+
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($this->request->post['code']);
 
 		if ($coupon_info) {
@@ -344,8 +348,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('marketing/coupon');
-
 			if (!isset($this->request->get['coupon_id'])) {
 				$this->model_marketing_coupon->addCoupon($this->request->post);
 			} else {

@@ -21,4 +21,11 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript"><!--
+$('#filter').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#filter').load(this.href);
+});
+//--></script>
 {{ footer }}

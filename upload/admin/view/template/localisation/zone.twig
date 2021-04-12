@@ -46,6 +46,12 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
+$('#zone').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#zone').load(this.href);
+});
+
 $('#button-filter').on('click', function() {
     var url = '';
 

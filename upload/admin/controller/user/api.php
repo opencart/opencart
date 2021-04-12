@@ -106,7 +106,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('tool/api');
+		$this->load->model('user/api');
 
 		$user_total = $this->model_user_api->getTotalApis();
 

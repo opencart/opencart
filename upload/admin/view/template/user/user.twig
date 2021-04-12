@@ -20,4 +20,11 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript"><!--
+$('#user').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#user').load(this.href);
+});
+//--></script>
 {{ footer }}

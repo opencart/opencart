@@ -185,6 +185,8 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['tax_class_id'])) {
+			$this->load->model('localisation/tax_class');
+
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
 		}
 

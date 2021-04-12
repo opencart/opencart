@@ -96,6 +96,8 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			'limit' => $this->config->get('config_pagination_admin')
 		];
 
+		$this->load->model('localisation/geo_zone');
+
 		$geo_zone_total = $this->model_localisation_geo_zone->getTotalGeoZones();
 
 		$results = $this->model_localisation_geo_zone->getGeoZones($filter_data);
@@ -146,7 +148,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$this->response->setOutput($this->load->view('localisation/geo_zone_list', $data));
+		return $this->load->view('localisation/geo_zone_list', $data);
 	}
 
 	public function form(): void {

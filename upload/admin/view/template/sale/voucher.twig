@@ -23,6 +23,12 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
+$('#voucher').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#voucher').load(this.href);
+});
+
 $('#button-send').on('click', function() {
     $.ajax({
         url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',

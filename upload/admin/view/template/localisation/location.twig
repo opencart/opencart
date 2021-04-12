@@ -16,8 +16,15 @@
 	<div class="container-fluid">
 		<div class="card">
 			<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-			<div class="card-body">{{ list }}</div>
+			<div id="location" class="card-body">{{ list }}</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript"><!--
+$('#location').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#location').load(this.href);
+});
+//--></script>
 {{ footer }}

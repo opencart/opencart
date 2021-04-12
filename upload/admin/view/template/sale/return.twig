@@ -82,6 +82,12 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
+$('#return').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#return').load(this.href);
+});
+
 $('#button-filter').on('click', function() {
     url = 'index.php?route=sale/return&user_token={{ user_token }}';
 
@@ -135,8 +141,7 @@ $('#button-filter').on('click', function() {
 
     location = url;
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('input[name=\'filter_customer\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
@@ -196,8 +201,7 @@ $('input[name=\'filter_model\']').autocomplete({
         $('input[name=\'filter_model\']').val(item['label']);
     }
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
     'locale': '{{ datepicker }}',

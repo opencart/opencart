@@ -187,6 +187,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['weight_class_id'])) {
+			$this->load->model('localisation/weight_class');
 
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
 		}

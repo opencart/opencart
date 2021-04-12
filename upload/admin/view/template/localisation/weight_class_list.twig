@@ -1,46 +1,48 @@
-<div class="table-responsive">
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-				<td class="text-left">{% if sort == 'title' %}
-						<a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
-					{% else %}
-						<a href="{{ sort_title }}">{{ column_title }}</a>
-					{% endif %}</td>
-				<td class="text-left">{% if sort == 'unit' %}
-						<a href="{{ sort_unit }}" class="{{ order|lower }}">{{ column_unit }}</a>
-					{% else %}
-						<a href="{{ sort_unit }}">{{ column_unit }}</a>
-					{% endif %}</td>
-				<td class="text-right">{% if sort == 'value' %}
-						<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
-					{% else %}
-						<a href="{{ sort_value }}">{{ column_value }}</a>
-					{% endif %}</td>
-				<td class="text-right">{{ column_action }}</td>
-			</tr>
-		</thead>
-		<tbody>
-			{% if weight_classes %}
-				{% for weight_class in weight_classes %}
-					<tr>
-						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ weight_class.weight_class_id }}"/></td>
-						<td class="text-left">{{ weight_class.title }}</td>
-						<td class="text-left">{{ weight_class.unit }}</td>
-						<td class="text-right">{{ weight_class.value }}</td>
-						<td class="text-right"><a href="{{ weight_class.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-					</tr>
-				{% endfor %}
-			{% else %}
+<form action="{{ action }}" id="weight-class-list" data-target="#weight-class">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
 				<tr>
-					<td class="text-center" colspan="5">{{ text_no_results }}</td>
+					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-left">{% if sort == 'title' %}
+							<a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
+						{% else %}
+							<a href="{{ sort_title }}">{{ column_title }}</a>
+						{% endif %}</td>
+					<td class="text-left">{% if sort == 'unit' %}
+							<a href="{{ sort_unit }}" class="{{ order|lower }}">{{ column_unit }}</a>
+						{% else %}
+							<a href="{{ sort_unit }}">{{ column_unit }}</a>
+						{% endif %}</td>
+					<td class="text-right">{% if sort == 'value' %}
+							<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
+						{% else %}
+							<a href="{{ sort_value }}">{{ column_value }}</a>
+						{% endif %}</td>
+					<td class="text-right">{{ column_action }}</td>
 				</tr>
-			{% endif %}
-		</tbody>
-	</table>
-</div>
-<div class="row">
-	<div class="col-sm-6 text-left">{{ pagination }}</div>
-	<div class="col-sm-6 text-right">{{ results }}</div>
-</div>
+			</thead>
+			<tbody>
+				{% if weight_classes %}
+					{% for weight_class in weight_classes %}
+						<tr>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ weight_class.weight_class_id }}"/></td>
+							<td class="text-left">{{ weight_class.title }}</td>
+							<td class="text-left">{{ weight_class.unit }}</td>
+							<td class="text-right">{{ weight_class.value }}</td>
+							<td class="text-right"><a href="{{ weight_class.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td class="text-center" colspan="5">{{ text_no_results }}</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-left">{{ pagination }}</div>
+		<div class="col-sm-6 text-right">{{ results }}</div>
+	</div>
+</form>

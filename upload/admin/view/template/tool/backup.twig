@@ -67,8 +67,7 @@ $('#history').on('click', '.pagination a', function(e) {
 });
 
 $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
-//--></script>
-<script type="text/javascript"><!--
+
 $('#button-backup').on('click', function() {
     $('#progress-bar').css('width', '0%');
     $('#progress-bar').removeClass('progress-bar-danger progress-bar-success');

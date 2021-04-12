@@ -1,74 +1,76 @@
-<div class="table-responsive">
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-				<td class="text-left">{% if sort == 'v.code' %}
-						<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
-					{% else %}
-						<a href="{{ sort_code }}">{{ column_code }}</a>
-					{% endif %}</td>
-				<td class="text-left">{% if sort == 'v.from_name' %}
-						<a href="{{ sort_from }}" class="{{ order|lower }}">{{ column_from }}</a>
-					{% else %}
-						<a href="{{ sort_from }}">{{ column_from }}</a>
-					{% endif %}</td>
-				<td class="text-left">{% if sort == 'v.to_name' %}
-						<a href="{{ sort_to }}" class="{{ order|lower }}">{{ column_to }}</a>
-					{% else %}
-						<a href="{{ sort_to }}">{{ column_to }}</a>
-					{% endif %}</td>
-				<td class="text-right">{% if sort == 'v.amount' %}
-						<a href="{{ sort_amount }}" class="{{ order|lower }}">{{ column_amount }}</a>
-					{% else %}
-						<a href="{{ sort_amount }}">{{ column_amount }}</a>
-					{% endif %}</td>
-				<td class="text-left d-none d-lg-table-cell">{% if sort == 'theme' %}
-						<a href="{{ sort_theme }}" class="{{ order|lower }}">{{ column_theme }}</a>
-					{% else %}
-						<a href="{{ sort_theme }}">{{ column_theme }}</a>
-					{% endif %}</td>
-				<td class="text-lef d-none d-lg-table-cellt">{% if sort == 'v.status' %}
-						<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-					{% else %}
-						<a href="{{ sort_status }}">{{ column_status }}</a>
-					{% endif %}</td>
-				<td class="text-left d-none d-lg-table-cell">{% if sort == 'v.date_added' %}
-						<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
-					{% else %}
-						<a href="{{ sort_date_added }}">{{ column_date_added }}</a>
-					{% endif %}</td>
-				<td class="text-right">{{ column_action }}</td>
-			</tr>
-		</thead>
-		<tbody>
-			{% if vouchers %}
-				{% for voucher in vouchers %}
-					<tr>
-						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}"/></td>
-						<td class="text-left">{{ voucher.code }}</td>
-						<td class="text-left">{{ voucher.from }}</td>
-						<td class="text-left">{{ voucher.to }}</td>
-						<td class="text-right">{{ voucher.amount }}</td>
-						<td class="text-left d-none d-lg-table-cell">{{ voucher.theme }}</td>
-						<td class="text-left d-none d-lg-table-cell">{{ voucher.status }}</td>
-						<td class="text-left d-none d-lg-table-cell">{{ voucher.date_added }}</td>
-						<td class="text-right">
-							{% if voucher.order %}
-								<a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-							{% endif %}
-							<a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-					</tr>
-				{% endfor %}
-			{% else %}
+<form action="{{ action }}" id="voucher-list" data-target="#voucher">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
 				<tr>
-					<td class="text-center" colspan="9">{{ text_no_results }}</td>
+					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-left">{% if sort == 'v.code' %}
+							<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
+						{% else %}
+							<a href="{{ sort_code }}">{{ column_code }}</a>
+						{% endif %}</td>
+					<td class="text-left">{% if sort == 'v.from_name' %}
+							<a href="{{ sort_from }}" class="{{ order|lower }}">{{ column_from }}</a>
+						{% else %}
+							<a href="{{ sort_from }}">{{ column_from }}</a>
+						{% endif %}</td>
+					<td class="text-left">{% if sort == 'v.to_name' %}
+							<a href="{{ sort_to }}" class="{{ order|lower }}">{{ column_to }}</a>
+						{% else %}
+							<a href="{{ sort_to }}">{{ column_to }}</a>
+						{% endif %}</td>
+					<td class="text-right">{% if sort == 'v.amount' %}
+							<a href="{{ sort_amount }}" class="{{ order|lower }}">{{ column_amount }}</a>
+						{% else %}
+							<a href="{{ sort_amount }}">{{ column_amount }}</a>
+						{% endif %}</td>
+					<td class="text-left d-none d-lg-table-cell">{% if sort == 'theme' %}
+							<a href="{{ sort_theme }}" class="{{ order|lower }}">{{ column_theme }}</a>
+						{% else %}
+							<a href="{{ sort_theme }}">{{ column_theme }}</a>
+						{% endif %}</td>
+					<td class="text-lef d-none d-lg-table-cellt">{% if sort == 'v.status' %}
+							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+						{% else %}
+							<a href="{{ sort_status }}">{{ column_status }}</a>
+						{% endif %}</td>
+					<td class="text-left d-none d-lg-table-cell">{% if sort == 'v.date_added' %}
+							<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
+						{% else %}
+							<a href="{{ sort_date_added }}">{{ column_date_added }}</a>
+						{% endif %}</td>
+					<td class="text-right">{{ column_action }}</td>
 				</tr>
-			{% endif %}
-		</tbody>
-	</table>
-</div>
-<div class="row">
-	<div class="col-sm-6 text-left">{{ pagination }}</div>
-	<div class="col-sm-6 text-right">{{ results }}</div>
-</div>
+			</thead>
+			<tbody>
+				{% if vouchers %}
+					{% for voucher in vouchers %}
+						<tr>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ voucher.voucher_id }}"/></td>
+							<td class="text-left">{{ voucher.code }}</td>
+							<td class="text-left">{{ voucher.from }}</td>
+							<td class="text-left">{{ voucher.to }}</td>
+							<td class="text-right">{{ voucher.amount }}</td>
+							<td class="text-left d-none d-lg-table-cell">{{ voucher.theme }}</td>
+							<td class="text-left d-none d-lg-table-cell">{{ voucher.status }}</td>
+							<td class="text-left d-none d-lg-table-cell">{{ voucher.date_added }}</td>
+							<td class="text-right">
+								{% if voucher.order %}
+									<a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+								{% endif %}
+								<a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td class="text-center" colspan="9">{{ text_no_results }}</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-left">{{ pagination }}</div>
+		<div class="col-sm-6 text-right">{{ results }}</div>
+	</div>
+</form>

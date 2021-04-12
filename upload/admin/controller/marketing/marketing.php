@@ -142,7 +142,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			'limit'             => $this->config->get('config_pagination_admin')
 		];
 
-		$this->load->model('localisation/marketing');
+		$this->load->model('marketing/marketing');
 
 		$marketing_total = $this->model_marketing_marketing->getTotalMarketings($filter_data);
 
@@ -283,6 +283,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['marketing_id'])) {
+			$this->load->model('marketing/marketing');
+
 			$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
 		}
 
@@ -332,6 +334,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
+		$this->load->model('marketing/marketing');
+
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
 
 		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
@@ -339,8 +343,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('marketing/marketing');
-
 			if (!isset($this->request->get['marketing_id'])) {
 				$this->model_marketing_marketing->addMarketing($this->request->post);
 			} else {

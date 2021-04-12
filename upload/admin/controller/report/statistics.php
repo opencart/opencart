@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Report;
 class Statistics extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('report/statistics');
 

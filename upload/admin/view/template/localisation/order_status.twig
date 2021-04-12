@@ -16,8 +16,15 @@
 	<div class="container-fluid">
 		<div class="card">
 			<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-			<div class="card-body">{{ list }}</div>
+			<div id="order-status" class="card-body">{{ list }}</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript"><!--
+$('#order-status').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#order-status').load(this.href);
+});
+//--></script>
 {{ footer }}

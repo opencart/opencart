@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<div class="float-right">
 				<a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-				<button type="button" id="button-delete" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+				<button type="button" data-event="submit" data-url="{{ delete }}" data-form="#seo-profile-list" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -17,15 +17,15 @@
 	<div class="container-fluid">
 		<div class="card">
 			<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-			<div class="card-body">{{ list }}</div>
+			<div id="seo-profile" class="card-body">{{ list }}</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#filter').on('click', 'thead a, .pagination a', function(e) {
+$('#seo-profile').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#filter').load(this.href);
+    $('#seo-profile').load(this.href);
 });
 //--></script>
 {{ footer }}

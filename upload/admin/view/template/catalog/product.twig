@@ -58,17 +58,17 @@
 			<div class="col-md-9 col-sm-12">
 				<div class="card">
 					<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-					<div class="card-body">{{ list }}</div>
+					<div id="product" class="card-body">{{ list }}</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#filter').on('click', 'thead a, .pagination a', function(e) {
+$('#product').on('click', 'thead a, .pagination a', function(e) {
     e.preventDefault();
 
-    $('#filter').load(this.href);
+    $('#product').load(this.href);
 });
 
 $('#button-filter').on('click', function() {
@@ -106,8 +106,7 @@ $('#button-filter').on('click', function() {
 
     location = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
         $.ajax({

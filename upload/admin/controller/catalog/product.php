@@ -400,7 +400,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['product_id'])) {
-			$data['product_id'] = (int)$this->request->get['pro duct_id'];
+			$data['product_id'] = (int)$this->request->get['product_id'];
 		} elseif (isset($this->request->get['master_id'])) {
 			$data['master_id'] = (int)$this->request->get['master_id'];
 		} else {

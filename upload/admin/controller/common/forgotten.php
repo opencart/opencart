@@ -46,7 +46,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+			$code = (string)$this->request->get['code'];
 		} else {
 			$code = '';
 		}

@@ -186,6 +186,12 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		if (!isset($this->request->get['attribute_group_id'])) {
+			$data['action'] = $this->url->link('catalog/attribute_group|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('catalog/attribute_group|save', 'user_token=' . $this->session->data['user_token'] . '&attribute_group_id=' . $this->request->get['attribute_group_id']);
+		}
+
 		if (isset($this->request->get['attribute_group_id'])) {
 			$data['attribute_group_id'] = $this->request->get['attribute_group_id'];
 		} else {

@@ -326,7 +326,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/information');
 
-			if (!isset($this->request->post['information_id'])) {
+			if (!isset($this->request->get['information_id'])) {
 				$this->model_catalog_information->addInformation($this->request->post);
 			} else {
 				$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);

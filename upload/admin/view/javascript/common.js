@@ -103,13 +103,16 @@ $(document).ready(function() {
 });
 
 // Forms
-$(document).on('click', '[data-oc-toggle=\'submit\']', function() {
+$(document).on('click', '[data-action]', function() {
     var element = this;
 
     var form = $(element).attr('data-form');
 
+    //console.log($(element).attr('data-action'));
+   // console.log($(element).attr('data-form'));
+
     $.ajax({
-        url: $(element).attr('data-url'),
+        url: $(element).attr('data-action'),
         type: 'post',
         dataType: 'json',
         data: new FormData($(form)[0]),
@@ -120,46 +123,50 @@ $(document).on('click', '[data-oc-toggle=\'submit\']', function() {
             $(element).button('loading');
         },
         complete: function() {
-            $(element).button('`reset');
+            $(element).button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.invalid-tooltip, .alert-dismissible').remove();
 
-            if (json['error']) {
-                if (typeof json['error'] == 'string') {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
-                if (typeof json['error'] == 'object') {
-                    if (json['error']['warning']) {
-                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    }
+                for (key in json['error']) {
+                    var element = $('#input-' + key.replace('_', '-'));
 
-                    for (key in json['error']) {
-                        var element = $('#input-' + key.replace('_', '-'));
+                    // Highlight any found errors
+                    $(element).addClass('is-invalid');
 
-                        // Highlight any found errors
-                        $(element).addClass('is-invalid');
-
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
-                        } else {
-                            $(element).after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
-                        }
+                    if ($(element).parent().hasClass('input-group')) {
+                        $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
+                    } else {
+                        $(element).after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
                     }
                 }
+            }
+
+            if (typeof json['error'] == 'string') {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh
-                var action = $(form).prop('action');
+                var url = $(form).prop('data-load');
                 var target = $(form).prop('data-target');
 
-                if (action !== 'undefined' && target !== 'undefined') {
-                    $(target).load(action);
+                if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                    $(target).load(url);
                 }
+            }
+
+            if (json['redirect']) {
+                location = json['redirect'];
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

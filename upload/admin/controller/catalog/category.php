@@ -33,6 +33,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/category|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['repair'] = $this->url->link('catalog/category|repair', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/category|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
@@ -189,10 +190,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['back'] = $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		if (isset($this->request->get['category_id'])) {
-			$data['category_id'] = $this->request->get['category_id'];
+		if (!isset($this->request->get['category_id'])) {
+			$data['action'] = $this->url->link('catalog/category|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['category_id'] = 0;
+			$data['action'] = $this->url->link('catalog/category|save', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $this->request->get['category_id']);
 		}
 
 		if (isset($this->request->get['category_id'])) {
@@ -333,8 +334,10 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/category_form', $data));
 	}
 
-	protected function save(): void {
+	public function save(): void {
 		$this->load->language('catalog/category');
+
+		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'catalog/category')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
@@ -382,12 +385,12 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
 		if (!$json) {
-			if (!isset($this->request->post['category_id'])) {
+			if (!isset($this->request->get['category_id'])) {
 				$this->model_catalog_category->addCategory($this->request->post);
 			} else {
 				$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);

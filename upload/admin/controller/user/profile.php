@@ -71,7 +71,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/profile', $data));
 	}
 
-	protected function save(): void {
+	public function save(): void {
 		$this->load->language('common/profile');
 
 		$json = [];

@@ -185,9 +185,9 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (!isset($this->request->get['attribute_id'])) {
-			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['action'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id']);
+			$data['action'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id']);
 		}
 
 		if (isset($this->request->get['attribute_id'])) {

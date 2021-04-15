@@ -265,6 +265,12 @@ class Country extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['country_id'])) {
+			$data['action'] = $this->url->link('localisation/country|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('localisation/country|save', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $this->request->get['country_id']);
+		}
+
 		$data['back'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['country_id'])) {

@@ -28,9 +28,10 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
 										</div>
-										<input type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+										<input type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 									</div>
-								{% endfor %}</div>
+								{% endfor %}
+							</div>
 						</div>
 						<div class="form-group row">
 							<label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
@@ -120,15 +121,15 @@
 													<div class="input-group-prepend">
 														<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
 													</div>
-													<input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" class="form-control"/>
+													<input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 												</div>
 											{% endfor %}</td>
 										<td class="text-center">
 											<div class="card image">
-												<img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image{{ option_value_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}"/>
+												<img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image-{{ option_value_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image-{{ option_value_row }}"/>
 												<div class="card-body">
-													<button type="button" data-toggle="image" data-target="#input-image{{ option_value_row }}" data-thumb="#thumb-image{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-													<button type="button" data-toggle="clear" data-target="#input-image{{ option_value_row }}" data-thumb="#thumb-image{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+													<button type="button" data-toggle="image" data-target="#input-image-{{ option_value_row }}" data-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+													<button type="button" data-toggle="clear" data-target="#input-image-{{ option_value_row }}" data-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 												</div>
 											</div>
 										</td>
@@ -170,7 +171,7 @@ function addOptionValue() {
 	{% for language in languages %}
     html += '    <div class="input-group">';
     html += '      <div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span></div>';
-    html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value }}" class="form-control" />';
+    html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value }}" id="input-name-{{ language.language_id }}" class="form-control" />';
     html += '    </div>';
 	{% endfor %}
     html += '  </td>';

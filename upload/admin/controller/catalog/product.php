@@ -397,6 +397,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		if (!isset($this->request->get['product_id'])) {
+			$data['action'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']);
+		}
+
 		$data['back'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['product_id'])) {
@@ -1008,11 +1014,11 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['product_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 255)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$json['error']['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
@@ -1027,7 +1033,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			foreach ($product_options as $product_option) {
 				if (isset($this->request->post['override']['variant'][$product_option['product_option_id']]) && $product_option['required'] && empty($this->request->post['variant'][$product_option['product_option_id']])) {
-					$json['error']['variant'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+					$json['error']['variant_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
 		}
@@ -1041,10 +1047,10 @@ class Product extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && ($seo_url_info['key'] != 'product_id' || !isset($this->request->get['product_id']) || $seo_url_info['value'] != (int)$this->request->get['product_id'])) {
-							$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_seo');
 					}
 				}
 			}

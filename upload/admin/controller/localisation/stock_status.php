@@ -182,6 +182,12 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['stock_status_id'])) {
+			$data['action'] = $this->url->link('localisation/stock_status|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('localisation/stock_status|save', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $this->request->get['stock_status_id']);
+		}
+
 		$data['back'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
@@ -212,7 +218,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['stock_status'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 

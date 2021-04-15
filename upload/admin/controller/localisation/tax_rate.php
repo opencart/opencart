@@ -193,6 +193,12 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['tax_rate_id'])) {
+			$data['action'] = $this->url->link('localisation/tax_rate|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('localisation/tax_rate|save', 'user_token=' . $this->session->data['user_token'] . '&tax_rate_id=' . $this->request->get['tax_rate_id']);
+		}
+
 		$data['back'] = $this->url->link('localisation/tax_rate', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['tax_rate_id'])) {

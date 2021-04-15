@@ -190,6 +190,12 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['translation_id'])) {
+			$data['action'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $this->request->get['translation_id']);
+		}
+
 		$data['back'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['translation_id'])) {

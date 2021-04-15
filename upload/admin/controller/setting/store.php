@@ -140,13 +140,13 @@ class Store extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
-
-		if (isset($this->request->get['store_id'])) {
-			$data['store_id'] = $this->request->get['store_id'];
+		if (!isset($this->request->get['store_id'])) {
+			$data['action'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['store_id'] = 0;
+			$data['action'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
 		}
+
+		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['store_id'])) {
 			$this->load->model('setting/setting');
@@ -692,8 +692,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		if ($json['error'] && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
-
-		$this->load->model('setting/store');
 
 		if (!$json) {
 			$this->load->model('setting/setting');

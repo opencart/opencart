@@ -26,7 +26,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
 									</div>
-									<input type="text" name="voucher_theme_description[{{ language.language_id }}][name]" value="{{ voucher_theme_description[language.language_id] ? voucher_theme_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control"/>
+									<input type="text" name="voucher_theme_description[{{ language.language_id }}][name]" value="{{ voucher_theme_description[language.language_id] ? voucher_theme_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 								</div>
 							{% endfor %}
 						</div>

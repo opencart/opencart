@@ -181,6 +181,12 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['length_class_id'])) {
+			$data['action'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $this->request->get['length_class_id']);
+		}
+
 		$data['back'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['length_class_id'])) {
@@ -223,11 +229,11 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['length_class_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 32)) {
-				$json['error']['title'][$language_id] = $this->language->get('error_title');
+				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
 
 			if (!$value['unit'] || (utf8_strlen($value['unit']) > 4)) {
-				$json['error']['unit'][$language_id] = $this->language->get('error_unit');
+				$json['error']['unit_' . $language_id] = $this->language->get('error_unit');
 			}
 		}
 

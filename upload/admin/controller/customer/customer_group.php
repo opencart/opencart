@@ -184,13 +184,13 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->get['customer_group_id'];
+		if (!isset($this->request->get['customer_group_id'])) {
+			$data['action'] = $this->url->link('customer/customer_group|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['customer_group_id'] = 0;
+			$data['action'] = $this->url->link('customer/customer_group|save', 'user_token=' . $this->session->data['user_token'] . '&customer_group_id=' . $this->request->get['customer_group_id']);
 		}
+
+		$data['back'] = $this->url->link('customer/customer_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['customer_group_id'])) {
 			$this->load->model('customer/customer_group');
@@ -238,7 +238,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['customer_group_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 

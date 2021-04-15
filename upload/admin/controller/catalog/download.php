@@ -188,18 +188,24 @@ class Download extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['download_id'])) {
-			$data['download_id'] = (int)$this->request->get['download_id'];
+		if (!isset($this->request->get['download_id'])) {
+			$data['action'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['download_id'] = 0;
+			$data['action'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $this->request->get['download_id']);
 		}
+
+		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['download_id'])) {
 			$this->load->model('catalog/download');
 
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
+		}
+
+		if (isset($this->request->get['download_id'])) {
+			$data['download_id'] = (int)$this->request->get['download_id'];
+		} else {
+			$data['download_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');
@@ -244,7 +250,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['download_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 3) || (utf8_strlen($value['name']) > 64)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 

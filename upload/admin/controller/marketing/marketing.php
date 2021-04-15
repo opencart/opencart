@@ -274,18 +274,24 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['marketing_id'])) {
-			$data['marketing_id'] = (int)$this->request->get['marketing_id'];
+		if (!isset($this->request->get['marketing_id'])) {
+			$data['action'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['marketing_id'] = 0;
+			$data['action'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $this->request->get['marketing_id']);
 		}
+
+		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['marketing_id'])) {
 			$this->load->model('marketing/marketing');
 
 			$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
+		}
+
+		if (isset($this->request->get['marketing_id'])) {
+			$data['marketing_id'] = (int)$this->request->get['marketing_id'];
+		} else {
+			$data['marketing_id'] = 0;
 		}
 
 		$data['store'] = HTTP_CATALOG;

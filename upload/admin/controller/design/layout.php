@@ -182,6 +182,12 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['layout_id'])) {
+			$data['action'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id']);
+		}
+
 		$data['back'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['layout_id'])) {
@@ -295,10 +301,17 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		$this->load->model('design/layout');
+		if (!$json) {
+			$this->load->model('design/layout');
 
-		$this->model_design_layout->addLayout($this->request->post);
-		$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
+			if (isset($this->request->get['layout_id'])) {
+				$this->model_design_layout->addLayout($this->request->post);
+			} else {
+				$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

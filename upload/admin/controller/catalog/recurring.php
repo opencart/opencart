@@ -184,13 +184,13 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['recurring_id'])) {
-			$data['recurring_id'] = $this->request->get['recurring_id'];
+		if (!isset($this->request->get['recurring_id'])) {
+			$data['action'] = $this->url->link('catalog/recurring|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['recurring_id'] = 0;
+			$data['action'] = $this->url->link('catalog/recurring|save', 'user_token=' . $this->session->data['user_token'] . '&recurring_id=' . $this->request->get['recurring_id']);
 		}
+
+		$data['back'] = $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['recurring_id'])) {
 			$this->load->model('catalog/recurring');
@@ -203,7 +203,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['recurring_id'])) {
-			$data['recurring_description'] = $this->model_catalog_recurring->getDescription($recurring_info['recurring_id']);
+			$data['recurring_description'] = $this->model_catalog_recurring->getDescription($this->request->get['recurring_id']);
 		} else {
 			$data['recurring_description'] = [];
 		}
@@ -321,7 +321,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['recurring_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 3) || (utf8_strlen($value['name']) > 255)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 

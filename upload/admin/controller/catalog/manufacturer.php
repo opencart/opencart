@@ -184,6 +184,12 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['manufacturer_id'])) {
+			$data['action'] = $this->url->link('catalog/manufacturer|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('catalog/manufacturer|save', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $this->request->get['manufacturer_id']);
+		}
+
 		$data['back'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['manufacturer_id'])) {
@@ -301,10 +307,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && ($seo_url_info['key'] != 'manufacturer_id' || !isset($this->request->get['manufacturer_id']) || $seo_url_info['value'] != (int)$this->request->get['manufacturer_id'])) {
-							$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_seo');
 					}
 				}
 			}

@@ -182,13 +182,13 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		if (!isset($this->request->get['attribute_id'])) {
-			$data['action'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id']);
+			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id']);
 		}
+
+		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['attribute_id'])) {
 			$this->load->model('catalog/attribute');
@@ -246,7 +246,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['attribute_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 64)) {
-				$json['error']['name' . $language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 

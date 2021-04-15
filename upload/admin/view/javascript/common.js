@@ -157,8 +157,8 @@ $(document).on('click', '[data-action]', function() {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 // Refresh
-                var url = $(form).prop('data-load');
-                var target = $(form).prop('data-target');
+                var url = $(form).attr('data-load');
+                var target = $(form).attr('data-target');
 
                 if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
                     $(target).load(url);

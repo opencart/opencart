@@ -187,6 +187,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['coupon_id'])) {
+			$data['action'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id']);
+		}
+
 		$data['back'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['coupon_id'])) {

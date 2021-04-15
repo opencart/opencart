@@ -182,6 +182,12 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['return_status_id'])) {
+			$data['action'] = $this->url->link('localisation/return_status|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('localisation/return_status|save', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $this->request->get['return_status_id']);
+		}
+
 		$data['back'] = $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
@@ -212,14 +218,17 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['return_status'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
 		$this->load->model('localisation/return_status');
 
-		$this->model_localisation_return_status->addReturnStatus($this->request->post);
-		$this->model_localisation_return_status->editReturnStatus($this->request->get['return_status_id'], $this->request->post);
+		if (!isset($this->request->get['return_status_id'])) {
+			$this->model_localisation_return_status->addReturnStatus($this->request->post);
+		} else {
+			$this->model_localisation_return_status->editReturnStatus($this->request->get['return_status_id'], $this->request->post);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -313,19 +313,25 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['customer_id'])) {
-			$data['customer_id'] = (int)$this->request->get['customer_id'];
+		if (!isset($this->request->get['customer_id'])) {
+			$data['action'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['customer_id'] = 0;
+			$data['action'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id']);
 		}
+
+		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Affiliate
 		if (isset($this->request->get['customer_id'])) {
 			$this->load->model('marketing/affiliate');
 
 			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->get['customer_id']);
+		}
+
+		if (isset($this->request->get['customer_id'])) {
+			$data['customer_id'] = (int)$this->request->get['customer_id'];
+		} else {
+			$data['customer_id'] = 0;
 		}
 
 		if (!empty($affiliate_info)) {
@@ -522,9 +528,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if (($custom_field['location'] == 'affiliate') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['location'] == 'affiliate') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
 		}

@@ -184,13 +184,13 @@ class Option extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['recurring_id'])) {
-			$data['recurring_id'] = $this->request->get['recurring_id'];
+		if (!isset($this->request->get['option_id'])) {
+			$data['action'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['recurring_id'] = 0;
+			$data['action'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id']);
 		}
+
+		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['option_id'])) {
 			$this->load->model('catalog/option');
@@ -270,7 +270,7 @@ class Option extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 128)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
@@ -304,7 +304,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					if ((utf8_strlen(trim($option_value_description['name'])) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
-						$json['error']['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value');
+						$json['error']['option_value_' . '_' . $option_value_id . '_' . $language_id] = $this->language->get('error_option_value');
 					}
 				}
 			}

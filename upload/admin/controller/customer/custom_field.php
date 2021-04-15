@@ -199,12 +199,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['custom_field_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		if (isset($this->request->get['custom_field_id'])) {
-			$data['custom_field_id'] = $this->request->get['custom_field_id'];
-		} else {
-			$data['custom_field_id'] = 0;
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -231,9 +225,17 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['custom_field_id'])) {
+			$data['action'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $this->request->get['custom_field_id']);
+		}
+
 		$data['back'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['custom_field_id'])) {
+
+
 			$custom_field_info = $this->model_customer_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}
 
@@ -345,7 +347,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['custom_field_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 128)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
@@ -358,7 +360,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 				foreach ($this->request->post['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
 					foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
 						if ((utf8_strlen($custom_field_value_description['name']) < 1) || (utf8_strlen($custom_field_value_description['name']) > 128)) {
-							$json['error']['custom_field_value'][$custom_field_value_id][$language_id] = $this->language->get('error_custom_value');
+							$json['error']['custom_field_value_' . $custom_field_value_id . '_' . $language_id] = $this->language->get('error_custom_value');
 						}
 					}
 				}

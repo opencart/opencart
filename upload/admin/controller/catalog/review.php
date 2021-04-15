@@ -303,13 +303,13 @@ class Review extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
-
-		if (isset($this->request->get['review_id'])) {
-			$data['review_id'] = $this->request->get['review_id'];
+		if (!isset($this->request->get['review_id'])) {
+			$data['action'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['review_id'] = 0;
+			$data['action'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $this->request->get['review_id']);
 		}
+
+		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['review_id'])) {
 			$this->load->model('catalog/review');

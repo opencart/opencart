@@ -417,6 +417,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['return_id'])) {
+			$data['action'] = $this->url->link('sale/returns|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('sale/returns|save', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $this->request->get['return_id']);
+		}
+
 		$data['back'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['return_id'])) {

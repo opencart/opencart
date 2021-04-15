@@ -183,6 +183,12 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		if (!isset($this->request->get['return_action_id'])) {
+			$data['action'] = $this->url->link('localisation/return_action|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('localisation/return_action|save', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $this->request->get['return_action_id']);
+		}
+
 		$data['back'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
@@ -213,7 +219,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['return_action'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 64)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 

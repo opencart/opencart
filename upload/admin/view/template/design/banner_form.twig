@@ -63,10 +63,7 @@
 											{% for banner_image in banner_images[language.language_id] %}
 												<tr id="image-row{{ image_row }}">
 													<td class="text-left"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" class="form-control"/>
-														{% if error_banner_image[language.language_id][image_row] %}
-															<div class="invalid-tooltip">{{ error_banner_image[language.language_id][image_row] }}</div>
-														{% endif %}</td>
-													<td class="text-left" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" class="form-control"/></td>
+													<td class="text-left" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-link{{ language.language_id }}" class="form-control"/></td>
 													<td class="text-center">
 														<div class="card">
 															<img src="{{ banner_image.thumb }}" alt="" title="" id="thumb-image{{ image_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-image{{ image_row }}"/>

@@ -173,9 +173,9 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['voucher_theme_id'])) {
-			$data['voucher_theme_id'] = $this->request->get['voucher_theme_id'];
+			$data['action'] = $this->url->link('sale/voucher_theme|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['voucher_theme_id'] = 0;
+			$data['action'] = $this->url->link('sale/voucher_theme|save', 'user_token=' . $this->session->data['user_token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id']);
 		}
 
 		$data['back'] = $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -184,6 +184,12 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$this->load->model('sale/voucher_theme');
 
 			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
+		}
+
+		if (!isset($this->request->get['voucher_theme_id'])) {
+			$data['voucher_theme_id'] = $this->request->get['voucher_theme_id'];
+		} else {
+			$data['voucher_theme_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');
@@ -232,7 +238,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['voucher_theme_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
@@ -242,19 +248,14 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/voucher_theme');
 
-		$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
-		$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
+		if (!isset($this->request->get['voucher_id'])) {
+			$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
+		} else {
+			$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function add(): void {
-
-
-
-
-		$this->getForm();
 	}
 
 	public function delete(): void {

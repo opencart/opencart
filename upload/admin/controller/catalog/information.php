@@ -187,13 +187,13 @@ class Information extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
-
 		if (!isset($this->request->get['information_id'])) {
-			$data['information_id'] = $this->request->get['information_id'];
+			$data['action'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['information_id'] = 0;
+			$data['action'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $this->request->get['information_id']);
 		}
+
+		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
@@ -289,15 +289,15 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['title'])) < 1) || (utf8_strlen($value['title']) > 64)) {
-				$json['error']['title' . $language_id] = $this->language->get('error_title');
+				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
 
 			if (utf8_strlen(trim($value['description'])) < 3) {
-				$json['error']['description'][$language_id] = $this->language->get('error_description');
+				$json['error']['description_' . $language_id] = $this->language->get('error_description');
 			}
 
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
-				$json['error']['meta_title'][$language_id] = $this->language->get('error_meta_title');
+				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
 		}
 
@@ -310,10 +310,10 @@ class Information extends \Opencart\System\Engine\Controller {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
 						if ($seo_url_info && (!isset($this->request->get['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->get['information_id'])) {
-							$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_keyword');
+							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$json['error']['keyword'][$store_id][$language_id] = $this->language->get('error_seo');
+						$json['error']['keyword_' . $store_id . '-' . $language_id] = $this->language->get('error_seo');
 					}
 				}
 			}

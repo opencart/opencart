@@ -240,7 +240,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['attribute_group_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 64)) {
-				$json['error']['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 

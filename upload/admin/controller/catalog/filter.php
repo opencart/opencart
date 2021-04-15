@@ -160,12 +160,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		if (isset($this->request->get['filter_group_id'])) {
-			$data['filter_group_id'] = $this->request->get['filter_group_id'];
-		} else {
-			$data['filter_group_id'] = 0;
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -191,6 +185,12 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
+
+		if (!isset($this->request->get['filter_group_id'])) {
+			$data['action'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		} else {
+			$data['action'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $this->request->get['filter_group_id']);
+		}
 
 		$data['back'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);
 
@@ -240,7 +240,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['filter_group_description'] as $language_id => $value) {
 			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 64)) {
-				$json['error']['group'][$language_id] = $this->language->get('error_group');
+				$json['error']['group_' . $language_id] = $this->language->get('error_group');
 			}
 		}
 
@@ -248,7 +248,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['filter'] as $key => $filter) {
 				foreach ($filter['filter_description'] as $language_id => $filter_description) {
 					if ((utf8_strlen(trim($filter_description['name'])) < 1) || (utf8_strlen($filter_description['name']) > 64)) {
-						$json['error']['filter'][$key][$language_id] = $this->language->get('error_name');
+						$json['error']['filter_' . $key . '_' . $language_id] = $this->language->get('error_name');
 					}
 				}
 			}

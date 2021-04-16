@@ -196,6 +196,8 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['return_action_id'])) {
+			$this->load->model('localisation/return_action');
+
 			$data['return_action'] = $this->model_localisation_return_action->getDescriptions($this->request->get['return_action_id']);
 		} else {
 			$data['return_action'] = [];

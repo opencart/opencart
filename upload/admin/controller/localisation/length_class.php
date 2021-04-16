@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class LengthClass extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('localisation/length_class');
 
@@ -45,6 +44,12 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('localisation/length_class', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('localisation/length_class');
+
+		$this->response->setOutput($this->getList());
 	}
 
 	protected function getList(): string {

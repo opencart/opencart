@@ -287,7 +287,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('user/user_permission');
+		$this->load->language('user/user_group');
 
 		$json = [];
 

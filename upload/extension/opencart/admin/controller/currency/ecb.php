@@ -58,7 +58,11 @@ class ECB extends \Opencart\System\Engine\Controller {
 	}
 
 	public function currency(string $default = ''): void {
+		echo 'hi';
+
 		if ($this->config->get('currency_ecb_status')) {
+
+
 			$curl = curl_init();
 
 			curl_setopt($curl, CURLOPT_URL, 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');

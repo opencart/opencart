@@ -12,7 +12,7 @@
  */
 namespace Opencart\System\Engine;
 use \Opencart\System\Engine\Action as Action;
-final class Loader {
+class Loader {
 	protected $registry;
 
 	/**

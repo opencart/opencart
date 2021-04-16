@@ -109,7 +109,10 @@ $(document).on('click', '[data-action]', function() {
     var form = $(element).attr('data-form');
 
     //console.log($(element).attr('data-action'));
-   // console.log($(element).attr('data-form'));
+    //console.log($(element).attr('data-form'));
+
+
+    console.log(new FormData($(form)[0]));
 
     $.ajax({
         url: $(element).attr('data-action'),
@@ -136,7 +139,7 @@ $(document).on('click', '[data-action]', function() {
                 }
 
                 for (key in json['error']) {
-                    var element = $('#input-' + key.replace('_', '-'));
+                    var element = $('#input-' + key.replaceAll('_', '-'));
 
                     // Highlight any found errors
                     $(element).addClass('is-invalid');

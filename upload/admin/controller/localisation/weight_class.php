@@ -185,9 +185,9 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['weight_class_id'])) {
-			$data['save'] = $this->url->link('catalog/weight_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('localisation/weight_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['save'] = $this->url->link('catalog/weight_class|save', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $this->request->get['weight_class_id']);
+			$data['save'] = $this->url->link('localisation/weight_class|save', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $this->request->get['weight_class_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url);

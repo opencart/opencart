@@ -219,12 +219,6 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (!isset($this->request->get['country_id'])) {
-			$data['country_id'] = $this->request->get['country_id'];
-		} else {
-			$data['country_id'] = 0;
-		}
-
 		$data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$url = '';
@@ -323,7 +317,7 @@ class Country extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('design/country');
+		$this->load->language('localisation/country');
 
 		$json = [];
 

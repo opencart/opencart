@@ -1034,7 +1034,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			foreach ($product_options as $product_option) {
 				if (isset($this->request->post['override']['variant'][$product_option['product_option_id']]) && $product_option['required'] && empty($this->request->post['variant'][$product_option['product_option_id']])) {
-					$json['error']['variant_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+					$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
 		}
@@ -1080,9 +1080,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				// Variant product edit
 				$this->model_catalog_product->editVariant($this->request->get['master_id'], $this->request->get['product_id'], $this->request->post);
 			}
-
-
-
 
 			// Variant products edit
 			$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);

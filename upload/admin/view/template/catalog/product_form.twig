@@ -979,8 +979,7 @@
 										{% set attribute_row = 0 %}
 										{% for product_attribute in product_attributes %}
 											<tr id="attribute-row{{ attribute_row }}">
-												<td class="text-left"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-name-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/>
-													<input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/></td>
+												<td class="text-left"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-name-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/></td>
 												<td class="text-left">
 													{% for language in languages %}
 														<div class="input-group mb-12">
@@ -1006,16 +1005,16 @@
 						</div>
 						{% if not master_id %}
 							<div id="tab-option" class="tab-pane">
+
 								<div id="option">
 									{% set option_row = 0 %}
 									{% set option_value_row = 0 %}
 									{% for product_option in product_options %}
+
 										<fieldset id="option-row{{ option_row }}">
 											<legend>{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-right" onclick="$('#option-row{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
-											<input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/>
-											<input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/>
-											<input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/>
-											<input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
+											<input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
+
 											<div class="form-group row">
 												<label for="input-required{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_required }}</label>
 												<div class="col-sm-10">
@@ -1030,29 +1029,33 @@
 													</select>
 												</div>
 											</div>
+
 											{% if product_option.type == 'text' %}
 												<div class="form-group row">
-													<label for="input-option{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
+													<label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
 													<div class="col-sm-10"><input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/></div>
 												</div>
 											{% endif %}
+
 											{% if product_option.type == 'textarea' %}
 												<div class="form-group row">
-													<label for="input-option{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
+													<label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
 													<div class="col-sm-10">
-														<textarea name="product_option[{{ option_row }}][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-value-{{ option_row }}" class="form-control">{{ product_option.value }}</textarea>
+														<textarea name="product_option[{{ option_row }}][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control">{{ product_option.value }}</textarea>
 													</div>
 												</div>
 											{% endif %}
+
 											{% if product_option.type == 'file' %}
 												<div class="form-group row d-none">
-													<label for="input-option{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
+													<label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
 													<div class="col-sm-10"><input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/></div>
 												</div>
 											{% endif %}
+
 											{% if product_option.type == 'date' %}
 												<div class="form-group row">
-													<label for="input-option{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
+													<label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
 													<div class="col-sm-10 col-md-4">
 														<div class="input-group date">
 															<input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
@@ -1063,9 +1066,10 @@
 													</div>
 												</div>
 											{% endif %}
+
 											{% if product_option.type == 'time' %}
 												<div class="form-group row">
-													<label for="input-option{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
+													<label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
 													<div class="col-sm-10 col-md-4">
 														<div class="input-group time">
 															<input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
@@ -1076,9 +1080,10 @@
 													</div>
 												</div>
 											{% endif %}
+
 											{% if product_option.type == 'datetime' %}
 												<div class="form-group row">
-													<label for="input-option{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
+													<label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
 													<div class="col-sm-10 col-md-4">
 														<div class="input-group datetime">
 															<input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/>
@@ -1089,6 +1094,7 @@
 													</div>
 												</div>
 											{% endif %}
+
 											{% if product_option.type == 'select' or product_option.type == 'radio' or product_option.type == 'checkbox' or product_option.type == 'image' %}
 												<div class="table-responsive">
 													<table class="table table-bordered table-hover">
@@ -1107,8 +1113,7 @@
 															{% for product_option_value in product_option.product_option_value %}
 																<tr id="option-value-row{{ option_value_row }}">
 																	<td class="text-left">{{ product_option_value.name }}
-																		<input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/>
-																		<input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
+																		<input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][option_value_id]" value="{{ product_option_value.option_value_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
 																	<td class="text-right">{{ product_option_value.quantity }} <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}"/></td>
 																	<td class="text-left">{% if product_option_value.subtract %}
 																			{{ text_yes }}
@@ -1144,9 +1149,11 @@
 												</div>
 											{% endif %}
 										</fieldset>
+
 										{% set option_row = option_row + 1 %}
 									{% endfor %}
 								</div>
+
 								<fieldset>
 									<legend>{{ text_option_add }}</legend>
 									<div class="form-group row">
@@ -1158,11 +1165,16 @@
 									</div>
 								</fieldset>
 							</div>
+
+
 						{% else %}
+
+
 							<div id="tab-option" class="tab-pane">
 								{% for option in options %}
 									<fieldset>
 										<legend>{{ option.name }}</legend>
+
 										{% if option.type == 'select' %}
 											<div class="form-group row{% if option.required %} required{% endif %}">
 												<label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1306,7 +1318,7 @@
 
 										{% if option.type == 'textarea' %}
 											<div class="form-group row{% if option.required %} required{% endif %}">
-												<label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
+												<label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
 												<div class="col-sm-10">
 													<div class="input-group">
 														<textarea name="variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}</textarea>
@@ -1330,10 +1342,13 @@
 										{% if option.type == 'file' %}
 											<div class="form-group row{% if option.required %} required{% endif %}">
 												<label class="col-sm-2 col-form-label">{{ option.name }}</label>
-												<div class="col-sm-10">
-													<div class="input-group">
+												<div class="col-sm-10 col-md-4">
+
+													<div id="input-option-{{ option.product_option_id }}" class="input-group">
+
 														<button type="button" id="button-upload-{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-														<input type="hidden" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}"/>
+														<input type="hidden" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}"/>
+
 														<div class="input-group-append align-items-center">
 															<div class="custom-control custom-switch">
 																{% if override.variant[option.product_option_id] %}
@@ -1345,13 +1360,14 @@
 															</div>
 														</div>
 													</div>
+
 												</div>
 											</div>
 										{% endif %}
 
 										{% if option.type == 'date' %}
 											<div class="form-group row{% if option.required %} required{% endif %}">
-												<label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
+												<label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
 												<div class="col-sm-10 col-md-4">
 													<div class="input-group date">
 														<input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
@@ -1377,10 +1393,10 @@
 
 										{% if option.type == 'time' %}
 											<div class="form-group row{% if option.required %} required{% endif %}">
-												<label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
+												<label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
 												<div class="col-sm-10 col-md-4">
-													<div class="input-group time">
-														<input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+													<div id="input-option-{{ option.product_option_id }}" class="input-group time">
+														<input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" class="form-control"/>
 														<div class="input-group-append">
 															<span class="input-group-text"><i class="fas fa-calendar"></i></span>
 														</div>
@@ -1388,9 +1404,9 @@
 															<div class="input-group-text">
 																<div class="custom-control custom-switch">
 																	{% if override.variant[option.product_option_id] %}
-																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input" checked/>
+																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input" checked/>
 																	{% else %}
-																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input"/>
+																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input"/>
 																	{% endif %}
 																	<label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
 																</div>
@@ -1403,7 +1419,7 @@
 
 										{% if option.type == 'datetime' %}
 											<div class="form-group row{% if option.required %} required{% endif %}">
-												<label for="input-option{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
+												<label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
 												<div class="col-sm-10 col-md-4">
 													<div class="input-group datetime">
 														<input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
@@ -1414,9 +1430,9 @@
 															<div class="input-group-text">
 																<div class="custom-control custom-switch">
 																	{% if override.variant[option.product_option_id] %}
-																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input" checked/>
+																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input" checked/>
 																	{% else %}
-																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input"/>
+																		<input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-toggle="switch" data-target="#input-option-{{ option.product_option_id }}" class="custom-control-input"/>
 																	{% endif %}
 																	<label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
 																</div>
@@ -2104,42 +2120,42 @@ $('input[name=\'option\']').autocomplete({
         if (item['type'] == 'text') {
             html += '	<div class="form-group row">';
             html += '	  <label for="input-option' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>';
-            html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option' + option_row + '" class="form-control" /></div>';
+            html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control" /></div>';
             html += '	</div>';
         }
 
         if (item['type'] == 'textarea') {
             html += '	<div class="form-group row">';
             html += '	  <label for="input-option' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>';
-            html += '	  <div class="col-sm-10"><textarea name="product_option[' + option_row + '][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-option' + option_row + '" class="form-control"></textarea></div>';
+            html += '	  <div class="col-sm-10"><textarea name="product_option[' + option_row + '][value]" rows="5" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control"></textarea></div>';
             html += '	</div>';
         }
 
         if (item['type'] == 'file') {
             html += '	<div class="form-group row d-none">';
             html += '	  <label for="input-option' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>';
-            html += '	  <div class="col-sm-10 d-none"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option' + option_row + '" class="form-control" /></div>';
+            html += '	  <div class="col-sm-10 d-none"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control" /></div>';
             html += '	</div>';
         }
 
         if (item['type'] == 'date') {
             html += '	<div class="form-group row">';
             html += '	  <label for="input-option' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>';
-            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group date"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
+            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group date"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
             html += '	</div>';
         }
 
         if (item['type'] == 'time') {
             html += '	<div class="form-group row">';
             html += '	  <label for="input-option' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>';
-            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
+            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
             html += '	</div>';
         }
 
         if (item['type'] == 'datetime') {
             html += '	<div class="form-group row">';
             html += '	  <label for="input-option' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>';
-            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
+            html += '	  <div class="col-sm-10 col-md-4"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fa fa-calendar"></i></div></div></div></div>';
             html += '	</div>';
         }
 

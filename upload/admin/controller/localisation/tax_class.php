@@ -183,9 +183,9 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['tax_class_id'])) {
-			$data['save'] = $this->url->link('catalog/tax_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('localisation/tax_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['save'] = $this->url->link('catalog/tax_class|save', 'user_token=' . $this->session->data['user_token'] . 'tax_class_id=' . $this->request->get['tax_class_id']);
+			$data['save'] = $this->url->link('localisation/tax_class|save', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $this->request->get['tax_class_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -246,9 +246,9 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/tax_class');
 
 			if (!isset($this->request->get['tax_class_id'])) {
-				$this->model_localisation_tax_class->addStockStatus($this->request->post);
+				$this->model_localisation_tax_class->addTaxClass($this->request->post);
 			} else {
-				$this->model_localisation_tax_class->editStockStatus($this->request->get['tax_class_id'], $this->request->post);
+				$this->model_localisation_tax_class->editTaxClass($this->request->get['tax_class_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

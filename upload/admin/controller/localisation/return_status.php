@@ -224,12 +224,16 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->load->model('localisation/return_status');
+		if (!$json) {
+			$this->load->model('localisation/return_status');
 
-		if (!isset($this->request->get['return_status_id'])) {
-			$this->model_localisation_return_status->addReturnStatus($this->request->post);
-		} else {
-			$this->model_localisation_return_status->editReturnStatus($this->request->get['return_status_id'], $this->request->post);
+			if (!isset($this->request->get['return_status_id'])) {
+				$this->model_localisation_return_status->addReturnStatus($this->request->post);
+			} else {
+				$this->model_localisation_return_status->editReturnStatus($this->request->get['return_status_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

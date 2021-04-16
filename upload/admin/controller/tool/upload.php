@@ -105,6 +105,8 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('tool/upload|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['uploads'] = [];
 
 		$filter_data = [

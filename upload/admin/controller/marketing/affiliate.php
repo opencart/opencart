@@ -46,6 +46,12 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/affiliate', $data));
 	}
 
+	public function list(): void {
+		$this->load->language('marketing/affiliate');
+
+		$this->response->setOutput($this->getList());
+	}
+
 	protected function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -483,7 +489,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
 
 		if (!$customer_info) {
-			$json['error']['warning'] = $this->language->get('error_customer');
+			$json['error']['customer'] = $this->language->get('error_customer');
 		}
 
 		// Check to see if customer is already a affiliate

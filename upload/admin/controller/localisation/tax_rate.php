@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 class TaxRate extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('localisation/tax_rate');
 
@@ -161,7 +160,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 	}
 
 	public function form(): void {
-		$this->load->language('localisation/tax_class');
+		$this->load->language('localisation/tax_rate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

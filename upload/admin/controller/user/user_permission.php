@@ -30,11 +30,11 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user_group', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('user/user_group|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('user/user_group|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('user/user_permission|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('user/user_permission|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -316,7 +316,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 	}
 
 	public function delete(): void {
-		$this->load->language('user/user_permission');
+		$this->load->language('user/user_group');
 
 		$json = [];
 
@@ -341,7 +341,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('user/user_permission');
+			$this->load->model('user/user_group');
 
 			foreach ($selected as $user_group_id) {
 				$this->model_user_user_group->deleteUserGroup($user_group_id);

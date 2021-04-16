@@ -206,7 +206,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		if (!empty($layout_info)) {
+		if (isset($this->request->get['layout_id'])) {
 			$data['layout_routes'] = $this->model_design_layout->getRoutes($this->request->get['layout_id']);
 		} else {
 			$data['layout_routes'] = [];
@@ -304,7 +304,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('design/layout');
 
-			if (isset($this->request->get['layout_id'])) {
+			if (!isset($this->request->get['layout_id'])) {
 				$this->model_design_layout->addLayout($this->request->post);
 			} else {
 				$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);

@@ -32,8 +32,8 @@ class Category extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/category|form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['repair'] = $this->url->link('catalog/category|repair', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('catalog/category|form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/category|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();

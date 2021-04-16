@@ -1057,32 +1057,35 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 
 		if (!$json) {
 
+			if (!isset($this->request->get['product_id'])) {
 
+				if (!isset($this->request->get['master_id'])) {
+					// Normal product add
+					$this->model_catalog_product->addProduct($this->request->post);
+				} else {
+					// Variant product add
+					$this->model_catalog_product->addVariant($this->request->get['master_id'], $this->request->post);
+				}
 
-			if (!isset($this->request->get['master_id'])) {
-				// Normal product add
-				$this->model_catalog_product->addProduct($this->request->post);
 			} else {
-				// Variant product add
-				$this->model_catalog_product->addVariant($this->request->get['master_id'], $this->request->post);
-			}
 
-			if (!isset($this->request->get['master_id'])) {
-				// Normal product edit
-				$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
-			} else {
-				// Variant product edit
-				$this->model_catalog_product->editVariant($this->request->get['master_id'], $this->request->get['product_id'], $this->request->post);
-			}
+				if (!isset($this->request->get['master_id'])) {
+					// Normal product edit
+					$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+				} else {
+					// Variant product edit
+					$this->model_catalog_product->editVariant($this->request->get['master_id'], $this->request->get['product_id'], $this->request->post);
+				}
 
-			// Variant products edit
-			$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);
+				// Variant products edit if master product is edited
+				$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

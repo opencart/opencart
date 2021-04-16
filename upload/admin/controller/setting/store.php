@@ -689,7 +689,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['image_location'] = $this->language->get('error_image_location');
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

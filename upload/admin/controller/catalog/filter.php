@@ -256,7 +256,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$json['error']['warning']  = $this->language->get('error_values');
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

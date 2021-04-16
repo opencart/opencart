@@ -21,8 +21,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['back'] = $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token']);
-
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();

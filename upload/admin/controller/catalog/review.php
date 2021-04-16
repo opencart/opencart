@@ -395,7 +395,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['rating'] = $this->language->get('error_rating');
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

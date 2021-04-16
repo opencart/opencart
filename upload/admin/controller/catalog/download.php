@@ -266,7 +266,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error']['mask'] = $this->language->get('error_mask');
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

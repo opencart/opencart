@@ -293,7 +293,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/attribute_group');
 
 			foreach ($selected as $attribute_group_id) {
-				$this->model_catalogattribute_group->deleteAttributeGroup($attribute_group_id);
+				$this->model_catalog_attribute_group->deleteAttributeGroup($attribute_group_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

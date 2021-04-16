@@ -304,13 +304,13 @@ class Option extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					if ((utf8_strlen(trim($option_value_description['name'])) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
-						$json['error']['option_value_' . '_' . $option_value_id . '_' . $language_id] = $this->language->get('error_option_value');
+						$json['error']['option_value_' . $option_value_id . '_' . $language_id] = $this->language->get('error_option_value');
 					}
 				}
 			}
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

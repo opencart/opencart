@@ -193,12 +193,6 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['manufacturer_id'])) {
-			$data['manufacturer_id'] = (int)$this->request->get['manufacturer_id'];
-		} else {
-			$data['manufacturer_id'] = 0;
-		}
-
-		if (isset($this->request->get['manufacturer_id'])) {
 			$this->load->model('catalog/manufacturer');
 
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
@@ -316,7 +310,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

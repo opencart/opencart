@@ -313,13 +313,13 @@ class Information extends \Opencart\System\Engine\Controller {
 							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 						}
 					} else {
-						$json['error']['keyword_' . $store_id . '-' . $language_id] = $this->language->get('error_seo');
+						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_seo');
 					}
 				}
 			}
 		}
 
-		if ($json['error'] && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

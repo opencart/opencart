@@ -187,9 +187,9 @@ class Filter extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['filter_group_id'])) {
-			$data['action'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $this->request->get['filter_group_id']);
+			$data['save'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $this->request->get['filter_group_id']);
 		}
 
 		$data['back'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);

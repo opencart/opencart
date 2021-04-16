@@ -191,9 +191,9 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/category', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (!isset($this->request->get['category_id'])) {
-			$data['action'] = $this->url->link('catalog/category|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/category|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/category|save', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $this->request->get['category_id']);
+			$data['save'] = $this->url->link('catalog/category|save', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $this->request->get['category_id']);
 		}
 
 		if (isset($this->request->get['category_id'])) {

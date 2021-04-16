@@ -185,9 +185,9 @@ class Option extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['option_id'])) {
-			$data['action'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id']);
+			$data['save'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id']);
 		}
 
 		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);

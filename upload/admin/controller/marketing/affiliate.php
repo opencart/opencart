@@ -314,9 +314,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['customer_id'])) {
-			$data['action'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id']);
+			$data['save'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id']);
 		}
 
 		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -470,7 +470,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('localisation/affiliate');
+		$this->load->language('marketing/affiliate');
 
 		$json = [];
 

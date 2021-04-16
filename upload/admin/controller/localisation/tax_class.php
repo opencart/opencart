@@ -183,9 +183,9 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['tax_class_id'])) {
-			$data['action'] = $this->url->link('catalog/tax_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/tax_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/tax_class|save', 'user_token=' . $this->session->data['user_token'] . 'tax_class_id=' . $this->request->get['tax_class_id']);
+			$data['save'] = $this->url->link('catalog/tax_class|save', 'user_token=' . $this->session->data['user_token'] . 'tax_class_id=' . $this->request->get['tax_class_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url);

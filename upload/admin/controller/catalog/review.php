@@ -304,9 +304,9 @@ class Review extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['review_id'])) {
-			$data['action'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $this->request->get['review_id']);
+			$data['save'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $this->request->get['review_id']);
 		}
 
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);

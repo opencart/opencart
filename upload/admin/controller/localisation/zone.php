@@ -260,9 +260,9 @@ class Zone extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['zone_id'])) {
-			$data['action'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $this->request->get['zone_id']);
+			$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $this->request->get['zone_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url);

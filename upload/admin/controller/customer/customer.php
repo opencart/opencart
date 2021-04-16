@@ -399,9 +399,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['customer_id'])) {
-			$data['action'] = $this->url->link('customer/customer|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('customer/customer|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('customer/customer|save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id']);
+			$data['save'] = $this->url->link('customer/customer|save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id']);
 		}
 
 		$data['back'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url);

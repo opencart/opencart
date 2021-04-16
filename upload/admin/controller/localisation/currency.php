@@ -203,9 +203,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['currency_id'])) {
-			$data['action'] = $this->url->link('localisation/currency|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('localisation/currency|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/currency|save', 'user_token=' . $this->session->data['user_token'] . '&currency_id=' . $this->request->get['currency_id']);
+			$data['save'] = $this->url->link('localisation/currency|save', 'user_token=' . $this->session->data['user_token'] . '&currency_id=' . $this->request->get['currency_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url);

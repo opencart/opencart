@@ -183,9 +183,9 @@ class Layout extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['layout_id'])) {
-			$data['action'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id']);
+			$data['save'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id']);
 		}
 
 		$data['back'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);

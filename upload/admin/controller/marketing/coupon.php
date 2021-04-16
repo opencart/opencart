@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Coupon extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('marketing/coupon');
 
@@ -45,6 +44,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('marketing/coupon', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('marketing/coupon');
+
+		$this->response->setOutput($this->getList());
 	}
 
 	protected function getList(): string {
@@ -188,9 +193,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['coupon_id'])) {
-			$data['action'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id']);
+			$data['save'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id']);
 		}
 
 		$data['back'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -325,7 +330,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('localisation/coupon');
+		$this->load->language('marketing/coupon');
 
 		$json = [];
 

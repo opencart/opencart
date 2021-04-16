@@ -185,9 +185,9 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['recurring_id'])) {
-			$data['action'] = $this->url->link('catalog/recurring|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/recurring|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/recurring|save', 'user_token=' . $this->session->data['user_token'] . '&recurring_id=' . $this->request->get['recurring_id']);
+			$data['save'] = $this->url->link('catalog/recurring|save', 'user_token=' . $this->session->data['user_token'] . '&recurring_id=' . $this->request->get['recurring_id']);
 		}
 
 		$data['back'] = $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url);

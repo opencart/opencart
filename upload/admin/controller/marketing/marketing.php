@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 class Marketing extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('marketing/marketing');
 
@@ -129,6 +128,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('marketing/marketing|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['marketings'] = [];
 
@@ -275,9 +276,9 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['marketing_id'])) {
-			$data['action'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $this->request->get['marketing_id']);
+			$data['save'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $this->request->get['marketing_id']);
 		}
 
 		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);

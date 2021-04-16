@@ -192,6 +192,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['returns'] = [];
 
 		$filter_data = [
@@ -418,9 +420,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['return_id'])) {
-			$data['action'] = $this->url->link('sale/returns|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('sale/returns|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('sale/returns|save', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $this->request->get['return_id']);
+			$data['save'] = $this->url->link('sale/returns|save', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $this->request->get['return_id']);
 		}
 
 		$data['back'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);

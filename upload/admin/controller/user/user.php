@@ -85,6 +85,8 @@ class User extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('user/user|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['users'] = [];
 
 		$filter_data = [
@@ -172,22 +174,10 @@ class User extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
 		if (!isset($this->request->get['user_id'])) {
-			$data['action'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id']);
+			$data['save'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id']);
 		}
 
 		$data['back'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url);

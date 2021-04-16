@@ -188,9 +188,9 @@ class Information extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['information_id'])) {
-			$data['action'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $this->request->get['information_id']);
+			$data['save'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $this->request->get['information_id']);
 		}
 
 		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);

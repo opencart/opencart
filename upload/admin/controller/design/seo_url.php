@@ -345,9 +345,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['seo_url_id'])) {
-			$data['action'] = $this->url->link('design/seo_url|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('design/seo_url|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/seo_url|save', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $this->request->get['seo_url_id']);
+			$data['save'] = $this->url->link('design/seo_url|save', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $this->request->get['seo_url_id']);
 		}
 
 		$data['back'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url);

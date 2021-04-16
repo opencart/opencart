@@ -53,6 +53,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['copy'] = $this->url->link('catalog/product|copy', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/product|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
@@ -398,9 +399,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['product_id'])) {
-			$data['action'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']);
+			$data['save'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']);
 		}
 
 		$data['back'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url);

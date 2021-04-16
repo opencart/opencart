@@ -185,9 +185,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['banner_id'])) {
-			$data['action'] = $this->url->link('design/banner|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('design/banner|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/banner|save', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $this->request->get['banner_id']);
+			$data['save'] = $this->url->link('design/banner|save', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $this->request->get['banner_id']);
 		}
 
 		$data['back'] = $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url);

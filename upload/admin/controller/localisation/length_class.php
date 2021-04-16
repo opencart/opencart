@@ -182,9 +182,9 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['length_class_id'])) {
-			$data['action'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $this->request->get['length_class_id']);
+			$data['save'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $this->request->get['length_class_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url);

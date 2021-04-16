@@ -226,15 +226,15 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['custom_field_id'])) {
-			$data['action'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $this->request->get['custom_field_id']);
+			$data['save'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $this->request->get['custom_field_id']);
 		}
 
 		$data['back'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['custom_field_id'])) {
-
+			$this->load->model('customer/custom_field');
 
 			$custom_field_info = $this->model_customer_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}

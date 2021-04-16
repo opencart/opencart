@@ -187,9 +187,9 @@ class Language extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['language_id'])) {
-			$data['action'] = $this->url->link('localisation/language|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('localisation/language|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/language|save', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $this->request->get['language_id']);
+			$data['save'] = $this->url->link('localisation/language|save', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $this->request->get['language_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/language', 'user_token=' . $this->session->data['user_token'] . $url);

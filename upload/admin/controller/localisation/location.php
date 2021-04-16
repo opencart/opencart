@@ -185,9 +185,9 @@ class Location extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['location_id'])) {
-			$data['action'] = $this->url->link('catalog/location|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/location|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/location|save', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $this->request->get['location_id']);
+			$data['save'] = $this->url->link('catalog/location|save', 'user_token=' . $this->session->data['user_token'] . '&location_id=' . $this->request->get['location_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/location', 'user_token=' . $this->session->data['user_token'] . $url);

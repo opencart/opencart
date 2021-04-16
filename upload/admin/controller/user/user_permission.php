@@ -86,17 +86,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
+		$data['action'] = $this->url->link('user/user_permission|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['user_groups'] = [];
 
@@ -194,9 +184,9 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['user_id'])) {
-			$data['action'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id']);
+			$data['save'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id']);
 		}
 
 		$data['back'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);

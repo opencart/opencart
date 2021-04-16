@@ -183,9 +183,9 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['return_reason_id'])) {
-			$data['action'] = $this->url->link('localisation/return_reason|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('localisation/return_reason|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('localisation/return_reason|save', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $this->request->get['return_reason_id']);
+			$data['save'] = $this->url->link('localisation/return_reason|save', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $this->request->get['return_reason_id']);
 		}
 
 		$data['back'] = $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url);

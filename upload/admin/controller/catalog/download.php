@@ -189,9 +189,9 @@ class Download extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['download_id'])) {
-			$data['action'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $this->request->get['download_id']);
+			$data['save'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $this->request->get['download_id']);
 		}
 
 		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);

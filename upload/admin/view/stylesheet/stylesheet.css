@@ -894,6 +894,12 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     overflow: visible;
 }
 
+.invalid-tooltip {
+    position: absolute;
+    float: left;
+}
+
+/*
 .is-invalid ~ .invalid-tooltip, .input-group + .invalid-tooltip, .form-check + .invalid-tooltip {
     position: static !important;
-}
+}*/

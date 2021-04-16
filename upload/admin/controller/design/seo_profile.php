@@ -185,9 +185,9 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['seo_profile_id'])) {
-			$data['action'] = $this->url->link('design/seo_profile|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('design/seo_profile|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('design/seo_profile|save', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $this->request->get['seo_profile_id']);
+			$data['save'] = $this->url->link('design/seo_profile|save', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $this->request->get['seo_profile_id']);
 		}
 
 		$data['back'] = $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url);

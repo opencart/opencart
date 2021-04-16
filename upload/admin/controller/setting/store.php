@@ -141,9 +141,9 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['store_id'])) {
-			$data['action'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
+			$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['action'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
+			$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
 		}
 
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);

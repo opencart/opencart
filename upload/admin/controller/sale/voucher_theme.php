@@ -79,6 +79,8 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('sale/voucher_theme|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['voucher_themes'] = [];
 
 		$filter_data = [
@@ -173,9 +175,9 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!isset($this->request->get['voucher_theme_id'])) {
-			$data['action'] = $this->url->link('sale/voucher_theme|save', 'user_token=' . $this->session->data['user_token'] . $url);
+			$data['save'] = $this->url->link('sale/voucher_theme|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		} else {
-			$data['action'] = $this->url->link('sale/voucher_theme|save', 'user_token=' . $this->session->data['user_token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id']);
+			$data['save'] = $this->url->link('sale/voucher_theme|save', 'user_token=' . $this->session->data['user_token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id']);
 		}
 
 		$data['back'] = $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url);

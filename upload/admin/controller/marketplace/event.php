@@ -32,6 +32,8 @@ class Event extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/event', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		$data['delete'] = $this->url->link('marketplace/event|delete', 'user_token=' . $this->session->data['user_token']);
+
 		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -82,7 +84,7 @@ class Event extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['refresh'] = $this->url->link('marketplace/event|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('marketplace/event|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['events'] = [];
 
@@ -92,6 +94,8 @@ class Event extends \Opencart\System\Engine\Controller {
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('setting/event');
 
 		$event_total = $this->model_setting_event->getTotalEvents();
 

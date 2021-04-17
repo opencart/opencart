@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="button" id="button-delete" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+				<button type="button" data-action="{{ delete }}" data-form="#event-list" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -33,7 +33,7 @@ $('#event').on('click', '.btn-success, .btn-danger', function() {
 
     $.ajax({
         url: $(element).val(),
-		    type: 'post',
+        type: 'post',
         data: $('#event input[name=\'selected[]\']:checked'),
         dataType: 'json',
         beforeSend: function() {
@@ -52,7 +52,7 @@ $('#event').on('click', '.btn-success, .btn-danger', function() {
             if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-                $('#button-refresh').trigger('click');
+                $('#event').load($('#event-list').attr('data-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -90,42 +90,6 @@ $('#event').on('click', '.btn-info', function() {
     $('body').append(html);
 
     $('#modal-event').modal('show');
-});
-
-// Delete
-$('#button-delete').on('click', function() {
-    var element = this;
-
-    if (confirm('{{ text_confirm }}')) {
-        $.ajax({
-            url: 'index.php?route=marketplace/event|delete&&user_token={{ user_token }}',
-            type: 'post',
-            data: $('#cron input[name=\'selected[]\']:checked'),
-            dataType: 'json',
-            beforeSend: function() {
-                $(element).button('loading');
-            },
-            complete: function() {
-                $(element).button('reset');
-            },
-            success: function(json) {
-                $('.alert-dismissible').remove();
-
-                if (json['error']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                }
-
-                if (json['success']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-                    $('#button-refresh').trigger('click');
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
 });
 //--></script>
 {{ footer }}

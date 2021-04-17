@@ -258,7 +258,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if (@preg_match(html_entity_decode($this->request->post['regex'], ENT_QUOTES, 'UTF-8'), null) === false) {
+		if (!$this->request->post['regex'] || !preg_match('/^\/[\s\S]+\/$/', html_entity_decode($this->request->post['regex'], ENT_QUOTES, 'UTF-8'))) {
 			$json['error']['regex'] = $this->language->get('error_regex');
 		}
 

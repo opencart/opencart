@@ -111,7 +111,6 @@ $(document).on('click', '[data-action]', function() {
     //console.log($(element).attr('data-action'));
     //console.log($(element).attr('data-form'));
 
-
     console.log(new FormData($(form)[0]));
 
     $.ajax({

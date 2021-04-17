@@ -32,6 +32,8 @@ class Startup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/startup', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		$data['delete'] = $this->url->link('marketplace/startup|delete', 'user_token=' . $this->session->data['user_token']);
+
 		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -82,7 +84,7 @@ class Startup extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['refresh'] = $this->url->link('marketplace/startup|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('marketplace/startup|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['startups'] = [];
 

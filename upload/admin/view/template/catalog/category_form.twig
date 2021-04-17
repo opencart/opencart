@@ -276,9 +276,9 @@ $('input[name=\'filter\']').autocomplete({
     'select': function(item) {
         $('input[name=\'filter\']').val('');
 
-        $('#category-filter' + item['value']).remove();
+        $('#category-filter-' + item['value']).remove();
 
-        html = '<tr id="category-filter' + item['value'] + '">';
+        html = '<tr id="category-filter-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';

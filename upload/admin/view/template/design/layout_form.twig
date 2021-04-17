@@ -38,7 +38,7 @@
 							<tbody>
 								{% set route_row = 0 %}
 								{% for layout_route in layout_routes %}
-									<tr id="route-row{{ route_row }}">
+									<tr id="route-row-{{ route_row }}">
 										<td class="text-left"><select name="layout_route[{{ route_row }}][store_id]" class="form-control">
 												<option value="0">{{ text_default }}</option>
 												{% for store in stores %}
@@ -50,7 +50,7 @@
 												{% endfor %}
 											</select></td>
 										<td class="text-left"><input type="text" name="layout_route[{{ route_row }}][route]" value="{{ layout_route.route }}" placeholder="{{ entry_route }}" class="form-control"/></td>
-										<td class="text-right"><button type="button" onclick="$('#route-row{{ route_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+										<td class="text-right"><button type="button" onclick="$('#route-row-{{ route_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 									</tr>
 									{% set route_row = route_row + 1 %}
 								{% endfor %}
@@ -77,7 +77,7 @@
 									<tbody>
 										{% for layout_module in layout_modules %}
 											{% if layout_module.position == 'column_left' %}
-												<tr id="module-row{{ module_row }}">
+												<tr id="module-row-{{ module_row }}">
 													<td class="text-left">
 														<div class="input-group input-group-sm">
 															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
@@ -103,7 +103,7 @@
 															</select> <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
 																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -129,7 +129,7 @@
 									<tbody>
 										{% for layout_module in layout_modules %}
 											{% if layout_module.position == 'content_top' %}
-												<tr id="module-row{{ module_row }}">
+												<tr id="module-row-{{ module_row }}">
 													<td class="text-left">
 														<div class="input-group input-group-sm">
 															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
@@ -155,7 +155,7 @@
 															</select><input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
 																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -179,7 +179,7 @@
 									<tbody>
 										{% for layout_module in layout_modules %}
 											{% if layout_module.position == 'content_bottom' %}
-												<tr id="module-row{{ module_row }}">
+												<tr id="module-row-{{ module_row }}">
 													<td class="text-left">
 														<div class="input-group input-group-sm">
 															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
@@ -205,7 +205,7 @@
 															</select> <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
 																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -231,7 +231,7 @@
 									<tbody>
 										{% for layout_module in layout_modules %}
 											{% if layout_module.position == 'column_right' %}
-												<tr id="module-row{{ module_row }}">
+												<tr id="module-row-{{ module_row }}">
 													<td class="text-left">
 														<div class="input-group input-group-sm">
 															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
@@ -257,7 +257,7 @@
 															</select> <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
 																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -284,7 +284,7 @@
 var route_row = {{ route_row }};
 
 function addRoute() {
-    html = '<tr id="route-row' + route_row + '">';
+    html = '<tr id="route-row-' + route_row + '">';
     html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
     html += '  <option value="0">{{ text_default }}</option>';
 	{% for store in stores %}
@@ -292,7 +292,7 @@ function addRoute() {
 	{% endfor %}
     html += '  </select></td>';
     html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="{{ entry_route }}" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-right"><button type="button" onclick="$(\'#route-row-' + route_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#route tbody').append(html);
@@ -303,7 +303,7 @@ function addRoute() {
 var module_row = {{ module_row }};
 
 function addModule(type) {
-    html = '<tr id="module-row' + module_row + '">';
+    html = '<tr id="module-row-' + module_row + '">';
     html += '  <td class="text-left"><div class="input-group input-group-sm">';
     html += '    <select name="layout_module[' + module_row + '][code]" class="form-control input-sm">';
 	{% for extension in extensions %}
@@ -320,7 +320,7 @@ function addModule(type) {
     html += '  </select>';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][position]" value="' + type.replaceAll('-', '_') + '" />';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="" />';
-    html += '  <div class="input-group-append"><a href="" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button></div>';
+    html += '  <div class="input-group-append"><a href="" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a><button type="button" onclick="$(\'#module-row-' + module_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button></div>';
     html += '  </div></td>';
     html += '</tr>';
 

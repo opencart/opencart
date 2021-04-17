@@ -53,7 +53,7 @@
 							<tbody>
 								{% set filter_row = 0 %}
 								{% for filter in filters %}
-									<tr id="filter-row{{ filter_row }}">
+									<tr id="filter-row-{{ filter_row }}">
 										<td class="text-left" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}"/>
 											{% for language in languages %}
 												<div class="input-group">
@@ -64,7 +64,7 @@
 												</div>
 											{% endfor %}</td>
 										<td class="text-right"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/></td>
-										<td class="text-right"><button type="button" onclick="$('#filter-row{{ filter_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+										<td class="text-right"><button type="button" onclick="$('#filter-row-{{ filter_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 									</tr>
 									{% set filter_row = filter_row + 1 %}
 								{% endfor %}
@@ -86,7 +86,7 @@
 var filter_row = {{ filter_row }};
 
 $('#button-filter').on('click', function() {
-    html = '<tr id="filter-row' + filter_row + '">';
+    html = '<tr id="filter-row-' + filter_row + '">';
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value=""/>';
 	{% for language in languages %}
     html += '  <div class="input-group">';
@@ -98,7 +98,7 @@ $('#button-filter').on('click', function() {
 	{% endfor %}
     html += '  </td>';
     html += '  <td class="text-right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-right"><button type="button" onclick="$(\'#filter-row-' + filter_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#filter tbody').append(html);

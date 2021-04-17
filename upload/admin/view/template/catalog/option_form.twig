@@ -114,7 +114,7 @@
 							<tbody>
 								{% set option_value_row = 0 %}
 								{% for option_value in option_values %}
-									<tr id="option-value-row{{ option_value_row }}">
+									<tr id="option-value-row-{{ option_value_row }}">
 										<td class="text-center"><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value="{{ option_value.option_value_id }}"/>
 											{% for language in languages %}
 												<div class="input-group">
@@ -134,7 +134,7 @@
 											</div>
 										</td>
 										<td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-										<td class="text-right"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+										<td class="text-right"><button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 									</tr>
 									{% set option_value_row = option_value_row + 1 %}
 								{% endfor %}
@@ -166,7 +166,7 @@ $('select[name=\'type\']').trigger('change');
 var option_value_row = {{ option_value_row }};
 
 function addOptionValue() {
-    html = '<tr id="option-value-row' + option_value_row + '">';
+    html = '<tr id="option-value-row-' + option_value_row + '">';
     html += '  <td class="text-left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
 	{% for language in languages %}
     html += '    <div class="input-group">';
@@ -177,16 +177,16 @@ function addOptionValue() {
     html += '  </td>';
     html += '  <td class="text-center">';
     html += '    <div class="card image">';
-    html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image' + option_value_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
-    html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '"/>';
+    html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + option_value_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
+    html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image-' + option_value_row + '"/>';
     html += '      <div class="card-body">';
-    html += '        <button type="button" data-toggle="image" data-target="#input-image' + option_value_row + '" data-thumb="#thumb-image' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
-    html += '        <button type="button" data-toggle="clear" data-target="#input-image' + option_value_row + '" data-thumb="#thumb-image' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
+    html += '        <button type="button" data-toggle="image" data-target="#input-image-' + option_value_row + '" data-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
+    html += '        <button type="button" data-toggle="clear" data-target="#input-image-' + option_value_row + '" data-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
     html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row-' + option_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#option-value tbody').append(html);

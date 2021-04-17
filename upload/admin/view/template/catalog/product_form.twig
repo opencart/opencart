@@ -44,9 +44,9 @@
 							</ul>
 							<div class="tab-content">
 								{% for language in languages %}
-									<div class="tab-pane" id="language{{ language.language_id }}">
+									<div class="tab-pane" id="language-{{ language.language_id }}">
 										<div class="form-group row required">
-											<label for="input-name{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+											<label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 											<div class="col-sm-10">
 												<div class="input-group">
 													<input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
@@ -68,7 +68,7 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<label for="input-description{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+											<label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
 											<div class="col-sm-10">
 												<div class="input-group">
 													<div class="form-control h-100 p-0 border-0 rounded-0">
@@ -92,7 +92,7 @@
 											</div>
 										</div>
 										<div class="form-group row required">
-											<label for="input-meta-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
+											<label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
 											<div class="col-sm-10">
 												<div class="input-group">
 													<input type="text" name="product_description[{{ language.language_id }}][meta_title]" value="{{ product_description[language.language_id] ? product_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
@@ -114,7 +114,7 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<label for="input-meta-description{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
+											<label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
 											<div class="col-sm-10">
 												<div class="input-group">
 													<textarea name="product_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_description }}</textarea>
@@ -136,7 +136,7 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<label for="input-meta-keyword{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
+											<label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
 											<div class="col-sm-10">
 												<div class="input-group">
 													<textarea name="product_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ product_description[language.language_id] ? product_description[language.language_id].meta_keyword }}</textarea>
@@ -158,7 +158,7 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<label for="input-tag{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_tag }}</label>
+											<label for="input-tag-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_tag }}</label>
 											<div class="col-sm-10">
 												<div class="input-group">
 													<input type="text" name="product_description[{{ language.language_id }}][tag]" value="{{ product_description[language.language_id] ? product_description[language.language_id].tag }}" placeholder="{{ entry_tag }}" id="input-tag-{{ language.language_id }}" class="form-control"/>
@@ -794,7 +794,7 @@
 											<table id="product-category" class="table table-sm m-0">
 												<tbody>
 													{% for product_category in product_categories %}
-														<tr id="product-category{{ product_category.category_id }}">
+														<tr id="product-category-{{ product_category.category_id }}">
 															<td>{{ product_category.name }}<input type="hidden" name="product_category[]" value="{{ product_category.category_id }}"/></td>
 															<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 														</tr>
@@ -828,7 +828,7 @@
 										<div class="form-control p-0" style="height: 150px; overflow: auto;">
 											<table id="product-filter" class="table table-sm m-0">
 												{% for product_filter in product_filters %}
-													<tr id="product-filter{{ product_filter.filter_id }}">
+													<tr id="product-filter-{{ product_filter.filter_id }}">
 														<td>{{ product_filter.name }}<input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/></td>
 														<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 													</tr>
@@ -895,7 +895,7 @@
 										<div class="form-control p-0" style="height: 150px; overflow: auto;">
 											<table id="product-download" class="table table-sm m-0">
 												{% for product_download in product_downloads %}
-													<tr id="product-download{{ product_download.download_id }}">
+													<tr id="product-download-{{ product_download.download_id }}">
 														<td>{{ product_download.name }}<input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/></td>
 														<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 													</tr>
@@ -928,7 +928,7 @@
 										<div class="form-control p-0" style="height: 150px; overflow: auto;">
 											<table id="product-related" class="table table-sm m-0">
 												{% for product_related in product_relateds %}
-													<tr id="product-related{{ product_related.product_id }}">
+													<tr id="product-related-{{ product_related.product_id }}">
 														<td>{{ product_related.name }}<input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/></td>
 														<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 													</tr>

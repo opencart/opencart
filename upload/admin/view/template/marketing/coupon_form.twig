@@ -103,7 +103,7 @@
 									<div class="form-control p-0" style="height: 150px; overflow: auto;">
 										<table id="coupon-product" class="table table-sm m-0">
 											{% for coupon_product in coupon_products %}
-												<tr id="coupon-product{{ coupon_product.product_id }}">
+												<tr id="coupon-product-{{ coupon_product.product_id }}">
 													<td>{{ coupon_product.name }}<input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}"/></td>
 													<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 												</tr>
@@ -120,7 +120,7 @@
 									<div class="form-control p-0" style="height: 150px; overflow: auto;">
 										<table id="coupon-category" class="table table-sm m-0">
 											{% for coupon_category in coupon_categories %}
-												<tr id="coupon-category{{ coupon_category.category_id }}">
+												<tr id="coupon-category-{{ coupon_category.category_id }}">
 													<td>{{ coupon_category.name }}<input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}"/></td>
 													<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 												</tr>
@@ -214,9 +214,9 @@ $('input[name=\'product\']').autocomplete({
     'select': function(item) {
         $('input[name=\'product\']').val('');
 
-        $('#coupon-product' + item['value']).remove();
+        $('#coupon-product-' + item['value']).remove();
 
-        html = '<tr id="coupon-product' + item['value'] + '">';
+        html = '<tr id="coupon-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -248,9 +248,9 @@ $('input[name=\'category\']').autocomplete({
     'select': function(item) {
         $('input[name=\'category\']').val('');
 
-        $('#coupon-category' + item['value']).remove();
+        $('#coupon-category-' + item['value']).remove();
 
-        html = '<tr id="coupon-category' + item['value'] + '">';
+        html = '<tr id="coupon-category-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';

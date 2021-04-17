@@ -133,9 +133,9 @@ $('input[name=\'customers\']').autocomplete({
     'select': function(item) {
         $('input[name=\'customers\']').val('');
 
-        $('#mail-customer' + item['value']).remove();
+        $('#mail-customer-' + item['value']).remove();
 
-        html = '<tr id="mail-customer' + item['value'] + '">';
+        html = '<tr id="mail-customer-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -170,9 +170,9 @@ $('input[name=\'affiliates\']').autocomplete({
     'select': function(item) {
         $('input[name=\'affiliates\']').val('');
 
-        $('#mail-affiliate' + item['value']).remove();
+        $('#mail-affiliate-' + item['value']).remove();
 
-        html = '<tr id="mail-affiliate' + item['value'] + '">';
+        html = '<tr id="mail-affiliate-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -207,9 +207,9 @@ $('input[name=\'products\']').autocomplete({
     'select': function(item) {
         $('input[name=\'products\']').val('');
 
-        $('#mail-product' + item['value']).remove();
+        $('#mail-product-' + item['value']).remove();
 
-        html  = '<tr id="mail-product' + item['value'] + '">';
+        html  = '<tr id="mail-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';

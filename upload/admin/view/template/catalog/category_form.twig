@@ -33,7 +33,7 @@
 							</ul>
 							<div class="tab-content">
 								{% for language in languages %}
-									<div class="tab-pane" id="language{{ language.language_id }}">
+									<div class="tab-pane" id="language-{{ language.language_id }}">
 										<div class="form-group row required">
 											<label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 											<div class="col-sm-10">
@@ -83,7 +83,7 @@
 									<div class="form-control p-0" style="height: 150px; overflow: auto;">
 										<table id="category-filter" class="table table-sm m-0">
 											{% for category_filter in category_filters %}
-												<tr id="category-filter{{ category_filter.filter_id }}">
+												<tr id="category-filter-{{ category_filter.filter_id }}">
 													<td>{{ category_filter.name }}<input type="hidden" name="category_filter[]" value="{{ category_filter.filter_id }}"/></td>
 													<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 												</tr>

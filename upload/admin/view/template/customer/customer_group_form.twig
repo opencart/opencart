@@ -31,11 +31,11 @@
           </div>
           {% for language in languages %}
             <div class="form-group row">
-              <label for="input-description{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+              <label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
                   <div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span></div>
-                  <textarea name="customer_group_description[{{ language.language_id }}][description]" rows="5" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control">{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].description }}</textarea>
+                  <textarea name="customer_group_description[{{ language.language_id }}][description]" rows="5" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" class="form-control">{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].description }}</textarea>
                 </div>
               </div>
             </div>

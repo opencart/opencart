@@ -7,7 +7,7 @@
 				{% if menu.href %}
 					<a href="{{ menu.href }}"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
 				{% else %}
-					<a href="#collapse{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
+					<a href="#collapse-{{ i }}" data-toggle="collapse" class="parent collapsed"><i class="{{ menu.icon }}"></i> {{ menu.name }}</a>
 				{% endif %}
 				{% if menu.children %}
 					<ul id="collapse-{{ i }}" class="collapse">
@@ -16,7 +16,7 @@
 							<li>{% if children_1.href %}
 									<a href="{{ children_1.href }}">{{ children_1.name }}</a>
 								{% else %}
-									<a href="#collapse{{ i }}-{{ j }}" data-toggle="collapse" class="parent collapsed">{{ children_1.name }}</a>
+									<a href="#collapse-{{ i }}-{{ j }}" data-toggle="collapse" class="parent collapsed">{{ children_1.name }}</a>
 								{% endif %}
 								{% if children_1.children %}
 									<ul id="collapse-{{ i }}-{{ j }}" class="collapse">

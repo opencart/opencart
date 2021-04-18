@@ -91,8 +91,6 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/sale');
-
 		$data['orders'] = [];
 
 		$filter_data = [
@@ -103,6 +101,8 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 			'start'                  => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                  => $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/sale');
 
 		$order_total = $this->model_extension_opencart_report_sale->getTotalOrders($filter_data);
 

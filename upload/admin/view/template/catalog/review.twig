@@ -74,7 +74,7 @@ $('#review').on('click', 'thead a, .pagination a', function(e) {
 });
 
 $('#button-filter').on('click', function() {
-    url = 'index.php?route=catalog/review&user_token={{ user_token }}';
+    url = '';
 
     var filter_product = $('input[name=\'filter_product\']').val();
 
@@ -100,7 +100,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
 
-    location = url;
+    $('#review').load('index.php?route=catalog/review|list&user_token={{ user_token }}' + url);
 });
 //--></script>
 <script type="text/javascript"><!--

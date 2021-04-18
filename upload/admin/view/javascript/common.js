@@ -108,11 +108,6 @@ $(document).on('click', '[data-action]', function() {
 
     var form = $(element).attr('data-form');
 
-    //console.log($(element).attr('data-action'));
-    //console.log($(element).attr('data-form'));
-
-    console.log(new FormData($(form)[0]));
-
     $.ajax({
         url: $(element).attr('data-action'),
         type: 'post',

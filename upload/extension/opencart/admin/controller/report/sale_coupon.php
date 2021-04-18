@@ -79,8 +79,6 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/coupon');
-
 		$data['coupons'] = [];
 
 		$filter_data = [
@@ -89,6 +87,8 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 			'start'             => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'             => $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/coupon');
 
 		$coupon_total = $this->model_extension_opencart_report_coupon->getTotalCoupons($filter_data);
 

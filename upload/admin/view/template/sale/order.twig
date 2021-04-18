@@ -146,7 +146,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
     }
 
-    location = 'index.php?route=sale/order&user_token={{ user_token }}' + url;
+    $('#order').load('index.php?route=sale/order|list&user_token={{ user_token }}' + url);
 });
 //--></script>
 <script type="text/javascript"><!--

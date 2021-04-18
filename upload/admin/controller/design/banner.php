@@ -269,10 +269,10 @@ class Banner extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['banner_image'])) {
-			foreach ($this->request->post['banner_image'] as $language_id=> $banner_image) {
+			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
 				foreach ($banner_image as $key => $value) {
 					if ((utf8_strlen(trim($value['title'])) < 2) || (utf8_strlen($value['title']) > 64)) {
-						$json['error']['banner_image_' . $key . '_' . $language_id] = $this->language->get('error_title');
+						$json['error']['banner_image_' . $language_id . '_' . $key . '_title'] = $this->language->get('error_title');
 					}
 				}
 			}

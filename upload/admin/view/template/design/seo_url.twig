@@ -82,7 +82,7 @@ $('#seo-url').on('click', 'thead a, .pagination a', function(e) {
 });
 
 $('#button-filter').on('click', function() {
-    var url = 'index.php?route=design/seo_url&user_token={{ user_token }}';
+    var url = '';
 
     var filter_keyword = $('input[name=\'filter_keyword\']').val();
 
@@ -114,7 +114,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_language_id=' + encodeURIComponent(filter_language_id);
     }
 
-    location = url;
+    $('#seo-url').load('index.php?route=design/seo_url|list&user_token={{ user_token }}' + url);
 });
 //--></script>
 {{ footer }}

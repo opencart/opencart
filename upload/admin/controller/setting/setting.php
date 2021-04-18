@@ -23,6 +23,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		if (!isset($this->request->get['store_id'])) {
+			$data['save'] = $this->url->link('setting/setting|save', 'user_token=' . $this->session->data['user_token']);
+		} else {
+			$data['save'] = $this->url->link('setting/setting|save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
+		}
+
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		// General

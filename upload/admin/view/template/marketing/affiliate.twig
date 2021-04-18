@@ -77,7 +77,7 @@ $('#affiliate').on('click', 'thead a, .pagination a', function(e) {
 });
 
 $('#button-filter').on('click', function() {
-    url = 'index.php?route=marketing/affiliate&user_token={{ user_token }}';
+    url = '';
 
     var filter_name = $('input[name=\'filter_name\']').val();
 
@@ -109,7 +109,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_added=' + filter_date_added;
     }
 
-    location = url;
+    $('#affiliate').load('index.php?route=marketing/affiliate|list&user_token={{ user_token }}' + url);
 });
 //--></script>
 <script type="text/javascript"><!--

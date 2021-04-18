@@ -89,7 +89,7 @@ $('#return').on('click', 'thead a, .pagination a', function(e) {
 });
 
 $('#button-filter').on('click', function() {
-    url = 'index.php?route=sale/return&user_token={{ user_token }}';
+    url = '';
 
     var filter_return_id = $('input[name=\'filter_return_id\']').val();
 
@@ -139,7 +139,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
     }
 
-    location = url;
+    $('#return').load('index.php?route=sale/returns|list&user_token={{ user_token }}' + url);
 });
 
 $('input[name=\'filter_customer\']').autocomplete({

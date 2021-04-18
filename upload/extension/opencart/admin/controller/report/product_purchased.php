@@ -85,8 +85,6 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/product');
-
 		$data['products'] = [];
 
 		$filter_data = [
@@ -96,6 +94,8 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 			'start'                  => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                  => $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/product');
 
 		$product_total = $this->model_extension_opencart_report_product->getTotalPurchased($filter_data);
 

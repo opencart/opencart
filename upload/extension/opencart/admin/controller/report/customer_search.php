@@ -97,9 +97,6 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/customer');
-		$this->load->model('catalog/category');
-
 		$data['searches'] = [];
 
 		$filter_data = [
@@ -111,6 +108,9 @@ class CustomerSearch extends \Opencart\System\Engine\Controller {
 			'start'             => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'             => $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/customer');
+		$this->load->model('catalog/category');
 
 		$search_total = $this->model_extension_opencart_report_customer->getTotalCustomerSearches($filter_data);
 

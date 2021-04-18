@@ -62,6 +62,8 @@ $('#event').on('click', '.btn-success, .btn-danger', function() {
 });
 
 $('#event').on('click', '.btn-info', function() {
+    var element = this;
+
     $('#modal-event').remove();
 
     html = '<div id="modal-event" class="modal">';
@@ -73,13 +75,13 @@ $('#event').on('click', '.btn-info', function() {
     html += '      </div>';
     html += '      <div class="modal-body">';
     html += '        <div class="form-group">';
-    html += '          <label for="input-description" class="col-form-label">{{ text_description }}</label> <textarea placeholder="{{ text_description }}" id="input-description"rows="5" class="form-control" disabled>' + $(this).attr('data-description') + '</textarea>';
+    html += '          <label for="input-description" class="col-form-label">{{ text_description }}</label> <textarea placeholder="{{ text_description }}" id="input-description"rows="5" class="form-control" disabled>' + $(element).attr('data-event-description') + '</textarea>';
     html += '        </div>';
     html += '        <div class="form-group">';
-    html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea placeholder="{{ text_trigger }}" id="input-trigger" class="form-control" disabled>' + $(this).attr('data-trigger') + '</textarea>';
+    html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea placeholder="{{ text_trigger }}" id="input-trigger" class="form-control" disabled>' + $(element).attr('data-event-trigger') + '</textarea>';
     html += '        </div>';
     html += '        <div class="form-group">';
-    html += '          <label for="input-action" class="col-form-label">{{ text_action }}</label> <textarea placeholder="{{ text_action }}" id="input-action" class="form-control" disabled>' + $(this).attr('data-action') + '</textarea>';
+    html += '          <label for="input-action" class="col-form-label">{{ text_action }}</label> <textarea placeholder="{{ text_action }}" id="input-action" class="form-control" disabled>' + $(element).attr('data-event-action') + '</textarea>';
     html += '        </div>';
     html += '      </div>';
     html += '      </div>';

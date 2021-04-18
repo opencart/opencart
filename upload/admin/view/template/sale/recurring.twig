@@ -74,7 +74,7 @@ $('#recurring').on('click', 'thead a, .pagination a', function(e) {
 });
 
 $('#button-filter').on('click', function() {
-    url = 'index.php?route=sale/recurring&user_token={{ user_token }}';
+    url = '';
 
     var filter_order_recurring_id = $('input[name=\'filter_order_recurring_id\']').val();
 
@@ -112,7 +112,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
 
-    location = url;
+    $('#recurring').load('index.php?route=sale/recurring|list&user_token={{ user_token }}' + url);
 });
 
 $('#form input').keydown(function(e) {

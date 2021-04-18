@@ -104,7 +104,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_status=' + encodeURIComponent(filter_status);
     }
 
-    location = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;
+    $('#product').load('index.php?route=catalog/product|list&user_token={{ user_token }}' + url);
 });
 
 $('input[name=\'filter_name\']').autocomplete({

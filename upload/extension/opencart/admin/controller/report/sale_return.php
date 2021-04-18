@@ -90,8 +90,6 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 		} else {
 			$page = 1;
 		}
-		
-		$this->load->model('extension/opencart/report/returns');
 
 		$data['returns'] = [];
 
@@ -103,6 +101,8 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 			'start'                   => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                   => $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/returns');
 
 		$return_total = $this->model_extension_opencart_report_returns->getTotalReturns($filter_data);
 

@@ -85,8 +85,6 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/customer');
-
 		$data['customers'] = [];
 
 		$filter_data = [
@@ -96,6 +94,8 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 			'start'				=> ($page - 1) * $this->config->get('config_pagination'),
 			'limit'				=> $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/customer');
 
 		$customer_total = $this->model_extension_opencart_report_customer->getTotalRewardPoints($filter_data);
 

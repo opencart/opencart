@@ -85,8 +85,6 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/customer_transaction');
-		
 		$data['customers'] = [];
 
 		$filter_data = [
@@ -96,6 +94,8 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 			'start'				=> ($page - 1) * $this->config->get('config_pagination'),
 			'limit'				=> $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/customer_transaction');
 
 		$customer_total = $this->model_extension_opencart_report_customer_transaction->getTotalTransactions($filter_data);
 

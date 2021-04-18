@@ -85,8 +85,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('extension/opencart/report/marketing');
-
 		$data['marketings'] = [];
 
 		$filter_data = [
@@ -96,6 +94,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			'start'                  => ($page - 1) * $this->config->get('config_pagination'),
 			'limit'                  => $this->config->get('config_pagination')
 		];
+
+		$this->load->model('extension/opencart/report/marketing');
 
 		$marketing_total = $this->model_extension_opencart_report_marketing->getTotalMarketing($filter_data);
 
@@ -107,7 +107,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				'code'     => $result['code'],
 				'clicks'   => $result['clicks'],
 				'orders'   => $result['orders'],
-				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency')),
+				'total'    => $this->currency->format((float)$result['total'], $this->config->get('config_currency')),
 				'action'   => $this->url->link('marketing/marketing/edit', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'])
 			];
 		}

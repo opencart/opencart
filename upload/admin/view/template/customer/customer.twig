@@ -89,7 +89,7 @@ $('#customer').on('click', 'thead a, .pagination a', function(e) {
 });
 
 $('#button-filter').on('click', function() {
-    url = 'index.php?route=customer/customer&user_token={{ user_token }}';
+    url = '';
 
     var filter_name = $('input[name=\'filter_name\']').val();
 
@@ -127,7 +127,7 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
 
-    location = url;
+		$('#customer').load('index.php?route=customer/customer|list&user_token={{ user_token }}' + url);
 });
 
 $('input[name=\'filter_name\']').autocomplete({

@@ -8,14 +8,6 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -64,6 +56,8 @@ class Store extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+
+		$data['action'] = $this->url->link('setting/store|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['stores'] = [];
 
@@ -116,6 +110,12 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['store_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
+		$url = '';
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -131,12 +131,12 @@ class Store extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['store_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'])
+				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . $url)
 			];
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
+				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'] . $url)
 			];
 		}
 
@@ -459,18 +459,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['logo'] = $data['placeholder'];
 		}
 
-		if (isset($store_info['config_icon'])) {
-			$data['config_icon'] = $store_info['config_icon'];
-		} else {
-			$data['config_icon'] = '';
-		}
-
-		if (is_file(DIR_IMAGE . html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'))) {
-			$data['icon'] = $this->model_tool_image->resize(html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'), 100, 100);
-		} else {
-			$data['icon'] = $data['placeholder'];
-		}
-
 		if (isset($store_info['config_image_category_width'])) {
 			$data['config_image_category_width'] = $store_info['config_image_category_width'];
 		} else {
@@ -700,9 +688,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 			if (!isset($this->request->get['store_id'])) {
 				$store_id = $this->model_setting_store->addStore($this->request->post);
-
-				$this->model_setting_store->addStore($this->request->post);
-
+				
 				$this->model_setting_setting->editSetting('config', $this->request->post, $store_id);
 			} else {
 				$this->model_setting_store->editStore($this->request->get['store_id'], $this->request->post);
@@ -747,6 +733,8 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('setting/store');
+
 			$this->load->model('setting/setting');
 
 			foreach ($selected as $store_id) {

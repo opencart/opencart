@@ -17,10 +17,6 @@ class Header extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$this->document->addLink($this->config->get('config_url') . 'image/' . $this->config->get('config_icon'), 'icon');
-		}
-
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 

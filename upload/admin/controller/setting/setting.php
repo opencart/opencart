@@ -23,12 +23,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		if (!isset($this->request->get['store_id'])) {
-			$data['save'] = $this->url->link('setting/setting|save', 'user_token=' . $this->session->data['user_token']);
-		} else {
-			$data['save'] = $this->url->link('setting/setting|save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
-		}
-
+		$data['save'] = $this->url->link('setting/setting|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		// General
@@ -379,14 +374,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), 100, 100);
 		} else {
 			$data['logo'] = $data['placeholder'];
-		}
-
-		$data['config_icon'] = $this->config->get('config_icon');
-
-		if (is_file(DIR_IMAGE . html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'))) {
-			$data['icon'] = $this->model_tool_image->resize(html_entity_decode($data['config_icon'], ENT_QUOTES, 'UTF-8'), 100, 100);
-		} else {
-			$data['icon'] = $data['placeholder'];
 		}
 
 		if ($this->config->get('config_image_category_width')) {

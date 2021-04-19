@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="submit" data-action="{{ action }}" data-form="#store-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="submit" data-action="{{ save }}" data-form="#store-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -50,6 +50,18 @@
 								<label for="input-meta-keyword" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
+								<div class="col-sm-10">
+									<div class="card image">
+										<img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+										<div class="card-body">
+											<button type="button" data-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -226,7 +238,7 @@
 									<div class="form-group row required">
 										<label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-length" class="form-control"/>
+											<input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control"/>
 											<small class="form-text text-muted">{{ help_product_description_length }}</small>
 										</div>
 									</div>
@@ -507,44 +519,15 @@
 						<div id="tab-image" class="tab-pane">
 							<fieldset>
 								<legend>{{ text_image }}</legend>
-								<div class="form-group row">
-									<label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
-									<div class="col-sm-10">
-										<div class="card image">
-											<img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
-											<div class="card-body">
-												<button type="button" data-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-												<button type="button" data-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
-									<div class="col-sm-10">
-										<div class="card image">
-											<img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
-											<div class="card-body">
-												<button type="button" data-toggle="image" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-												<button type="button" data-toggle="clear" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
-											</div>
-										</div>
-										<small class="form-text text-muted">{{ help_icon }}</small>
-									</div>
-								</div>
-							</fieldset>
-							<fieldset>
-								<legend>{{ text_image }}</legend>
-								<div class="alert alert-info"><i class="fas fa-check-circle"></i> {{ success }}</div>
 								<div class="form-group row required">
 									<label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-category" class="row">
 											<div class="col-sm-6">
 												<input type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" id="input-image-category-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -552,12 +535,12 @@
 								<div class="form-group row required">
 									<label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-thumb" class="row">
 											<div class="col-sm-6">
 												<input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" id="input-image-thumb-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -565,12 +548,12 @@
 								<div class="form-group row required">
 									<label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-popup" class="row">
 											<div class="col-sm-6">
 												<input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" id="input-image-popup-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -578,12 +561,12 @@
 								<div class="form-group row required">
 									<label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-product" class="row">
 											<div class="col-sm-6">
 												<input type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" id="input-image-product-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -591,12 +574,12 @@
 								<div class="form-group row required">
 									<label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-additional" class="row">
 											<div class="col-sm-6">
 												<input type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" id="input-image-additional-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -604,12 +587,12 @@
 								<div class="form-group row required">
 									<label for="input-image-related" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-related" class="row">
 											<div class="col-sm-6">
-												<input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related" class="form-control"/>
+												<input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" id="input-image-related-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -617,12 +600,12 @@
 								<div class="form-group row required">
 									<label for="input-image-compare" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-compare" class="row">
 											<div class="col-sm-6">
-												<input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare" class="form-control"/>
+												<input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" id="input-image-compare-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -630,12 +613,12 @@
 								<div class="form-group row required">
 									<label for="input-image-wishlist" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-wishlist" class="row">
 											<div class="col-sm-6">
-												<input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist" class="form-control"/>
+												<input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" id="input-image-wishlist-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -643,12 +626,12 @@
 								<div class="form-group row required">
 									<label for="input-image-cart" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-cart" class="row">
 											<div class="col-sm-6">
-												<input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart" class="form-control"/>
+												<input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" id="input-image-cart-height" class="form-control"/>
 											</div>
 										</div>
 									</div>
@@ -656,12 +639,12 @@
 								<div class="form-group row required">
 									<label for="input-image-location" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
 									<div class="col-sm-10">
-										<div class="row">
+										<div id="input-image-location" class="row">
 											<div class="col-sm-6">
-												<input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location" class="form-control"/>
+												<input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location-width" class="form-control"/>
 											</div>
 											<div class="col-sm-6">
-												<input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+												<input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" id="input-image-location-height" class="form-control"/>
 											</div>
 										</div>
 									</div>

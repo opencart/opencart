@@ -196,12 +196,6 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
 		}
 
-		if (!isset($this->request->get['voucher_theme_id'])) {
-			$data['voucher_theme_id'] = $this->request->get['voucher_theme_id'];
-		} else {
-			$data['voucher_theme_id'] = 0;
-		}
-
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

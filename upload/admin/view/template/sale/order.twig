@@ -193,11 +193,6 @@ $('#button-shipping, #button-invoice').prop('disabled', true);
 
 $('input[name^=\'selected\']:first').trigger('change');
 
-// IE and Edge fix!
-$('#button-shipping, #button-invoice').on('click', function(e) {
-    $('#form-order').attr('action', this.getAttribute('formAction'));
-});
-
 $('#form-order a.delete').on('click', function(e) {
     e.preventDefault();
 

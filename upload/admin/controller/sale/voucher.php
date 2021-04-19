@@ -46,6 +46,12 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher', $data));
 	}
 
+	public function list(): void {
+		$this->load->language('sale/voucher');
+
+		$this->response->setOutput($this->getList());
+	}
+
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -89,6 +95,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('sale/voucher');
 
 		$voucher_total = $this->model_sale_voucher->getTotalVouchers();
 
@@ -157,7 +165,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$this->response->setOutput($this->load->view('sale/voucher_list', $data));
+		return $this->load->view('sale/voucher_list', $data);
 	}
 
 	public function form(): void {
@@ -293,6 +301,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
+		$this->load->model('sale/voucher');
+
 		$voucher_info = $this->model_sale_voucher->getVoucherByCode($this->request->post['code']);
 
 		if ($voucher_info) {
@@ -324,8 +334,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('sale/voucher');
-
 			if (!isset($this->request->get['voucher_id'])) {
 				$this->model_sale_voucher->addVoucher($this->request->post);
 			} else {

@@ -88,7 +88,7 @@
 								{% for custom_field in custom_fields %}
 									{% if custom_field.location == 'account' %}
 										{% if custom_field.type == 'select' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
 													<select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">
@@ -105,10 +105,10 @@
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'radio' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
-													<div>
+													<div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
 														{% for custom_field_value in custom_field.custom_field_value %}
 															<label class="form-check">
 																{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
@@ -125,10 +125,10 @@
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'checkbox' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
-													<div class="form-control" style="height: 150px; overflow: auto;">
+													<div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
 														{% for custom_field_value in custom_field.custom_field_value %}
 															<label class="form-check">
 																{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
@@ -143,7 +143,7 @@
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'text' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
 													<input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -151,7 +151,7 @@
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'textarea' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
 													<textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
@@ -159,16 +159,18 @@
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'file' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
-													<button type="button" id="button-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-													<input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+													<div id="input-custom-field-{{ custom_field.custom_field_id }}">
+														<button type="button" id="button-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+														<input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}"/>
+													</div>
 												</div>
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'date' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
 													<div class="input-group date">
@@ -181,7 +183,7 @@
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'time' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
 													<div class="input-group time">
@@ -194,7 +196,7 @@
 											</div>
 										{% endif %}
 										{% if custom_field.type == 'datetime' %}
-											<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+											<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
 													<div class="input-group datetime">
@@ -271,58 +273,60 @@
 								</div>
 							</fieldset>
 						</div>
+
 						<div id="tab-address" class="tab-pane">
 							{% set address_row = 0 %}
 							{% for address in addresses %}
 								<fieldset id="address-row-{{ address_row }}">
 									<legend>{{ text_address }} {{ address_row + 1 }} <button type="button" onclick="$('#address-row-{{ address_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-right"><i class="fas fa-minus-circle"></i></button></legend>
 									<input type="hidden" name="address[{{ address_row }}][address_id]" value="{{ address.address_id }}"/>
+
 									<div class="form-group row required">
-										<label for="input-firstname-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
+										<label for="input-address-{{ address_row }}-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="address[{{ address_row }}][firstname]" value="{{ address.firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname-{{ address_row }}" class="form-control"/>
+											<input type="text" name="address[{{ address_row }}][firstname]" value="{{ address.firstname }}" placeholder="{{ entry_firstname }}" id="input-address-{{ address_row }}-firstname" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group row required">
-										<label for="input-lastname-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
+										<label for="input-address-{{ address_row }}-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="address[{{ address_row }}][lastname]" value="{{ address.lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname-{{ address_row }}" class="form-control"/>
+											<input type="text" name="address[{{ address_row }}][lastname]" value="{{ address.lastname }}" placeholder="{{ entry_lastname }}" id="input-address-{{ address_row }}-lastname" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="input-company-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_company }}</label>
+										<label for="input-address-{{ address_row }}-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="address[{{ address_row }}][company]" value="{{ address.company }}" placeholder="{{ entry_company }}" id="input-company-{{ address_row }}" class="form-control"/>
+											<input type="text" name="address[{{ address_row }}][company]" value="{{ address.company }}" placeholder="{{ entry_company }}" id="input-address-{{ address_row }}-company" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group row required">
-										<label for="input-address-1-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>
+										<label for="input-address-{{ address_row }}-address-1" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="address[{{ address_row }}][address_1]" value="{{ address.address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-1-{{ address_row }}" class="form-control"/>
+											<input type="text" name="address[{{ address_row }}][address_1]" value="{{ address.address_1 }}" placeholder="{{ entry_address_1 }}" id="input-address-{{ address_row }}-address-1" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="input-address-2-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_address_2 }}</label>
+										<label for="input-address-{{ address_row }}-address-2" class="col-sm-2 col-form-label">{{ entry_address_2 }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="address[{{ address_row }}][address_2]" value="{{ address.address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-2-{{ address_row }}" class="form-control"/>
+											<input type="text" name="address[{{ address_row }}][address_2]" value="{{ address.address_2 }}" placeholder="{{ entry_address_2 }}" id="input-address-{{ address_row }}-address-2" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group row required">
-										<label for="input-city-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_city }}</label>
+										<label for="input-address-{{ address_row }}-city" class="col-sm-2 col-form-label">{{ entry_city }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="address[{{ address_row }}][city]" value="{{ address.city }}" placeholder="{{ entry_city }}" id="input-city-{{ address_row }}" class="form-control"/>
+											<input type="text" name="address[{{ address_row }}][city]" value="{{ address.city }}" placeholder="{{ entry_city }}" id="input-address-{{ address_row }}-city" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group row required">
-										<label for="input-postcode-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>
+										<label for="input-address-{{ address_row }}-postcode" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>
 										<div class="col-sm-10">
-											<input type="text" name="address[{{ address_row }}][postcode]" value="{{ address.postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode-{{ address_row }}" class="form-control"/>
+											<input type="text" name="address[{{ address_row }}][postcode]" value="{{ address.postcode }}" placeholder="{{ entry_postcode }}" id="input-address-{{ address_row }}-postcode" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group row required">
-										<label for="input-country-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_country }}</label>
+										<label for="input-address-{{ address_row }}-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
 										<div class="col-sm-10">
-											<select name="address[{{ address_row }}][country_id]" id="input-country-{{ address_row }}" class="form-control" data-address-row="{{ address_row }}" data-zone-id="{{ address.zone_id }}" disabled>
+											<select name="address[{{ address_row }}][country_id]" id="input-address-{{ address_row }}-country" class="form-control" data-address-row="{{ address_row }}" data-zone-id="{{ address.zone_id }}" disabled>
 												<option value="">{{ text_select }}</option>
 												{% for country in countries %}
 													{% if country.country_id == address.country_id %}
@@ -335,9 +339,9 @@
 										</div>
 									</div>
 									<div class="form-group row required">
-										<label for="input-zone-{{ address_row }}" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
+										<label for="input-address-{{ address_row }}-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
 										<div class="col-sm-10">
-											<select name="address[{{ address_row }}][zone_id]" id="input-zone-{{ address_row }}" class="form-control" disabled></select>
+											<select name="address[{{ address_row }}][zone_id]" id="input-address-{{ address_row }}-zone" class="form-control" disabled></select>
 										</div>
 									</div>
 									{% for custom_field in custom_fields %}
@@ -359,11 +363,12 @@
 													</div>
 												</div>
 											{% endif %}
+
 											{% if custom_field.type == 'radio' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
 													<label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
-														<div class="form-control" style="height: 150px; overflow: auto;">
+														<div id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
 															{% for custom_field_value in custom_field.custom_field_value %}
 																<label class="form-check">
 																	{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address.custom_field[custom_field.custom_field_id] %}
@@ -379,38 +384,37 @@
 													</div>
 												</div>
 											{% endif %}
+
 											{% if custom_field.type == 'checkbox' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
 													<label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
-														<div class="form-control" style="height: 150px; overflow: auto;">
-															<div id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}">
-																{% for custom_field_value in custom_field.custom_field_value %}
-																	<label class="form-check">
-																		{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address.custom_field[custom_field.custom_field_id] %}
-																			<input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/>
-																			{{ custom_field_value.name }}
-																		{% else %}
-																			<input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
-																			{{ custom_field_value.name }}
-																		{% endif %}
-																	</label>
-																{% endfor %}
-															</div>
+														<div id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
+															{% for custom_field_value in custom_field.custom_field_value %}
+																<label class="form-check">
+																	{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address.custom_field[custom_field.custom_field_id] %}
+																		<input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" class="form-check-input"/>
+																		{{ custom_field_value.name }}
+																	{% else %}
+																		<input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+																		{{ custom_field_value.name }}
+																	{% endif %}
+																</label>
+															{% endfor %}
 														</div>
 													</div>
 												</div>
 											{% endif %}
 											{% if custom_field.type == 'text' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
-													<label for="input-address-{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+													<label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
 														<input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 													</div>
 												</div>
 											{% endif %}
 											{% if custom_field.type == 'textarea' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
 													<label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
 														<textarea name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
@@ -418,20 +422,22 @@
 												</div>
 											{% endif %}
 											{% if custom_field.type == 'file' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
 													<label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
-														<button type="button" id="button-custom-field-{{ address_row }}-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-														<input type="hidden" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] }}"/>
+														<div id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}">
+															<button type="button" id="button-custom-field-{{ address_row }}-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+															<input type="hidden" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] }}"/>
+														</div>
 													</div>
 												</div>
 											{% endif %}
 											{% if custom_field.type == 'date' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
-													<label for="input-address-{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+													<label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
 														<div class="input-group date">
-															<input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+															<input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 															<div class="input-group-append">
 																<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 															</div>
@@ -440,11 +446,11 @@
 												</div>
 											{% endif %}
 											{% if custom_field.type == 'time' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
-													<label for="input-address-{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+													<label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
 														<div class="input-group time">
-															<input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+															<input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 															<div class="input-group-append">
 																<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 															</div>
@@ -453,11 +459,11 @@
 												</div>
 											{% endif %}
 											{% if custom_field.type == 'datetime' %}
-												<div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
-													<label for="input-address-{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
+												<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
+													<label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
 														<div class="input-group datetime">
-															<input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
+															<input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 															<div class="input-group-append">
 																<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 															</div>
@@ -582,10 +588,10 @@ $('select[name=\'customer_group_id\']').on('change', function() {
             for (i = 0; i < json.length; i++) {
                 custom_field = json[i];
 
-                $('.custom-field' + custom_field['custom_field_id']).show();
+                $('.custom-field-' + custom_field['custom_field_id']).show();
 
                 if (custom_field['required']) {
-                    $('.custom-field' + custom_field['custom_field_id']).addClass('required');
+                    $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
                 }
             }
         },
@@ -608,44 +614,44 @@ $('#button-address').on('click', function(e) {
     html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
     html += '  <div class="form-group row required">';
-    html += '    <label for="input-firstname-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>';
-    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="{{ entry_firstname }}" id="input-firstname-' + address_row + '" class="form-control" /></div>';
+    html += '    <label for="input-address-' + address_row + '-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>';
+    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="{{ entry_firstname }}" id="input-address-' + address_row + '-firstname" class="form-control" /></div>';
     html += '  </div>';
 
     html += '  <div class="form-group row required">';
-    html += '    <label for="input-lastname-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>';
-    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="{{ entry_lastname }}" id="input-lastname-' + address_row + '" class="form-control" /></div>';
+    html += '    <label for="input-address-' + address_row + '-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>';
+    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="{{ entry_lastname }}" id="input-address-' + address_row + '-lastname" class="form-control" /></div>';
     html += '  </div>';
 
     html += '  <div class="form-group row">';
-    html += '    <label for="input-company-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_company }}</label>';
-    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="{{ entry_company }}" id="input-company-' + address_row + '" class="form-control" /></div>';
+    html += '    <label for="input-address-' + address_row + '-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>';
+    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="{{ entry_company }}" id="input-address-' + address_row + '-company" class="form-control" /></div>';
     html += '  </div>';
 
     html += '  <div class="form-group row required">';
-    html += '    <label for="input-address-1-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>';
-    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="{{ entry_address_1 }}" id="input-address-1-' + address_row + '" class="form-control" /></div>';
+    html += '    <label for="input-address-' + address_row + '-address-1-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>';
+    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="{{ entry_address_1 }}" id="input-address-' + address_row + '-address-1" class="form-control" /></div>';
     html += '  </div>';
 
     html += '  <div class="form-group row">';
-    html += '    <label for="input-address-2-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_address_2 }}</label>';
-    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="{{ entry_address_2 }}" id="input-address-2-' + address_row + '" class="form-control" /></div>';
+    html += '    <label for="input-address-' + address_row + '-address-2-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_address_2 }}</label>';
+    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="{{ entry_address_2 }}" id="input-address-' + address_row + '-address-2" class="form-control" /></div>';
     html += '  </div>';
 
     html += '  <div class="form-group row required">';
-    html += '    <label for="input-city-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_city }}</label>';
-    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="{{ entry_city }}" id="input-city-' + address_row + '" class="form-control" /></div>';
+    html += '    <label for="input-address-' + address_row + '-city" class="col-sm-2 col-form-label">{{ entry_city }}</label>';
+    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="{{ entry_city }}" id="input-address-' + address_row + '-city" class="form-control" /></div>';
     html += '  </div>';
 
     html += '  <div class="form-group row required">';
-    html += '    <label for="input-postcode-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>';
-    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="{{ entry_postcode }}" id="input-postcode-' + address_row + '" class="form-control" /></div>';
+    html += '    <label for="input-address-' + address_row + '-postcode" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>';
+    html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="{{ entry_postcode }}" id="input-address-' + address_row + '-postcode" class="form-control" /></div>';
     html += '  </div>';
 
     html += '  <div class="form-group row required">';
-    html += '    <label for="input-country-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_country }}</label>';
+    html += '    <label for="input-address-' + address_row + '-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>';
     html += '    <div class="col-sm-10">';
-    html += '       <select name="address[' + address_row + '][country_id]" id="input-country-' + address_row + '" data-address-row="' + address_row + '" data-zone-id="0" class="form-control" disabled>';
+    html += '       <select name="address[' + address_row + '][country_id]" id="input-address-' + address_row + '-country" data-address-row="' + address_row + '" data-zone-id="0" class="form-control" disabled>';
     html += '         <option value="">{{ text_select }}</option>';
 	{% for country in countries %}
     html += '         <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
@@ -655,8 +661,8 @@ $('#button-address').on('click', function(e) {
     html += '  </div>';
 
     html += '  <div class="form-group row required">';
-    html += '    <label for="input-zone-' + address_row + '" class="col-sm-2 col-form-label">{{ entry_zone }}</label>';
-    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone-' + address_row + '" class="form-control" disabled><option value="">{{ text_none }}</option></select></div>';
+    html += '    <label for="input-address-' + address_row + '-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>';
+    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-address-' + address_row + '-zone" class="form-control" disabled><option value="">{{ text_none }}</option></select></div>';
     html += '  </div>';
 
     // Custom Fields
@@ -664,10 +670,10 @@ $('#button-address').on('click', function(e) {
 	{% if custom_field.location == 'address' %}
 	{% if custom_field.type == 'select' %}
 
-    html += '  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '  <div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '    <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '  	 <div class="col-sm-10">';
-    html += '      <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address-' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control">';
+    html += '      <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control">';
     html += '        <option value="">{{ text_select }}</option>';
 
 	{% for custom_field_value in custom_field.custom_field_value %}
@@ -680,37 +686,38 @@ $('#button-address').on('click', function(e) {
 	{% endif %}
 
 	{% if custom_field.type == 'radio' %}
-    html += '  	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}">';
+    html += '  	<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}">';
     html += '  		<label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '  		<div class="col-sm-10">';
-    html += '  		  <div>';
+    html += '  		  <div id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">';
 
 	{% for custom_field_value in custom_field.custom_field_value %}
-    html += '  			<label class="form-check"><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name|e('js') }}</label>';
+    html += '  		    <label class="form-check"><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name|e('js') }}</label>';
 	{% endfor %}
 
-    html += '		  </div>';
-    html += '		</div>';
-    html += '	  </div>';
+    html += '		    </div>';
+
+    html += '		   </div>';
+    html += '	   </div>';
 	{% endif %}
 
 	{% if custom_field.type == 'checkbox' %}
-    html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
-    html += '		<label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
-    html += '		<div class="col-sm-10">';
-    html += '		  <div class="form-control" style="height: 150px; overflow: auto;">';
+    html += '	  <div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '		  <label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
+    html += '		  <div class="col-sm-10">';
+    html += '		    <div id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">';
 
 	{% for custom_field_value in custom_field.custom_field_value %}
-    html += '			<label class="form-check"><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name|e('js') }}</label>';
+    html += '			    <label class="form-check"><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name|e('js') }}</label>';
 	{% endfor %}
 
+    html += '		    </div>';
     html += '		  </div>';
-    html += '		</div>';
     html += '	  </div>';
 	{% endif %}
 
 	{% if custom_field.type == 'text' %}
-    html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '	  <div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '		<label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '		<div class="col-sm-10">';
     html += '		  <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field_value.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>';
@@ -719,26 +726,28 @@ $('#button-address').on('click', function(e) {
 	{% endif %}
 
 	{% if custom_field.type == 'textarea' %}
-    html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
-    html += '		<label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
-    html += '		<div class="col-sm-10">';
-    html += '		  <textarea name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field_value.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value|e('js') }}</textarea>';
-    html += '		</div>';
-    html += '	  </div>';
+    html += '<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '  <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
+    html += '  <div class="col-sm-10">';
+    html += '	  <textarea name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field_value.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value|e('js') }}</textarea>';
+    html += '  </div>';
+    html += '</div>';
 	{% endif %}
 
 	{% if custom_field.type == 'file' %}
-    html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
-    html += '		<label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
-    html += '		<div class="col-sm-10">';
-    html += '		  <button type="button" id="button-custom-field-' + address_row + '-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
-    html += '		  <input type="hidden" name="address[' + address_row + '][{{ custom_field.custom_field_id }}]" value="" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" />';
-    html += '		</div>';
+    html += '	  <div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '		  <label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
+    html += '		  <div class="col-sm-10">';
+    html += '		    <div id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}">';
+    html += '		      <button type="button" id="button-custom-field-' + address_row + '-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
+    html += '		      <input type="hidden" name="address[' + address_row + '][{{ custom_field.custom_field_id }}]" value=""/>';
+    html += '		    </div>';
+    html += '		  </div>';
     html += '	  </div>';
 	{% endif %}
 
 	{% if custom_field.type == 'date' %}
-    html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '	  <div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '		<label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '		<div class="col-sm-10">';
     html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div>';
@@ -747,17 +756,17 @@ $('#button-address').on('click', function(e) {
 	{% endif %}
 
 	{% if custom_field.type == 'time' %}
-    html += '	  <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
-    html += '		<label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
-    html += '		<div class="col-sm-10">';
-    html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div>';
-    html += '		</div>';
-    html += '	  </div>';
+    html += '<div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '  <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
+    html += '    <div class="col-sm-10">';
+    html += '		   <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div>';
+    html += '		 </div>';
+    html += '</div>';
 	{% endif %}
 
 	{% if custom_field.type == 'datetime' %}
-    html += '     <div class="form-group row custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
-    html += '       <label for="input-address-' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
+    html += '     <div class="form-group row custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
+    html += '       <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '       <div class="col-sm-10">';
     html += '         <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div>';
     html += '       </div>';

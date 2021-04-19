@@ -84,6 +84,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order', $data));
 	}
 
+	public function list(): void {
+		$this->load->language('sale/order');
+
+		$this->response->setOutput($this->getList());
+	}
+
 	protected function getList(): string {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = (int)$this->request->get['filter_order_id'];
@@ -206,8 +212,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-
 
 		$data['orders'] = [];
 

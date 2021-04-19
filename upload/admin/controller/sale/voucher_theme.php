@@ -46,6 +46,12 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_theme', $data));
 	}
 
+	public function list(): void {
+		$this->load->language('sale/voucher_theme');
+
+		$this->response->setOutput($this->getList());
+	}
+
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -89,6 +95,8 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('sale/voucher_theme');
 
 		$voucher_theme_total = $this->model_sale_voucher_theme->getTotalVoucherThemes();
 
@@ -138,7 +146,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$this->response->setOutput($this->load->view('sale/voucher_theme_list', $data));
+		return $this->load->view('sale/voucher_theme_list', $data);
 	}
 
 	public function form(): void {
@@ -248,12 +256,16 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$json['error']['image'] = $this->language->get('error_image');
 		}
 
-		$this->load->model('sale/voucher_theme');
+		if (!$json) {
+			$this->load->model('sale/voucher_theme');
 
-		if (!isset($this->request->get['voucher_id'])) {
-			$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
-		} else {
-			$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
+			if (!isset($this->request->get['voucher_theme_id'])) {
+				$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
+			} else {
+				$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

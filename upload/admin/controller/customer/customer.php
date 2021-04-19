@@ -539,7 +539,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		if (!empty($customer_info)) {
+		if ($this->request->get['customer_id']) {
 			$data['addresses'] = $this->model_customer_customer->getAddresses($this->request->get['customer_id']);
 		} else {
 			$data['addresses'] = [];
@@ -580,6 +580,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
+
+		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($this->request->post['email']);
 
@@ -672,8 +674,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('customer/customer');
-
 			if (!isset($this->request->get['customer_id'])) {
 				$this->model_customer_customer->addCustomer($this->request->post);
 			} else {
@@ -690,57 +690,26 @@ class Customer extends \Opencart\System\Engine\Controller {
 	public function unlock(): void {
 		$this->load->language('customer/customer');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = [];
 
-		$this->load->model('customer/customer');
-
-		if (isset($this->request->get['email']) && $this->validateUnlock()) {
-			$this->model_customer_customer->deleteLoginAttempts($this->request->get['email']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_name'])) {
-				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_email'])) {
-				$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_customer_group_id'])) {
-				$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
-			}
-
-			if (isset($this->request->get['filter_status'])) {
-				$url .= '&filter_status=' . $this->request->get['filter_status'];
-			}
-
-			if (isset($this->request->get['filter_ip'])) {
-				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->getList();
+		if (empty($this->request->get['email'])) {
+			$json['error'] = $this->language->get('error_email');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			$this->model_customer_customer->deleteLoginAttempts($this->request->get['email']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -770,14 +739,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	protected function validateUnlock(): bool {
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
 	}
 
 	public function login(): object|null {

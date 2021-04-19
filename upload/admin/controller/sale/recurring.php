@@ -70,6 +70,12 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/recurring', $data));
 	}
 
+	public function list(): void {
+		$this->load->language('sale/recurring');
+
+		$this->response->setOutput($this->getList());
+	}
+
 	protected function getList(): string {
 		if (isset($this->request->get['filter_order_recurring_id'])) {
 			$filter_order_recurring_id = (int)$this->request->get['filter_order_recurring_id'];
@@ -177,6 +183,8 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			'start'                     => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'                     => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('sale/recurring');
 
 		$recurrings_total = $this->model_sale_recurring->getTotalRecurrings($filter_data);
 

@@ -1,7 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
 class Returns extends \Opencart\System\Engine\Controller {
-
 	public function index(): void {
 		$this->load->language('sale/return');
 
@@ -62,11 +61,11 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url)
+			'href' => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('sale/return|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('sale/return|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('sale/returns|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/returns|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -77,6 +76,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/return', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('sale/return');
+
+		$this->response->setOutput($this->getList());
 	}
 
 	protected function getList(): string {
@@ -351,7 +356,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$this->response->setOutput($this->load->view('sale/return_list', $data));
+		return $this->load->view('sale/return_list', $data);
 	}
 
 	public function form(): void {
@@ -557,7 +562,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('sale/returns');
+		$this->load->language('sale/return');
 
 		$json = [];
 

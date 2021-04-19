@@ -123,9 +123,9 @@ $(document).on('click', '[data-action]', function() {
             $(element).button('reset');
         },
         success: function(json) {
-            console.log(json);
-
             $('.invalid-tooltip, .alert-dismissible').remove();
+
+            console.log(json);
 
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {

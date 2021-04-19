@@ -148,11 +148,17 @@ $('#extension').on('click', '.btn-success', function(e) {
             $(element).button('reset');
         },
         success: function(json) {
+            $('.alert-dismissible').remove();
 
+            if (json['error']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
 
-            $('#extension').html(json);
+            if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-
+								$('select[name=\'type\']').trigger('change');
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -161,7 +167,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 });
 
 // Uninstall / Delete
-$('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
+$('#extension').on('click', '.btn-danger, .btn-outline-danger', function(e) {
     e.preventDefault();
 
     if (confirm('{{ text_confirm }}')) {
@@ -177,10 +183,19 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
                 $(element).button('reset');
             },
             success: function(json) {
+                console.log(json);
 
-                $('#extension').html(html);
+                $('.alert-dismissible').remove();
 
+                if (json['error']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                }
 
+                if (json['success']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                    $('select[name=\'type\']').trigger('change');
+                }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

@@ -60,18 +60,17 @@ class Module extends \Opencart\System\Engine\Controller {
 					}
 
 					$module_data[] = [
-						'module_id' => $module['module_id'],
-						'name'      => $module['name'],
-						'status'    => $setting_info['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-						'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
-						'delete'    => $this->url->link('extension/module|delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
+						'name'   => $module['name'],
+						'status' => $setting_info['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
+						'delete' => $this->url->link('extension/module|delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
 					];
 				}
 
 				if ($module_data) {
 					$status = '';
 				} else {
-					$status = (bool)$this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
 				}
 
 				$data['extensions'][] = [
@@ -152,7 +151,8 @@ class Module extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->setOutput($this->getList());
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function add(): void {
@@ -183,7 +183,7 @@ class Module extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->request->get['module_id'])) {
+		if (isset($this->request->get['module_id'])) {
 			$module_id = $this->request->get['module_id'];
 		} else {
 			$module_id = 0;

@@ -71,7 +71,7 @@ class Module extends \Opencart\System\Engine\Controller {
 				if ($module_data) {
 					$status = '';
 				} else {
-					$status = $this->config->has('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+					$status = (bool)$this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
 				}
 
 				$data['extensions'][] = [

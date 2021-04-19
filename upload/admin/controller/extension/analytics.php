@@ -33,12 +33,12 @@ class Analytics extends \Opencart\System\Engine\Controller {
 				$this->model_setting_extension->uninstall('analytics', $extension['code']);
 			}
 		}
-		
+
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();
-		
+
 		$data['extensions'] = [];
 
 		$this->load->model('setting/extension');
@@ -50,7 +50,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 				$code = basename($result['path'], '.php');
 
 				$this->load->language('extension/' . $extension . '/analytics/' . $code, $code);
-				
+
 				$store_data = [];
 
 				$store_data[] = [
@@ -58,7 +58,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 					'edit'   => $this->url->link('extension/' . $extension . '/analytics/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
 					'status' => $this->config->get('analytics_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				];
-				
+
 				foreach ($stores as $store) {
 					$store_data[] = [
 						'name'   => $store['name'],
@@ -68,11 +68,11 @@ class Analytics extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['extensions'][] = [
-					'name'      => $this->language->get($code . '_heading_title'),
-					'install'   => $this->url->link('extension/analytics|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'name' => $this->language->get($code . '_heading_title'),
+					'install' => $this->url->link('extension/analytics|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/analytics|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
-					'store'     => $store_data
+					'store' => $store_data
 				];
 			}
 		}

@@ -45,7 +45,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('extension/opencart/dashboard/ip');
+		$this->load->language('extension/opencart/fraud/ip');
 
 		$json = [];
 
@@ -77,7 +77,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$this->model_extension_opencart_fraud_ip->uninstall();
 	}
 
-	public function ip(): string {
+	public function ip(): void {
 		$this->load->language('extension/opencart/fraud/ip');
 
 		if (isset($this->request->get['page'])) {

@@ -23,7 +23,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/sale_return', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/report/sale_return', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/sale_return|save', 'user_token=' . $this->session->data['user_token']);
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 

@@ -23,7 +23,7 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/customer_activity', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/report/customer_activity', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/customer_activity|save', 'user_token=' . $this->session->data['user_token']);
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 

@@ -23,7 +23,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/total/coupon', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/total/coupon', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/total/coupon|save', 'user_token=' . $this->session->data['user_token']);
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 

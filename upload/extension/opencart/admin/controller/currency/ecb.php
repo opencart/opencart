@@ -23,7 +23,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/currency/ecb', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/currency/ecb', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/currency/ecb|save', 'user_token=' . $this->session->data['user_token']);
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency');
 
@@ -58,11 +58,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 	}
 
 	public function currency(string $default = ''): void {
-		echo 'hi';
-
 		if ($this->config->get('currency_ecb_status')) {
-
-
 			$curl = curl_init();
 
 			curl_setopt($curl, CURLOPT_URL, 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');

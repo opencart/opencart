@@ -23,7 +23,7 @@ class Sale extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/dashboard/sale', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/dashboard/sale', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/dashboard/sale|save', 'user_token=' . $this->session->data['user_token']);
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 

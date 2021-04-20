@@ -60,13 +60,13 @@
   });
 
   $('#modal-image').on('click', '#button-upload', function() {
-      $('#form-upload').remove();
+      $('#upload-form').remove();
 
-      $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
+      $('body').prepend('<form enctype="multipart/form-data" id="upload-form" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
 
-      $('#form-upload input[name=\'file[]\']').trigger('click');
+      $('#upload-form input[name=\'file[]\']').trigger('click');
 
-      $('#form-upload input[name=\'file[]\']').on('change', function() {
+      $('#upload-form input[name=\'file[]\']').on('change', function() {
           for (i = 0; i < this.files.length; i++) {
               if (this.files[i].size > {{ config_file_max_size }}) {
                   $(this).val('');
@@ -81,7 +81,7 @@
       }
 
       timer = setInterval(function() {
-          if ($('#form-upload input[name=\'file[]\']').val() != '') {
+          if ($('#upload-form input[name=\'file[]\']').val() != '') {
               clearInterval(timer);
 
               var url = 'index.php?route=common/filemanager|upload&user_token={{ user_token }}';
@@ -96,7 +96,7 @@
                   url: url,
                   type: 'post',
                   dataType: 'json',
-                  data: new FormData($('#form-upload')[0]),
+                  data: new FormData($('#upload-form')[0]),
                   cache: false,
                   contentType: false,
                   processData: false,

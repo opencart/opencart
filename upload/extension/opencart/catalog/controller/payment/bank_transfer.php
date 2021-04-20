@@ -4,7 +4,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/bank_transfer');
 
-		$data['bank'] = nl2br($this->config->get('payment_bank_transfer_bank' . $this->config->get('config_language_id')));
+		$data['bank'] = nl2br($this->config->get('payment_bank_transfer_bank_' . $this->config->get('config_language_id')));
 
 		return $this->load->view('extension/opencart/payment/bank_transfer', $data);
 	}
@@ -18,7 +18,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 			$this->load->model('checkout/order');
 
 			$comment  = $this->language->get('text_instruction') . "\n\n";
-			$comment .= $this->config->get('payment_bank_transfer_bank' . $this->config->get('config_language_id')) . "\n\n";
+			$comment .= $this->config->get('payment_bank_transfer_bank_' . $this->config->get('config_language_id')) . "\n\n";
 			$comment .= $this->language->get('text_payment');
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_bank_transfer_order_status_id'), $comment, true);

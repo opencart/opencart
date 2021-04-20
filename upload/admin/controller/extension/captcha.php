@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Controller\Extension;
 class Captcha extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->response->setOutput($this->getList());
+ 		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {

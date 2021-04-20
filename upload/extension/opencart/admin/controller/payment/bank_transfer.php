@@ -23,7 +23,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/payment/bank_transfer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/payment/bank_transfer', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/payment/bank_transfer|save', 'user_token=' . $this->session->data['user_token']);
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
@@ -34,7 +34,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 		
 		foreach ($languages as $language) {
-			$data['payment_bank_transfer_bank'][$language['language_id']] = $this->config->get('payment_bank_transfer_bank' . $language['language_id']);
+			$data['payment_bank_transfer_bank'][$language['language_id']] = $this->config->get('payment_bank_transfer_bank_' . $language['language_id']);
 		}
 
 		$data['languages'] = $languages;
@@ -76,8 +76,8 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			if (empty($this->request->post['payment_bank_transfer_bank' . $language['language_id']])) {
-				$json['error']['bank'][$language['language_id']] = $this->language->get('error_bank');
+			if (empty($this->request->post['payment_bank_transfer_bank_' . $language['language_id']])) {
+				$json['error']['bank_' . $language['language_id']] = $this->language->get('error_bank');
 			}
 		}
 

@@ -42,7 +42,7 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'extension/report/sale_order')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/report/sale_order')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

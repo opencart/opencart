@@ -49,7 +49,7 @@ class Ip extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/ip')) {
+		if (!$this->user->hasPermission('modify', 'extension/opencart/fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

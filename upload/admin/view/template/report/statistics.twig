@@ -18,12 +18,6 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#').on('click', 'thead a, .pagination a', function(e) {
-    e.preventDefault();
-
-    $('#statistics').load(this.href);
-});
-
 $('#statistics').on('click', '.btn-warning', function(e) {
     e.preventDefault();
 
@@ -48,7 +42,7 @@ $('#statistics').on('click', '.btn-warning', function(e) {
             if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-                $('#statistics').load('index.php?route=report/statistics|list&user_token={{ user_token }}' + url);
+                $('#statistics').load('index.php?route=report/statistics|list&user_token={{ user_token }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

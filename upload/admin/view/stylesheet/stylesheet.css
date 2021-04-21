@@ -895,8 +895,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 .invalid-tooltip {
-    position: absolute;
-    float: left;
+    top: inherit;
+    left: inherit;
 }
 
 /*

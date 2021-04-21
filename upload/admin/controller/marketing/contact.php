@@ -228,7 +228,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 						}
 					}
 				} else {
-					$json['error']['email'] = $this->language->get('error_email');
+					$json['error']['warning'] = $this->language->get('error_email');
 				}
 			}
 		}

@@ -25,6 +25,7 @@
 								{% for store in stores %}
 									<option value="{{ store.store_id }}">{{ store.name }}</option>
 								{% endfor %}
+
 							</select>
 						</div>
 					</div>
@@ -100,8 +101,6 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('textarea[data-toggle=\'ckeditor\']').ckeditor();
-
 $('select[name=\'to\']').on('change', function() {
     $('.to').hide();
 
@@ -109,8 +108,7 @@ $('select[name=\'to\']').on('change', function() {
 });
 
 $('select[name=\'to\']').trigger('change');
-//--></script>
-<script type="text/javascript"><!--
+
 // Customers
 $('input[name=\'customers\']').autocomplete({
     'source': function(request, response) {
@@ -209,7 +207,7 @@ $('input[name=\'products\']').autocomplete({
 
         $('#mail-product-' + item['value']).remove();
 
-        html  = '<tr id="mail-product-' + item['value'] + '">';
+        html = '<tr id="mail-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -221,6 +219,8 @@ $('input[name=\'products\']').autocomplete({
 $('#mail-product').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
+
+$('textarea[data-toggle=\'ckeditor\']').ckeditor();
 
 function send(url) {
     for (instance in CKEDITOR.instances) {
@@ -239,6 +239,8 @@ function send(url) {
             $('#button-send').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible, .invalid-tooltip').remove();
 
             if (json['error']) {
@@ -246,16 +248,12 @@ function send(url) {
                     $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
 
-                if (json['error']['email']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['email'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                }
-
                 if (json['error']['subject']) {
-                    $('input[name=\'subject\']').after('<div class="invalid-tooltip d-block">' + json['error']['subject'] + '</div>');
+                    $('#input-subject').after('<div class="invalid-tooltip d-block">' + json['error']['subject'] + '</div>');
                 }
 
                 if (json['error']['message']) {
-                    $('textarea[name=\'message\']').after('<div class="invalid-tooltip d-block">' + json['error']['message'] + '</div>');
+                    $('#input-message').after('<div class="invalid-tooltip d-block">' + json['error']['message'] + '</div>');
                 }
             }
 

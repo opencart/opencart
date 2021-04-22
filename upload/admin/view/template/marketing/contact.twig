@@ -239,8 +239,6 @@ function send(url) {
             $('#button-send').button('reset');
         },
         success: function(json) {
-            console.log(json);
-
             $('.alert-dismissible, .invalid-tooltip').remove();
 
             if (json['error']) {

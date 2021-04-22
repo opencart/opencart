@@ -895,11 +895,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 .invalid-tooltip {
-    top: inherit;
-    left: inherit;
+    left: auto;
+    top: auto;
 }
-
-/*
-.is-invalid ~ .invalid-tooltip, .input-group + .invalid-tooltip, .form-check + .invalid-tooltip {
-    position: static !important;
-}*/

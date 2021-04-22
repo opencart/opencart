@@ -92,8 +92,10 @@
 					<div class="form-group row required">
 						<label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
 						<div class="col-sm-10">
-							<textarea name="message" placeholder="{{ entry_message }}" id="input-message" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
-						</div>
+							<div id="input-message">
+							<textarea name="message" placeholder="{{ entry_message }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
+							</div>
+							</div>
 					</div>
 				</form>
 			</div>
@@ -249,11 +251,11 @@ function send(url) {
                 }
 
                 if (json['error']['subject']) {
-                    $('#input-subject').after('<div class="invalid-tooltip d-block">' + json['error']['subject'] + '</div>');
+                    $('#input-subject').after('<div class="invalid-tooltip d-inline">' + json['error']['subject'] + '</div>');
                 }
 
                 if (json['error']['message']) {
-                    $('#input-message').after('<div class="invalid-tooltip d-block">' + json['error']['message'] + '</div>');
+                    $('#input-message').after('<div class="invalid-tooltip d-inline">' + json['error']['message'] + '</div>');
                 }
             }
 

@@ -2532,7 +2532,7 @@ $('#content').on('click', 'button[id^=\'button-upload\']', function() {
                     $(element).parent().find('.invalid-tooltip').remove();
 
                     if (json['error']) {
-                        $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-block">' + json['error'] + '</div>');
+                        $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
                     }
 
                     if (json['success']) {

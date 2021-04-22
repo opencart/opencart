@@ -1567,9 +1567,9 @@ $('#modal-customer #button-customer').on('click', function() {
                     $(element).addClass('is-invalid');
 
                     if ($(element).parent().hasClass('input-group')) {
-                        $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
+                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
                     } else {
-                        $(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
+                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
                     }
                 }
             }
@@ -2131,9 +2131,9 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
                     $(element).addClass('is-invalid');
 
                     if ($(element).parent().hasClass('input-group')) {
-                        $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
+                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
                     } else {
-                        $(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
+                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
                     }
                 }
             }
@@ -2282,9 +2282,9 @@ $('#modal-shipping-address #button-shipping-address').on('click', function() {
                     $(element).addClass('is-invalid');
 
                     if ($(element).parent().hasClass('input-group')) {
-                        $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
+                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
                     } else {
-                        $(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
+                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
                     }
                 }
             }
@@ -2527,9 +2527,9 @@ $('#modal-cart #button-product-add').on('click', function() {
                         $(element).addClass('is-invalid');
 
                         if (element.parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error']['option'][i] + '</div>');
+                            $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error']['option'][i] + '</div>');
                         } else {
-                            $(element).after('<div class="invalid-tooltip d-block">' + json['error']['option'][i] + '</div>');
+                            $(element).after('<div class="invalid-tooltip d-inline">' + json['error']['option'][i] + '</div>');
                         }
                     }
                 }
@@ -2607,7 +2607,7 @@ $('#modal-cart #button-voucher-add').on('click', function() {
                     // Highlight any found errors
                     $(element).addClass('is-invalid');
 
-                    $(element).after('<div class="invalid-tooltip d-block">' + json['error'][i] + '</div>');
+                    $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
                 }
             } else {
                 $('input[name=\'from_name\']').val('');
@@ -2895,7 +2895,7 @@ $('.modal').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-cust
                     $(element).parent().find('.invalid-tooltip').remove();
 
                     if (json['error']) {
-                        $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-block">' + json['error'] + '</div>');
+                        $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
                     }
 
                     if (json['success']) {

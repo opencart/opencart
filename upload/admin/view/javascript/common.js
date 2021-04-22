@@ -139,9 +139,9 @@ $(document).on('click', '[data-action]', function() {
                     $(element).addClass('is-invalid');
 
                     if ($(element).parent().hasClass('input-group')) {
-                        $(element).parent().after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
+                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
                     } else {
-                        $(element).after('<div class="invalid-tooltip d-block">' + json['error'][key] + '</div>');
+                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
                     }
                 }
             }

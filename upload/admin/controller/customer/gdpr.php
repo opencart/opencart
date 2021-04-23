@@ -20,6 +20,10 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
 
+		$data['approve'] = $this->url->link('customer/gdpr|approve', 'user_token=' . $this->session->data['user_token']);
+		$data['deny']    = $this->url->link('customer/gdpr|deny', 'user_token=' . $this->session->data['user_token']);
+		$data['delete']  = $this->url->link('customer/gdpr|delete', 'user_token=' . $this->session->data['user_token']);
+
 		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];

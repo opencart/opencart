@@ -455,7 +455,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (isset($this->request->get['seo_url_id'])) {
+			if (!isset($this->request->get['seo_url_id'])) {
 				$this->model_design_seo_url->addSeoUrl($this->request->post);
 			} else {
 				$this->model_design_seo_url->editSeoUrl($this->request->get['seo_url_id'], $this->request->post);

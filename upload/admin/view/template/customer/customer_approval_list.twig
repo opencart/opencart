@@ -2,6 +2,7 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
+				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
 				<td class="text-left">{{ column_customer }}</td>
 				<td class="text-left">{{ column_email }}</td>
 				<td class="text-left">{{ column_customer_group }}</td>
@@ -14,6 +15,7 @@
 			{% if customer_approvals %}
 				{% for customer_approval in customer_approvals %}
 					<tr>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer_approval.customer_id }}"/></td>
 						<td class="text-left"><a href="{{ customer_approval.edit }}">{{ customer_approval.customer }}</a></td>
 						<td class="text-left">{{ customer_approval.email }}</td>
 						<td class="text-left">{{ customer_approval.customer_group }}</td>

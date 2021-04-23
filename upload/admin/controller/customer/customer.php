@@ -539,7 +539,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		if ($this->request->get['customer_id']) {
+		if (isset($this->request->get['customer_id'])) {
 			$data['addresses'] = $this->model_customer_customer->getAddresses($this->request->get['customer_id']);
 		} else {
 			$data['addresses'] = [];

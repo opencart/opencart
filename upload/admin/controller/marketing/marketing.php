@@ -357,7 +357,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!isset($this->request->get['marketing_id'])) {
-				$this->model_marketing_marketing->addMarketing($this->request->post);
+				$json['marketing_id'] = $this->model_marketing_marketing->addMarketing($this->request->post);
 			} else {
 				$this->model_marketing_marketing->editMarketing($this->request->get['marketing_id'], $this->request->post);
 			}

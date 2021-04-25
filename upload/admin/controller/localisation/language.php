@@ -282,7 +282,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/language');
 
 			if (!isset($this->request->get['language_id'])) {
-				$this->model_localisation_language->addLanguage($this->request->post);
+				$json['language_id'] = $this->model_localisation_language->addLanguage($this->request->post);
 			} else {
 				$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
 			}

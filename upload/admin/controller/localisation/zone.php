@@ -325,7 +325,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/zone');
 
 			if (!isset($this->request->get['zone_id'])) {
-				$this->model_localisation_zone->addZone($this->request->post);
+				$json['zone_id'] = $this->model_localisation_zone->addZone($this->request->post);
 			} else {
 				$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);
 			}

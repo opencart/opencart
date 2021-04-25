@@ -513,7 +513,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		// Product add with master product overridden values
-		$this->model_catalog_product->addProduct($product_data);
+		return $this->model_catalog_product->addProduct($product_data);
 	}
 
 	public function editVariant(int $master_id, int $product_id, array $data): void {

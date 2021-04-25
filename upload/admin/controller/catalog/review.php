@@ -403,7 +403,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/review');
 
 			if (!isset($this->request->get['review_id'])) {
-				$this->model_catalog_review->addReview($this->request->post);
+				$json['review_id'] = $this->model_catalog_review->addReview($this->request->post);
 			} else {
 				$this->model_catalog_review->editReview($this->request->get['review_id'], $this->request->post);
 			}

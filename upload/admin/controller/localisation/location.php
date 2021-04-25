@@ -286,7 +286,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/location');
 
 			if (!isset($this->request->get['location_id'])) {
-				$this->model_localisation_location->addLocation($this->request->post);
+				$json['location_id'] = $this->model_localisation_location->addLocation($this->request->post);
 			} else {
 				$this->model_localisation_location->editLocation($this->request->get['location_id'], $this->request->post);
 			}

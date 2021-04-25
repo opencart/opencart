@@ -333,7 +333,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/recurring');
 
 			if (!isset($this->request->get['recurring_id'])) {
-				$this->model_catalog_recurring->addRecurring($this->request->post);
+				$json['recurring_id'] = $this->model_catalog_recurring->addRecurring($this->request->post);
 			} else {
 				$this->model_catalog_recurring->editRecurring($this->request->get['recurring_id'], $this->request->post);
 			}

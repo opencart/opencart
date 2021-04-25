@@ -254,7 +254,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$this->load->model('sale/voucher_theme');
 
 			if (!isset($this->request->get['voucher_theme_id'])) {
-				$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
+				$json['voucher_theme_id'] = $this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
 			} else {
 				$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
 			}

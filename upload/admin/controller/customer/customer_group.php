@@ -246,7 +246,7 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$this->load->model('customer/customer_group');
 
 			if (!isset($this->request->get['customer_group_id'])) {
-				$this->model_customer_customer_group->addCustomerGroup($this->request->post);
+				$json['customer_group_id'] = $this->model_customer_customer_group->addCustomerGroup($this->request->post);
 			} else {
 				$this->model_customer_customer_group->editCustomerGroup($this->request->get['customer_group_id'], $this->request->post);
 			}

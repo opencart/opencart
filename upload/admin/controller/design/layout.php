@@ -305,7 +305,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$this->load->model('design/layout');
 
 			if (!isset($this->request->get['layout_id'])) {
-				$this->model_design_layout->addLayout($this->request->post);
+				$json['layout_id'] = $this->model_design_layout->addLayout($this->request->post);
 			} else {
 				$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
 			}

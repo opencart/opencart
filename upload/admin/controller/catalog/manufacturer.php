@@ -318,7 +318,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/manufacturer');
 
 			if (!isset($this->request->get['manufacturer_id'])) {
-				$this->model_catalog_manufacturer->addManufacturer($this->request->post);
+				$json['manufacturer_id'] = $this->model_catalog_manufacturer->addManufacturer($this->request->post);
 			} else {
 				$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
 			}

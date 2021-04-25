@@ -391,7 +391,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!isset($this->request->get['category_id'])) {
-				$this->model_catalog_category->addCategory($this->request->post);
+				$json['category_id'] = $this->model_catalog_category->addCategory($this->request->post);
 			} else {
 				$this->model_catalog_category->editCategory($this->request->get['category_id'], $this->request->post);
 			}

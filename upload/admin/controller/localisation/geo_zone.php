@@ -250,7 +250,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/geo_zone');
 
 			if (!isset($this->request->get['geo_zone_id'])) {
-				$this->model_localisation_geo_zone->addGeoZone($this->request->post);
+				$json['geo_zone_id'] = $this->model_localisation_geo_zone->addGeoZone($this->request->post);
 			} else {
 				$this->model_localisation_geo_zone->editGeoZone($this->request->get['geo_zone_id'], $this->request->post);
 			}

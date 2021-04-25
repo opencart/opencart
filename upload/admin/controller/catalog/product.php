@@ -1065,10 +1065,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->get['product_id'])) {
 				if (!isset($this->request->get['master_id'])) {
 					// Normal product add
-					$this->model_catalog_product->addProduct($this->request->post);
+					$json['product_id'] = $this->model_catalog_product->addProduct($this->request->post);
 				} else {
 					// Variant product add
-					$this->model_catalog_product->addVariant($this->request->get['master_id'], $this->request->post);
+					$json['product_id'] = $this->model_catalog_product->addVariant($this->request->get['master_id'], $this->request->post);
 				}
 			} else {
 				if (!isset($this->request->get['master_id'])) {
@@ -1082,6 +1082,8 @@ class Product extends \Opencart\System\Engine\Controller {
 				// Variant products edit if master product is edited
 				$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);
 			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

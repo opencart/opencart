@@ -266,7 +266,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			$this->load->model('design/seo_profile');
 
 			if (!isset($this->request->get['seo_profile_id'])) {
-				$this->model_design_seo_profile->addSeoProfile($this->request->post);
+				$json['seo_profile_id'] = $this->model_design_seo_profile->addSeoProfile($this->request->post);
 			} else {
 				$this->model_design_seo_profile->editSeoProfile($this->request->get['seo_profile_id'], $this->request->post);
 			}

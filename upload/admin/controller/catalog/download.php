@@ -274,7 +274,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/download');
 
 			if (!isset($this->request->get['download_id'])) {
-				$this->model_catalog_download->addDownload($this->request->post);
+				$json['download_id'] = $this->model_catalog_download->addDownload($this->request->post);
 			} else {
 				$this->model_catalog_download->editDownload($this->request->get['download_id'], $this->request->post);
 			}

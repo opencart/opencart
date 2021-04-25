@@ -295,7 +295,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/api');
 
 			if (!isset($this->request->get['api_id'])) {
-				$this->model_user_api->addApi($this->request->post);
+				$json['api_id'] = $this->model_user_api->addApi($this->request->post);
 			} else {
 				$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
 			}

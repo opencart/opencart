@@ -289,7 +289,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/currency');
 
 			if (!isset($this->request->get['currency_id'])) {
-				$this->model_localisation_currency->addCurrency($this->request->post);
+				$json['currency_id'] = $this->model_localisation_currency->addCurrency($this->request->post);
 			} else {
 				$this->model_localisation_currency->editCurrency($this->request->get['currency_id'], $this->request->post);
 			}

@@ -894,7 +894,14 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     overflow: visible;
 }
 
+td {
+    position: relative;
+}
+
 .invalid-tooltip {
-    left: auto;
-    top: auto;
+
+   left: 0;
+   top: auto;
+
+    margin-left: 12px;
 }

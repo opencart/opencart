@@ -318,7 +318,7 @@ class Option extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/option');
 
 			if (!isset($this->request->get['option_id'])) {
-				$this->model_catalog_option->addOption($this->request->post);
+				$json['option_id'] = $this->model_catalog_option->addOption($this->request->post);
 			} else {
 				$this->model_catalog_option->editOption($this->request->get['option_id'], $this->request->post);
 			}

@@ -244,7 +244,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/weight_class');
 
 			if (!isset($this->request->get['weight_class_id'])) {
-				$this->model_localisation_weight_class->addWeightClass($this->request->post);
+				$json['weight_class_id'] = $this->model_localisation_weight_class->addWeightClass($this->request->post);
 			} else {
 				$this->model_localisation_weight_class->editWeightClass($this->request->get['weight_class_id'], $this->request->post);
 			}

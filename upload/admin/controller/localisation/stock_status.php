@@ -228,7 +228,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/stock_status');
 
 			if (!isset($this->request->get['stock_status_id'])) {
-				$this->model_localisation_stock_status->addStockStatus($this->request->post);
+				$json['stock_status_id'] = $this->model_localisation_stock_status->addStockStatus($this->request->post);
 			} else {
 				$this->model_localisation_stock_status->editStockStatus($this->request->get['stock_status_id'], $this->request->post);
 			}

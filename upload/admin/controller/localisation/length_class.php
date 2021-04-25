@@ -246,7 +246,7 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/length_class');
 
 			if (!isset($this->request->get['length_class_id'])) {
-				$this->model_localisation_length_class->addLengthClass($this->request->post);
+				$json['length_class_id'] = $this->model_localisation_length_class->addLengthClass($this->request->post);
 			} else {
 				$this->model_localisation_length_class->editLengthClass($this->request->get['length_class_id'], $this->request->post);
 			}

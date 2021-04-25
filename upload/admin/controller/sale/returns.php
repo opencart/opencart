@@ -610,7 +610,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$this->load->model('sale/returns');
 
 			if (!isset($this->request->get['return_id'])) {
-				$this->model_sale_returns->addReturn($this->request->post);
+				$json['return_id'] = $this->model_sale_returns->addReturn($this->request->post);
 			} else {
 				$this->model_sale_returns->editReturn($this->request->get['return_id'], $this->request->post);
 			}

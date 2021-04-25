@@ -335,7 +335,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!isset($this->request->get['voucher_id'])) {
-				$this->model_sale_voucher->addVoucher($this->request->post);
+				$json['voucher_id'] = $this->model_sale_voucher->addVoucher($this->request->post);
 			} else {
 				$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
 			}

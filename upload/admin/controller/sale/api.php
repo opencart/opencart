@@ -600,7 +600,9 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('sale/order');
 
 			$order_info = $this->model_sale_order->getOrder($order_id);

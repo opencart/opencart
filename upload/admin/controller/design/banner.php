@@ -282,7 +282,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$this->load->model('design/banner');
 
 			if (!isset($this->request->get['banner_id'])) {
-				$this->model_design_banner->addBanner($this->request->post);
+				$json['banner_id'] = $this->model_design_banner->addBanner($this->request->post);
 			} else {
 				$this->model_design_banner->editBanner($this->request->get['banner_id'], $this->request->post);
 			}

@@ -268,7 +268,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$this->load->model('design/translation');
 
 			if (!isset($this->request->get['translation_id'])) {
-				$this->model_design_translation->addTranslation($this->request->post);
+				$json['translation_id'] = $this->model_design_translation->addTranslation($this->request->post);
 			} else {
 				$this->model_design_translation->editTranslation($this->request->get['translation_id'], $this->request->post);
 			}

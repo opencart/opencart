@@ -252,7 +252,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/attribute_group');
 
 			if (!isset($this->request->get['attribute_group_id'])) {
-				$this->model_catalog_attribute_group->addAttributeGroup($this->request->post);
+				$json['attribute_group_id'] = $this->model_catalog_attribute_group->addAttributeGroup($this->request->post);
 			} else {
 				$this->model_catalog_attribute_group->editAttributeGroup($this->request->get['attribute_group_id'], $this->request->post);
 			}

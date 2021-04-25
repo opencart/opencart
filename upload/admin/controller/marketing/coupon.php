@@ -360,7 +360,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!isset($this->request->get['coupon_id'])) {
-				$this->model_marketing_coupon->addCoupon($this->request->post);
+				$json['coupon_id'] = $this->model_marketing_coupon->addCoupon($this->request->post);
 			} else {
 				$this->model_marketing_coupon->editCoupon($this->request->get['coupon_id'], $this->request->post);
 			}

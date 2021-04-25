@@ -314,7 +314,7 @@ class User extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!isset($this->request->get['user_id'])) {
-				$this->model_user_user->addUser($this->request->post);
+				$json['user_id'] = $this->model_user_user->addUser($this->request->post);
 			} else {
 				$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
 			}

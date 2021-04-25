@@ -547,7 +547,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!isset($this->request->get['customer_id'])) {
-				$this->model_marketing_affiliate->addAffiliate($this->request->post);
+				$json['customer_id'] = $this->model_marketing_affiliate->addAffiliate($this->request->post);
 			} else {
 				$this->model_marketing_affiliate->editAffiliate($this->request->get['customer_id'], $this->request->post);
 			}

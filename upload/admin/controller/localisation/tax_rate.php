@@ -272,7 +272,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/tax_rate');
 
 			if (!isset($this->request->get['tax_rate_id'])) {
-				$this->model_localisation_tax_rate->addTaxRate($this->request->post);
+				$json['tax_rate_id'] = $this->model_localisation_tax_rate->addTaxRate($this->request->post);
 			} else {
 				$this->model_localisation_tax_rate->editTaxRate($this->request->get['tax_rate_id'], $this->request->post);
 			}

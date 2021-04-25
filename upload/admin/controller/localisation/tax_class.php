@@ -246,7 +246,7 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/tax_class');
 
 			if (!isset($this->request->get['tax_class_id'])) {
-				$this->model_localisation_tax_class->addTaxClass($this->request->post);
+				$json['tax_class_id'] = $this->model_localisation_tax_class->addTaxClass($this->request->post);
 			} else {
 				$this->model_localisation_tax_class->editTaxClass($this->request->get['tax_class_id'], $this->request->post);
 			}

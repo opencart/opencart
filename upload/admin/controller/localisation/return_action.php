@@ -229,7 +229,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/return_action');
 
 			if (!isset($this->request->get['return_action_id'])) {
-				$this->model_localisation_return_action->addReturnAction($this->request->post);
+				$json['return_action_id'] = $this->model_localisation_return_action->addReturnAction($this->request->post);
 			} else {
 				$this->model_localisation_return_action->editReturnAction($this->request->get['return_action_id'], $this->request->post);
 			}

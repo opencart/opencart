@@ -675,7 +675,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if (!isset($this->request->get['customer_id'])) {
-				$this->model_customer_customer->addCustomer($this->request->post);
+				$json['customer_id'] = $this->model_customer_customer->addCustomer($this->request->post);
 			} else {
 				$this->model_customer_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
 			}
@@ -837,7 +837,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+
+		if (!$json) {
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
@@ -907,7 +910,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->addTransaction($customer_id, $this->request->post['description'], $this->request->post['amount']);
@@ -977,7 +982,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->addReward($customer_id, $this->request->post['description'], $this->request->post['points']);

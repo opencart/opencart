@@ -258,7 +258,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/attribute');
 
 			if (!isset($this->request->get['attribute_id'])) {
-				$this->model_catalog_attribute->addAttribute($this->request->post);
+				$json['attribute_id'] = $this->model_catalog_attribute->addAttribute($this->request->post);
 			} else {
 				$this->model_catalog_attribute->editAttribute($this->request->get['attribute_id'], $this->request->post);
 			}

@@ -303,7 +303,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/user_group');
 
 			if (!isset($this->request->get['user_group_id'])) {
-				$this->model_user_user_group->addUserGroup($this->request->post);
+				$json['user_group_id'] = $this->model_user_user_group->addUserGroup($this->request->post);
 			} else {
 				$this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
 			}

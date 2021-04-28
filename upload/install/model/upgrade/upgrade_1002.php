@@ -224,19 +224,12 @@ class Upgrade1002 extends \Opencart\System\Engine\Model {
 			if ($query->num_rows) {
 				foreach ($query->rows as $result) {
 					//update old column name to adding prefix before the name
-					if ($result['code'] == $extension['code'] && $result['code'] != $extension['type'] . '_' . $extension['code'] && $extension['type'] != 'theme') {
+					if ($result['code'] == $extension['code'] && $result['code'] != $extension['type'] . '_' . $extension['code']) {
 						$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `code` = '" . $this->db->escape($extension['type'] . '_' . $extension['code']) . "', `key` = '" . $this->db->escape($extension['type'] . '_' . $result['key']) . "', `value` = '" . $this->db->escape($result['value']) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
 					}
 				}
 			}
-
-
 		}
-
-
-
-
-
 
 
 

@@ -404,9 +404,6 @@ class Cli extends \Opencart\System\Engine\Controller {
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . '\');' . "\n\n";
 
-			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . '\');' . "\n\n";
-
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'catalog/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', \'' . addslashes(DIR_OPENCART) . 'system/\');' . "\n";
@@ -440,10 +437,6 @@ class Cli extends \Opencart\System\Engine\Controller {
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
 			$output .= 'define(\'HTTP_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
-
-			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . $option['http_server'] . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTPS_CATALOG\', \'' . $option['http_server'] . '\');' . "\n";
 
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', \'' . addslashes(DIR_OPENCART) . 'admin/\');' . "\n";

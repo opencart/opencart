@@ -19,6 +19,11 @@
   IndexIgnore *
 </IfModule>
 
+## No-Referrer-Header
+<IfModule mod_headers.c>
+  Header set Referrer-Policy "no-referrer"
+</IfModule>
+
 ## Suppress mime type detection in browsers for unknown types and prevent FLOC
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"

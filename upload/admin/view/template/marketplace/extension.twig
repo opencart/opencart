@@ -42,11 +42,13 @@
 </div>
 <script type="text/javascript"><!--
 if (window.sessionStorage.getItem('extension')) {
-    $('select[name="type"]').val(window.sessionStorage.getItem('extension'));
+    $('select[name="type"]').val(window.sessionStorage.getItem('extension').replace('user_token=', 'user_token=' + getURLVar('user_token')));
 }
 
 $('select[name=\'type\']').on('change', function() {
-    window.sessionStorage.setItem('extension', $(this).val());
+    if ($(this).val()) {
+        window.sessionStorage.setItem('extension', $('select[name="type"]').val().replace(getURLVar('user_token'), ''));
+    }
     $.ajax({
         url: $(this).val(),
         dataType: 'html',

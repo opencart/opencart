@@ -49,6 +49,16 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				'serialized' => 0
 			];
 
+			// force some settings to prevent errors
+			if (isset($settings['config_template'])) {
+				$missing[] = [
+					'key'        => 'config_theme',
+					'value'      => 'basic',
+					'code'       => 'config',
+					'serialized' => 0
+				];
+			}
+
 			$missing[] = [
 				'key'        => 'config_product_description_length',
 				'value'      => 100,
@@ -63,12 +73,14 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				'serialized' => 0
 			];
 
-			$missing[] = [
-				'key'        => 'config_pagination_admin',
-				'value'      => $settings['config_limit_admin'],
-				'code'       => 'config',
-				'serialized' => 0
-			];
+			if (isset($settings['config_limit_admin'])) {
+				$missing[] = [
+					'key' => 'config_pagination_admin',
+					'value' => $settings['config_limit_admin'],
+					'code' => 'config',
+					'serialized' => 0
+				];
+			}
 
 			$missing[] = [
 				'key'        => 'config_encryption',
@@ -105,7 +117,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				'serialized' => 0
 			];
 
-			if ($settings['config_smtp_host']) {
+			if (isset($settings['config_smtp_host'])) {
 				$missing[] = [
 					'key' => 'config_mail_smtp_hostname',
 					'value' => $settings['config_smtp_host'],
@@ -114,7 +126,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($settings['config_smtp_username']) {
+			if (isset($settings['config_smtp_username'])) {
 				$missing[] = [
 					'key' => 'config_mail_smtp_username',
 					'value' => $settings['config_smtp_username'],
@@ -123,7 +135,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($settings['config_smtp_password']) {
+			if (isset($settings['config_smtp_password'])) {
 				$missing[] = [
 					'key' => 'config_mail_smtp_password',
 					'value' => $settings['config_smtp_password'],
@@ -132,7 +144,8 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($settings['config_smtp_port']) {
+
+			if (isset($settings['config_smtp_port'])) {
 				$missing[] = [
 					'key' => 'config_mail_smtp_port',
 					'value' => $settings['config_smtp_port'],
@@ -141,7 +154,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($settings['config_smtp_timeout']) {
+			if (isset($settings['config_smtp_timeout'])) {
 				$missing[] = [
 					'key'        => 'config_mail_smtp_timeout',
 					'value'      => $settings['config_smtp_timeout'],
@@ -150,7 +163,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($settings['config_smtp_timeout']) {
+			if (isset($settings['config_smtp_timeout'])) {
 				$missing[] = [
 					'key'        => 'config_mail_smtp_timeout',
 					'value'      => $settings['config_smtp_timeout'],
@@ -190,19 +203,14 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			}
 
 			$remove = [
-				''
-
+				'config_template',
+				'config_limit_admin',
+				'config_smtp_host',
+				'config_smtp_username',
+				'config_smtp_password',
+				'config_smtp_port',
+				'config_smtp_timeout'
 			];
-
-			// force some settings to prevent errors
-			if ($settings['config_template'] == 'basic_default') {
-				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'default' WHERE `key` = 'config_template'");
-			}
-
-
-			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '1' WHERE `key` = 'config_error_display'");
-			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '1' WHERE `key` = 'config_error_log'");
-			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '0' WHERE `key` = 'config_compression'");
 
 			// Update some language settings
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");

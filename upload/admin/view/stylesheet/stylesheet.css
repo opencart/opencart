@@ -899,9 +899,9 @@ td {
 }
 
 .invalid-tooltip {
-
-   left: 0;
-   top: auto;
-
-    margin-left: 12px;
+    position: relative;
+    left: auto;
+    top: 5px;
+    margin-top: 10px;
+    clear: both;
 }

@@ -1027,9 +1027,9 @@ class Product extends \Opencart\System\Engine\Controller {
 			$json['error']['model'] = $this->language->get('error_model');
 		}
 
-		if ($this->request->post['master_id']) {
-			$this->load->model('catalog/product');
+		$this->load->model('catalog/product');
 
+		if ($this->request->post['master_id']) {
 			$product_options = $this->model_catalog_product->getOptions($this->request->post['master_id']);
 
 			foreach ($product_options as $product_option) {

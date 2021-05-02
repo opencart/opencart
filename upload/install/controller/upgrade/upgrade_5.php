@@ -17,8 +17,6 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 					$module_data = [];
 
 					if (in_array($result['code'], ['latest', 'bestseller', 'special', 'featured'])) {
-
-
 						if ($value) {
 
 							foreach ($value as $k => $v) {
@@ -47,7 +45,6 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 								if ($result['code'] == 'featured') {
 									foreach ($query->rows as $result2) {
-
 										if ($result2['key'] == 'featured_product') {
 
 											$module_data['product'] = explode(',', $result2['value']);
@@ -64,7 +61,6 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 												$module_data['limit'] = 4;
 											}
 										}
-
 									}
 								}
 
@@ -74,7 +70,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 								$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
 
-								$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
+								$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
 							}
 
 
@@ -98,8 +94,6 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 
 					} elseif (in_array($result['code'], ['banner', 'carousel', 'slideshow'])) {
-
-
 						if ($value) {
 							foreach ($value as $k => $v) {
 								$module_data['name'] = ($result['key'] . '_' . $k);

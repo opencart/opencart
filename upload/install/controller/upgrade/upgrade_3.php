@@ -187,17 +187,19 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				'serialized' => 1
 			];
 
+			// Dashboard
+
+
+
 			// Add missing keys and serialized values
 			foreach ($missing as $setting) {
 				$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = '" . $this->db->escape($setting['key']) . "'");
 
-				if (!$query->num_rows) {
-					if (!isset($settings[$setting['key']])) {
-						if (!$setting['serialized']) {
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = '" . $this->db->escape($setting['key']) . "', `value` = '" . $this->db->escape($setting['value']) . "', `code` = '" . $this->db->escape($setting['code']) . "', `serialized` = '0', `store_id` = '0'");
-						} else {
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = '" . $this->db->escape($setting['key']) . "', `value` = '" . $this->db->escape(json_encode($setting['value'])) . "', `code` = '" . $this->db->escape($setting['code']) . "', `serialized` = '1', `store_id` = '0'");
-						}
+				if (!$query->num_rows && !isset($settings[$setting['key']])) {
+					if (!$setting['serialized']) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = '" . $this->db->escape($setting['key']) . "', `value` = '" . $this->db->escape($setting['value']) . "', `code` = '" . $this->db->escape($setting['code']) . "', `serialized` = '0', `store_id` = '0'");
+					} else {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = '" . $this->db->escape($setting['key']) . "', `value` = '" . $this->db->escape(json_encode($setting['value'])) . "', `code` = '" . $this->db->escape($setting['code']) . "', `serialized` = '1', `store_id` = '0'");
 					}
 				}
 			}
@@ -241,8 +243,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'dashboard'");
 
 			if (!$query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'payment_free_checkout_order_status_id' WHERE `key` = 'free_checkout_order_status_id'");
-
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'activity'");
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'sale'");
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'recent'");
@@ -276,7 +276,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'dashboard_recent', `key` = 'dashboard_recent_sort_order', `value` = '8', `serialized` = '0'");
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'dashboard_activity', `key` = 'dashboard_activity_width', `value` = '4', `serialized` = '0'");
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'dashboard_recent', `key` = 'dashboard_recent_width', `value` = '8', `serialized` = '0'");
-
 			}
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
@@ -285,7 +284,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 3, 3, 8);
 
-			$json['next'] = $this->url->link('upgrade/upgrade_4', true);
+			$json['next'] = $this->url->link('upgrade/upgrade_4', [], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

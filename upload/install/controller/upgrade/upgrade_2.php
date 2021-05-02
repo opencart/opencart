@@ -367,6 +367,20 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Convert image/data to image/catalog
+		$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "option_value` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value, 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value, 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `description` = REPLACE (description, 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `description` = REPLACE (description, 'data/', 'catalog/')");
+		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `description` = REPLACE (description, 'data/', 'catalog/')");
+
 		// If create any missing storage directories
 		$directories = [
 			'backup',
@@ -447,7 +461,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
 
-			$json['next'] = $this->url->link('upgrade/upgrade_3', true);
+			$json['next'] = $this->url->link('upgrade/upgrade_3', [], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

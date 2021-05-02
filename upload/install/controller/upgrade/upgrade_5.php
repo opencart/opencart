@@ -189,7 +189,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 5, 5, 8);
 
-			$json['next'] = $this->url->link('upgrade/upgrade_6', true);
+			$json['next'] = $this->url->link('upgrade/upgrade_6', [], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

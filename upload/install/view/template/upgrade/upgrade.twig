@@ -55,51 +55,48 @@ $('#button-continue').on('click', function() {
         $('#progress-text').html('');
     }
 
-    if (next) {
-        console.log(next);
+    console.log(next);
 
+    $.ajax({
+        url: next,
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
 
-        $.ajax({
-            url: next,
-            dataType: 'json',
-            beforeSend: function() {
-                $(element).button('loading');
-            },
-            complete: function() {
-                $(element).button('reset');
-            },
-            success: function(json) {
-                console.log(json);
-
-                if (json['error']) {
-                    $('#progress-bar').addClass('progress-bar-danger');
-                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-                }
-
-                if (json['success']) {
-                    $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-                    $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
-                }
-
-                if (json['next']) {
-                    next = json['next'];
-
-                    $('#button-continue').trigger('click');
-                } else {
-                    next = '';
-                }
-
-                step++;
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            if (json['error']) {
+                $('#progress-bar').addClass('progress-bar-danger');
+                $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
             }
-        }).done(function() {
-            console.log('done');
-        });
-    }
+
+            if (json['success']) {
+                $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+                $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
+            }
+
+            if (json['next']) {
+                next = json['next'];
+
+                $('#button-continue').trigger('click');
+            } else {
+                next = '';
+            }
+
+            step++;
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+            next = '';
+
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script>
 {{ footer }}

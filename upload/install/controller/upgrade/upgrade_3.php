@@ -431,7 +431,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			];
 
 			foreach ($remove as $key) {
-				$this->db->query("DELETE FROM `" . DB_PREFIX . "settings` WHERE `key` = '" . $this->db->escape($key) . "'");
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = '" . $this->db->escape($key) . "'");
 			}
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

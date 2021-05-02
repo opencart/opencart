@@ -47,18 +47,24 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 								if ($result['code'] == 'featured') {
 									foreach ($query->rows as $result2) {
+
 										if ($result2['key'] == 'featured_product') {
-											$module_data['product'] = explode(",", $result2['value']);
+
+											$module_data['product'] = explode(',', $result2['value']);
 											$module_data['limit'] = 4;
+
 											break;
 										} else {
 											$featured_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'featured_product'");
 
 											if ($featured_product_query->num_rows) {
+
 												$module_data['product'] = explode(",", $featured_product_query->row['value']);
+
 												$module_data['limit'] = 4;
 											}
 										}
+
 									}
 								}
 
@@ -146,7 +152,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 
 								foreach ($v['description'] as $language_id => $description) {
 									$module_data['module_description'][$language_id]['title'] = '';
-									$module_data['module_description'][$language_id]['description'] = str_replace('image/data', 'image/catalo   g', $description);
+									$module_data['module_description'][$language_id]['description'] = str_replace('image/data', 'image/catalog', $description);
 								}
 
 								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
@@ -189,7 +195,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 5, 5, 8);
 
-			$json['next'] = $this->url->link('upgrade/upgrade_6', [], true);
+			$json['next'] = $this->url->link('upgrade/upgrade_6', '', true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

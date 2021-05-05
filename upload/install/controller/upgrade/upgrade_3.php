@@ -6,6 +6,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Adds any missing setting keys or default values that need changing or removed
 		try {
 			// Alter setting table
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "setting' AND COLUMN_NAME = 'group'");
@@ -187,202 +188,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				'serialized' => 1
 			];
 
-			// Add missing extensions for pre dashboard extensions
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'dashboard'");
-
-			if (!$query->num_rows) {
-				// Dashboard Activity
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'activity'");
-
-				$missing[] = [
-					'key'        => 'dashboard_activity_width',
-					'value'      => 4,
-					'code'       => 'dashboard_activity',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_activity_status',
-					'value'      => 1,
-					'code'       => 'dashboard_activity',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_activity_sort_order',
-					'value'      => 7,
-					'code'       => 'dashboard_activity',
-					'serialized' => 0
-				];
-
-				// Dashboard Sale
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'sale'");
-
-				$missing[] = [
-					'key'        => 'dashboard_sale_width',
-					'value'      => 3,
-					'code'       => 'dashboard_sale',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_sale_status',
-					'value'      => 1,
-					'code'       => 'dashboard_sale',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_sale_sort_order',
-					'value'      => 2,
-					'code'       => 'dashboard_sale',
-					'serialized' => 0
-				];
-
-				// Dashboard Chart
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'chart'");
-
-				$missing[] = [
-					'key'        => 'dashboard_chart_width',
-					'value'      => 6,
-					'code'       => 'dashboard_chart',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_chart_status',
-					'value'      => 1,
-					'code'       => 'dashboard_chart',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_chart_sort_order',
-					'value'      => 6,
-					'code'       => 'dashboard_chart',
-					'serialized' => 0
-				];
-
-				// Dashboard Customer
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'customer'");
-
-				$missing[] = [
-					'key'        => 'dashboard_customer_width',
-					'value'      => 3,
-					'code'       => 'dashboard_customer',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_customer_status',
-					'value'      => 1,
-					'code'       => 'dashboard_customer',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_customer_sort_order',
-					'value'      => 3,
-					'code'       => 'dashboard_customer',
-					'serialized' => 0
-				];
-
-				// Dashboard Map
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'map'");
-
-				$missing[] = [
-					'key'        => 'dashboard_map_width',
-					'value'      => 6,
-					'code'       => 'dashboard_map',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_map_status',
-					'value'      => 1,
-					'code'       => 'dashboard_map',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_map_sort_order',
-					'value'      => 5,
-					'code'       => 'dashboard_map',
-					'serialized' => 0
-				];
-
-				// Dashboard Online
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'online'");
-
-				$missing[] = [
-					'key'        => 'dashboard_online_width',
-					'value'      => 3,
-					'code'       => 'dashboard_online',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_online_status',
-					'value'      => 1,
-					'code'       => 'dashboard_online',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_online_sort_order',
-					'value'      => 4,
-					'code'       => 'dashboard_online',
-					'serialized' => 0
-				];
-
-				// Dashboard Order
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'order'");
-
-				$missing[] = [
-					'key'        => 'dashboard_order_width',
-					'value'      => 3,
-					'code'       => 'dashboard_order',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_order_status',
-					'value'      => 1,
-					'code'       => 'dashboard_order',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_order_sort_order',
-					'value'      => 1,
-					'code'       => 'dashboard_order',
-					'serialized' => 0
-				];
-
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `extension` = 'opencart', `type` = 'dashboard', `code` = 'recent'");
-
-				$missing[] = [
-					'key'        => 'dashboard_recent_width',
-					'value'      => 8,
-					'code'       => 'dashboard_recent',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_recent_status',
-					'value'      => 1,
-					'code'       => 'dashboard_recent',
-					'serialized' => 0
-				];
-
-				$missing[] = [
-					'key'        => 'dashboard_recent_sort_order',
-					'value'      => 8,
-					'code'       => 'dashboard_recent',
-					'serialized' => 0
-				];
-			}
-
 			// Add missing keys and serialized values
 			foreach ($missing as $setting) {
 				$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = '" . $this->db->escape($setting['key']) . "'");
@@ -397,6 +202,11 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->cache->delete('language');
+
+			// Get all setting columns from extension table
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
+
+
 
 			// Get all setting columns from extension table
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
@@ -431,7 +241,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			];
 
 			foreach ($remove as $key) {
-				$this->db->query("DELETE FROM `" . DB_PREFIX . "settings` WHERE `key` = '" . $this->db->escape($key) . "'");
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = '" . $this->db->escape($key) . "'");
 			}
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

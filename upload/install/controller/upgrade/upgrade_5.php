@@ -1,194 +1,250 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
-class Upgrade5 extends \Opencart\System\Engine\Controller {
+class Upgrade4 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');
 
 		$json = [];
 
+		// Adds missing events
 		try {
-			// Convert 1.5.x core module format to 2.x (core modules only)
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `serialized` = '1'");
+			// Add missing default events
+			$events = [];
 
-			foreach ($query->rows as $result) {
-				if ($result['serialized']) {
-					$value = json_decode($result['value'], true);
+			$events[] = [
+				'code' => 'activity_customer_add',
+				'trigger' => 'catalog/model/account/customer/addCustomer/after',
+				'action' => 'event/activity|addCustomer'
+			];
 
-					$module_data = [];
+			$events[] = [
+				'code' => 'activity_customer_edit',
+				'trigger' => 'catalog/model/account/customer/editCustomer/after',
+				'action' => 'event/activity|editCustomer'
+			];
 
-					if (in_array($result['code'], ['latest', 'bestseller', 'special', 'featured'])) {
+			$events[] = [
+				'code' => 'activity_customer_password',
+				'trigger' => 'catalog/model/account/customer/editPassword/after',
+				'action' => 'event/activity|editPassword'
+			];
 
+			$events[] = [
+				'code' => 'activity_customer_forgotten',
+				'trigger' => 'catalog/model/account/customer/editCode/after',
+				'action' => 'event/activity|forgotten'
+			];
 
-						if ($value) {
+			$events[] = [
+				'code' => 'activity_transaction',
+				'trigger' => 'catalog/model/account/customer/addTransaction/after',
+				'action' => 'event/activity|addTransaction'
+			];
 
-							foreach ($value as $k => $v) {
+			$events[] = [
+				'code' => 'activity_customer_login',
+				'trigger' => 'catalog/model/account/customer/deleteLoginAttempts/after',
+				'action' => 'event/activity|login'
+			];
 
-								// Since 2.x doesn't look good with modules as side boxes, set to content bottom
-								if ($v['position'] == 'column_left' || $v['position'] == 'column_right') {
-									$v['position'] = 'content_bottom';
-								}
+			$events[] = [
+				'code' => 'activity_address_add',
+				'trigger' => 'catalog/model/account/address/addAddress/after',
+				'action' => 'event/activity|addAddress'
+			];
 
-								$module_data['name'] = ($result['key'] . '_' . $k);
-								$module_data['status'] = $v['status'];
+			$events[] = [
+				'code' => 'activity_address_edit',
+				'trigger' => 'catalog/model/account/address/editAddress/after',
+				'action' => 'event/activity|editAddress'
+			];
 
-								if (isset($v['image_width'])) {
-									$module_data['width'] = $v['image_width'];
-								}
+			$events[] = [
+				'code' => 'activity_address_delete',
+				'trigger' => 'catalog/model/account/address/deleteAddress/after',
+				'action' => 'event/activity|deleteAddress'
+			];
 
-								if (isset($v['image_height'])) {
-									$module_data['height'] = $v['image_height'];
-								}
+			$events[] = [
+				'code' => 'activity_affiliate_add',
+				'trigger' => 'catalog/model/account/customer/addAffiliate/after',
+				'action' => 'event/activity|addAffiliate'
+			];
 
-								if (isset($v['limit'])) {
-									$module_data['limit'] = $v['limit'];
-								} else {
-									$module_data['limit'] = 4;
-								}
+			$events[] = [
+				'code' => 'activity_affiliate_edit',
+				'trigger' => 'catalog/model/account/customer/editAffiliate/after',
+				'action' => 'event/activity|editAffiliate'
+			];
 
-								if ($result['code'] == 'featured') {
-									foreach ($query->rows as $result2) {
+			$events[] = [
+				'code' => 'activity_order_add',
+				'trigger' => 'catalog/model/checkout/order/addHistory/before',
+				'action' => 'event/activity|addHistory'
+			];
 
-										if ($result2['key'] == 'featured_product') {
+			$events[] = [
+				'code' => 'activity_return_add',
+				'trigger' => 'catalog/model/account/returns/addReturn/after',
+				'action' => 'event/activity|addReturn'
+			];
 
-											$module_data['product'] = explode(',', $result2['value']);
-											$module_data['limit'] = 4;
+			$events[] = [
+				'code' => 'mail_transaction',
+				'trigger' => 'catalog/model/account/customer/addTransaction/after',
+				'action' => 'mail/transaction'
+			];
 
-											break;
-										} else {
-											$featured_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'featured_product'");
+			$events[] = [
+				'code' => 'mail_forgotten',
+				'trigger' => 'catalog/model/account/customer/editCode/after',
+				'action' => 'mail/forgotten'
+			];
 
-											if ($featured_product_query->num_rows) {
+			$events[] = [
+				'code' => 'mail_customer_add',
+				'trigger' => 'catalog/model/account/customer/addCustomer/after',
+				'action' => 'mail/register'
+			];
 
-												$module_data['product'] = explode(",", $featured_product_query->row['value']);
+			$events[] = [
+				'code' => 'mail_customer_alert',
+				'trigger' => 'catalog/model/account/customer/addCustomer/after',
+				'action' => 'mail/register|alert'
+			];
 
-												$module_data['limit'] = 4;
-											}
-										}
+			$events[] = [
+				'code' => 'mail_affiliate_add',
+				'trigger' => 'catalog/model/account/customer/addAffiliate/after',
+				'action' => 'mail/affiliate'
+			];
 
-									}
-								}
+			$events[] = [
+				'code' => 'mail_affiliate_alert',
+				'trigger' => 'catalog/model/account/customer/addAffiliate/after',
+				'action' => 'mail/affiliate|alert'
+			];
 
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
+			$events[] = [
+				'code' => 'mail_voucher',
+				'trigger' => 'catalog/model/checkout/order/addHistory/after',
+				'action' => 'account/voucher|send'
+			];
 
-								$module_id = $this->db->getLastId();
+			$events[] = [
+				'code' => 'mail_order_add',
+				'trigger' => 'catalog/model/checkout/order/addHistory/before',
+				'action' => 'mail/order'
+			];
 
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
+			$events[] = [
+				'code' => 'mail_order_alert',
+				'trigger' => 'catalog/model/checkout/order/addHistory/before',
+				'action' => 'mail/order|alert'
+			];
 
-								$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
-							}
+			$events[] = [
+				'code' => 'statistics_review_add',
+				'trigger' => 'catalog/model/catalog/review/addReview/after',
+				'action' => 'event/statistics|addReview'
+			];
 
+			$events[] = [
+				'code' => 'statistics_return_add',
+				'trigger' => 'catalog/model/account/returns/addReturn/after',
+				'action' => 'event/statistics|addReturn'
+			];
 
-						} else {
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
-						}
+			$events[] = [
+				'code' => 'statistics_order_history',
+				'trigger' => 'catalog/model/checkout/order/addHistory/after',
+				'action' => 'event/statistics|addHistory'
+			];
 
+			$events[] = [
+				'code' => 'admin_mail_affiliate_approve',
+				'trigger' => 'admin/model/customer/customer_approval/approveAffiliate/after',
+				'action' => 'mail/affiliate|approve'
+			];
 
+			$events[] = [
+				'code' => 'admin_mail_affiliate_deny',
+				'trigger' => 'admin/model/customer/customer_approval/denyAffiliate/after',
+				'action' => 'mail/affiliate|deny'
+			];
 
-					} elseif (in_array($result['code'], ['category', 'account', 'affiliate', 'filter'])) {
+			$events[] = [
+				'code' => 'admin_mail_customer_approve',
+				'trigger' => 'admin/model/customer/customer_approval/approveCustomer/after',
+				'action' => 'mail/customer|approve'
+			];
 
+			$events[] = [
+				'code' => 'admin_mail_customer_deny',
+				'trigger' => 'admin/model/customer/customer_approval/denyCustomer/after',
+				'action' => 'mail/customer|deny'
+			];
 
-						foreach ($value as $k => $v) {
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
-							$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$result['store_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `key` = '" . ($result['code'] . '_status') . "', `value` = '1'");
+			$events[] = [
+				'code' => 'admin_mail_reward',
+				'trigger' => 'admin/model/customer/customer/addReward/after',
+				'action' => 'mail/reward'
+			];
 
-							if ($v['status']) {
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code']) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
-							}
-						}
+			$events[] = [
+				'code' => 'admin_mail_transaction',
+				'trigger' => 'admin/model/customer/customer/addTransaction/after',
+				'action' => 'mail/transaction'
+			];
 
+			$events[] = [
+				'code' => 'admin_mail_return',
+				'trigger' => 'admin/model/sale/return/addReturn/after',
+				'action' => 'mail/return'
+			];
 
-					} elseif (in_array($result['code'], ['banner', 'carousel', 'slideshow'])) {
+			$events[] = [
+				'code' => 'admin_mail_forgotten',
+				'trigger' => 'admin/model/user/user/editCode/after',
+				'action' => 'mail/forgotten'
+			];
 
+			$events[] = [
+				'code' => 'admin_currency_add',
+				'trigger' => 'admin/model/currency/addCurrency/after',
+				'action' => 'event/currency'
+			];
 
-						if ($value) {
-							foreach ($value as $k => $v) {
-								$module_data['name'] = ($result['key'] . '_' . $k);
-								$module_data['status'] = $v['status'];
-								$module_data['banner_id'] = $v['banner_id'];
+			$events[] = [
+				'code' => 'admin_currency_edit',
+				'trigger' => 'admin/model/currency/editCurrency/after',
+				'action' => 'event/currency'
+			];
 
-								if (isset($v['image_width'])) {
-									$module_data['width'] = $v['image_width'];
-								}
+			$events[] = [
+				'code' => 'admin_setting',
+				'trigger' => 'admin/model/setting/setting/editSetting/after',
+				'action' => 'event/currency'
+			];
 
-								if (isset($v['image_height'])) {
-									$module_data['height'] = $v['image_height'];
-								}
+			foreach ($events as $event) {
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($event['code']) . "'");
 
-								if (isset($v['width'])) {
-									$module_data['width'] = $v['width'];
-								}
-
-								if (isset($v['height'])) {
-									$module_data['height'] = $v['height'];
-								}
-
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
-
-								$module_id = $this->db->getLastId();
-
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
-
-								$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = '" . $this->db->escape($result['code']) . "'");
-							}
-						} else {
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = '" . $this->db->escape($result['code']) . "'");
-						}
-
-
-					} elseif (in_array($result['code'], ['welcome'])) {
-						if ($value) {
-							// Install HTML module if not already installed
-							$html_query = $this->db->query("SELECT count(*) FROM `" . DB_PREFIX . "extension` WHERE `code` = 'html'");
-
-							if ($html_query->row['count(*)'] == '0') {
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'module', `code` = 'html'");
-							}
-
-							$result['code'] = 'html';
-
-							foreach ($value as $k => $v) {
-								$module_data['name'] = ($result['key'] . '_' . $k);
-								$module_data['status'] = $v['status'];
-
-								foreach ($v['description'] as $language_id => $description) {
-									$module_data['module_description'][$language_id]['title'] = '';
-									$module_data['module_description'][$language_id]['description'] = str_replace('image/data', 'image/catalog', $description);
-								}
-
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
-
-								$module_id = $this->db->getLastId();
-
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$v['layout_id'] . "', `code` = '" . $this->db->escape($result['code'] . '.' . $module_id) . "', `position` = '" . $this->db->escape($v['position']) . "', `sort_order` = '" . (int)$v['sort_order'] . "'");
-
-								$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$result['store_id'] . "' AND `code` = 'welcome'");
-							}
-						} else {
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `code` = 'welcome'");
-						}
-					} else {
-						// Could add code for other types here
-						// If module has position, but not a core module, then disable it because it likely isn't compatible
-						if (!empty($value)) {
-							foreach ($value as $k => $v) {
-								if (isset($v['position'])) {
-									$module_data = $v;
-
-									$module_data['name'] = ($result['key'] . '_' . $k);
-									$module_data['status'] = '0'; // Disable non-core modules
-
-									$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($result['key']) . '_' . $k . "', `code` = '" . $this->db->escape($result['code']) . "', `setting` = '" . $this->db->escape(json_encode($module_data)) . "'");
-								}
-							}
-						} else {
-							$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
-						}
-					}
-				} else {
-					// Something should go here?
+				if (!$query->num_rows) {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($event['code']) . "', `trigger` = '" . $this->db->escape($event['trigger']) . "', `action` = '" . $this->db->escape($event['action']) . "', `status` = '1', `sort_order` = '0'");
 				}
 			}
-		} catch(\ErrorException $exception) {
+
+			// Alter events table
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "event' AND COLUMN_NAME = 'date_added'");
+
+			if ($query->num_rows) {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "event` DROP COLUMN `date_added`");
+			}
+
+			// Update current keys
+			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = 'admin/model/sale/returns/addHistory/after' WHERE `code` = 'admin_mail_return'");
+		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 

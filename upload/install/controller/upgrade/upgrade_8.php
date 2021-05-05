@@ -20,8 +20,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group_description` SET `customer_group_id` = '" . (int)$customer_group['customer_group_id'] . "', `language_id` = '" . (int)$language['language_id'] . "', `name` = '" . $this->db->escape($customer_group['name']) . "'");
 					}
 				}
-
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");
 			}
 
 			// Affiliate customer merge code
@@ -72,22 +70,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `affiliate_id` = '" . (int)$customer_id . "' WHERE `affiliate_id` = '" . (int)$affiliate['affiliate_id'] . "'");
 				}
-
-				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate`");
-
-				$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
-
-				if ($affiliate_query->num_rows) {
-					$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
-				}
-
-				$affiliate_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_login'");
-
-				if ($affiliate_query->num_rows) {
-					$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_login`");
-				}
-
-				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_transaction`");
 			}
 
 			// order_custom_field
@@ -103,8 +85,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "order_custom_field` SET `order_id` = '" . (int)$result['order_id'] . "', `custom_field_id` = '" . (int)$result['custom_field_id'] . "', `custom_field_value_id` = '" . (int)$result['custom_field_value_id'] . "', `name` = '" . $this->db->escape($result['name']) . "', `value` = '" . $this->db->escape($result['value']) . "'");
 					}
 				}
-
-				$this->db->query("DROP TABLE `" . DB_PREFIX . "order_field`");
 			}
 
 			// order_recurring
@@ -112,7 +92,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `created`");
 			}
 
 			// order_recurring
@@ -120,7 +99,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL OR `recurring_id` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_id`");
 			}
 
 			// order_recurring
@@ -128,7 +106,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_name` = `profile_name` WHERE `recurring_name` IS NULL or `recurring_name` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_name`");
 			}
 
 			// order_recurring
@@ -136,7 +113,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_description` = `profile_description` WHERE `recurring_description` IS NULL OR `recurring_description` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring` DROP `profile_description`");
+
 			}
 
 			// order_recurring_transaction
@@ -144,7 +121,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring_transaction` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "order_recurring_transaction` DROP `created`");
+
 			}
 
 			// Api
@@ -152,14 +129,100 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `name` = `username` WHERE `username` IS NULL or `username` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "api` DROP COLUMN `name`");
+			}
+
+			// Drop Fields
+			$remove = [];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'fax'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'salt'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'approved'
+			];
+
+			$remove[] = [
+				'table' => 'customer_group',
+				'field' => 'name'
+			];
+
+			$remove[] = [
+				'table' => 'order_recurring',
+				'field' => 'profile_name'
+			];
+
+			$remove[] = [
+				'table' => 'order_recurring',
+				'field' => 'profile_description'
+			];
+
+			$remove[] = [
+				'table' => 'order_recurring',
+				'field' => 'profile_id'
+			];
+
+			$remove[] = [
+				'table' => 'order_recurring',
+				'field' => 'created'
+			];
+
+			$remove[] = [
+				'table' => 'order_recurring_transaction',
+				'field' => 'created'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'name'
+			];
+
+			foreach ($remove as $value) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $value['table'] . "' AND COLUMN_NAME = '" . $value['field'] . "'");
+
+				if ($query->num_rows) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $value['table'] . "` DROP `" . $value['field'] . "`");
+				}
+			}
+
+			$this->db->query("DROP TABLE `" . DB_PREFIX . "order_field`");
+
+			// Drop Tables
+			$remove = [
+				'affiliate',
+				'affiliate_activity',
+				'affiliate_login',
+				'affiliate_transaction',
+				'banner_image_description',
+				'banner_image_description',
+				'banner_image_description',
+				'customer_ban_ip'.
+				'customer_field',
+				'order_field'
+			];
+
+
+
+			foreach ($remove as $table) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");
+
+				if ($query->num_rows) {
+					$this->db->query("DROP TABLE `" . DB_PREFIX . $table . "`");
+				}
 			}
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['success'] = sprintf($this->language->get('text_progress'), 7, 7, 8);
+			$json['success'] = sprintf($this->language->get('text_progress'), 8, 8, 8);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

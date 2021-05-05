@@ -6,14 +6,8 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Fixes the serialisation from serialise to json
 		try {
-			// affiliate_activity
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate_activity'");
-
-			if ($query->num_rows) {
-				$this->db->query("DROP TABLE `" . DB_PREFIX . "affiliate_activity`");
-			}
-
 			// customer_activity
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
 
@@ -82,21 +76,12 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
 				}
 			}
-
-			// module
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
-
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['setting'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode(unserialize($result['setting']))) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
-				}
-			}
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 
 		if (!$json) {
-			$json['success'] = sprintf($this->language->get('text_progress'), 4, 4, 8);
+			$json['success'] = sprintf($this->language->get('text_progress'), 6, 6, 8);
 
 			$json['next'] = $this->url->link('upgrade/upgrade_7', '', true);
 		}

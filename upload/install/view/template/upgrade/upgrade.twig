@@ -76,18 +76,21 @@ $('#button-continue').on('click', function() {
 
             if (json['success']) {
                 $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-                $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
             }
+
+            $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
+
+            console.log(((step / {{ total }}) * 100) + '%');
 
             if (json['next']) {
                 next = json['next'];
+
+                step++;
 
                 $('#button-continue').trigger('click');
             } else {
                 next = '';
             }
-
-            step++;
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

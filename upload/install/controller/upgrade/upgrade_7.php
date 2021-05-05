@@ -20,63 +20,28 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET `option_value` = `value`");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `option_value`");
 			}
 
 			// tags
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_tag'");
 
 			if ($query->num_rows) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
+				$language_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
 
-				foreach ($query->rows as $language) {
+				foreach ($language_query->rows as $language) {
 					// Get old tags
-					$query = $this->db->query("SELECT p.`product_id`, GROUP_CONCAT(DISTINCT pt.`tag` order by pt.`tag` ASC SEPARATOR ',') as `tags` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_tag` pt ON (p.`product_id` = pt.`product_id`) WHERE pt.`language_id` = '" . (int)$language['language_id'] . "' GROUP BY p.`product_id`");
+					$product_query = $this->db->query("SELECT p.`product_id`, GROUP_CONCAT(DISTINCT pt.`tag` order by pt.`tag` ASC SEPARATOR ',') as `tags` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_tag` pt ON (p.`product_id` = pt.`product_id`) WHERE pt.`language_id` = '" . (int)$language['language_id'] . "' GROUP BY p.`product_id`");
 
-					if ($query->num_rows) {
-						foreach ($query->rows as $row) {
-							$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `tag` = '" . $this->db->escape(strtolower($row['tags'])) . "' WHERE `product_id` = '" . (int)$row['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
-							$this->db->query("DELETE FROM `" . DB_PREFIX . "product_tag` WHERE `product_id` = '" . (int)$row['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
+					if ($product_query->num_rows) {
+						foreach ($product_query->rows as $product) {
+							$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `tag` = '" . $this->db->escape(strtolower($product['tags'])) . "' WHERE `product_id` = '" . (int)$product['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
+							$this->db->query("DELETE FROM `" . DB_PREFIX . "product_tag` WHERE `product_id` = '" . (int)$product['product_id'] . "' AND `language_id` = '" . (int)$language['language_id'] . "'");
 						}
 					}
 				}
-
-				$this->db->query("DROP TABLE `" . DB_PREFIX . "product_tag`");
-			}
-
-			// custom_field
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'required'");
-
-			if ($query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` DROP `required`");
-			}
-
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'position'");
-
-			if ($query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` DROP `position`");
-			}
-
-			// download
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "download' AND COLUMN_NAME = 'remaining'");
-
-			if ($query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` DROP `remaining`");
 			}
 
 			// Banner
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image' AND COLUMN_NAME = 'language_id'");
-
-			if (!$query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `language_id` INT(11) NOT NULL AFTER `banner_id`");
-			}
-
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image' AND COLUMN_NAME = 'title'");
-
-			if (!$query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `title` VARCHAR(64) NOT NULL AFTER `language_id`");
-			}
-
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "banner_image_description'");
 
 			if ($query->num_rows) {
@@ -91,8 +56,70 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "banner_image` SET `banner_id` = '" . (int)$banner_image['banner_id'] . "', `language_id` = '" . (int)$banner_image_description['language_id'] . "', `title` = '" . $this->db->escape($banner_image_description['title']) . "', `link` = '" . $this->db->escape($banner_image['link']) . "', `image` = '" . $this->db->escape($banner_image['image']) . "', `sort_order` = '" . (int)$banner_image['sort_order'] . "'");
 					}
 				}
+			}
 
-				$this->db->query("DROP TABLE `" . DB_PREFIX . "banner_image_description`");
+			// Drop Fields
+			$remove = [];
+
+			// product_option
+			$remove[] = [
+				'table' => 'product_option',
+				'field' => 'option_value'
+			];
+
+			// custom_field
+			$remove[] = [
+				'table' => 'custom_field',
+				'field' => 'required'
+			];
+
+			$remove[] = [
+				'table' => 'custom_field',
+				'field' => 'position'
+			];
+
+			// download
+			$remove[] = [
+				'table' => 'custom_field',
+				'field' => 'required'
+			];
+
+			$remove[] = [
+				'table' => 'download',
+				'field' => 'remaining'
+			];
+
+			$remove[] = [
+				'table' => 'custom_field',
+				'field' => 'required'
+			];
+
+
+			$remove[] = [
+				'table' => 'banner_image_description',
+				'field' => 'title'
+			];
+
+			foreach ($remove as $value) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $value['table'] . "' AND COLUMN_NAME = '" . $value['field'] . "'");
+
+				if ($query->num_rows) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $value['table'] . "` DROP `" . $value['field'] . "`");
+				}
+			}
+
+			// Drop Tables
+			$remove = [
+				'product_tag',
+				'banner_image_description'
+			];
+
+			foreach ($remove as $table) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");
+
+				if ($query->num_rows) {
+					$this->db->query("DROP TABLE `" . DB_PREFIX . $table . "`");
+				}
 			}
 
 			// Sort the categories to take advantage of the nested set model
@@ -102,7 +129,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = sprintf($this->language->get('text_progress'), 6, 6, 8);
+			$json['success'] = sprintf($this->language->get('text_progress'), 7, 7, 8);
 
 			$json['next'] = $this->url->link('upgrade/upgrade_8', '', true);
 		}
@@ -112,7 +139,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 	}
 
 	// Function to repair any erroneous categories that are not in the category path table.
-	public function repairCategories(int $parent_id = 0): void {
+	private function repairCategories(int $parent_id = 0): void {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
 
 		foreach ($query->rows as $category) {

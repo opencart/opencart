@@ -6,7 +6,6 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// This is a generic upgrade script.
 		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema.
 
 		// Structure
@@ -82,19 +81,31 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 						$this->db->query($sql);
 					}
 
-					// Remove all primary keys and indexes
 					$keys = [];
 
+					// Remove all primary keys and indexes
 					$query = $this->db->query("SHOW INDEXES FROM `" . DB_PREFIX . $table['name'] . "`");
 
 					foreach ($query->rows as $result) {
+						if ($result['Key_name'] == 'PRIMARY') {
+							// We need to remove the AUTO_INCREMENT
+							$field_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND COLUMN_NAME = '" . $result['Column_name'] . "'");
+
+							if ($field_query->num_rows) {
+								$this->db->query("ALTER TABLE " . DB_PREFIX . $table['name'] . " MODIFY " . $result['Column_name'] . " " . $field_query->row['COLUMN_TYPE'] . " NOT NULL");
+							}
+						}
+
 						if (!in_array($result['Key_name'], $keys)) {
+							// Remove indexes below
 							$keys[] = $result['Key_name'];
 						}
 					}
 
 					foreach ($keys as $key) {
-						if ($key == 'PRIMARY') {
+						if ($result['Key_name'] == 'PRIMARY') {
+							echo "ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY" . "\n";
+
 							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
 						} else {
 							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $key . "`");
@@ -148,6 +159,9 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+
+			exit();
+
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

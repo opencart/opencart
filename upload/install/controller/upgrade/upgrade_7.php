@@ -100,11 +100,11 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 				'field' => 'title'
 			];
 
-			foreach ($remove as $value) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $value['table'] . "' AND COLUMN_NAME = '" . $value['field'] . "'");
+			foreach ($remove as $result) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
 
 				if ($query->num_rows) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $value['table'] . "` DROP `" . $value['field'] . "`");
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $result['table'] . "` DROP `" . $result['field'] . "`");
 				}
 			}
 

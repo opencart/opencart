@@ -57,6 +57,8 @@ $('#button-continue').on('click', function() {
 
     console.log(next);
 
+    step++;
+
     $.ajax({
         url: next,
         dataType: 'json',
@@ -80,17 +82,17 @@ $('#button-continue').on('click', function() {
 
             $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
 
-            console.log(((step / {{ total }}) * 100) + '%');
+            console.log(step);
+
+            console.log({{ total }});
 
             if (json['next']) {
                 next = json['next'];
-
-                step++;
-
-                $('#button-continue').trigger('click');
             } else {
                 next = '';
             }
+
+            $('#button-continue').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

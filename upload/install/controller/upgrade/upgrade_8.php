@@ -7,6 +7,13 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
+			// customer_activity
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
+
+			if ($query->num_rows) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
+			}
+
 			// Customer Group
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
 
@@ -72,6 +79,11 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+
+			/***
+			 *
+			 * needs removing
+			 */
 			// order_custom_field
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_field'");
 
@@ -86,6 +98,12 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+
+
+
+
+
+
 
 			// order_recurring
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'created'");
@@ -135,6 +153,26 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			$remove = [];
 
 			$remove[] = [
+				'table' => 'api',
+				'field' => 'name'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'firstname'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'lastname'
+			];
+
+			$remove[] = [
+				'table' => 'api',
+				'field' => 'password'
+			];
+
+			$remove[] = [
 				'table' => 'customer',
 				'field' => 'fax'
 			];
@@ -150,6 +188,11 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$remove[] = [
+				'table' => 'customer_activity',
+				'field' => 'activity_id'
+			];
+
+			$remove[] = [
 				'table' => 'customer_group',
 				'field' => 'name'
 			];
@@ -157,6 +200,11 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			$remove[] = [
 				'table' => 'order_recurring',
 				'field' => 'profile_name'
+			];
+
+			$remove[] = [
+				'table' => 'order',
+				'field' => 'fax'
 			];
 
 			$remove[] = [
@@ -180,19 +228,32 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$remove[] = [
-				'table' => 'api',
-				'field' => 'name'
+				'table' => 'language',
+				'field' => 'directory'
 			];
 
-			foreach ($remove as $value) {
-				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $value['table'] . "' AND COLUMN_NAME = '" . $value['field'] . "'");
+			$remove[] = [
+				'table' => 'location',
+				'field' => 'fax'
+			];
+
+			$remove[] = [
+				'table' => 'store',
+				'field' => 'ssl'
+			];
+
+			$remove[] = [
+				'table' => 'user',
+				'field' => 'salt'
+			];
+
+			foreach ($remove as $result) {
+				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
 
 				if ($query->num_rows) {
-					$this->db->query("ALTER TABLE `" . DB_PREFIX . $value['table'] . "` DROP `" . $value['field'] . "`");
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $result['table'] . "` DROP `" . $result['field'] . "`");
 				}
 			}
-
-			$this->db->query("DROP TABLE `" . DB_PREFIX . "order_field`");
 
 			// Drop Tables
 			$remove = [
@@ -203,12 +264,13 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'banner_image_description',
 				'banner_image_description',
 				'banner_image_description',
-				'customer_ban_ip'.
+				'customer_ban_ip',
 				'customer_field',
-				'order_field'
+				'modification',
+				'order_field',
+				'order_custom_field',
+				'url_alias'
 			];
-
-
 
 			foreach ($remove as $table) {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");

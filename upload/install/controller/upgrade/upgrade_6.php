@@ -8,14 +8,6 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 
 		// Fixes the serialisation from serialise to json
 		try {
-			// customer_activity
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_activity' AND COLUMN_NAME = 'activity_id'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_activity` DROP `activity_id`");
-			}
-
 			// customer
 			$query = $this->db->query("SELECT `customer_id`, `cart`, `wishlist`, `custom_field` FROM `" . DB_PREFIX . "customer` WHERE `custom_field` LIKE 'a:%' OR `cart` LIKE 'a:%' OR `wishlist` LIKE 'a:%'");
 
@@ -30,6 +22,15 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 
 				if (preg_match('/^(a:)/', $result['custom_field'])) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode(unserialize($result['custom_field']))) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+				}
+			}
+
+			// customer_activity
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity` WHERE `data` LIKE 'a:%'");
+
+			foreach ($query->rows as $result) {
+				if (preg_match('/^(a:)/', $result['data'])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
 				}
 			}
 
@@ -65,15 +66,6 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 			foreach ($query->rows as $result) {
 				if (preg_match('/^(a:)/', $result['permission'])) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode(unserialize($result['permission']))) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
-				}
-			}
-
-			// customer_activity
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity` WHERE `data` LIKE 'a:%'");
-
-			foreach ($query->rows as $result) {
-				if (preg_match('/^(a:)/', $result['data'])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode(unserialize($result['data']))) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
 				}
 			}
 		} catch(\ErrorException $exception) {

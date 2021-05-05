@@ -10,7 +10,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		// Structure
 		$this->load->helper('db_schema');
-
+/*
 		try {
 			$tables = db_schema();
 
@@ -91,9 +91,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 							// We need to remove the AUTO_INCREMENT
 							$field_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND COLUMN_NAME = '" . $result['Column_name'] . "'");
 
-							if ($field_query->num_rows) {
-								$this->db->query("ALTER TABLE " . DB_PREFIX . $table['name'] . " MODIFY " . $result['Column_name'] . " " . $field_query->row['COLUMN_TYPE'] . " NOT NULL");
-							}
+							$this->db->query("ALTER TABLE " . DB_PREFIX . $table['name'] . " MODIFY " . $result['Column_name'] . " " . $field_query->row['COLUMN_TYPE'] . " NOT NULL");
 						}
 
 						if (!in_array($result['Key_name'], $keys)) {
@@ -157,13 +155,10 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
-			exit();
-
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
-
+*/
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 1, 1, 8);
 

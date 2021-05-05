@@ -206,11 +206,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			// Get all setting columns from extension table
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
 
-
-
-			// Get all setting columns from extension table
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
-
 			foreach ($query->rows as $extension) {
 				//get all setting from setting table
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `code` = '" . $extension['code'] . "'");

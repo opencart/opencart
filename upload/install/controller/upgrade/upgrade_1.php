@@ -104,8 +104,6 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 					foreach ($keys as $key) {
 						if ($result['Key_name'] == 'PRIMARY') {
-							echo "ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY" . "\n";
-
 							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP PRIMARY KEY");
 						} else {
 							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP INDEX `" . $key . "`");

@@ -10,7 +10,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		// Structure
 		$this->load->helper('db_schema');
-/*
+
 		try {
 			$tables = db_schema();
 
@@ -158,7 +158,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
-*/
+
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 1, 1, 8);
 

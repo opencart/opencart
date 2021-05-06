@@ -76,9 +76,9 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			if (isset($settings['config_limit_admin'])) {
 				$missing[] = [
-					'key' => 'config_pagination_admin',
-					'value' => $settings['config_limit_admin'],
-					'code' => 'config',
+					'key'        => 'config_pagination_admin',
+					'value'      => $settings['config_limit_admin'],
+					'code'       => 'config',
 					'serialized' => 0
 				];
 			}
@@ -120,27 +120,27 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			if (isset($settings['config_smtp_host'])) {
 				$missing[] = [
-					'key' => 'config_mail_smtp_hostname',
-					'value' => $settings['config_smtp_host'],
-					'code' => 'config',
+					'key'        => 'config_mail_smtp_hostname',
+					'value'      => $settings['config_smtp_host'],
+					'code'       => 'config',
 					'serialized' => 0
 				];
 			}
 
 			if (isset($settings['config_smtp_username'])) {
 				$missing[] = [
-					'key' => 'config_mail_smtp_username',
-					'value' => $settings['config_smtp_username'],
-					'code' => 'config',
+					'key'        => 'config_mail_smtp_username',
+					'value'      => $settings['config_smtp_username'],
+					'code'       => 'config',
 					'serialized' => 0
 				];
 			}
 
 			if (isset($settings['config_smtp_password'])) {
 				$missing[] = [
-					'key' => 'config_mail_smtp_password',
-					'value' => $settings['config_smtp_password'],
-					'code' => 'config',
+					'key'        => 'config_mail_smtp_password',
+					'value'      => $settings['config_smtp_password'],
+					'code'       => 'config',
 					'serialized' => 0
 				];
 			}
@@ -148,9 +148,9 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			if (isset($settings['config_smtp_port'])) {
 				$missing[] = [
-					'key' => 'config_mail_smtp_port',
-					'value' => $settings['config_smtp_port'],
-					'code' => 'config',
+					'key'        => 'config_mail_smtp_port',
+					'value'      => $settings['config_smtp_port'],
+					'code'       => 'config',
 					'serialized' => 0
 				];
 			}
@@ -237,6 +237,56 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			foreach ($remove as $key) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = '" . $this->db->escape($key) . "'");
+			}
+
+			// List of default extension to add the opencart extension code to.
+			$extensions = [
+				'cod',
+				'shipping',
+				'sub_total',
+				'tax',
+				'total',
+				'banner',
+				'credit',
+				'flat',
+				'handling',
+				'low_order_fee',
+				'coupon',
+				'category',
+				'account',
+				'reward',
+				'voucher',
+				'free_checkout',
+				'featured',
+				'basic',
+				'activity',
+				'sale',
+				'order',
+				'online',
+				'map',
+				'customer',
+				'chart',
+				'sale_coupon',
+				'customer_search',
+				'customer_transaction',
+				'product_purchased',
+				'product_viewed',
+				'sale_return',
+				'sale_order',
+				'sale_shipping',
+				'sale_tax',
+				'customer_activity',
+				'customer_order',
+				'customer_reward',
+				'ecb'
+			];
+
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension`");
+
+			foreach ($query->rows as $result) {
+				if (!$result['extension'] && in_array($result['code'], $extensions)) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "extension` SET `extension` = 'opencart' WHERE `code` = '" . $this->db->escape($result['code']) . "'");
+				}
 			}
 		} catch(\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());

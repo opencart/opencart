@@ -247,7 +247,6 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			if (!isset($constants['HTTP_SERVER'])) {
 				$json['error'] = $this->language->get('error_server');
 			}

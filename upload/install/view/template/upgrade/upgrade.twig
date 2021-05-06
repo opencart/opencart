@@ -41,36 +41,28 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-var next = '';
+var step = 1;
 
 $('#button-continue').on('click', function() {
-    var element = this;
+    step = 1;
 
-    if (next == '') {
-        next = 'index.php?route=upgrade/upgrade_1';
+    next('index.php?route=upgrade/upgrade_1');
 
-        var step = 0;
+    $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
+    $('#progress-text').html('');
+});
 
-        $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
-        $('#progress-text').html('');
-    }
-
-    console.log(next);
-
-    step++;
-
+function next(url) {
     $.ajax({
-        url: next,
+        url: url,
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $('#button-continue').button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $('#button-continue').button('reset');
         },
         success: function(json) {
-            console.log(json);
-
             if (json['error']) {
                 $('#progress-bar').addClass('progress-bar-danger');
                 $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
@@ -80,28 +72,20 @@ $('#button-continue').on('click', function() {
                 $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
             }
 
-            $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
+            $('#progress-bar').css('width', Math.round((step / {{ total }}) * 100) + '%');
 
-            console.log(step);
-
-            console.log({{ total }});
+            step++;
 
             if (json['next']) {
-                next = json['next'];
-            } else {
-                next = '';
+                next(json['next']);
             }
-
-            $('#button-continue').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-            next = '';
-
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
+}
 //--></script>
 {{ footer }}

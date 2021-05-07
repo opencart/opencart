@@ -32,6 +32,7 @@
 								{% endfor %}
 							</ul>
 							<div class="tab-content">
+								<input type="hidden" name="category_id" value="{{ category_id }}" id="input-category-id"/>
 								{% for language in languages %}
 									<div class="tab-pane" id="language-{{ language.language_id }}">
 										<div class="form-group row required">

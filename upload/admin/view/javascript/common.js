@@ -125,7 +125,9 @@ $(document).on('click', '[data-action]', function() {
         success: function(json) {
             $('.invalid-tooltip, .alert-dismissible').remove();
 
-            console.log(json);
+            for (key in json) {
+                $(form).find('[name=\'' + key + '\']').val(json[key]);
+            }
 
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
@@ -472,14 +474,12 @@ var chain = new Chain();
     // BUTTON DATA-API
     // ===============
 
-    $(document)
-    .on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+    $(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
         var $btn = $(e.target)
         if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
         Plugin.call($btn, 'toggle')
         if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
-    })
-    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+    }).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
         $(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
     })
 }(jQuery);

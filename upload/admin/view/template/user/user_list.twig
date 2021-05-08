@@ -30,7 +30,7 @@
 							<td class="text-left">{{ user.username }}</td>
 							<td class="text-left">{{ user.status }}</td>
 							<td class="text-left">{{ user.date_added }}</td>
-							<td class="text-right"><a href="{{ user.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-right"><a href="{{ user.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}

@@ -21,7 +21,7 @@
 						<td class="text-left">{{ customer_approval.customer_group }}</td>
 						<td class="text-left">{{ customer_approval.type }}</td>
 						<td class="text-left">{{ customer_approval.date_added }}</td>
-						<td class="text-right" style="min-width: 103px;"><a href="{{ customer_approval.approve }}" data-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ customer_approval.deny }}" data-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
+						<td class="text-right" style="min-width: 103px;"><a href="{{ customer_approval.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ customer_approval.deny }}" data-bs-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
 					</tr>
 				{% endfor %}
 			{% else %}

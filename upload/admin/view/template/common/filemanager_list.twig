@@ -1,16 +1,16 @@
 <div class="row mb-3">
 	<div class="col-sm-5">
-		<a href="{{ parent }}" id="button-parent" data-toggle="tooltip" title="{{ button_parent }}" class="btn btn-light"><i class="fas fa-level-up-alt"></i></a> <a href="{{ refresh }}" id="button-refresh" data-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fas fa-sync"></i></a>
-		<button type="button" data-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fas fa-upload"></i></button>
-		<button type="button" data-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="fas fa-folder"></i></button>
-		<button type="button" data-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+		<a href="{{ parent }}" id="button-parent" data-bs-toggle="tooltip" title="{{ button_parent }}" class="btn btn-light"><i class="fas fa-level-up-alt"></i></a> <a href="{{ refresh }}" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fas fa-sync"></i></a>
+		<button type="button" data-bs-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fas fa-upload"></i></button>
+		<button type="button" data-bs-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="fas fa-folder"></i></button>
+		<button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 		<input type="hidden" name="directory" value="{{ directory }}"/>
 	</div>
 	<div class="col-sm-7">
 		<div class="input-group">
 			<input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
 			<div class="input-group-append">
-				<button type="button" id="button-search" data-toggle="tooltip" title="{{ button_search }}" class="btn btn-primary"><i class="fas fa-search"></i></button>
+				<button type="button" id="button-search" data-bs-toggle="tooltip" title="{{ button_search }}" class="btn btn-primary"><i class="fas fa-search"></i></button>
 			</div>
 		</div>
 	</div>

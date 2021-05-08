@@ -22,9 +22,9 @@
 								{% if extension.installed %}
 
 									{% if extension.module %}
-										<a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>
+										<a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>
 									{% else %}
-										<a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+										<a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
 									{% endif %}
 
 								{% else %}
@@ -32,9 +32,9 @@
 								{% endif %}
 
 								{% if not extension.installed %}
-									<a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+									<a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
 								{% else %}
-									<a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+									<a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
 								{% endif %}</td>
 						</tr>
 
@@ -43,7 +43,7 @@
 								<td class="text-left">&nbsp;&nbsp;&nbsp;<i class="fas fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
 								<td class="text-left">{{ module.status }}</td>
 								<td class="text-right">
-									<a href="{{ module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-pencil-alt"></i></a> <a href="{{ module.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+									<a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-pencil-alt"></i></a> <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
 								</td>
 							</tr>
 						{% endfor %}

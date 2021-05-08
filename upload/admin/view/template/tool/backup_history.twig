@@ -16,9 +16,9 @@
             <td>{{ history.size }}</td>
             <td class="d-none d-lg-table-cell">{{ history.date_added }}</td>
             <td class="text-right">
-              <button type="button" value="{{ history.filename }}" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_restore }}" class="btn btn-warning"><i class="fas fa-sync"></i></button>
-              <button type="button" onclick="location = '{{ history.download }}';" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fas fa-download"></i></button>
-              <button type="button" value="{{ history.filename }}" onclick="" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+              <button type="button" value="{{ history.filename }}" data-loading="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_restore }}" class="btn btn-warning"><i class="fas fa-sync"></i></button>
+              <button type="button" onclick="location = '{{ history.download }}';" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fas fa-download"></i></button>
+              <button type="button" value="{{ history.filename }}" onclick="" data-loading="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
             </td>
           </tr>
         {% endfor %}

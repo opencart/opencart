@@ -24,11 +24,11 @@
 						<td class="text-right align-text-top">
 
 							{% if not extension.status %}
-								<a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
-								<a href="{{ extension.delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+								<a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+								<a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
 							{% else %}
-								<a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fas fa-minus-circle"></i></a>
-								<button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="far fa-trash-alt"></i></button>
+								<a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fas fa-minus-circle"></i></a>
+								<button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="far fa-trash-alt"></i></button>
 							{% endif %}
 
 						</td>

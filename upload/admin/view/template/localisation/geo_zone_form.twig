@@ -3,8 +3,8 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="button" data-action="{{ save }}" data-form="#geo-zone-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<button type="button" data-action="{{ save }}" data-form="#geo-zone-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -54,7 +54,7 @@
 												{% endfor %}
 											</select></td>
 										<td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" class="form-control" disabled></select></td>
-										<td class="text-right"><button type="button" onclick="$('#zone-to-geo-zone-row-{{ zone_to_geo_zone_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+										<td class="text-right"><button type="button" onclick="$('#zone-to-geo-zone-row-{{ zone_to_geo_zone_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 									</tr>
 									{% set zone_to_geo_zone_row = zone_to_geo_zone_row + 1 %}
 								{% endfor %}
@@ -62,7 +62,7 @@
 							<tfoot>
 								<tr>
 									<td colspan="2"></td>
-									<td class="text-right"><button type="button" id="button-geo-zone" data-toggle="tooltip" title="{{ button_geo_zone_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+									<td class="text-right"><button type="button" id="button-geo-zone" data-bs-toggle="tooltip" title="{{ button_geo_zone_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
 								</tr>
 							</tfoot>
 						</table>
@@ -83,7 +83,7 @@ $('#button-geo-zone').on('click', function() {
 	{% endfor %}
     html += '  </select></td>';
     html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-control" disabled><option value="0">{{ text_all_zones }}</option></select></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#zone-to-geo-zone-row-' + zone_to_geo_zone_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-right"><button type="button" onclick="$(\'#zone-to-geo-zone-row-' + zone_to_geo_zone_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#zone-to-geo-zone tbody').append(html);

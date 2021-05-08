@@ -18,7 +18,7 @@
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ layout.layout_id }}"/></td>
 							<td class="text-left">{{ layout.name }}</td>
-							<td class="text-right"><a href="{{ layout.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-right"><a href="{{ layout.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}

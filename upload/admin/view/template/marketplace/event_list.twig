@@ -19,9 +19,9 @@
 							<td class="text-right">
 								<button type="button" data-event-description="{{ event.description }}" data-event-trigger="{{ event.trigger }}" data-event-action="{{ event.action }}" class="btn btn-info"><i class="fas fa-info-circle"></i></button>
 								{% if not event.status %}
-									<button type="button" value="{{ event.enable }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+									<button type="button" value="{{ event.enable }}" data-bs-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
 								{% else %}
-									<button type="button" value="{{ event.disable }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+									<button type="button" value="{{ event.disable }}" data-bs-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
 								{% endif %}</td>
 						</tr>
 					{% endfor %}

@@ -36,7 +36,7 @@
 								<span class="badge badge-success">{{ text_complete }}</span>
 							{% endif %}</td>
 						<td class="text-left d-none d-lg-table-cell">{{ gdpr.date_added }}</td>
-						<td class="text-right"><a href="{{ gdpr.approve }}" data-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></a> <a href="{{ gdpr.deny }}" data-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></a> <a href="{{ gdpr.delete }}" data-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+						<td class="text-right"><a href="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></a> <a href="{{ gdpr.deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></a> <a href="{{ gdpr.delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
 					</tr>
 				{% endfor %}
 			{% else %}

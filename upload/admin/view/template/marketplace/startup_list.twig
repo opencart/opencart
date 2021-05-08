@@ -19,9 +19,9 @@
 							<td class="text-left">{{ startup.action }}</td>
 							<td class="text-right">{{ startup.sort_order }}</td>
 							<td class="text-right">{% if not startup.status %}
-									<button type="button" value="{{ startup.enable }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+									<button type="button" value="{{ startup.enable }}" data-bs-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
 								{% else %}
-									<button type="button" value="{{ startup.disable }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+									<button type="button" value="{{ startup.disable }}" data-bs-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
 								{% endif %}</td>
 						</tr>
 					{% endfor %}

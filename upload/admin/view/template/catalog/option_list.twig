@@ -24,7 +24,7 @@
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ option.option_id }}"/></td>
 							<td class="text-left">{{ option.name }}</td>
 							<td class="text-right">{{ option.sort_order }}</td>
-							<td class="text-right"><a href="{{ option.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-right"><a href="{{ option.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}

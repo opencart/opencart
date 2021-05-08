@@ -16,9 +16,9 @@
 						<tr>
 							<td class="text-left" colspan="2"><b>{{ extension.name }}</b></td>
 							<td class="text-right">{% if not extension.installed %}
-									<a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+									<a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
 								{% else %}
-									<a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+									<a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
 								{% endif %}</td>
 						</tr>
 						{% if extension.installed %}
@@ -26,7 +26,7 @@
 								<tr>
 									<td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
 									<td class="text-left">{{ store.status }}</td>
-									<td class="text-right"><a href="{{ store.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+									<td class="text-right"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 								</tr>
 							{% endfor %}
 						{% endif %}

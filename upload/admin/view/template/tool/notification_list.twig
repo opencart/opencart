@@ -20,7 +20,7 @@
 									<br/>
 									<small class="text-muted">{{ notification.date_added }}</small>
 								</td>
-								<td class="text-right"><button value="{{ notification.view }}" data-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fas fa-eye"></i></button></td>
+								<td class="text-right"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fas fa-eye"></i></button></td>
 							</tr>
 						{% else %}
 							<tr id="notification-row-{{ notification_row }}">
@@ -30,7 +30,7 @@
 									<br/>
 									<small class="text-muted">{{ notification.date_added }}</small>
 								</td>
-								<td class="text-right"><button value="{{ notification.view }}" data-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button></td>
+								<td class="text-right"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button></td>
 							</tr>
 						{% endif %}
 						{% set notification_row = notification_row + 1 %}

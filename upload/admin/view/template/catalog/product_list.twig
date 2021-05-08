@@ -44,12 +44,12 @@
 							<td class="text-right">
 								{% if product.variant %}
 									<div class="btn-group">
-										<a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
-										<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"><i class="fas fa-caret-down"></i></button>
+										<a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+										<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"><i class="fas fa-caret-down"></i></button>
 										<div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant_add }}</a></div>
 									</div>
 								{% else %}
-									<a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
+									<a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
 								{% endif %}
 							</td>
 						</tr>

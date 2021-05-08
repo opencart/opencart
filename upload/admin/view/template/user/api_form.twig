@@ -3,8 +3,8 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="submit" data-action="{{ save }}" data-form="#api-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<button type="submit" data-action="{{ save }}" data-form="#api-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -19,9 +19,9 @@
 			<div class="card-body">
 				<form id="api-form">
 					<ul class="nav nav-tabs">
-						<li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-						<li class="nav-item"><a href="#tab-ip" data-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
-						<li class="nav-item"><a href="#tab-session" data-toggle="tab" class="nav-link">{{ tab_session }}</a></li>
+						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+						<li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
+						<li class="nav-item"><a href="#tab-session" data-bs-toggle="tab" class="nav-link">{{ tab_session }}</a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
@@ -69,7 +69,7 @@
 										{% for api_ip in api_ips %}
 											<tr id="ip-row-{{ ip_row }}">
 												<td class="text-left"><input type="text" name="api_ip[]" value="{{ api_ip }}" placeholder="{{ entry_ip }}" class="form-control"/></td>
-												<td class="text-right"><button type="button" onclick="$('#ip-row-{{ ip_row }}').remove()" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+												<td class="text-right"><button type="button" onclick="$('#ip-row-{{ ip_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 											</tr>
 											{% set ip_row = ip_row + 1 %}
 										{% endfor %}
@@ -77,7 +77,7 @@
 									<tfoot>
 										<tr>
 											<td></td>
-											<td class="text-right"><button type="button" id="button-ip" data-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+											<td class="text-right"><button type="button" id="button-ip" data-bs-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
 										</tr>
 									</tfoot>
 								</table>
@@ -103,7 +103,7 @@
 													<td class="text-left">{{ api_session.ip }}</td>
 													<td class="text-left">{{ api_session.date_added }}</td>
 													<td class="text-left">{{ api_session.date_modified }}</td>
-													<td class="text-right"><button type="button" value="{{ api_session.api_session_id }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+													<td class="text-right"><button type="button" value="{{ api_session.api_session_id }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 												</tr>
 											{% endfor %}
 										{% else %}
@@ -140,7 +140,7 @@ var ip_row = {{ ip_row }};
 $('#button-ip').on('click', function() {
     html = '<tr id="ip-row-' + ip_row + '">';
     html += '  <td class="text-right"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip }}" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-right"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#ip tbody').append(html);

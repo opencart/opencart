@@ -3,9 +3,9 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">{% if not error_signature %}
-					<button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
+					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
 				{% else %}
-					<button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
+					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
 				{% endif %}</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -26,7 +26,7 @@
 							<div class="input-group-append dropdown">
 								{% for category in categories %}
 									{% if category.value == filter_category %}
-										<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
+										<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
 									{% endif %}
 								{% endfor %}
 								<div class="dropdown-menu dropdown-menu-right">
@@ -36,7 +36,7 @@
 								</div>
 							</div>
 							<div class="input-group-append">
-								<button type="button" id="button-filter" data-toggle="tooltip" data-title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
+								<button type="button" id="button-filter" data-bs-toggle="tooltip" data-title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
 							</div>
 						</div>
 						<input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>

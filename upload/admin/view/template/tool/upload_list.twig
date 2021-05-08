@@ -18,7 +18,7 @@
 							<td class="text-left">{{ upload.name }}</td>
 							<td class="text-left">{{ upload.filename }}</td>
 							<td class="text-right">{{ upload.date_added }}</td>
-							<td class="text-right"><a href="{{ upload.download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fas fa-download"></i></a></td>
+							<td class="text-right"><a href="{{ upload.download }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fas fa-download"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}

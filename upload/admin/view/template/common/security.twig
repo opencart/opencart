@@ -22,7 +22,7 @@
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend dropdown">
-									<button type="button" id="button-path" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
+									<button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
 									<div class="dropdown-menu">
 										{% for path in paths %}
 											{% if path|length > document_root|length %}

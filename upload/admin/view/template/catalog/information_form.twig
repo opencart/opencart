@@ -3,8 +3,8 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="button" data-action="{{ save }}" data-form="#information-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<button type="button" data-action="{{ save }}" data-form="#information-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -19,16 +19,16 @@
 			<div class="card-body">
 				<form id="information-form">
 					<ul class="nav nav-tabs">
-						<li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-						<li class="nav-item"><a href="#tab-data" data-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
-						<li class="nav-item"><a href="#tab-seo" data-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
-						<li class="nav-item"><a href="#tab-design" data-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
+						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+						<li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
+						<li class="nav-item"><a href="#tab-seo" data-bs-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
+						<li class="nav-item"><a href="#tab-design" data-bs-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
 							<ul class="nav nav-tabs" id="language">
 								{% for language in languages %}
-									<li class="nav-item"><a href="#language-{{ language.language_id }}" data-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+									<li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
 								{% endfor %}
 							</ul>
 							<div class="tab-content">

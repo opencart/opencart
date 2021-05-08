@@ -43,7 +43,7 @@
 							<td class="text-left">{% if custom_field.status %}
 									<span class="badge badge-success">{{ text_enabled }}</span>{% else %}<span class="badge badge-danger">{{ text_disabled }}</span>{% endif %}</td>
 							<td class="text-right d-none d-lg-table-cell">{{ custom_field.sort_order }}</td>
-							<td class="text-right"><a href="{{ custom_field.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-right"><a href="{{ custom_field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}

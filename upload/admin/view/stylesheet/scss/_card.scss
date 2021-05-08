@@ -84,6 +84,9 @@
   background-color: $card-cap-bg;
   border-bottom: $card-border-width solid $card-border-color;
 
+  /* OpenCart Start */
+  font-size: 0.9375rem;
+  /* OpenCart End */
   &:first-child {
     @include border-radius($card-inner-border-radius $card-inner-border-radius 0 0);
   }

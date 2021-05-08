@@ -56,9 +56,9 @@
 							<td class="text-left d-none d-lg-table-cell">{{ voucher.date_added }}</td>
 							<td class="text-right">
 								{% if voucher.order %}
-									<a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+									<a href="{{ voucher.order }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
 								{% endif %}
-								<a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+								<a href="{{ voucher.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}

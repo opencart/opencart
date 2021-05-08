@@ -22,7 +22,7 @@
 							<td class="text-left">{{ recurring.customer }}</td>
 							<td class="text-left">{{ recurring.status }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ recurring.date_added }}</td>
-							<td class="text-right"><a href="{{ recurring.view }}" data-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fas fa-eye"></i></a> <a href="{{ recurring.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-shopping-cart"></i></a></td>
+							<td class="text-right"><a href="{{ recurring.view }}" data-bs-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fas fa-eye"></i></a> <a href="{{ recurring.order }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-shopping-cart"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}

@@ -19,14 +19,14 @@
               <td class="text-left">{{ extension.status }}</td>
               <td class="text-right">{{ extension.sort_order }}</td>
               <td class="text-right">{% if extension.installed %}
-                  <a href="{{ extension.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                  <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                 {% else %}
                   <button type="button" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>
                 {% endif %}
                 {% if not extension.installed %}
-                  <a href="{{ extension.install }}" data-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+                  <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
                 {% else %}
-                  <a href="{{ extension.uninstall }}" data-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+                  <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
                 {% endif %}</td>
             </tr>
           {% endfor %}

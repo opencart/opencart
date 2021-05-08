@@ -5,12 +5,12 @@
 			<div class="float-right">
 
 				{% if not error_signature %}
-					<button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
+					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
 				{% else %}
-					<button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
+					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
 				{% endif %}
 
-				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
 
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -41,10 +41,10 @@
 							{% endfor %}
 						</div>
 						<ul class="nav nav-tabs">
-							<li class="nav-item"><a href="#tab-description" class="nav-link active" data-toggle="tab">{{ tab_general }}</a></li>
-							<li class="nav-item"><a href="#tab-documentation" class="nav-link" data-toggle="tab">{{ tab_documentation }}</a></li>
-							<li class="nav-item"><a href="#tab-download" class="nav-link" data-toggle="tab">{{ tab_download }}</a></li>
-							<li class="nav-item"><a href="#tab-comment" class="nav-link" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
+							<li class="nav-item"><a href="#tab-description" class="nav-link active" data-bs-toggle="tab">{{ tab_general }}</a></li>
+							<li class="nav-item"><a href="#tab-documentation" class="nav-link" data-bs-toggle="tab">{{ tab_documentation }}</a></li>
+							<li class="nav-item"><a href="#tab-download" class="nav-link" data-bs-toggle="tab">{{ tab_download }}</a></li>
+							<li class="nav-item"><a href="#tab-comment" class="nav-link" data-bs-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
 						</ul>
 						<div class="tab-content">
 							<div id="tab-description" class="tab-pane fade show active">{{ description }}</div>

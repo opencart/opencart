@@ -3,8 +3,8 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="button" data-action="{{ save }}" data-form="#tax-class-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<button type="button" data-action="{{ save }}" data-form="#tax-class-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -75,7 +75,7 @@
 												{% endif %}
 											</select></td>
 										<td class="text-left"><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="{{ tax_rule.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
-										<td class="text-right"><button type="button" onclick="$('#tax-rule-row-{{ tax_rule_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+										<td class="text-right"><button type="button" onclick="$('#tax-rule-row-{{ tax_rule_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 									</tr>
 									{% set tax_rule_row = tax_rule_row + 1 %}
 								{% endfor %}
@@ -83,7 +83,7 @@
 							<tfoot>
 								<tr>
 									<td colspan="3"></td>
-									<td class="text-right"><button type="button" id="button-tax-rule" data-toggle="tooltip" title="{{ button_rule_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+									<td class="text-right"><button type="button" id="button-tax-rule" data-bs-toggle="tooltip" title="{{ button_rule_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
 								</tr>
 							</tfoot>
 						</table>
@@ -109,7 +109,7 @@ $('#button-tax-rule').on('click', function() {
     html += '    <option value="store">{{ text_store }}</option>';
     html += '  </select></td>';
     html += '  <td class="text-left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#tax-rule-row-' + tax_rule_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-right"><button type="button" onclick="$(\'#tax-rule-row-' + tax_rule_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#tax-rule tbody').append(html);

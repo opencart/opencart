@@ -22,11 +22,11 @@
 							<td class="text-left">{{ cron.action }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ cron.date_added }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ cron.date_modified }}</td>
-							<td class="text-right"><button type="button" value="{{ cron.run }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fas fa-play"></i></button>
+							<td class="text-right"><button type="button" value="{{ cron.run }}" data-bs-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fas fa-play"></i></button>
 								{% if not cron.status %}
-									<button type="button" value="{{ cron.enable }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+									<button type="button" value="{{ cron.enable }}" data-bs-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
 								{% else %}
-									<button type="button" value="{{ cron.disable }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+									<button type="button" value="{{ cron.disable }}" data-bs-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
 								{% endif %}</td>
 						</tr>
 					{% endfor %}

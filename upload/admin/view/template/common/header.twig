@@ -40,7 +40,7 @@
 				<a href="#" id="button-menu" class="d-inline-block d-lg-none"><span class="fas fa-bars"></span></a>
 				<ul class="nav navbar-nav">
 					<li id="header-notification" class="nav-item dropdown">
-						<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i>{% if notification_total %} <span class="badge badge-danger">{{ notification_total }}</span>{% endif %}</a>
+						<a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i>{% if notification_total %} <span class="badge badge-danger">{{ notification_total }}</span>{% endif %}</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							{% if notifications %}
 								{% for notification in notifications %}
@@ -53,7 +53,7 @@
 						</div>
 					</li>
 					<li id="header-profile" class="nav-item dropdown">
-						<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></span></a>
+						<a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></span></a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle fa-fw"></i> {{ text_profile }}</a>
 							<div class="dropdown-divider"></div>

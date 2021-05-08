@@ -3,8 +3,8 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-right">
-				<button type="button" data-action="{{ save }}" data-form="#layout-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<button type="button" data-action="{{ save }}" data-form="#layout-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -50,7 +50,7 @@
 												{% endfor %}
 											</select></td>
 										<td class="text-left"><input type="text" name="layout_route[{{ route_row }}][route]" value="{{ layout_route.route }}" placeholder="{{ entry_route }}" class="form-control"/></td>
-										<td class="text-right"><button type="button" onclick="$('#route-row-{{ route_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+										<td class="text-right"><button type="button" onclick="$('#route-row-{{ route_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 									</tr>
 									{% set route_row = route_row + 1 %}
 								{% endfor %}
@@ -58,7 +58,7 @@
 							<tfoot>
 								<tr>
 									<td colspan="2"></td>
-									<td class="text-right"><button type="button" onclick="addRoute();" data-toggle="tooltip" title="{{ button_route_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+									<td class="text-right"><button type="button" onclick="addRoute();" data-bs-toggle="tooltip" title="{{ button_route_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
 								</tr>
 							</tfoot>
 						</table>
@@ -102,8 +102,8 @@
 																{% endfor %}
 															</select> <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
-																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<a href="{{ layout_module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -114,7 +114,7 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<td class="text-right"><button type="button" onclick="addModule('column-left');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
+											<td class="text-right"><button type="button" onclick="addModule('column-left');" data-bs-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
 										</tr>
 									</tfoot>
 								</table>
@@ -154,8 +154,8 @@
 																{% endfor %}
 															</select><input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
-																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<a href="{{ layout_module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -166,7 +166,7 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<td class="text-right"><button type="button" onclick="addModule('content-top');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
+											<td class="text-right"><button type="button" onclick="addModule('content-top');" data-bs-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
 										</tr>
 									</tfoot>
 								</table>
@@ -204,8 +204,8 @@
 																{% endfor %}
 															</select> <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
-																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<a href="{{ layout_module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -216,7 +216,7 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<td class="text-right"><button type="button" onclick="addModule('content-bottom');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
+											<td class="text-right"><button type="button" onclick="addModule('content-bottom');" data-bs-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
 										</tr>
 									</tfoot>
 								</table>
@@ -256,8 +256,8 @@
 																{% endfor %}
 															</select> <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/>
 															<div class="input-group-append">
-																<a href="{{ layout_module.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
-																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
+																<a href="{{ layout_module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a>
+																<button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button>
 															</div>
 														</div>
 													</td>
@@ -268,7 +268,7 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<td class="text-right"><button type="button" onclick="addModule('column-right');" data-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
+											<td class="text-right"><button type="button" onclick="addModule('column-right');" data-bs-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle fa-fw"></i></button></td>
 										</tr>
 									</tfoot>
 								</table>
@@ -292,7 +292,7 @@ function addRoute() {
 	{% endfor %}
     html += '  </select></td>';
     html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="{{ entry_route }}" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#route-row-' + route_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-right"><button type="button" onclick="$(\'#route-row-' + route_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#route tbody').append(html);
@@ -320,7 +320,7 @@ function addModule(type) {
     html += '  </select>';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][position]" value="' + type.replaceAll('-', '_') + '" />';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="" />';
-    html += '  <div class="input-group-append"><a href="" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a><button type="button" onclick="$(\'#module-row-' + module_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button></div>';
+    html += '  <div class="input-group-append"><a href="" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt fa-fw"></i></a><button type="button" onclick="$(\'#module-row-' + module_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle fa-fw"></i></button></div>';
     html += '  </div></td>';
     html += '</tr>';
 

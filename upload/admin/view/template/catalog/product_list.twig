@@ -5,11 +5,11 @@
 				<tr>
 					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
 					<td class="text-center">{{ column_image }}</td>
-					<td class="text-left">{% if sort == 'pd.name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
-					<td class="text-left d-none d-lg-table-cell">{% if sort == 'p.model' %}<a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>{% else %}<a href="{{ sort_model }}">{{ column_model }}</a>{% endif %}</td>
-					<td class="text-right">{% if sort == 'p.price' %}<a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a>{% else %}<a href="{{ sort_price }}">{{ column_price }}</a>{% endif %}</td>
-					<td class="text-right">{% if sort == 'p.quantity' %}<a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>{% else %}<a href="{{ sort_quantity }}">{{ column_quantity }}</a>{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-start">{% if sort == 'pd.name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
+					<td class="text-start d-none d-lg-table-cell">{% if sort == 'p.model' %}<a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>{% else %}<a href="{{ sort_model }}">{{ column_model }}</a>{% endif %}</td>
+					<td class="text-end">{% if sort == 'p.price' %}<a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a>{% else %}<a href="{{ sort_price }}">{{ column_price }}</a>{% endif %}</td>
+					<td class="text-end">{% if sort == 'p.quantity' %}<a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a>{% else %}<a href="{{ sort_quantity }}">{{ column_quantity }}</a>{% endif %}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -18,30 +18,30 @@
 						<tr{% if not product.variant %} class="table-warning"{% endif %}>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ product.product_id }}"/></td>
 							<td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
-							<td class="text-left">{{ product.name }}
+							<td class="text-start">{{ product.name }}
 								<br/>
 								{% if product.status %}
 									<small class="text-success">{{ text_enabled }}</small>
 								{% else %}
 									<small class="text-danger">{{ text_disabled }}</small>
 								{% endif %}</td>
-							<td class="text-left d-none d-lg-table-cell">{{ product.model }}</td>
-							<td class="text-right">
+							<td class="text-start d-none d-lg-table-cell">{{ product.model }}</td>
+							<td class="text-end">
 								{% if product.special %}<span style="text-decoration: line-through;">{{ product.price }}</span>
 									<br/>
 									<div class="text-danger">{{ product.special }}</div>
 								{% else %}
 									{{ product.price }}
 								{% endif %}</td>
-							<td class="text-right">
+							<td class="text-end">
 								{% if product.quantity <= 0 %}
-									<span class="badge badge-warning">{{ product.quantity }}</span>
+									<span class="badge bg-warning">{{ product.quantity }}</span>
 								{% elseif product.quantity <= 5 %}
-									<span class="badge badge-danger">{{ product.quantity }}</span>
+									<span class="badge bg-danger">{{ product.quantity }}</span>
 								{% else %}
-									<span class="badge badge-success">{{ product.quantity }}</span>
+									<span class="badge bg-success">{{ product.quantity }}</span>
 								{% endif %}</td>
-							<td class="text-right">
+							<td class="text-end">
 								{% if product.variant %}
 									<div class="btn-group">
 										<a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
@@ -63,7 +63,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

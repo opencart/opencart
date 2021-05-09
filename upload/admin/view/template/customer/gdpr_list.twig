@@ -3,11 +3,11 @@
 		<thead>
 			<tr>
 				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-				<td class="text-left">{{ column_email }}</td>
-				<td class="text-left">{{ column_request }}</td>
-				<td class="text-left">{{ column_status }}</td>
-				<td class="text-left d-none d-lg-table-cell">{{ column_date_added }}</td>
-				<td class="text-right" style="min-width: 150px;">{{ column_action }}</td>
+				<td class="text-start">{{ column_email }}</td>
+				<td class="text-start">{{ column_request }}</td>
+				<td class="text-start">{{ column_status }}</td>
+				<td class="text-start d-none d-lg-table-cell">{{ column_date_added }}</td>
+				<td class="text-end" style="min-width: 150px;">{{ column_action }}</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -15,28 +15,28 @@
 				{% for gdpr in gdprs %}
 					<tr>
 						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ gdpr.gdpr_id }}"/></td>
-						<td class="text-left">
+						<td class="text-start">
 							{% if gdpr.edit %}
 								<a href="{{ gdpr.edit }}">{{ gdpr.email }}</a>
 							{% else %}
 								{{ gdpr.email }}
 							{% endif %}
 						</td>
-						<td class="text-left">{{ gdpr.action }}</td>
-						<td class="text-left">
+						<td class="text-start">{{ gdpr.action }}</td>
+						<td class="text-start">
 							{% if gdpr.status == '-1' %}
-								<span class="badge badge-danger">{{ text_denied }}</span>
+								<span class="badge bg-danger">{{ text_denied }}</span>
 							{% elseif gdpr.status == '0' %}
-								<span class="badge badge-secondary">{{ text_unverified }}</span>
+								<span class="badge bg-secondary">{{ text_unverified }}</span>
 							{% elseif gdpr.status == '1' %}
-								<span class="badge badge-warning">{{ text_pending }}</span>
+								<span class="badge bg-warning">{{ text_pending }}</span>
 							{% elseif gdpr.status == '2' %}
-								<span class="badge badge-info">{{ text_processing }}</span>
+								<span class="badge bg-info">{{ text_processing }}</span>
 							{% elseif gdpr.status == '3' %}
-								<span class="badge badge-success">{{ text_complete }}</span>
+								<span class="badge bg-success">{{ text_complete }}</span>
 							{% endif %}</td>
-						<td class="text-left d-none d-lg-table-cell">{{ gdpr.date_added }}</td>
-						<td class="text-right"><a href="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></a> <a href="{{ gdpr.deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></a> <a href="{{ gdpr.delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+						<td class="text-start d-none d-lg-table-cell">{{ gdpr.date_added }}</td>
+						<td class="text-end"><a href="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></a> <a href="{{ gdpr.deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></a> <a href="{{ gdpr.delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
 					</tr>
 				{% endfor %}
 			{% else %}
@@ -48,6 +48,6 @@
 	</table>
 </div>
 <div class="row">
-	<div class="col-sm-6 text-left">{{ pagination }}</div>
-	<div class="col-sm-6 text-right">{{ results }}</div>
+	<div class="col-sm-6 text-start">{{ pagination }}</div>
+	<div class="col-sm-6 text-end">{{ results }}</div>
 </div>

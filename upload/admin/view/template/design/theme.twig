@@ -75,13 +75,13 @@ $('select[name=\'store_id\']').on('change', function(e) {
 
             if (json['directory']) {
                 for (i = 0; i < json['directory'].length; i++) {
-                    html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+                    html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-end"></i></a>';
                 }
             }
 
             if (json['file']) {
                 for (i = 0; i < json['file'].length; i++) {
-                    html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+                    html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-end"></i></a>';
                 }
             }
 
@@ -116,32 +116,32 @@ $('#path').on('click', 'a.directory', function(e) {
 
             if (json['directory']) {
                 for (i = 0; i < json['directory'].length; i++) {
-                    html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+                    html += '<a href="' + json['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-end"></i></a>';
                 }
             }
 
             if (json['file']) {
                 for (i = 0; i < json['file'].length; i++) {
-                    html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+                    html += '<a href="' + json['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-end"></i></a>';
                 }
             }
 
             if (json['extension']) {
                 if (json['extension']['directory']) {
                     for (i = 0; i < json['extension']['directory'].length; i++) {
-                        html += '<a href="' + json['extension']['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['extension']['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+                        html += '<a href="' + json['extension']['directory'][i]['path'] + '" class="list-group-item list-group-item-action directory">' + json['extension']['directory'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-end"></i></a>';
                     }
                 }
 
                 if (json['extension']['file']) {
                     for (i = 0; i < json['extension']['file'].length; i++) {
-                        html += '<a href="' + json['extension']['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['extension']['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-right"></i></a>';
+                        html += '<a href="' + json['extension']['file'][i]['path'] + '" class="list-group-item list-group-item-action file">' + json['extension']['file'][i]['name'] + ' <i class="fas fa-arrow-right fa-fw float-end"></i></a>';
                     }
                 }
             }
 
             if (json['back']) {
-                html += '<a href="' + json['back']['path'] + '" class="list-group-item list-group-item-action directory">' + json['back']['name'] + ' <i class="fas fa-arrow-left fa-fw float-right"></i></a>';
+                html += '<a href="' + json['back']['path'] + '" class="list-group-item list-group-item-action directory">' + json['back']['name'] + ' <i class="fas fa-arrow-left fa-fw float-end"></i></a>';
             }
 
             $('#path').html(html);
@@ -192,7 +192,7 @@ $('#path').on('click', 'a.file', function(e) {
                     html += '  <input type="hidden" name="store_id" value="' + $('select[name=\'store_id\']').val() + '" />';
                     html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" />';
                     html += '  <br />';
-                    html += '  <div class="float-right">';
+                    html += '  <div class="float-end">';
                     html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
                     html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
                     html += '  </div>';
@@ -362,7 +362,7 @@ $('#history').on('click', '.btn-primary', function(e) {
                     html += '  <input type="hidden" name="store_id" value="' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '" />';
                     html += '  <input type="hidden" name="path" value="' + $(element).parent().parent().find('input[name=\'path\']').val() + '.twig" />';
                     html += '  <br />';
-                    html += '  <div class="float-right">';
+                    html += '  <div class="float-end">';
                     html += '    <button type="button" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
                     html += '    <button data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
                     html += '  </div>';

@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#user-group-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -18,13 +18,13 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="user-group-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label class="col-sm-2 col-form-label">{{ entry_permission }}</label>
 						<div class="col-sm-10">
 							<div id="user-group-permission" class="form-control" style="height: 250px; overflow: auto;">
@@ -62,7 +62,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label class="col-sm-2 col-form-label">{{ entry_extension }}</label>
 						<div class="col-sm-10">
 							<div id="user-group-extension" class="form-control" style="height: 250px; overflow: auto;">

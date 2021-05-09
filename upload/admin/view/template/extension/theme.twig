@@ -5,17 +5,17 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="text-left">{{ column_name }}</td>
-          <td class="text-left">{{ column_status }}</td>
-          <td class="text-right" style="min-width: 103px;">{{ column_action }}</td>
+          <td class="text-start">{{ column_name }}</td>
+          <td class="text-start">{{ column_status }}</td>
+          <td class="text-end" style="min-width: 103px;">{{ column_action }}</td>
         </tr>
       </thead>
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
             <tr>
-              <td class="text-left" colspan="2"><b>{{ extension.name }}</b></td>
-              <td class="text-right">{% if not extension.installed %}
+              <td class="text-start" colspan="2"><b>{{ extension.name }}</b></td>
+              <td class="text-end">{% if not extension.installed %}
                   <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
                 {% else %}
                   <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
@@ -24,9 +24,9 @@
             {% if extension.installed %}
               {% for store in extension.store %}
                 <tr>
-                  <td class="text-left">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
-                  <td class="text-left">{{ store.status }}</td>
-                  <td class="text-right"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+                  <td class="text-start">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ store.name }}</td>
+                  <td class="text-start">{{ store.status }}</td>
+                  <td class="text-end"><a href="{{ store.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
                 </tr>
               {% endfor %}
             {% endif %}

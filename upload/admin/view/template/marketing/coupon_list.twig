@@ -4,17 +4,17 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'name' %}
+					<td class="text-start">{% if sort == 'name' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
 						{% else %}
 							<a href="{{ sort_name }}">{{ column_name }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'code' %}
+					<td class="text-start">{% if sort == 'code' %}
 							<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
 						{% else %}
 							<a href="{{ sort_code }}">{{ column_code }}</a>
 						{% endif %}</td>
-					<td class="text-right">{% if sort == 'discount' %}
+					<td class="text-end">{% if sort == 'discount' %}
 							<a href="{{ sort_discount }}" class="{{ order|lower }}">{{ column_discount }}</a>
 						{% else %}
 							<a href="{{ sort_discount }}">{{ column_discount }}</a>
@@ -29,12 +29,12 @@
 						{% else %}
 							<a href="{{ sort_date_end }}">{{ column_date_end }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'status' %}
+					<td class="text-start">{% if sort == 'status' %}
 							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
 						{% else %}
 							<a href="{{ sort_status }}">{{ column_status }}</a>
 						{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,13 +42,13 @@
 					{% for coupon in coupons %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}"/></td>
-							<td class="text-left">{{ coupon.name }}</td>
-							<td class="text-left">{{ coupon.code }}</td>
-							<td class="text-right">{{ coupon.discount }}</td>
+							<td class="text-start">{{ coupon.name }}</td>
+							<td class="text-start">{{ coupon.code }}</td>
+							<td class="text-end">{{ coupon.discount }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ coupon.date_start }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ coupon.date_end }}</td>
-							<td class="text-left">{{ coupon.status }}</td>
-							<td class="text-right"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-start">{{ coupon.status }}</td>
+							<td class="text-end"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -61,6 +61,6 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

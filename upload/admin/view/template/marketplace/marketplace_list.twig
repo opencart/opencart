@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">{% if not error_signature %}
+			<div class="float-end">{% if not error_signature %}
 					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
 				{% else %}
 					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
@@ -21,23 +21,19 @@
 			<div class="card-body">
 				<div class="card bg-light">
 					<div class="card-body">
-						<div id="extension-filter" class="input-group">
+						<div id="extension-filter" class="input-group dropdown">
 							<input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" class="form-control"/>
-							<div class="input-group-append dropdown">
+							{% for category in categories %}
+								{% if category.value == filter_category %}
+									<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
+								{% endif %}
+							{% endfor %}
+							<div class="dropdown-menu dropdown-menu-right">
 								{% for category in categories %}
-									{% if category.value == filter_category %}
-										<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
-									{% endif %}
+									<a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
 								{% endfor %}
-								<div class="dropdown-menu dropdown-menu-right">
-									{% for category in categories %}
-										<a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
-									{% endfor %}
-								</div>
 							</div>
-							<div class="input-group-append">
-								<button type="button" id="button-filter" data-bs-toggle="tooltip" data-title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
-							</div>
+							<button type="button" id="button-filter" data-bs-toggle="tooltip" data-title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
 						</div>
 						<input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
 					</div>
@@ -50,8 +46,8 @@
 							{% endfor %}</div>
 					</div>
 					<div class="col-xl-3 col-lg-5 col-sm-auto">
-						<div class="input-group float-right">
-							<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-sort-amount-down"></i></span></div>
+						<div class="input-group float-end">
+							<div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
 							<select onchange="location = this.value;" class="form-control">
 								{% for sorts in sorts %}
 									{% if sorts.value == sort %}
@@ -84,7 +80,7 @@
 															{% if extension.rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
 														{% endfor %}</div>
 													<div class="col-6">
-														<div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
+														<div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
 													</div>
 												</div>
 											</div>
@@ -113,7 +109,7 @@
 															{% if extension.rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="fas fa-star-o"></i>{% endif %}
 														{% endfor %}</div>
 													<div class="col-6">
-														<div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
+														<div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
 													</div>
 												</div>
 											</div>

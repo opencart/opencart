@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#currency-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -19,45 +19,45 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="currency-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-title" class="col-sm-2 col-form-label">{{ entry_title }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
 							<small class="form-text text-muted">{{ help_code }}</small>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-symbol-left" class="col-sm-2 col-form-label">{{ entry_symbol_left }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="symbol_left" value="{{ symbol_left }}" placeholder="{{ entry_symbol_left }}" id="input-symbol-left" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-symbol-right" class="col-sm-2 col-form-label">{{ entry_symbol_right }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="symbol_right" value="{{ symbol_right }}" placeholder="{{ entry_symbol_right }}" id="input-symbol-right" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-decimal-place" class="col-sm-2 col-form-label">{{ entry_decimal_place }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="decimal_place" value="{{ decimal_place }}" placeholder="{{ entry_decimal_place }}" id="input-decimal-place" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
 							<small class="form-text text-muted">{{ help_value }}</small>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
 							<select name="status" id="input-status" class="form-control">

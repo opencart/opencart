@@ -40,11 +40,11 @@
 				<a href="#" id="button-menu" class="d-inline-block d-lg-none"><span class="fas fa-bars"></span></a>
 				<ul class="nav navbar-nav">
 					<li id="header-notification" class="nav-item dropdown">
-						<a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i>{% if notification_total %} <span class="badge badge-danger">{{ notification_total }}</span>{% endif %}</a>
+						<a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i>{% if notification_total %} <span class="badge bg-danger">{{ notification_total }}</span>{% endif %}</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							{% if notifications %}
 								{% for notification in notifications %}
-									<a href="{{ notification.href }}" data-toggle="modal" class="dropdown-item">{{ notification.title }}</a>
+									<a href="{{ notification.href }}" data-bs-toggle="modal" class="dropdown-item">{{ notification.title }}</a>
 								{% endfor %}
 								<a href="{{ notification_all }}" class="dropdown-item text-center text-primary">{{ text_notification_all }}</a>
 							{% else %}

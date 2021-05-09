@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="submit" data-action="{{ save }}" data-form="#user-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -18,13 +18,13 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="user-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-username" class="col-sm-2 col-form-label">{{ entry_username }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="username" value="{{ username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-user-group" class="col-sm-2 col-form-label">{{ entry_user_group }}</label>
 						<div class="col-sm-10">
 							<select name="user_group_id" id="input-user-group" class="form-control">
@@ -38,49 +38,49 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
 						<div class="col-sm-10">
 							<div class="card image">
 								<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
 								<div class="card-body">
-									<button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-									<button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+									<button type="button" data-oc-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+									<button type="button" data-oc-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-password" class="col-sm-2 col-form-label">{{ entry_password }}</label>
 						<div class="col-sm-10">
 							<input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" autocomplete="off"/>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-confirm" class="col-sm-2 col-form-label">{{ entry_confirm }}</label>
 						<div class="col-sm-10">
 							<input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
 							<select name="status" id="input-status" class="form-control">

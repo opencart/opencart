@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-upload').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
 				<button type="button" data-action="{{ delete }}" data-form="#upload-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
@@ -20,19 +20,17 @@
 				<div class="card">
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-name" class="col-form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
 							<div class="input-group date">
 								<input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
-								<div class="input-group-append">
-									<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-								</div>
+								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 							</div>
 						</div>
-						<div class="form-group text-right">
+						<div class="mb-3 text-end">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 						</div>
 					</div>

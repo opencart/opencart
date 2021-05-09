@@ -4,12 +4,12 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
-					<td class="text-left">{% if sort == 'key' %}<a href="{{ sort_key }}" class="{{ order|lower }}">{{ column_key }}</a> {% else %}<a href="{{ sort_key }}">{{ column_key }}</a>{% endif %}</td>
-					<td class="text-left">{% if sort == 'value' %}<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a> {% else %}<a href="{{ sort_value }}">{{ column_value }}</a>{% endif %}</td>
-					<td class="text-left d-none d-lg-table-cell">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
+					<td class="text-start">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
+					<td class="text-start">{% if sort == 'key' %}<a href="{{ sort_key }}" class="{{ order|lower }}">{{ column_key }}</a> {% else %}<a href="{{ sort_key }}">{{ column_key }}</a>{% endif %}</td>
+					<td class="text-start">{% if sort == 'value' %}<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a> {% else %}<a href="{{ sort_value }}">{{ column_value }}</a>{% endif %}</td>
+					<td class="text-start d-none d-lg-table-cell">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
 					<td class="text-center d-none d-lg-table-cell">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -17,12 +17,12 @@
 					{% for seo_url in seo_urls %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/></td>
-							<td class="text-left">{{ seo_url.keyword }}</td>
-							<td class="text-left">{{ seo_url.key }}</td>
-							<td class="text-left">{{ seo_url.value }}</td>
-							<td class="text-left d-none d-lg-table-cell">{{ seo_url.store }}</td>
+							<td class="text-start">{{ seo_url.keyword }}</td>
+							<td class="text-start">{{ seo_url.key }}</td>
+							<td class="text-start">{{ seo_url.value }}</td>
+							<td class="text-start d-none d-lg-table-cell">{{ seo_url.store }}</td>
 							<td class="text-center d-none d-lg-table-cell"><img src="language/{{ seo_url.language }}/{{ seo_url.language }}.png" alt="{{ seo_url.language }}" title="{{ seo_url.language }}"></td>
-							<td class="text-right"><a href="{{ seo_url.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-end"><a href="{{ seo_url.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -34,7 +34,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

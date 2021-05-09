@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				{% if voucher_id %}
 					<button type="button" id="button-send" data-bs-toggle="tooltip" title="{{ button_send }}" class="btn btn-warning"><i class="fas fa-envelope"></i></button>
 				{% endif %}
@@ -30,38 +30,38 @@
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
 									<small class="form-text text-muted">{{ help_code }}</small>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-from-name" class="col-sm-2 col-form-label">{{ entry_from_name }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-from-email" class="col-sm-2 col-form-label">{{ entry_from_email }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-to-email" class="col-sm-2 col-form-label">{{ entry_to_email }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
 								<div class="col-sm-10">
 									<select name="voucher_theme_id" id="input-theme" class="form-control">
@@ -75,19 +75,19 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
 								<div class="col-sm-10">
 									<textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control">{{ message }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
 									<select name="status" id="input-status" class="form-control">

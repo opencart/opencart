@@ -6,9 +6,9 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td class="text-left">{{ column_name }}</td>
-					<td class="text-left">{{ column_status }}</td>
-					<td class="text-right" style="min-width: 103px;">{{ column_action }}</td>
+					<td class="text-start">{{ column_name }}</td>
+					<td class="text-start">{{ column_status }}</td>
+					<td class="text-end" style="min-width: 103px;">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -18,7 +18,7 @@
 						<tr>
 							<td><b>{{ extension.name }}</b></td>
 							<td>{{ extension.status }}</td>
-							<td class="text-right">
+							<td class="text-end">
 								{% if extension.installed %}
 
 									{% if extension.module %}
@@ -40,9 +40,9 @@
 
 						{% for module in extension.module %}
 							<tr>
-								<td class="text-left">&nbsp;&nbsp;&nbsp;<i class="fas fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
-								<td class="text-left">{{ module.status }}</td>
-								<td class="text-right">
+								<td class="text-start">&nbsp;&nbsp;&nbsp;<i class="fas fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
+								<td class="text-start">{{ module.status }}</td>
+								<td class="text-end">
 									<a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-pencil-alt"></i></a> <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
 								</td>
 							</tr>

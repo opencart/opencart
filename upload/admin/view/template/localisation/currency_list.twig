@@ -4,32 +4,32 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'title' %}
+					<td class="text-start">{% if sort == 'title' %}
 							<a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
 						{% else %}
 							<a href="{{ sort_title }}">{{ column_title }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'code' %}
+					<td class="text-start">{% if sort == 'code' %}
 							<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
 						{% else %}
 							<a href="{{ sort_code }}">{{ column_code }}</a>
 						{% endif %}</td>
-					<td class="text-right">{% if sort == 'value' %}
+					<td class="text-end">{% if sort == 'value' %}
 							<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
 						{% else %}
 							<a href="{{ sort_value }}">{{ column_value }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'status' %}
+					<td class="text-start">{% if sort == 'status' %}
 							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
 						{% else %}
 							<a href="{{ sort_status }}">{{ column_status }}</a>
 						{% endif %}</td>
-					<td class="text-left d-none d-lg-table-cell">{% if sort == 'date_modified' %}
+					<td class="text-start d-none d-lg-table-cell">{% if sort == 'date_modified' %}
 							<a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>
 						{% else %}
 							<a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
 						{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,12 +37,12 @@
 					{% for currency in currencies %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ currency.currency_id }}"/></td>
-							<td class="text-left">{{ currency.title }}</td>
-							<td class="text-left">{{ currency.code }}</td>
-							<td class="text-right">{{ currency.value }}</td>
-							<td class="text-left">{{ currency.status }}</td>
+							<td class="text-start">{{ currency.title }}</td>
+							<td class="text-start">{{ currency.code }}</td>
+							<td class="text-end">{{ currency.value }}</td>
+							<td class="text-start">{{ currency.status }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ currency.date_modified }}</td>
-							<td class="text-right"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-end"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -55,6 +55,6 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

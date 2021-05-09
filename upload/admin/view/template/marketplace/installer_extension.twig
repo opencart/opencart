@@ -2,26 +2,26 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<td class="text-left">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
-				<td class="text-left">{% if sort == 'version' %}<a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>{% else %}<a href="{{ sort_version }}">{{ column_version }}</a>{% endif %}</td>
-				<td class="text-left">{% if sort == 'date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
-				<td class="text-right" style="min-width: 105px;">{{ column_action }}</td>
+				<td class="text-start">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
+				<td class="text-start">{% if sort == 'version' %}<a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>{% else %}<a href="{{ sort_version }}">{{ column_version }}</a>{% endif %}</td>
+				<td class="text-start">{% if sort == 'date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
+				<td class="text-end" style="min-width: 105px;">{{ column_action }}</td>
 			</tr>
 		</thead>
 		<tbody>
 			{% if extensions %}
 				{% for extension in extensions %}
 					<tr>
-						<td class="text-left">
+						<td class="text-start">
 							{% if extension.link %}
 								<a href="{{ extension.link }}" target="_blank">{{ extension.name }}</a>
 							{% else %}
 								{{ extension.name }}
 							{% endif %}
 						</td>
-						<td class="text-left align-text-top">{{ extension.version }}</td>
-						<td class="text-left align-text-top">{{ extension.date_added }}</td>
-						<td class="text-right align-text-top">
+						<td class="text-start align-text-top">{{ extension.version }}</td>
+						<td class="text-start align-text-top">{{ extension.date_added }}</td>
+						<td class="text-end align-text-top">
 
 							{% if not extension.status %}
 								<a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
@@ -43,6 +43,6 @@
 	</table>
 </div>
 <div class="row">
-	<div class="col-sm-6 text-left">{{ pagination }}</div>
-	<div class="col-sm-6 text-right">{{ results }}</div>
+	<div class="col-sm-6 text-start">{{ pagination }}</div>
+	<div class="col-sm-6 text-end">{{ results }}</div>
 </div>

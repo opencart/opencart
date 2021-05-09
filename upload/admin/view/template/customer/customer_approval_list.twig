@@ -3,12 +3,12 @@
 		<thead>
 			<tr>
 				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-				<td class="text-left">{{ column_customer }}</td>
-				<td class="text-left">{{ column_email }}</td>
-				<td class="text-left">{{ column_customer_group }}</td>
-				<td class="text-left">{{ column_type }}</td>
-				<td class="text-left">{{ column_date_added }}</td>
-				<td class="text-right">{{ column_action }}</td>
+				<td class="text-start">{{ column_customer }}</td>
+				<td class="text-start">{{ column_email }}</td>
+				<td class="text-start">{{ column_customer_group }}</td>
+				<td class="text-start">{{ column_type }}</td>
+				<td class="text-start">{{ column_date_added }}</td>
+				<td class="text-end">{{ column_action }}</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -16,12 +16,12 @@
 				{% for customer_approval in customer_approvals %}
 					<tr>
 						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer_approval.customer_id }}"/></td>
-						<td class="text-left"><a href="{{ customer_approval.edit }}">{{ customer_approval.customer }}</a></td>
-						<td class="text-left">{{ customer_approval.email }}</td>
-						<td class="text-left">{{ customer_approval.customer_group }}</td>
-						<td class="text-left">{{ customer_approval.type }}</td>
-						<td class="text-left">{{ customer_approval.date_added }}</td>
-						<td class="text-right" style="min-width: 103px;"><a href="{{ customer_approval.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ customer_approval.deny }}" data-bs-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
+						<td class="text-start"><a href="{{ customer_approval.edit }}">{{ customer_approval.customer }}</a></td>
+						<td class="text-start">{{ customer_approval.email }}</td>
+						<td class="text-start">{{ customer_approval.customer_group }}</td>
+						<td class="text-start">{{ customer_approval.type }}</td>
+						<td class="text-start">{{ customer_approval.date_added }}</td>
+						<td class="text-end" style="min-width: 103px;"><a href="{{ customer_approval.approve }}" data-bs-toggle="tooltip" title="{{ button_approve }}" class="btn btn-success"><i class="fas fa-thumbs-up"></i></a> <a href="{{ customer_approval.deny }}" data-bs-toggle="tooltip" title="{{ button_deny }}" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></a></td>
 					</tr>
 				{% endfor %}
 			{% else %}
@@ -33,6 +33,6 @@
 	</table>
 </div>
 <div class="row">
-	<div class="col-sm-6 text-left">{{ pagination }}</div>
-	<div class="col-sm-6 text-right">{{ results }}</div>
+	<div class="col-sm-6 text-start">{{ pagination }}</div>
+	<div class="col-sm-6 text-end">{{ results }}</div>
 </div>

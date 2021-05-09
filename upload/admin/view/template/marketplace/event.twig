@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ delete }}" data-form="#event-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -74,13 +74,13 @@ $('#event').on('click', '.btn-info', function() {
     html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
     html += '      </div>';
     html += '      <div class="modal-body">';
-    html += '        <div class="form-group">';
+    html += '        <div class="mb-3">';
     html += '          <label for="input-description" class="col-form-label">{{ text_description }}</label> <textarea placeholder="{{ text_description }}" id="input-description"rows="5" class="form-control" disabled>' + $(element).attr('data-event-description') + '</textarea>';
     html += '        </div>';
-    html += '        <div class="form-group">';
+    html += '        <div class="mb-3">';
     html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea placeholder="{{ text_trigger }}" id="input-trigger" class="form-control" disabled>' + $(element).attr('data-event-trigger') + '</textarea>';
     html += '        </div>';
-    html += '        <div class="form-group">';
+    html += '        <div class="mb-3">';
     html += '          <label for="input-action" class="col-form-label">{{ text_action }}</label> <textarea placeholder="{{ text_action }}" id="input-action" class="form-control" disabled>' + $(element).attr('data-event-action') + '</textarea>';
     html += '        </div>';
     html += '      </div>';

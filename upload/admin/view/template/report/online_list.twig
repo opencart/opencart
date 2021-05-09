@@ -2,24 +2,24 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<td class="text-left">{{ column_ip }}</td>
-				<td class="text-left">{{ column_customer }}</td>
-				<td class="text-left">{{ column_url }}</td>
-				<td class="text-left">{{ column_referer }}</td>
-				<td class="text-left">{{ column_date_added }}</td>
-				<td class="text-right">{{ column_action }}</td>
+				<td class="text-start">{{ column_ip }}</td>
+				<td class="text-start">{{ column_customer }}</td>
+				<td class="text-start">{{ column_url }}</td>
+				<td class="text-start">{{ column_referer }}</td>
+				<td class="text-start">{{ column_date_added }}</td>
+				<td class="text-end">{{ column_action }}</td>
 			</tr>
 		</thead>
 		<tbody>
 			{% if customers %}
 				{% for customer in customers %}
 					<tr>
-						<td class="text-left"><a href="https://whatismyipaddress.com/ip/{{ customer.ip }}" rel="noreferrer" target="_blank">{{ customer.ip }}</a></td>
-						<td class="text-left">{{ customer.customer }}</td>
-						<td class="text-left"><a href="{{ customer.url }}" rel="noreferrer" target="_blank">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
-						<td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" rel="noreferrer" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>{% endif %}</td>
-						<td class="text-left">{{ customer.date_added }}</td>
-						<td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}<button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>{% endif %}</td>
+						<td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ customer.ip }}" rel="noreferrer" target="_blank">{{ customer.ip }}</a></td>
+						<td class="text-start">{{ customer.customer }}</td>
+						<td class="text-start"><a href="{{ customer.url }}" rel="noreferrer" target="_blank">{{ customer.url|split('', 30)|join('<br/>') }}</a></td>
+						<td class="text-start">{% if customer.referer %}<a href="{{ customer.referer }}" rel="noreferrer" target="_blank">{{ customer.referer|split('', 30)|join('<br/>') }}</a>{% endif %}</td>
+						<td class="text-start">{{ customer.date_added }}</td>
+						<td class="text-end">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>{% else %}<button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>{% endif %}</td>
 					</tr>
 				{% endfor %}
 			{% else %}
@@ -31,7 +31,6 @@
 	</table>
 </div>
 <div class="row">
-	<div class="col-sm-6 text-left">{{ pagination }}</div>
-	<div class="col-sm-6 text-right">{{ results }}</div>
-</div>
+	<div class="col-sm-6 text-start">{{ pagination }}</div>
+	<div class="col-sm-6 text-end">{{ results }}</div>
 </div>

@@ -4,22 +4,22 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'username' %}
+					<td class="text-start">{% if sort == 'username' %}
 							<a href="{{ sort_username }}" class="{{ order|lower }}">{{ column_username }}</a>
 						{% else %}
 							<a href="{{ sort_username }}">{{ column_username }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'status' %}
+					<td class="text-start">{% if sort == 'status' %}
 							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
 						{% else %}
 							<a href="{{ sort_status }}">{{ column_status }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'date_added' %}
+					<td class="text-start">{% if sort == 'date_added' %}
 							<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
 						{% else %}
 							<a href="{{ sort_date_added }}">{{ column_date_added }}</a>
 						{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,10 +27,10 @@
 					{% for user in users %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ user.user_id }}"/></td>
-							<td class="text-left">{{ user.username }}</td>
-							<td class="text-left">{{ user.status }}</td>
-							<td class="text-left">{{ user.date_added }}</td>
-							<td class="text-right"><a href="{{ user.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-start">{{ user.username }}</td>
+							<td class="text-start">{{ user.status }}</td>
+							<td class="text-start">{{ user.date_added }}</td>
+							<td class="text-end"><a href="{{ user.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -42,7 +42,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

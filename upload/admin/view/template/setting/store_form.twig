@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="submit" data-action="{{ save }}" data-form="#store-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -27,44 +27,44 @@
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-url" class="col-sm-2 col-form-label">{{ entry_url }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control"/>
 									<small class="form-text text-muted">{{ help_url }}</small>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-meta-title" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-meta-description" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description" class="form-control">{{ config_meta_description }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-meta-keyword" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
 								<div class="col-sm-10">
 									<div class="card image">
 										<img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
 										<div class="card-body">
-											<button type="button" data-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-											<button type="button" data-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+											<button type="button" data-oc-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
 								<div class="col-sm-10">
 									<select name="config_theme" id="input-theme" class="form-control">
@@ -79,7 +79,7 @@
 									<br/>
 									<img src="" alt="" id="theme" class="img-thumbnail"/></div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
 								<div class="col-sm-10">
 									<select name="config_layout_id" id="input-layout" class="form-control">
@@ -95,63 +95,63 @@
 							</div>
 						</div>
 						<div id="tab-store" class="tab-pane">
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
 									<small class="form-text text-muted">{{ help_geocode }}</small>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
 								<div class="col-sm-10">
 									<div class="card image">
 										<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
 										<div class="card-body">
-											<button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-											<button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+											<button type="button" data-oc-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
 									<small class="form-text text-muted">{{ help_open }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
@@ -159,7 +159,7 @@
 								</div>
 							</div>
 							{% if locations %}
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">{{ entry_location }}</label>
 									<div class="col-sm-10">
 										<div class="form-control" style="height: 150px; overflow: auto;">
@@ -181,7 +181,7 @@
 							{% endif %}
 						</div>
 						<div id="tab-local" class="tab-pane">
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
 								<div class="col-sm-10">
 									<select name="config_country_id" id="input-country" class="form-control">
@@ -195,13 +195,13 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
 								<div class="col-sm-10">
 									<select name="config_zone_id" id="input-zone" class="form-control"> </select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
 								<div class="col-sm-10">
 									<select name="config_language" id="input-language" class="form-control">
@@ -215,7 +215,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
 								<div class="col-sm-10">
 									<select name="config_currency" id="input-currency" class="form-control">
@@ -233,26 +233,26 @@
 						</div>
 						<div id="tab-option" class="tab-pane">
 							<fieldset>
-								<legend><a href="#collapse-product" data-toggle="collapse">{{ text_product }}</a></legend>
+								<legend><a href="#collapse-product" data-bs-toggle="collapse">{{ text_product }}</a></legend>
 								<div id="collapse-product" class="collapse" data-parent="#tab-option">
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control"/>
 											<small class="form-text text-muted">{{ help_product_description_length }}</small>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
 											<small class="form-text text-muted">{{ help_pagination }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_product_count %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_product_count" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_product_count" value="0"/> {{ text_no }}</label>
@@ -268,9 +268,9 @@
 							</fieldset>
 
 							<fieldset>
-								<legend><a href="#collapse-legal" data-toggle="collapse">{{ text_legal }}</a></legend>
+								<legend><a href="#collapse-legal" data-bs-toggle="collapse">{{ text_legal }}</a></legend>
 								<div id="collapse-legal" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-gdpr" class="col-sm-2 col-form-label">{{ entry_gdpr }}</label>
 										<div class="col-sm-10">
 											<select name="config_gdpr_id" id="input-gdpr" class="form-control">
@@ -289,12 +289,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-tax" data-toggle="collapse">{{ text_tax }}</a></legend>
+								<legend><a href="#collapse-tax" data-bs-toggle="collapse">{{ text_tax }}</a></legend>
 								<div id="collapse-tax" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_tax %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
@@ -305,7 +305,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-tax-default" class="col-sm-2 col-form-label">{{ entry_tax_default }}</label>
 										<div class="col-sm-10">
 											<select name="config_tax_default" id="input-tax-default" class="form-control">
@@ -324,7 +324,7 @@
 											<small class="form-text text-muted">{{ help_tax_default }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-tax-customer" class="col-sm-2 col-form-label">{{ entry_tax_customer }}</label>
 										<div class="col-sm-10">
 											<select name="config_tax_customer" id="input-tax-customer" class="form-control">
@@ -346,9 +346,9 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-account" data-toggle="collapse">{{ text_account }}</a></legend>
+								<legend><a href="#collapse-account" data-bs-toggle="collapse">{{ text_account }}</a></legend>
 								<div id="collapse-account" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 										<div class="col-sm-10">
 											<select name="config_customer_group_id" id="input-customer-group" class="form-control">
@@ -363,7 +363,7 @@
 											<small class="form-text text-muted">{{ help_customer_group }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
 										<div class="col-sm-10">
 											<div class="form-control" style="height: 150px; overflow: auto;">
@@ -382,10 +382,10 @@
 											<small class="form-text text-muted">{{ help_customer_group_display }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_customer_price %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
@@ -397,7 +397,7 @@
 											<small class="form-text text-muted">{{ help_customer_price }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
 										<div class="col-sm-10">
 											<select name="config_account_id" id="input-account" class="form-control">
@@ -416,12 +416,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-checkout" data-toggle="collapse">{{ text_checkout }}</a></legend>
+								<legend><a href="#collapse-checkout" data-bs-toggle="collapse">{{ text_checkout }}</a></legend>
 								<div id="collapse-checkout" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_cart_weight %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
@@ -432,10 +432,10 @@
 											</div>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_checkout_guest %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
@@ -447,7 +447,7 @@
 											<small class="form-text text-muted">{{ help_checkout_guest }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
 										<div class="col-sm-10">
 											<select name="config_checkout_id" id="input-checkout" class="form-control">
@@ -463,7 +463,7 @@
 											<small class="form-text text-muted">{{ help_checkout }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
 										<div class="col-sm-10">
 											<select name="config_order_status_id" id="input-order-status" class="form-control">
@@ -481,12 +481,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-stock" data-toggle="collapse">{{ text_stock }}</a></legend>
+								<legend><a href="#collapse-stock" data-bs-toggle="collapse">{{ text_stock }}</a></legend>
 								<div id="collapse-stock" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_stock_display %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
@@ -498,10 +498,10 @@
 											<small class="form-text text-muted">{{ help_stock_display }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_stock_checkout %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
@@ -519,7 +519,7 @@
 						<div id="tab-image" class="tab-pane">
 							<fieldset>
 								<legend>{{ text_image }}</legend>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-category" class="row">
@@ -532,7 +532,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-thumb" class="row">
@@ -545,7 +545,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-popup" class="row">
@@ -558,7 +558,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-product" class="row">
@@ -571,7 +571,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-additional" class="row">
@@ -584,7 +584,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-related" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-related" class="row">
@@ -597,7 +597,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-compare" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-compare" class="row">
@@ -610,7 +610,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-wishlist" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-wishlist" class="row">
@@ -623,7 +623,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-cart" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-cart" class="row">
@@ -636,7 +636,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-location" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-location" class="row">

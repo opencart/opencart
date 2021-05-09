@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ delete }}" data-form="#cron-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -19,15 +19,11 @@
 			<div class="card-body">
 				<p>{{ text_cron_1 }}</p>
 				<p>{{ text_cron_2 }}</p>
-				<div class="form-group">
+				<div class="mb-3">
 					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text">{{ entry_cron }}</span>
-						</div>
+						<div class="input-group-text">{{ entry_cron }}</div>
 						<input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control"/>
-						<div class="input-group-append">
-							<button type="button" id="button-copy" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
-						</div>
+						<button type="button" id="button-copy" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
 					</div>
 				</div>
 			</div>
@@ -67,7 +63,7 @@ $('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
             if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-		            $('#cron').load($('#cron-list').attr('data-load'));
+                $('#cron').load($('#cron-list').attr('data-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

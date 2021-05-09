@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 
 				{% if not error_signature %}
 					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
@@ -58,10 +58,10 @@
 							<div id="tab-comment" class="tab-pane">
 								<fieldset>
 									<legend>{{ text_comment_add }}</legend>
-									<div class="form-group">
+									<div class="mb-3">
 										<textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-comment" class="form-control"></textarea>
 									</div>
-									<div class="text-right">
+									<div class="text-end">
 										<button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
 									</div>
 								</fieldset>
@@ -81,7 +81,7 @@
 								{% endif %}
 								<div id="price" class="row">
 									<div class="col-lg-5"><strong>{{ text_price }}</strong></div>
-									<div class="col-lg-7 text-right">{% if license %}
+									<div class="col-lg-7 text-end">{% if license %}
 											{{ price }}
 										{% else %}
 											{{ text_free }}
@@ -97,7 +97,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-md-5"><strong>{{ text_rating }}</strong></div>
-									<div class="col-md-7 text-right">{% for i in 1..5 %}
+									<div class="col-md-7 text-end">{% for i in 1..5 %}
 											{% if rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="fas fa-star-o"></i>{% endif %}
 										{% endfor %} ({{ rating_total }})
 									</div>
@@ -105,12 +105,12 @@
 								<hr>
 								<div class="row">
 									<div class="col-md-5"><strong>{{ text_date_modified }}</strong></div>
-									<div class="col-md-7 text-right">{{ date_modified }}</div>
+									<div class="col-md-7 text-end">{{ date_modified }}</div>
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-md-5"><strong>{{ text_date_added }}</strong></div>
-									<div class="col-md-7 text-right">{{ date_added }}</div>
+									<div class="col-md-7 text-end">{{ date_added }}</div>
 								</div>
 							</div>
 						</div>
@@ -179,12 +179,12 @@ $('#button-buy').on('click', function(e) {
     html += '      <div class="modal-body">';
     html += '        <p>{{ text_pin }}</p>';
     html += '        <p>{{ text_secure }}</p>';
-    html += '        <div class="form-group">';
+    html += '        <div class="mb-3">';
     html += '          <label for="input-pin">{{ entry_pin }}</label>';
     html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
     html += '        </div>';
-    html += '        <div class="form-group text-right">';
-    html += '          <div class="float-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
+    html += '        <div class="mb-3 text-end">';
+    html += '          <div class="text-end"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
     html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
     html += '        </div>';
     html += '      </div>';

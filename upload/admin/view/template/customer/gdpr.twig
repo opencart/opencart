@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-gdpr').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
 				<button type="button" id="button-approve" value="{{ approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
 				<button type="button" id="button-deny" value="{{ deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
@@ -23,17 +23,17 @@
 				<div class="card">
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="col-form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-action" class="col-form-label">{{ entry_action }}</label> <select name="filter_action" id="input-action" class="form-control">
 								<option value=""></option>
 								<option value="export">{{ text_export }}</option>
 								<option value="remove">{{ text_remove }}</option>
 							</select>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
 								<option value=""></option>
 								<option value="0">{{ text_unverified }}</option>
@@ -43,16 +43,14 @@
 								<option value="-1">{{ text_denied }}</option>
 							</select>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
 							<div class="input-group date">
 								<input type="text" name="filter_date_added" value="" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
-								<div class="input-group-append">
-									<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-								</div>
+								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 							</div>
 						</div>
-						<div class="form-group text-right">
+						<div class="mb-3 text-end">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 						</div>
 					</div>

@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button id="button-send" data-loading-text="{{ text_loading }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact|send&user_token={{ user_token }}');"><i class="fas fa-envelope"></i> {{ button_send }}</button></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -17,7 +17,7 @@
 			<div class="card-header"><i class="fas fa-envelope"></i> {{ text_mail }}</div>
 			<div class="card-body">
 				<form>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
 						<div class="col-sm-10">
 							<select name="store_id" id="input-store" class="form-control">
@@ -29,7 +29,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-to" class="col-sm-2 col-form-label">{{ entry_to }}</label>
 						<div class="col-sm-10">
 							<select name="to" id="input-to" class="form-control">
@@ -43,7 +43,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group row to" id="to-customer-group">
+					<div class="row mb-3 to" id="to-customer-group">
 						<label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 						<div class="col-sm-10">
 							<select name="customer_group_id" id="input-customer-group" class="form-control">
@@ -53,7 +53,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group row to" id="to-customer">
+					<div class="row mb-3 to" id="to-customer">
 						<label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
@@ -63,7 +63,7 @@
 							<small class="form-text text-muted">{{ help_customer }}</small>
 						</div>
 					</div>
-					<div class="form-group row to" id="to-affiliate">
+					<div class="row mb-3 to" id="to-affiliate">
 						<label class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
@@ -73,7 +73,7 @@
 							<small class="form-text text-muted">{{ help_affiliate }}</small>
 						</div>
 					</div>
-					<div class="form-group row to" id="to-product">
+					<div class="row mb-3 to" id="to-product">
 						<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
@@ -83,13 +83,13 @@
 							<small class="form-text text-muted">{{ help_product }}</small>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="subject" value="" placeholder="{{ entry_subject }}" id="input-subject" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
 						<div class="col-sm-10">
 							<div id="input-message">
@@ -137,7 +137,7 @@ $('input[name=\'customers\']').autocomplete({
 
         html = '<tr id="mail-customer-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#mail-customer').append(html);
@@ -174,7 +174,7 @@ $('input[name=\'affiliates\']').autocomplete({
 
         html = '<tr id="mail-affiliate-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#mail-affiliate').append(html);
@@ -211,7 +211,7 @@ $('input[name=\'products\']').autocomplete({
 
         html = '<tr id="mail-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#mail-product').append(html);

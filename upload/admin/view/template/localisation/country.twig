@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-country').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
 				<a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
 
@@ -23,16 +23,16 @@
 				<div class="card">
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="col-form-label">{{ entry_name }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="col-form-label">{{ entry_iso_code_2 }}</label> <input type="text" name="filter_iso_code_2" value="{{ filter_iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="col-form-label">{{ entry_iso_code_3 }}</label> <input type="text" name="filter_iso_code_3" value="{{ filter_iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
 						</div>
-						<div class="form-group text-right">
+						<div class="mb-3 text-end">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 						</div>
 					</div>

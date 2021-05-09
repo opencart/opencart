@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#return-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -29,48 +29,46 @@
 							<form id="return-form">
 								<fieldset>
 									<legend>{{ text_order }}</legend>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-order-id" class="col-sm-2 col-form-label">{{ entry_order_id }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-date-ordered" class="col-sm-2 col-form-label">{{ entry_date_ordered }}</label>
 										<div class="col-sm-10 col-md-4">
 											<div class="input-group date">
 												<input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" id="input-date-ordered" class="form-control"/>
-												<div class="input-group-append">
-													<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-												</div>
+												<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 											</div>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
@@ -79,26 +77,26 @@
 								</fieldset>
 								<fieldset>
 									<legend>{{ text_product }}</legend>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
 											<small class="form-text text-muted">{{ help_product }}</small>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-model" class="col-sm-2 col-form-label">{{ entry_model }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-quantity" class="col-sm-2 col-form-label">{{ entry_quantity }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="quantity" value="{{ quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-return-reason" class="col-sm-2 col-form-label">{{ entry_return_reason }}</label>
 										<div class="col-sm-10">
 											<select name="return_reason_id" id="input-return-reason" class="form-control">
@@ -112,7 +110,7 @@
 											</select>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-opened" class="col-sm-2 col-form-label">{{ entry_opened }}</label>
 										<div class="col-sm-10">
 											<select name="opened" id="input-opened" class="form-control">
@@ -126,13 +124,13 @@
 											</select>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
 										<div class="col-sm-10">
 											<textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-return-action" class="col-sm-2 col-form-label">{{ entry_return_action }}</label>
 										<div class="col-sm-10">
 											<select name="return_action_id" id="input-return-action" class="form-control">
@@ -148,7 +146,7 @@
 										</div>
 									</div>
 									{% if not return_id %}
-										<div class="form-group row">
+										<div class="row mb-3">
 											<label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
 											<div class="col-sm-10">
 												<select name="return_status_id" id="input-return-status" class="form-control">
@@ -176,7 +174,7 @@
 								<fieldset>
 									<legend>{{ text_history_add }}</legend>
 									<form>
-										<div class="form-group row">
+										<div class="row mb-3">
 											<label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
 											<div class="col-sm-10">
 												<select name="return_status_id" id="input-return-status" class="form-control">
@@ -190,19 +188,19 @@
 												</select>
 											</div>
 										</div>
-										<div class="form-group row">
+										<div class="row mb-3">
 											<label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
 											<div class="col-sm-10">
 												<input type="checkbox" name="notify" value="1" id="input-notify"/>
 											</div>
 										</div>
-										<div class="form-group row">
+										<div class="row mb-3">
 											<label for="input-history-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
 											<div class="col-sm-10">
 												<textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history-comment" class="form-control"></textarea>
 											</div>
 										</div>
-										<div class="text-right">
+										<div class="text-end">
 											<button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
 										</div>
 									</form>

@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
 				<a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
 				<button type="button" data-action="{{ delete }}" data-form="#seo-url-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -21,16 +21,16 @@
 				<div class="card">
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-keyword" class="col-form-label">{{ entry_keyword }}</label> <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-key" class="col-form-label">{{ entry_key }}</label> <input type="text" name="filter_key" value="{{ filter_key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-value" class="col-form-label">{{ entry_value }}</label> <input type="text" name="filter_value" value="{{ filter_value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
 								<option value=""></option>
 								{% if filter_store_id == '0' %}
@@ -47,7 +47,7 @@
 								{% endfor %}
 							</select>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="input-language" class="col-form-label">{{ entry_language }}</label> <select name="filter_language_id" id="input-language" class="form-control">
 								<option value=""></option>
 								{% for language in languages %}
@@ -59,7 +59,7 @@
 								{% endfor %}
 							</select>
 						</div>
-						<div class="text-right">
+						<div class="text-end">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 						</div>
 					</div>

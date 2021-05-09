@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right"><a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+			<div class="float-end"><a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -110,18 +110,18 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<td class="text-left">{{ column_date_added }}</td>
-							<td class="text-right">{{ column_amount }}</td>
-							<td class="text-left">{{ column_type }}</td>
+							<td class="text-start">{{ column_date_added }}</td>
+							<td class="text-end">{{ column_amount }}</td>
+							<td class="text-start">{{ column_type }}</td>
 						</tr>
 					</thead>
 					<tbody>
 						{% if transactions %}
 							{% for transaction in transactions %}
 								<tr>
-									<td class="text-left">{{ transaction.date_added }}</td>
-									<td class="text-right">{{ transaction.amount }}</td>
-									<td class="text-left">{{ transaction.type }}</td>
+									<td class="text-start">{{ transaction.date_added }}</td>
+									<td class="text-end">{{ transaction.amount }}</td>
+									<td class="text-start">{{ transaction.type }}</td>
 								</tr>
 							{% endfor %}
 						{% else %}

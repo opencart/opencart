@@ -2,7 +2,7 @@
 	<thead>
 		<td>{{ text_name }}</td>
 		<td>{{ text_date_added }}</td>
-		<td class="text-right">{{ text_action }}</td>
+		<td class="text-end">{{ text_action }}</td>
 	</thead>
 	<tbody>
 		{% if downloads %}
@@ -10,7 +10,7 @@
 				<tr>
 					<td>{{ download.name }}</td>
 					<td>{{ download.date_added }}</td>
-					<td class="text-right">
+					<td class="text-end">
 						<div class="dropdown">
 							<div class="btn-group">
 								<button type="button" value="{{ download.download }}" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.download %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>

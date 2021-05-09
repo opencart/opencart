@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#option-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -20,20 +20,18 @@
 				<form id="option-form">
 					<fieldset>
 						<legend>{{ text_option }}</legend>
-						<div class="form-group row required">
+						<div class="row mb-3 required">
 							<label class="col-sm-2 col-form-label">{{ entry_name }}</label>
 							<div class="col-sm-10">
 								{% for language in languages %}
 									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-										</div>
+										<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 										<input type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 									</div>
 								{% endfor %}
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
 							<div class="col-sm-10">
 								<select name="type" id="input-type" class="form-control">
@@ -93,7 +91,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
@@ -105,9 +103,9 @@
 						<table id="option-value" class="table table-bordered table-hover">
 							<thead>
 								<tr>
-									<td class="text-left required">{{ entry_option_value }}</td>
+									<td class="text-start required">{{ entry_option_value }}</td>
 									<td class="text-center">{{ entry_image }}</td>
-									<td class="text-right">{{ entry_sort_order }}</td>
+									<td class="text-end">{{ entry_sort_order }}</td>
 									<td></td>
 								</tr>
 							</thead>
@@ -118,9 +116,7 @@
 										<td class="text-center"><input type="hidden" name="option_value[{{ option_value_row }}][option_value_id]" value="{{ option_value.option_value_id }}"/>
 											{% for language in languages %}
 												<div class="input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-													</div>
+													<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 													<input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" id="input-option-value-{{ option_value_row }}-{{ language.language_id }}" class="form-control"/>
 												</div>
 											{% endfor %}</td>
@@ -128,13 +124,13 @@
 											<div class="card image">
 												<img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image-{{ option_value_row }}" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image-{{ option_value_row }}"/>
 												<div class="card-body">
-													<button type="button" data-toggle="image" data-target="#input-image-{{ option_value_row }}" data-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-													<button type="button" data-toggle="clear" data-target="#input-image-{{ option_value_row }}" data-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+													<button type="button" data-oc-toggle="image" data-target="#input-image-{{ option_value_row }}" data-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+													<button type="button" data-oc-toggle="clear" data-target="#input-image-{{ option_value_row }}" data-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 												</div>
 											</div>
 										</td>
-										<td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-										<td class="text-right"><button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+										<td class="text-end"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+										<td class="text-end"><button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 									</tr>
 									{% set option_value_row = option_value_row + 1 %}
 								{% endfor %}
@@ -142,7 +138,7 @@
 							<tfoot>
 								<tr>
 									<td colspan="3"></td>
-									<td class="text-right"><button type="button" onclick="addOptionValue();" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+									<td class="text-end"><button type="button" onclick="addOptionValue();" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
 								</tr>
 							</tfoot>
 						</table>
@@ -167,10 +163,10 @@ var option_value_row = {{ option_value_row }};
 
 function addOptionValue() {
     html = '<tr id="option-value-row-' + option_value_row + '">';
-    html += '  <td class="text-left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
+    html += '  <td class="text-start"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
 	{% for language in languages %}
     html += '    <div class="input-group">';
-    html += '      <div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span></div>';
+    html += '      <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></div>';
     html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value }}" id="input-option-value-' + option_value_row + '-{{ language.language_id }}" class="form-control" />';
     html += '    </div>';
 	{% endfor %}
@@ -180,18 +176,19 @@ function addOptionValue() {
     html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + option_value_row + '" data-placeholder="{{ placeholder }}" class="card-img-top"/>';
     html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image-' + option_value_row + '"/>';
     html += '      <div class="card-body">';
-    html += '        <button type="button" data-toggle="image" data-target="#input-image-' + option_value_row + '" data-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
-    html += '        <button type="button" data-toggle="clear" data-target="#input-image-' + option_value_row + '" data-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
+    html += '        <button type="button" data-oc-toggle="image" data-target="#input-image-' + option_value_row + '" data-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
+    html += '        <button type="button" data-oc-toggle="clear" data-target="#input-image-' + option_value_row + '" data-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
-    html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row-' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#option-value-row-' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#option-value tbody').append(html);
 
     option_value_row++;
 }
+
 //--></script>
 {{ footer }} 

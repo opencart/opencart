@@ -120,9 +120,9 @@
 					<tr>
 						<td><b>{{ column_product }}</b></td>
 						<td><b>{{ column_model }}</b></td>
-						<td class="text-right"><b>{{ column_quantity }}</b></td>
-						<td class="text-right"><b>{{ column_price }}</b></td>
-						<td class="text-right"><b>{{ column_total }}</b></td>
+						<td class="text-end"><b>{{ column_quantity }}</b></td>
+						<td class="text-end"><b>{{ column_price }}</b></td>
+						<td class="text-end"><b>{{ column_total }}</b></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -135,24 +135,24 @@
 									<small> - {{ option.name }}: {{ option.value }}</small>
 								{% endfor %}</td>
 							<td>{{ product.model }}</td>
-							<td class="text-right">{{ product.quantity }}</td>
-							<td class="text-right">{{ product.price }}</td>
-							<td class="text-right">{{ product.total }}</td>
+							<td class="text-end">{{ product.quantity }}</td>
+							<td class="text-end">{{ product.price }}</td>
+							<td class="text-end">{{ product.total }}</td>
 						</tr>
 					{% endfor %}
 					{% for voucher in order.voucher %}
 						<tr>
 							<td>{{ voucher.description }}</td>
 							<td></td>
-							<td class="text-right">1</td>
-							<td class="text-right">{{ voucher.amount }}</td>
-							<td class="text-right">{{ voucher.amount }}</td>
+							<td class="text-end">1</td>
+							<td class="text-end">{{ voucher.amount }}</td>
+							<td class="text-end">{{ voucher.amount }}</td>
 						</tr>
 					{% endfor %}
 					{% for total in order.total %}
 						<tr>
-							<td class="text-right" colspan="4"><b>{{ total.title }}</b></td>
-							<td class="text-right">{{ total.text }}</td>
+							<td class="text-end" colspan="4"><b>{{ total.title }}</b></td>
+							<td class="text-end">{{ total.text }}</td>
 						</tr>
 					{% endfor %}
 				</tbody>

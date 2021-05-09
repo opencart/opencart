@@ -4,27 +4,27 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'username' %}
+					<td class="text-start">{% if sort == 'username' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_username }}</a>
 						{% else %}
 							<a href="{{ sort_name }}">{{ column_username }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'status' %}
+					<td class="text-start">{% if sort == 'status' %}
 							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
 						{% else %}
 							<a href="{{ sort_status }}">{{ column_status }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'date_added' %}
+					<td class="text-start">{% if sort == 'date_added' %}
 							<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
 						{% else %}
 							<a href="{{ sort_date_added }}">{{ column_date_added }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'date_modified' %}
+					<td class="text-start">{% if sort == 'date_modified' %}
 							<a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>
 						{% else %}
 							<a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
 						{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,11 +32,11 @@
 					{% for api in apis %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ api.api_id }}"/></td>
-							<td class="text-left">{{ api.username }}</td>
-							<td class="text-left">{{ api.status }}</td>
-							<td class="text-left">{{ api.date_added }}</td>
-							<td class="text-left">{{ api.date_modified }}</td>
-							<td class="text-right"><a href="{{ api.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-start">{{ api.username }}</td>
+							<td class="text-start">{{ api.status }}</td>
+							<td class="text-start">{{ api.date_added }}</td>
+							<td class="text-start">{{ api.date_modified }}</td>
+							<td class="text-end"><a href="{{ api.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -48,7 +48,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

@@ -4,9 +4,9 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>{% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
-					<td class="text-right d-none d-lg-table-cell">{% if sort == 'sort_order' %}<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>{% else %}<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
-					<td class="text-right" style="min-width: 103px;">{{ column_action }}</td>
+					<td class="text-start">{% if sort == 'code' %}<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>{% else %}<a href="{{ sort_code }}">{{ column_code }}</a>{% endif %}</td>
+					<td class="text-end d-none d-lg-table-cell">{% if sort == 'sort_order' %}<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>{% else %}<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>{% endif %}</td>
+					<td class="text-end" style="min-width: 103px;">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -14,9 +14,9 @@
 					{% for event in events %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ event.event_id }}"/></td>
-							<td class="text-left">{{ event.code }}</td>
-							<td class="text-right d-none d-lg-table-cell">{{ event.sort_order }}</td>
-							<td class="text-right">
+							<td class="text-start">{{ event.code }}</td>
+							<td class="text-end d-none d-lg-table-cell">{{ event.sort_order }}</td>
+							<td class="text-end">
 								<button type="button" data-event-description="{{ event.description }}" data-event-trigger="{{ event.trigger }}" data-event-action="{{ event.action }}" class="btn btn-info"><i class="fas fa-info-circle"></i></button>
 								{% if not event.status %}
 									<button type="button" value="{{ event.enable }}" data-bs-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
@@ -34,7 +34,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

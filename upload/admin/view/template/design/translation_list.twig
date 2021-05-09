@@ -4,12 +4,12 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a> {% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
+					<td class="text-start">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a> {% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
 					<td class="text-center">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
-					<td class="text-left">{% if sort == 'route' %}<a href="{{ sort_route }}" class="{{ order|lower }}">{{ column_route }}</a> {% else %}<a href="{{ sort_route }}">{{ column_route }}</a>{% endif %}</td>
-					<td class="text-left">{% if sort == 'key' %}<a href="{{ sort_key }}" class="{{ order|lower }}">{{ column_key }}</a>{% else %}<a href="{{ sort_key }}">{{ column_key }}</a>{% endif %}</td>
-					<td class="text-left">{% if sort == 'value' %}<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>{% else %}<a href="{{ sort_value }}">{{ column_value }}</a>{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-start">{% if sort == 'route' %}<a href="{{ sort_route }}" class="{{ order|lower }}">{{ column_route }}</a> {% else %}<a href="{{ sort_route }}">{{ column_route }}</a>{% endif %}</td>
+					<td class="text-start">{% if sort == 'key' %}<a href="{{ sort_key }}" class="{{ order|lower }}">{{ column_key }}</a>{% else %}<a href="{{ sort_key }}">{{ column_key }}</a>{% endif %}</td>
+					<td class="text-start">{% if sort == 'value' %}<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>{% else %}<a href="{{ sort_value }}">{{ column_value }}</a>{% endif %}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -17,12 +17,12 @@
 					{% for translation in translations %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ translation.translation_id }}"/></td>
-							<td class="text-left">{{ translation.store }}</td>
+							<td class="text-start">{{ translation.store }}</td>
 							<td class="text-center"><img src="language/{{ translation.language }}/{{ translation.language }}.png" alt="{{ translation.language }}" title="{{ translation.language }}"></td>
-							<td class="text-left">{{ translation.route }}</td>
-							<td class="text-left">{{ translation.key }}</td>
-							<td class="text-left">{{ translation.value }}</td>
-							<td class="text-right"><a href="{{ translation.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-start">{{ translation.route }}</td>
+							<td class="text-start">{{ translation.key }}</td>
+							<td class="text-start">{{ translation.value }}</td>
+							<td class="text-end"><a href="{{ translation.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -34,7 +34,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

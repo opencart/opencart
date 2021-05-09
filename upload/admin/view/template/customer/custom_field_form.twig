@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#custom-field-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -20,18 +20,18 @@
 				<form id="custom-field-form">
 					<fieldset>
 						<legend>{{ text_custom_field }}</legend>
-						<div class="form-group row required">
+						<div class="row mb-3 required">
 							<label class="col-sm-2 col-form-label">{{ entry_name }}</label>
 							<div class="col-sm-10">
 								{% for language in languages %}
 									<div class="input-group">
-										<div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span></div>
+										<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 										<input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 									</div>
 								{% endfor %}
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-location" class="col-sm-2 col-form-label">{{ entry_location }}</label>
 							<div class="col-sm-10">
 								<select name="location" id="input-location" class="form-control">
@@ -53,7 +53,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
 							<div class="col-sm-10">
 								<select name="type" id="input-type" class="form-control">
@@ -113,20 +113,20 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group row" id="display-value">
+						<div class="row mb-3" id="display-value">
 							<label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
 							</div>
 						</div>
-						<div class="form-group row" id="display-validation">
+						<div class="row mb-3" id="display-validation">
 							<label for="input-validation" class="col-sm-2 col-form-label">{{ entry_validation }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="validation" id="input-validation" value="{{ validation }}" placeholder="{{ text_regex }}" class="form-control"/>
 								<small class="form-text text-muted">{{ help_regex }}</small>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 							<div class="col-sm-10">
 								<div class="form-control" style="height: 150px; overflow: auto;">
@@ -145,7 +145,7 @@
 									{% endfor %}</div>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label class="col-sm-2 col-form-label">{{ entry_required }}</label>
 							<div class="col-sm-10">
 								<div class="form-control" style="height: 150px; overflow: auto;">
@@ -165,7 +165,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 							<div class="col-sm-10">
 								<select name="status" id="input-status" class="form-control">
@@ -179,7 +179,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
@@ -194,8 +194,8 @@
 							<table class="table table-bordered table-hover">
 								<thead>
 									<tr>
-										<td class="text-left required">{{ entry_custom_value }}</td>
-										<td class="text-right">{{ entry_sort_order }}</td>
+										<td class="text-start required">{{ entry_custom_value }}</td>
+										<td class="text-end">{{ entry_sort_order }}</td>
 										<td></td>
 									</tr>
 								</thead>
@@ -203,17 +203,15 @@
 									{% set custom_field_value_row = 0 %}
 									{% for custom_field_value in custom_field_values %}
 										<tr id="custom-field-value-row-{{ custom_field_value_row }}">
-											<td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="{{ custom_field_value.custom_field_value_id }}"/>
+											<td class="text-start" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="{{ custom_field_value.custom_field_value_id }}"/>
 												{% for language in languages %}
 													<div class="input-group">
-														<div class="input-group-prepend">
-															<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-														</div>
+														<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 														<input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{{ custom_field_value.custom_field_value_description[language.language_id] ? custom_field_value.custom_field_value_description[language.language_id].name }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" placeholder="{{ entry_custom_value }}" class="form-control"/>
 													</div>
 												{% endfor %}</td>
-											<td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-											<td class="text-right"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+											<td class="text-end"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+											<td class="text-end"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
 										</tr>
 										{% set custom_field_value_row = custom_field_value_row + 1 %}
 									{% endfor %}
@@ -221,7 +219,7 @@
 								<tfoot>
 									<tr>
 										<td colspan="2"></td>
-										<td class="text-right"><button type="button" onclick="addCustomFieldValue();" data-bs-toggle="tooltip" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+										<td class="text-end"><button type="button" onclick="addCustomFieldValue();" data-bs-toggle="tooltip" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -243,11 +241,11 @@ $('select[name=\'type\']').on('change', function() {
     }
 
     if (this.value == 'date') {
-        $('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div>');
+        $('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
     } else if (this.value == 'time') {
-        $('#display-value > div').html('<div class="input-group time"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div>');
+        $('#display-value > div').html('<div class="input-group time"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
     } else if (this.value == 'datetime') {
-        $('#display-value > div').html('<div class="input-group datetime"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" /><div class="input-group-append"><div class="input-group-text"><i class="fas fa-calendar"></i></div></div></div>');
+        $('#display-value > div').html('<div class="input-group datetime"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
     } else if (this.value == 'textarea') {
         $('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value }}" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
     } else {
@@ -279,16 +277,16 @@ var custom_field_value_row = {{ custom_field_value_row }};
 
 function addCustomFieldValue() {
     html = '<tr id="custom-field-value-row-' + custom_field_value_row + '">';
-    html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
+    html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
 	{% for language in languages %}
     html += '    <div class="input-group">';
-    html += '      <div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span></div>';
+    html += '      <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></div>';
     html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="form-control" />';
     html += '    </div>';
 	{% endfor %}
     html += '  </td>';
-    html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-    html += '  <td class="text-right"><button type="button" onclick="$(\'#custom-field-value-row-' + custom_field_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#custom-field-value-row-' + custom_field_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#custom-field-value tbody').append(html);

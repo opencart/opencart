@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			{% if developer_status %}
-				<div class="float-right">
+				<div class="float-end">
 					<button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" data-loading-text="{{ text_loading }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
 				</div>
 			{% endif %}
@@ -18,7 +18,7 @@
 	<div class="container-fluid">
 		{% if error_install %}
 			<div class="alert alert-danger alert-dismissible">
-				<button type="button" class="close float-right" data-dismiss="alert">&times;</button>
+				<button type="button" class="close float-end" data-dismiss="alert">&times;</button>
 				<i class="fas fa-exclamation-circle"></i> {{ error_install }}</div>
 		{% endif %}
 		{% for row in rows %}

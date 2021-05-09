@@ -4,12 +4,12 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'pd.name' %} <a href="{{ sort_product }}" class="{{ order|lower }}">{{ column_product }}</a> {% else %} <a href="{{ sort_product }}">{{ column_product }}</a> {% endif %}</td>
-					<td class="text-left">{% if sort == 'r.author' %} <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a> {% else %} <a href="{{ sort_author }}">{{ column_author }}</a> {% endif %}</td>
-					<td class="text-right d-none d-lg-table-cell">{% if sort == 'r.rating' %} <a href="{{ sort_rating }}" class="{{ order|lower }}">{{ column_rating }}</a> {% else %} <a href="{{ sort_rating }}">{{ column_rating }}</a> {% endif %}</td>
-					<td class="text-left">{% if sort == 'r.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
-					<td class="text-left">{% if sort == 'r.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-start">{% if sort == 'pd.name' %} <a href="{{ sort_product }}" class="{{ order|lower }}">{{ column_product }}</a> {% else %} <a href="{{ sort_product }}">{{ column_product }}</a> {% endif %}</td>
+					<td class="text-start">{% if sort == 'r.author' %} <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a> {% else %} <a href="{{ sort_author }}">{{ column_author }}</a> {% endif %}</td>
+					<td class="text-end d-none d-lg-table-cell">{% if sort == 'r.rating' %} <a href="{{ sort_rating }}" class="{{ order|lower }}">{{ column_rating }}</a> {% else %} <a href="{{ sort_rating }}">{{ column_rating }}</a> {% endif %}</td>
+					<td class="text-start">{% if sort == 'r.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
+					<td class="text-start">{% if sort == 'r.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -17,12 +17,12 @@
 					{% for review in reviews %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ review.review_id }}"/></td>
-							<td class="text-left">{{ review.name }}</td>
-							<td class="text-left">{{ review.author }}</td>
-							<td class="text-right d-none d-lg-table-cell">{{ review.rating }}</td>
-							<td class="text-left">{{ review.status }}</td>
-							<td class="text-left">{{ review.date_added }}</td>
-							<td class="text-right"><a href="{{ review.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-start">{{ review.name }}</td>
+							<td class="text-start">{{ review.author }}</td>
+							<td class="text-end d-none d-lg-table-cell">{{ review.rating }}</td>
+							<td class="text-start">{{ review.status }}</td>
+							<td class="text-start">{{ review.date_added }}</td>
+							<td class="text-end"><a href="{{ review.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -34,7 +34,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#country-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -18,35 +18,35 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="country-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-iso-code-2" class="col-sm-2 col-form-label">{{ entry_iso_code_2 }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-iso-code-3" class="col-sm-2 col-form-label">{{ entry_iso_code_3 }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
 						<div class="col-sm-10">
 							<textarea name="address_format" rows="5" placeholder="{{ entry_address_format }}" id="input-address-format" class="form-control">{{ address_format }}</textarea>
 							<small class="form-text text-muted">{{ help_address_format }}</small>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
 						<div class="col-sm-10">
-							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+							<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 								{% if postcode_required %}
 									<label class="btn btn-outline-secondary active"><input type="radio" name="postcode_required" value="1" checked="checked"/> {{ text_yes }}</label>
 									<label class="btn btn-outline-secondary"><input type="radio" name="postcode_required" value="0"/> {{ text_no }}</label>
@@ -57,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
 							<select name="status" id="input-status" class="form-control">

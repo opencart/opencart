@@ -2,22 +2,22 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-left">{{ column_ip }}</td>
-        <td class="text-right">{{ column_account }}</td>
-        <td class="text-left">{{ column_store }}</td>
-        <td class="text-left">{{ column_country }}</td>
-        <td class="text-left">{{ column_date_added }}</td>
+        <td class="text-start">{{ column_ip }}</td>
+        <td class="text-end">{{ column_account }}</td>
+        <td class="text-start">{{ column_store }}</td>
+        <td class="text-start">{{ column_country }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
       </tr>
     </thead>
     <tbody>
       {% if ips %}
         {% for ip in ips %}
           <tr>
-            <td class="text-left"><a href="https://whatismyipaddress.com/ip/{{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
-            <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.account }}</a></td>
-            <td class="text-left">{{ ip.store }}</td>
-            <td class="text-left">{{ ip.country }}</td>
-            <td class="text-left">{{ ip.date_added }}</td>
+            <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
+            <td class="text-end"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.account }}</a></td>
+            <td class="text-start">{{ ip.store }}</td>
+            <td class="text-start">{{ ip.country }}</td>
+            <td class="text-start">{{ ip.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}
@@ -29,6 +29,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

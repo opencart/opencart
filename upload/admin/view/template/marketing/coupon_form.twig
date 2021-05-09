@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#coupon-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -23,20 +23,20 @@
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
 									<small class="form-text text-muted">{{ help_code }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
 								<div class="col-sm-10">
 									<select name="type" id="input-type" class="form-control">
@@ -54,23 +54,23 @@
 									<small class="form-text text-muted">{{ help_type }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-discount" class="col-sm-2 col-form-label">{{ entry_discount }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="discount" value="{{ discount }}" placeholder="{{ entry_discount }}" id="input-discount" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-total" class="col-sm-2 col-form-label">{{ entry_total }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
 									<small class="form-text text-muted">{{ help_total }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 										{% if logged %}
 											<label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="1" checked="checked"/> {{ text_yes }}</label>
 											<label class="btn btn-outline-secondary"><input type="radio" name="logged" value="0"/> {{ text_no }}</label>
@@ -82,10 +82,10 @@
 									<small class="form-text text-muted">{{ help_logged }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 										{% if shipping %}
 											<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
 											<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
@@ -96,7 +96,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
@@ -105,7 +105,7 @@
 											{% for coupon_product in coupon_products %}
 												<tr id="coupon-product-{{ coupon_product.product_id }}">
 													<td>{{ coupon_product.name }}<input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}"/></td>
-													<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+													<td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 												</tr>
 											{% endfor %}
 										</table>
@@ -113,7 +113,7 @@
 									<small class="form-text text-muted">{{ help_product }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_category }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
@@ -122,7 +122,7 @@
 											{% for coupon_category in coupon_categories %}
 												<tr id="coupon-category-{{ coupon_category.category_id }}">
 													<td>{{ coupon_category.name }}<input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}"/></td>
-													<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+													<td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 												</tr>
 											{% endfor %}
 										</table>
@@ -130,43 +130,39 @@
 									<small class="form-text text-muted">{{ help_category }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-date-start" class="col-sm-2 col-form-label">{{ entry_date_start }}</label>
 								<div class="col-sm-10 col-md-4">
 									<div class="input-group date">
 										<input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
-										<div class="input-group-append">
-											<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-										</div>
+										<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-date-end" class="col-sm-2 col-form-label">{{ entry_date_end }}</label>
 								<div class="col-sm-10 col-md-4">
 									<div class="input-group date">
 										<input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
-										<div class="input-group-append">
-											<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-										</div>
+										<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-uses-total" class="col-sm-2 col-form-label">{{ entry_uses_total }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
 									<small class="form-text text-muted">{{ help_uses_total }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-uses-customer" class="col-sm-2 col-form-label">{{ entry_uses_customer }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
 									<small class="form-text text-muted">{{ help_uses_customer }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
 									<select name="status" id="input-status" class="form-control">
@@ -218,7 +214,7 @@ $('input[name=\'product\']').autocomplete({
 
         html = '<tr id="coupon-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#coupon-product').append(html);
@@ -252,7 +248,7 @@ $('input[name=\'category\']').autocomplete({
 
         html = '<tr id="coupon-category-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#coupon-category').append(html);

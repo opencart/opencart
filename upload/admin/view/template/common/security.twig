@@ -10,7 +10,7 @@
 				<form>
 					<fieldset>
 						<legend>{{ text_choose }}</legend>
-						<div class="form-group">
+						<div class="mb-3">
 							<select name="type" id="input-type" class="form-control">
 								<option value="automatic">{{ text_automatic }}</option>
 								<option value="manual">{{ text_manual }}</option>
@@ -19,24 +19,20 @@
 					</fieldset>
 					<fieldset id="collapse-automatic" class="collapse">
 						<legend>{{ text_automatic }}</legend>
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-prepend dropdown">
-									<button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
-									<div class="dropdown-menu">
-										{% for path in paths %}
-											{% if path|length > document_root|length %}
-												<a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
-											{% else %}
-												<a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
-											{% endif %}
-										{% endfor %}
-									</div>
+						<div class="mb-3">
+							<div class="input-group dropdown">
+								<button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
+								<div class="dropdown-menu">
+									{% for path in paths %}
+										{% if path|length > document_root|length %}
+											<a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
+										{% else %}
+											<a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
+										{% endif %}
+									{% endfor %}
 								</div>
 								<input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
-								<div class="input-group-append">
-									<button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
-								</div>
+								<button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
 							</div>
 							<input type="hidden" name="path" value="{{ document_root }}"/>
 						</div>

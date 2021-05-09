@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right"><button type="button" data-action="{{ save }}" data-form="#category-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+			<div class="float-end"><button type="button" data-action="{{ save }}" data-form="#category-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -35,31 +35,31 @@
 								<input type="hidden" name="category_id" value="{{ category_id }}" id="input-category-id"/>
 								{% for language in languages %}
 									<div class="tab-pane" id="language-{{ language.language_id }}">
-										<div class="form-group row required">
+										<div class="row mb-3 required">
 											<label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 											<div class="col-sm-10">
 												<input type="text" name="category_description[{{ language.language_id }}][name]" value="{{ category_description[language.language_id] ? category_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 											</div>
 										</div>
-										<div class="form-group row">
+										<div class="row mb-3">
 											<label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
 											<div class="col-sm-10">
 												<textarea name="category_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].description }}</textarea>
 											</div>
 										</div>
-										<div class="form-group row required">
+										<div class="row mb-3 required">
 											<label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
 											<div class="col-sm-10">
 												<input type="text" name="category_description[{{ language.language_id }}][meta_title]" value="{{ category_description[language.language_id] ? category_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
 											</div>
 										</div>
-										<div class="form-group row">
+										<div class="row mb-3">
 											<label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
 											<div class="col-sm-10">
 												<textarea name="category_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].meta_description }}</textarea>
 											</div>
 										</div>
-										<div class="form-group row">
+										<div class="row mb-3">
 											<label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
 											<div class="col-sm-10">
 												<textarea name="category_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ category_description[language.language_id] ? category_description[language.language_id].meta_keyword }}</textarea>
@@ -70,14 +70,14 @@
 							</div>
 						</div>
 						<div id="tab-data" class="tab-pane">
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_parent }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" class="form-control"/> <input type="hidden" name="parent_id" value="{{ parent_id }}"/>
 									<small class="form-text text-muted">{{ help_parent }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
@@ -86,7 +86,7 @@
 											{% for category_filter in category_filters %}
 												<tr id="category-filter-{{ category_filter.filter_id }}">
 													<td>{{ category_filter.name }}<input type="hidden" name="category_filter[]" value="{{ category_filter.filter_id }}"/></td>
-													<td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+													<td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
 												</tr>
 											{% endfor %}
 										</table>
@@ -94,7 +94,7 @@
 									<small class="form-text text-muted">{{ help_filter }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_store }}</label>
 								<div class="col-sm-10">
 									<div class="form-control" style="height: 150px; overflow: auto;">
@@ -111,22 +111,22 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_image }}</label>
 								<div class="col-sm-10">
 									<div class="card image">
 										<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
 										<div class="card-body">
-											<button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-											<button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+											<button type="button" data-oc-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_top }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 										{% if top %}
 											<label class="btn btn-outline-secondary active"><input type="radio" name="top" value="1" checked="checked"/> {{ text_yes }}</label>
 											<label class="btn btn-outline-secondary"><input type="radio" name="top" value="0"/> {{ text_no }}</label>
@@ -138,20 +138,20 @@
 									<small class="form-text text-muted">{{ help_top }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-column" class="col-sm-2 col-form-label">{{ entry_column }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="column" value="{{ column }}" placeholder="{{ entry_column }}" id="input-column" class="form-control"/>
 									<small class="form-text text-muted">{{ help_column }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
 									<select name="status" id="input-status" class="form-control">
@@ -172,18 +172,18 @@
 								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
-											<td class="text-left">{{ entry_store }}</td>
-											<td class="text-left">{{ entry_keyword }}</td>
+											<td class="text-start">{{ entry_store }}</td>
+											<td class="text-start">{{ entry_keyword }}</td>
 										</tr>
 									</thead>
 									<tbody>
 										{% for store in stores %}
 											<tr>
-												<td class="text-left">{{ store.name }}</td>
-												<td class="text-left">
+												<td class="text-start">{{ store.name }}</td>
+												<td class="text-start">
 													{% for language in languages %}
 														<div class="input-group">
-															<div class="input-group-prepend"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span></div>
+															<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 															<input type="text" name="category_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if category_seo_url[store.store_id][language.language_id] %}{{ category_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" class="form-control"/>
 														</div>
 													{% endfor %}
@@ -199,15 +199,15 @@
 								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
-											<td class="text-left">{{ entry_store }}</td>
-											<td class="text-left">{{ entry_layout }}</td>
+											<td class="text-start">{{ entry_store }}</td>
+											<td class="text-start">{{ entry_layout }}</td>
 										</tr>
 									</thead>
 									<tbody>
 										{% for store in stores %}
 											<tr>
-												<td class="text-left">{{ store.name }}</td>
-												<td class="text-left"><select name="category_layout[{{ store.store_id }}]" class="form-control">
+												<td class="text-start">{{ store.name }}</td>
+												<td class="text-start"><select name="category_layout[{{ store.store_id }}]" class="form-control">
 														<option value=""></option>
 														{% for layout in layouts %}
 															{% if category_layout[store.store_id] and category_layout[store.store_id] == layout.layout_id %}
@@ -281,7 +281,7 @@ $('input[name=\'filter\']').autocomplete({
 
         html = '<tr id="category-filter-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '"/></td>';
-        html += '  <td class="text-right"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '  <td class="end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#category-filter').append(html);

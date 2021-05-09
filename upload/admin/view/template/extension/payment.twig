@@ -5,22 +5,22 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="text-left">{{ column_name }}</td>
+          <td class="text-start">{{ column_name }}</td>
           <td class="text-center">{{ column_vendor }}</td>
-          <td class="text-left">{{ column_status }}</td>
-          <td class="text-right">{{ column_sort_order }}</td>
-          <td class="text-right" style="min-width: 103px;">{{ column_action }}</td>
+          <td class="text-start">{{ column_status }}</td>
+          <td class="text-end">{{ column_sort_order }}</td>
+          <td class="text-end" style="min-width: 103px;">{{ column_action }}</td>
         </tr>
       </thead>
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
             <tr>
-              <td class="text-left">{{ extension.name }}</td>
+              <td class="text-start">{{ extension.name }}</td>
               <td class="text-center">{{ extension.link }}</td>
-              <td class="text-left">{{ extension.status }}</td>
-              <td class="text-right">{{ extension.sort_order }}</td>
-              <td class="text-right">{% if extension.installed %}
+              <td class="text-start">{{ extension.status }}</td>
+              <td class="text-end">{{ extension.sort_order }}</td>
+              <td class="text-end">{% if extension.installed %}
                   <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                 {% else %}
                   <button type="button" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>

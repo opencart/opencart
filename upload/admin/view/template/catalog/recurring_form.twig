@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#recurring-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -19,14 +19,12 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="recurring-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							{% for language in languages %}
 								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-									</div>
+									<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 									<input type="text" name="recurring_description[{{ language.language_id }}][name]" value="{{ recurring_description[language.language_id] ? recurring_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 								</div>
 							{% endfor %}
@@ -34,25 +32,25 @@
 					</div>
 					<fieldset>
 						<legend>{{ text_profile }}</legend>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-price" class="col-sm-2 col-form-label">{{ entry_price }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-duration" class="col-sm-2 col-form-label">{{ entry_duration }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-cycle" class="col-sm-2 col-form-label">{{ entry_cycle }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-frequency" class="col-sm-2 col-form-label">{{ entry_frequency }}</label>
 							<div class="col-sm-10">
 								<select name="frequency" id="input-frequency" class="form-control">
@@ -66,7 +64,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 							<div class="col-sm-10">
 								<select name="status" id="input-status" class="form-control">
@@ -83,25 +81,25 @@
 					</fieldset>
 					<fieldset>
 						<legend>{{ text_trial }}</legend>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-trial-price" class="col-sm-2 col-form-label">{{ entry_trial_price }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="trial_price" value="{{ trial_price }}" placeholder="{{ entry_trial_price }}" id="input-trial-price" class="form-control"/>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-trial-duration" class="col-sm-2 col-form-label">{{ entry_trial_duration }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-trial-cycle" class="col-sm-2 col-form-label">{{ entry_trial_cycle }}</label>
 							<div class="col-sm-10">
 								<input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" id="input-trial-cycle" class="form-control"/>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-trial-frequency" class="col-sm-2 col-form-label">{{ entry_trial_frequency }}</label>
 							<div class="col-sm-10">
 								<select name="trial_frequency" id="input-trial-frequency" class="form-control">
@@ -115,7 +113,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="row mb-3">
 							<label for="input-trial-status" class="col-sm-2 col-form-label">{{ entry_trial_status }}</label>
 							<div class="col-sm-10">
 								<select name="trial_status" id="input-trial-status" class="form-control">
@@ -130,7 +128,7 @@
 							</div>
 						</div>
 					</fieldset>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>

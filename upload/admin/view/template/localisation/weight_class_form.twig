@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#weight-class-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -18,33 +18,29 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="weight-class-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label class="col-sm-2 col-form-label">{{ entry_title }}</label>
 						<div class="col-sm-10">
 							{% for language in languages %}
 								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-									</div>
+									<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 									<input type="text" name="weight_class_description[{{ language.language_id }}][title]" value="{{ weight_class_description[language.language_id] ? weight_class_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control"/>
 								</div>
 							{% endfor %}
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label class="col-sm-2 col-form-label">{{ entry_unit }}</label>
 						<div class="col-sm-10">
 							{% for language in languages %}
 								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-									</div>
+									<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 									<input type="text" name="weight_class_description[{{ language.language_id }}][unit]" value="{{ weight_class_description[language.language_id] ? weight_class_description[language.language_id].unit }}" placeholder="{{ entry_unit }}" id="input-unit-{{ language.language_id }}" class="form-control"/>
 								</div>
 							{% endfor %}
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-value" class="col-sm-2 col-form-label">{{ entry_value }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>

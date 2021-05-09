@@ -4,8 +4,8 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{{ column_message }}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-start">{{ column_message }}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -16,21 +16,21 @@
 							<tr id="notification-row-{{ notification_row }}" class="table-primary">
 								<td class="text-center"><input type="checkbox" name="selected[]" value="{{ notification.notification_id }}"/></td>
 								<td class="text-primary" style="width: 1px;"><i class="fas far fa-bell fa-3x"></i></td>
-								<td class="text-left"><a href="{{ notification.view }}" class="text-primary font-weight-bold">{{ notification.title }}</a>
+								<td class="text-start"><a href="{{ notification.view }}" class="text-primary font-weight-bold">{{ notification.title }}</a>
 									<br/>
 									<small class="text-muted">{{ notification.date_added }}</small>
 								</td>
-								<td class="text-right"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fas fa-eye"></i></button></td>
+								<td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fas fa-eye"></i></button></td>
 							</tr>
 						{% else %}
 							<tr id="notification-row-{{ notification_row }}">
 								<td class="text-center"><input type="checkbox" name="selected[]" value="{{ notification.notification_id }}"/></td>
 								<td class="text-primary" style="width: 1px;"><i class="far fa-bell fa-3x"></i></td>
-								<td class="text-left"><a href="{{ notification.view }}" class="text-primary">{{ notification.title }}</a>
+								<td class="text-start"><a href="{{ notification.view }}" class="text-primary">{{ notification.title }}</a>
 									<br/>
 									<small class="text-muted">{{ notification.date_added }}</small>
 								</td>
-								<td class="text-right"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button></td>
+								<td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button></td>
 							</tr>
 						{% endif %}
 						{% set notification_row = notification_row + 1 %}
@@ -44,7 +44,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#setting-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
 			</div>
@@ -30,39 +30,39 @@
 					</ul>
 					<div class="tab-content">
 						<div id="tab-general" class="tab-pane active">
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-meta-title" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-meta-description" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description" class="form-control">{{ config_meta_description }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-meta-keyword" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
 								<div class="col-sm-10">
 
 									<div class="card image">
 										<img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
 										<div class="card-body">
-											<button type="button" data-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-											<button type="button" data-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+											<button type="button" data-oc-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 										</div>
 									</div>
 
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
 								<div class="col-sm-10">
 									<select name="config_theme" id="input-theme" class="form-control">
@@ -78,7 +78,7 @@
 									<img src="" alt="" id="theme-thumb" class="img-thumbnail"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
 								<div class="col-sm-10">
 									<select name="config_layout_id" id="input-layout" class="form-control">
@@ -94,63 +94,63 @@
 							</div>
 						</div>
 						<div id="tab-store" class="tab-pane">
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
 									<small class="form-text text-muted">{{ help_geocode }}</small>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row required">
+							<div class="row mb-3 required">
 								<label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
 								<div class="col-sm-10">
 									<div class="card image">
 										<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
 										<div class="card-body">
-											<button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-											<button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+											<button type="button" data-oc-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
 									<small class="form-text text-muted">{{ help_open }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
 								<div class="col-sm-10">
 									<textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
@@ -158,7 +158,7 @@
 								</div>
 							</div>
 							{% if locations %}
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">{{ entry_location }}</label>
 									<div class="col-sm-10">
 										<div class="form-control" style="height: 150px; overflow: auto;">
@@ -180,7 +180,7 @@
 							{% endif %}
 						</div>
 						<div id="tab-local" class="tab-pane">
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
 								<div class="col-sm-10">
 									<select name="config_country_id" id="input-country" class="form-control">
@@ -194,13 +194,13 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
 								<div class="col-sm-10">
 									<select name="config_zone_id" id="input-zone" class="form-control"> </select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-timezone" class="col-sm-2 col-form-label">{{ entry_timezone }}</label>
 								<div class="col-sm-10">
 									<select name="config_timezone" id="input-timezone" class="form-control">
@@ -214,7 +214,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
 								<div class="col-sm-10">
 									<select name="config_language" id="input-language" class="form-control">
@@ -228,7 +228,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-language-admin" class="col-sm-2 col-form-label">{{ entry_language_admin }}</label>
 								<div class="col-sm-10">
 									<select name="config_language_admin" id="input-language-admin" class="form-control">
@@ -242,7 +242,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
 								<div class="col-sm-10">
 									<select name="config_currency" id="input-currency" class="form-control">
@@ -257,7 +257,7 @@
 									<small class="form-text text-muted">{{ help_currency }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-currency-engine" class="col-sm-2 col-form-label">{{ entry_currency_engine }}</label>
 								<div class="col-sm-10">
 									<select name="config_currency_engine" id="input-currency-engine" class="form-control">
@@ -271,10 +271,10 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 										{% if config_currency_auto %}
 											<label class="btn btn-outline-secondary active"><input type="radio" name="config_currency_auto" value="1" checked="checked"/> {{ text_yes }}</label>
 											<label class="btn btn-outline-secondary"><input type="radio" name="config_currency_auto" value="0"/> {{ text_no }}</label>
@@ -286,7 +286,7 @@
 									<small class="form-text text-muted">{{ help_currency_auto }}</small>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-length-class" class="col-sm-2 col-form-label">{{ entry_length_class }}</label>
 								<div class="col-sm-10">
 									<select name="config_length_class_id" id="input-length-class" class="form-control">
@@ -300,7 +300,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-weight-class" class="col-sm-2 col-form-label">{{ entry_weight_class }}</label>
 								<div class="col-sm-10">
 									<select name="config_weight_class_id" id="input-weight-class" class="form-control">
@@ -317,26 +317,26 @@
 						</div>
 						<div id="tab-option" class="tab-pane">
 							<fieldset>
-								<legend><a href="#collapse-product" data-toggle="collapse">{{ text_product }}</a></legend>
+								<legend><a href="#collapse-product" data-bs-toggle="collapse">{{ text_product }}</a></legend>
 								<div id="collapse-product" class="collapse" data-parent="#tab-option">
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control"/>
 											<small class="form-text text-muted">{{ help_product_description_length }}</small>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
 											<small class="form-text text-muted">{{ help_pagination }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_product_count %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_product_count" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_product_count" value="0"/> {{ text_no }}</label>
@@ -348,7 +348,7 @@
 											<small class="form-text text-muted">{{ help_product_count }}</small>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-pagination-admin" class="col-sm-2 col-form-label">{{ entry_pagination_admin }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_pagination_admin" value="{{ config_pagination_admin }}" placeholder="{{ entry_pagination_admin }}" id="input-pagination-admin" class="form-control"/>
@@ -358,12 +358,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-review" data-toggle="collapse">{{ text_review }}</a></legend>
+								<legend><a href="#collapse-review" data-bs-toggle="collapse">{{ text_review }}</a></legend>
 								<div id="collapse-review" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_review_status }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_review_status %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_review_status" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_review_status" value="0"/> {{ text_no }}</label>
@@ -375,10 +375,10 @@
 											<small class="form-text text-muted">{{ help_review }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_review_guest }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_review_guest %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_review_guest" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_review_guest" value="0"/> {{ text_no }}</label>
@@ -393,16 +393,16 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-voucher" data-toggle="collapse">{{ text_voucher }}</a></legend>
+								<legend><a href="#collapse-voucher" data-bs-toggle="collapse">{{ text_voucher }}</a></legend>
 								<div id="collapse-voucher" class="collapse" data-parent="#tab-option">
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-voucher-min" class="col-sm-2 col-form-label">{{ entry_voucher_min }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>
 											<small class="form-text text-muted">{{ help_voucher_min }}</small>
 										</div>
 									</div>
-									<div class="form-group row required">
+									<div class="row mb-3 required">
 										<label for="input-voucher-max" class="col-sm-2 col-form-label">{{ entry_voucher_max }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_voucher_max" value="{{ config_voucher_max }}" placeholder="{{ entry_voucher_max }}" id="input-voucher-max" class="form-control"/>
@@ -412,9 +412,9 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-legal" data-toggle="collapse">{{ text_legal }}</a></legend>
+								<legend><a href="#collapse-legal" data-bs-toggle="collapse">{{ text_legal }}</a></legend>
 								<div id="collapse-legal" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-cookie" class="col-sm-2 col-form-label">{{ entry_cookie }}</label>
 										<div class="col-sm-10">
 											<select name="config_cookie_id" id="input-cookie" class="form-control">
@@ -430,7 +430,7 @@
 											<small class="form-text text-muted">{{ help_cookie }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-gdpr" class="col-sm-2 col-form-label">{{ entry_gdpr }}</label>
 										<div class="col-sm-10">
 											<select name="config_gdpr_id" id="input-gdpr" class="form-control">
@@ -446,7 +446,7 @@
 											<small class="form-text text-muted">{{ help_gdpr }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-gdpr-limit" class="col-sm-2 col-form-label">{{ entry_gdpr_limit }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_gdpr_limit" value="{{ config_gdpr_limit }}" placeholder="{{ entry_gdpr_limit }}" id="input-gdpr-limit" class="form-control"/>
@@ -456,12 +456,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-tax" data-toggle="collapse">{{ text_tax }}</a></legend>
+								<legend><a href="#collapse-tax" data-bs-toggle="collapse">{{ text_tax }}</a></legend>
 								<div id="collapse-tax" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_tax %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
@@ -472,7 +472,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-tax-default" class="col-sm-2 col-form-label">{{ entry_tax_default }}</label>
 										<div class="col-sm-10">
 											<select name="config_tax_default" id="input-tax-default" class="form-control">
@@ -491,7 +491,7 @@
 											<small class="form-text text-muted">{{ help_tax_default }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-tax-customer" class="col-sm-2 col-form-label">{{ entry_tax_customer }}</label>
 										<div class="col-sm-10">
 											<select name="config_tax_customer" id="input-tax-customer" class="form-control">
@@ -513,12 +513,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-account" data-toggle="collapse">{{ text_account }}</a></legend>
+								<legend><a href="#collapse-account" data-bs-toggle="collapse">{{ text_account }}</a></legend>
 								<div id="collapse-account" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_online }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_customer_online %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_online" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_customer_online" value="0"/> {{ text_no }}</label>
@@ -530,10 +530,10 @@
 											<small class="form-text text-muted">{{ help_customer_online }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_activity }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_customer_activity %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_activity" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_customer_activity" value="0"/> {{ text_no }}</label>
@@ -545,10 +545,10 @@
 											<small class="form-text text-muted">{{ help_customer_activity }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_search }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_customer_search %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_search" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_customer_search" value="0"/> {{ text_no }}</label>
@@ -559,7 +559,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 										<div class="col-sm-10">
 											<select name="config_customer_group_id" id="input-customer-group" class="form-control">
@@ -574,7 +574,7 @@
 											<small class="form-text text-muted">{{ help_customer_group }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
 										<div class="col-sm-10">
 											<div class="form-control" style="height: 150px; overflow: auto;">
@@ -591,10 +591,10 @@
 											<small class="form-text text-muted">{{ help_customer_group_display }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_customer_price %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
@@ -606,14 +606,14 @@
 											<small class="form-text text-muted">{{ help_customer_price }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-login-attempts" class="col-sm-2 col-form-label">{{ entry_login_attempts }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control"/>
 											<small class="form-text text-muted">{{ help_login_attempts }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
 										<div class="col-sm-10">
 											<select name="config_account_id" id="input-account" class="form-control">
@@ -632,19 +632,19 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-checkout" data-toggle="collapse">{{ text_checkout }}</a></legend>
+								<legend><a href="#collapse-checkout" data-bs-toggle="collapse">{{ text_checkout }}</a></legend>
 								<div id="collapse-checkout" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-invoice-prefix" class="col-sm-2 col-form-label">{{ entry_invoice_prefix }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_invoice_prefix" value="{{ config_invoice_prefix }}" placeholder="{{ entry_invoice_prefix }}" id="input-invoice-prefix" class="form-control"/>
 											<small class="form-text text-muted">{{ help_invoice_prefix }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_cart_weight %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
@@ -656,10 +656,10 @@
 											<small class="form-text text-muted">{{ help_cart_weight }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_checkout_guest %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
@@ -671,7 +671,7 @@
 											<small class="form-text text-muted">{{ help_checkout_guest }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
 										<div class="col-sm-10">
 											<select name="config_checkout_id" id="input-checkout" class="form-control">
@@ -687,7 +687,7 @@
 											<small class="form-text text-muted">{{ help_checkout }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
 										<div class="col-sm-10">
 											<select name="config_order_status_id" id="input-order-status" class="form-control">
@@ -702,7 +702,7 @@
 											<small class="form-text text-muted">{{ help_order_status }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-process-status" class="col-sm-2 col-form-label">{{ entry_processing_status }}</label>
 										<div class="col-sm-10">
 											<div class="form-control" style="height: 150px; overflow: auto;">
@@ -720,7 +720,7 @@
 											<small class="form-text text-muted">{{ help_processing_status }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-complete-status" class="col-sm-2 col-form-label">{{ entry_complete_status }}</label>
 										<div class="col-sm-10">
 											<div class="form-control" style="height: 150px; overflow: auto;">
@@ -739,7 +739,7 @@
 											<small class="form-text text-muted">{{ help_complete_status }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-fraud-status" class="col-sm-2 col-form-label">{{ entry_fraud_status }}</label>
 										<div class="col-sm-10">
 											<select name="config_fraud_status_id" id="input-fraud-status" class="form-control">
@@ -754,7 +754,7 @@
 											<small class="form-text text-muted">{{ help_fraud_status }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-api" class="col-sm-2 col-form-label">{{ entry_api }}</label>
 										<div class="col-sm-10">
 											<select name="config_api_id" id="input-api" class="form-control">
@@ -773,12 +773,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-stock" data-toggle="collapse">{{ text_stock }}</a></legend>
+								<legend><a href="#collapse-stock" data-bs-toggle="collapse">{{ text_stock }}</a></legend>
 								<div id="collapse-stock" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_stock_display %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
@@ -790,10 +790,10 @@
 											<small class="form-text text-muted">{{ help_stock_display }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_stock_warning }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_stock_warning %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_warning" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_stock_warning" value="0"/> {{ text_no }}</label>
@@ -805,10 +805,10 @@
 											<small class="form-text text-muted">{{ help_stock_warning }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_stock_checkout %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
@@ -823,12 +823,12 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-affiliate" data-toggle="collapse">{{ text_affiliate }}</a></legend>
+								<legend><a href="#collapse-affiliate" data-bs-toggle="collapse">{{ text_affiliate }}</a></legend>
 								<div id="collapse-affiliate" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_affiliate_status }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_affiliate_status %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_affiliate_status" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_affiliate_status" value="0"/> {{ text_no }}</label>
@@ -840,7 +840,7 @@
 											<small class="form-text text-muted">{{ help_affiliate_status }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-affiliate-group" class="col-sm-2 col-form-label">{{ entry_affiliate_group }}</label>
 										<div class="col-sm-10">
 											<select name="config_affiliate_group_id" id="input-affiliate-group" class="form-control">
@@ -854,10 +854,10 @@
 											</select>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_affiliate_approval }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_affiliate_approval %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_affiliate_approval" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_affiliate_approval" value="0"/> {{ text_no }}</label>
@@ -869,10 +869,10 @@
 											<small class="form-text text-muted">{{ help_affiliate_approval }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_affiliate_auto }}</label>
 										<div class="col-sm-10">
-											<div class="btn-group btn-group-toggle" data-toggle="buttons">
+											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 												{% if config_affiliate_auto %}
 													<label class="btn btn-outline-secondary active"><input type="radio" name="config_affiliate_auto" value="1" checked="checked"/> {{ text_yes }}</label>
 													<label class="btn btn-outline-secondary"><input type="radio" name="config_affiliate_auto" value="0"/> {{ text_no }}</label>
@@ -884,14 +884,14 @@
 											<small class="form-text text-muted">{{ help_affiliate_auto }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-affiliate-commission" class="col-sm-2 col-form-label">{{ entry_affiliate_commission }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="config_affiliate_commission" value="{{ config_affiliate_commission }}" placeholder="{{ entry_affiliate_commission }}" id="input-affiliate-commission" class="form-control"/>
 											<small class="form-text text-muted">{{ help_affiliate_commission }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-affiliate" class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
 										<div class="col-sm-10">
 											<select name="config_affiliate_id" id="input-affiliate" class="form-control">
@@ -911,9 +911,9 @@
 							</fieldset>
 
 							<fieldset>
-								<legend><a href="#collapse-return" data-toggle="collapse">{{ text_return }}</a></legend>
+								<legend><a href="#collapse-return" data-bs-toggle="collapse">{{ text_return }}</a></legend>
 								<div id="collapse-return" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-return" class="col-sm-2 col-form-label">{{ entry_return }}</label>
 										<div class="col-sm-10">
 											<select name="config_return_id" id="input-return" class="form-control">
@@ -929,7 +929,7 @@
 											<small class="form-text text-muted">{{ help_return }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
 										<div class="col-sm-10">
 											<select name="config_return_status_id" id="input-return-status" class="form-control">
@@ -947,9 +947,9 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend><a href="#collapse-captcha" data-toggle="collapse">{{ text_captcha }}</a></legend>
+								<legend><a href="#collapse-captcha" data-bs-toggle="collapse">{{ text_captcha }}</a></legend>
 								<div id="collapse-captcha" class="collapse" data-parent="#tab-option">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-captcha" class="col-sm-2 col-form-label">{{ entry_captcha }}</label>
 										<div class="col-sm-10">
 											<select name="config_captcha" id="input-captcha" class="form-control">
@@ -965,7 +965,7 @@
 											<small class="form-text text-muted">{{ help_captcha }}</small>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_captcha_page }}</label>
 										<div class="col-sm-10">
 											<div class="form-control" style="height: 150px; overflow: auto;">
@@ -989,7 +989,7 @@
 						<div id="tab-image" class="tab-pane">
 							<fieldset>
 								<legend>{{ text_image_size }}</legend>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-category" class="row">
@@ -1002,7 +1002,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-thumb" class="row">
@@ -1015,7 +1015,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-popup" class="row">
@@ -1028,7 +1028,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-product" class="row">
@@ -1041,7 +1041,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-additional" class="row">
@@ -1054,7 +1054,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-related" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-related" class="row">
@@ -1067,7 +1067,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-image-compare" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-compare" class="row">
@@ -1080,7 +1080,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="mb-3 row required">
 									<label for="input-image-wishlist" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-wishlist" class="row">
@@ -1093,7 +1093,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="mb-3 row required">
 									<label for="input-image-cart" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-cart" class="row">
@@ -1106,7 +1106,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="mb-3 row required">
 									<label for="input-image-location" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
 									<div class="col-sm-10">
 										<div id="input-image-location" class="row">
@@ -1124,7 +1124,7 @@
 						<div id="tab-mail" class="tab-pane">
 							<fieldset>
 								<legend>{{ text_general }}</legend>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-engine" class="col-sm-2 col-form-label">{{ entry_mail_engine }}</label>
 									<div class="col-sm-10">
 										<select name="config_mail_engine" id="input-mail-engine" class="form-control">
@@ -1142,40 +1142,40 @@
 										<small class="form-text text-muted">{{ help_mail_engine }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-parameter" class="col-sm-2 col-form-label">{{ entry_mail_parameter }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_mail_parameter" value="{{ config_mail_parameter }}" placeholder="{{ entry_mail_parameter }}" id="input-mail-parameter" class="form-control"/>
 										<small class="form-text text-muted">{{ help_mail_parameter }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-smtp-hostname" class="col-sm-2 col-form-label">{{ entry_mail_smtp_hostname }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_mail_smtp_hostname" value="{{ config_mail_smtp_hostname }}" placeholder="{{ entry_mail_smtp_hostname }}" id="input-mail-smtp-hostname" class="form-control"/>
 										<small class="form-text text-muted">{{ help_mail_smtp_hostname }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-smtp-username" class="col-sm-2 col-form-label">{{ entry_mail_smtp_username }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_mail_smtp_username" value="{{ config_mail_smtp_username }}" placeholder="{{ entry_mail_smtp_username }}" id="input-mail-smtp-username" class="form-control"/>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-smtp-password" class="col-sm-2 col-form-label">{{ entry_mail_smtp_password }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_mail_smtp_password" value="{{ config_mail_smtp_password }}" placeholder="{{ entry_mail_smtp_password }}" id="input-mail-smtp-password" class="form-control"/>
 										<small class="form-text text-muted">{{ help_mail_smtp_password }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-smtp-port" class="col-sm-2 col-form-label">{{ entry_mail_smtp_port }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_mail_smtp_port" value="{{ config_mail_smtp_port }}" placeholder="{{ entry_mail_smtp_port }}" id="input-mail-smtp-port" class="form-control"/>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-smtp-timeout" class="col-sm-2 col-form-label">{{ entry_mail_smtp_timeout }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_mail_smtp_timeout" value="{{ config_mail_smtp_timeout }}" placeholder="{{ entry_mail_smtp_timeout }}" id="input-mail-smtp-timeout" class="form-control"/>
@@ -1184,7 +1184,7 @@
 							</fieldset>
 							<fieldset>
 								<legend>{{ text_mail_alert }}</legend>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label class="col-sm-2 col-form-label">{{ entry_mail_alert }}</label>
 									<div class="col-sm-10">
 										<div class="form-control" style="height: 150px; overflow: auto;">
@@ -1203,7 +1203,7 @@
 										<small class="form-text text-muted">{{ help_mail_alert }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label for="input-mail-alert-email" class="col-sm-2 col-form-label">{{ entry_mail_alert_email }}</label>
 									<div class="col-sm-10">
 										<textarea name="config_mail_alert_email" rows="5" placeholder="{{ entry_mail_alert_email }}" id="input-alert-email" class="form-control">{{ config_mail_alert_email }}</textarea>
@@ -1215,10 +1215,10 @@
 						<div id="tab-server" class="tab-pane">
 							<fieldset>
 								<legend>{{ text_general }}</legend>
-								<div class="form-group row">
+								<div class="mb-3 row">
 									<label class="col-sm-2 col-form-label">{{ entry_maintenance }}</label>
 									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 											{% if config_maintenance %}
 												<label class="btn btn-outline-secondary active"><input type="radio" name="config_maintenance" value="1" checked="checked"/> {{ text_yes }}</label>
 												<label class="btn btn-outline-secondary"><input type="radio" name="config_maintenance" value="0"/> {{ text_no }}</label>
@@ -1230,10 +1230,10 @@
 										<small class="form-text text-muted">{{ help_maintenance }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">{{ entry_seo_url }}</label>
 									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 											{% if config_seo_url %}
 												<label class="btn btn-outline-secondary active"><input type="radio" name="config_seo_url" value="1" checked="checked"/> {{ text_yes }}</label>
 												<label class="btn btn-outline-secondary"><input type="radio" name="config_seo_url" value="0"/> {{ text_no }}</label>
@@ -1245,14 +1245,14 @@
 										<small class="form-text text-muted">{{ help_seo_url }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label for="input-robots" class="col-sm-2 col-form-label">{{ entry_robots }}</label>
 									<div class="col-sm-10">
 										<textarea name="config_robots" rows="5" placeholder="{{ entry_robots }}" id="input-robots" class="form-control">{{ config_robots }}</textarea>
 										<small class="form-text text-muted">{{ help_robots }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label for="input-compression" class="col-sm-2 col-form-label">{{ entry_compression }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_compression" value="{{ config_compression }}" placeholder="{{ entry_compression }}" id="input-compression" class="form-control"/>
@@ -1262,10 +1262,10 @@
 							</fieldset>
 							<fieldset>
 								<legend>{{ text_security }}</legend>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">{{ entry_password }}</label>
 									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 											{% if config_password %}
 												<label class="btn btn-outline-secondary active"><input type="radio" name="config_password" value="1" checked="checked"/> {{ text_yes }}</label>
 												<label class="btn btn-outline-secondary"><input type="radio" name="config_password" value="0"/> {{ text_no }}</label>
@@ -1277,10 +1277,10 @@
 										<small class="form-text text-muted">{{ help_password }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
 									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 											{% if config_shared %}
 												<label class="btn btn-outline-secondary active"><input type="radio" name="config_shared" value="1" checked="checked"/> {{ text_yes }}</label>
 												<label class="btn btn-outline-secondary"><input type="radio" name="config_shared" value="0"/> {{ text_no }}</label>
@@ -1292,7 +1292,7 @@
 										<small class="form-text text-muted">{{ help_shared }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label for="input-encryption" class="col-sm-2 col-form-label">{{ entry_encryption }}</label>
 									<div class="col-sm-10">
 										<textarea name="config_encryption" rows="5" placeholder="{{ entry_encryption }}" id="input-encryption" class="form-control">{{ config_encryption }}</textarea>
@@ -1302,21 +1302,21 @@
 							</fieldset>
 							<fieldset>
 								<legend>{{ text_upload }}</legend>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-file-max-size" class="col-sm-2 col-form-label">{{ entry_file_max_size }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_file_max_size" value="{{ config_file_max_size }}" placeholder="{{ entry_file_max_size }}" id="input-file-max-size" class="form-control"/>
 										<small class="form-text text-muted">{{ help_file_max_size }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label for="input-file-ext-allowed" class="col-sm-2 col-form-label">{{ entry_file_ext_allowed }}</label>
 									<div class="col-sm-10">
 										<textarea name="config_file_ext_allowed" rows="5" placeholder="{{ entry_file_ext_allowed }}" id="input-file-ext-allowed" class="form-control">{{ config_file_ext_allowed }}</textarea>
 										<small class="form-text text-muted">{{ help_file_ext_allowed }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label for="input-file-mime-allowed" class="col-sm-2 col-form-label">{{ entry_file_mime_allowed }}</label>
 									<div class="col-sm-10">
 										<textarea name="config_file_mime_allowed" rows="5" placeholder="{{ entry_file_mime_allowed }}" id="input-file-mime-allowed" class="form-control">{{ config_file_mime_allowed }}</textarea>
@@ -1326,10 +1326,10 @@
 							</fieldset>
 							<fieldset>
 								<legend>{{ text_error }}</legend>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">{{ entry_error_display }}</label>
 									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 											{% if config_error_display %}
 												<label class="btn btn-outline-secondary active"><input type="radio" name="config_error_display" value="1" checked="checked"/> {{ text_yes }}</label>
 												<label class="btn btn-outline-secondary"><input type="radio" name="config_error_display" value="0"/> {{ text_no }}</label>
@@ -1340,10 +1340,10 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label class="col-sm-2 col-form-label">{{ entry_error_log }}</label>
 									<div class="col-sm-10">
-										<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 											{% if config_error_log %}
 												<label class="btn btn-outline-secondary active"><input type="radio" name="config_error_log" value="1" checked="checked"/> {{ text_yes }}</label>
 												<label class="btn btn-outline-secondary"><input type="radio" name="config_error_log" value="0"/> {{ text_no }}</label>
@@ -1354,7 +1354,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row required">
+								<div class="row mb-3 required">
 									<label for="input-error-filename" class="col-sm-2 col-form-label">{{ entry_error_filename }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control"/>

@@ -9,15 +9,15 @@
 			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
-						<td class="text-left">{{ column_name }}</td>
-						<td class="text-right">{{ column_action }}</td>
+						<td class="text-start">{{ column_name }}</td>
+						<td class="text-end">{{ column_action }}</td>
 					</tr>
 				</thead>
 				<tbody>
 					{% for extension in extensions %}
 						<tr>
-							<td class="text-left"><a href="{{ extension.href }}">{{ extension.name }}</a></td>
-							<td class="text-right">
+							<td class="text-start"><a href="{{ extension.href }}">{{ extension.name }}</a></td>
+							<td class="text-end">
 								<div class="dropdown">
 									<div class="btn-group">
 										<button type="button" value="{{ extension.download }}" data-loading="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"{% if not extension.download %} disabled{% endif %}><i class="fas fa-download"></i></button>

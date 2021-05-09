@@ -23,7 +23,7 @@
     {% endif %}
     <div id="collapse">
       <div class="card">
-        <div class="card-header" data-toggle="collapse" data-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
+        <div class="card-header" data-bs-toggle="collapse" data-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
         <div id="collapse-version" data-parent="#collapse" class="collapse show">
           <div class="card-body">
             <fieldset>
@@ -51,12 +51,12 @@
               <textarea wrap="off" rows="10" readonly class="form-control">{{ log }}</textarea>
             </fieldset>
             <br/>
-            <div class="text-right"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-end"><a href="#collapse-compatible" data-bs-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
+        <div class="card-header collapsed" data-bs-toggle="collapse" data-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
         <div id="collapse-compatible" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
@@ -66,7 +66,7 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-left">{{ column_name }}</td>
+                  <td class="text-start">{{ column_name }}</td>
                   <td class="text-center">{{ column_compatible }}</td>
                   <td class="text-center">{{ column_available }}</td>
                 </tr>
@@ -75,7 +75,7 @@
                 {% if extensions %}
                   {% for extension in extensions %}
                     <tr>
-                      <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
+                      <td class="text-start"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
                       <td class="text-center">{% if extension.compatible %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
                       <td class="text-center">{% if extension.available %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
                     </tr>
@@ -88,17 +88,17 @@
               </tbody>
             </table>
             <br/>
-            <div class="text-right"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-end"><a href="#collapse-upgrade" data-bs-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
+        <div class="card-header collapsed" data-bs-toggle="collapse" data-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
         <div id="collapse-upgrade" data-parent="#collapse" class="collapse">
           <div class="card-body">
             <fieldset>
               <legend>{{ text_progress }}</legend>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
                 <div class="col-sm-10">
                   <div id="progress-download" class="progress">
@@ -108,7 +108,7 @@
                 </div>
               </div>
               <div class="col-sm-10 offset-sm-2">
-                <div class="form-group row">
+                <div class="row mb-3">
                   {% if upgrade %}
                     <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-play"></i> {{ button_start }}</button>
                   {% else %}

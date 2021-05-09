@@ -3,26 +3,26 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td class="text-right">{% if sort == 'or.order_recurring_id' %} <a href="{{ sort_order_recurring }}" class="{{ order|lower }}">{{ column_order_recurring_id }}</a> {% else %} <a href="{{ sort_order_recurring }}">{{ column_order_recurring_id }}</a> {% endif %}</td>
-					<td class="text-right">{% if sort == 'or.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</td>
-					<td class="text-left">{% if sort == 'or.reference' %} <a href="{{ sort_reference }}" class="{{ order|lower }}">{{ column_reference }}</a> {% else %} <a href="{{ sort_reference }}">{{ column_reference }}</a> {% endif %}</td>
-					<td class="text-left">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
-					<td class="text-left">{% if sort == 'or.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
-					<td class="text-left d-none d-lg-table-cell">{% if sort == 'or.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-end">{% if sort == 'or.order_recurring_id' %} <a href="{{ sort_order_recurring }}" class="{{ order|lower }}">{{ column_order_recurring_id }}</a> {% else %} <a href="{{ sort_order_recurring }}">{{ column_order_recurring_id }}</a> {% endif %}</td>
+					<td class="text-end">{% if sort == 'or.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</td>
+					<td class="text-start">{% if sort == 'or.reference' %} <a href="{{ sort_reference }}" class="{{ order|lower }}">{{ column_reference }}</a> {% else %} <a href="{{ sort_reference }}">{{ column_reference }}</a> {% endif %}</td>
+					<td class="text-start">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
+					<td class="text-start">{% if sort == 'or.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
+					<td class="text-start d-none d-lg-table-cell">{% if sort == 'or.date_added' %} <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a> {% else %} <a href="{{ sort_date_added }}">{{ column_date_added }}</a> {% endif %}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
 				{% if recurrings %}
 					{% for recurring in recurrings %}
 						<tr>
-							<td class="text-right">{{ recurring.order_recurring_id }}</td>
-							<td class="text-right">{{ recurring.order_id }}</td>
-							<td class="text-left">{{ recurring.reference }}</td>
-							<td class="text-left">{{ recurring.customer }}</td>
-							<td class="text-left">{{ recurring.status }}</td>
-							<td class="text-left d-none d-lg-table-cell">{{ recurring.date_added }}</td>
-							<td class="text-right"><a href="{{ recurring.view }}" data-bs-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fas fa-eye"></i></a> <a href="{{ recurring.order }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-shopping-cart"></i></a></td>
+							<td class="text-end">{{ recurring.order_recurring_id }}</td>
+							<td class="text-end">{{ recurring.order_id }}</td>
+							<td class="text-start">{{ recurring.reference }}</td>
+							<td class="text-start">{{ recurring.customer }}</td>
+							<td class="text-start">{{ recurring.status }}</td>
+							<td class="text-start d-none d-lg-table-cell">{{ recurring.date_added }}</td>
+							<td class="text-end"><a href="{{ recurring.view }}" data-bs-toggle="tooltip" title="{{ button_order_recurring }}" class="btn btn-info"><i class="fas fa-eye"></i></a> <a href="{{ recurring.order }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-shopping-cart"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -34,7 +34,7 @@
 		</table>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

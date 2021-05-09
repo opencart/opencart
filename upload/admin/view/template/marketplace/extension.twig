@@ -28,9 +28,7 @@
 										{% endif %}
 									{% endfor %}
 								</select>
-								<div class="input-group-append">
-									<span class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</span>
-								</div>
+								<div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>
 							</div>
 						</div>
 					</div>
@@ -157,7 +155,7 @@ $('#extension').on('click', '.btn-success', function(e) {
             if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-								$('select[name=\'type\']').trigger('change');
+                $('select[name=\'type\']').trigger('change');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

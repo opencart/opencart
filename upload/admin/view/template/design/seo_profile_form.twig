@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#seo-profile-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -18,40 +18,40 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="seo-profile-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-regex" class="col-sm-2 col-form-label">{{ entry_regex }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="regex" value="{{ regex }}" placeholder="{{ entry_regex }}" id="input-regex" class="form-control"/>
 							<small class="form-text text-muted">{{ help_regex }}</small>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-push" class="col-sm-2 col-form-label">{{ entry_push }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="push" value="{{ push }}" placeholder="{{ entry_push }}" id="input-push" class="form-control"/>
 							<small class="form-text text-muted">{{ help_push }}</small>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-remove" class="col-sm-2 col-form-label">{{ entry_remove }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="remove" value="{{ remove }}" placeholder="{{ entry_remove }}" id="input-remove" class="form-control"/>
 							<small class="form-text text-muted">{{ help_remove }}</small>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>

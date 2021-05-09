@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-action="{{ save }}" data-form="#tax-rate-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
@@ -18,19 +18,19 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="tax-rate-form">
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row required">
+					<div class="row mb-3 required">
 						<label for="input-rate" class="col-sm-2 col-form-label">{{ entry_rate }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="rate" value="{{ rate }}" placeholder="{{ entry_rate }}" id="input-rate" class="form-control"/>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
 						<div class="col-sm-10">
 							<select name="type" id="input-type" class="form-control">
@@ -47,7 +47,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 						<div class="col-sm-10">
 							<div id="product-store" class="form-control" style="height: 150px; overflow: auto;">
@@ -65,7 +65,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
 						<div class="col-sm-10">
 							<select name="geo_zone_id" id="input-geo-zone" class="form-control">

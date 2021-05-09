@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
+			<div class="float-end">
 				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-report').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -29,7 +29,7 @@
 									{% endif %}
 								{% endfor %}
 							</select>
-							<div class="input-group-append"><span class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</span></div>
+							<div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>
 						</div>
 					</div>
 				</div>

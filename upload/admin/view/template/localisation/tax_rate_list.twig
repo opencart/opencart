@@ -4,22 +4,22 @@
 			<thead>
 				<tr>
 					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-left">{% if sort == 'tr.name' %}
+					<td class="text-start">{% if sort == 'tr.name' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
 						{% else %}
 							<a href="{{ sort_name }}">{{ column_name }}</a>
 						{% endif %}</td>
-					<td class="text-right">{% if sort == 'tr.rate' %}
+					<td class="text-end">{% if sort == 'tr.rate' %}
 							<a href="{{ sort_rate }}" class="{{ order|lower }}">{{ column_rate }}</a>
 						{% else %}
 							<a href="{{ sort_rate }}">{{ column_rate }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'tr.type' %}
+					<td class="text-start">{% if sort == 'tr.type' %}
 							<a href="{{ sort_type }}" class="{{ order|lower }}">{{ column_type }}</a>
 						{% else %}
 							<a href="{{ sort_type }}">{{ column_type }}</a>
 						{% endif %}</td>
-					<td class="text-left">{% if sort == 'gz.name' %}
+					<td class="text-start">{% if sort == 'gz.name' %}
 							<a href="{{ sort_geo_zone }}" class="{{ order|lower }}">{{ column_geo_zone }}</a>
 						{% else %}
 							<a href="{{ sort_geo_zone }}">{{ column_geo_zone }}</a>
@@ -34,7 +34,7 @@
 						{% else %}
 							<a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
 						{% endif %}</td>
-					<td class="text-right">{{ column_action }}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,13 +42,13 @@
 					{% for tax_rate in tax_rates %}
 						<tr>
 							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ tax_rate.tax_rate_id }}"/></td>
-							<td class="text-left">{{ tax_rate.name }}</td>
-							<td class="text-right">{{ tax_rate.rate }}</td>
-							<td class="text-left">{{ tax_rate.type }}</td>
-							<td class="text-left">{{ tax_rate.geo_zone }}</td>
+							<td class="text-start">{{ tax_rate.name }}</td>
+							<td class="text-end">{{ tax_rate.rate }}</td>
+							<td class="text-start">{{ tax_rate.type }}</td>
+							<td class="text-start">{{ tax_rate.geo_zone }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ tax_rate.date_added }}</td>
 							<td class="text-left d-none d-lg-table-cell">{{ tax_rate.date_modified }}</td>
-							<td class="text-right"><a href="{{ tax_rate.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+							<td class="text-end"><a href="{{ tax_rate.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 						</tr>
 					{% endfor %}
 				{% else %}
@@ -61,6 +61,6 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-right">{{ results }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
 	</div>
 </form>

@@ -29,20 +29,20 @@ function isIE() {
 
 $(document).ready(function() {
     // tooltips on hover
-    $('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+    $('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
     // Makes tooltips work on ajax generated content
     $(document).ajaxStop(function() {
-        $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+        $('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
 
     // tooltip remove
-    $('[data-toggle=\'tooltip\']').on('remove', function() {
+    $('[data-bs-toggle=\'tooltip\']').on('remove', function() {
         $(this).tooltip('dispose');
     });
 
     // Tooltip remove fixed
-    $(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
+    $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
         $('body > .tooltip').remove();
     });
 
@@ -103,13 +103,13 @@ $(document).ready(function() {
 });
 
 // Forms
-$(document).on('click', '[data-action]', function() {
+$(document).on('click', '[data-oc-action]', function() {
     var element = this;
 
-    var form = $(element).attr('data-form');
+    var form = $(element).attr('data-oc-form');
 
     $.ajax({
-        url: $(element).attr('data-action'),
+        url: $(element).attr('data-oc-action'),
         type: 'post',
         dataType: 'json',
         data: new FormData($(form)[0]),
@@ -131,7 +131,7 @@ $(document).on('click', '[data-action]', function() {
 
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
                 }
 
                 for (key in json['error']) {
@@ -149,15 +149,15 @@ $(document).on('click', '[data-action]', function() {
             }
 
             if (typeof json['error'] == 'string') {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                 // Refresh
-                var url = $(form).attr('data-load');
-                var target = $(form).attr('data-target');
+                var url = $(form).attr('data-oc-load');
+                var target = $(form).attr('data-oc-target');
 
                 if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
                     $(target).load(url);
@@ -167,8 +167,6 @@ $(document).on('click', '[data-action]', function() {
             if (json['redirect']) {
                 location = json['redirect'];
             }
-
-
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -177,7 +175,7 @@ $(document).on('click', '[data-action]', function() {
 });
 
 // Image Manager
-$(document).on('click', '[data-toggle=\'image\']', function(e) {
+$(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -185,7 +183,7 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
     $('#modal-image').remove();
 
     $.ajax({
-        url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-thumb')),
+        url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-oc-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-oc-thumb')),
         dataType: 'html',
         beforeSend: function() {
             $(element).button('loading');
@@ -201,10 +199,10 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
     });
 });
 
-$(document).on('click', '[data-toggle=\'clear\']', function() {
-    $($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
+$(document).on('click', '[data-oc-toggle=\'clear\']', function() {
+    $($(this).attr('data-oc-thumb')).attr('src', $($(this).attr('data-oc-thumb')).attr('data-oc-placeholder'));
 
-    $($(this).attr('data-target')).val('');
+    $($(this).attr('data-oc-target')).val('');
 });
 
 

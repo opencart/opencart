@@ -48,7 +48,7 @@
 					<div class="col-xl-3 col-lg-5 col-sm-auto">
 						<div class="input-group float-end">
 							<div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
-							<select onchange="location = this.value;" class="form-control">
+							<select onchange="location = this.value;" class="form-select">
 								{% for sorts in sorts %}
 									{% if sorts.value == sort %}
 										<option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>

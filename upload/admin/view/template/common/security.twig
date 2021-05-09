@@ -3,7 +3,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				<div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
@@ -11,7 +11,7 @@
 					<fieldset>
 						<legend>{{ text_choose }}</legend>
 						<div class="mb-3">
-							<select name="type" id="input-type" class="form-control">
+							<select name="type" id="input-type" class="form-select">
 								<option value="automatic">{{ text_automatic }}</option>
 								<option value="manual">{{ text_manual }}</option>
 							</select>
@@ -99,11 +99,11 @@ $('#button-move').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

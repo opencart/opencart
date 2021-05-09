@@ -5,7 +5,7 @@
 			<div class="float-end">
 				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-seo').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
 				<a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-				<button type="button" data-action="{{ delete }}" data-form="#seo-url-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+				<button type="button" data-oc-action="{{ delete }}" data-oc-form="#seo-url-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -31,7 +31,7 @@
 							<label for="input-value" class="col-form-label">{{ entry_value }}</label> <input type="text" name="filter_value" value="{{ filter_value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-control">
+							<label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
 								<option value=""></option>
 								{% if filter_store_id == '0' %}
 									<option value="0" selected="selected">{{ text_default }}</option>
@@ -48,7 +48,7 @@
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="input-language" class="col-form-label">{{ entry_language }}</label> <select name="filter_language_id" id="input-language" class="form-control">
+							<label for="input-language" class="col-form-label">{{ entry_language }}</label> <select name="filter_language_id" id="input-language" class="form-select">
 								<option value=""></option>
 								{% for language in languages %}
 									{% if language.language_id == filter_language_id %}

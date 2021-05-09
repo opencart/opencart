@@ -29,7 +29,7 @@
 							<label for="input-order-id" class="col-form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-control">
+							<label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
 								{% for recurring_status in recurring_statuses %}
 									{% if filter_status == recurring_status.value %}
 										<option value="{{ recurring_status.value }}" selected="selected">{{ recurring_status.text }}</option>

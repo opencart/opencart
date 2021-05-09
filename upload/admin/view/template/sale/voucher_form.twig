@@ -6,7 +6,7 @@
 				{% if voucher_id %}
 					<button type="button" id="button-send" data-bs-toggle="tooltip" title="{{ button_send }}" class="btn btn-warning"><i class="fas fa-envelope"></i></button>
 				{% endif %}
-				<button type="button" data-action="{{ save }}" data-form="#voucher-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#voucher-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -64,7 +64,7 @@
 							<div class="row mb-3">
 								<label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
 								<div class="col-sm-10">
-									<select name="voucher_theme_id" id="input-theme" class="form-control">
+									<select name="voucher_theme_id" id="input-theme" class="form-select">
 										{% for voucher_theme in voucher_themes %}
 											{% if voucher_theme.voucher_theme_id == voucher_theme_id %}
 												<option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
@@ -90,7 +90,7 @@
 							<div class="row mb-3">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
-									<select name="status" id="input-status" class="form-control">
+									<select name="status" id="input-status" class="form-select">
 										{% if status %}
 											<option value="1" selected="selected">{{ text_enabled }}</option>
 											<option value="0">{{ text_disabled }}</option>
@@ -131,11 +131,11 @@
               $('.alert-dismissible').remove();
 
               if (json['error']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
               }
 
               if (json['success']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
               }
           },
           error: function(xhr, ajaxOptions, thrownError) {

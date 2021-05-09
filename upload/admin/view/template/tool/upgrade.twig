@@ -13,18 +13,18 @@
   <div class="container-fluid">
     {% if error_warning %}
       <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     {% if success %}
       <div class="alert alert-success"><i class="fas fa-check-circle"></i> {{ success }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
       </div>
     {% endif %}
     <div id="collapse">
       <div class="card">
-        <div class="card-header" data-bs-toggle="collapse" data-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
-        <div id="collapse-version" data-parent="#collapse" class="collapse show">
+        <div class="card-header" data-bs-toggle="collapse" data-bs-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
+        <div id="collapse-version" data-bs-parent="#collapse" class="collapse show">
           <div class="card-body">
             <fieldset>
               {% if error_warning %}
@@ -51,17 +51,17 @@
               <textarea wrap="off" rows="10" readonly class="form-control">{{ log }}</textarea>
             </fieldset>
             <br/>
-            <div class="text-end"><a href="#collapse-compatible" data-bs-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-end"><a href="#collapse-compatible" data-bs-toggle="collapse" data-bs-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header collapsed" data-bs-toggle="collapse" data-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
-        <div id="collapse-compatible" data-parent="#collapse" class="collapse">
+        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
+        <div id="collapse-compatible" data-bs-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
               {{ text_before }}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
             </div>
             <table class="table table-bordered table-hover">
               <thead>
@@ -88,13 +88,13 @@
               </tbody>
             </table>
             <br/>
-            <div class="text-end"><a href="#collapse-upgrade" data-bs-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-end"><a href="#collapse-upgrade" data-bs-toggle="collapse" data-bs-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header collapsed" data-bs-toggle="collapse" data-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
-        <div id="collapse-upgrade" data-parent="#collapse" class="collapse">
+        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
+        <div id="collapse-upgrade" data-bs-parent="#collapse" class="collapse">
           <div class="card-body">
             <fieldset>
               <legend>{{ text_progress }}</legend>

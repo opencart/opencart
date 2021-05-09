@@ -28,7 +28,7 @@
 							<label class="col-form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-customer-group" class="col-form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
+							<label for="input-customer-group" class="col-form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-select">
 								<option value=""></option>
 								{% for customer_group in customer_groups %}
 									<option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
@@ -36,7 +36,7 @@
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="input-type" class="col-form-label">{{ entry_type }}</label> <select name="filter_type" id="input-type" class="form-control">
+							<label for="input-type" class="col-form-label">{{ entry_type }}</label> <select name="filter_type" id="input-type" class="form-select">
 								<option value=""></option>
 								<option value="customer">{{ text_customer }}</option>
 								<option value="affiliate">{{ text_affiliate }}</option>
@@ -95,11 +95,11 @@ $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                 $('#gdpr').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}');
             }
@@ -128,13 +128,13 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#customer-approval').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#customer-approval').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
                 $('#customer-approval').load('index.php?route=customer/customer_approval|list&user_token={{ user_token }}');
 
-                $('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

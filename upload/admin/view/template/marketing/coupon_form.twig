@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-action="{{ save }}" data-form="#coupon-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#coupon-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -39,7 +39,7 @@
 							<div class="row mb-3">
 								<label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
 								<div class="col-sm-10">
-									<select name="type" id="input-type" class="form-control">
+									<select name="type" id="input-type" class="form-select">
 										{% if type == 'P' %}
 											<option value="P" selected="selected">{{ text_percent }}</option>
 										{% else %}
@@ -165,7 +165,7 @@
 							<div class="row mb-3">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
-									<select name="status" id="input-status" class="form-control">
+									<select name="status" id="input-status" class="form-select">
 										{% if status %}
 											<option value="1" selected="selected">{{ text_enabled }}</option>
 											<option value="0">{{ text_disabled }}</option>

@@ -22,7 +22,6 @@
 						<td class="text-start align-text-top">{{ extension.version }}</td>
 						<td class="text-start align-text-top">{{ extension.date_added }}</td>
 						<td class="text-end align-text-top">
-
 							{% if not extension.status %}
 								<a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
 								<a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
@@ -30,7 +29,6 @@
 								<a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fas fa-minus-circle"></i></a>
 								<button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" disabled><i class="far fa-trash-alt"></i></button>
 							{% endif %}
-
 						</td>
 					</tr>
 				{% endfor %}

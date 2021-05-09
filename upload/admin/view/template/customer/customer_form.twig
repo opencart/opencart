@@ -6,7 +6,7 @@
 				{% if orders %}
 					<a href="{{ orders }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-warning"><i class="fas fa-receipt"></i></a>
 				{% endif %}
-				<button type="button" data-action="{{ save }}" data-form="#customer-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#customer-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -38,7 +38,7 @@
 								<div class="row mb-3">
 									<label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
 									<div class="col-sm-10">
-										<select name="store_id" id="input-store" class="form-control">
+										<select name="store_id" id="input-store" class="form-select">
 											{% for store in stores %}
 												{% if store.store_id == store_id %}
 													<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
@@ -52,7 +52,7 @@
 								<div class="row mb-3">
 									<label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 									<div class="col-sm-10">
-										<select name="customer_group_id" id="input-customer-group" class="form-control">
+										<select name="customer_group_id" id="input-customer-group" class="form-select">
 											{% for customer_group in customer_groups %}
 												{% if customer_group.customer_group_id == customer_group_id %}
 													<option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
@@ -91,7 +91,7 @@
 											<div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
 												<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
-													<select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">
+													<select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
 														<option value="">{{ text_select }}</option>
 														{% for custom_field_value in custom_field.custom_field_value %}
 															{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
@@ -320,7 +320,7 @@
 									<div class="row mb-3 required">
 										<label for="input-address-{{ address_row }}-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
 										<div class="col-sm-10">
-											<select name="address[{{ address_row }}][country_id]" id="input-address-{{ address_row }}-country" class="form-control" data-address-row="{{ address_row }}" data-zone-id="{{ address.zone_id }}" disabled>
+											<select name="address[{{ address_row }}][country_id]" id="input-address-{{ address_row }}-country" class="form-select" data-address-row="{{ address_row }}" data-zone-id="{{ address.zone_id }}" disabled>
 												<option value="">{{ text_select }}</option>
 												{% for country in countries %}
 													{% if country.country_id == address.country_id %}
@@ -335,7 +335,7 @@
 									<div class="row mb-3 required">
 										<label for="input-address-{{ address_row }}-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
 										<div class="col-sm-10">
-											<select name="address[{{ address_row }}][zone_id]" id="input-address-{{ address_row }}-zone" class="form-control" disabled></select>
+											<select name="address[{{ address_row }}][zone_id]" id="input-address-{{ address_row }}-zone" class="form-select" disabled></select>
 										</div>
 									</div>
 									{% for custom_field in custom_fields %}
@@ -344,7 +344,7 @@
 												<div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
 													<label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 													<div class="col-sm-10">
-														<select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control">
+														<select name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
 															<option value="">{{ text_select }}</option>
 															{% for custom_field_value in custom_field.custom_field_value %}
 																{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address.custom_field[custom_field.custom_field_id] %}
@@ -639,7 +639,7 @@ $('#button-address').on('click', function(e) {
     html += '  <div class="row mb-3 required">';
     html += '    <label for="input-address-' + address_row + '-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>';
     html += '    <div class="col-sm-10">';
-    html += '       <select name="address[' + address_row + '][country_id]" id="input-address-' + address_row + '-country" data-address-row="' + address_row + '" data-zone-id="0" class="form-control" disabled>';
+    html += '       <select name="address[' + address_row + '][country_id]" id="input-address-' + address_row + '-country" data-address-row="' + address_row + '" data-zone-id="0" class="form-select" disabled>';
     html += '         <option value="">{{ text_select }}</option>';
 	{% for country in countries %}
     html += '         <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
@@ -650,7 +650,7 @@ $('#button-address').on('click', function(e) {
 
     html += '  <div class="row mb-3 required">';
     html += '    <label for="input-address-' + address_row + '-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>';
-    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-address-' + address_row + '-zone" class="form-control" disabled><option value="">{{ text_none }}</option></select></div>';
+    html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-address-' + address_row + '-zone" class="form-select" disabled><option value="">{{ text_none }}</option></select></div>';
     html += '  </div>';
 
     // Custom Fields
@@ -661,7 +661,7 @@ $('#button-address').on('click', function(e) {
     html += '  <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '    <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '  	 <div class="col-sm-10">';
-    html += '      <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control">';
+    html += '      <select name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-select">';
     html += '        <option value="">{{ text_select }}</option>';
 
 	{% for custom_field_value in custom_field.custom_field_value %}
@@ -925,11 +925,11 @@ $('#button-history').on('click', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                 $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
@@ -969,11 +969,11 @@ $('#button-transaction').on('click', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                 $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
@@ -1014,11 +1014,11 @@ $('#button-reward').on('click', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                 $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
 

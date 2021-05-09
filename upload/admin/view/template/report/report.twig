@@ -20,7 +20,7 @@
 				<div class="card">
 					<div class="card-body bg-light">
 						<div class="input-group">
-							<select name="report" class="form-control">
+							<select name="report" class="form-select">
 								{% for report in reports %}
 									{% if code == report.code %}
 										<option value="{{ report.href }}" selected="selected">{{ report.text }}</option>

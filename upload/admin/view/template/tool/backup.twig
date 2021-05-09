@@ -35,7 +35,9 @@
 						<label class="col-sm-2 col-form-label">{{ entry_export }}</label>
 						<div class="col-sm-10">
 							<div class="form-control" style="height: 150px; overflow: auto;">
-								<label class="form-check"><input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}</label>
+								<label class="form-check">
+									<input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}
+								</label>
 								{% for table in tables %}
 									<label class="form-check"><input type="checkbox" name="backup[]" value="{{ table }}" checked="checked" class="form-check-input"/> {{ table }}</label>
 								{% endfor %}
@@ -231,11 +233,11 @@ $('#button-upload').on('click', function() {
                     $('.alert-dismissible').remove();
 
                     if (json['error']) {
-                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
                     }
 
                     if (json['success']) {
-                        $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                         $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
                     }
@@ -266,11 +268,11 @@ $('#history').on('click', '.btn-danger', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#history').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
-                $('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                 $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
             }

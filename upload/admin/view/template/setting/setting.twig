@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-action="{{ save }}" data-form="#setting-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#setting-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -53,10 +53,10 @@
 								<div class="col-sm-10">
 
 									<div class="card image">
-										<img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+										<img src="{{ logo }}" alt="" title="" id="thumb-logo" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
 										<div class="card-body">
-											<button type="button" data-oc-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-											<button type="button" data-oc-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+											<button type="button" data-oc-toggle="image" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 										</div>
 									</div>
 
@@ -65,7 +65,7 @@
 							<div class="row mb-3">
 								<label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
 								<div class="col-sm-10">
-									<select name="config_theme" id="input-theme" class="form-control">
+									<select name="config_theme" id="input-theme" class="form-select">
 										{% for theme in themes %}
 											{% if theme.value == config_theme %}
 												<option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
@@ -81,7 +81,7 @@
 							<div class="row mb-3">
 								<label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
 								<div class="col-sm-10">
-									<select name="config_layout_id" id="input-layout" class="form-control">
+									<select name="config_layout_id" id="input-layout" class="form-select">
 										{% for layout in layouts %}
 											{% if layout.layout_id == config_layout_id %}
 												<option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
@@ -135,10 +135,10 @@
 								<label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
 								<div class="col-sm-10">
 									<div class="card image">
-										<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+										<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
 										<div class="card-body">
-											<button type="button" data-oc-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-											<button type="button" data-oc-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+											<button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 										</div>
 									</div>
 								</div>
@@ -183,7 +183,7 @@
 							<div class="row mb-3">
 								<label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
 								<div class="col-sm-10">
-									<select name="config_country_id" id="input-country" class="form-control">
+									<select name="config_country_id" id="input-country" class="form-select">
 										{% for country in countries %}
 											{% if country.country_id == config_country_id %}
 												<option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
@@ -197,13 +197,13 @@
 							<div class="row mb-3">
 								<label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
 								<div class="col-sm-10">
-									<select name="config_zone_id" id="input-zone" class="form-control"> </select>
+									<select name="config_zone_id" id="input-zone" class="form-select"> </select>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<label for="input-timezone" class="col-sm-2 col-form-label">{{ entry_timezone }}</label>
 								<div class="col-sm-10">
-									<select name="config_timezone" id="input-timezone" class="form-control">
+									<select name="config_timezone" id="input-timezone" class="form-select">
 										{% for timezone in timezones %}
 											{% if timezone.value == config_timezone %}
 												<option value="{{ timezone.value }}" selected="selected">{{ timezone.text }}</option>
@@ -217,7 +217,7 @@
 							<div class="row mb-3">
 								<label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
 								<div class="col-sm-10">
-									<select name="config_language" id="input-language" class="form-control">
+									<select name="config_language" id="input-language" class="form-select">
 										{% for language in languages %}
 											{% if language.code == config_language %}
 												<option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
@@ -231,7 +231,7 @@
 							<div class="row mb-3">
 								<label for="input-language-admin" class="col-sm-2 col-form-label">{{ entry_language_admin }}</label>
 								<div class="col-sm-10">
-									<select name="config_language_admin" id="input-language-admin" class="form-control">
+									<select name="config_language_admin" id="input-language-admin" class="form-select">
 										{% for language in languages %}
 											{% if language.code == config_language_admin %}
 												<option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
@@ -245,7 +245,7 @@
 							<div class="row mb-3">
 								<label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
 								<div class="col-sm-10">
-									<select name="config_currency" id="input-currency" class="form-control">
+									<select name="config_currency" id="input-currency" class="form-select">
 										{% for currency in currencies %}
 											{% if currency.code == config_currency %}
 												<option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
@@ -260,7 +260,7 @@
 							<div class="row mb-3">
 								<label for="input-currency-engine" class="col-sm-2 col-form-label">{{ entry_currency_engine }}</label>
 								<div class="col-sm-10">
-									<select name="config_currency_engine" id="input-currency-engine" class="form-control">
+									<select name="config_currency_engine" id="input-currency-engine" class="form-select">
 										{% for currency_engine in currency_engines %}
 											{% if currency_engine.value == config_currency_engine %}
 												<option value="{{ currency_engine.value }}" selected="selected">{{ currency_engine.text }}</option>
@@ -289,7 +289,7 @@
 							<div class="row mb-3">
 								<label for="input-length-class" class="col-sm-2 col-form-label">{{ entry_length_class }}</label>
 								<div class="col-sm-10">
-									<select name="config_length_class_id" id="input-length-class" class="form-control">
+									<select name="config_length_class_id" id="input-length-class" class="form-select">
 										{% for length_class in length_classes %}
 											{% if length_class.length_class_id == config_length_class_id %}
 												<option value="{{ length_class.length_class_id }}" selected="selected">{{ length_class.title }}</option>
@@ -303,7 +303,7 @@
 							<div class="row mb-3">
 								<label for="input-weight-class" class="col-sm-2 col-form-label">{{ entry_weight_class }}</label>
 								<div class="col-sm-10">
-									<select name="config_weight_class_id" id="input-weight-class" class="form-control">
+									<select name="config_weight_class_id" id="input-weight-class" class="form-select">
 										{% for weight_class in weight_classes %}
 											{% if weight_class.weight_class_id == config_weight_class_id %}
 												<option value="{{ weight_class.weight_class_id }}" selected="selected">{{ weight_class.title }}</option>
@@ -318,7 +318,7 @@
 						<div id="tab-option" class="tab-pane">
 							<fieldset>
 								<legend><a href="#collapse-product" data-bs-toggle="collapse">{{ text_product }}</a></legend>
-								<div id="collapse-product" class="collapse" data-parent="#tab-option">
+								<div id="collapse-product" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3 required">
 										<label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
 										<div class="col-sm-10">
@@ -359,7 +359,7 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-review" data-bs-toggle="collapse">{{ text_review }}</a></legend>
-								<div id="collapse-review" class="collapse" data-parent="#tab-option">
+								<div id="collapse-review" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_review_status }}</label>
 										<div class="col-sm-10">
@@ -394,7 +394,7 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-voucher" data-bs-toggle="collapse">{{ text_voucher }}</a></legend>
-								<div id="collapse-voucher" class="collapse" data-parent="#tab-option">
+								<div id="collapse-voucher" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3 required">
 										<label for="input-voucher-min" class="col-sm-2 col-form-label">{{ entry_voucher_min }}</label>
 										<div class="col-sm-10">
@@ -413,11 +413,11 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-legal" data-bs-toggle="collapse">{{ text_legal }}</a></legend>
-								<div id="collapse-legal" class="collapse" data-parent="#tab-option">
+								<div id="collapse-legal" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label for="input-cookie" class="col-sm-2 col-form-label">{{ entry_cookie }}</label>
 										<div class="col-sm-10">
-											<select name="config_cookie_id" id="input-cookie" class="form-control">
+											<select name="config_cookie_id" id="input-cookie" class="form-select">
 												<option value="0">{{ text_none }}</option>
 												{% for information in informations %}
 													{% if information.information_id == config_cookie_id %}
@@ -433,7 +433,7 @@
 									<div class="row mb-3">
 										<label for="input-gdpr" class="col-sm-2 col-form-label">{{ entry_gdpr }}</label>
 										<div class="col-sm-10">
-											<select name="config_gdpr_id" id="input-gdpr" class="form-control">
+											<select name="config_gdpr_id" id="input-gdpr" class="form-select">
 												<option value="0">{{ text_none }}</option>
 												{% for information in informations %}
 													{% if information.information_id == config_gdpr_id %}
@@ -457,7 +457,7 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-tax" data-bs-toggle="collapse">{{ text_tax }}</a></legend>
-								<div id="collapse-tax" class="collapse" data-parent="#tab-option">
+								<div id="collapse-tax" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
 										<div class="col-sm-10">
@@ -475,7 +475,7 @@
 									<div class="row mb-3">
 										<label for="input-tax-default" class="col-sm-2 col-form-label">{{ entry_tax_default }}</label>
 										<div class="col-sm-10">
-											<select name="config_tax_default" id="input-tax-default" class="form-control">
+											<select name="config_tax_default" id="input-tax-default" class="form-select">
 												<option value="">{{ text_none }}</option>
 												{% if config_tax_default == 'shipping' %}
 													<option value="shipping" selected="selected">{{ text_shipping }}</option>
@@ -494,7 +494,7 @@
 									<div class="row mb-3">
 										<label for="input-tax-customer" class="col-sm-2 col-form-label">{{ entry_tax_customer }}</label>
 										<div class="col-sm-10">
-											<select name="config_tax_customer" id="input-tax-customer" class="form-control">
+											<select name="config_tax_customer" id="input-tax-customer" class="form-select">
 												<option value="">{{ text_none }}</option>
 												{% if config_tax_customer == 'shipping' %}
 													<option value="shipping" selected="selected">{{ text_shipping }}</option>
@@ -514,7 +514,7 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-account" data-bs-toggle="collapse">{{ text_account }}</a></legend>
-								<div id="collapse-account" class="collapse" data-parent="#tab-option">
+								<div id="collapse-account" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_customer_online }}</label>
 										<div class="col-sm-10">
@@ -562,7 +562,7 @@
 									<div class="row mb-3">
 										<label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 										<div class="col-sm-10">
-											<select name="config_customer_group_id" id="input-customer-group" class="form-control">
+											<select name="config_customer_group_id" id="input-customer-group" class="form-select">
 												{% for customer_group in customer_groups %}
 													{% if customer_group.customer_group_id == config_customer_group_id %}
 														<option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
@@ -616,7 +616,7 @@
 									<div class="row mb-3">
 										<label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
 										<div class="col-sm-10">
-											<select name="config_account_id" id="input-account" class="form-control">
+											<select name="config_account_id" id="input-account" class="form-select">
 												<option value="0">{{ text_none }}</option>
 												{% for information in informations %}
 													{% if information.information_id == config_account_id %}
@@ -633,7 +633,7 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-checkout" data-bs-toggle="collapse">{{ text_checkout }}</a></legend>
-								<div id="collapse-checkout" class="collapse" data-parent="#tab-option">
+								<div id="collapse-checkout" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label for="input-invoice-prefix" class="col-sm-2 col-form-label">{{ entry_invoice_prefix }}</label>
 										<div class="col-sm-10">
@@ -674,7 +674,7 @@
 									<div class="row mb-3">
 										<label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
 										<div class="col-sm-10">
-											<select name="config_checkout_id" id="input-checkout" class="form-control">
+											<select name="config_checkout_id" id="input-checkout" class="form-select">
 												<option value="0">{{ text_none }}</option>
 												{% for information in informations %}
 													{% if information.information_id == config_checkout_id %}
@@ -690,7 +690,7 @@
 									<div class="row mb-3">
 										<label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
 										<div class="col-sm-10">
-											<select name="config_order_status_id" id="input-order-status" class="form-control">
+											<select name="config_order_status_id" id="input-order-status" class="form-select">
 												{% for order_status in order_statuses %}
 													{% if order_status.order_status_id == config_order_status_id %}
 														<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -742,7 +742,7 @@
 									<div class="row mb-3">
 										<label for="input-fraud-status" class="col-sm-2 col-form-label">{{ entry_fraud_status }}</label>
 										<div class="col-sm-10">
-											<select name="config_fraud_status_id" id="input-fraud-status" class="form-control">
+											<select name="config_fraud_status_id" id="input-fraud-status" class="form-select">
 												{% for order_status in order_statuses %}
 													{% if order_status.order_status_id == config_fraud_status_id %}
 														<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -757,7 +757,7 @@
 									<div class="row mb-3">
 										<label for="input-api" class="col-sm-2 col-form-label">{{ entry_api }}</label>
 										<div class="col-sm-10">
-											<select name="config_api_id" id="input-api" class="form-control">
+											<select name="config_api_id" id="input-api" class="form-select">
 												<option value="0">{{ text_none }}</option>
 												{% for api in apis %}
 													{% if api.api_id == config_api_id %}
@@ -774,7 +774,7 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-stock" data-bs-toggle="collapse">{{ text_stock }}</a></legend>
-								<div id="collapse-stock" class="collapse" data-parent="#tab-option">
+								<div id="collapse-stock" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
 										<div class="col-sm-10">
@@ -824,7 +824,7 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-affiliate" data-bs-toggle="collapse">{{ text_affiliate }}</a></legend>
-								<div id="collapse-affiliate" class="collapse" data-parent="#tab-option">
+								<div id="collapse-affiliate" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label class="col-sm-2 col-form-label">{{ entry_affiliate_status }}</label>
 										<div class="col-sm-10">
@@ -843,7 +843,7 @@
 									<div class="row mb-3">
 										<label for="input-affiliate-group" class="col-sm-2 col-form-label">{{ entry_affiliate_group }}</label>
 										<div class="col-sm-10">
-											<select name="config_affiliate_group_id" id="input-affiliate-group" class="form-control">
+											<select name="config_affiliate_group_id" id="input-affiliate-group" class="form-select">
 												{% for customer_group in customer_groups %}
 													{% if customer_group.customer_group_id == config_affiliate_group_id %}
 														<option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
@@ -894,7 +894,7 @@
 									<div class="row mb-3">
 										<label for="input-affiliate" class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
 										<div class="col-sm-10">
-											<select name="config_affiliate_id" id="input-affiliate" class="form-control">
+											<select name="config_affiliate_id" id="input-affiliate" class="form-select">
 												<option value="0">{{ text_none }}</option>
 												{% for information in informations %}
 													{% if information.information_id == config_affiliate_id %}
@@ -912,11 +912,11 @@
 
 							<fieldset>
 								<legend><a href="#collapse-return" data-bs-toggle="collapse">{{ text_return }}</a></legend>
-								<div id="collapse-return" class="collapse" data-parent="#tab-option">
+								<div id="collapse-return" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label for="input-return" class="col-sm-2 col-form-label">{{ entry_return }}</label>
 										<div class="col-sm-10">
-											<select name="config_return_id" id="input-return" class="form-control">
+											<select name="config_return_id" id="input-return" class="form-select">
 												<option value="0">{{ text_none }}</option>
 												{% for information in informations %}
 													{% if information.information_id == config_return_id %}
@@ -932,7 +932,7 @@
 									<div class="row mb-3">
 										<label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
 										<div class="col-sm-10">
-											<select name="config_return_status_id" id="input-return-status" class="form-control">
+											<select name="config_return_status_id" id="input-return-status" class="form-select">
 												{% for return_status in return_statuses %}
 													{% if return_status.return_status_id == config_return_status_id %}
 														<option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
@@ -948,11 +948,11 @@
 							</fieldset>
 							<fieldset>
 								<legend><a href="#collapse-captcha" data-bs-toggle="collapse">{{ text_captcha }}</a></legend>
-								<div id="collapse-captcha" class="collapse" data-parent="#tab-option">
+								<div id="collapse-captcha" class="collapse" data-bs-parent="#tab-option">
 									<div class="row mb-3">
 										<label for="input-captcha" class="col-sm-2 col-form-label">{{ entry_captcha }}</label>
 										<div class="col-sm-10">
-											<select name="config_captcha" id="input-captcha" class="form-control">
+											<select name="config_captcha" id="input-captcha" class="form-select">
 												<option value="">{{ text_none }}</option>
 												{% for captcha in captchas %}
 													{% if captcha.value == config_captcha %}
@@ -1127,7 +1127,7 @@
 								<div class="mb-3 row">
 									<label for="input-mail-engine" class="col-sm-2 col-form-label">{{ entry_mail_engine }}</label>
 									<div class="col-sm-10">
-										<select name="config_mail_engine" id="input-mail-engine" class="form-control">
+										<select name="config_mail_engine" id="input-mail-engine" class="form-select">
 											{% if config_mail_engine == 'mail' %}
 												<option value="mail" selected="selected">{{ text_mail }}</option>
 											{% else %}

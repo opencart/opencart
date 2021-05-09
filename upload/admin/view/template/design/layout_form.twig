@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-action="{{ save }}" data-form="#layout-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#layout-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -39,7 +39,7 @@
 								{% set route_row = 0 %}
 								{% for layout_route in layout_routes %}
 									<tr id="route-row-{{ route_row }}">
-										<td class="text-start"><select name="layout_route[{{ route_row }}][store_id]" class="form-control">
+										<td class="text-start"><select name="layout_route[{{ route_row }}][store_id]" class="form-select">
 												<option value="0">{{ text_default }}</option>
 												{% for store in stores %}
 													{% if store.store_id == layout_route.store_id %}
@@ -80,7 +80,7 @@
 												<tr id="module-row-{{ module_row }}">
 													<td class="text-start">
 														<div class="input-group input-group-sm">
-															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+															<select name="layout_module[{{ module_row }}][code]" class="form-select input-sm">
 																{% for extension in extensions %}
 																	<optgroup label="{{ extension.name }}">
 																		{% if not extension.module %}
@@ -129,7 +129,7 @@
 												<tr id="module-row-{{ module_row }}">
 													<td class="text-start">
 														<div class="input-group input-group-sm">
-															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+															<select name="layout_module[{{ module_row }}][code]" class="form-select input-sm">
 																{% for extension in extensions %}
 																	<optgroup label="{{ extension.name }}">
 																		{% if not extension.module %}
@@ -176,7 +176,7 @@
 												<tr id="module-row-{{ module_row }}">
 													<td class="text-start">
 														<div class="input-group input-group-sm">
-															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+															<select name="layout_module[{{ module_row }}][code]" class="form-select input-sm">
 																{% for extension in extensions %}
 																	<optgroup label="{{ extension.name }}">
 																		{% if not extension.module %}
@@ -225,7 +225,7 @@
 												<tr id="module-row-{{ module_row }}">
 													<td class="text-end">
 														<div class="input-group input-group-sm">
-															<select name="layout_module[{{ module_row }}][code]" class="form-control input-sm">
+															<select name="layout_module[{{ module_row }}][code]" class="form-select input-sm">
 																{% for extension in extensions %}
 																	<optgroup label="{{ extension.name }}">
 																		{% if not extension.module %}
@@ -274,7 +274,7 @@ var route_row = {{ route_row }};
 
 function addRoute() {
     html = '<tr id="route-row-' + route_row + '">';
-    html += '  <td class="text-start"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
+    html += '  <td class="text-start"><select name="layout_route[' + route_row + '][store_id]" class="form-select">';
     html += '  <option value="0">{{ text_default }}</option>';
 	{% for store in stores %}
     html += '<option value="{{ store.store_id }}">{{ store.name|escape('js') }}</option>';
@@ -294,7 +294,7 @@ var module_row = {{ module_row }};
 function addModule(type) {
     html = '<tr id="module-row-' + module_row + '">';
     html += '  <td class="text-start"><div class="input-group input-group-sm">';
-    html += '    <select name="layout_module[' + module_row + '][code]" class="form-control input-sm">';
+    html += '    <select name="layout_module[' + module_row + '][code]" class="form-select input-sm">';
 	{% for extension in extensions %}
     html += '    <optgroup label="{{ extension.name|escape('js') }}">';
 	{% if not extension.module %}

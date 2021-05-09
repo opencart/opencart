@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-action="{{ save }}" data-form="#return-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#return-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -99,7 +99,7 @@
 									<div class="row mb-3">
 										<label for="input-return-reason" class="col-sm-2 col-form-label">{{ entry_return_reason }}</label>
 										<div class="col-sm-10">
-											<select name="return_reason_id" id="input-return-reason" class="form-control">
+											<select name="return_reason_id" id="input-return-reason" class="form-select">
 												{% for return_reason in return_reasons %}
 													{% if return_reason.return_reason_id == return_reason_id %}
 														<option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
@@ -113,7 +113,7 @@
 									<div class="row mb-3">
 										<label for="input-opened" class="col-sm-2 col-form-label">{{ entry_opened }}</label>
 										<div class="col-sm-10">
-											<select name="opened" id="input-opened" class="form-control">
+											<select name="opened" id="input-opened" class="form-select">
 												{% if opened %}
 													<option value="1" selected="selected">{{ text_opened }}</option>
 													<option value="0">{{ text_unopened }}</option>
@@ -133,7 +133,7 @@
 									<div class="row mb-3">
 										<label for="input-return-action" class="col-sm-2 col-form-label">{{ entry_return_action }}</label>
 										<div class="col-sm-10">
-											<select name="return_action_id" id="input-return-action" class="form-control">
+											<select name="return_action_id" id="input-return-action" class="form-select">
 												<option value="0"></option>
 												{% for return_action in return_actions %}
 													{% if return_action.return_action_id == return_action_id %}
@@ -149,7 +149,7 @@
 										<div class="row mb-3">
 											<label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
 											<div class="col-sm-10">
-												<select name="return_status_id" id="input-return-status" class="form-control">
+												<select name="return_status_id" id="input-return-status" class="form-select">
 													{% for return_status in return_statuses %}
 														{% if return_status.return_status_id == return_status_id %}
 															<option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
@@ -177,7 +177,7 @@
 										<div class="row mb-3">
 											<label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
 											<div class="col-sm-10">
-												<select name="return_status_id" id="input-return-status" class="form-control">
+												<select name="return_status_id" id="input-return-status" class="form-select">
 													{% for return_status in return_statuses %}
 														{% if return_status.return_status_id == return_status_id %}
 															<option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
@@ -294,13 +294,13 @@ $('#button-history').on('click', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['success']) {
                 $('#history').load('index.php?route=sale/return|history&user_token={{ user_token }}&return_id={{ return_id }}');
 
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
 
                 $('#tab-history textarea[name=\'comment\']').val('');
             }

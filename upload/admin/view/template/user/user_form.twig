@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="submit" data-action="{{ save }}" data-form="#user-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="submit" data-oc-action="{{ save }}" data-oc-form="#user-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -27,7 +27,7 @@
 					<div class="row mb-3">
 						<label for="input-user-group" class="col-sm-2 col-form-label">{{ entry_user_group }}</label>
 						<div class="col-sm-10">
-							<select name="user_group_id" id="input-user-group" class="form-control">
+							<select name="user_group_id" id="input-user-group" class="form-select">
 								{% for user_group in user_groups %}
 									{% if user_group.user_group_id == user_group_id %}
 										<option value="{{ user_group.user_group_id }}" selected="selected">{{ user_group.name }}</option>
@@ -60,10 +60,10 @@
 						<label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
 						<div class="col-sm-10">
 							<div class="card image">
-								<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+								<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
 								<div class="card-body">
-									<button type="button" data-oc-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-									<button type="button" data-oc-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+									<button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+									<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 								</div>
 							</div>
 						</div>
@@ -83,7 +83,7 @@
 					<div class="row mb-3">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
-							<select name="status" id="input-status" class="form-control">
+							<select name="status" id="input-status" class="form-select">
 								{% if status %}
 									<option value="0">{{ text_disabled }}</option>
 									<option value="1" selected="selected">{{ text_enabled }}</option>

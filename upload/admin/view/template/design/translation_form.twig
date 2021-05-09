@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-action="{{ save }}" data-form="#translation-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#translation-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -21,7 +21,7 @@
 					<div class="row mb-3">
 						<label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
 						<div class="col-sm-10">
-							<select name="store_id" id="input-store" class="form-control">
+							<select name="store_id" id="input-store" class="form-select">
 								<option value="0">{{ text_default }}</option>
 								{% for store in stores %}
 									{% if store.store_id == store_id %}
@@ -36,7 +36,7 @@
 					<div class="row mb-3">
 						<label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
 						<div class="col-sm-10">
-							<select name="language_id" id="input-language" class="form-control">
+							<select name="language_id" id="input-language" class="form-select">
 								{% for language in languages %}
 									{% if language.language_id == language_id %}
 										<option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
@@ -50,14 +50,14 @@
 					<div class="row mb-3">
 						<label for="input-route" class="col-sm-2 col-form-label">{{ entry_route }}</label>
 						<div class="col-sm-10">
-							<select name="route" id="input-route" class="form-control"></select>
+							<select name="route" id="input-route" class="form-select"></select>
 						</div>
 					</div>
 
 					<div class="row mb-3">
 						<label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
 						<div class="col-sm-10">
-							<select id="input-key" class="form-control"></select>
+							<select id="input-key" class="form-select"></select>
 							<input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
 						</div>
 					</div>

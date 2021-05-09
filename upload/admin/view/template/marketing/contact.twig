@@ -20,7 +20,7 @@
 					<div class="row mb-3">
 						<label for="input-store" class="col-sm-2 col-form-label">{{ entry_store }}</label>
 						<div class="col-sm-10">
-							<select name="store_id" id="input-store" class="form-control">
+							<select name="store_id" id="input-store" class="form-select">
 								<option value="0">{{ text_default }}</option>
 								{% for store in stores %}
 									<option value="{{ store.store_id }}">{{ store.name }}</option>
@@ -32,7 +32,7 @@
 					<div class="row mb-3">
 						<label for="input-to" class="col-sm-2 col-form-label">{{ entry_to }}</label>
 						<div class="col-sm-10">
-							<select name="to" id="input-to" class="form-control">
+							<select name="to" id="input-to" class="form-select">
 								<option value="newsletter">{{ text_newsletter }}</option>
 								<option value="customer_all">{{ text_customer_all }}</option>
 								<option value="customer_group">{{ text_customer_group }}</option>
@@ -46,7 +46,7 @@
 					<div class="row mb-3 to" id="to-customer-group">
 						<label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
 						<div class="col-sm-10">
-							<select name="customer_group_id" id="input-customer-group" class="form-control">
+							<select name="customer_group_id" id="input-customer-group" class="form-select">
 								{% for customer_group in customer_groups %}
 									<option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
 								{% endfor %}
@@ -247,7 +247,7 @@ function send(url) {
 
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
                 }
 
                 if (json['error']['subject']) {
@@ -260,7 +260,7 @@ function send(url) {
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
             }
 
             if (json['next']) {

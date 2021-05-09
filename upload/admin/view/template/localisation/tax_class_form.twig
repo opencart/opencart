@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-action="{{ save }}" data-form="#tax-class-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#tax-class-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -48,7 +48,7 @@
 								{% set tax_rule_row = 0 %}
 								{% for tax_rule in tax_rules %}
 									<tr id="tax-rule-row-{{ tax_rule_row }}">
-										<td class="text-start"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-control">
+										<td class="text-start"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-select">
 												{% for tax_rate in tax_rates %}
 													{% if tax_rate.tax_rate_id == tax_rule.tax_rate_id %}
 														<option value="{{ tax_rate.tax_rate_id }}" selected="selected">{{ tax_rate.name }}</option>
@@ -57,7 +57,7 @@
 													{% endif %}
 												{% endfor %}
 											</select></td>
-										<td class="text-start"><select name="tax_rule[{{ tax_rule_row }}][based]" class="form-control">
+										<td class="text-start"><select name="tax_rule[{{ tax_rule_row }}][based]" class="form-select">
 												{% if tax_rule.based == 'shipping' %}
 													<option value="shipping" selected="selected">{{ text_shipping }}</option>
 												{% else %}
@@ -98,12 +98,12 @@ var tax_rule_row = {{ tax_rule_row }};
 
 $('#button-tax-rule').on('click', function() {
     html = '<tr id="tax-rule-row-' + tax_rule_row + '">';
-    html += '  <td class="text-start"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-control">';
+    html += '  <td class="text-start"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-select">';
 	{% for tax_rate in tax_rates %}
     html += '    <option value="{{ tax_rate.tax_rate_id }}">{{ tax_rate.name|escape('js') }}</option>';
 	{% endfor %}
     html += '  </select></td>';
-    html += '  <td class="text-start"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-control">';
+    html += '  <td class="text-start"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-select">';
     html += '    <option value="shipping">{{ text_shipping }}</option>';
     html += '    <option value="payment">{{ text_payment }}</option>';
     html += '    <option value="store">{{ text_store }}</option>';

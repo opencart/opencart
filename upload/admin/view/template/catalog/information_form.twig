@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-action="{{ save }}" data-form="#information-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#information-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -107,7 +107,7 @@
 							<div class="row mb-3">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
-									<select name="status" id="input-status" class="form-control">
+									<select name="status" id="input-status" class="form-select">
 										{% if status %}
 											<option value="1" selected="selected">{{ text_enabled }}</option>
 											<option value="0">{{ text_disabled }}</option>
@@ -165,7 +165,7 @@
 										{% for store in stores %}
 											<tr>
 												<td class="text-start">{{ store.name }}</td>
-												<td class="text-start"><select name="information_layout[{{ store.store_id }}]" class="form-control">
+												<td class="text-start"><select name="information_layout[{{ store.store_id }}]" class="form-select">
 														<option value=""></option>
 														{% for layout in layouts %}
 															{% if information_layout[store.store_id] and information_layout[store.store_id] == layout.layout_id %}

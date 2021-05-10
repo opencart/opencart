@@ -83,7 +83,7 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('#header-notification [data-toggle=\'modal\']').on('click', function(e) {
+    $('#header-notification [data-bs-toggle=\'modal\']').on('click', function(e) {
         e.preventDefault();
 
         var element = this;
@@ -131,7 +131,7 @@ $(document).on('click', '[data-oc-action]', function() {
 
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 for (key in json['error']) {
@@ -149,11 +149,11 @@ $(document).on('click', '[data-oc-action]', function() {
             }
 
             if (typeof json['error'] == 'string') {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refresh
                 var url = $(form).attr('data-oc-load');
@@ -417,7 +417,7 @@ var chain = new Chain();
 
     Button.prototype.toggle = function() {
         var changed = true
-        var $parent = this.$element.closest('[data-toggle="buttons"]')
+        var $parent = this.$element.closest('[data-bs-toggle="buttons"]')
 
         if ($parent.length) {
             var $input = this.$element.find('input')
@@ -472,12 +472,12 @@ var chain = new Chain();
     // BUTTON DATA-API
     // ===============
 
-    $(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+    $(document).on('click.bs.button.data-api', '[data-bs-toggle^="button"]', function(e) {
         var $btn = $(e.target)
         if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
         Plugin.call($btn, 'toggle')
         if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
-    }).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+    }).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-bs-toggle^="button"]', function(e) {
         $(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
     })
 }(jQuery);

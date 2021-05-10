@@ -21,7 +21,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
@@ -35,22 +35,22 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="text-left">{{ column_name }}</td>
-								<td class="text-left">{{ column_code }}</td>
-								<td class="text-right">{{ column_orders }}</td>
-								<td class="text-right">{{ column_total }}</td>
-								<td class="text-right">{{ column_action }}</td>
+								<td class="text-start">{{ column_name }}</td>
+								<td class="text-start">{{ column_code }}</td>
+								<td class="text-end">{{ column_orders }}</td>
+								<td class="text-end">{{ column_total }}</td>
+								<td class="text-end">{{ column_action }}</td>
 							</tr>
 						</thead>
 						<tbody>
 							{% if coupons %}
 								{% for coupon in coupons %}
 									<tr>
-										<td class="text-left">{{ coupon.name }}</td>
-										<td class="text-left">{{ coupon.code }}</td>
-										<td class="text-right">{{ coupon.orders }}</td>
-										<td class="text-right">{{ coupon.total }}</td>
-										<td class="text-right"><a href="{{ coupon.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+										<td class="text-start">{{ coupon.name }}</td>
+										<td class="text-start">{{ coupon.code }}</td>
+										<td class="text-end">{{ coupon.orders }}</td>
+										<td class="text-end">{{ coupon.total }}</td>
+										<td class="text-end"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 									</tr>
 								{% endfor %}
 							{% else %}
@@ -62,8 +62,8 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			</div>
 		</div>

@@ -33,7 +33,7 @@
 						{% endfor %}
 					</select>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
@@ -47,22 +47,22 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="text-left">{{ column_campaign }}</td>
-								<td class="text-left">{{ column_code }}</td>
-								<td class="text-right">{{ column_clicks }}</td>
-								<td class="text-right">{{ column_orders }}</td>
-								<td class="text-right">{{ column_total }}</td>
+								<td class="text-start">{{ column_campaign }}</td>
+								<td class="text-start">{{ column_code }}</td>
+								<td class="text-end">{{ column_clicks }}</td>
+								<td class="text-end">{{ column_orders }}</td>
+								<td class="text-end">{{ column_total }}</td>
 							</tr>
 						</thead>
 						<tbody>
 							{% if marketings %}
 								{% for marketing in marketings %}
 									<tr>
-										<td class="text-left">{{ marketing.campaign }}</td>
-										<td class="text-left">{{ marketing.code }}</td>
-										<td class="text-right">{{ marketing.clicks }}</td>
-										<td class="text-right">{{ marketing.orders }}</td>
-										<td class="text-right">{{ marketing.total }}</td>
+										<td class="text-start">{{ marketing.campaign }}</td>
+										<td class="text-start">{{ marketing.code }}</td>
+										<td class="text-end">{{ marketing.clicks }}</td>
+										<td class="text-end">{{ marketing.orders }}</td>
+										<td class="text-end">{{ marketing.total }}</td>
 									</tr>
 								{% endfor %}
 							{% else %}
@@ -74,8 +74,8 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			</div>
 		</div>

@@ -93,7 +93,7 @@
 						<label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
 						<div class="col-sm-10">
 							<div id="input-message">
-								<textarea name="message" placeholder="{{ entry_message }}" data-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
+								<textarea name="message" placeholder="{{ entry_message }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
 							</div>
 						</div>
 					</div>
@@ -222,7 +222,7 @@ $('#mail-product').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
 
-$('textarea[data-toggle=\'ckeditor\']').ckeditor();
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
 
 function send(url) {
     for (instance in CKEDITOR.instances) {

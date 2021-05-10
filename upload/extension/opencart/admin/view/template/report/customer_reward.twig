@@ -24,7 +24,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
@@ -38,28 +38,28 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="text-left">{{ column_customer }}</td>
-								<td class="text-left">{{ column_email }}</td>
-								<td class="text-left">{{ column_customer_group }}</td>
-								<td class="text-left">{{ column_status }}</td>
-								<td class="text-right">{{ column_points }}</td>
-								<td class="text-right">{{ column_orders }}</td>
-								<td class="text-right">{{ column_total }}</td>
-								<td class="text-right">{{ column_action }}</td>
+								<td class="text-start">{{ column_customer }}</td>
+								<td class="text-start">{{ column_email }}</td>
+								<td class="text-start">{{ column_customer_group }}</td>
+								<td class="text-start">{{ column_status }}</td>
+								<td class="text-end">{{ column_points }}</td>
+								<td class="text-end">{{ column_orders }}</td>
+								<td class="text-end">{{ column_total }}</td>
+								<td class="text-end">{{ column_action }}</td>
 							</tr>
 						</thead>
 						<tbody>
 							{% if customers %}
 								{% for customer in customers %}
 									<tr>
-										<td class="text-left">{{ customer.customer }}</td>
-										<td class="text-left">{{ customer.email }}</td>
-										<td class="text-left">{{ customer.customer_group }}</td>
-										<td class="text-left">{{ customer.status }}</td>
-										<td class="text-right">{{ customer.points }}</td>
-										<td class="text-right">{{ customer.orders }}</td>
-										<td class="text-right">{{ customer.total }}</td>
-										<td class="text-right"><a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+										<td class="text-start">{{ customer.customer }}</td>
+										<td class="text-start">{{ customer.email }}</td>
+										<td class="text-start">{{ customer.customer_group }}</td>
+										<td class="text-start">{{ customer.status }}</td>
+										<td class="text-end">{{ customer.points }}</td>
+										<td class="text-end">{{ customer.orders }}</td>
+										<td class="text-end">{{ customer.total }}</td>
+										<td class="text-end"><a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
 									</tr>
 								{% endfor %}
 							{% else %}
@@ -71,8 +71,8 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			</div>
 		</div>

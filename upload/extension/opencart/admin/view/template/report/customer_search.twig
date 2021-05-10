@@ -30,7 +30,7 @@
 				<div class="form-group">
 					<label for="input-keyword" class="col-form-label">{{ entry_keyword }}</label> <input type="text" name="filter_keyword" value="{{ filter_keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control"/>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
@@ -44,24 +44,24 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="text-left">{{ column_keyword }}</td>
-								<td class="text-left">{{ column_products }}</td>
-								<td class="text-left">{{ column_category }}</td>
-								<td class="text-left">{{ column_customer }}</td>
-								<td class="text-left">{{ column_ip }}</td>
-								<td class="text-left">{{ column_date_added }}</td>
+								<td class="text-start">{{ column_keyword }}</td>
+								<td class="text-start">{{ column_products }}</td>
+								<td class="text-start">{{ column_category }}</td>
+								<td class="text-start">{{ column_customer }}</td>
+								<td class="text-start">{{ column_ip }}</td>
+								<td class="text-start">{{ column_date_added }}</td>
 							</tr>
 						</thead>
 						<tbody>
 							{% if searches %}
 								{% for search in searches %}
 									<tr>
-										<td class="text-left">{{ search.keyword }}</td>
-										<td class="text-left">{{ search.products }}</td>
-										<td class="text-left">{{ search.category }}</td>
-										<td class="text-left">{{ search.customer }}</td>
-										<td class="text-left">{{ search.ip }}</td>
-										<td class="text-left">{{ search.date_added }}</td>
+										<td class="text-start">{{ search.keyword }}</td>
+										<td class="text-start">{{ search.products }}</td>
+										<td class="text-start">{{ search.category }}</td>
+										<td class="text-start">{{ search.customer }}</td>
+										<td class="text-start">{{ search.ip }}</td>
+										<td class="text-start">{{ search.date_added }}</td>
 									</tr>
 								{% endfor %}
 							{% else %}
@@ -73,8 +73,8 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			</div>
 		</div>

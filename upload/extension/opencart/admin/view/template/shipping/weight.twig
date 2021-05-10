@@ -2,9 +2,9 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
-				<button type="button" data-action="{{ save }}" data-form="#shipping-form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+			<div class="float-end">
+				<button type="button" data-action="{{ save }}" data-form="#shipping-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -19,9 +19,9 @@
 			<div class="card-body">
 				<form id="shipping-form">
 					<ul class="nav nav-tabs">
-						<li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
 						{% for geo_zone in geo_zones %}
-							<li class="nav-item"><a href="#tab-geo-zone{{ geo_zone.geo_zone_id }}" data-toggle="tab" class="nav-link">{{ geo_zone.name }}</a></li>
+							<li class="nav-item"><a href="#tab-geo-zone{{ geo_zone.geo_zone_id }}" data-bs-toggle="tab" class="nav-link">{{ geo_zone.name }}</a></li>
 						{% endfor %}
 					</ul>
 					<div class="tab-content">

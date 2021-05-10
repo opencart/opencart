@@ -2,20 +2,20 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-left">{{ column_ip }}</td>
-        <td class="text-right">{{ column_total }}</td>
-        <td class="text-left">{{ column_date_added }}</td>
-        <td class="text-right">{{ column_action }}</td>
+        <td class="text-start">{{ column_ip }}</td>
+        <td class="text-end">{{ column_total }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
+        <td class="text-end">{{ column_action }}</td>
       </tr>
     </thead>
     <tbody>
       {% if ips %}
         {% for ip in ips %}
           <tr>
-            <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
-            <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
-            <td class="text-left">{{ ip.date_added }}</td>
-            <td class="text-right"><button type="button" value="{{ ip.ip }}" data-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+            <td class="text-start"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
+            <td class="text-end"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
+            <td class="text-start">{{ ip.date_added }}</td>
+            <td class="text-end"><button type="button" value="{{ ip.ip }}" data-bs-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
           </tr>
         {% endfor %}
       {% else %}
@@ -27,6 +27,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

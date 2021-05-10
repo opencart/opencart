@@ -1,5 +1,5 @@
 <div class="tile tile-primary">
-  <div class="tile-heading">{{ heading_title }} <span class="float-right">
+  <div class="tile-heading">{{ heading_title }} <span class="float-end">
     {% if percentage > 0 %}
       <i class="fas fa-caret-up"></i>
     {% elseif percentage < 0 %}
@@ -7,7 +7,7 @@
     {% endif %}
       {{ percentage }}%</span></div>
   <div class="tile-body"><i class="fas fa-shopping-cart"></i>
-    <h2 class="float-right">{{ total }}</h2>
+    <h2 class="float-end">{{ total }}</h2>
   </div>
   <div class="tile-footer"><a href="{{ order }}">{{ text_view }}</a></div>
 </div>

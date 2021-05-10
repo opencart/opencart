@@ -27,7 +27,7 @@
 				<div class="form-group">
 					<label for="input-ip" class="col-form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
@@ -41,18 +41,18 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="text-left">{{ column_comment }}</td>
-								<td class="text-left">{{ column_ip }}</td>
-								<td class="text-left">{{ column_date_added }}</td>
+								<td class="text-start">{{ column_comment }}</td>
+								<td class="text-start">{{ column_ip }}</td>
+								<td class="text-start">{{ column_date_added }}</td>
 							</tr>
 						</thead>
 						<tbody>
 							{% if activities %}
 								{% for activity in activities %}
 									<tr>
-										<td class="text-left">{{ activity.comment }}</td>
-										<td class="text-left">{{ activity.ip }}</td>
-										<td class="text-left">{{ activity.date_added }}</td>
+										<td class="text-start">{{ activity.comment }}</td>
+										<td class="text-start">{{ activity.ip }}</td>
+										<td class="text-start">{{ activity.date_added }}</td>
 									</tr>
 								{% endfor %}
 							{% else %}
@@ -64,8 +64,8 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			</div>
 		</div>

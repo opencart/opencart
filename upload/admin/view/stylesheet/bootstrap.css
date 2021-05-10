@@ -3516,7 +3516,7 @@ textarea.form-control-lg {
   margin-left: 1rem;
 }
 .card-header {
-  padding: 0.5rem 1rem;
+  padding: 0.7692307692rem 1rem;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -3528,7 +3528,7 @@ textarea.form-control-lg {
   border-radius: calc(0.2308rem - 1px) calc(0.2308rem - 1px) 0 0;
 }
 .card-footer {
-  padding: 0.5rem 1rem;
+  padding: 0.7692307692rem 1rem;
   background-color: rgba(0, 0, 0, 0.03);
   border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
@@ -3537,7 +3537,7 @@ textarea.form-control-lg {
 }
 .card-header-tabs {
   margin-right: -0.5rem;
-  margin-bottom: -0.5rem;
+  margin-bottom: -0.7692307692rem;
   margin-left: -0.5rem;
   border-bottom: 0;
 }

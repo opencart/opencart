@@ -44,7 +44,7 @@
 						{% endfor %}
 					</select>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
@@ -58,18 +58,18 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="text-left">{{ column_date_start }}</td>
-								<td class="text-left">{{ column_date_end }}</td>
-								<td class="text-right">{{ column_returns }}</td>
+								<td class="text-start">{{ column_date_start }}</td>
+								<td class="text-start">{{ column_date_end }}</td>
+								<td class="text-end">{{ column_returns }}</td>
 							</tr>
 						</thead>
 						<tbody>
 							{% if returns %}
 								{% for return in returns %}
 									<tr>
-										<td class="text-left">{{ return.date_start }}</td>
-										<td class="text-left">{{ return.date_end }}</td>
-										<td class="text-right">{{ return.returns }}</td>
+										<td class="text-start">{{ return.date_start }}</td>
+										<td class="text-start">{{ return.date_end }}</td>
+										<td class="text-end">{{ return.returns }}</td>
 									</tr>
 								{% endfor %}
 							{% else %}
@@ -81,8 +81,8 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			</div>
 		</div>

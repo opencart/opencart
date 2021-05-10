@@ -33,7 +33,7 @@
 						{% endfor %}
 					</select>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
@@ -47,20 +47,20 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td class="text-left">{{ column_name }}</td>
-								<td class="text-left">{{ column_model }}</td>
-								<td class="text-right">{{ column_quantity }}</td>
-								<td class="text-right">{{ column_total }}</td>
+								<td class="text-start">{{ column_name }}</td>
+								<td class="text-start">{{ column_model }}</td>
+								<td class="text-end">{{ column_quantity }}</td>
+								<td class="text-end">{{ column_total }}</td>
 							</tr>
 						</thead>
 						<tbody>
 							{% if products %}
 								{% for product in products %}
 									<tr>
-										<td class="text-left">{{ product.name }}</td>
-										<td class="text-left">{{ product.model }}</td>
-										<td class="text-right">{{ product.quantity }}</td>
-										<td class="text-right">{{ product.total }}</td>
+										<td class="text-start">{{ product.name }}</td>
+										<td class="text-start">{{ product.model }}</td>
+										<td class="text-end">{{ product.quantity }}</td>
+										<td class="text-end">{{ product.total }}</td>
 									</tr>
 								{% endfor %}
 							{% else %}
@@ -72,8 +72,8 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 <div class="card">
 	<div class="card-header">
 		<i class="fas fa-filter"></i> {{ heading_title }}
-		<div class="float-right">
+		<div class="float-end">
 			<button type="button" id="button-reset" data-loading-text="{{ text_loading }}" class="btn btn-danger btn-sm"><i class="fas fa-sync"></i> {{ button_reset }}</button>
 		</div>
 	</div>
@@ -10,20 +10,20 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<td class="text-left">{{ column_name }}</td>
-						<td class="text-left">{{ column_model }}</td>
-						<td class="text-right">{{ column_viewed }}</td>
-						<td class="text-right">{{ column_percent }}</td>
+						<td class="text-start">{{ column_name }}</td>
+						<td class="text-start">{{ column_model }}</td>
+						<td class="text-end">{{ column_viewed }}</td>
+						<td class="text-end">{{ column_percent }}</td>
 					</tr>
 				</thead>
 				<tbody>
 					{% if products %}
 						{% for product in products %}
 							<tr>
-								<td class="text-left">{{ product.name }}</td>
-								<td class="text-left">{{ product.model }}</td>
-								<td class="text-right">{{ product.viewed }}</td>
-								<td class="text-right">{{ product.percent }}</td>
+								<td class="text-start">{{ product.name }}</td>
+								<td class="text-start">{{ product.model }}</td>
+								<td class="text-end">{{ product.viewed }}</td>
+								<td class="text-end">{{ product.percent }}</td>
 							</tr>
 						{% endfor %}
 					{% else %}
@@ -35,8 +35,8 @@
 			</table>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 text-left">{{ pagination }}</div>
-			<div class="col-sm-6 text-right">{{ results }}</div>
+			<div class="col-sm-6 text-start">{{ pagination }}</div>
+			<div class="col-sm-6 text-end">{{ results }}</div>
 		</div>
 	</div>
 </div>

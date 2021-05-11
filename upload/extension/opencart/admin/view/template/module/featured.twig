@@ -44,7 +44,7 @@
 					<div class="form-group row">
 						<label for="input-axis" class="col-sm-2 col-form-label">{{ entry_axis }}</label>
 						<div class="col-sm-10">
-							<select name="axis" id="input-axis" class="form-control">
+							<select name="axis" id="input-axis" class="form-select">
 								{% if axis == 'horizontal' %}
 									<option value="0" selected="selected">{{ text_horizontal }}</option>
 								{% else %}
@@ -73,7 +73,7 @@
 					<div class="form-group row">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
-							<select name="status" id="input-status" class="form-control">
+							<select name="status" id="input-status" class="form-select">
 								{% if status %}
 									<option value="1" selected="selected">{{ text_enabled }}</option>
 									<option value="0">{{ text_disabled }}</option>

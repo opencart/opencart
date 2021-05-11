@@ -27,7 +27,7 @@
 					<div class="form-group row">
 						<label for="input-tax-class" class="col-sm-2 col-form-label">{{ entry_tax_class }}</label>
 						<div class="col-sm-10">
-							<select name="shipping_flat_tax_class_id" id="input-tax-class" class="form-control">
+							<select name="shipping_flat_tax_class_id" id="input-tax-class" class="form-select">
 								<option value="0">{{ text_none }}</option>
 								{% for tax_class in tax_classes %}
 									{% if tax_class.tax_class_id == shipping_flat_tax_class_id %}
@@ -42,7 +42,7 @@
 					<div class="form-group row">
 						<label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
 						<div class="col-sm-10">
-							<select name="shipping_flat_geo_zone_id" id="input-geo-zone" class="form-control">
+							<select name="shipping_flat_geo_zone_id" id="input-geo-zone" class="form-select">
 								<option value="0">{{ text_all_zones }}</option>
 								{% for geo_zone in geo_zones %}
 									{% if geo_zone.geo_zone_id == shipping_flat_geo_zone_id %}
@@ -57,7 +57,7 @@
 					<div class="form-group row">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
-							<select name="shipping_flat_status" id="input-status" class="form-control">
+							<select name="shipping_flat_status" id="input-status" class="form-select">
 								{% if shipping_flat_status %}
 									<option value="1" selected="selected">{{ text_enabled }}</option>
 									<option value="0">{{ text_disabled }}</option>

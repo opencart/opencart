@@ -28,24 +28,25 @@ function isIE() {
 }
 
 $(document).ready(function() {
+    /*
     // tooltips on hover
     $('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
     // Makes tooltips work on ajax generated content
     $(document).ajaxStop(function() {
-        $('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body'});
+        //$('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
 
     // tooltip remove
     $('[data-bs-toggle=\'tooltip\']').on('remove', function() {
-        $(this).tooltip('dispose');
+      //  $(this).tooltip('dispose');
     });
 
     // Tooltip remove fixed
     $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
-        $('body > .tooltip').remove();
+       // $('body > .tooltip').remove();
     });
-
+*/
     // https://github.com/opencart/opencart/issues/2595
     $.event.special.remove = {
         remove: function(o) {
@@ -54,6 +55,33 @@ $(document).ready(function() {
             }
         }
     }
+
+    $('[data-bs-toggle=\'tab\']').each(function() {
+    //.on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
+
+      //  });
+        var tab = document.querySelector('.nav-tabs [data-bs-toggle=\'tab\']');
+
+        //  tab.parentNode.parentNode;
+
+        //console.log(tab.parentNode.parentNode);
+
+        var tab = new bootstrap.Tab(tab);
+
+        tab.show();
+    });
+
+    /*
+    var triggerTabList = [].slice.call(document.querySelectorAll('#language li:first-child a'))
+    triggerTabList.forEach(function (triggerEl) {
+        var tabTrigger = new bootstrap.Tab(triggerEl)
+
+        triggerEl.addEventListener('click', function (event) {
+            event.preventDefault()
+            tabTrigger.show()
+        })
+    })
+    */
 });
 
 $(document).ready(function() {
@@ -125,10 +153,6 @@ $(document).on('click', '[data-oc-action]', function() {
         success: function(json) {
             $('.invalid-tooltip, .alert-dismissible').remove();
 
-            for (key in json) {
-                $(form).find('[name=\'' + key + '\']').val(json[key]);
-            }
-
             if (typeof json['error'] == 'object') {
                 if (json['error']['warning']) {
                     $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -146,10 +170,14 @@ $(document).on('click', '[data-oc-action]', function() {
                         $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
                     }
                 }
+
+                delete json['error'];
             }
 
             if (typeof json['error'] == 'string') {
                 $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                delete json['error'];
             }
 
             if (json['success']) {
@@ -162,10 +190,19 @@ $(document).on('click', '[data-oc-action]', function() {
                 if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
                     $(target).load(url);
                 }
+
+                delete json['success'];
             }
 
             if (json['redirect']) {
                 location = json['redirect'];
+
+                // Not sure this part works
+                delete json['redirect'];
+            }
+
+            for (key in json) {
+                $(form).find('[name=\'' + key + '\']').val(json[key]);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

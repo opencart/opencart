@@ -18,6 +18,7 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="order-status-form">
+					<input type="hidden" name="order_status_id" value="{{ order_status_id }}" id="input-order-status-id"/>
 					<div class="row mb-3 required">
 						<label class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">

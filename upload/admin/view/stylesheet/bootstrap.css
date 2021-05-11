@@ -3725,6 +3725,7 @@ textarea.form-control-lg {
   /* OpenCart Start */
   text-shadow: 0 1px #fff;
   font-size: 0.9231rem;
+  display: inline-block;
   /* OpenCart End */
 }
 .breadcrumb-item + .breadcrumb-item {

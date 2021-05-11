@@ -19,6 +19,7 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="currency-form">
+					<input type="hidden" name="currency_id" value="{{ currency_id }}" id="input-currency-id"/>
 					<div class="row mb-3 required">
 						<label for="input-title" class="col-sm-2 col-form-label">{{ entry_title }}</label>
 						<div class="col-sm-10">

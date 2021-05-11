@@ -21,7 +21,9 @@ legend {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 15px;
 }
-
+a {
+    text-decoration: none;
+}
 #container {
     min-height: 100%;
     width: 100%;
@@ -29,7 +31,6 @@ legend {
     background: #f6f6f6;
     overflow: hidden;
 }
-
 .container-fluid {
     padding: 0 20px;
 }
@@ -381,9 +382,9 @@ legend {
     vertical-align: middle;
     margin: 20px 0 15px 0;
     padding: 0;
+    padding-bottom: 5px;
     border-bottom: 1px solid #e9e9e9;
 }
-
 .page-header h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;

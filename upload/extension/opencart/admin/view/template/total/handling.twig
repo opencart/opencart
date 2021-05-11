@@ -34,7 +34,7 @@
 					<div class="form-group row">
 						<label for="input-tax-class" class="col-sm-2 col-form-label">{{ entry_tax_class }}</label>
 						<div class="col-sm-10">
-							<select name="total_handling_tax_class_id" id="input-tax-class" class="form-control">
+							<select name="total_handling_tax_class_id" id="input-tax-class" class="form-select">
 								<option value="0">{{ text_none }}</option>
 								{% for tax_class in tax_classes %}
 									{% if tax_class.tax_class_id == total_handling_tax_class_id %}
@@ -49,7 +49,7 @@
 					<div class="form-group row">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
-							<select name="total_handling_status" id="input-status" class="form-control">
+							<select name="total_handling_status" id="input-status" class="form-select">
 								{% if total_handling_status %}
 									<option value="1" selected="selected">{{ text_enabled }}</option>
 									<option value="0">{{ text_disabled }}</option>

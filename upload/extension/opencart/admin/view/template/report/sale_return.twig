@@ -22,7 +22,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="input-group" class="col-form-label">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-control">
+					<label for="input-group" class="col-form-label">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-select">
 						{% for group in groups %}
 							{% if group.value == filter_group %}
 								<option value="{{ group.value }}" selected="selected">{{ group.text }}</option>
@@ -33,7 +33,7 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="input-status" class="col-form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-status" class="form-control">
+					<label for="input-status" class="col-form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-status" class="form-select">
 						<option value="0">{{ text_all_status }}</option>
 						{% for return_status in return_statuses %}
 							{% if return_status.return_status_id == filter_return_status_id %}

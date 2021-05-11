@@ -18,6 +18,7 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="filter-form">
+					<input type="hidden" name="filter_group_id" value="{{ filter_group_id }}" id="input-filter-group-id"/>
 					<fieldset>
 						<legend>{{ text_group }}</legend>
 						<div class="row mb-3 required">

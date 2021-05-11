@@ -29,7 +29,7 @@
 							<div class="form-group row">
 								<label for="input-tax-class" class="col-sm-2 col-form-label">{{ entry_tax_class }}</label>
 								<div class="col-sm-10">
-									<select name="shipping_weight_tax_class_id" id="input-tax-class" class="form-control">
+									<select name="shipping_weight_tax_class_id" id="input-tax-class" class="form-select">
 										<option value="0">{{ text_none }}</option>
 										{% for tax_class in tax_classes %}
 											{% if tax_class.tax_class_id == shipping_weight_tax_class_id %}
@@ -44,7 +44,7 @@
 							<div class="form-group row">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
-									<select name="shipping_weight_status" id="input-status" class="form-control">
+									<select name="shipping_weight_status" id="input-status" class="form-select">
 										{% if shipping_weight_status %}
 											<option value="1" selected="selected">{{ text_enabled }}</option>
 											<option value="0">{{ text_disabled }}</option>
@@ -74,7 +74,7 @@
 								<div class="form-group row">
 									<label for="input-status{{ geo_zone.geo_zone_id }}" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 									<div class="col-sm-10">
-										<select name="shipping_weight_{{ geo_zone.geo_zone_id }}_status" id="input-status{{ geo_zone.geo_zone_id }}" class="form-control">
+										<select name="shipping_weight_{{ geo_zone.geo_zone_id }}_status" id="input-status{{ geo_zone.geo_zone_id }}" class="form-select">
 											{% if shipping_weight_geo_zone_status[geo_zone.geo_zone_id] %}
 												<option value="1" selected="selected">{{ text_enabled }}</option>
 												<option value="0">{{ text_disabled }}</option>

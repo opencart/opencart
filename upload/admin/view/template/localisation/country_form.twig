@@ -18,6 +18,7 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="country-form">
+					<input type="hidden" name="translation_id" value="{{ translation_id }}" id="input-translation-id"/>
 					<div class="row mb-3 required">
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">

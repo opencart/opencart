@@ -1,7 +1,6 @@
 .breadcrumb {
   //display: flex;
   display: inline-block;
-  //flex-wrap: wrap;
   flex-wrap: nowrap;
   padding: $breadcrumb-padding-y $breadcrumb-padding-x;
   margin-bottom: $breadcrumb-margin-bottom;
@@ -25,6 +24,7 @@
   /* OpenCart Start */
   text-shadow: 0 1px #fff;
   font-size: .9231rem;
+  display: inline-block;
   /* OpenCart End */
 
  // The separator between breadcrumbs (by default, a forward-slash: "/")
@@ -41,6 +41,7 @@
       font-weight: 600;
       font-size: .7692rem;
       color: #BBBBBB;
+      vertical-align: middle;
       /* OpenCart End */
     }
   }

@@ -21,7 +21,7 @@
 					<div class="form-group row">
 						<label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
 						<div class="col-sm-10">
-							<select name="shipping_pickup_geo_zone_id" id="input-geo-zone" class="form-control">
+							<select name="shipping_pickup_geo_zone_id" id="input-geo-zone" class="form-select">
 								<option value="0">{{ text_all_zones }}</option>
 								{% for geo_zone in geo_zones %}
 									{% if geo_zone.geo_zone_id == shipping_pickup_geo_zone_id %}
@@ -36,7 +36,7 @@
 					<div class="form-group row">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
-							<select name="shipping_pickup_status" id="input-status" class="form-control">
+							<select name="shipping_pickup_status" id="input-status" class="form-select">
 								{% if shipping_pickup_status %}
 									<option value="1" selected="selected">{{ text_enabled }}</option>
 									<option value="0">{{ text_disabled }}</option>

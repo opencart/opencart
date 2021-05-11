@@ -21,15 +21,14 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="customer-form">
+					<input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
 					<ul class="nav nav-tabs">
 						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
 						<li class="nav-item"><a href="#tab-address" data-bs-toggle="tab" class="nav-link">{{ tab_address }}</a></li>
-
 						<li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link d-none">{{ tab_history }}</a></li>
 						<li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
 						<li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
 						<li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
-
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">

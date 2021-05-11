@@ -18,6 +18,7 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="review-form">
+					<input type="hidden" name="review_id" value="{{ review_id }}" id="input-review-id"/>
 					<div class="row mb-3 required">
 						<label for="input-author" class="col-sm-2 col-form-label">{{ entry_author }}</label>
 						<div class="col-sm-10">

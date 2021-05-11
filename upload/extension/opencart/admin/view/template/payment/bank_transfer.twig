@@ -41,7 +41,7 @@
 					<div class="form-group row">
 						<label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
 						<div class="col-sm-10">
-							<select name="payment_bank_transfer_order_status_id" id="input-order-status" class="form-control">
+							<select name="payment_bank_transfer_order_status_id" id="input-order-status" class="form-select">
 								{% for order_status in order_statuses %}
 									{% if order_status.order_status_id == payment_bank_transfer_order_status_id %}
 										<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -55,7 +55,7 @@
 					<div class="form-group row">
 						<label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
 						<div class="col-sm-10">
-							<select name="payment_bank_transfer_geo_zone_id" id="input-geo-zone" class="form-control">
+							<select name="payment_bank_transfer_geo_zone_id" id="input-geo-zone" class="form-select">
 								<option value="0">{{ text_all_zones }}</option>
 								{% for geo_zone in geo_zones %}
 									{% if geo_zone.geo_zone_id == payment_bank_transfer_geo_zone_id %}
@@ -70,7 +70,7 @@
 					<div class="form-group row">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
-							<select name="payment_bank_transfer_status" id="input-status" class="form-control">
+							<select name="payment_bank_transfer_status" id="input-status" class="form-select">
 								{% if payment_bank_transfer_status %}
 									<option value="1" selected="selected">{{ text_enabled }}</option>
 									<option value="0">{{ text_disabled }}</option>

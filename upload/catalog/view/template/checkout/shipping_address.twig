@@ -20,49 +20,49 @@
   {% endif %}
   <br/>
   <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
-    <div class="form-group row required">
+    <div class="row mb-3 required">
       <label for="input-shipping-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
       <div class="col-sm-10">
         <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="row mb-3 required">
       <label for="input-shipping-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
       <div class="col-sm-10">
         <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="row mb-3">
       <label for="input-shipping-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>
       <div class="col-sm-10">
         <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="row mb-3 required">
       <label for="input-shipping-address-1" class="col-sm-2 col-form-label">{{ entry_address_1 }}</label>
       <div class="col-sm-10">
         <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="row mb-3">
       <label for="input-shipping-address-2" class="col-sm-2 col-form-label">{{ entry_address_2 }}</label>
       <div class="col-sm-10">
         <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="row mb-3 required">
       <label for="input-shipping-city" class="col-sm-2 col-form-label">{{ entry_city }}</label>
       <div class="col-sm-10">
         <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="row mb-3 required">
       <label for="input-shipping-postcode" class="col-sm-2 col-form-label">{{ entry_postcode }}</label>
       <div class="col-sm-10">
         <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="row form-group required">
       <label for="input-shipping-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
       <div class="col-sm-10">
         <select name="country_id" id="input-shipping-country" class="form-control">
@@ -77,7 +77,7 @@
         </select>
       </div>
     </div>
-    <div class="form-group row required">
+    <div class="row form-group required">
       <label for="input-shipping-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
       <div class="col-sm-10">
         <select name="zone_id" id="input-shipping-zone" class="form-control"> </select>
@@ -85,7 +85,7 @@
     </div>
     {% for custom_field in custom_fields %}
       {% if custom_field.type == 'select' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
@@ -98,7 +98,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'radio' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -112,7 +112,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'checkbox' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div id="input-shipping-custom-field{{ custom_field.custom_field_id }}">
@@ -126,7 +126,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'text' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -134,7 +134,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'textarea' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
@@ -142,7 +142,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'file' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <button type="button" id="button-shipping-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
@@ -151,7 +151,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'date' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group date">
@@ -164,7 +164,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'time' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group time">
@@ -177,7 +177,7 @@
         </div>
       {% endif %}
       {% if custom_field.type == 'datetime' %}
-        <div class="form-group row{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+        <div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
           <label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
           <div class="col-sm-10">
             <div class="input-group datetime">
@@ -192,7 +192,7 @@
     {% endfor %}
   </div>
   <div class="d-inline-block pt-2 pd-2 w-100">
-    <div class="float-right">
+    <div class="float-end">
       <button type="button" id="button-shipping-address" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   </div>
@@ -257,12 +257,12 @@ $('#button-shipping-address').on('click', function() {
 							success: function(html) {
 								$('#collapse-shipping-method .card-body').html(html);
 
-								$('#heading-shipping-method').attr('data-toggle', 'collapse');
+								$('#heading-shipping-method').attr('data-bs-toggle', 'collapse');
 
 								$('#heading-shipping-method').trigger('click');
 
-								$('#heading-payment-method').removeAttr('data-toggle');
-								$('#heading-checkout-confirm').removeAttr('data-toggle');
+								$('#heading-payment-method').removeAttr('data-bs-toggle');
+								$('#heading-checkout-confirm').removeAttr('data-bs-toggle');
 							},
 							error: function(xhr, ajaxOptions, thrownError) {
 								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

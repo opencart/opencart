@@ -18,7 +18,7 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
 			<div class="card-body">
 				<form id="module-form">
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
@@ -33,13 +33,13 @@
 						<div class="tab-content">
 							{% for language in languages %}
 								<div class="tab-pane" id="language{{ language.language_id }}">
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-title{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="module_description[{{ language.language_id }}][title]" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" value="{{ module_description[language.language_id] ? module_description[language.language_id].title }}" class="form-control"/>
 										</div>
 									</div>
-									<div class="form-group row">
+									<div class="row mb-3">
 										<label for="input-description{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
 										<div class="col-sm-10">
 											<textarea name="module_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" data-oc-toggle="ckeditor" class="form-control">{{ module_description[language.language_id] ? module_description[language.language_id].description }}</textarea>
@@ -49,7 +49,7 @@
 							{% endfor %}
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="row mb-3">
 						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 						<div class="col-sm-10">
 							<select name="status" id="input-status" class="form-select">

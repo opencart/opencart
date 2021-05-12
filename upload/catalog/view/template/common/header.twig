@@ -40,18 +40,18 @@
 </div>
 <nav id="top">
   <div class="container">
-    <div class="nav float-left">
+    <div class="nav float-start">
       <ul class="list-inline">
         <li class="list-inline-item">{{ currency }}</li>
         <li class="list-inline-item">{{ language }}</li>
       </ul>
     </div>
-    <div class="nav float-right">
+    <div class="nav float-end">
       <ul class="list-inline">
         <li class="list-inline-item"><a href="{{ contact }}"><i class="fas fa-phone"></i></a> <span class="d-none d-md-inline">{{ telephone }}</span></li>
         <li class="list-inline-item">
           <div class="dropdown">
-            <a href="{{ account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">{{ text_account }}</span> <i class="fas fa-caret-down"></i></a>
+            <a href="{{ account }}" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">{{ text_account }}</span> <i class="fas fa-caret-down"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
               {% if logged %}
                 <a href="{{ account }}" class="dropdown-item">{{ text_account }}</a>

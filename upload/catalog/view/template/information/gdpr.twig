@@ -15,7 +15,7 @@
 			<p>{{ text_gdpr|format(store, gdpr, title) }}</p>
 			<fieldset>
 				<legend id="account">{{ text_verification }}</legend>
-				<div class="form-group">
+				<div class="row mb-3">
 					<p><label for="input-email" class="form-check-label">{{ text_email }}</label></p>
 					<div class="input-group">
 						<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
@@ -27,7 +27,7 @@
 			</fieldset>
 			<fieldset>
 				<legend id="action">{{ text_action }}</legend>
-				<div class="form-group">
+				<div class="row mb-3">
 					<div class="form-check">
 						<input type="radio" name="action" value="export" id="input-export" checked class="form-check-input"/> <label for="input-export" class="form-check-label"><strong>{{ text_export }}</strong></label>
 					</div>
@@ -45,8 +45,8 @@
 				</div>
 			</fieldset>
 			<div class="d-inline-block pt-2 pd-2 w-100">
-				<div class="float-left"><a href="{{ cancel }}" class="btn btn-light">Cancel</a></div>
-				<div class="float-right"><button type="button" id="button-continue" class="btn btn-primary">{{ button_continue }}</button></div>
+				<div class="float-start"><a href="{{ cancel }}" class="btn btn-light">Cancel</a></div>
+				<div class="float-end"><button type="button" id="button-continue" class="btn btn-primary">{{ button_continue }}</button></div>
 			</div>
 			{{ content_bottom }}
 		</div>

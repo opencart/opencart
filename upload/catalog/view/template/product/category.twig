@@ -55,8 +55,8 @@
           </div>
           <div class="col-lg-1 d-none d-lg-block">
             <div class="btn-group">
-              <button type="button" id="list-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
-              <button type="button" id="grid-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
+              <button type="button" id="list-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
+              <button type="button" id="grid-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
             </div>
           </div>
           <div class="col-lg-4 offset-lg-1 col-6">
@@ -98,14 +98,14 @@
           {% endfor %}
         </div>
         <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
         </div>
       {% endif %}
       {% if not categories and not products %}
         <p>{{ text_no_results }}</p>
         <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+          <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
         </div>
       {% endif %}
       {{ content_bottom }}

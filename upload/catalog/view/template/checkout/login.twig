@@ -30,10 +30,10 @@
 	<div class="col-sm-6">
 		<h2>{{ text_returning_customer }}</h2>
 		<p>{{ text_i_am_returning_customer }}</p>
-		<div class="form-group">
+		<div class="row mb-3">
 			<label for="input-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
 		</div>
-		<div class="form-group">
+		<div class="row mb-3">
 			<label for="input-password" class="col-form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/> <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
 		<button type="button" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_login }}</button>
 	</div>
@@ -56,7 +56,7 @@ $('#button-account').on('click', function() {
 
                 $('#collapse-payment-address .card-body').html(html);
 
-                $('#heading-payment-address').attr('data-toggle', 'collapse');
+                $('#heading-payment-address').attr('data-bs-toggle', 'collapse');
 
                 $('#heading-payment-address').trigger('click');
             },

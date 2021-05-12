@@ -13,32 +13,32 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <td class="text-right">{{ column_order_recurring_id }}</td>
-                <td class="text-left">{{ column_product }}</td>
-                <td class="text-left">{{ column_status }}</td>
-                <td class="text-left">{{ column_date_added }}</td>
-                <td class="text-right"></td>
+                <td class="text-end">{{ column_order_recurring_id }}</td>
+                <td class="text-start">{{ column_product }}</td>
+                <td class="text-start">{{ column_status }}</td>
+                <td class="text-start">{{ column_date_added }}</td>
+                <td class="text-end"></td>
               </tr>
             </thead>
             <tbody>
               {% for recurring in recurrings %}
                 <tr>
-                  <td class="text-right">#{{ recurring.order_recurring_id }}</td>
-                  <td class="text-left">{{ recurring.product }}</td>
-                  <td class="text-left">{{ recurring.status }}</td>
-                  <td class="text-left">{{ recurring.date_added }}</td>
-                  <td class="text-right"><a href="{{ recurring.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
+                  <td class="text-end">#{{ recurring.order_recurring_id }}</td>
+                  <td class="text-start">{{ recurring.product }}</td>
+                  <td class="text-start">{{ recurring.status }}</td>
+                  <td class="text-start">{{ recurring.date_added }}</td>
+                  <td class="text-end"><a href="{{ recurring.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
                 </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
-        <div class="text-right">{{ pagination }}</div>
+        <div class="text-end">{{ pagination }}</div>
       {% else %}
         <p>{{ text_no_results }}</p>
       {% endif %}
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}
     </div>

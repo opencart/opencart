@@ -73,8 +73,8 @@
 					</div>
 					<div class="col-md-1 d-none d-md-block">
 						<div class="btn-group">
-							<button type="button" id="list-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
-							<button type="button" id="grid-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
+							<button type="button" id="list-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
+							<button type="button" id="grid-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
 						</div>
 					</div>
 					<div class="col-md-4 offset-md-1 col-6">
@@ -116,8 +116,8 @@
 					{% endfor %}
 				</div>
 				<div class="row">
-					<div class="col-sm-6 text-left">{{ pagination }}</div>
-					<div class="col-sm-6 text-right">{{ results }}</div>
+					<div class="col-sm-6 text-start">{{ pagination }}</div>
+					<div class="col-sm-6 text-end">{{ results }}</div>
 				</div>
 			{% else %}
 				<p>{{ text_no_results }}</p>

@@ -27,12 +27,12 @@
             </ul>
           {% endif %}
           <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-description" id="description-tab" class="nav-link active" data-toggle="tab">{{ tab_description }}</a></li>
+            <li class="nav-item"><a href="#tab-description" id="description-tab" class="nav-link active" data-bs-toggle="tab">{{ tab_description }}</a></li>
             {% if attribute_groups %}
-              <li class="nav-item"><a href="#tab-specification" id="specification-tab" class="nav-link" data-toggle="tab">{{ tab_attribute }}</a></li>
+              <li class="nav-item"><a href="#tab-specification" id="specification-tab" class="nav-link" data-bs-toggle="tab">{{ tab_attribute }}</a></li>
             {% endif %}
             {% if review_status %}
-              <li class="nav-item"><a href="#tab-review" id="review-tab" class="nav-link" data-toggle="tab">{{ tab_review }}</a></li>
+              <li class="nav-item"><a href="#tab-review" id="review-tab" class="nav-link" data-bs-toggle="tab">{{ tab_review }}</a></li>
             {% endif %}
           </ul>
           <div class="tab-content">
@@ -68,14 +68,14 @@
                   <div id="review"></div>
                   <h2>{{ text_write }}</h2>
                   {% if review_guest %}
-                    <div class="form-group required">
+                    <div class="row mb-3 required">
                       <label for="input-name" class="col-form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
                     </div>
-                    <div class="form-group required">
+                    <div class="row mb-3 required">
                       <label for="input-review" class="col-form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
                       <div class="help-block">{{ text_note }}</div>
                     </div>
-                    <div class="form-group row required">
+                    <div class="row mb-3 required">
                       <div class="col-sm-12">
                         <label class="col-form-label">{{ entry_rating }}</label>
                         &nbsp;&nbsp;&nbsp; {{ entry_bad }}&nbsp;
@@ -92,7 +92,7 @@
                     </div>
                     {{ captcha }}
                     <div class="d-inline-block pt-2 pd-2 w-100">
-                      <div class="float-right">
+                      <div class="float-end">
                         <button type="button" id="button-review" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
                       </div>
                     </div>
@@ -112,8 +112,8 @@
 
         <div class="{{ class }}">
           <div class="btn-group">
-            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
-            <button type="button" data-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
+            <button type="button" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
+            <button type="button" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
           </div>
 
 
@@ -161,7 +161,7 @@
               <h3>{{ text_option }}</h3>
               {% for option in options %}
                 {% if option.type == 'select' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
                       <option value="">{{ text_select }}</option>
                       {% for option_value in option.product_option_value %}
@@ -174,7 +174,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'radio' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label class="col-form-label">{{ option.name }}</label>
                     <div id="input-option{{ option.product_option_id }}">
                       {% for option_value in option.product_option_value %}
@@ -192,7 +192,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'checkbox' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label class="col-form-label">{{ option.name }}</label>
                     <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
                         <div class="form-check">
@@ -208,24 +208,24 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'text' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'textarea' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
                   </div>
                 {% endif %}
                 {% if option.type == 'file' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label for="button-upload{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light btn-block"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'date' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group date">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
@@ -236,7 +236,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'datetime' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group datetime">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
@@ -247,7 +247,7 @@
                   </div>
                 {% endif %}
                 {% if option.type == 'time' %}
-                  <div class="form-group{% if option.required %} required {% endif %}">
+                  <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group time">
                       <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
@@ -262,7 +262,7 @@
             {% if recurrings %}
               <hr/>
               <h3>{{ text_payment_recurring }}</h3>
-              <div class="form-group required">
+              <div class="row mb-3 required">
                 <select name="recurring_id" class="form-control">
                   <option value="">{{ text_select }}</option>
                   {% for recurring in recurrings %}
@@ -272,7 +272,7 @@
                 <div id="recurring-description" class="help-block"></div>
               </div>
             {% endif %}
-            <div class="form-group">
+            <div class="row mb-3">
               <label for="input-quantity" class="col-form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
               <br/>
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
@@ -387,7 +387,7 @@ $('#button-cart').on('click', function() {
 
 			if (json['success']) {
 				html  = '<div class="toast">';
-				html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
+				html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
 				html += '</div>';
 
 				$('#toast').prepend(html);

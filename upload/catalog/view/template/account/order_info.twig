@@ -21,17 +21,17 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left" colspan="2">{{ text_order_detail }}</td>
+            <td class="text-start" colspan="2">{{ text_order_detail }}</td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="text-left" style="width: 50%;">{% if invoice_no %} <b>{{ text_invoice_no }}</b> {{ invoice_no }}
+            <td class="text-start" style="width: 50%;">{% if invoice_no %} <b>{{ text_invoice_no }}</b> {{ invoice_no }}
                 <br/>
               {% endif %} <b>{{ text_order_id }}</b> #{{ order_id }}
               <br/>
               <b>{{ text_date_added }}</b> {{ date_added }}</td>
-            <td class="text-left" style="width: 50%;">{% if payment_method %} <b>{{ text_payment_method }}</b> {{ payment_method }}
+            <td class="text-start" style="width: 50%;">{% if payment_method %} <b>{{ text_payment_method }}</b> {{ payment_method }}
                 <br/>
               {% endif %}
               {% if shipping_method %} <b>{{ text_shipping_method }}</b> {{ shipping_method }} {% endif %}</td>
@@ -41,16 +41,16 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_payment_address }}</td>
+            <td class="text-start" style="width: 50%; vertical-align: top;">{{ text_payment_address }}</td>
             {% if shipping_address %}
-              <td class="text-left" style="width: 50%; vertical-align: top;">{{ text_shipping_address }}</td>
+              <td class="text-start" style="width: 50%; vertical-align: top;">{{ text_shipping_address }}</td>
             {% endif %} </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="text-left">{{ payment_address }}</td>
+            <td class="text-start">{{ payment_address }}</td>
             {% if shipping_address %}
-              <td class="text-left">{{ shipping_address }}</td>
+              <td class="text-start">{{ shipping_address }}</td>
             {% endif %} </tr>
         </tbody>
       </table>
@@ -58,11 +58,11 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left">{{ column_name }}</td>
-              <td class="text-left">{{ column_model }}</td>
-              <td class="text-right">{{ column_quantity }}</td>
-              <td class="text-right">{{ column_price }}</td>
-              <td class="text-right">{{ column_total }}</td>
+              <td class="text-start">{{ column_name }}</td>
+              <td class="text-start">{{ column_model }}</td>
+              <td class="text-end">{{ column_quantity }}</td>
+              <td class="text-end">{{ column_price }}</td>
+              <td class="text-end">{{ column_total }}</td>
               {% if products %}
                 <td style="width: 20px;"></td>
               {% endif %} </tr>
@@ -70,25 +70,25 @@
           <tbody>
             {% for product in products %}
               <tr>
-                <td class="text-left">{{ product.name }}
+                <td class="text-start">{{ product.name }}
                   {% for option in product.option %}
                     <br/>
                     &nbsp;
                     <small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}</td>
-                <td class="text-left">{{ product.model }}</td>
-                <td class="text-right">{{ product.quantity }}</td>
-                <td class="text-right">{{ product.price }}</td>
-                <td class="text-right">{{ product.total }}</td>
-                <td class="text-right" style="white-space: nowrap;">{% if product.reorder %} <a href="{{ product.reorder }}" data-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></a> {% endif %} <a href="{{ product.return }}" data-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fas fa-reply"></i></a></td>
+                <td class="text-start">{{ product.model }}</td>
+                <td class="text-end">{{ product.quantity }}</td>
+                <td class="text-end">{{ product.price }}</td>
+                <td class="text-end">{{ product.total }}</td>
+                <td class="text-end" style="white-space: nowrap;">{% if product.reorder %} <a href="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></a> {% endif %} <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fas fa-reply"></i></a></td>
               </tr>
             {% endfor %}
             {% for voucher in vouchers %}
               <tr>
-                <td class="text-left">{{ voucher.description }}</td>
-                <td class="text-left"></td>
-                <td class="text-right">1</td>
-                <td class="text-right">{{ voucher.amount }}</td>
-                <td class="text-right">{{ voucher.amount }}</td>
+                <td class="text-start">{{ voucher.description }}</td>
+                <td class="text-start"></td>
+                <td class="text-end">1</td>
+                <td class="text-end">{{ voucher.amount }}</td>
+                <td class="text-end">{{ voucher.amount }}</td>
                 {% if products %}
                   <td></td>
                 {% endif %} </tr>
@@ -98,8 +98,8 @@
             {% for total in totals %}
               <tr>
                 <td colspan="3"></td>
-                <td class="text-right"><b>{{ total.title }}</b></td>
-                <td class="text-right">{{ total.text }}</td>
+                <td class="text-end"><b>{{ total.title }}</b></td>
+                <td class="text-end">{{ total.text }}</td>
                 {% if products %}
                   <td></td>
                 {% endif %} </tr>
@@ -111,12 +111,12 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left">{{ text_comment }}</td>
+              <td class="text-start">{{ text_comment }}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left">{{ comment }}</td>
+              <td class="text-start">{{ comment }}</td>
             </tr>
           </tbody>
         </table>
@@ -126,18 +126,18 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left">{{ column_date_added }}</td>
-              <td class="text-left">{{ column_status }}</td>
-              <td class="text-left">{{ column_comment }}</td>
+              <td class="text-start">{{ column_date_added }}</td>
+              <td class="text-start">{{ column_status }}</td>
+              <td class="text-start">{{ column_comment }}</td>
             </tr>
           </thead>
           <tbody>
             {% if histories %}
               {% for history in histories %}
                 <tr>
-                  <td class="text-left">{{ history.date_added }}</td>
-                  <td class="text-left">{{ history.status }}</td>
-                  <td class="text-left">{{ history.comment }}</td>
+                  <td class="text-start">{{ history.date_added }}</td>
+                  <td class="text-start">{{ history.status }}</td>
+                  <td class="text-start">{{ history.comment }}</td>
                 </tr>
               {% endfor %}
             {% else %}
@@ -149,7 +149,7 @@
         </table>
       {% endif %}
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

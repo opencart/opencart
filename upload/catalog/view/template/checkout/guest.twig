@@ -2,7 +2,7 @@
 	<div class="col-sm-6">
 		<fieldset id="account">
 			<legend>{{ text_your_details }}</legend>
-			<div class="form-group required{{ customer_groups|length <= 1 ? ' d-none' }}">
+			<div class="row mb-3 required{{ customer_groups|length <= 1 ? ' d-none' }}">
 				<label class="col-form-label">{{ entry_customer_group }}</label>
 				{% for customer_group in customer_groups %}
 					{% if customer_group.customer_group_id == customer_group_id %}
@@ -17,22 +17,22 @@
 						</div>
 					{% endif %}
 				{% endfor %}</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-payment-email" class="form-control"/>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-telephone" class="col-form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-payment-telephone" class="form-control"/>
 			</div>
 			{% for custom_field in custom_fields %}
 				{% if custom_field.location == 'account' %}
 					{% if custom_field.type == 'select' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
 								<option value="">{{ text_select }}</option>
 								{% for custom_field_value in custom_field.custom_field_value %}
@@ -46,7 +46,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'radio' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label class="col-form-label">{{ custom_field.name }}</label>
 							<div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> {% for custom_field_value in custom_field.custom_field_value %}
 									<div class="form-check">
@@ -63,7 +63,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'checkbox' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label class="col-form-label">{{ custom_field.name }}</label>
 							<div id="input-payment-custom-field{{ custom_field.custom_field_id }}"> {% for custom_field_value in custom_field.custom_field_value %}
 									<div class="form-check">
@@ -80,17 +80,17 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'text' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'textarea' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'file' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label class="col-form-label">{{ custom_field.name }}</label>
 							<br/>
 							<button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
@@ -98,7 +98,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'date' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
 							<div class="input-group date">
 								<input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -109,7 +109,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'time' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
 							<div class="input-group time">
 								<input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -120,7 +120,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'datetime' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
 							<div class="input-group datetime">
 								<input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -137,22 +137,22 @@
 	<div class="col-sm-6">
 		<fieldset id="address">
 			<legend>{{ text_your_address }}</legend>
-			<div class="form-group">
+			<div class="row mb-3">
 				<label for="input-payment-company" class="col-form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-address-1" class="col-form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
 			</div>
-			<div class="form-group">
+			<div class="row mb-3">
 				<label for="input-payment-address-2" class="col-form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-city" class="col-form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-postcode" class="col-form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-country" class="col-form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-control">
 					<option value="">{{ text_select }}</option>
 					{% for country in countries %}
@@ -164,13 +164,13 @@
 					{% endfor %}
 				</select>
 			</div>
-			<div class="form-group required">
+			<div class="row mb-3 required">
 				<label for="input-payment-zone" class="col-form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-control"> </select>
 			</div>
 			{% for custom_field in custom_fields %}
 				{% if custom_field.location == 'address' %}
 					{% if custom_field.type == 'select' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
 								<option value="">{{ text_select }}</option>
 								{% for custom_field_value in custom_field.custom_field_value %}
@@ -184,7 +184,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'radio' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label class="col-form-label">{{ custom_field.name }}</label>
 							<div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
 								{% for custom_field_value in custom_field.custom_field_value %}
@@ -202,7 +202,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'checkbox' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label class="col-form-label">{{ custom_field.name }}</label>
 							<div id="input-payment-custom-field{{ custom_field.custom_field_id }}">
 								{% for custom_field_value in custom_field.custom_field_value %}
@@ -219,17 +219,17 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'text' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if guest_custom_field[custom_field.custom_field_id] %}{{ guest_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'textarea' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'file' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label class="col-form-label">{{ custom_field.name }}</label>
 							<br/>
 							<button type="button" id="button-payment-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
@@ -237,7 +237,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'date' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
 							<div class="input-group date">
 								<input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -248,7 +248,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'time' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
 							<div class="input-group time">
 								<input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -259,7 +259,7 @@
 						</div>
 					{% endif %}
 					{% if custom_field.type == 'datetime' %}
-						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="form-group custom-field" data-sort="{{ custom_field.sort_order }}">
+						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
 							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
 							<div class="input-group datetime">
 								<input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ guest_custom_field[custom_field.custom_field_id] ? guest_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -287,7 +287,7 @@
 	</div>
 {% endif %}
 <div class="d-inline-block pt-2 pd-2 w-100">
-	<div class="float-right">
+	<div class="float-end">
 		<button type="button" id="button-guest" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
 	</div>
 </div>
@@ -383,7 +383,7 @@ $('#button-guest').on('click', function() {
                                             success: function(html) {
                                                 $('#collapse-shipping-address .card-body').html(html);
 
-                                                $('#heading-shipping-address').attr('data-toggle', 'collapse');
+                                                $('#heading-shipping-address').attr('data-bs-toggle', 'collapse');
                                             },
                                             error: function(xhr, ajaxOptions, thrownError) {
                                                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -391,12 +391,12 @@ $('#button-guest').on('click', function() {
                                         });
                                     });
 
-                                    $('#heading-shipping-method').attr('data-toggle', 'collapse');
+                                    $('#heading-shipping-method').attr('data-bs-toggle', 'collapse');
 
                                     $('#heading-shipping-method').trigger('click');
 
-                                    $('#heading-payment-method').removeAttr('data-toggle');
-                                    $('#heading-checkout-confirm').removeAttr('data-toggle');
+                                    $('#heading-payment-method').removeAttr('data-bs-toggle');
+                                    $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
                                 },
                                 error: function(xhr, ajaxOptions, thrownError) {
                                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -414,13 +414,13 @@ $('#button-guest').on('click', function() {
                                 success: function(html) {
                                     $('#collapse-shipping-address .card-body').html(html);
 
-                                    $('#heading-shipping-address').attr('data-toggle', 'collapse');
+                                    $('#heading-shipping-address').attr('data-bs-toggle', 'collapse');
 
                                     $('#heading-shipping-address').trigger('click');
 
-                                    $('#heading-shipping-method').removeAttr('data-toggle');
-                                    $('#heading-payment-method').removeAttr('data-toggle');
-                                    $('#heading-checkout-confirm').removeAttr('data-toggle');
+                                    $('#heading-shipping-method').removeAttr('data-bs-toggle');
+                                    $('#heading-payment-method').removeAttr('data-bs-toggle');
+                                    $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
                                 },
                                 error: function(xhr, ajaxOptions, thrownError) {
                                     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -439,11 +439,11 @@ $('#button-guest').on('click', function() {
                             success: function(html) {
                                 $('#collapse-payment-method .card-body').html(html);
 
-                                $('#heading-payment-method').attr('data-toggle', 'collapse');
+                                $('#heading-payment-method').attr('data-bs-toggle', 'collapse');
 
                                 $('#heading-payment-method').trigger('click');
 
-                                $('#heading-checkout-confirm').removeAttr('data-toggle');
+                                $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
                                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

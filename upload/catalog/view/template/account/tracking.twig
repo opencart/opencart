@@ -11,19 +11,19 @@
       <h1>{{ heading_title }}</h1>
       <p>{{ text_description }}</p>
       <form>
-        <div class="form-group row">
+        <div class="row mb-3">
           <label for="input-code" class="col-md-2 col-form-label">{{ entry_code }}</label>
           <div class="col-md-10">
             <textarea cols="40" rows="5" placeholder="{{ entry_code }}" id="input-code" class="form-control">{{ code }}</textarea>
           </div>
         </div>
-        <div class="form-group row">
-          <label for="input-generator"><span data-toggle="tooltip" title="{{ help_generator }}" class="col-md-2 col-form-label">{{ entry_generator }}</span></label>
+        <div class="row mb-3">
+          <label for="input-generator"><span data-bs-toggle="tooltip" title="{{ help_generator }}" class="col-md-2 col-form-label">{{ entry_generator }}</span></label>
           <div class="col-md-10">
             <input type="text" name="product" value="" placeholder="{{ entry_generator }}" id="input-generator" class="form-control"/>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="row mb-3">
           <label for="input-link" class="col-md-2 col-form-label">{{ entry_link }}</label>
           <div class="col-md-10">
             <textarea name="link" cols="40" rows="5" placeholder="{{ entry_link }}" id="input-link" class="form-control"></textarea>
@@ -31,7 +31,7 @@
         </div>
       </form>
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}
     </div>

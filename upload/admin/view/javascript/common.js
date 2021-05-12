@@ -46,7 +46,7 @@ $(document).ready(function() {
     $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
        // $('body > .tooltip').remove();
     });
-*/
+    */
     // https://github.com/opencart/opencart/issues/2595
     $.event.special.remove = {
         remove: function(o) {

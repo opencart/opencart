@@ -26,7 +26,7 @@
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-tax-class" class="col-sm-2 col-form-label">{{ entry_tax_class }}</label>
 								<div class="col-sm-10">
 									<select name="shipping_weight_tax_class_id" id="input-tax-class" class="form-select">
@@ -41,7 +41,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 								<div class="col-sm-10">
 									<select name="shipping_weight_status" id="input-status" class="form-select">
@@ -55,7 +55,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="row mb-3">
 								<label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="shipping_weight_sort_order" value="{{ shipping_weight_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
@@ -64,14 +64,14 @@
 						</div>
 						{% for geo_zone in geo_zones %}
 							<div class="tab-pane" id="tab-geo-zone{{ geo_zone.geo_zone_id }}">
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label for="input-rate{{ geo_zone.geo_zone_id }}" class="col-sm-2 col-form-label">{{ entry_rate }}</label>
 									<div class="col-sm-10">
 										<textarea name="shipping_weight_{{ geo_zone.geo_zone_id }}_rate" rows="5" placeholder="{{ entry_rate }}" id="input-rate{{ geo_zone.geo_zone_id }}" class="form-control">{{ shipping_weight_geo_zone_rate[geo_zone.geo_zone_id] ? shipping_weight_geo_zone_rate[geo_zone.geo_zone_id] }}</textarea>
 										<small class="form-text text-muted">{{ help_rate }}</small>
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="row mb-3">
 									<label for="input-status{{ geo_zone.geo_zone_id }}" class="col-sm-2 col-form-label">{{ entry_status }}</label>
 									<div class="col-sm-10">
 										<select name="shipping_weight_{{ geo_zone.geo_zone_id }}_status" id="input-status{{ geo_zone.geo_zone_id }}" class="form-select">

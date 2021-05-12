@@ -3741,6 +3741,7 @@ textarea.form-control-lg {
   font-weight: 600;
   font-size: 0.7692rem;
   color: #BBBBBB;
+  float: none;
   /* OpenCart End */
 }
 .breadcrumb-item.active {

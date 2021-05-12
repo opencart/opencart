@@ -52,7 +52,7 @@ $('#button-account').on('click', function() {
             },
             success: function(html) {
                 $('.alert-dismissible, .text-danger').remove();
-                $('.form-group').removeClass('has-error');
+                $('.mb-3').removeClass('has-error');
 
                 $('#collapse-payment-address .card-body').html(html);
 

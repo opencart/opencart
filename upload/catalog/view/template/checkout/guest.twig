@@ -33,7 +33,7 @@
 				{% if custom_field.location == 'account' %}
 					{% if custom_field.type == 'select' %}
 						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
-							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-select">
 								<option value="">{{ text_select }}</option>
 								{% for custom_field_value in custom_field.custom_field_value %}
 									{% if guest_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == guest_custom_field[custom_field.custom_field_id] %}
@@ -153,7 +153,7 @@
 				<label for="input-payment-postcode" class="col-form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
 			</div>
 			<div class="row mb-3 required">
-				<label for="input-payment-country" class="col-form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-control">
+				<label for="input-payment-country" class="col-form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select">
 					<option value="">{{ text_select }}</option>
 					{% for country in countries %}
 						{% if country.country_id == country_id %}
@@ -165,13 +165,13 @@
 				</select>
 			</div>
 			<div class="row mb-3 required">
-				<label for="input-payment-zone" class="col-form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-control"> </select>
+				<label for="input-payment-zone" class="col-form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"> </select>
 			</div>
 			{% for custom_field in custom_fields %}
 				{% if custom_field.location == 'address' %}
 					{% if custom_field.type == 'select' %}
 						<div id="payment-custom-field{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
-							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+							<label for="input-payment-custom-field{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field{{ custom_field.custom_field_id }}" class="form-select">
 								<option value="">{{ text_select }}</option>
 								{% for custom_field_value in custom_field.custom_field_value %}
 									{% if guest_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == guest_custom_field[custom_field.custom_field_id] %}
@@ -335,7 +335,7 @@ $('#button-guest').on('click', function() {
             },
             success: function(json) {
                 $('.alert-dismissible, .text-danger').remove();
-                $('.form-group').removeClass('has-error');
+                $('.mb-3').removeClass('has-error');
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -461,39 +461,39 @@ $('#button-guest').on('click', function() {
 });
 
 // Sort the custom fields
-$('#account .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .form-group').length) {
-        $('#account .form-group').eq($(this).attr('data-sort')).before(this);
+$('#account .mb-3[data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .mb-3').length) {
+        $('#account .mb-3').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#account .form-group').length) {
-        $('#account .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#account .mb-3').length) {
+        $('#account .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') == $('#account .form-group').length) {
-        $('#account .form-group:last').after(this);
+    if ($(this).attr('data-sort') == $('#account .mb-3').length) {
+        $('#account .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#account .form-group').length) {
-        $('#account .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#account .mb-3').length) {
+        $('#account .mb-3:first').before(this);
     }
 });
 
-$('#address .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#address .form-group').length) {
-        $('#address .form-group').eq($(this).attr('data-sort')).before(this);
+$('#address .mb-3[data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#address .mb-3').length) {
+        $('#address .mb-3').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#address .form-group').length) {
-        $('#address .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#address .mb-3').length) {
+        $('#address .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') == $('#address .form-group').length) {
-        $('#address .form-group:last').after(this);
+    if ($(this).attr('data-sort') == $('#address .mb-3').length) {
+        $('#address .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#address .form-group').length) {
-        $('#address .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#address .mb-3').length) {
+        $('#address .mb-3:first').before(this);
     }
 });
 //--></script>

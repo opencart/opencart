@@ -162,7 +162,7 @@
               {% for option in options %}
                 {% if option.type == 'select' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-control">
+                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-select">
                       <option value="">{{ text_select }}</option>
                       {% for option_value in option.product_option_value %}
                         <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
@@ -263,7 +263,7 @@
               <hr/>
               <h3>{{ text_payment_recurring }}</h3>
               <div class="row mb-3 required">
-                <select name="recurring_id" class="form-control">
+                <select name="recurring_id" class="form-select">
                   <option value="">{{ text_select }}</option>
                   {% for recurring in recurrings %}
                     <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>

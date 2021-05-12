@@ -32,7 +32,7 @@ $('#button-tracking').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert-dismissible, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
+			$('.mb-3').removeClass('has-error');
 
 			if (json['redirect']) {
 				location = json['redirect'];

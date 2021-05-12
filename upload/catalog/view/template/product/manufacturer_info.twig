@@ -27,7 +27,7 @@
               <div class="input-group-prepend">
                 <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
               </div>
-              <select id="input-sort" class="form-control" onchange="location = this.value;">
+              <select id="input-sort" class="form-select" onchange="location = this.value;">
                 {% for sorts in sorts %}
                   {% if sorts.value == '%s-%s'|format(sort, order) %}
                     <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
@@ -43,7 +43,7 @@
               <div class="input-group-prepend">
                 <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
               </div>
-              <select id="input-limit" class="form-control" onchange="location = this.value;">
+              <select id="input-limit" class="form-select" onchange="location = this.value;">
                 {% for limits in limits %}
                   {% if limits.value == limit %}
                     <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>

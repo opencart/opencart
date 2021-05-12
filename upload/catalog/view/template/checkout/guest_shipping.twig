@@ -44,7 +44,7 @@
 	<div class="row mb-3 required">
 		<label for="input-shipping-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
 		<div class="col-sm-10">
-			<select name="country_id" id="input-shipping-country" class="form-control">
+			<select name="country_id" id="input-shipping-country" class="form-select">
 				<option value="">{{ text_select }}</option>
 				{% for country in countries %}
 					{% if country.country_id == country_id %}
@@ -59,7 +59,7 @@
 	<div class="row mb-3 required">
 		<label for="input-shipping-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
 		<div class="col-sm-10">
-			<select name="zone_id" id="input-shipping-zone" class="form-control"> </select>
+			<select name="zone_id" id="input-shipping-zone" class="form-select"> </select>
 		</div>
 	</div>
 	{% for custom_field in custom_fields %}
@@ -68,7 +68,7 @@
 				<div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
 					<label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 					<div class="col-sm-10">
-						<select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+						<select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="form-select">
 							<option value="">{{ text_select }}</option>
 							{% for custom_field_value in custom_field.custom_field_value %}
 								{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address_custom_field[custom_field.custom_field_id] %}
@@ -143,7 +143,7 @@
 				</div>
 			{% endif %}
 			{% if custom_field.type == 'date' %}
-				<div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+				<div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
 					<label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 					<div class="col-sm-10">
 						<div class="input-group date">
@@ -156,7 +156,7 @@
 				</div>
 			{% endif %}
 			{% if custom_field.type == 'time' %}
-				<div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+				<div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
 					<label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 					<div class="col-sm-10">
 						<div class="input-group time">
@@ -169,7 +169,7 @@
 				</div>
 			{% endif %}
 			{% if custom_field.type == 'datetime' %}
-				<div class="row form-group{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+				<div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
 					<label for="input-shipping-custom-field{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 					<div class="col-sm-10">
 						<div class="input-group datetime">
@@ -203,7 +203,7 @@ $('#button-guest-shipping').on('click', function() {
             },
             success: function(json) {
                 $('.alert-dismissible, .text-danger').remove();
-                $('.form-group').removeClass('has-error');
+                $('.mb-3').removeClass('has-error');
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -261,21 +261,21 @@ $('#button-guest-shipping').on('click', function() {
 });
 
 // Sort the custom fields
-$('#collapse-shipping-address .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping-address .form-group').length - 2) {
-        $('#collapse-shipping-address .form-group').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
+$('#collapse-shipping-address .mb-3[data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#collapse-shipping-address .form-group').length - 2) {
-        $('#collapse-shipping-address .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') == $('#collapse-shipping-address .form-group').length - 2) {
-        $('#collapse-shipping-address .form-group:last').after(this);
+    if ($(this).attr('data-sort') == $('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#collapse-shipping-address .form-group').length - 2) {
-        $('#collapse-shipping-address .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3:first').before(this);
     }
 });
 //--></script>

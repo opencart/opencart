@@ -240,7 +240,7 @@ $(document).delegate('#button-register', 'click', function() {
 				$('.text-danger').parent().addClass('has-error');
             } else {
                 {% if shipping_required %}
-                var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
+                var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
 
                 if (shipping_address) {
                     $.ajax({

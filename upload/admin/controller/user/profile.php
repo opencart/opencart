@@ -18,6 +18,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		$data['save'] = $this->url->link('user/profile|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
 
 		$this->load->model('user/user');
@@ -76,7 +77,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'common/profile')) {
+		if (!$this->user->hasPermission('modify', 'user/profile')) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 

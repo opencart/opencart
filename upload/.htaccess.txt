@@ -28,6 +28,13 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|webp|js|css|svg)
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
+# Removes multiple leading slashes directly after the domain name / TLD
+RewriteCond %{THE_REQUEST} \s/{2,}
+RewriteRule (.*) $1 [R=301,L]
+# Remove multiple slashes anywhere in the rest of the path
+RewriteCond %{REQUEST_URI} ^(.*)/{2,}(.*)$
+RewriteRule (.*) %1/%2 [R=301,L]
+
 #ErrorDocument 400 /index.php?route=error/not_found
 #ErrorDocument 401 /index.php?route=error/permission
 #ErrorDocument 403 /index.php?route=error/not_found

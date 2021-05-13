@@ -8265,3 +8265,18 @@ INSERT INTO `oc_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id
 (107, 222, 3954, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (108, 222, 3955, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (109, 222, 3972, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+
+-----------------------------------------------------------
+
+--
+-- Table structure for table `oc_freeshipping_postcode`
+--
+
+DROP TABLE IF EXISTS `oc_freeshipping_postcode`;
+CREATE TABLE `oc_freeshipping_postcode` (
+  `freeshipping_postcode_id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL,
+  `postcode` varchar(10) NOT NULL,
+  PRIMARY KEY (`freeshipping_postcode_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

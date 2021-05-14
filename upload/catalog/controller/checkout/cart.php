@@ -196,6 +196,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				array_multisort($sort_order, SORT_ASC, $totals);
+			} else {
+				$results = [];
 			}
 
 			$data['totals'] = [];

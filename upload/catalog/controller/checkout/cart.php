@@ -167,6 +167,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$totals = [];
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
+			
+			$data['totals'] = [];
+			$data['modules'] = [];
 
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -196,33 +199,27 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				array_multisort($sort_order, SORT_ASC, $totals);
-			} else {
-				$results = [];
-			}
+				
+				foreach ($totals as $total) {
+					$data['totals'][] = [
+						'title' => $total['title'],
+						'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+					];
+				}
+				
+				foreach ($results as $result) {
+					if ($this->config->get('total_' . $result['code'] . '_status')) {
+						$result = $this->load->controller('extension/' . $result['extension'] . '/total/' . $result['code']);
 
-			$data['totals'] = [];
-
-			foreach ($totals as $total) {
-				$data['totals'][] = [
-					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-				];
-			}
-
-			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
-			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
-
-			$data['modules'] = [];
-
-			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$result = $this->load->controller('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-					if (!$result instanceof \Exception) {
-						$data['modules'][] = $result;
+						if (!$result instanceof \Exception) {
+							$data['modules'][] = $result;
+						}
 					}
 				}
 			}
+			
+			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
+			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

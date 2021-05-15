@@ -41,9 +41,9 @@ $(document).ready(function() {
 
    // var elements = [].slice.call(document.querySelectorAll('[data-bs-toggle=\'tooltip\']'));
 
-   console.log(list);
+   //console.log(list);
 
-    console.log(elements);
+    //console.log(elements);
     //$('[data-bs-toggle=\'tooltip\']').tooltip();
 
     // Makes tooltips work on ajax generated content
@@ -58,7 +58,7 @@ $(document).ready(function() {
            return new bootstrap.Tooltip(element, );
         });
 
-        if (!in_array(tooltipList)) {
+        if (jQuery.inArray(tooltipList)) {
             console.log(document.querySelectorAll('[data-bs-toggle=\'tooltip\']'));
         }
 

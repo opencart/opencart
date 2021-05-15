@@ -460,7 +460,6 @@ div.required .col-form-label:not(span):before, td.required:before {
 }
 
 input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio"], input[type="checkbox"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
-    position: relative;
     width: 13px;
     width: 16px \0;
     height: 13px;

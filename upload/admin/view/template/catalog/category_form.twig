@@ -128,14 +128,26 @@
 							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_top }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
-										{% if top %}
-											<label class="btn btn-outline-secondary active"><input type="radio" name="top" value="1" checked="checked"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary"><input type="radio" name="top" value="0"/> {{ text_no }}</label>
-										{% else %}
-											<label class="btn btn-outline-secondary"><input type="radio" name="top" value="1"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary active"><input type="radio" name="top" value="0" checked="checked"/> {{ text_no }}</label>
-										{% endif %}
+									<div>
+										<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+											{% if top %}
+
+												<input type="radio" name="top" value="1" id="input-top-1" class="btn-check" checked="checked"/>
+												<label for="input-top-1" class="btn btn-outline-secondary"> {{ text_yes }}</label>
+
+												<input type="radio" name="top" value="0" id="input-top-2" class="btn-check"/>
+												<label for="input-top-2" class="btn btn-outline-secondary">{{ text_no }}</label>
+
+											{% else %}
+
+												<input type="radio" name="top" value="1" id="input-top-1" class="btn-check"/>
+												<label for="input-top-1" class="btn btn-outline-secondary"> {{ text_yes }}</label>
+
+												<input type="radio" name="top" value="0" id="input-top-2" class="btn-check" checked="checked"/>
+												<label for="input-top-2" class="btn btn-outline-secondary">{{ text_no }}</label>
+
+											{% endif %}
+										</div>
 									</div>
 									<small class="form-text text-muted">{{ help_top }}</small>
 								</div>

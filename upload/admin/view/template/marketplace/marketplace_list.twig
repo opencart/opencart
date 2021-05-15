@@ -33,7 +33,7 @@
 									<a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
 								{% endfor %}
 							</div>
-							<button type="button" id="button-filter" data-bs-toggle="tooltip" data-title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
+							<button type="button" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
 						</div>
 						<input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
 					</div>

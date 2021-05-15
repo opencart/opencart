@@ -94,11 +94,11 @@ $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#gdpr').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}');
             }
@@ -127,11 +127,11 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#gdpr').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#gdpr').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#gdpr').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}');
             }

@@ -46,13 +46,13 @@ $('#event').on('click', '.btn-success, .btn-danger', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button></div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#event').load($('#event-list').attr('data-load'));
+                $('#event').load($('#event-list').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -60,6 +60,8 @@ $('#event').on('click', '.btn-success, .btn-danger', function() {
         }
     });
 });
+
+import Modal from 'bootstrap/js/dist/modal';
 
 $('#event').on('click', '.btn-info', function() {
     var element = this;
@@ -91,7 +93,25 @@ $('#event').on('click', '.btn-info', function() {
 
     $('body').append(html);
 
-    $('#modal-event').modal('show');
+    //$('#modal-event').modal('show');
+
+    //var event = document.querySelector('#modal-event');
+     //var event = document.getElementById('#modal-event');
+
+    var option = {
+        'backdrop': true
+    };
+
+
+
+   // var modal = new bootstrap.Modal(document.getElementById('modal-event'), option);
+
+    //modal.show();
+
+    //console.log(modal);
+    console.log(bootstrap);
+
+    //modal.show();
 });
 //--></script>
 {{ footer }}

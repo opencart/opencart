@@ -13,6 +13,12 @@
 
 .carousel {
   position: relative;
+
+  // OpenCart
+  border: 4px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  margin-bottom: 50px;
 }
 
 .carousel.pointer-event {
@@ -92,7 +98,8 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  z-index: 1;
+  //z-index: 1;
+  z-index: 2;
   // Use flex for alignment (1-3)
   display: flex; // 1. allow flex styles
   align-items: center; // 2. vertically center contents
@@ -100,6 +107,13 @@
   width: $carousel-control-width;
   padding: 0;
   color: $carousel-control-color;
+
+  // OpenCart
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all .3s ease;
+  font-size: 40px;
+  color: rgba(0,0,0,0.8);
+
   text-align: center;
   background: none;
   border: 0;
@@ -116,12 +130,32 @@
   }
 }
 .carousel-control-prev {
-  left: 0;
+  //left: 0;
   background-image: if($enable-gradients, linear-gradient(90deg, rgba($black, .25), rgba($black, .001)), null);
 }
 .carousel-control-next {
-  right: 0;
+  //right: 0;
   background-image: if($enable-gradients, linear-gradient(270deg, rgba($black, .25), rgba($black, .001)), null);
+}
+
+// OpenCart
+.carousel .carousel-control-prev {
+  opacity: 0;
+  left: -20px;
+}
+.carousel .carousel-control-next {
+  opacity: 0;
+  right: -20px;
+}
+
+.carousel:hover .carousel-control-prev {
+  opacity: 0.7;
+  left: 0px;
+
+}
+.carousel:hover .carousel-control-next {
+  opacity: 0.7;
+  right: 0px;
 }
 
 // Icons for within
@@ -158,7 +192,8 @@
 .carousel-indicators {
   position: absolute;
   right: 0;
-  bottom: 0;
+  //bottom: 0;
+  bottom: -50px;
   left: 0;
   z-index: 2;
   display: flex;
@@ -187,7 +222,18 @@
     border-top: $carousel-indicator-hit-area-height solid transparent;
     border-bottom: $carousel-indicator-hit-area-height solid transparent;
     opacity: $carousel-indicator-opacity;
+
+    // OpenCart
+    border-radius: 20px;
+    border: 1px solid #000000;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+
     @include transition($carousel-indicator-transition);
+  }
+
+  // OpenCart
+  li:hover {
+    opacity: .7;
   }
 
   .active {

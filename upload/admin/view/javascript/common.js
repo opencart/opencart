@@ -28,25 +28,68 @@ function isIE() {
 }
 
 $(document).ready(function() {
-    /*
-    // tooltips on hover
-    $('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+
+   // Array.from(document.querySelectorAll('[data-bs-toggle=\'tooltip\']')).forEach(toastNode => new bootstrap.Tooltip(toastNode));
+
+    var elements = [].slice.call(document.querySelectorAll('[data-bs-toggle=\'tooltip\']'));
+
+    var list = elements.map(function(element) {
+        //if () {
+            return new bootstrap.Tooltip(element);
+        //}
+    });
+
+   // var elements = [].slice.call(document.querySelectorAll('[data-bs-toggle=\'tooltip\']'));
+
+   console.log(list);
+
+    console.log(elements);
+    //$('[data-bs-toggle=\'tooltip\']').tooltip();
 
     // Makes tooltips work on ajax generated content
     $(document).ajaxStop(function() {
-        //$('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body'});
-    });
+        //$('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
-    // tooltip remove
-    $('[data-bs-toggle=\'tooltip\']').on('remove', function() {
-      //  $(this).tooltip('dispose');
-    });
+       // tooltip();
+        /*
+        var elements = [].slice.call(document.querySelectorAll('[data-bs-toggle=\'tooltip\']'));
 
-    // Tooltip remove fixed
-    $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
-       // $('body > .tooltip').remove();
+        var tooltipList = elements.map(function(element) {
+           return new bootstrap.Tooltip(element, );
+        });
+
+        if (!in_array(tooltipList)) {
+            console.log(document.querySelectorAll('[data-bs-toggle=\'tooltip\']'));
+        }
+
+        // $('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body'});
+        */
+   });
+/*
+    return $(element).each(function() {
+        var $this = $(this);
+        var data  = $this.data('bs.tooltip');
+
+        if (!data) {
+            data = new bootstrap.Tooltip($this, option);
+
+            $this.data('bs.tooltip', data);
+        }
+
+
+        $.extend(this, option);
     });
-    */
+*/
+   /*
+   // tooltips on hover
+   $('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+
+   // Tooltip remove fixed
+   $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
+      // $('body > .tooltip').remove();
+   });
+   */
+
     // https://github.com/opencart/opencart/issues/2595
     $.event.special.remove = {
         remove: function(o) {
@@ -56,32 +99,33 @@ $(document).ready(function() {
         }
     }
 
-    $('[data-bs-toggle=\'tab\']').each(function() {
-    //.on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
-
-      //  });
-        var tab = document.querySelector('.nav-tabs [data-bs-toggle=\'tab\']');
-
-        //  tab.parentNode.parentNode;
-
-        //console.log(tab.parentNode.parentNode);
-
-        var tab = new bootstrap.Tab(tab);
-
-        tab.show();
-    });
-
     /*
-    var triggerTabList = [].slice.call(document.querySelectorAll('#language li:first-child a'))
-    triggerTabList.forEach(function (triggerEl) {
-        var tabTrigger = new bootstrap.Tab(triggerEl)
+    $('[data-bs-toggle=\'tab\']').each(function() {
+        //.on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
 
-        triggerEl.addEventListener('click', function (event) {
-            event.preventDefault()
-            tabTrigger.show()
-        })
+    //});
+
+    var tab = document.querySelector('.nav-tabs [data-bs-toggle=\'tab\']');
+
+    //tab.parentNode.parentNode;
+
+    //console.log(tab.parentNode.parentNode);
+
+    var tab = new bootstrap.Tab(tab);
+
+    tab.show();
+});
+
+var triggerTabList = [].slice.call(document.querySelectorAll('#language li:first-child a'))
+triggerTabList.forEach(function (triggerEl) {
+    var tabTrigger = new bootstrap.Tab(triggerEl)
+
+    triggerEl.addEventListener('click', function (event) {
+        event.preventDefault()
+        tabTrigger.show()
     })
-    */
+});
+*/
 });
 
 $(document).ready(function() {
@@ -231,7 +275,15 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
         success: function(html) {
             $('body').append(html);
 
-            $('#modal-image').modal('show');
+            var option = {
+                'backdrop': true
+            };
+
+            var modal = new bootstrap.Modal(document.getElementById('modal-image'), option);
+
+            modal.show();
+
+           // $('#modal-image').modal('show');
         }
     });
 });
@@ -408,7 +460,7 @@ var chain = new Chain();
             $this.after($dropdown);
         });
     }
-})(window.jQuery);
+})(jQuery);
 
 +function($) {
     'use strict';
@@ -518,3 +570,31 @@ var chain = new Chain();
         $(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
     })
 }(jQuery);
+
+/*
+// Tooltip
++function ($) {
+    'use strict';
+
+    console.log($);
+
+    $.fn.tooltip = function(element, option) {
+
+        console.log(element);
+
+        return $(element).each(function() {
+            var $this = $(this);
+            var data  = $this.data('bs.tooltip');
+
+            if (!data) {
+                data = new bootstrap.Tooltip($this, option);
+
+                $this.data('bs.tooltip', data);
+            }
+
+
+            $.extend(this, option);
+        });
+    }
+}(jQuery);
+*/

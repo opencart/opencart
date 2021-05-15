@@ -58,7 +58,7 @@ $(document).ready(function() {
            return new bootstrap.Tooltip(element, );
         });
 
-        if (jQuery.inArray(tooltipList)) {
+        if (!jQuery.inArray(tooltipList)) {
             console.log(document.querySelectorAll('[data-bs-toggle=\'tooltip\']'));
         }
 

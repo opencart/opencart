@@ -2,24 +2,24 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-left">{{ column_date_added }}</td>
-        <td class="text-left">{{ column_description }}</td>
-        <td class="text-right">{{ column_amount }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
+        <td class="text-start">{{ column_description }}</td>
+        <td class="text-end">{{ column_amount }}</td>
       </tr>
     </thead>
     <tbody>
       {% if transactions %}
         {% for transaction in transactions %}
           <tr>
-            <td class="text-left">{{ transaction.date_added }}</td>
-            <td class="text-left">{{ transaction.description }}</td>
-            <td class="text-right">{{ transaction.amount }}</td>
+            <td class="text-start">{{ transaction.date_added }}</td>
+            <td class="text-start">{{ transaction.description }}</td>
+            <td class="text-end">{{ transaction.amount }}</td>
           </tr>
         {% endfor %}
         <tr>
           <td>&nbsp;</td>
-          <td class="text-right"><b>{{ text_balance }}</b></td>
-          <td class="text-right">{{ balance }}</td>
+          <td class="text-end"><b>{{ text_balance }}</b></td>
+          <td class="text-end">{{ balance }}</td>
         </tr>
       {% else %}
         <tr>
@@ -30,6 +30,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

@@ -303,10 +303,12 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['error_custom_field'] = [];
 		}
 
+		$this->session->data['address_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
 		if (!isset($this->request->get['address_id'])) {
-			$data['action'] = $this->url->link('account/address|add', 'language=' . $this->config->get('config_language'));
+			$data['action'] = $this->url->link('account/address|add', 'language=' . $this->config->get('config_language') . '&address_token=' . $this->session->data['address_token']);
 		} else {
-			$data['action'] = $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_id=' . $this->request->get['address_id']);
+			$data['action'] = $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_token=' . $this->session->data['address_token'] . '&address_id=' . $this->request->get['address_id']);
 		}
 
 		if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -394,7 +396,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
@@ -447,6 +449,10 @@ class Address extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!isset($this->request->get['address_token']) || !isset($this->session->data['address_token']) || ($this->session->data['address_token'] != $this->request->get['address_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
@@ -482,7 +488,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {

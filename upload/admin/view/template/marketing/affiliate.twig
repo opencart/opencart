@@ -1,0 +1,141 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+				<a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+				<button type="button" data-oc-action="{{ delete }}" data-oc-form="#customer-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div id="filter-customer" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+				<div class="card">
+					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+					<div class="card-body">
+						<div class="mb-3">
+							<label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+						</div>
+						<div class="mb-3">
+							<label for="input-tracking" class="col-form-label">{{ entry_tracking }}</label> <input type="text" name="filter_tracking" value="{{ filter_tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
+						</div>
+						<div class="mb-3">
+							<label for="input-commission" class="col-form-label">{{ entry_commission }}</label> <input type="text" name="filter_commission" value="{{ filter_commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control"/>
+						</div>
+						<div class="mb-3">
+							<label for="input-status" class="col-form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+								<option value=""></option>
+								{% if filter_status == '1' %}
+									<option value="1" selected="selected">{{ text_enabled }}</option>
+								{% else %}
+									<option value="1">{{ text_enabled }}</option>
+								{% endif %}
+								{% if filter_status == '0' %}
+									<option value="0" selected="selected">{{ text_disabled }}</option>
+								{% else %}
+									<option value="0">{{ text_disabled }}</option>
+								{% endif %}
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
+							<div class="input-group date">
+								<input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
+							</div>
+						</div>
+						<div class="mb-3 text-end">
+							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-12">
+				<div class="card">
+					<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+					<div id="affiliate" class="card-body">{{ list }}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript"><!--
+$('#affiliate').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#affiliate').load(this.href);
+});
+
+$('#button-filter').on('click', function() {
+    url = '';
+
+    var filter_name = $('input[name=\'filter_name\']').val();
+
+    if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
+
+    var filter_tracking = $('input[name=\'filter_tracking\']').val();
+
+    if (filter_tracking) {
+        url += '&filter_tracking=' + encodeURIComponent(filter_tracking);
+    }
+
+    var filter_commission = $('input[name=\'filter_commission\']').val();
+
+    if (filter_commission) {
+        url += '&filter_commission=' + filter_commission;
+    }
+
+    var filter_status = $('select[name=\'filter_status\']').val();
+
+    if (filter_status !== '') {
+        url += '&filter_status=' + filter_status;
+    }
+
+    var filter_date_added = $('input[name=\'filter_date_added\']').val();
+
+    if (filter_date_added) {
+        url += '&filter_date_added=' + filter_date_added;
+    }
+
+    $('#affiliate').load('index.php?route=marketing/affiliate|list&user_token={{ user_token }}' + url);
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'filter_name\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_name\']').val(item['label']);
+    }
+});
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+    'format': 'YYYY-MM-DD',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
+});
+//--></script>
+{{ footer }}

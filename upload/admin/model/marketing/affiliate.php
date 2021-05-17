@@ -123,7 +123,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getReports(int $customer_id, int $start = 0, int $limit = 10): array {
@@ -143,6 +143,6 @@ class Affiliate extends \Opencart\System\Engine\Model {
 	public function getTotalReports(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_affiliate_report` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

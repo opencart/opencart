@@ -22,6 +22,7 @@ $_['entry_password']       = 'Password';
 $_['entry_confirm']        = 'Password Confirm';
 
 // Error
+$_['error_token']          = 'Warning: Register token invalid!';
 $_['error_exists']         = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']      = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']       = 'Last Name must be between 1 and 32 characters!';

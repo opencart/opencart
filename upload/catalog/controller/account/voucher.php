@@ -88,7 +88,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$data['error_amount'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'));
+		$this->session->data['voucher_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
 
 		if (isset($this->request->post['to_name'])) {
 			$data['to_name'] = $this->request->post['to_name'];
@@ -200,6 +202,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->post[$key])) {
 				$this->request->post[$key] = '';
 			}
+		}
+
+		if (!isset($this->request->get['voucher_token']) || !isset($this->session->data['voucher_token']) || ($this->session->data['voucher_token'] != $this->request->get['voucher_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
 		}
 
 		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {

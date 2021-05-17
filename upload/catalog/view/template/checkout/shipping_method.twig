@@ -30,7 +30,7 @@
   <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
 </p>
 <div class="d-inline-block pt-2 pd-2 w-100">
-  <div class="float-right">
+  <div class="float-end">
     <button type="button" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
   </div>
 </div>
@@ -68,11 +68,11 @@ $('#button-shipping-method').on('click', function() {
 							success: function(html) {
 								$('#collapse-payment-method .card-body').html(html);
 
-								$('#heading-payment-method').attr('data-toggle', 'collapse');
+								$('#heading-payment-method').attr('data-bs-toggle', 'collapse');
 
 								$('#heading-payment-method').trigger('click');
 
-								$('#heading-checkout-confirm').removeAttr('data-toggle');
+								$('#heading-checkout-confirm').removeAttr('data-bs-toggle');
 							},
 							error: function(xhr, ajaxOptions, thrownError) {
 								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

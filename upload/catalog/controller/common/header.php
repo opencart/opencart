@@ -17,10 +17,6 @@ class Header extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$this->document->addLink($this->config->get('config_url') . 'image/' . $this->config->get('config_icon'), 'icon');
-		}
-
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 
@@ -36,7 +32,7 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
 
 		// Hard coding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.3.1.min.js';
+		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.6.0.min.js';
 		$data['bootstrap_js'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$data['links'] = $this->document->getLinks();

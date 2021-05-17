@@ -12,7 +12,7 @@
  */
 namespace Opencart\System\Engine;
 use \Opencart\System\Engine\Action as Action;
-final class Loader {
+class Loader {
 	protected $registry;
 
 	/**
@@ -249,7 +249,7 @@ final class Loader {
 	 *
 	 * @return	closure
 	 */
-	protected function callback(string $route): mixed {
+	protected function callback(string $route): callable {
 		return function (mixed &...$args) use ($route) {
 			// Grab args using function because we don't know the number of args being passed.
 			// https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list

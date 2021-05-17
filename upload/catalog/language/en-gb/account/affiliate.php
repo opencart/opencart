@@ -27,6 +27,7 @@ $_['entry_bank_account_name']   = 'Account Name';
 $_['entry_bank_account_number'] = 'Account Number';
 
 // Error
+$_['error_token']               = 'Warning: Affiliate token invalid!';
 $_['error_agree']               = 'Warning: You must agree to the %s!';
 $_['error_cheque']              = 'Cheque Payee Name required!';
 $_['error_paypal']              = 'PayPal Email Address does not appear to be valid!';

@@ -62,6 +62,6 @@ class Translation extends \Opencart\System\Engine\Model {
 	public function getTotalTranslations(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

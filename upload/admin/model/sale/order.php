@@ -325,19 +325,19 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalOrdersByStoreId(int $store_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `store_id` = '" . (int)$store_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalOrdersByOrderStatusId(int $order_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `order_status_id` > '0'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalOrdersByProcessingStatus(): int {
@@ -352,7 +352,7 @@ class Order extends \Opencart\System\Engine\Model {
 		if ($implode) {
 			$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode));
 
-			return $query->row['total'];
+			return (int)$query->row['total'];
 		} else {
 			return 0;
 		}
@@ -370,7 +370,7 @@ class Order extends \Opencart\System\Engine\Model {
 		if ($implode) {
 			$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
 
-			return $query->row['total'];
+			return (int)$query->row['total'];
 		} else {
 			return 0;
 		}
@@ -379,13 +379,13 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalOrdersByLanguageId(int $language_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `language_id` = '" . (int)$language_id . "' AND `order_status_id` > '0'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalOrdersByCurrencyId(int $currency_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order` WHERE `currency_id` = '" . (int)$currency_id . "' AND `order_status_id` > '0'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalSales(array $data = []): float {
@@ -443,7 +443,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function createInvoiceNo(int $order_id) {
@@ -481,13 +481,13 @@ class Order extends \Opencart\System\Engine\Model {
 	public function getTotalHistories(int $order_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalHistoriesByOrderStatusId(int $order_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_history` WHERE `order_status_id` = '" . (int)$order_status_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getEmailsByProductsOrdered(array $products, int $start, int $end) {
@@ -511,6 +511,6 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query("SELECT COUNT(DISTINCT o.`email`) AS `total` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.`order_id` = op.`order_id`) WHERE (" . implode(" OR ", $implode) . ") AND o.`order_status_id` <> '0'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

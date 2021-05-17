@@ -10,7 +10,7 @@
       <h1>{{ heading_title }}</h1>
       <form action="{{ action }}" method="post" enctype="multipart/form-data">
         <fieldset>
-          <div class="form-group row mb-0">
+          <div class="row mb-3 mb-0">
             <label class="col-md-3 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-md-9">
               {% if newsletter %}
@@ -32,8 +32,8 @@
           </div>
         </fieldset>
         <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
-          <div class="float-right">
+          <div class="float-start"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+          <div class="float-end">
             <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>

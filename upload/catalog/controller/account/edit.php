@@ -82,7 +82,9 @@ class Edit extends \Opencart\System\Engine\Controller {
 			$data['error_custom_field'] = [];
 		}
 
-		$data['action'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
+		$this->session->data['edit_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language') . '&edit_token=' . $this->session->data['edit_token']);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
@@ -125,7 +127,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {
@@ -167,6 +169,10 @@ class Edit extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!isset($this->request->get['edit_token']) || !isset($this->session->data['edit_token']) || ($this->session->data['edit_token'] != $this->request->get['edit_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
@@ -190,7 +196,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {

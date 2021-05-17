@@ -33,7 +33,7 @@ class Url {
 	 *
 	 * @return void
 	 */
-	public function addRewrite(string $rewrite): void {
+	public function addRewrite(\Opencart\System\Engine\Controller $rewrite): void {
 		$this->rewrite[] = $rewrite;
 	}
 
@@ -53,7 +53,7 @@ class Url {
 			if (is_array($args)) {
 				$url .= '&' . http_build_query($args);
 			} else {
-				$url .= '&' . ltrim($args, '&');
+				$url .= '&' . trim($args, '&');
 			}
 		}
 

@@ -4,8 +4,6 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/security');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['storage'] = DIR_SYSTEM . 'storage/';
 
 		$path = '';
@@ -23,6 +21,8 @@ class Security extends \Opencart\System\Engine\Controller {
 		rsort($data['paths']);
 
 		$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('common/security', $data);
 	}

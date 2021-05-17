@@ -53,7 +53,9 @@ class Password extends \Opencart\System\Engine\Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
+		$this->session->data['password_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language') . '&password_token=' . $this->session->data['password_token']);
 
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
@@ -89,6 +91,10 @@ class Password extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->post[$key])) {
 				$this->request->post[$key] = '';
 			}
+		}
+
+		if (!isset($this->request->get['password_token']) || !isset($this->session->data['password_token']) || ($this->session->data['password_token'] != $this->request->get['password_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
 		}
 
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {

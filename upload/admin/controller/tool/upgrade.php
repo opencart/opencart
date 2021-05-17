@@ -51,8 +51,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['version'] = VERSION;
 		$data['upgrade'] = false;
 
@@ -134,6 +132,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
 		$data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -471,43 +471,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['error'] = $this->language->get('error_connection');
 			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function db(): void {
-		$this->load->language('tool/upgrade');
-
-		$json = [];
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$files = glob(DIR_APPLICATION .  'model/upgrade/*.php');
-
-			if ($files) {
-				foreach ($files AS $file) {
-					$upgrade = basename($file, '.php');
-
-					$this->load->model('upgrade/' . $upgrade);
-
-					$this->{'model_upgrade_' . $upgrade}->upgrade();
-				}
-			}
-
-			$json['text'] = $this->language->get('text_clear');
-
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

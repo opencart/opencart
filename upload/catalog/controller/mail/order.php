@@ -42,7 +42,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function add(array $order_info, int $order_status_id, text $comment, bool $notify): void {
+	public function add(array $order_info, int $order_status_id, string $comment, bool $notify): void {
 		// Check for any downloadable products
 		$download_status = false;
 

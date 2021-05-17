@@ -16,7 +16,7 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
 		// Hard coding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'view/javascript/jquery/jquery-3.5.1.min.js';
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.6.0.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$data['links'] = $this->document->getLinks();
@@ -33,7 +33,7 @@ class Header extends \Opencart\System\Engine\Controller {
 			$data['logged'] = true;
 
 			$data['home'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
-			$data['profile'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
+			$data['profile'] = $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token']);
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
 
 			// Notifications

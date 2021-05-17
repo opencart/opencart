@@ -20,21 +20,21 @@
             <thead>
               <tr>
                 <td class="text-center">{{ column_image }}</td>
-                <td class="text-left">{{ column_name }}</td>
-                <td class="text-left">{{ column_model }}</td>
-                <td class="text-right">{{ column_stock }}</td>
-                <td class="text-right">{{ column_price }}</td>
-                <td class="text-right">{{ column_action }}</td>
+                <td class="text-start">{{ column_name }}</td>
+                <td class="text-start">{{ column_model }}</td>
+                <td class="text-end">{{ column_stock }}</td>
+                <td class="text-end">{{ column_price }}</td>
+                <td class="text-end">{{ column_action }}</td>
               </tr>
             </thead>
             <tbody>
               {% for product in products %}
                 <tr>
                   <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}"/></a>{% endif %}</td>
-                  <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a></td>
-                  <td class="text-left">{{ product.model }}</td>
-                  <td class="text-right">{{ product.stock }}</td>
-                  <td class="text-right">
+                  <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a></td>
+                  <td class="text-start">{{ product.model }}</td>
+                  <td class="text-end">{{ product.stock }}</td>
+                  <td class="text-end">
                     {% if product.price %}
                       <div class="price">
                         {% if not product.special %}
@@ -44,8 +44,8 @@
                         {% endif %}
                       </div>
                     {% endif %}</td>
-                  <td class="text-right"><button type="button" onclick="cart.add('{{ product.product_id }}');" data-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button>
-                    <a href="{{ product.remove }}" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times"></i></a></td>
+                  <td class="text-end"><button type="button" onclick="cart.add('{{ product.product_id }}');" data-bs-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    <a href="{{ product.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times"></i></a></td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -55,7 +55,7 @@
         <p>{{ text_no_results }}</p>
       {% endif %}
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}
     </div>

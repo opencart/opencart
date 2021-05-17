@@ -9,8 +9,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
 		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -23,8 +21,6 @@ class Contact extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['cancel'] = $this->url->link('marketing/contact', 'user_token=' . $this->session->data['user_token']);
-
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -32,6 +28,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -230,7 +228,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 						}
 					}
 				} else {
-					$json['error']['email'] = $this->language->get('error_email');
+					$json['error']['warning'] = $this->language->get('error_email');
 				}
 			}
 		}

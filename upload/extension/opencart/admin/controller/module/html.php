@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 class HTML extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/module/html');
 
@@ -10,32 +8,6 @@ class HTML extends \Opencart\System\Engine\Controller {
 
 		$this->document->addScript('view/javascript/ckeditor/ckeditor.js');
 		$this->document->addScript('view/javascript/ckeditor/adapters/jquery.js');
-
-		$this->load->model('setting/module');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			if (!isset($this->request->get['module_id'])) {
-				$this->model_setting_module->addModule('opencart.html', $this->request->post);
-			} else {
-				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -62,28 +34,26 @@ class HTML extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('extension/opencart/module/html', 'user_token=' . $this->session->data['user_token']);
+			$data['save'] = $this->url->link('extension/opencart/module/html|save', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['action'] = $this->url->link('extension/opencart/module/html', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+			$data['save'] = $this->url->link('extension/opencart/module/html|save', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
 		}
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
 		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$this->load->model('setting/module');
+
 			$module_info = $this->model_setting_module->getModule($this->request->get['module_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (isset($module_info['name'])) {
+		if (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['module_description'])) {
-			$data['module_description'] = $this->request->post['module_description'];
-		} elseif (isset($module_info['module_description'])) {
+		if (isset($module_info['module_description'])) {
 			$data['module_description'] = $module_info['module_description'];
 		} else {
 			$data['module_description'] = [];
@@ -93,9 +63,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (isset($module_info['status'])) {
+		if (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';
@@ -108,15 +76,32 @@ class HTML extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/html', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/module/html');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/module/html')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/module');
+
+			if (!isset($this->request->get['module_id'])) {
+				$this->model_setting_module->addModule('opencart.html', $this->request->post);
+			} else {
+				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

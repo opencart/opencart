@@ -30,10 +30,10 @@
               <h2>{{ text_returning_affiliate }}</h2>
               <p><strong>{{ text_i_am_returning_affiliate }}</strong></p>
               <form action="{{ action }}" method="post" enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="row mb-3">
                   <label for="input-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                   <label for="input-password" class="col-form-label">{{ entry_password }}</label> <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/> <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
                 <button type="submit" class="btn btn-primary">{{ button_login }}</button>
                 {% if redirect %}

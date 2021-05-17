@@ -116,6 +116,6 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	public function getTotalWeightClasses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "weight_class`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

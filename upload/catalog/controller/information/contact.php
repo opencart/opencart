@@ -83,7 +83,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/location');
 
 		foreach ((array)$this->config->get('config_location') as $location_id) {
-			$location_info = $this->model_localisation_location->getLocation($location_id);
+			$location_info = $this->model_localisation_location->getLocation((int)$location_id);
 
 			if ($location_info) {
 				if (is_file(DIR_IMAGE . html_entity_decode($location_info['image'], ENT_QUOTES, 'UTF-8'))) {

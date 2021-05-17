@@ -3,10 +3,10 @@ namespace Opencart\Admin\Controller\Common;
 class Developer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/developer');
-		
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['developer_sass'] = $this->config->get('developer_sass');
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
@@ -18,7 +18,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSetting('developer', $this->request->post, 0);
@@ -37,7 +39,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$directories = glob(DIR_CACHE . 'template/*', GLOB_ONLYDIR);
 
 			if ($directories) {
@@ -70,7 +74,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			// Before we delete we need to make sure there is a sass file to regenerate the css
 			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
 			

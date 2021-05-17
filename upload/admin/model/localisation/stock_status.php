@@ -96,6 +96,6 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	public function getTotalStockStatuses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

@@ -1,28 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 class Shipping extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/total/shipping');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('total_shipping', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,27 +23,13 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/total/shipping', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/total/shipping', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/total/shipping|save', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
-		if (isset($this->request->post['total_shipping_estimator'])) {
-			$data['total_shipping_estimator'] = $this->request->post['total_shipping_estimator'];
-		} else {
-			$data['total_shipping_estimator'] = $this->config->get('total_shipping_estimator');
-		}
-
-		if (isset($this->request->post['total_shipping_status'])) {
-			$data['total_shipping_status'] = $this->request->post['total_shipping_status'];
-		} else {
-			$data['total_shipping_status'] = $this->config->get('total_shipping_status');
-		}
-
-		if (isset($this->request->post['total_shipping_sort_order'])) {
-			$data['total_shipping_sort_order'] = $this->request->post['total_shipping_sort_order'];
-		} else {
-			$data['total_shipping_sort_order'] = $this->config->get('total_shipping_sort_order');
-		}
+		$data['total_shipping_estimator'] = $this->config->get('total_shipping_estimator');
+		$data['total_shipping_status'] = $this->config->get('total_shipping_status');
+		$data['total_shipping_sort_order'] = $this->config->get('total_shipping_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -70,11 +38,24 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/total/shipping', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/total/shipping');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/total/shipping')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('total_shipping', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

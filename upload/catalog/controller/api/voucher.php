@@ -15,7 +15,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$this->load->model('extension/opencart/total/voucher');
 
 			if (isset($this->request->post['voucher'])) {
-				$voucher = $this->request->post['voucher'];
+				$voucher = (string)$this->request->post['voucher'];
 			} else {
 				$voucher = '';
 			}

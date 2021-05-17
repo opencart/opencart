@@ -1,44 +1,42 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ text_list }}</div>
-      <div class="card-body">
-        <fieldset>
-          <legend>{{ text_type }}</legend>
-          <div class="card bg-light">
-            <div class="card-body">
-              <div class="input-group">
-                <select name="type" class="form-control">
-                  {% for category in categories %}
-                    {% if type == category.code %}
-                      <option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
-                    {% else %}
-                      <option value="{{ category.href }}">{{ category.text }}</option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
-                <div class="input-group-append">
-                  <span class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <div id="extension">{{ extension }}</div>
-      </div>
-    </div>
-  </div>
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ text_list }}</div>
+			<div class="card-body">
+				<fieldset>
+					<legend>{{ text_type }}</legend>
+					<div class="card bg-light">
+						<div class="card-body">
+							<div class="input-group">
+								<select name="type" class="form-select">
+									{% for category in categories %}
+										{% if type == category.code %}
+											<option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
+										{% else %}
+											<option value="{{ category.href }}">{{ category.text }}</option>
+										{% endif %}
+									{% endfor %}
+								</select>
+								<div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<div id="extension">{{ extension }}</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {
@@ -83,11 +81,11 @@ $('#extension').on('click', '#recommended .btn-primary', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
             }
 
             if (json['success']) {
-                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $(element).prop('disabled', true);
 
@@ -117,11 +115,11 @@ $('#extension').on('click', '.dropdown-item', function(e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
             }
 
             if (json['success']) {
-                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#extension').load($('select[name=\'type\']').val());
             }
@@ -140,15 +138,25 @@ $('#extension').on('click', '.btn-success', function(e) {
 
     $.ajax({
         url: $(element).attr('href'),
-        dataType: 'html',
+        dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
         },
         complete: function() {
             $(element).button('reset');
         },
-        success: function(html) {
-            $('#extension').html(html);
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('select[name=\'type\']').trigger('change');
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -157,7 +165,7 @@ $('#extension').on('click', '.btn-success', function(e) {
 });
 
 // Uninstall / Delete
-$('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
+$('#extension').on('click', '.btn-danger, .btn-outline-danger', function(e) {
     e.preventDefault();
 
     if (confirm('{{ text_confirm }}')) {
@@ -165,15 +173,27 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 
         $.ajax({
             url: $(element).attr('href'),
-            dataType: 'html',
+            dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');
             },
             complete: function() {
                 $(element).button('reset');
             },
-            success: function(html) {
-                $('#extension').html(html);
+            success: function(json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('select[name=\'type\']').trigger('change');
+                }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

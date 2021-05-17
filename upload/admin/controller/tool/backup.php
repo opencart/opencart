@@ -18,8 +18,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$this->load->model('tool/backup');
 
 		$ignore = [
@@ -37,6 +35,10 @@ class Backup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$data['history'] = $this->getHistory();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -45,6 +47,12 @@ class Backup extends \Opencart\System\Engine\Controller {
 	}
 
 	public function history(): void {
+		$this->load->language('tool/backup');
+
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
 		$this->load->language('tool/backup');
 
 		$data['histories'] = [];
@@ -82,7 +90,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$this->response->setOutput($this->load->view('tool/backup_history', $data));
+		return $this->load->view('tool/backup_history', $data);
 	}
 
 	public function backup(): void {

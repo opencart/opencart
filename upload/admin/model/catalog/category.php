@@ -341,12 +341,12 @@ class Category extends \Opencart\System\Engine\Model {
 	public function getTotalCategories(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalCategoriesByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "category_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

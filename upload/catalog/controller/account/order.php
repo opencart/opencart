@@ -85,7 +85,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/order_list', $data));
 	}
 
-	public function info(): void {
+	public function info(): object|null {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -333,6 +333,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('account/order_info', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}

@@ -18,8 +18,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['stores'] = [];
 
 		$this->load->model('setting/store');
@@ -32,6 +30,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 				'name'     => $result['name']
 			];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

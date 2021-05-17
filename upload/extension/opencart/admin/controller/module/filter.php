@@ -1,28 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 class filter extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/module/filter');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('module_filter', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,15 +23,11 @@ class filter extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/module/filter', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/module/filter', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/module/filter|save', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
-		if (isset($this->request->post['module_filter_status'])) {
-			$data['module_filter_status'] = $this->request->post['module_filter_status'];
-		} else {
-			$data['module_filter_status'] = $this->config->get('module_filter_status');
-		}
+		$data['module_filter_status'] = $this->config->get('module_filter_status');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -58,11 +36,24 @@ class filter extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/filter', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/module/filter');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/module/filter')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('module_filter', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

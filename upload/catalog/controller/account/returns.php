@@ -303,7 +303,9 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['error_reason'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/returns|add', 'language=' . $this->config->get('config_language'));
+		$this->session->data['returns_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('account/returns|add', 'language=' . $this->config->get('config_language') . '&returns_token=' . $this->session->data['returns_token']);
 
 		$this->load->model('account/order');
 
@@ -477,6 +479,10 @@ class Returns extends \Opencart\System\Engine\Controller {
 			if (!isset($this->request->post[$key])) {
 				$this->request->post[$key] = '';
 			}
+		}
+
+		if (!isset($this->request->get['returns_token']) || !isset($this->session->data['returns_token']) || ($this->session->data['returns_token'] != $this->request->get['returns_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
 		}
 
 		if (!$this->request->post['order_id']) {

@@ -1,73 +1,16 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 class Feed extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
-		$this->load->language('extension/feed');
-
-		$this->load->model('setting/extension');
-
-		$this->response->setOutput($this->getList());
-	}
-
-	public function install(): void {
-		$this->load->language('extension/feed');
-
-		$this->load->model('setting/extension');
-
-		if ($this->validate()) {
-			$this->model_setting_extension->install('feed', $this->request->get['extension'], $this->request->get['code']);
-
-			$this->load->model('user/user_group');
-
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code']);
-
-			// Call install method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code'] . '|install');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->setOutput($this->getList());
-	}
-
-	public function uninstall(): void {
-		$this->load->language('extension/feed');
-
-		$this->load->model('setting/extension');
-
-		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('feed', $this->request->get['code']);
-
-			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code'] . '|uninstall');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
 		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {
 		$this->load->language('extension/feed');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		$available = [];
+
+		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/feed/%.php');
 
@@ -119,5 +62,58 @@ class Feed extends \Opencart\System\Engine\Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function install(): void {
+		$this->load->language('extension/feed');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/feed')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->install('feed', $this->request->get['extension'], $this->request->get['code']);
+
+			$this->load->model('user/user_group');
+
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code']);
+
+			// Call install method if it exists
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code'] . '|install');
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function uninstall(): void {
+		$this->load->language('extension/feed');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/feed')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->uninstall('feed', $this->request->get['code']);
+
+			// Call uninstall method if it exists
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/feed/' . $this->request->get['code'] . '|uninstall');
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -212,6 +212,6 @@ class CustomField extends \Opencart\System\Engine\Model {
 	public function getTotalCustomFields(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "custom_field`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

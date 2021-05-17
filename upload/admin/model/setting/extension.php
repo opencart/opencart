@@ -117,7 +117,7 @@ class Extension extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function addPath(int $extension_install_id, string $path): void {

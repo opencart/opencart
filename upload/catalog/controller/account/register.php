@@ -106,7 +106,9 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'));
+		$this->session->data['register_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
+
+		$data['action'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
 
 		$data['customer_groups'] = [];
 
@@ -247,6 +249,10 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
+			$this->error['warning'] = $this->language->get('error_token');
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
@@ -277,7 +283,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {
@@ -336,7 +342,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			$json[] = [

@@ -27,7 +27,7 @@
 </p>
 {% if text_agree %}
   <div class="d-inline-block pt-2 pd-2 w-100">
-    <div class="float-right">{{ text_agree }}
+    <div class="float-end">{{ text_agree }}
       {% if agree %}
         <input type="checkbox" name="agree" value="1" checked="checked"/>
       {% else %}
@@ -39,7 +39,7 @@
   </div>
 {% else %}
   <div class="d-inline-block pt-2 pd-2 w-100">
-    <div class="float-right">
+    <div class="float-end">
       <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
     </div>
   </div>
@@ -80,7 +80,7 @@ $('#button-payment-method').on('click', function() {
 								if (jqXHR.getResponseHeader('content-type').substr(5, 4) == 'html') {
 									$('#collapse-checkout-confirm .card-body').html(output);
 
-									$('#heading-checkout-confirm').attr('data-toggle', 'collapse');
+									$('#heading-checkout-confirm').attr('data-bs-toggle', 'collapse');
 
 									$('#heading-checkout-confirm').trigger('click');
 								}

@@ -1,28 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 class Pickup extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/shipping/pickup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('shipping_pickup', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,31 +23,18 @@ class Pickup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/shipping/pickup', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/shipping/pickup', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/shipping/pickup|save', 'user_token=' . $this->session->data['user_token']);
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
-		if (isset($this->request->post['shipping_pickup_geo_zone_id'])) {
-			$data['shipping_pickup_geo_zone_id'] = $this->request->post['shipping_pickup_geo_zone_id'];
-		} else {
-			$data['shipping_pickup_geo_zone_id'] = $this->config->get('shipping_pickup_geo_zone_id');
-		}
+		$data['shipping_pickup_geo_zone_id'] = $this->config->get('shipping_pickup_geo_zone_id');
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['shipping_pickup_status'])) {
-			$data['shipping_pickup_status'] = $this->request->post['shipping_pickup_status'];
-		} else {
-			$data['shipping_pickup_status'] = $this->config->get('shipping_pickup_status');
-		}
-
-		if (isset($this->request->post['shipping_pickup_sort_order'])) {
-			$data['shipping_pickup_sort_order'] = $this->request->post['shipping_pickup_sort_order'];
-		} else {
-			$data['shipping_pickup_sort_order'] = $this->config->get('shipping_pickup_sort_order');
-		}
+		$data['shipping_pickup_status'] = $this->config->get('shipping_pickup_status');
+		$data['shipping_pickup_sort_order'] = $this->config->get('shipping_pickup_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -74,11 +43,24 @@ class Pickup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/shipping/pickup', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/shipping/pickup');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/shipping/pickup')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('shipping_pickup', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

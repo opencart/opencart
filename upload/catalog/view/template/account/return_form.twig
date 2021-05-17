@@ -19,45 +19,30 @@
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
-              {% if error_firstname %}
-                <div class="text-danger">{{ error_firstname }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
-              {% if error_lastname %}
-                <div class="text-danger">{{ error_lastname }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
-              {% if error_email %}
-                <div class="text-danger">{{ error_email }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
-              {% if error_telephone %}
-                <div class="text-danger">{{ error_telephone }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-order-id" class="col-sm-2 col-form-label">{{ entry_order_id }}</label>
             <div class="col-sm-10">
               <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
-              {% if error_order_id %}
-                <div class="text-danger">{{ error_order_id }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3">
@@ -79,18 +64,12 @@
             <div class="col-sm-10">
               <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
               <input type="hidden" name="product_id" value="{{ product_id }}"/>
-              {% if error_product %}
-                <div class="text-danger">{{ error_product }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-model" class="col-sm-2 col-form-label">{{ entry_model }}</label>
             <div class="col-sm-10">
               <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
-              {% if error_model %}
-                <div class="text-danger">{{ error_model }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3">
@@ -114,9 +93,6 @@
                   </div>
                 {% endif %}
               {% endfor %}
-              {% if error_reason %}
-                <div class="text-danger">{{ error_reason }}</div>
-              {% endif %}
             </div>
           </div>
           <div class="row mb-3 required">

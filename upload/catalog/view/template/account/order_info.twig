@@ -5,16 +5,6 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-  {% endif %}
-  {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-  {% endif %}
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>

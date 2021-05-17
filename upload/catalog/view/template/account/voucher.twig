@@ -17,36 +17,24 @@
           <label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
           <div class="col-sm-10">
             <input type="text" name="to_name" value="{{ to_name }}" id="input-to-name" class="form-control"/>
-            {% if error_to_name %}
-              <div class="text-danger">{{ error_to_name }}</div>
-            {% endif %}
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-to-email" class="col-sm-2 col-form-label">{{ entry_to_email }}</label>
           <div class="col-sm-10">
             <input type="text" name="to_email" value="{{ to_email }}" id="input-to-email" class="form-control"/>
-            {% if error_to_email %}
-              <div class="text-danger">{{ error_to_email }}</div>
-            {% endif %}
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-from-name" class="col-sm-2 col-form-label">{{ entry_from_name }}</label>
           <div class="col-sm-10">
             <input type="text" name="from_name" value="{{ from_name }}" id="input-from-name" class="form-control"/>
-            {% if error_from_name %}
-              <div class="text-danger">{{ error_from_name }}</div>
-            {% endif %}
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-from-email" class="col-sm-2 col-form-label">{{ entry_from_email }}</label>
           <div class="col-sm-10">
             <input type="text" name="from_email" value="{{ from_email }}" id="input-from-email" class="form-control"/>
-            {% if error_from_email %}
-              <div class="text-danger">{{ error_from_email }}</div>
-            {% endif %}
           </div>
         </div>
         <div class="row mb-3 required">
@@ -65,9 +53,6 @@
                 </div>
               {% endif %}
             {% endfor %}
-            {% if error_theme %}
-              <div class="text-danger">{{ error_theme }}</div>
-            {% endif %}
           </div>
         </div>
         <div class="row mb-3">
@@ -80,9 +65,6 @@
           <label for="input-amount" class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_amount }}" class="col-sm-2 col-form-label">{{ entry_amount }}</span></label>
           <div class="col-sm-10">
             <input type="text" name="amount" value="{{ amount }}" id="input-amount" class="form-control" size="5"/>
-            {% if error_amount %}
-              <div class="text-danger">{{ error_amount }}</div>
-            {% endif %}
           </div>
         </div>
         <div class="d-inline-block pt-2 pd-2 w-100">

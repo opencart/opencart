@@ -36,7 +36,47 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten', $data));
 	}
 
-	public function password(): void {
+	public function confirm(): void {
+		$this->load->language('common/forgotten');
+
+		$json = [];
+
+		if (isset($this->request->post['email'])) {
+			$email = $this->request->post['email'];
+		} else {
+			$email = '';
+		}
+
+		// Stop any undefined index messages.
+		if ($this->user->isLogged()) {
+			$this->user->logout();
+
+			$json['redirect'] = $this->url->link('common/login');
+		}
+
+		if (!$this->config->get('config_password')) {
+			$json['redirect'] = $this->url->link('common/login');
+		}
+
+		$this->load->model('user/user');
+
+		if (!$this->model_user_user->getTotalUsersByEmail($email)) {
+			$json['error'] = $this->language->get('error_email');
+		}
+
+		if (!$json) {
+			$this->model_user_user->editCode($email, token(40));
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$json['redirect'] = $this->url->link('common/login');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function reset(): void {
 		$this->load->language('common/forgotten');
 
 		if (isset($this->request->get['email'])) {
@@ -99,47 +139,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten_reset', $data));
 	}
 
-	public function forgotten(): void {
-		$this->load->language('common/forgotten');
-
-		$json = [];
-
-		if (isset($this->request->post['email'])) {
-			$email = $this->request->post['email'];
-		} else {
-			$email = '';
-		}
-
-		// Stop any undefined index messages.
-		if ($this->user->isLogged()) {
-			$this->user->logout();
-
-			$json['redirect'] = $this->url->link('common/login');
-		}
-
-		if (!$this->config->get('config_password')) {
-			$json['redirect'] = $this->url->link('common/login');
-		}
-
-		$this->load->model('user/user');
-
-		if (!$this->model_user_user->getTotalUsersByEmail($email)) {
-			$json['error'] = $this->language->get('error_email');
-		}
-
-		if (!$json) {
-			$this->model_user_user->editCode($email, token(40));
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$json['redirect'] = $this->url->link('common/login');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function reset(): bool {
+	public function password(): bool {
 		$this->load->language('common/reset');
 
 		$json = [];

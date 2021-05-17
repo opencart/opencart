@@ -1,6 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 class Forgotten extends \Opencart\System\Engine\Controller {
+	// admin/model/user/user/editCode/after
 	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0]) && isset($args[1]) && $args[0] && $args[1]) {
 			$this->load->language('mail/forgotten');

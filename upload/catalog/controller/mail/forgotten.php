@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
 class Forgotten extends \Opencart\System\Engine\Controller {
-	//catalog/model/account/customer/editCode/after
+	// catalog/model/account/customer/editCode/after
 	public function index(string &$route, array &$args, mixed &$output): void {
 		if ($args[0] && $args[1]) {
 			$this->load->model('account/customer');

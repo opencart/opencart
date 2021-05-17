@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Login extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
@@ -70,12 +68,9 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['error_warning'] = $this->session->data['error'];
 
 			unset($this->session->data['error']);
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
 		}
-
 
 		$this->session->data['login_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
@@ -102,18 +97,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} else {
-			$data['email'] = '';
-		}
-
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -124,7 +107,11 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/login', $data));
 	}
 
-	protected function validate(): bool {
+	public function login(): void {
+		$this->load->language('account/login');
+
+		$json = [];
+
 		$keys = [
 			'email',
 			'password'
@@ -154,7 +141,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 
-		if (!$this->error) {
+		if (!$jsonr) {
 			if (!$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
 				$this->error['warning'] = $this->language->get('error_login');
 
@@ -164,7 +151,8 @@ class Login extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		return !$this->error;
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function token(): void {

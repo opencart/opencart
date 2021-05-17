@@ -33,7 +33,7 @@ $('#button-reset').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/forgotten|reset',
+        url: 'index.php?route=common/forgotten|confirm',
         type: 'post',
         data: $('#forgotten :input'),
         dataType: 'json',

@@ -17,28 +17,6 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-		$this->load->model('account/customer');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			unset($this->session->data['guest']);
-
-			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
-
-			$this->load->model('account/affiliate');
-
-			$this->model_account_affiliate->addAffiliate($customer_id, $this->request->post);
-
-			// Clear any previous login attempts in not registered.
-			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-
-			$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
-
-			// Log the IP info
-			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
-
-			$this->response->redirect($this->url->link('affiliate/success', 'language=' . $this->config->get('config_language')));
-		}
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -62,78 +40,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['firstname'])) {
-			$data['error_firstname'] = $this->error['firstname'];
-		} else {
-			$data['error_firstname'] = '';
-		}
-
-		if (isset($this->error['lastname'])) {
-			$data['error_lastname'] = $this->error['lastname'];
-		} else {
-			$data['error_lastname'] = '';
-		}
-
-		if (isset($this->error['email'])) {
-			$data['error_email'] = $this->error['email'];
-		} else {
-			$data['error_email'] = '';
-		}
-
-		if (isset($this->error['telephone'])) {
-			$data['error_telephone'] = $this->error['telephone'];
-		} else {
-			$data['error_telephone'] = '';
-		}
-
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
-		}
-
-		if (isset($this->error['confirm'])) {
-			$data['error_confirm'] = $this->error['confirm'];
-		} else {
-			$data['error_confirm'] = '';
-		}
-
-		if (isset($this->error['custom_field'])) {
-			$data['error_custom_field'] = $this->error['custom_field'];
-		} else {
-			$data['error_custom_field'] = [];
-		}
-
-		if (isset($this->error['cheque'])) {
-			$data['error_cheque'] = $this->error['cheque'];
-		} else {
-			$data['error_cheque'] = '';
-		}
-
-		if (isset($this->error['paypal'])) {
-			$data['error_paypal'] = $this->error['paypal'];
-		} else {
-			$data['error_paypal'] = '';
-		}
-
-		if (isset($this->error['bank_account_name'])) {
-			$data['error_bank_account_name'] = $this->error['bank_account_name'];
-		} else {
-			$data['error_bank_account_name'] = '';
-		}
-
-		if (isset($this->error['bank_account_number'])) {
-			$data['error_bank_account_number'] = $this->error['bank_account_number'];
-		} else {
-			$data['error_bank_account_number'] = '';
-		}
-
 		$this->session->data['register_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
 		$data['action'] = $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
@@ -152,41 +58,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
-		} else {
-			$data['customer_group_id'] = $this->config->get('config_affiliate_group_id');
-		}
-
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} else {
-			$data['firstname'] = '';
-		}
-
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} else {
-			$data['lastname'] = '';
-		}
-
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} else {
-			$data['email'] = '';
-		}
-
-		if (isset($this->request->post['telephone'])) {
-			$data['telephone'] = $this->request->post['telephone'];
-		} else {
-			$data['telephone'] = '';
-		}
-
-		if (isset($this->request->post['company'])) {
-			$data['company'] = $this->request->post['company'];
-		} else {
-			$data['company'] = '';
-		}
+		$data['customer_group_id'] = $this->config->get('config_affiliate_group_id');
 
 		// Custom Fields
 		$data['custom_fields'] = [];
@@ -201,95 +73,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['custom_field'])) {
-			if (isset($this->request->post['custom_field']['account'])) {
-				$account_custom_field = $this->request->post['custom_field']['account'];
-			} else {
-				$account_custom_field = [];
-			}
-
-			if (isset($this->request->post['custom_field']['affiliate'])) {
-				$affiliate_custom_field = $this->request->post['custom_field']['affiliate'];
-			} else {
-				$affiliate_custom_field = [];
-			}
-
-			$data['register_custom_field'] = $account_custom_field + $affiliate_custom_field;
-		} else {
-			$data['register_custom_field'] = [];
-		}
-
-		if (isset($this->request->post['website'])) {
-			$data['website'] = $this->request->post['website'];
-		} else {
-			$data['website'] = '';
-		}
-
-		if (isset($this->request->post['tax'])) {
-			$data['tax'] = $this->request->post['tax'];
-		} else {
-			$data['tax'] = '';
-		}
-
-		if (isset($this->request->post['payment'])) {
-			$data['payment'] = $this->request->post['payment'];
-		} else {
-			$data['payment'] = 'cheque';
-		}
-
-		if (isset($this->request->post['cheque'])) {
-			$data['cheque'] = $this->request->post['cheque'];
-		} else {
-			$data['cheque'] = '';
-		}
-
-		if (isset($this->request->post['paypal'])) {
-			$data['paypal'] = $this->request->post['paypal'];
-		} else {
-			$data['paypal'] = '';
-		}
-
-		if (isset($this->request->post['bank_name'])) {
-			$data['bank_name'] = $this->request->post['bank_name'];
-		} else {
-			$data['bank_name'] = '';
-		}
-
-		if (isset($this->request->post['bank_branch_number'])) {
-			$data['bank_branch_number'] = $this->request->post['bank_branch_number'];
-		} else {
-			$data['bank_branch_number'] = '';
-		}
-
-		if (isset($this->request->post['bank_swift_code'])) {
-			$data['bank_swift_code'] = $this->request->post['bank_swift_code'];
-		} else {
-			$data['bank_swift_code'] = '';
-		}
-
-		if (isset($this->request->post['bank_account_name'])) {
-			$data['bank_account_name'] = $this->request->post['bank_account_name'];
-		} else {
-			$data['bank_account_name'] = '';
-		}
-
-		if (isset($this->request->post['bank_account_number'])) {
-			$data['bank_account_number'] = $this->request->post['bank_account_number'];
-		} else {
-			$data['bank_account_number'] = '';
-		}
-
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
-
-		if (isset($this->request->post['confirm'])) {
-			$data['confirm'] = $this->request->post['confirm'];
-		} else {
-			$data['confirm'] = '';
-		}
+		$data['payment'] = 'cheque';
 
 		// Captcha
 		$this->load->model('setting/extension');
@@ -332,7 +116,11 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('affiliate/register', $data));
 	}
 
-	protected function validate(): bool {
+	protected function save(): bool {
+
+
+
+
 		$keys = [
 			'firstname',
 			'lastname',
@@ -444,7 +232,28 @@ class Register extends \Opencart\System\Engine\Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			unset($this->session->data['guest']);
 
+			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+
+			$this->load->model('account/affiliate');
+
+			$this->model_account_affiliate->addAffiliate($customer_id, $this->request->post);
+
+			// Clear any previous login attempts in not registered.
+			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+
+			$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
+
+			// Log the IP info
+			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
+
+			$this->response->redirect($this->url->link('affiliate/success', 'language=' . $this->config->get('config_language')));
+		}
 		return !$this->error;
 	}
+
+
+
 }

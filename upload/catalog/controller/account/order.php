@@ -135,22 +135,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $this->request->get['order_id'] . $url)
 			];
 
-			if (isset($this->session->data['error'])) {
-				$data['error_warning'] = $this->session->data['error'];
-
-				unset($this->session->data['error']);
-			} else {
-				$data['error_warning'] = '';
-			}
-
-			if (isset($this->session->data['success'])) {
-				$data['success'] = $this->session->data['success'];
-
-				unset($this->session->data['success']);
-			} else {
-				$data['success'] = '';
-			}
-
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 			} else {

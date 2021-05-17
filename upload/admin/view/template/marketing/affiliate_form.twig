@@ -147,7 +147,7 @@
 												<label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
 												<div class="col-sm-10">
 													<div id="input-custom-field-{{ custom_field.custom_field_id }}">
-														<button type="button" id="button-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+														<button type="button" id="button-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
 														<input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] }}"/>
 													</div>
 												</div>
@@ -302,7 +302,7 @@
 									</div>
 								</fieldset>
 								<div class="text-end">
-									<button id="button-history" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+									<button id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
 								</div>
 							</div>
 							<div id="tab-transaction" class="tab-pane">
@@ -327,7 +327,7 @@
 									</div>
 								</fieldset>
 								<div class="text-end">
-									<button type="button" id="button-transaction" data-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
+									<button type="button" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
 								</div>
 							</div>
 							<div id="tab-report" class="tab-pane">

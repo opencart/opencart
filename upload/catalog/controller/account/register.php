@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Register extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
@@ -23,22 +21,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			unset($this->session->data['guest']);
-
-			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
-
-			// Clear any previous login attempts for unregistered accounts.
-			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-
-			$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
-
-			// Log the IP info
-			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
-
-			$this->response->redirect($this->url->link('account/success', 'language=' . $this->config->get('config_language')));
-		}
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -58,57 +40,9 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['firstname'])) {
-			$data['error_firstname'] = $this->error['firstname'];
-		} else {
-			$data['error_firstname'] = '';
-		}
-
-		if (isset($this->error['lastname'])) {
-			$data['error_lastname'] = $this->error['lastname'];
-		} else {
-			$data['error_lastname'] = '';
-		}
-
-		if (isset($this->error['email'])) {
-			$data['error_email'] = $this->error['email'];
-		} else {
-			$data['error_email'] = '';
-		}
-
-		if (isset($this->error['telephone'])) {
-			$data['error_telephone'] = $this->error['telephone'];
-		} else {
-			$data['error_telephone'] = '';
-		}
-
-		if (isset($this->error['custom_field'])) {
-			$data['error_custom_field'] = $this->error['custom_field'];
-		} else {
-			$data['error_custom_field'] = [];
-		}
-
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
-		}
-
-		if (isset($this->error['confirm'])) {
-			$data['error_confirm'] = $this->error['confirm'];
-		} else {
-			$data['error_confirm'] = '';
-		}
-
 		$this->session->data['register_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['action'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
+		$data['save'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
 
 		$data['customer_groups'] = [];
 
@@ -124,35 +58,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
-		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
-		}
-
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} else {
-			$data['firstname'] = '';
-		}
-
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} else {
-			$data['lastname'] = '';
-		}
-
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} else {
-			$data['email'] = '';
-		}
-
-		if (isset($this->request->post['telephone'])) {
-			$data['telephone'] = $this->request->post['telephone'];
-		} else {
-			$data['telephone'] = '';
-		}
+		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 
 		// Custom Fields
 		$data['custom_fields'] = [];
@@ -165,30 +71,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			if ($custom_field['location'] == 'account') {
 				$data['custom_fields'][] = $custom_field;
 			}
-		}
-
-		if (isset($this->request->post['custom_field']['account'])) {
-			$data['register_custom_field'] = $this->request->post['custom_field']['account'];
-		} else {
-			$data['register_custom_field'] = [];
-		}
-
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
-
-		if (isset($this->request->post['confirm'])) {
-			$data['confirm'] = $this->request->post['confirm'];
-		} else {
-			$data['confirm'] = '';
-		}
-
-		if (isset($this->request->post['newsletter'])) {
-			$data['newsletter'] = $this->request->post['newsletter'];
-		} else {
-			$data['newsletter'] = '';
 		}
 
 		// Captcha
@@ -232,7 +114,11 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/register', $data));
 	}
 
-	private function validate(): bool {
+	private function save(): bool {
+		$this->load->language('account/register');
+
+		$json = [];
+
 		$keys = [
 			'firstname',
 			'lastname',
@@ -250,27 +136,27 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
-			$this->error['warning'] = $this->language->get('error_token');
+			$json['error']['warning'] = $this->language->get('error_token');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
+			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
+			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_exists');
+			$json['error']['warning'] = $this->language->get('error_exists');
 		}
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
+			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		// Customer Group
@@ -288,19 +174,19 @@ class Register extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
 		}
 
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-			$this->error['password'] = $this->language->get('error_password');
+			$json['error']['password'] = $this->language->get('error_password');
 		}
 
 		if ($this->request->post['confirm'] !== $this->request->post['password']) {
-			$this->error['confirm'] = $this->language->get('error_confirm');
+			$json['error']['confirm'] = $this->language->get('error_confirm');
 		}
 
 		// Captcha
@@ -312,7 +198,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$captcha = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
 
 			if ($captcha) {
-				$this->error['captcha'] = $captcha;
+				$json['error']['captcha'] = $captcha;
 			}
 		}
 
@@ -323,11 +209,31 @@ class Register extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			unset($this->session->data['guest']);
+
+			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+
+			// Clear any previous login attempts for unregistered accounts.
+			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+
+			$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
+
+			// Log the IP info
+			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
+
+			// Create customer token
+			$this->session->data['customer_token'] = token(26);
+
+			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function customfield(): void {

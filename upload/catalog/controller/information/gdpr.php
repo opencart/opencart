@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
 class Gdpr extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+	public function index(): object|null {
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_gdpr_id'));
@@ -41,6 +41,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('information/gdpr', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
@@ -128,7 +130,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function success(): void {
+	public function success(): object|null {
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
@@ -179,6 +181,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('common/success', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}

@@ -20,7 +20,7 @@
 							<td class="text-end">
 								<div class="dropdown">
 									<div class="btn-group">
-										<button type="button" value="{{ extension.download }}" data-loading="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"{% if not extension.download %} disabled{% endif %}><i class="fas fa-download"></i></button>
+										<button type="button" value="{{ extension.download }}" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"{% if not extension.download %} disabled{% endif %}><i class="fas fa-download"></i></button>
 										<button type="button" data-bs-toggle="dropdown" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"><i class="fas fa-caret-down"></i></button>
 										<div class="dropdown-menu dropdown-menu-right">
 											<a href="{{ extension.install }}" class="dropdown-item{% if not extension.install %} disabled{% endif %}"><i class="fa fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="{{ extension.delete }}" class="dropdown-item{% if not extension.delete %} disabled{% endif %}"><i class="far fa-trash-alt fa-fw"></i> {{ text_delete }}</a>

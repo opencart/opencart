@@ -381,6 +381,87 @@ var compare = {
 	}
 };
 
+// Forms
+$(document).on('click', '[data-oc-action]', function() {
+	var element = this;
+
+	var form = $(element).attr('data-oc-form');
+
+	$.ajax({
+		url: $(element).attr('data-oc-action'),
+		type: 'post',
+		dataType: 'json',
+		data: new FormData($(form)[0]),
+		cache: false,
+		contentType: false,
+		processData: false,
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.invalid-tooltip, .alert-dismissible').remove();
+
+			if (typeof json['error'] == 'object') {
+				if (json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+				}
+
+				for (key in json['error']) {
+					var element = $('#input-' + key.replaceAll('_', '-'));
+
+					// Highlight any found errors
+					$(element).addClass('is-invalid');
+
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+					} else {
+						$(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+					}
+				}
+
+				delete json['error'];
+			}
+
+			if (typeof json['error'] == 'string') {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+				delete json['error'];
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+				// Refresh
+				var url = $(form).attr('data-oc-load');
+				var target = $(form).attr('data-oc-target');
+
+				if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+					$(target).load(url);
+				}
+
+				delete json['success'];
+			}
+
+			if (json['redirect']) {
+				location = json['redirect'];
+
+				// Not sure this part works
+				delete json['redirect'];
+			}
+
+			for (key in json) {
+				$(form).find('[name=\'' + key + '\']').val(json[key]);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 // Chain ajax calls.
 class Chain {
 	constructor() {

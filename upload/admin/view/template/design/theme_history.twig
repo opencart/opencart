@@ -17,7 +17,7 @@
             <td class="text-start">{{ history.route }}
               <input type="hidden" name="path" value="{{ history.route }}"/></td>
             <td class="text-start">{{ history.date_added }}</td>
-            <td class="text-end"><a href="{{ history.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a> <a href="{{ history.delete }}" data-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+            <td class="text-end"><a href="{{ history.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a> <a href="{{ history.delete }}" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
           </tr>
         {% endfor %}
       {% else %}

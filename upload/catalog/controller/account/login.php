@@ -141,7 +141,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 
-		if (!$jsonr) {
+		if (!$json) {
 			if (!$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
 				$this->error['warning'] = $this->language->get('error_login');
 

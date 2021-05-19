@@ -19,7 +19,7 @@ final class MySQL {
 		mysql_query("SET SQL_MODE = ''", $this->connection);
 	}
 
-	public function query($sql) {
+	public function query($sql, $params = array()) {
 		if ($this->connection) {
 			$resource = mysql_query($sql, $this->connection);
 

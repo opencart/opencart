@@ -15,7 +15,7 @@ final class PgSQL {
 		pg_query($this->link, "SET CLIENT_ENCODING TO 'UTF8'");
 	}
 
-	public function query($sql) {
+	public function query($sql, $params = array()) {
 		$resource = pg_query($this->link, $sql);
 
 		if ($resource) {

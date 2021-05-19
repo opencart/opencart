@@ -16,7 +16,7 @@ final class MSSQL {
 		mssql_query("SET CHARACTER SET utf8", $this->connection);
 	}
 
-	public function query($sql) {
+	public function query($sql, $params = array()) {
 		$resource = mssql_query($sql, $this->connection);
 
 		if ($resource) {

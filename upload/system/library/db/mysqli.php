@@ -20,7 +20,7 @@ class MySQLi {
 		}
 	}
 
-	public function query($sql) {
+	public function query($sql, $params = array()) {
 		$query = $this->connection->query($sql);
 
 		if (!$this->connection->errno) {

@@ -54,9 +54,9 @@
           {% for location in locations %}
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title pt-2"><a href="#collapse-location{{ location.location_id }}" class="accordion-toggle" data-bs-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
+                <h4 class="card-title pt-2"><a href="#collapse-location-{{ location.location_id }}" class="accordion-toggle" data-bs-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
               </div>
-              <div class="card-collapse collapse" id="collapse-location{{ location.location_id }}">
+              <div class="card-collapse collapse" id="collapse-location-{{ location.location_id }}">
                 <div class="card-body">
                   <div class="row">
                     {% if location.image %}

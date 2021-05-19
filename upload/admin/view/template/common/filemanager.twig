@@ -62,7 +62,7 @@
   $('#modal-image').on('click', '#button-upload', function() {
       $('#upload-form').remove();
 
-      $('body').prepend('<form enctype="multipart/form-data" id="upload-form" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
+      $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
 
       $('#upload-form input[name=\'file[]\']').trigger('click');
 

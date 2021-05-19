@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-oc-action="{{ save }}" data-oc-form="#download-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#form-download" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
 			</div>
 			<h1>{{ heading_title }}</h1>
@@ -18,7 +18,7 @@
 		<div class="card">
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
-				<form id="download-form">
+				<form id="form-download">
 					<input type="hidden" name="download_id" value="{{ download_id }}" id="input-download-id"/>
 					<ul class="nav nav-tabs">
 						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
@@ -82,7 +82,7 @@ $('#report').load('index.php?route=catalog/download|report&user_token={{ user_to
 $('#button-upload').on('click', function() {
     $('#upload-form').remove();
 
-    $('body').prepend('<form enctype="multipart/form-data" id="upload-form" style="display: none;"><input type="file" name="file" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
     $('#upload-form input[name=\'file\']').trigger('click');
 

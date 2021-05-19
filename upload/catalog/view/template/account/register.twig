@@ -9,7 +9,7 @@
 		<div id="content" class="col">{{ content_top }}
 			<h1>{{ heading_title }}</h1>
 			<p>{{ text_account_already }}</p>
-			<form action="{{ action }}" method="post" enctype="multipart/form-data">
+			<form id="form-register">
 				<fieldset id="account">
 					<legend>{{ text_your_details }}</legend>
 					<div class="row mb-3 required{{ customer_groups|length <= 1 ? ' d-none' }}">
@@ -220,13 +220,13 @@
 								<input type="checkbox" name="agree" value="1"/>
 							{% endif %}
 							&nbsp;
-							<button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+							<button type="button" data-oc-action="{{ save }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
 						</div>
 					</div>
 				{% else %}
 					<div class="d-inline-block pt-2 pd-2 w-100">
 						<div class="float-end">
-							<button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+							<button type="button" data-oc-action="{{ save }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
 						</div>
 					</div>
 				{% endif %}

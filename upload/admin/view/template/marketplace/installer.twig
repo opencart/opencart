@@ -48,7 +48,7 @@ $('#extension').load('index.php?route=marketplace/installer|extension&user_token
 $('#button-upload').on('click', function() {
     $('#upload-form').remove();
 
-    $('body').prepend('<form enctype="multipart/form-data" id="upload-form" style="display: none;"><input type="file" name="file" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
     $('#upload-form input[name=\'file\']').trigger('click');
 

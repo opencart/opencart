@@ -203,7 +203,7 @@ $('#history').on('click', '.btn-warning', function() {
 $('#button-upload').on('click', function() {
     $('#upload-form').remove();
 
-    $('body').prepend('<form enctype="multipart/form-data" id="upload-form" style="display: none;"><input type="file" name="upload" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="upload" /></form>');
 
     $('#upload-form input[name=\'upload\']').trigger('click');
 

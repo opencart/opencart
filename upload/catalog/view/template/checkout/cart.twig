@@ -7,17 +7,17 @@
 	</ul>
 	{% if attention %}
 		<div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ attention }}
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<button type="button" class="btn-close" data-dismiss="alert">&times;</button>
 		</div>
 	{% endif %}
 	{% if success %}
 		<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<button type="button" class="btn-close" data-dismiss="alert">&times;</button>
 		</div>
 	{% endif %}
 	{% if error_warning %}
 		<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<button type="button" class="btn-close" data-dismiss="alert">&times;</button>
 		</div>
 	{% endif %}
 	<div class="row">{{ column_left }}
@@ -64,7 +64,7 @@
 										<div class="input-group">
 											<input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="form-control">
 											<div class="input-group-append">
-												<button type="submit" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
+												<button type="button" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
 												<button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fas fa-times-circle"></i></button>
 											</div>
 										</div>

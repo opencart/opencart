@@ -162,7 +162,7 @@
               {% for option in options %}
                 {% if option.type == 'select' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option{{ option.product_option_id }}" class="form-select">
+                    <label for="input-option-{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
                       <option value="">{{ text_select }}</option>
                       {% for option_value in option.product_option_value %}
                         <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
@@ -176,7 +176,7 @@
                 {% if option.type == 'radio' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label class="col-form-label">{{ option.name }}</label>
-                    <div id="input-option{{ option.product_option_id }}">
+                    <div id="input-option-{{ option.product_option_id }}">
                       {% for option_value in option.product_option_value %}
                         <div class="form-check">
                           <label><input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
@@ -194,7 +194,7 @@
                 {% if option.type == 'checkbox' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
                     <label class="col-form-label">{{ option.name }}</label>
-                    <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+                    <div id="input-option-{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
                         <div class="form-check">
                           <label><input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
                             {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
@@ -209,26 +209,26 @@
                 {% endif %}
                 {% if option.type == 'text' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                    <label for="input-option-{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'textarea' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+                    <label for="input-option-{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
                   </div>
                 {% endif %}
                 {% if option.type == 'file' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="button-upload{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
-                    <button type="button" id="button-upload{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light btn-block"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                    <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option{{ option.product_option_id }}"/>
+                    <label for="button-upload-{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
+                    <button type="button" id="button-upload-{{ option.product_option_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light btn-block"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option-{{ option.product_option_id }}"/>
                   </div>
                 {% endif %}
                 {% if option.type == 'date' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
+                    <label for="input-option-{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group date">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                       </div>
@@ -237,9 +237,9 @@
                 {% endif %}
                 {% if option.type == 'datetime' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
+                    <label for="input-option-{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group datetime">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                       </div>
@@ -248,9 +248,9 @@
                 {% endif %}
                 {% if option.type == 'time' %}
                   <div class="row mb-3{% if option.required %} required {% endif %}">
-                    <label for="input-option{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
+                    <label for="input-option-{{ option.product_option_id }}" class="col-form-label">{{ option.name }}</label>
                     <div class="input-group time">
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option{{ option.product_option_id }}" class="form-control"/>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                       </div>

@@ -10,7 +10,7 @@
 	<div class="row">{{ column_left }}
 		<div id="content" class="col">{{ content_top }}
 			<h1>{{ text_address }}</h1>
-			<form method="post" enctype="multipart/form-data">
+			<form id="form-address">
 				<fieldset>
 					<div class="row mb-3 required">
 						<label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
@@ -166,7 +166,7 @@
 									<button type="button" id="button-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light">
 										<i class="fas fa-upload"></i>
 										{{ button_upload }}</button>
-									<input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %} {{ address_custom_field[custom_field.custom_field_id] }} {% endif %}"/>
+									<input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% endif %}"/>
 								</div>
 							</div>
 						{% endif %}
@@ -250,7 +250,7 @@
 						<a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
 					</div>
 					<div class="float-end">
-						<button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+						<button type="button" data-oc-action="{{ save }}" data-oc-form="#form-address" class="btn btn-primary">{{ button_continue }}</button>
 					</div>
 				</div>
 			</form>

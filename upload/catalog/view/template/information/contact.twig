@@ -98,7 +98,7 @@
           {% endfor %}
         </div>
       {% endif %}
-      <form action="{{ action }}" method="post" enctype="multipart/form-data">
+      <form id="form-contact">
         <fieldset>
           <legend>{{ text_contact }}</legend>
           <div class="row mb-3 required">
@@ -122,8 +122,8 @@
           {{ captcha }}
         </fieldset>
         <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-end">
-            <input class="btn btn-primary" type="submit" value="{{ button_submit }}"/>
+          <input class="float-end">
+            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-contact" class="btn btn-primary">{{ button_submit }}</button>
           </div>
         </div>
       </form>

@@ -8,7 +8,7 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <form action="{{ action }}" method="post" enctype="multipart/form-data">
+      <form id="form-reset">
         <fieldset>
           <legend>{{ text_password }}</legend>
           <div class="row mb-3">
@@ -27,7 +27,7 @@
         <div class="d-inline-block pt-2 pd-2 w-100">
           <div class="float-start"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
           <div class="float-end">
-            <button type="button" class="btn btn-primary">{{ button_continue }}</button>
+            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-reset" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
       </form>

@@ -1,26 +1,26 @@
 {% if currencies|length > 1 %}
-  <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-currency">
-    <div class="dropdown">
-      <div class="dropdown-toggle" data-bs-toggle="tooltip"down">
-        {% for currency in currencies %}
-          {% if currency.symbol_left and currency.code == code %}
-            <strong>{{ currency.symbol_left }}</strong>
-          {% elseif currency.symbol_right and currency.code == code %}
-            <strong>{{ currency.symbol_right }}</strong>
-          {% endif %}
-        {% endfor %}
-        <span class="d-none d-md-inline">{{ text_currency }}</span> <i class="fas fa-caret-down"></i>
-      </div>
-      <div class="dropdown-menu">
-        {% for currency in currencies %}
-          {% if currency.symbol_left %}
-            <a href="{{ currency.code }}" class="dropdown-item">{{ currency.symbol_left }} {{ currency.title }}</a>
-          {% else %}
-            <a href="{{ currency.code }}" class="dropdown-item">{{ currency.symbol_right }} {{ currency.title }}</a>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-    <input type="hidden" name="code" value=""/> <input type="hidden" name="redirect" value="{{ redirect }}"/>
-  </form>
+	<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-currency">
+		<div class="dropdown">
+			<div class="dropdown-toggle" data-bs-toggle="tooltip">
+				{% for currency in currencies %}
+					{% if currency.symbol_left and currency.code == code %}
+						<strong>{{ currency.symbol_left }}</strong>
+					{% elseif currency.symbol_right and currency.code == code %}
+						<strong>{{ currency.symbol_right }}</strong>
+					{% endif %}
+				{% endfor %}
+				<span class="d-none d-md-inline">{{ text_currency }}</span> <i class="fas fa-caret-down"></i>
+			</div>
+			<div class="dropdown-menu">
+				{% for currency in currencies %}
+					{% if currency.symbol_left %}
+						<a href="{{ currency.code }}" class="dropdown-item">{{ currency.symbol_left }} {{ currency.title }}</a>
+					{% else %}
+						<a href="{{ currency.code }}" class="dropdown-item">{{ currency.symbol_right }} {{ currency.title }}</a>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		<input type="hidden" name="code" value=""/> <input type="hidden" name="redirect" value="{{ redirect }}"/>
+	</form>
 {% endif %}

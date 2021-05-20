@@ -71,12 +71,12 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['addresses'][] = [
 				'address_id' => $result['address_id'],
 				'address'    => str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format)))),
-				'update'     => $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_id=' . $result['address_id']),
+				'update'     => $this->url->link('account/address|form', 'language=' . $this->config->get('config_language') . '&address_id=' . $result['address_id']),
 				'delete'     => $this->url->link('account/address|delete', 'language=' . $this->config->get('config_language') . '&address_id=' . $result['address_id'])
 			];
 		}
 
-		$data['add'] = $this->url->link('account/address|add', 'language=' . $this->config->get('config_language'));
+		$data['add'] = $this->url->link('account/address|form', 'language=' . $this->config->get('config_language'));
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');

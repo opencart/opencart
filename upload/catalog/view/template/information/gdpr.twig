@@ -6,7 +6,7 @@
 		{% endfor %}
 	</ul>
 	{% if success %}
-		<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-dismiss="alert">&times;</button></div>
+		<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-dismiss="alert"></button></div>
 	{% endif %}
 	<div class="row">{{ column_left }}
 		<div id="content" class="col">
@@ -85,12 +85,12 @@ $('#button-continue').on('click', function() {
                 }
 
                 if (json['error']['action']) {
-                    $('#action').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['action'] + ' <button type="button" class="btn-close" data-dismiss="alert">&times;</button></div>');
+                    $('#action').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['action'] + ' <button type="button" class="btn-close" data-dismiss="alert"></button></div>');
                 }
             }
 
             if (json['success']) {
-                $('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-dismiss="alert">&times;</button></div>');
+                $('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-dismiss="alert"></button></div>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

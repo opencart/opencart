@@ -6,10 +6,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
-
-		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
-
 		$this->load->language('account/register');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -18,8 +14,6 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
-
-		$this->load->model('account/customer');
 
 		$data['breadcrumbs'] = [];
 
@@ -40,9 +34,13 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		$this->session->data['register_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['save'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
+		$data['register'] = $this->url->link('account/register|register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
 
 		$data['customer_groups'] = [];
 
@@ -98,12 +96,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['text_agree'] = '';
 		}
 
-		if (isset($this->request->post['agree'])) {
-			$data['agree'] = $this->request->post['agree'];
-		} else {
-			$data['agree'] = false;
-		}
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -114,7 +106,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/register', $data));
 	}
 
-	private function save(): bool {
+	public function register(): void {
 		$this->load->language('account/register');
 
 		$json = [];
@@ -136,7 +128,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
-			$json['error']['warning'] = $this->language->get('error_token');
+			$json['redirect'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
@@ -150,6 +142,8 @@ class Register extends \Opencart\System\Engine\Controller {
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
+
+		$this->load->model('account/customer');
 
 		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 			$json['error']['warning'] = $this->language->get('error_exists');
@@ -215,6 +209,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			unset($this->session->data['guest']);
+			unset($this->session->data['register_token']);
 
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
@@ -229,7 +224,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Create customer token
 			$this->session->data['customer_token'] = token(26);
 
-			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

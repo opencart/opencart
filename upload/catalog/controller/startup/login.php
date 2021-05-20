@@ -25,7 +25,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			];
 
 			if (!in_array($route, $ignore) && (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
-				$this->session->data['error'] = $this->url->link($this->request->get['route'], 'language=' . $this->config->get('config_language'));
+				//$this->session->data['error'] = $this->url->link($this->request->get['route'], 'language=' . $this->config->get('config_language'));
 
 				$url_data = $this->request->get;
 
@@ -44,9 +44,9 @@ class Login extends \Opencart\System\Engine\Controller {
 					$url = '&' . urldecode(http_build_query($url_data));
 				}
 
-				$this->session->data['redirect'] = $this->url->link($this->request->get['route'], $url);
+				//$this->session->data['redirect'] = $this->url->link($this->request->get['route'], $url);
 
-				$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+				//$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 			}
 		}
 	}

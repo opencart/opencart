@@ -55,7 +55,7 @@ $('#button-shipping-method').on('click', function() {
 					$('#button-shipping-method').button('reset');
 
 					if (json['error']['warning']) {
-						$('#collapse-shipping-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert">&times;</button></div>');
+						$('#collapse-shipping-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
 					}
 				} else {
 					chain.attach(function() {

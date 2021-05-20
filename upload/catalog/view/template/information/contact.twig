@@ -1,133 +1,132 @@
 {{ header }}
 <div id="information-contact" class="container">
-  <ul class="breadcrumb">
-    {% for breadcrumb in breadcrumbs %}
-      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-    {% endfor %}
-  </ul>
-  <div class="row">
-    {{ column_left }}
-    <div id="content" class="col">{{ content_top }}
-      <h1>{{ heading_title }}</h1>
-      <h3>{{ text_location }}</h3>
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            {% if image %}
-              <div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail"/></div>
-            {% endif %}
-            <div class="col-sm-3"><strong>{{ store }}</strong>
-              <br/>
-              <address>
-                {{ address }}
-              </address>
-              {% if geocode %}
-                <a href="https://maps.google.com/maps?q={{ geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fas fa-map-marker"></i> {{ button_map }}</a>
-              {% endif %}
-            </div>
-            <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
-              <br>
-              {{ telephone }}
-              <br/>
-              <br/>
-            </div>
-            <div class="col-sm-3">
-              {% if open %}
-                <strong>{{ text_open }}</strong>
-                <br/>
-                {{ open }}
-                <br/>
-                <br/>
-              {% endif %}
-              {% if comment %}
-                <strong>{{ text_comment }}</strong>
-                <br/>
-                {{ comment }}
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-      {% if locations %}
-        <h3>{{ text_store }}</h3>
-        <div id="accordion" class="card-group">
-          {% for location in locations %}
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title pt-2"><a href="#collapse-location-{{ location.location_id }}" class="accordion-toggle" data-bs-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
-              </div>
-              <div class="card-collapse collapse" id="collapse-location-{{ location.location_id }}">
-                <div class="card-body">
-                  <div class="row">
-                    {% if location.image %}
-                      <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail"/></div>
-                    {% endif %}
-                    <div class="col-sm-3"><strong>{{ location.name }}</strong>
-                      <br/>
-                      <address>
-                        {{ location.address }}
-                      </address>
-                      {% if location.geocode %}
-                        <a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fas fa-map-marker"></i> {{ button_map }}</a>
-                      {% endif %}
-                    </div>
-                    <div class="col-sm-3"><strong>{{ text_telephone }}</strong>
-                      <br>
-                      {{ location.telephone }}
-                      <br/>
-                      <br/>
-                    </div>
-                    <div class="col-sm-3">
-                      {% if location.open %}
-                        <strong>{{ text_open }}</strong>
-                        <br/>
-                        {{ location.open }}
-                        <br/>
-                        <br/>
-                      {% endif %}
-                      {% if location.comment %}
-                        <strong>{{ text_comment }}</strong>
-                        <br/>
-                        {{ location.comment }}
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-      <form id="form-contact">
-        <fieldset>
-          <legend>{{ text_contact }}</legend>
-          <div class="row mb-3 required">
-            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control"/>
-            </div>
-          </div>
-          <div class="row mb-3 required">
-            <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
-            </div>
-          </div>
-          <div class="row mb-3 required">
-            <label for="input-enquiry" class="col-sm-2 col-form-label">{{ entry_enquiry }}</label>
-            <div class="col-sm-10">
-              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
-            </div>
-          </div>
-          {{ captcha }}
-        </fieldset>
-        <div class="d-inline-block pt-2 pd-2 w-100">
-          <input class="float-end">
-            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-contact" class="btn btn-primary">{{ button_submit }}</button>
-          </div>
-        </div>
-      </form>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+	<ul class="breadcrumb">
+		{% for breadcrumb in breadcrumbs %}
+			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		{% endfor %}
+	</ul>
+	<div class="row">
+		{{ column_left }}
+		<div id="content" class="col">{{ content_top }}
+			<h1>{{ heading_title }}</h1>
+			<h3>{{ text_location }}</h3>
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						{% if image %}
+							<div class="col-sm-3"><img src="{{ image }}" alt="{{ store }}" title="{{ store }}" class="img-thumbnail"/></div>
+						{% endif %}
+						<div class="col-sm-3"><strong>{{ store }}</strong>
+							<br/>
+							<address>
+								{{ address }}
+							</address>
+							{% if geocode %}
+								<a href="https://maps.google.com/maps?q={{ geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fas fa-map-marker"></i> {{ button_map }}</a>
+							{% endif %}
+						</div>
+						<div class="col-sm-3"><strong>{{ text_telephone }}</strong>
+							<br>
+							{{ telephone }}
+							<br/>
+							<br/>
+						</div>
+						<div class="col-sm-3">
+							{% if open %}
+								<strong>{{ text_open }}</strong>
+								<br/>
+								{{ open }}
+								<br/>
+								<br/>
+							{% endif %}
+							{% if comment %}
+								<strong>{{ text_comment }}</strong>
+								<br/>
+								{{ comment }}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% if locations %}
+				<h3>{{ text_store }}</h3>
+				<div id="accordion" class="card-group">
+					{% for location in locations %}
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title pt-2"><a href="#collapse-location-{{ location.location_id }}" class="accordion-toggle" data-bs-toggle="collapse" data-parent="#accordion">{{ location.name }} <i class="fas fa-caret-down"></i></a></h4>
+							</div>
+							<div class="card-collapse collapse" id="collapse-location-{{ location.location_id }}">
+								<div class="card-body">
+									<div class="row">
+										{% if location.image %}
+											<div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail"/></div>
+										{% endif %}
+										<div class="col-sm-3"><strong>{{ location.name }}</strong>
+											<br/>
+											<address>
+												{{ location.address }}
+											</address>
+											{% if location.geocode %}
+												<a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fas fa-map-marker"></i> {{ button_map }}</a>
+											{% endif %}
+										</div>
+										<div class="col-sm-3"><strong>{{ text_telephone }}</strong>
+											<br>
+											{{ location.telephone }}
+											<br/>
+											<br/>
+										</div>
+										<div class="col-sm-3">
+											{% if location.open %}
+												<strong>{{ text_open }}</strong>
+												<br/>
+												{{ location.open }}
+												<br/>
+												<br/>
+											{% endif %}
+											{% if location.comment %}
+												<strong>{{ text_comment }}</strong>
+												<br/>
+												{{ location.comment }}
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+			<form id="form-contact">
+				<fieldset>
+					<legend>{{ text_contact }}</legend>
+					<div class="row mb-3 required">
+						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" value="{{ name }}" id="input-name" class="form-control"/>
+						</div>
+					</div>
+					<div class="row mb-3 required">
+						<label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
+						</div>
+					</div>
+					<div class="row mb-3 required">
+						<label for="input-enquiry" class="col-sm-2 col-form-label">{{ entry_enquiry }}</label>
+						<div class="col-sm-10">
+							<textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"></textarea>
+						</div>
+					</div>
+					{{ captcha }}
+				</fieldset>
+				<div class="d-inline-block pt-2 pd-2 w-100">
+					<input class="float-end">
+					<button type="button" data-oc-action="{{ send }}" data-oc-form="#form-contact" class="btn btn-primary">{{ button_submit }}</button>
+				</div>
+		</form>
+		{{ content_bottom }}</div>
+	{{ column_right }}</div>
 </div>
 {{ footer }}

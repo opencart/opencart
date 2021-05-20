@@ -404,6 +404,10 @@ $(document).on('click', '[data-oc-action]', function() {
 		success: function(json) {
 			$('.invalid-tooltip, .alert-dismissible').remove();
 
+			console.log('xhr.responseText');
+
+
+
 			if (typeof json['error'] == 'object') {
 				if (json['error']['warning']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -457,6 +461,8 @@ $(document).on('click', '[data-oc-action]', function() {
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(xhr.responseText);
+
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});

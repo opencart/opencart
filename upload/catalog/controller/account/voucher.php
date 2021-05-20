@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Voucher extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('account/voucher');
 
@@ -10,21 +8,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->session->data['vouchers'])) {
 			$this->session->data['vouchers'] = [];
-		}
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['vouchers'][mt_rand()] = [
-				'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->request->post['amount'], $this->session->data['currency'], 1.0), $this->request->post['to_name']),
-				'to_name'          => $this->request->post['to_name'],
-				'to_email'         => $this->request->post['to_email'],
-				'from_name'        => $this->request->post['from_name'],
-				'from_email'       => $this->request->post['from_email'],
-				'voucher_theme_id' => $this->request->post['voucher_theme_id'],
-				'message'          => $this->request->post['message'],
-				'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
-			];
-
-			$this->response->redirect($this->url->link('account/voucher|success', 'language=' . $this->config->get('config_language')));
 		}
 
 		$data['breadcrumbs'] = [];
@@ -46,75 +29,17 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$data['help_amount'] = sprintf($this->language->get('help_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['to_name'])) {
-			$data['error_to_name'] = $this->error['to_name'];
-		} else {
-			$data['error_to_name'] = '';
-		}
-
-		if (isset($this->error['to_email'])) {
-			$data['error_to_email'] = $this->error['to_email'];
-		} else {
-			$data['error_to_email'] = '';
-		}
-
-		if (isset($this->error['from_name'])) {
-			$data['error_from_name'] = $this->error['from_name'];
-		} else {
-			$data['error_from_name'] = '';
-		}
-
-		if (isset($this->error['from_email'])) {
-			$data['error_from_email'] = $this->error['from_email'];
-		} else {
-			$data['error_from_email'] = '';
-		}
-
-		if (isset($this->error['theme'])) {
-			$data['error_theme'] = $this->error['theme'];
-		} else {
-			$data['error_theme'] = '';
-		}
-
-		if (isset($this->error['amount'])) {
-			$data['error_amount'] = $this->error['amount'];
-		} else {
-			$data['error_amount'] = '';
-		}
-
 		$this->session->data['voucher_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['action'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
+		$data['save'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
 
-		if (isset($this->request->post['to_name'])) {
-			$data['to_name'] = $this->request->post['to_name'];
-		} else {
-			$data['to_name'] = '';
-		}
-
-		if (isset($this->request->post['to_email'])) {
-			$data['to_email'] = $this->request->post['to_email'];
-		} else {
-			$data['to_email'] = '';
-		}
-
-		if (isset($this->request->post['from_name'])) {
-			$data['from_name'] = $this->request->post['from_name'];
-		} elseif ($this->customer->isLogged()) {
+		if ($this->customer->isLogged()) {
 			$data['from_name'] = $this->customer->getFirstName() . ' '  . $this->customer->getLastName();
 		} else {
 			$data['from_name'] = '';
 		}
 
-		if (isset($this->request->post['from_email'])) {
-			$data['from_email'] = $this->request->post['from_email'];
-		} elseif ($this->customer->isLogged()) {
+		if ($this->customer->isLogged()) {
 			$data['from_email'] = $this->customer->getEmail();
 		} else {
 			$data['from_email'] = '';
@@ -124,29 +49,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$data['voucher_themes'] = $this->model_account_voucher_theme->getVoucherThemes();
 
-		if (isset($this->request->post['voucher_theme_id'])) {
-			$data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
-		} else {
-			$data['voucher_theme_id'] = '';
-		}
-
-		if (isset($this->request->post['message'])) {
-			$data['message'] = $this->request->post['message'];
-		} else {
-			$data['message'] = '';
-		}
-
-		if (isset($this->request->post['amount'])) {
-			$data['amount'] = $this->request->post['amount'];
-		} else {
-			$data['amount'] = $this->currency->format($this->config->get('config_voucher_min'), $this->config->get('config_currency'), false, false);
-		}
-
-		if (isset($this->request->post['agree'])) {
-			$data['agree'] = $this->request->post['agree'];
-		} else {
-			$data['agree'] = false;
-		}
+		$data['amount'] = $this->currency->format($this->config->get('config_voucher_min'), $this->config->get('config_currency'), false, false);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -156,6 +59,78 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('account/voucher', $data));
+	}
+
+	public function save(): void {
+		$this->load->language('account/voucher');
+
+		$json = [];
+
+		$keys = [
+			'to_name',
+			'to_email',
+			'from_name',
+			'from_email',
+			'voucher_theme_id',
+			'amount',
+			'agree'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
+		if (!isset($this->request->get['voucher_token']) || !isset($this->session->data['voucher_token']) || ($this->session->data['voucher_token'] != $this->request->get['voucher_token'])) {
+			$json['redirect'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
+			$json['error']['to_name'] = $this->language->get('error_to_name');
+		}
+
+		if ((utf8_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
+			$json['error']['to_email'] = $this->language->get('error_email');
+		}
+
+		if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
+			$json['error']['from_name'] = $this->language->get('error_from_name');
+		}
+
+		if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
+			$json['error']['from_email'] = $this->language->get('error_email');
+		}
+
+		if (!isset($this->request->post['voucher_theme_id'])) {
+			$json['error']['theme'] = $this->language->get('error_theme');
+		}
+
+		if (($this->currency->convert((int)$this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency')) < $this->config->get('config_voucher_min')) || ($this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency')) > $this->config->get('config_voucher_max'))) {
+			$json['error']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
+		}
+
+		if (!isset($this->request->post['agree'])) {
+			$json['error']['warning'] = $this->language->get('error_agree');
+		}
+
+		if ($json) {
+			$this->session->data['vouchers'][mt_rand()] = [
+				'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->request->post['amount'], $this->session->data['currency'], 1.0), $this->request->post['to_name']),
+				'to_name'          => $this->request->post['to_name'],
+				'to_email'         => $this->request->post['to_email'],
+				'from_name'        => $this->request->post['from_name'],
+				'from_email'       => $this->request->post['from_email'],
+				'voucher_theme_id' => $this->request->post['voucher_theme_id'],
+				'message'          => $this->request->post['message'],
+				'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
+			];
+
+			$json['redirect'] = $this->url->link('account/voucher|success', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function success(): void {
@@ -185,57 +160,5 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('common/success', $data));
-	}
-
-	protected function validate(): bool {
-		$keys = [
-			'to_name',
-			'to_email',
-			'from_name',
-			'from_email',
-			'voucher_theme_id',
-			'amount',
-			'agree'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
-
-		if (!isset($this->request->get['voucher_token']) || !isset($this->session->data['voucher_token']) || ($this->session->data['voucher_token'] != $this->request->get['voucher_token'])) {
-			$this->error['warning'] = $this->language->get('error_token');
-		}
-
-		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
-			$this->error['to_name'] = $this->language->get('error_to_name');
-		}
-
-		if ((utf8_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['to_email'] = $this->language->get('error_email');
-		}
-
-		if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
-			$this->error['from_name'] = $this->language->get('error_from_name');
-		}
-
-		if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['from_email'] = $this->language->get('error_email');
-		}
-
-		if (!isset($this->request->post['voucher_theme_id'])) {
-			$this->error['theme'] = $this->language->get('error_theme');
-		}
-
-		if (($this->currency->convert((int)$this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency')) < $this->config->get('config_voucher_min')) || ($this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency')) > $this->config->get('config_voucher_max'))) {
-			$this->error['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
-		}
-
-		if (!isset($this->request->post['agree'])) {
-			$this->error['warning'] = $this->language->get('error_agree');
-		}
-
-		return !$this->error;
 	}
 }

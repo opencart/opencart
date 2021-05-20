@@ -228,7 +228,7 @@ $('#button-payment-address').on('click', function() {
                     location = json['redirect'];
                 } else if (json['error']) {
                     if (json['error']['warning']) {
-                        $('#collapse-payment-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert">&times;</button></div>');
+                        $('#collapse-payment-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
                     }
 
                     for (i in json['error']) {

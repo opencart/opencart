@@ -387,7 +387,7 @@ $('#button-cart').on('click', function() {
 
 			if (json['success']) {
 				html  = '<div class="toast">';
-				html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
+				html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 btn-close float-end" data-dismiss="toast"></button> ' + json['success'] + '</div>';
 				html += '</div>';
 
 				$('#toast').prepend(html);

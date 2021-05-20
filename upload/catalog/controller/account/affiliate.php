@@ -124,9 +124,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($this->request->post['custom_field']['affiliate'])) {
-			$data['affiliate_custom_field'] = $this->request->post['custom_field']['affiliate'];
-		} elseif (isset($affiliate_info)) {
+		if (isset($affiliate_info)) {
 			$data['affiliate_custom_field'] = json_decode($affiliate_info['custom_field'], true);
 		} else {
 			$data['affiliate_custom_field'] = [];
@@ -148,12 +146,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['text_agree'] = '';
 		}
 
-		if (isset($this->request->post['agree'])) {
-			$data['agree'] = $this->request->post['agree'];
-		} else {
-			$data['agree'] = false;
-		}
-
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -172,88 +164,69 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->config->get('config_affiliate_status')) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 		}
 
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
+		$keys = [
+			'payment',
+			'cheque',
+			'paypal',
+			'bank_account_name',
+			'bank_account_number'
+		];
 
-			$this->response->redirect($this->url->link('affiliate/login', 'language=' . $this->config->get('config_language')));
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
 		}
 
-		$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
-
-		$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
-
-		if ($this->customer->isLogged()) {
-			$keys = [
-				'payment',
-				'cheque',
-				'paypal',
-				'bank_account_name',
-				'bank_account_number'
-			];
-
-			foreach ($keys as $key) {
-				if (!isset($this->request->post[$key])) {
-					$this->request->post[$key] = '';
-				}
+		if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {
+			$json['error']['cheque'] = $this->language->get('error_cheque');
+		} elseif (($this->request->post['payment'] == 'paypal') && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
+			$json['error']['paypal'] = $this->language->get('error_paypal');
+		} elseif ($this->request->post['payment'] == 'bank') {
+			if ($this->request->post['bank_account_name'] == '') {
+				$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
 			}
 
-			if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {
-				$json['error']['cheque'] = $this->language->get('error_cheque');
-			} elseif (($this->request->post['payment'] == 'paypal') && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
-				$json['error']['paypal'] = $this->language->get('error_paypal');
-			} elseif ($this->request->post['payment'] == 'bank') {
-				if ($this->request->post['bank_account_name'] == '') {
-					$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
-				}
-
-				if ($this->request->post['bank_account_number'] == '') {
-					$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
-				}
+			if ($this->request->post['bank_account_number'] == '') {
+				$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
 			}
+		}
 
-			// Custom field validation
-			$this->load->model('account/custom_field');
+		// Custom field validation
+		$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
-			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'affiliate') {
-					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-					}
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'affiliate') {
+				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
+		}
 
-			// Validate agree only if customer not already an affiliate
-			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
+		// Validate agree only if customer not already an affiliate
+		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
-			if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
-				$this->load->model('catalog/information');
+		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
+			$this->load->model('catalog/information');
 
-				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
-				if ($information_info && !isset($this->request->post['agree'])) {
-					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-				}
+			if ($information_info && !isset($this->request->post['agree'])) {
+				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
+		}
 
-			if (!$json) {
+		if (!$json) {
+			$this->model_account_affiliate->addAffiliate($this->customer->getId(), $this->request->post);
 
-
-				$this->model_account_affiliate->addAffiliate($this->customer->getId(), $this->request->post);
-
-				$this->model_account_affiliate->editAffiliate($this->customer->getId(), $this->request->post);
-
-				$this->session->data['success'] = $this->language->get('text_success');
-
-				$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
-			}
-
+			$this->model_account_affiliate->editAffiliate($this->customer->getId(), $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

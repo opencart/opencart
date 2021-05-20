@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Affiliate;
 class Register extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		if (!$this->config->get('config_affiliate_status') || $this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
@@ -42,7 +40,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$this->session->data['register_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['action'] = $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
+		$data['register'] = $this->url->link('affiliate/register|register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
 
 		$data['customer_groups'] = [];
 
@@ -81,7 +79,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
 
 		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$data['captcha'] = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'], $this->error);
+			$data['captcha'] = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code']);
 		} else {
 			$data['captcha'] = '';
 		}
@@ -100,12 +98,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['text_agree'] = '';
 		}
 
-		if (isset($this->request->post['agree'])) {
-			$data['agree'] = $this->request->post['agree'];
-		} else {
-			$data['agree'] = false;
-		}
-
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -117,10 +109,6 @@ class Register extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function save(): bool {
-
-
-
-
 		$keys = [
 			'firstname',
 			'lastname',
@@ -142,27 +130,27 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['register_token']) || !isset($this->session->data['register_token']) || ($this->session->data['register_token'] != $this->request->get['register_token'])) {
-			$this->error['warning'] = $this->language->get('error_token');
+			$json['redirect'] = $this->url->link('affiliate/register', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
+			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
+			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$this->error['email'] = $this->language->get('error_email');
+			$json['error']['email'] = $this->language->get('error_email');
 		}
 
 		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_exists');
+			$json['error']['warning'] = $this->language->get('error_exists');
 		}
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
+			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		// Customer Group
@@ -180,32 +168,32 @@ class Register extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account' || $custom_field['location'] == 'affiliate') {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
 		}
 
 		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-			$this->error['password'] = $this->language->get('error_password');
+			$json['error']['password'] = $this->language->get('error_password');
 		}
 
 		if ($this->request->post['confirm'] != $this->request->post['password']) {
-			$this->error['confirm'] = $this->language->get('error_confirm');
+			$json['error']['confirm'] = $this->language->get('error_confirm');
 		}
 
 		if (($this->request->post['payment'] == 'cheque') && !$this->request->post['cheque']) {
-			$this->error['cheque'] = $this->language->get('error_cheque');
+			$json['error']['cheque'] = $this->language->get('error_cheque');
 		} elseif (($this->request->post['payment'] == 'paypal') && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
-			$this->error['paypal'] = $this->language->get('error_paypal');
+			$json['error']['paypal'] = $this->language->get('error_paypal');
 		} elseif ($this->request->post['payment'] == 'bank') {
 			if (!$this->request->post['bank_account_name']) {
-				$this->error['bank_account_name'] = $this->language->get('error_bank_account_name');
+				$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
 			}
 
 			if (!$this->request->post['bank_account_number']) {
-				$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
+				$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
 			}
 		}
 
@@ -218,7 +206,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$captcha = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
 
 			if ($captcha) {
-				$this->error['captcha'] = $captcha;
+				$json['error']['captcha'] = $captcha;
 			}
 		}
 
@@ -229,10 +217,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
 			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+
+		if (!$json) {
 			unset($this->session->data['guest']);
 
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
@@ -249,11 +238,10 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Log the IP info
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
-			$this->response->redirect($this->url->link('affiliate/success', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('affiliate/success', 'language=' . $this->config->get('config_language'));
 		}
-		return !$this->error;
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
-
-
-
 }

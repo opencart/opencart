@@ -54,7 +54,7 @@
 
 			  if (json['error']) {
 				  if (json['error']['warning']) {
-					  $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					  $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-dismiss="alert"></button></div>');
 				  }
 
 				  if (json['error']['country']) {
@@ -148,7 +148,7 @@
 			  $('.alert-dismissible').remove();
 
 			  if (json['error']) {
-				  $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				  $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
 
 				  $('html, body').animate({scrollTop: 0}, 'slow');
 			  }

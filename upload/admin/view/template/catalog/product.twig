@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
+				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fas fa-filter"></i></button>
 				<a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
 				<button type="button" data-oc-action="{{ copy }}" data-oc-form="#product-list" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
 				<button type="button" data-oc-action="{{ delete }}" data-oc-form="#product-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#product-list').submit() : false;"><i class="far fa-trash-alt"></i></button>
@@ -18,7 +18,7 @@
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			<div id="filter-product" class="col align-self-end d-none d-md-block mb-3">
+			<div id="filter-product" class="col-lg-3 col-md-12 order-lg-9 d-none d-lg-block mb-3">
 				<div class="card">
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
@@ -55,7 +55,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col col-sm-12 align-self-start">
+			<div class="col-lg-9 col-md-12">
 				<div class="card">
 					<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
 					<div id="product" class="card-body">{{ list }}</div>

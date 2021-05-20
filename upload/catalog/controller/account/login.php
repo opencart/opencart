@@ -172,6 +172,7 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		// Login override for admin users
 		$this->customer->logout();
+		
 		$this->cart->clear();
 
 		unset($this->session->data['order_id']);
@@ -194,6 +195,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		if ($customer_info && $customer_info['token'] && $customer_info['token'] == $token && $this->customer->login($customer_info['email'], '', true)) {
 			// Default Addresses
 			$this->load->model('account/address');
+			
 			$address_info = $this->model_account_address->getAddress($customer_info['address_id']);
 
 			if ($this->config->get('config_tax_customer') && $address_info) {

@@ -58,14 +58,14 @@
 									<label for="input-tracking" class="col-sm-2 col-form-label">{{ entry_tracking }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
-										<small class="form-text text-muted">{{ help_tracking }}</small>
+										<div class="form-text text-muted">{{ help_tracking }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
 									<label for="input-commission" class="col-sm-2 col-form-label">{{ entry_commission }}</label>
 									<div class="col-sm-10">
 										<input type="text" name="commission" value="{{ commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control"/>
-										<small class="form-text text-muted">{{ help_commission }}</small>
+										<div class="form-text text-muted">{{ help_commission }}</div>
 									</div>
 								</div>
 								{% for custom_field in custom_fields %}

@@ -34,7 +34,7 @@
 								<label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-									<small class="form-text text-muted">{{ help_code }}</small>
+									<div class="form-text text-muted">{{ help_code }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -52,7 +52,7 @@
 											<option value="F">{{ text_amount }}</option>
 										{% endif %}
 									</select>
-									<small class="form-text text-muted">{{ help_type }}</small>
+									<div class="form-text text-muted">{{ help_type }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -65,7 +65,7 @@
 								<label for="input-total" class="col-sm-2 col-form-label">{{ entry_total }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
-									<small class="form-text text-muted">{{ help_total }}</small>
+									<div class="form-text text-muted">{{ help_total }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -73,14 +73,14 @@
 								<div class="col-sm-10">
 									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 										{% if logged %}
-											<label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="1" checked="checked"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary"><input type="radio" name="logged" value="0"/> {{ text_no }}</label>
+											<label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
+											<label class="btn btn-outline-secondary"><input type="radio" name="logged" value="0" class="btn-check"/> {{ text_no }}</label>
 										{% else %}
-											<label class="btn btn-outline-secondary"><input type="radio" name="logged" value="1"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="0" checked="checked"/> {{ text_no }}</label>
+											<label class="btn btn-outline-secondary"><input type="radio" name="logged" value="1" class="btn-check"/> {{ text_yes }}</label>
+											<label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
 										{% endif %}
 									</div>
-									<small class="form-text text-muted">{{ help_logged }}</small>
+									<div class="form-text text-muted">{{ help_logged }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -88,11 +88,11 @@
 								<div class="col-sm-10">
 									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 										{% if shipping %}
-											<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
+											<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
+											<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0" class="btn-check"/> {{ text_no }}</label>
 										{% else %}
-											<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
+											<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1" class="btn-check"/> {{ text_yes }}</label>
+											<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
 										{% endif %}
 									</div>
 								</div>
@@ -111,7 +111,7 @@
 											{% endfor %}
 										</table>
 									</div>
-									<small class="form-text text-muted">{{ help_product }}</small>
+									<div class="form-text text-muted">{{ help_product }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -128,7 +128,7 @@
 											{% endfor %}
 										</table>
 									</div>
-									<small class="form-text text-muted">{{ help_category }}</small>
+									<div class="form-text text-muted">{{ help_category }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -153,14 +153,14 @@
 								<label for="input-uses-total" class="col-sm-2 col-form-label">{{ entry_uses_total }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
-									<small class="form-text text-muted">{{ help_uses_total }}</small>
+									<div class="form-text text-muted">{{ help_uses_total }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<label for="input-uses-customer" class="col-sm-2 col-form-label">{{ entry_uses_customer }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
-									<small class="form-text text-muted">{{ help_uses_customer }}</small>
+									<div class="form-text text-muted">{{ help_uses_customer }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">

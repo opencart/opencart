@@ -43,7 +43,7 @@
 						<label for="input-locale" class="col-sm-2 col-form-label">{{ entry_locale }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="locale" value="{{ locale }}" placeholder="{{ entry_locale }}" id="input-locale" class="form-control"/>
-							<small class="form-text text-muted">{{ help_locale }}</small>
+							<div class="form-text text-muted">{{ help_locale }}</div>
 						</div>
 					</div>
 					<div class="row mb-3">
@@ -58,7 +58,7 @@
 									<option value="0" selected="selected">{{ text_disabled }}</option>
 								{% endif %}
 							</select>
-							<small class="form-text text-muted">{{ help_status }}</small>
+							<div class="form-text text-muted">{{ help_status }}</div>
 						</div>
 					</div>
 					<div class="row mb-3">

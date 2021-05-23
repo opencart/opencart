@@ -406,10 +406,13 @@ $(document).on('click', '[data-oc-action]', function() {
 
 			console.log(json);
 
+			console.log(Array.isArray(json['error']));
+
 			if (typeof json['error'] == 'object') {
 				if (json['error']['warning']) {
 					$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 				}
+
 
 				for (key in json['error']) {
 					var element = $(form).find('#input-' + key.replaceAll('_', '-'));

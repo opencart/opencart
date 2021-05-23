@@ -150,7 +150,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('account/address');
+		$this->load->language('account/affiliate');
 
 		$json = [];
 

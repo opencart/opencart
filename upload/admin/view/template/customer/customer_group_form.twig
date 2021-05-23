@@ -46,14 +46,14 @@
 						<div class="col-sm-10">
 							<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
 								{% if approval %}
-									<label class="btn btn-outline-secondary active"><input type="radio" name="approval" value="1" checked="checked"/> {{ text_yes }}</label>
-									<label class="btn btn-outline-secondary"><input type="radio" name="approval" value="0"/> {{ text_no }}</label>
+									<label class="btn btn-outline-secondary active"><input type="radio" name="approval" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
+									<label class="btn btn-outline-secondary"><input type="radio" name="approval" value="0" class="btn-check"/> {{ text_no }}</label>
 								{% else %}
-									<label class="btn btn-outline-secondary"><input type="radio" name="approval" value="1"/> {{ text_yes }}</label>
-									<label class="btn btn-outline-secondary active"><input type="radio" name="approval" value="0" checked="checked"/> {{ text_no }}</label>
+									<label class="btn btn-outline-secondary"><input type="radio" name="approval" value="1" class="btn-check"/> {{ text_yes }}</label>
+									<label class="btn btn-outline-secondary active"><input type="radio" name="approval" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
 								{% endif %}
 							</div>
-							<small class="form-text text-muted">{{ help_approval }}</small>
+							<div class="form-text text-muted">{{ help_approval }}</div>
 						</div>
 					</div>
 					<div class="row mb-3">

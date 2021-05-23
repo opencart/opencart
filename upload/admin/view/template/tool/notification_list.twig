@@ -18,7 +18,7 @@
 								<td class="text-primary" style="width: 1px;"><i class="fas far fa-bell fa-3x"></i></td>
 								<td class="text-start"><a href="{{ notification.view }}" class="text-primary font-weight-bold">{{ notification.title }}</a>
 									<br/>
-									<small class="text-muted">{{ notification.date_added }}</small>
+									<div class="text-muted">{{ notification.date_added }}</div>
 								</td>
 								<td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-oc-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fas fa-eye"></i></button></td>
 							</tr>
@@ -28,7 +28,7 @@
 								<td class="text-primary" style="width: 1px;"><i class="far fa-bell fa-3x"></i></td>
 								<td class="text-start"><a href="{{ notification.view }}" class="text-primary">{{ notification.title }}</a>
 									<br/>
-									<small class="text-muted">{{ notification.date_added }}</small>
+									<div class="text-muted">{{ notification.date_added }}</div>
 								</td>
 								<td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-oc-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button></td>
 							</tr>

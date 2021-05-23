@@ -28,11 +28,11 @@
             <div class="col-sm-10">
               <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
                 {% if module_store_admin %}
-                  <label class="btn btn-outline-secondary active"><input type="radio" name="module_store_admin" value="1" checked="checked"/> {{ text_yes }}</label>
-                  <label class="btn btn-outline-secondary"><input type="radio" name="module_store_admin" value="0"/> {{ text_no }}</label>
+                  <label class="btn btn-outline-secondary active"><input type="radio" name="module_store_admin" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
+                  <label class="btn btn-outline-secondary"><input type="radio" name="module_store_admin" value="0" class="btn-check"/> {{ text_no }}</label>
                 {% else %}
-                  <label class="btn btn-outline-secondary"><input type="radio" name="module_store_admin" value="1"/> {{ text_yes }}</label>
-                  <label class="btn btn-outline-secondary active"><input type="radio" name="module_store_admin" value="0" checked="checked"/> {{ text_no }}</label>
+                  <label class="btn btn-outline-secondary"><input type="radio" name="module_store_admin" value="1" class="btn-check"/> {{ text_yes }}</label>
+                  <label class="btn btn-outline-secondary active"><input type="radio" name="module_store_admin" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
                 {% endif %}
               </div>
             </div>

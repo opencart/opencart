@@ -111,6 +111,8 @@ class Register extends \Opencart\System\Engine\Controller {
 	public function register(): void {
 		$this->load->language('affiliate/register');
 
+		$json = [];
+
 		$keys = [
 			'firstname',
 			'lastname',

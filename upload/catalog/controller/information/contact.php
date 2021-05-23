@@ -89,6 +89,8 @@ class Contact extends \Opencart\System\Engine\Controller {
 	}
 
 	public function send(): void {
+		$this->load->language('information/contact');
+
 		$keys = [
 			'name',
 			'email',

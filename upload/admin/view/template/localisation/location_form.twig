@@ -35,7 +35,7 @@
 						<label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="geocode" value="{{ geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
-							<small class="form-text text-muted">{{ help_geocode }}</small>
+							<div class="form-text text-muted">{{ help_geocode }}</div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
@@ -60,14 +60,14 @@
 						<label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
 						<div class="col-sm-10">
 							<textarea name="open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ open }}</textarea>
-							<small class="form-text text-muted">{{ help_open }}</small>
+							<div class="form-text text-muted">{{ help_open }}</div>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
 						<div class="col-sm-10">
 							<textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
-							<small class="form-text text-muted">{{ help_comment }}</small>
+							<div class="form-text text-muted">{{ help_comment }}</div>
 						</div>
 					</div>
 				</form>

@@ -155,14 +155,13 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-
 		if (isset($this->request->get['remove'])) {
 			// Remove Wishlist
 			$this->model_account_wishlist->deleteWishlist($this->request->get['remove']);
 
 			$this->session->data['success'] = $this->language->get('text_remove');
 
-			$this->response->redirect($this->url->link('account/wishlist', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

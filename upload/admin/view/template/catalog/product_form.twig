@@ -172,7 +172,7 @@
 														</div>
 													{% endif %}
 												</div>
-												<small class="form-text text-muted">{{ help_tag }}</small>
+												<div class="form-text text-muted">{{ help_tag }}</div>
 											</div>
 										</div>
 									</div>
@@ -225,7 +225,7 @@
 												</div>
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_sku }}</small>
+										<div class="form-text text-muted">{{ help_sku }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -248,7 +248,7 @@
 												</div>
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_upc }}</small>
+										<div class="form-text text-muted">{{ help_upc }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -271,7 +271,7 @@
 
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_ean }}</small>
+										<div class="form-text text-muted">{{ help_ean }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -294,7 +294,7 @@
 
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_jan }}</small>
+										<div class="form-text text-muted">{{ help_jan }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -317,7 +317,7 @@
 
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_isbn }}</small>
+										<div class="form-text text-muted">{{ help_isbn }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -340,7 +340,7 @@
 
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_mpn }}</small>
+										<div class="form-text text-muted">{{ help_mpn }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -450,7 +450,7 @@
 
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_minimum }}</small>
+										<div class="form-text text-muted">{{ help_minimum }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -459,11 +459,11 @@
 										<div class="input-group">
 											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons" id="input-subtract">
 												{% if subtract %}
-													<label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" checked="checked"/> {{ text_yes }}</label>
-													<label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0"/> {{ text_no }}</label>
+													<label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
+													<label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="0" class="btn-check"/> {{ text_no }}</label>
 												{% else %}
-													<label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="1"/> {{ text_yes }}</label>
-													<label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="0" checked="checked"/> {{ text_no }}</label>
+													<label class="btn btn-outline-secondary"><input type="radio" name="subtract" value="1" class="btn-check"/> {{ text_yes }}</label>
+													<label class="btn btn-outline-secondary active"><input type="radio" name="subtract" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
 												{% endif %}
 											</div>
 											{% if master_id %}
@@ -509,7 +509,7 @@
 
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_stock_status }}</small>
+										<div class="form-text text-muted">{{ help_stock_status }}</div>
 									</div>
 								</div>
 								<div class="row mb-3">
@@ -540,17 +540,15 @@
 									<label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
 									<div class="col-sm-10">
 										<div class="input-group">
-
 											<div class="btn-group btn-group-toggle" data-bs-toggle="buttons" id="input-shipping">
 												{% if shipping %}
-													<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" checked="checked"/> {{ text_yes }}</label>
-													<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0"/> {{ text_no }}</label>
+													<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
+													<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0" class="btn-check"/> {{ text_no }}</label>
 												{% else %}
-													<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1"/> {{ text_yes }}</label>
-													<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" checked="checked"/> {{ text_no }}</label>
+													<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="1" class="btn-check"/> {{ text_yes }}</label>
+													<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
 												{% endif %}
 											</div>
-
 											{% if master_id %}
 												<div class="input-group-text">
 													<div class="custom-control custom-switch">
@@ -563,7 +561,6 @@
 													</div>
 												</div>
 											{% endif %}
-
 										</div>
 									</div>
 								</div>
@@ -768,7 +765,7 @@
 
 										{% endif %}
 									</div>
-									<small class="form-text text-muted">{{ help_manufacturer }}</small>
+									<div class="form-text text-muted">{{ help_manufacturer }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -803,7 +800,7 @@
 
 										{% endif %}
 									</div>
-									<small class="form-text text-muted">{{ help_category }}</small>
+									<div class="form-text text-muted">{{ help_category }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -836,7 +833,7 @@
 
 										{% endif %}
 									</div>
-									<small class="form-text text-muted">{{ help_filter }}</small>
+									<div class="form-text text-muted">{{ help_filter }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -901,7 +898,7 @@
 											</div>
 										{% endif %}
 									</div>
-									<small class="form-text text-muted">{{ help_download }}</small>
+									<div class="form-text text-muted">{{ help_download }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -934,7 +931,7 @@
 
 										{% endif %}
 									</div>
-									<small class="form-text text-muted">{{ help_related }}</small>
+									<div class="form-text text-muted">{{ help_related }}</div>
 								</div>
 							</div>
 						</div>
@@ -1136,7 +1133,7 @@
 										<label for="input-option" class="col-sm-2 col-form-label">{{ entry_option }}</label>
 										<div class="col-sm-10">
 											<input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" class="form-control"/>
-											<small class="form-text text-muted">{{ help_option }}</small>
+											<div class="form-text text-muted">{{ help_option }}</div>
 										</div>
 									</div>
 								</fieldset>
@@ -1682,9 +1679,9 @@
 												</div>
 											{% endif %}
 										</div>
-										<small class="form-text text-muted">{{ help_points }}</small>
+										<div class="form-text text-muted">{{ help_points }}</div>
+										</div>
 									</div>
-								</div>
 							</fieldset>
 
 							<fieldset>

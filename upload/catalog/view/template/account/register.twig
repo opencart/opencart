@@ -202,7 +202,7 @@
 				{% if text_agree %}
 					<div class="d-inline-block pt-2 pd-2 w-100">
 						<div class="float-end">{{ text_agree }}
-							<input type="checkbox" name="agree" value="1"/>
+							<input type="checkbox" name="agree" value="1" class="form-check-input"/>
 							&nbsp;
 							<button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
 						</div>
@@ -249,10 +249,10 @@ $('input[name=\'customer_group_id\']').on('change', function() {
             for (i = 0; i < json.length; i++) {
                 custom_field = json[i];
 
-                $('#custom-field' + custom_field['custom_field_id']).show();
+                $('#custom-field-' + custom_field['custom_field_id']).show();
 
                 if (custom_field['required']) {
-                    $('#custom-field' + custom_field['custom_field_id']).addClass('required');
+                    $('#custom-field-' + custom_field['custom_field_id']).addClass('required');
                 }
             }
         },

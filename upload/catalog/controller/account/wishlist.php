@@ -161,7 +161,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_remove');
 
-			$json['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

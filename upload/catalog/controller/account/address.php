@@ -45,7 +45,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$find = [
 				'{firstname}',
 				'{lastname}',
-				'{company}',-
+				'{company}',
 				'{address_1}',
 				'{address_2}',
 				'{city}',

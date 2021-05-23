@@ -31,7 +31,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$this->session->data['voucher_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['save'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
+		$data['save'] = $this->url->link('account/voucher|add', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
 
 		if ($this->customer->isLogged()) {
 			$data['from_name'] = $this->customer->getFirstName() . ' '  . $this->customer->getLastName();
@@ -61,7 +61,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/voucher', $data));
 	}
 
-	public function save(): void {
+	public function add(): void {
 		$this->load->language('account/voucher');
 
 		$json = [];
@@ -114,7 +114,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_agree');
 		}
 
-		if ($json) {
+		if (!$json) {
 			$this->session->data['vouchers'][mt_rand()] = [
 				'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->request->post['amount'], $this->session->data['currency'], 1.0), $this->request->post['to_name']),
 				'to_name'          => $this->request->post['to_name'],

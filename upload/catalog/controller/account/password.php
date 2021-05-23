@@ -29,7 +29,7 @@ class Password extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/password', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['save'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
+		$data['save'] = $this->url->link('account/password|save', 'language=' . $this->config->get('config_language'));
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -42,7 +42,7 @@ class Password extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/password', $data));
 	}
 
-	protected function validate(): void {
+	public function save(): void {
 		$keys = [
 			'password',
 			'confirm'
@@ -62,7 +62,7 @@ class Password extends \Opencart\System\Engine\Controller {
 			$json['error']['confirm'] = $this->language->get('error_confirm');
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (!$json) {
 			$this->load->model('account/customer');
 
 			$this->model_account_customer->editPassword($this->customer->getEmail(), $this->request->post['password']);

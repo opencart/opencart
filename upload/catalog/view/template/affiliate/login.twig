@@ -35,7 +35,7 @@
                 </div>
                 <div class="row mb-3">
                   <label for="input-password" class="col-form-label">{{ entry_password }}</label> <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control"/> <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
-                <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-login" class="btn btn-primary">{{ button_login }}</button>
+                <button type="button" data-oc-action="{{ login }}" data-oc-form="#form-login" class="btn btn-primary">{{ button_login }}</button>
                 {% if redirect %}
                   <input type="hidden" name="redirect" value="{{ redirect }}"/>
                 {% endif %}

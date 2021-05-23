@@ -404,17 +404,15 @@ $(document).on('click', '[data-oc-action]', function() {
 		success: function(json) {
 			$('.invalid-tooltip, .alert-dismissible').remove();
 
-			console.log('xhr.responseText');
-
-
+			console.log(json);
 
 			if (typeof json['error'] == 'object') {
 				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+					$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 				}
 
 				for (key in json['error']) {
-					var element = $('#input-' + key.replaceAll('_', '-'));
+					var element = $(form).find('#input-' + key.replaceAll('_', '-'));
 
 					// Highlight any found errors
 					$(element).addClass('is-invalid');
@@ -430,13 +428,13 @@ $(document).on('click', '[data-oc-action]', function() {
 			}
 
 			if (typeof json['error'] == 'string') {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+				$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
 				delete json['error'];
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
 				// Refresh
 				var url = $(form).attr('data-oc-load');
@@ -461,7 +459,7 @@ $(document).on('click', '[data-oc-action]', function() {
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			console.log(xhr.responseText);
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}

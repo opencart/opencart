@@ -45,7 +45,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$find = [
 				'{firstname}',
 				'{lastname}',
-				'{company}',
+				'{company}',-
 				'{address_1}',
 				'{address_2}',
 				'{city}',
@@ -135,9 +135,9 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['address_id'])) {
-			$data['save'] = $this->url->link('account/address|add', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+			$data['save'] = $this->url->link('account/address|save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		} else {
-			$data['save'] = $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $this->request->get['address_id']);
+			$data['save'] = $this->url->link('account/address|save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $this->request->get['address_id']);
 		}
 
 		if (isset($this->request->get['address_id'])) {

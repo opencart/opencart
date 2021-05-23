@@ -2,13 +2,13 @@
 namespace Opencart\Catalog\Controller\Account;
 class Edit extends \Opencart\System\Engine\Controller {
 	public function index(): void {
+		$this->load->language('account/edit');
+
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
-
-		$this->load->language('account/edit');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -34,7 +34,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/edit', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
-		$data['save'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+		$data['save'] = $this->url->link('account/edit|save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$this->load->model('account/customer');
 

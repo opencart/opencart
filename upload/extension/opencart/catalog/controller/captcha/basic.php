@@ -1,14 +1,8 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Captcha;
 class Basic extends \Opencart\System\Engine\Controller {
-	public function index(array $error = []): string {
+	public function index(): string {
 		$this->load->language('extension/opencart/captcha/basic');
-
-		if (isset($error['captcha'])) {
-			$data['error_captcha'] = $error['captcha'];
-		} else {
-			$data['error_captcha'] = '';
-		}
 
 		$data['route'] = (string)$this->request->get['route'];
 

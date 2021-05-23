@@ -404,9 +404,9 @@ $(document).on('click', '[data-oc-action]', function() {
 		success: function(json) {
 			$('.invalid-tooltip, .alert-dismissible').remove();
 
-			console.log(json);
+			//console.log(json);
 
-			console.log(Array.isArray(json['error']));
+			//console.log(Array.isArray(json['error']));
 
 			if (typeof json['error'] == 'object') {
 				if (json['error']['warning']) {

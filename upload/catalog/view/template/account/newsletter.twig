@@ -15,17 +15,21 @@
             <div class="col-md-9">
               {% if newsletter %}
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input" checked="checked"/> <label for="input-newsletter-yes" class="col-form-label">{{ text_yes }}</label>
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input" checked="checked"/>
+                <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input"/> <label for="input-newsletter-no" class="col-form-label">{{ text_no }}</label>
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input"/>
+                <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
               </div>
               {% else %}
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/> <label for="input-newsletter-yes" class="col-form-label">{{ text_yes }}</label>
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/>
+                <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked="checked"/> <label for="input-newsletter-no" class="col-form-label">{{ text_no }}</label>
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked="checked"/>
+                <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
             {% endif %}

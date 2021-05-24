@@ -6,8 +6,6 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('account/address');
-
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
@@ -33,6 +31,8 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$data['addresses'] = [];
 
+		$this->load->model('account/address');
+
 		$results = $this->model_account_address->getAddresses();
 
 		foreach ($results as $result) {
@@ -45,7 +45,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$find = [
 				'{firstname}',
 				'{lastname}',
-				'{company}',-
+				'{company}',
 				'{address_1}',
 				'{address_2}',
 				'{city}',
@@ -125,12 +125,12 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['address_id'])) {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_address_add'),
-				'href' => $this->url->link('account/address|add', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('account/address|form', 'language=' . $this->config->get('config_language'))
 			];
 		} else {
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_address_edit'),
-				'href' => $this->url->link('account/address|edit', 'language=' . $this->config->get('config_language') . '&address_id=' . $this->request->get['address_id'])
+				'href' => $this->url->link('account/address|form', 'language=' . $this->config->get('config_language') . '&address_id=' . $this->request->get['address_id'])
 			];
 		}
 
@@ -141,6 +141,8 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['address_id'])) {
+			$this->load->model('account/address');
+
 			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
 		}
 

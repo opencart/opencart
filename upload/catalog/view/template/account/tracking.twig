@@ -1,63 +1,65 @@
 {{ header }}
 <div id="account-tracking" class="container">
-  <ul class="breadcrumb">
-    {% for breadcrumb in breadcrumbs %}
-      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-    {% endfor %}
-  </ul>
-  <div class="row">{{ column_left }}
-    <div id="content" class="col">
-      {{ content_top }}
-      <h1>{{ heading_title }}</h1>
-      <p>{{ text_description }}</p>
-      <form>
-        <div class="row mb-3">
-          <label for="input-code" class="col-md-2 col-form-label">{{ entry_code }}</label>
-          <div class="col-md-10">
-            <textarea cols="40" rows="5" placeholder="{{ entry_code }}" id="input-code" class="form-control">{{ code }}</textarea>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="input-generator"><span data-bs-toggle="tooltip" title="{{ help_generator }}" class="col-md-2 col-form-label">{{ entry_generator }}</span></label>
-          <div class="col-md-10">
-            <input type="text" name="product" value="" placeholder="{{ entry_generator }}" id="input-generator" class="form-control"/>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="input-link" class="col-md-2 col-form-label">{{ entry_link }}</label>
-          <div class="col-md-10">
-            <textarea name="link" cols="40" rows="5" placeholder="{{ entry_link }}" id="input-link" class="form-control"></textarea>
-          </div>
-        </div>
-      </form>
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      </div>
-      {{ content_bottom }}
-    </div>
-    {{ column_right }}
-  </div>
+	<ul class="breadcrumb">
+		{% for breadcrumb in breadcrumbs %}
+			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		{% endfor %}
+	</ul>
+	<div class="row">{{ column_left }}
+		<div id="content" class="col">
+			{{ content_top }}
+			<h1>{{ heading_title }}</h1>
+			<p>{{ text_description }}</p>
+			<form>
+				<div class="row mb-3">
+					<label for="input-code" class="col-md-2 col-form-label">{{ entry_code }}</label>
+					<div class="col-md-10">
+						<textarea cols="40" rows="5" placeholder="{{ entry_code }}" id="input-code" class="form-control">{{ code }}</textarea>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="input-generator" class="col-md-2 col-form-label">{{ entry_generator }}</label>
+					<div class="col-md-10">
+
+						<input type="text" name="product" value="" placeholder="{{ entry_generator }}" id="input-generator" class="form-control"/>
+						<div class="text-muted">{{ help_generator }}</div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="input-link" class="col-md-2 col-form-label">{{ entry_link }}</label>
+					<div class="col-md-10">
+						<textarea name="link" cols="40" rows="5" placeholder="{{ entry_link }}" id="input-link" class="form-control"></textarea>
+					</div>
+				</div>
+			</form>
+			<div class="d-inline-block pt-2 pd-2 w-100">
+				<div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+			</div>
+			{{ content_bottom }}
+		</div>
+		{{ column_right }}
+	</div>
 </div>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=account/tracking|autocomplete&filter_name=' + encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['link']
-					}
-				}));
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'product\']').val(item['label']);
-		$('textarea[name=\'link\']').val(item['value']);
-	}
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=account/tracking|autocomplete&filter_name=' + encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['link']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'product\']').val(item['label']);
+        $('textarea[name=\'link\']').val(item['value']);
+    }
 });
 //--></script>
 {{ footer }}

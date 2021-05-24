@@ -122,11 +122,12 @@
 					{{ captcha }}
 				</fieldset>
 				<div class="d-inline-block pt-2 pd-2 w-100">
-					<input class="float-end">
-					<button type="button" data-oc-action="{{ send }}" data-oc-form="#form-contact" class="btn btn-primary">{{ button_submit }}</button>
+					<div class="text-end">
+						<button type="button" data-oc-action="{{ send }}" data-oc-form="#form-contact" class="btn btn-primary">{{ button_submit }}</button>
+					</div>
 				</div>
-		</form>
-		{{ content_bottom }}</div>
-	{{ column_right }}</div>
+			</form>
+			{{ content_bottom }}</div>
+		{{ column_right }}</div>
 </div>
 {{ footer }}

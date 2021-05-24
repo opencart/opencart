@@ -42,22 +42,15 @@
 									<span class="badge bg-success">{{ product.quantity }}</span>
 								{% endif %}</td>
 							<td class="text-end">
-
 								{% if product.variant %}
-
 									<div class="btn-group">
 										<a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
 										<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"><i class="fas fa-caret-down"></i></button>
 										<div class="dropdown-menu dropdown-menu-right"><a href="{{ product.variant }}" class="dropdown-item"><i class="fas fa-plus"></i> {{ text_variant_add }}</a></div>
 									</div>
-
 								{% else %}
-
 									<a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
-
 								{% endif %}
-
-
 							</td>
 						</tr>
 					{% endfor %}
@@ -68,9 +61,9 @@
 				{% endif %}
 			</tbody>
 		</table>
-	</div>
-	<div class="row">
-		<div class="col-sm-6 text-start">{{ pagination }}</div>
-		<div class="col-sm-6 text-end">{{ results }}</div>
-	</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 text-start">{{ pagination }}</div>
+			<div class="col-sm-6 text-end">{{ results }}</div>
+		</div>
 </form>

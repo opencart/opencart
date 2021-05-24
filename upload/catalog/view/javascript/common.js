@@ -636,7 +636,7 @@ var chain = new Chain();
 	}
 })(window.jQuery);
 
-+function($) {
+function($) {
 	'use strict';
 
 	// BUTTON PUBLIC CLASS DEFINITION

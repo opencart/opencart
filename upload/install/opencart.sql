@@ -3190,8 +3190,8 @@ CREATE TABLE `oc_return_action` (
 INSERT INTO `oc_return_action` (`return_action_id`, `language_id`, `name`) VALUES
 (1, 1, 'Refunded'),
 (2, 1, 'Credit Issued'),
-(3, 1, 'Replacement Sent');
-
+(3, 1, 'Replacement Sent'),
+(4, 1, 'Voided');
 -----------------------------------------------------------
 
 --
@@ -3254,8 +3254,9 @@ CREATE TABLE `oc_return_status` (
 
 INSERT INTO `oc_return_status` (`return_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
+(2, 1, 'Awaiting Products'),
 (3, 1, 'Complete'),
-(2, 1, 'Awaiting Products');
+(4, 1, 'Cancelled');
 
 -----------------------------------------------------------
 

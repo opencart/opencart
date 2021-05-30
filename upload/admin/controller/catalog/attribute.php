@@ -182,12 +182,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['attribute_id'])) {
-			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token']);
-		} else {
-			$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $this->request->get['attribute_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/attribute|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/attribute', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['attribute_id'])) {
@@ -257,10 +252,10 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/attribute');
 
-			if (!isset($this->request->get['attribute_id'])) {
+			if (!$this->request->post['attribute_id']) {
 				$json['attribute_id'] = $this->model_catalog_attribute->addAttribute($this->request->post);
 			} else {
-				$this->model_catalog_attribute->editAttribute($this->request->get['attribute_id'], $this->request->post);
+				$this->model_catalog_attribute->editAttribute($this->request->post['attribute_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

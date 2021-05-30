@@ -33,7 +33,6 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		// Hard coding scripts so they can be replaced via the events system.
 		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.6.0.min.js';
-		$data['bootstrap_js'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();

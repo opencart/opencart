@@ -451,7 +451,7 @@ div.required .col-form-label:not(span):before, td.required:before {
     width: 12rem;
 }
 
-.table thead td span[data-toggle="tooltip"]:after, label.col-form-label span:after {
+.table thead td span[data-toggle='tooltip']:after, label.form-label span:after {
     font-family: 'Font Awesome 5 Free';
     font-weight: 600;
     content: "\f059";

@@ -190,12 +190,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['translation_id'])) {
-			$data['save'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $this->request->get['translation_id']);
-		}
-
+		$data['save'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['translation_id'])) {
@@ -267,10 +262,10 @@ class Translation extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('design/translation');
 
-			if (!isset($this->request->get['translation_id'])) {
+			if (!$this->request->post['translation_id']) {
 				$json['translation_id'] = $this->model_design_translation->addTranslation($this->request->post);
 			} else {
-				$this->model_design_translation->editTranslation($this->request->get['translation_id'], $this->request->post);
+				$this->model_design_translation->editTranslation($this->request->post['translation_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

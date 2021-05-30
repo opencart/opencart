@@ -24,13 +24,13 @@
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
 						<div class="mb-3">
-							<label for="input-order-id" class="col-form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+							<label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+							<label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-store" class="col-form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
+							<label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
 								<option value=""></option>
 								{% for store in stores %}
 									{% if store.store_id == filter_store_id %}
@@ -42,7 +42,7 @@
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
+							<label for="input-order-status" class="form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
 								<option value=""></option>
 								{% if filter_order_status_id == '0' %}
 									<option value="0" selected="selected">{{ text_missing }}</option>
@@ -59,17 +59,17 @@
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="input-total" class="col-form-label">{{ entry_total }}</label> <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+							<label for="input-total" class="form-label">{{ entry_total }}</label> <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
+							<label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
 							<div class="input-group date">
 								<input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
 								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 							</div>
 						</div>
 						<div class="mb-3">
-							<label for="input-date-modified" class="col-form-label">{{ entry_date_modified }}</label>
+							<label for="input-date-modified" class="form-label">{{ entry_date_modified }}</label>
 							<div class="input-group date">
 								<input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" id="input-date-modified" class="form-control"/>
 								<div class="input-group-text"><i class="fas fa-calendar"></i></div>

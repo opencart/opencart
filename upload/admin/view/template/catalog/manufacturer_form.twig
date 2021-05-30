@@ -39,7 +39,7 @@
 										{% for store in stores %}
 											<label class="form-check">
 												{% if store.store_id in manufacturer_store %}
-													<input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+													<input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" class="form-check-input" checked="checked"/>
 													{{ store.name }}
 												{% else %}
 													<input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" class="form-check-input"/>

@@ -22,22 +22,22 @@
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
 						<div class="mb-3">
-							<label for="input-return-id" class="col-form-label">{{ entry_return_id }}</label> <input type="text" name="filter_return_id" value="{{ filter_return_id }}" placeholder="{{ entry_return_id }}" id="input-return-id" class="form-control"/>
+							<label for="input-return-id" class="form-label">{{ entry_return_id }}</label> <input type="text" name="filter_return_id" value="{{ filter_return_id }}" placeholder="{{ entry_return_id }}" id="input-return-id" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-order-id" class="col-form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+							<label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label class="col-form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+							<label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label class="col-form-label">{{ entry_product }}</label> <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+							<label class="form-label">{{ entry_product }}</label> <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label class="col-form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+							<label class="form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-return-status" class="col-form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-return-status" class="form-select">
+							<label for="input-return-status" class="form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-return-status" class="form-select">
 								<option value=""></option>
 								{% for return_status in return_statuses %}
 									{% if return_status.return_status_id == filter_return_status_id %}
@@ -49,14 +49,14 @@
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="input-date-added" class="col-form-label">{{ entry_date_added }}</label>
+							<label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
 							<div class="input-group date">
 								<input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
 								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 							</div>
 						</div>
 						<div class="mb-3">
-							<label for="input-date-modified" class="col-form-label">{{ entry_date_modified }}</label>
+							<label for="input-date-modified" class="form-label">{{ entry_date_modified }}</label>
 							<div class="input-group date">
 								<input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" id="input-date-modified" class="form-control"/>
 								<div class="input-group-text"><i class="fas fa-calendar"></i></div>

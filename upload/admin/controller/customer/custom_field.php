@@ -225,12 +225,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['custom_field_id'])) {
-			$data['save'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . '&custom_field_id=' . $this->request->get['custom_field_id']);
-		}
-
+		$data['save'] = $this->url->link('customer/custom_field|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('customer/custom_field', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['custom_field_id'])) {
@@ -374,10 +369,10 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/custom_field');
 
-			if (!isset($this->request->get['custom_field_id'])) {
+			if (!$this->request->post['custom_field_id']) {
 				$json['custom_field_id'] = $this->model_customer_custom_field->addCustomField($this->request->post);
 			} else {
-				$this->model_customer_custom_field->editCustomField($this->request->get['custom_field_id'], $this->request->post);
+				$this->model_customer_custom_field->editCustomField($this->request->post['custom_field_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

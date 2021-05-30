@@ -303,12 +303,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['review_id'])) {
-			$data['save'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . '&review_id=' . $this->request->get['review_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/review|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('catalog/review', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['review_id'])) {
@@ -402,10 +397,10 @@ class Review extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/review');
 
-			if (!isset($this->request->get['review_id'])) {
+			if (!$this->request->post['review_id']) {
 				$json['review_id'] = $this->model_catalog_review->addReview($this->request->post);
 			} else {
-				$this->model_catalog_review->editReview($this->request->get['review_id'], $this->request->post);
+				$this->model_catalog_review->editReview($this->request->post['review_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

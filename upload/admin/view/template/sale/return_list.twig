@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-end">{% if sort == 'r.return_id' %} <a href="{{ sort_return_id }}" class="{{ order|lower }}">{{ column_return_id }}</a> {% else %} <a href="{{ sort_return_id }}">{{ column_return_id }}</a> {% endif %}</td>
 					<td class="text-end">{% if sort == 'r.order_id' %} <a href="{{ sort_order_id }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order_id }}">{{ column_order_id }}</a> {% endif %}</td>
 					<td class="text-start">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
@@ -19,7 +19,7 @@
 				{% if returns %}
 					{% for return in returns %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ return.return_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ return.return_id }}" class="form-check-input"/></td>
 							<td class="text-end">{{ return.return_id }}</td>
 							<td class="text-end">{{ return.order_id }}</td>
 							<td class="text-start">{{ return.customer }}</td>

@@ -1,9 +1,9 @@
 <form id="product-list" data-oc-load="{{ action }}" data-oc-target="#product">
-	<small class="table-responsive">
+	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-center">{{ column_image }}</td>
 					<td class="text-start">{% if sort == 'pd.name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
 					<td class="text-start d-none d-lg-table-cell">{% if sort == 'p.model' %}<a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a>{% else %}<a href="{{ sort_model }}">{{ column_model }}</a>{% endif %}</td>
@@ -16,7 +16,7 @@
 				{% if products %}
 					{% for product in products %}
 						<tr{% if not product.variant %} class="table-warning"{% endif %}>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ product.product_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ product.product_id }}" class="form-check-input"/></td>
 							<td class="text-center"><img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail"/></td>
 							<td class="text-start">{{ product.name }}
 								<br/>

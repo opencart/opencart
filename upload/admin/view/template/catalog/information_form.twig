@@ -79,7 +79,7 @@
 										{% for store in stores %}
 											<label class="form-check">
 												{% if store.store_id in information_store %}
-													<input type="checkbox" name="information_store[]" value="{{ store.store_id }}" checked="checked" class="form-check-input"/>
+													<input type="checkbox" name="information_store[]" value="{{ store.store_id }}" class="form-check-input" checked="checked"/>
 													{{ store.name }}
 												{% else %}
 													<input type="checkbox" name="information_store[]" value="{{ store.store_id }}" class="form-check-input"/>
@@ -190,7 +190,5 @@
 </div>
 <script type="text/javascript"><!--
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
-
-$('#language li:first-child a').tab('show');
 //--></script>
 {{ footer }} 

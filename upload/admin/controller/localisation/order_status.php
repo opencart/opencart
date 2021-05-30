@@ -182,12 +182,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/order_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['order_status_id'])) {
-			$data['save'] = $this->url->link('localisation/order_status|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/order_status|save', 'user_token=' . $this->session->data['user_token'] . '&order_status_id=' . $this->request->get['order_status_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/order_status|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('localisation/order_status', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
@@ -229,10 +224,10 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/order_status');
 
-			if (!isset($this->request->get['order_status_id'])) {
+			if (!$this->request->post['order_status_id']) {
 				$json['order_status_id'] = $this->model_localisation_order_status->addOrderStatus($this->request->post);
 			} else {
-				$this->model_localisation_order_status->editOrderStatus($this->request->get['order_status_id'], $this->request->post);
+				$this->model_localisation_order_status->editOrderStatus($this->request->post['order_status_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

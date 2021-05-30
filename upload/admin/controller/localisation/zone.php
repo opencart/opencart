@@ -259,12 +259,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['zone_id'])) {
-			$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $this->request->get['zone_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['zone_id'])) {
@@ -324,10 +319,10 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/zone');
 
-			if (!isset($this->request->get['zone_id'])) {
+			if (!$this->request->post['zone_id']) {
 				$json['zone_id'] = $this->model_localisation_zone->addZone($this->request->post);
 			} else {
-				$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);
+				$this->model_localisation_zone->editZone($this->request->post['zone_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

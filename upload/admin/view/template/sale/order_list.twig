@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-end">{% if sort == 'o.order_id' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_order_id }}</a> {% else %} <a href="{{ sort_order }}">{{ column_order_id }}</a> {% endif %}</td>
 					<td class="text-start">{% if sort == 'o.store_name' %} <a href="{{ sort_store_name }}" class="{{ order|lower }}">{{ column_store }}</a> {% else %} <a href="{{ sort_store_name }}">{{ column_store }}</a> {% endif %}</td>
 					<td class="text-start">{% if sort == 'customer' %} <a href="{{ sort_customer }}" class="{{ order|lower }}">{{ column_customer }}</a> {% else %} <a href="{{ sort_customer }}">{{ column_customer }}</a> {% endif %}</td>
@@ -18,7 +18,7 @@
 				{% if orders %}
 					{% for order in orders %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}"/><input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/><input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
 							<td class="text-end">{{ order.order_id }}</td>
 							<td class="text-start">{{ order.store_name }}</td>
 							<td class="text-start">{{ order.customer }}</td>

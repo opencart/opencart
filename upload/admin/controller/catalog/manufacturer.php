@@ -184,12 +184,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['manufacturer_id'])) {
-			$data['save'] = $this->url->link('catalog/manufacturer|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('catalog/manufacturer|save', 'user_token=' . $this->session->data['user_token'] . '&manufacturer_id=' . $this->request->get['manufacturer_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/manufacturer|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('catalog/manufacturer', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['manufacturer_id'])) {
@@ -300,7 +295,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 					if ($keyword) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
-						if ($seo_url_info && ($seo_url_info['key'] != 'manufacturer_id' || !isset($this->request->get['manufacturer_id']) || $seo_url_info['value'] != (int)$this->request->get['manufacturer_id'])) {
+						if ($seo_url_info && ($seo_url_info['key'] != 'manufacturer_id' || !isset($this->request->post['manufacturer_id']) || $seo_url_info['value'] != (int)$this->request->post['manufacturer_id'])) {
 							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 						}
 					} else {
@@ -317,10 +312,10 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/manufacturer');
 
-			if (!isset($this->request->get['manufacturer_id'])) {
+			if (!$this->request->post['manufacturer_id']) {
 				$json['manufacturer_id'] = $this->model_catalog_manufacturer->addManufacturer($this->request->post);
 			} else {
-				$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
+				$this->model_catalog_manufacturer->editManufacturer($this->request->post['manufacturer_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

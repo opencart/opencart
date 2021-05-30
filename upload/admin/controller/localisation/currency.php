@@ -203,12 +203,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['currency_id'])) {
-			$data['save'] = $this->url->link('localisation/currency|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/currency|save', 'user_token=' . $this->session->data['user_token'] . '&currency_id=' . $this->request->get['currency_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/currency|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('localisation/currency', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['currency_id'])) {
@@ -288,10 +283,10 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/currency');
 
-			if (!isset($this->request->get['currency_id'])) {
+			if (!$this->request->post['currency_id']) {
 				$json['currency_id'] = $this->model_localisation_currency->addCurrency($this->request->post);
 			} else {
-				$this->model_localisation_currency->editCurrency($this->request->get['currency_id'], $this->request->post);
+				$this->model_localisation_currency->editCurrency($this->request->post['currency_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

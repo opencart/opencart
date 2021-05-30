@@ -3,7 +3,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a> {% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
 					<td class="text-center">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
 					<td class="text-start">{% if sort == 'route' %}<a href="{{ sort_route }}" class="{{ order|lower }}">{{ column_route }}</a> {% else %}<a href="{{ sort_route }}">{{ column_route }}</a>{% endif %}</td>
@@ -16,7 +16,7 @@
 				{% if translations %}
 					{% for translation in translations %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ translation.translation_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ translation.translation_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ translation.store }}</td>
 							<td class="text-center"><img src="language/{{ translation.language }}/{{ translation.language }}.png" alt="{{ translation.language }}" title="{{ translation.language }}"></td>
 							<td class="text-start">{{ translation.route }}</td>

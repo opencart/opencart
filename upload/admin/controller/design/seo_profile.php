@@ -184,12 +184,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['seo_profile_id'])) {
-			$data['save'] = $this->url->link('design/seo_profile|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('design/seo_profile|save', 'user_token=' . $this->session->data['user_token'] . '&seo_profile_id=' . $this->request->get['seo_profile_id']);
-		}
-
+		$data['save'] = $this->url->link('design/seo_profile|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['seo_profile_id'])) {
@@ -265,10 +260,10 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('design/seo_profile');
 
-			if (!isset($this->request->get['seo_profile_id'])) {
+			if (!$this->request->post['seo_profile_id']) {
 				$json['seo_profile_id'] = $this->model_design_seo_profile->addSeoProfile($this->request->post);
 			} else {
-				$this->model_design_seo_profile->editSeoProfile($this->request->get['seo_profile_id'], $this->request->post);
+				$this->model_design_seo_profile->editSeoProfile($this->request->post['seo_profile_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

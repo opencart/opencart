@@ -10,6 +10,8 @@ class Footer extends \Opencart\System\Engine\Controller {
 			$data['text_version'] = '';
 		}
 
+		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+
 		return $this->load->view('common/footer', $data);
 	}
 }

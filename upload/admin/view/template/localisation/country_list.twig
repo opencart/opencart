@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'name' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
 						{% else %}
@@ -26,7 +26,7 @@
 				{% if countries %}
 					{% for country in countries %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ country.country_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ country.country_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ country.name }}</td>
 							<td class="text-start">{{ country.iso_code_2 }}</td>
 							<td class="text-start">{{ country.iso_code_3 }}</td>

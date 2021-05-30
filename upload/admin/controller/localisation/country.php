@@ -259,12 +259,7 @@ class Country extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['country_id'])) {
-			$data['save'] = $this->url->link('localisation/country|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/country|save', 'user_token=' . $this->session->data['user_token'] . '&country_id=' . $this->request->get['country_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/country|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('localisation/country', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['country_id'])) {
@@ -332,10 +327,10 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/country');
 
-			if (!isset($this->request->get['country_id'])) {
+			if (!$this->request->post['country_id']) {
 				$json['country_id'] = $this->model_localisation_country->addTranslation($this->request->post);
 			} else {
-				$this->model_localisation_country->editTranslation($this->request->get['country_id'], $this->request->post);
+				$this->model_localisation_country->editTranslation($this->request->post['country_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -432,7 +427,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				'iso_code_3'        => $country_info['iso_code_3'],
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($country_id),
 				'status'            => $country_info['status']
 			];
 		}

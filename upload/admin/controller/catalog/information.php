@@ -187,12 +187,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['information_id'])) {
-			$data['save'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . '&information_id=' . $this->request->get['information_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/information|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('catalog/information', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['information_id'])) {
@@ -309,7 +304,7 @@ class Information extends \Opencart\System\Engine\Controller {
 					if ($keyword) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
-						if ($seo_url_info && (!isset($this->request->get['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->get['information_id'])) {
+						if ($seo_url_info && (!isset($this->request->post['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->post['information_id'])) {
 							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 						}
 					} else {
@@ -326,10 +321,10 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/information');
 
-			if (!isset($this->request->get['information_id'])) {
+			if (!$this->request->post['information_id']) {
 				$json['information_id'] = $this->model_catalog_information->addInformation($this->request->post);
 			} else {
-				$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
+				$this->model_catalog_information->editInformation($this->request->post['information_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

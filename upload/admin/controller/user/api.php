@@ -205,12 +205,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['api_id'])) {
-			$data['save'] = $this->url->link('user/api|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('user/api|save', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $this->request->get['api_id']);
-		}
-
+		$data['save'] = $this->url->link('user/api|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['api_id'])) {
@@ -294,10 +289,10 @@ class Api extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('user/api');
 
-			if (!isset($this->request->get['api_id'])) {
+			if (!$this->request->post['api_id']) {
 				$json['api_id'] = $this->model_user_api->addApi($this->request->post);
 			} else {
-				$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
+				$this->model_user_api->editApi($this->request->post['api_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

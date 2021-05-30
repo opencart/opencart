@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'username' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_username }}</a>
 						{% else %}
@@ -31,7 +31,7 @@
 				{% if apis %}
 					{% for api in apis %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ api.api_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ api.api_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ api.username }}</td>
 							<td class="text-start">{{ api.status }}</td>
 							<td class="text-start">{{ api.date_added }}</td>

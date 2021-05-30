@@ -39,7 +39,7 @@
 									<input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}
 								</label>
 								{% for table in tables %}
-									<label class="form-check"><input type="checkbox" name="backup[]" value="{{ table }}" checked="checked" class="form-check-input"/> {{ table }}</label>
+									<label class="form-check"><input type="checkbox" name="backup[]" value="{{ table }}" class="form-check-input" checked="checked"/> {{ table }}</label>
 								{% endfor %}
 							</div>
 						</div>

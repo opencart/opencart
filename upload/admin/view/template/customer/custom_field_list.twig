@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'cfd.name' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
 						{% else %}
@@ -36,7 +36,7 @@
 				{% if custom_fields %}
 					{% for custom_field in custom_fields %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ custom_field.custom_field_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ custom_field.name }}</td>
 							<td class="text-start">{{ custom_field.location }}</td>
 							<td class="text-start">{{ custom_field.type }}</td>

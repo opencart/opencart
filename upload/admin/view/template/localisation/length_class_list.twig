@@ -2,7 +2,7 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+				<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 				<td class="text-start">{% if sort == 'title' %}
 						<a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
 					{% else %}
@@ -25,7 +25,7 @@
 			{% if length_classes %}
 				{% for length_class in length_classes %}
 					<tr>
-						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ length_class.length_class_id }}"/></td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ length_class.length_class_id }}" class="form-check-input"/></td>
 						<td class="text-start">{{ length_class.title }}</td>
 						<td class="text-start">{{ length_class.unit }}</td>
 						<td class="text-end">{{ length_class.value }}</td>

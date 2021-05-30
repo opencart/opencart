@@ -2,7 +2,7 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+				<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 				<td class="text-start">{{ column_email }}</td>
 				<td class="text-start">{{ column_request }}</td>
 				<td class="text-start">{{ column_status }}</td>
@@ -14,7 +14,7 @@
 			{% if gdprs %}
 				{% for gdpr in gdprs %}
 					<tr>
-						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ gdpr.gdpr_id }}"/></td>
+						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ gdpr.gdpr_id }}" class="form-check-input"/></td>
 						<td class="text-start">
 							{% if gdpr.edit %}
 								<a href="{{ gdpr.edit }}">{{ gdpr.email }}</a>

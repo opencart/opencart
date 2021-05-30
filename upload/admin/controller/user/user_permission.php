@@ -183,12 +183,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['user_group_id'])) {
-			$data['save'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $this->request->get['user_group_id']);
-		}
-
+		$data['save'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['user_group_id'])) {
@@ -302,10 +297,10 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('user/user_group');
 
-			if (!isset($this->request->get['user_group_id'])) {
+			if (!$this->request->post['user_group_id']) {
 				$json['user_group_id'] = $this->model_user_user_group->addUserGroup($this->request->post);
 			} else {
-				$this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
+				$this->model_user_user_group->editUserGroup($this->request->post['user_group_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

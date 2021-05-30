@@ -281,12 +281,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['marketing_id'])) {
-			$data['save'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $this->request->get['marketing_id']);
-		}
-
+		$data['save'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['marketing_id'])) {
@@ -351,15 +346,15 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->request->post['code']);
 
-		if ($marketing_info && (!isset($this->request->get['marketing_id']) || ($this->request->get['marketing_id'] != $marketing_info['marketing_id']))) {
+		if ($marketing_info && (!isset($this->request->post['marketing_id']) || ($this->request->post['marketing_id'] != $marketing_info['marketing_id']))) {
 			$json['error']['code'] = $this->language->get('error_exists');
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['marketing_id'])) {
+			if (!$this->request->post['marketing_id']) {
 				$json['marketing_id'] = $this->model_marketing_marketing->addMarketing($this->request->post);
 			} else {
-				$this->model_marketing_marketing->editMarketing($this->request->get['marketing_id'], $this->request->post);
+				$this->model_marketing_marketing->editMarketing($this->request->post['marketing_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

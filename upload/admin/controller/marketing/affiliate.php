@@ -319,12 +319,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['customer_id'])) {
-			$data['save'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id']);
-		}
-
+		$data['save'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Affiliate
@@ -497,7 +492,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
 
-		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
+		if ($affiliate_info && (!isset($this->request->post['customer_id']) || ($this->request->post['customer_id'] != $affiliate_info['customer_id']))) {
 			$json['error']['warning'] = $this->language->get('error_already');
 		}
 
@@ -507,7 +502,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($this->request->post['tracking']);
 
-		if ($affiliate_info && (!isset($this->request->get['customer_id']) || ($this->request->get['customer_id'] != $affiliate_info['customer_id']))) {
+		if ($affiliate_info && (!isset($this->request->post['customer_id']) || ($this->request->post['customer_id'] != $affiliate_info['customer_id']))) {
 			$json['error']['tracking'] = $this->language->get('error_exists');
 		}
 
@@ -546,10 +541,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['customer_id'])) {
+			if (!$this->request->post['customer_id']) {
 				$json['customer_id'] = $this->model_marketing_affiliate->addAffiliate($this->request->post);
 			} else {
-				$this->model_marketing_affiliate->editAffiliate($this->request->get['customer_id'], $this->request->post);
+				$this->model_marketing_affiliate->editAffiliate($this->request->post['customer_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

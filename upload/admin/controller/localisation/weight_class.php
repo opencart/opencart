@@ -184,12 +184,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['weight_class_id'])) {
-			$data['save'] = $this->url->link('localisation/weight_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/weight_class|save', 'user_token=' . $this->session->data['user_token'] . '&weight_class_id=' . $this->request->get['weight_class_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/weight_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['weight_class_id'])) {
@@ -243,10 +238,10 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/weight_class');
 
-			if (!isset($this->request->get['weight_class_id'])) {
+			if (!$this->request->post['weight_class_id']) {
 				$json['weight_class_id'] = $this->model_localisation_weight_class->addWeightClass($this->request->post);
 			} else {
-				$this->model_localisation_weight_class->editWeightClass($this->request->get['weight_class_id'], $this->request->post);
+				$this->model_localisation_weight_class->editWeightClass($this->request->post['weight_class_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

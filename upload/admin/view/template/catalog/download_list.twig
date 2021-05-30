@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'dd.name' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
 						{% else %}
@@ -21,7 +21,7 @@
 				{% if downloads %}
 					{% for download in downloads %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ download.download_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ download.download_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ download.name }}</td>
 							<td class="text-end">{{ download.date_added }}</td>
 							<td class="text-end"><a href="{{ download.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

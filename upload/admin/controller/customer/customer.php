@@ -398,12 +398,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['customer_id'])) {
-			$data['save'] = $this->url->link('customer/customer|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('customer/customer|save', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $this->request->get['customer_id']);
-		}
-
+		$data['save'] = $this->url->link('customer/customer|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('customer/customer', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['customer_id'])) {
@@ -585,12 +580,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$customer_info = $this->model_customer_customer->getCustomerByEmail($this->request->post['email']);
 
-		if (!isset($this->request->get['customer_id'])) {
+		if (!$this->request->post['customer_id']) {
 			if ($customer_info) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		} else {
-			if ($customer_info && ($this->request->get['customer_id'] != $customer_info['customer_id'])) {
+			if ($customer_info && ($this->request->post['customer_id'] != $customer_info['customer_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
@@ -614,7 +609,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->request->post['password'] || (!isset($this->request->get['customer_id']))) {
+		if ($this->request->post['password'] || (!isset($this->request->post['customer_id']))) {
 			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
@@ -674,10 +669,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['customer_id'])) {
+			if (!$this->request->post['customer_id']) {
 				$json['customer_id'] = $this->model_customer_customer->addCustomer($this->request->post);
 			} else {
-				$this->model_customer_customer->editCustomer($this->request->get['customer_id'], $this->request->post);
+				$this->model_customer_customer->editCustomer($this->request->post['customer_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

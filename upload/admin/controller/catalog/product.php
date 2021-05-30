@@ -398,20 +398,13 @@ class Product extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (!isset($this->request->get['product_id'])) {
-			$data['save'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $this->request->get['product_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/product|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['product_id'])) {
 			$data['product_id'] = (int)$this->request->get['product_id'];
-		} elseif (isset($this->request->get['master_id'])) {
-			$data['master_id'] = (int)$this->request->get['master_id'];
 		} else {
-			$data['master_id'] = 0;
+			$data['product_id'] = 0;
 		}
 
 		// If master_id then we need to get the variant info
@@ -1047,7 +1040,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					if ($keyword) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
 
-						if ($seo_url_info && ($seo_url_info['key'] != 'product_id' || !isset($this->request->get['product_id']) || $seo_url_info['value'] != (int)$this->request->get['product_id'])) {
+						if ($seo_url_info && ($seo_url_info['key'] != 'product_id' || !isset($this->request->post['product_id']) || $seo_url_info['value'] != (int)$this->request->post['product_id'])) {
 							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 						}
 					} else {
@@ -1062,25 +1055,25 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['product_id'])) {
-				if (!isset($this->request->get['master_id'])) {
+			if (!$this->request->post['product_id']) {
+				if (!$this->request->post['master_id']) {
 					// Normal product add
 					$json['product_id'] = $this->model_catalog_product->addProduct($this->request->post);
 				} else {
 					// Variant product add
-					$json['product_id'] = $this->model_catalog_product->addVariant($this->request->get['master_id'], $this->request->post);
+					$json['product_id'] = $this->model_catalog_product->addVariant($this->request->post['master_id'], $this->request->post);
 				}
 			} else {
-				if (!isset($this->request->get['master_id'])) {
+				if (!$this->request->post['master_id']) {
 					// Normal product edit
-					$this->model_catalog_product->editProduct($this->request->get['product_id'], $this->request->post);
+					$this->model_catalog_product->editProduct($this->request->post['product_id'], $this->request->post);
 				} else {
 					// Variant product edit
-					$this->model_catalog_product->editVariant($this->request->get['master_id'], $this->request->get['product_id'], $this->request->post);
+					$this->model_catalog_product->editVariant($this->request->post['master_id'], $this->request->post['product_id'], $this->request->post);
 				}
 
 				// Variant products edit if master product is edited
-				$this->model_catalog_product->editVariants($this->request->get['product_id'], $this->request->post);
+				$this->model_catalog_product->editVariants($this->request->post['product_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

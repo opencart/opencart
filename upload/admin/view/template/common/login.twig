@@ -14,15 +14,15 @@
 						{% if success %}
 							<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ success }}</div>
 						{% endif %}
-						<div class="mb-3">
-							<label for="input-username" class="col-form-label">{{ entry_username }}</label>
+						<div class="row mb-3">
+							<label for="input-username" class="form-label">{{ entry_username }}</label>
 							<div class="input-group">
 								<div class="input-group-text"><i class="fas fa-user"></i></div>
 								<input type="text" name="username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
 							</div>
 						</div>
 						<div>
-							<label for="input-password" class="col-form-label">{{ entry_password }}</label>
+							<label for="input-password" class="form-label">{{ entry_password }}</label>
 							<div class="input-group mb-2">
 								<div class="input-group-text"><i class="fas fa-lock"></i></div>
 								<input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>

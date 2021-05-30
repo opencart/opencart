@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'rd.name' %}
 							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
 						{% else %}
@@ -21,7 +21,7 @@
 				{% if recurrings %}
 					{% for recurring in recurrings %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ recurring.recurring_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ recurring.name }}</td>
 							<td class="text-end">{{ recurring.sort_order }}</td>
 							<td class="text-end"><a href="{{ recurring.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

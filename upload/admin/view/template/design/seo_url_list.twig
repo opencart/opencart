@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
 					<td class="text-start">{% if sort == 'key' %}<a href="{{ sort_key }}" class="{{ order|lower }}">{{ column_key }}</a> {% else %}<a href="{{ sort_key }}">{{ column_key }}</a>{% endif %}</td>
 					<td class="text-start">{% if sort == 'value' %}<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a> {% else %}<a href="{{ sort_value }}">{{ column_value }}</a>{% endif %}</td>
@@ -16,7 +16,7 @@
 				{% if seo_urls %}
 					{% for seo_url in seo_urls %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_url.seo_url_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ seo_url.keyword }}</td>
 							<td class="text-start">{{ seo_url.key }}</td>
 							<td class="text-start">{{ seo_url.value }}</td>

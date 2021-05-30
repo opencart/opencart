@@ -201,12 +201,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['voucher_id'])) {
-			$data['save'] = $this->url->link('sale/voucher|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('sale/voucher|save', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id']);
-		}
-
+		$data['save'] = $this->url->link('sale/voucher|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('sale/voucher', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['voucher_id'])) {
@@ -306,9 +301,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$voucher_info = $this->model_sale_voucher->getVoucherByCode($this->request->post['code']);
 
 		if ($voucher_info) {
-			if (!isset($this->request->get['voucher_id'])) {
+			if (!isset($this->request->post['voucher_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
-			} elseif ($voucher_info['voucher_id'] != (int)$this->request->get['voucher_id'])  {
+			} elseif ($voucher_info['voucher_id'] != (int)$this->request->post['voucher_id'])  {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
@@ -334,10 +329,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['voucher_id'])) {
+			if (!$this->request->post['voucher_id']) {
 				$json['voucher_id'] = $this->model_sale_voucher->addVoucher($this->request->post);
 			} else {
-				$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
+				$this->model_sale_voucher->editVoucher($this->request->post['voucher_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

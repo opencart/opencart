@@ -186,18 +186,19 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['filter_group_id'])) {
-			$data['save'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $this->request->get['filter_group_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['filter_group_id'])) {
 			$this->load->model('catalog/filter');
 
 			$filter_group_info = $this->model_catalog_filter->getGroup($this->request->get['filter_group_id']);
+		}
+
+		if (isset($this->request->get['filter_group_id'])) {
+			$data['filter_group_id'] = (int)$this->request->get['filter_group_id'];
+		} else {
+			$data['filter_group_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');
@@ -263,10 +264,10 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/filter');
 
-			if (!isset($this->request->get['filter_group_id'])) {
+			if (!$this->request->post['filter_group_id']) {
 				$json['filter_group_id'] = $this->model_catalog_filter->addFilter($this->request->post);
 			} else {
-				$this->model_catalog_filter->editFilter($this->request->get['filter_group_id'], $this->request->post);
+				$this->model_catalog_filter->editFilter($this->request->post['filter_group_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

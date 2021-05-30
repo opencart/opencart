@@ -165,7 +165,7 @@
 											{% for location in locations %}
 												<label class="form-check">
 													{% if location.location_id in config_location %}
-														<input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" class="form-check-input"/>
+														<input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input" checked="checked"/>
 														{{ location.name }}
 													{% else %}
 														<input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"/>
@@ -580,7 +580,7 @@
 											<div class="form-control" style="height: 150px; overflow: auto;">
 												{% for customer_group in customer_groups %}
 													<label class="form-check">{% if customer_group.customer_group_id in config_customer_group_display %}
-															<input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
+															<input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input" checked="checked"/>
 															{{ customer_group.name }}
 														{% else %}
 															<input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
@@ -708,7 +708,7 @@
 											<div class="form-control" style="height: 150px; overflow: auto;">
 												{% for order_status in order_statuses %}
 													<label class="form-check">{% if order_status.order_status_id in config_processing_status %}
-															<input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" checked="checked" class="form-check-input"/>
+															<input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" class="form-check-input" checked="checked"/>
 															{{ order_status.name }}
 														{% else %}
 															<input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"/>
@@ -727,7 +727,7 @@
 												{% for order_status in order_statuses %}
 													<label class="form-check">
 														{% if order_status.order_status_id in config_complete_status %}
-															<input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" checked="checked" class="form-check-input"/>
+															<input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" class="form-check-input" checked="checked"/>
 															{{ order_status.name }}
 														{% else %}
 															<input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"/>
@@ -972,7 +972,7 @@
 												{% for captcha_page in captcha_pages %}
 													<label class="form-check">
 														{% if captcha_page.value in config_captcha_page %}
-															<input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" checked="checked" class="form-check-input"/>
+															<input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" class="form-check-input" checked="checked"/>
 															{{ captcha_page.text }}
 														{% else %}
 															<input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" class="form-check-input"/>
@@ -1191,7 +1191,7 @@
 											{% for mail_alert in mail_alerts %}
 												<label class="form-check">
 													{% if mail_alert.value in config_mail_alert %}
-														<input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" checked="checked" class="form-check-input"/>
+														<input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" class="form-check-input" checked="checked"/>
 														{{ mail_alert.text }}
 													{% else %}
 														<input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" class="form-check-input"/>

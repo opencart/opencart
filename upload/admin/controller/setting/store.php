@@ -128,24 +128,12 @@ class Store extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		if (!isset($this->request->get['store_id'])) {
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . $url)
-			];
-		} else {
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'] . $url)
-			];
-		}
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_settings'),
+			'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . (!isset($this->request->post['store_id']) ? '&store_id=' . $this->request->get['store_id'] : '') . $url)
+		];
 
-		if (!isset($this->request->get['store_id'])) {
-			$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
-		} else {
-			$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
-		}
-
+		$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['store_id'])) {
@@ -686,14 +674,14 @@ class Store extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/store');
 
-			if (!isset($this->request->get['store_id'])) {
+			if (!$this->request->post['store_id']) {
 				$store_id = $this->model_setting_store->addStore($this->request->post);
 
 				$this->model_setting_setting->editSetting('config', $this->request->post, $store_id);
 			} else {
-				$this->model_setting_store->editStore($this->request->get['store_id'], $this->request->post);
+				$this->model_setting_store->editStore($this->request->post['store_id'], $this->request->post);
 
-				$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->get['store_id']);
+				$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->post['store_id']);
 			}
 
 			$json['success'] = $this->language->get('text_success');

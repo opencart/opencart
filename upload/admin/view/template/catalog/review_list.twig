@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-start">{% if sort == 'pd.name' %} <a href="{{ sort_product }}" class="{{ order|lower }}">{{ column_product }}</a> {% else %} <a href="{{ sort_product }}">{{ column_product }}</a> {% endif %}</td>
 					<td class="text-start">{% if sort == 'r.author' %} <a href="{{ sort_author }}" class="{{ order|lower }}">{{ column_author }}</a> {% else %} <a href="{{ sort_author }}">{{ column_author }}</a> {% endif %}</td>
 					<td class="text-end d-none d-lg-table-cell">{% if sort == 'r.rating' %} <a href="{{ sort_rating }}" class="{{ order|lower }}">{{ column_rating }}</a> {% else %} <a href="{{ sort_rating }}">{{ column_rating }}</a> {% endif %}</td>
@@ -16,7 +16,7 @@
 				{% if reviews %}
 					{% for review in reviews %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ review.review_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ review.review_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ review.name }}</td>
 							<td class="text-start">{{ review.author }}</td>
 							<td class="text-end d-none d-lg-table-cell">{{ review.rating }}</td>

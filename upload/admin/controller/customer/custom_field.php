@@ -234,6 +234,12 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$custom_field_info = $this->model_customer_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}
 
+		if (isset($this->request->get['custom_field_id'])) {
+			$data['custom_field_id'] = (int)$this->request->get['custom_field_id'];
+		} else {
+			$data['custom_field_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

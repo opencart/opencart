@@ -193,6 +193,12 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$recurring_info = $this->model_catalog_recurring->getRecurring($this->request->get['recurring_id']);
 		}
 
+		if (isset($this->request->get['recurring_id'])) {
+			$data['recurring_id'] = (int)$this->request->get['recurring_id'];
+		} else {
+			$data['recurring_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

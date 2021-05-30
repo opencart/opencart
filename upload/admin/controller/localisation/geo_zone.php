@@ -193,6 +193,12 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);
 		}
 
+		if (isset($this->request->get['geo_zone_id'])) {
+			$data['geo_zone_id'] = (int)$this->request->get['geo_zone_id'];
+		} else {
+			$data['geo_zone_id'] = 0;
+		}
+
 		if (!empty($geo_zone_info)) {
 			$data['name'] = $geo_zone_info['name'];
 		} else {

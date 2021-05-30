@@ -196,6 +196,12 @@ class Information extends \Opencart\System\Engine\Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
 		}
 
+		if (isset($this->request->get['information_id'])) {
+			$data['information_id'] = (int)$this->request->get['information_id'];
+		} else {
+			$data['information_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

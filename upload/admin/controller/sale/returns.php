@@ -433,6 +433,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$return_info = $this->model_sale_returns->getReturn($this->request->get['return_id']);
 		}
 
+		if (isset($this->request->get['return_id'])) {
+			$data['return_id'] = (int)$this->request->get['return_id'];
+		} else {
+			$data['return_id'] = 0;
+		}
+
 		if (!empty($return_info)) {
 			$data['order_id'] = $return_info['order_id'];
 		} else {

@@ -193,6 +193,12 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 			$seo_profile_info = $this->model_design_seo_profile->getSeoProfile($this->request->get['seo_profile_id']);
 		}
 
+		if (isset($this->request->get['seo_profile_id'])) {
+			$data['seo_profile_id'] = (int)$this->request->get['seo_profile_id'];
+		} else {
+			$data['seo_profile_id'] = 0;
+		}
+
 		if (!empty($seo_profile_info)) {
 			$data['name'] = $seo_profile_info['name'];
 		} else {

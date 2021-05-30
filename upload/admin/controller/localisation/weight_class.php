@@ -193,6 +193,12 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
 		}
 
+		if (isset($this->request->get['weight_class_id'])) {
+			$data['weight_class_id'] = (int)$this->request->get['weight_class_id'];
+		} else {
+			$data['weight_class_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

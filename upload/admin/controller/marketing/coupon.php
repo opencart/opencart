@@ -201,6 +201,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
 		}
 
+		if (isset($this->request->get['coupon_id'])) {
+			$data['coupon_id'] = (int)$this->request->get['coupon_id'];
+		} else {
+			$data['coupon_id'] = 0;
+		}
+
 		if (!empty($coupon_info)) {
 			$data['name'] = $coupon_info['name'];
 		} else {

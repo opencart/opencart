@@ -199,6 +199,12 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
 		}
 
+		if (isset($this->request->get['translation_id'])) {
+			$data['translation_id'] = (int)$this->request->get['translation_id'];
+		} else {
+			$data['translation_id'] = 0;
+		}
+
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();

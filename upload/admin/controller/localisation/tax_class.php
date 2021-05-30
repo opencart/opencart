@@ -191,6 +191,12 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
 		}
 
+		if (isset($this->request->get['tax_class_id'])) {
+			$data['tax_class_id'] = (int)$this->request->get['tax_class_id'];
+		} else {
+			$data['tax_class_id'] = 0;
+		}
+
 		if (!empty($tax_class_info)) {
 			$data['title'] = $tax_class_info['title'];
 		} else {

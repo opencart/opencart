@@ -191,6 +191,12 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
 		}
 
+		if (isset($this->request->get['layout_id'])) {
+			$data['layout_id'] = (int)$this->request->get['layout_id'];
+		} else {
+			$data['layout_id'] = 0;
+		}
+
 		if (!empty($layout_info)) {
 			$data['name'] = $layout_info['name'];
 		} else {

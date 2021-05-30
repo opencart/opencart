@@ -191,6 +191,12 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($this->request->get['attribute_id']);
 		}
 
+		if (isset($this->request->get['attribute_id'])) {
+			$data['attribute_id'] = (int)$this->request->get['attribute_id'];
+		} else {
+			$data['attribute_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

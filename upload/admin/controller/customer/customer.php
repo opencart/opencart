@@ -413,6 +413,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_info = $this->model_customer_customer->getCustomer($this->request->get['customer_id']);
 		}
 
+		if (isset($this->request->get['customer_id'])) {
+			$data['customer_id'] = (int)$this->request->get['customer_id'];
+		} else {
+			$data['customer_id'] = 0;
+		}
+
 		$this->load->model('setting/store');
 
 		$data['stores'] = [];
@@ -435,12 +441,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['store_id'] = $customer_info['store_id'];
 		} else {
 			$data['store_id'] = [0];
-		}
-
-		if (isset($this->request->get['customer_id'])) {
-			$data['customer_id'] = (int)$this->request->get['customer_id'];
-		} else {
-			$data['customer_id'] = 0;
 		}
 
 		$this->load->model('customer/customer_group');

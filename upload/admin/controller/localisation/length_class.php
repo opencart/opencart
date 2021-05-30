@@ -195,6 +195,12 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
 		}
 
+		if (isset($this->request->get['length_class_id'])) {
+			$data['length_class_id'] = (int)$this->request->get['length_class_id'];
+		} else {
+			$data['length_class_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

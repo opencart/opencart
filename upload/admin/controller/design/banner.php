@@ -193,6 +193,12 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$banner_info = $this->model_design_banner->getBanner($this->request->get['banner_id']);
 		}
 
+		if (isset($this->request->get['banner_id'])) {
+			$data['banner_id'] = (int)$this->request->get['banner_id'];
+		} else {
+			$data['banner_id'] = 0;
+		}
+
 		if (!empty($banner_info)) {
 			$data['name'] = $banner_info['name'];
 		} else {

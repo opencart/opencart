@@ -335,6 +335,12 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['customer_id'] = 0;
 		}
 
+		if (isset($this->request->get['customer_id'])) {
+			$data['customer_id'] = (int)$this->request->get['customer_id'];
+		} else {
+			$data['customer_id'] = 0;
+		}
+
 		if (!empty($affiliate_info)) {
 			$data['customer'] = $affiliate_info['customer'];
 		} else {

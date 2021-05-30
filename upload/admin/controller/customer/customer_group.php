@@ -193,6 +193,12 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
 		}
 
+		if (isset($this->request->get['customer_group_id'])) {
+			$data['customer_group_id'] = (int)$this->request->get['customer_group_id'];
+		} else {
+			$data['customer_group_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

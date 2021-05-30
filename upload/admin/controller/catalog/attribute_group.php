@@ -188,15 +188,15 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$data['back'] = $this->url->link('catalog/attribute_group', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['attribute_group_id'])) {
-			$data['attribute_group_id'] = $this->request->get['attribute_group_id'];
-		} else {
-			$data['attribute_group_id'] = 0;
-		}
-
-		if (isset($this->request->get['attribute_group_id'])) {
 			$this->load->model('catalog/attribute_group');
 
 			$attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup($this->request->get['attribute_group_id']);
+		}
+
+		if (isset($this->request->get['attribute_group_id'])) {
+			$data['attribute_group_id'] = (int)$this->request->get['attribute_group_id'];
+		} else {
+			$data['attribute_group_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');

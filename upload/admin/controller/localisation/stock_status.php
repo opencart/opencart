@@ -185,6 +185,12 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/stock_status|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		if (isset($this->request->get['stock_status_id'])) {
+			$data['stock_status_id'] = (int)$this->request->get['stock_status_id'];
+		} else {
+			$data['stock_status_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

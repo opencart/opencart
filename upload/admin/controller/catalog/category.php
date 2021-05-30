@@ -198,7 +198,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['category_id'])) {
-			$data['category_id'] = $this->request->get['category_id'];
+			$data['category_id'] = (int)$this->request->get['category_id'];
 		} else {
 			$data['category_id'] = 0;
 		}

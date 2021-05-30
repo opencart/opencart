@@ -193,6 +193,12 @@ class Option extends \Opencart\System\Engine\Controller {
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
 		}
 
+		if (isset($this->request->get['option_id'])) {
+			$data['option_id'] = (int)$this->request->get['option_id'];
+		} else {
+			$data['option_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

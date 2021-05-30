@@ -185,6 +185,12 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('localisation/return_reason|save', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['back'] = $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url);
 
+		if (isset($this->request->get['return_reason_id'])) {
+			$data['return_reason_id'] = (int)$this->request->get['return_reason_id'];
+		} else {
+			$data['return_reason_id'] = 0;
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();

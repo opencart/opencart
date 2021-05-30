@@ -183,6 +183,12 @@ class User extends \Opencart\System\Engine\Controller {
 			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
 		}
 
+		if (isset($this->request->get['user_id'])) {
+			$data['user_id'] = (int)$this->request->get['user_id'];
+		} else {
+			$data['user_id'] = 0;
+		}
+
 		if (!empty($user_info)) {
 			$data['username'] = $user_info['username'];
 		} else {

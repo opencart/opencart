@@ -268,6 +268,12 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);
 		}
 
+		if (isset($this->request->get['zone_id'])) {
+			$data['zone_id'] = (int)$this->request->get['zone_id'];
+		} else {
+			$data['zone_id'] = 0;
+		}
+
 		if (!empty($zone_info)) {
 			$data['status'] = $zone_info['status'];
 		} else {

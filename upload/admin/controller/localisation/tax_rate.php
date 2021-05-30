@@ -201,6 +201,12 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);
 		}
 
+		if (isset($this->request->get['tax_rate_id'])) {
+			$data['tax_rate_id'] = (int)$this->request->get['tax_rate_id'];
+		} else {
+			$data['tax_rate_id'] = 0;
+		}
+
 	    if (!empty($tax_rate_info)) {
 			$data['name'] = $tax_rate_info['name'];
 		} else {

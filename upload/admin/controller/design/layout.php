@@ -261,20 +261,22 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 			if (!isset($part[2])) {
 				$data['layout_modules'][] = [
-					'code'       => $layout_module['code'],
-					'position'   => $layout_module['position'],
-					'sort_order' => $layout_module['sort_order'],
-					'edit'       => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'])
+					'layout_module_id'	=> $layout_module['layout_module_id'],
+					'code'       		=> $layout_module['code'],
+					'position'   		=> $layout_module['position'],
+					'sort_order' 		=> $layout_module['sort_order'],
+					'edit'       		=> $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'])
 				];
 			} else {
 				$module_info = $this->model_setting_module->getModule($part[2]);
 
 				if ($module_info) {
 					$data['layout_modules'][] = [
-						'code'       => $layout_module['code'],
-						'position'   => $layout_module['position'],
-						'sort_order' => $layout_module['sort_order'],
-						'edit'   	 => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[2])
+						'layout_module_id'	=> $layout_module['layout_module_id'],
+						'code'       		=> $layout_module['code'],
+						'position'   		=> $layout_module['position'],
+						'sort_order' 		=> $layout_module['sort_order'],
+						'edit'   	 		=> $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $part[2])
 					];
 				}
 			}

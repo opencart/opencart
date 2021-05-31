@@ -270,7 +270,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/stock_status');
 
 			foreach ($selected as $stock_status_id) {
-				$this->model_localisation_stock_status->deleteStockStatusId($stock_status_id);
+				$this->model_localisation_stock_status->deleteStockStatus($stock_status_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

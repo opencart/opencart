@@ -336,6 +336,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$this->load->model('localisation/currency');
 		$this->load->model('setting/store');
 		$this->load->model('sale/order');
 
@@ -362,8 +363,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('localisation/currency');
-
 			foreach ($selected as $currency_id) {
 				$this->model_localisation_currency->deleteCurrency($currency_id);
 			}

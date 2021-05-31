@@ -1,40 +1,42 @@
-<div class="table-responsive">
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-				<td class="text-start">{% if sort == 'cgd.name' %}
-						<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-					{% else %}
-						<a href="{{ sort_name }}">{{ column_name }}</a>
-					{% endif %}</td>
-				<td class="text-end">{% if sort == 'cg.sort_order' %}
-						<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
-					{% else %}
-						<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
-					{% endif %}</td>
-				<td class="text-end">{{ column_action }}</td>
-			</tr>
-		</thead>
-		<tbody>
-			{% if customer_groups %}
-				{% for customer_group in customer_groups %}
-					<tr>
-						<td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/></td>
-						<td class="text-start">{{ customer_group.name }}</td>
-						<td class="text-end">{{ customer_group.sort_order }}</td>
-						<td class="text-end"><a href="{{ customer_group.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-					</tr>
-				{% endfor %}
-			{% else %}
+<form id="customer-group-list" data-oc-load="{{ action }}" data-oc-target="#customer-group">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
 				<tr>
-					<td class="text-center" colspan="4">{{ text_no_results }}</td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+					<td class="text-start">{% if sort == 'cgd.name' %}
+							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+						{% else %}
+							<a href="{{ sort_name }}">{{ column_name }}</a>
+						{% endif %}</td>
+					<td class="text-end">{% if sort == 'cg.sort_order' %}
+							<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
+						{% else %}
+							<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
+						{% endif %}</td>
+					<td class="text-end">{{ column_action }}</td>
 				</tr>
-			{% endif %}
-		</tbody>
-	</table>
-</div>
-<div class="row">
-	<div class="col-sm-6 text-start">{{ pagination }}</div>
-	<div class="col-sm-6 text-end">{{ results }}</div>
-</div>
+			</thead>
+			<tbody>
+				{% if customer_groups %}
+					{% for customer_group in customer_groups %}
+						<tr>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/></td>
+							<td class="text-start">{{ customer_group.name }}</td>
+							<td class="text-end">{{ customer_group.sort_order }}</td>
+							<td class="text-end"><a href="{{ customer_group.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td class="text-center" colspan="4">{{ text_no_results }}</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
+	</div>
+</form>

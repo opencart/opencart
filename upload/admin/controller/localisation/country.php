@@ -334,9 +334,9 @@ class Country extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/country');
 
 			if (!$this->request->post['country_id']) {
-				$json['country_id'] = $this->model_localisation_country->addTranslation($this->request->post);
+				$json['country_id'] = $this->model_localisation_country->addCountry($this->request->post);
 			} else {
-				$this->model_localisation_country->editTranslation($this->request->post['country_id'], $this->request->post);
+				$this->model_localisation_country->editCountry($this->request->post['country_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

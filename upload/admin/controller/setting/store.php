@@ -130,7 +130,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_settings'),
-			'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . (!isset($this->request->post['store_id']) ? '&store_id=' . $this->request->get['store_id'] : '') . $url)
+			'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . (isset($this->request->post['store_id']) ? '&store_id=' . $this->request->get['store_id'] : '') . $url)
 		];
 
 		$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
@@ -681,9 +681,9 @@ class Store extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/store');
 
 			if (!$this->request->post['store_id']) {
-				$store_id = $this->model_setting_store->addStore($this->request->post);
+				$json['store_id'] = $this->model_setting_store->addStore($this->request->post);
 
-				$this->model_setting_setting->editSetting('config', $this->request->post, $store_id);
+				$this->model_setting_setting->editSetting('config', $this->request->post, $json['store_id']);
 			} else {
 				$this->model_setting_store->editStore($this->request->post['store_id'], $this->request->post);
 

@@ -312,8 +312,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			echo $this->config->get('config_currency_engine');
-
 			$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '|currency', $this->config->get('config_currency'));
 
 			$json['success'] = $this->language->get('text_success');

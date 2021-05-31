@@ -85,17 +85,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
+		$data['action'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['apis'] = [];
 
@@ -129,10 +119,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&order=DESC';
 		} else {
 			$url .= '&order=ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['sort_username'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);

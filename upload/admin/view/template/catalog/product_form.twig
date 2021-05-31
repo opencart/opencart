@@ -1679,6 +1679,10 @@ $('#button-attribute').on('click', function() {
 
     $('#product-attribute').append(html);
 
+    //new bootstrap.Tooltip(document.querySelector('#attribute-row-' + attribute_row + ' [data-bs-toggle=\'tooltip\']'));
+
+		$('#attribute-row- ' + attribute_row + ' [data-bs-toggle=\'tooltip\']').tooltip();
+
     attributeautocomplete(attribute_row);
 
     attribute_row++;
@@ -1753,7 +1757,7 @@ $('input[name=\'option\']').autocomplete({
         if (item['type'] == 'text') {
             html += '	<div class="row mb-3">';
             html += '	  <label for="input-option-' + option_row + '" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>';
-            html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control" /></div>';
+            html += '	  <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="{{ entry_option_value }}" id="input-option-' + option_row + '" class="form-control"/></div>';
             html += '	</div>';
         }
 
@@ -1828,10 +1832,7 @@ $('input[name=\'option\']').autocomplete({
 
         $('#option').append(html);
 
-        $('[data-bs-toggle=\'tooltip\']').tooltip({
-            container: 'body',
-            html: true
-        });
+       // new bootstrap.Tooltip(document.querySelector('#option-row- ' + option_row + ' [data-bs-toggle=\'tooltip\']'));
 
         $('.date').datetimepicker({
             'format': 'YYYY-MM-DD',
@@ -1873,7 +1874,7 @@ $('#option').on('click', '.btn-primary', function() {
     html += '  <div class="modal-dialog">';
     html += '    <div class="modal-content">';
     html += '      <div class="modal-header">';
-    html += '        <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> {{ text_option_value }}</h5> <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>';
+    html += '        <h5 class="modal-title"><i class="fas fa-pencil-alt"></i> {{ text_option_value }}</h5> <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
     html += '      </div>';
     html += '      <div class="modal-body">';
     html += '        <div class="mb-3">';
@@ -2012,7 +2013,9 @@ $('#option').on('click', '.btn-primary', function() {
             option_value_row++;
         }
 
-        $('[rel=tooltip]').tooltip();
+       // $('[rel=tooltip]').tooltip();
+
+        $('#option-value-row- ' + option_value_row + ' [data-bs-toggle=\'tooltip\']').tooltip();
 
         $('#modal-option').modal('hide');
     });

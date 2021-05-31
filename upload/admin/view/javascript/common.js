@@ -75,7 +75,7 @@ $(document).ready(function() {
 });
 
 // Tooltip
-+(function($) {
+(function($) {
     $.fn.tooltip = function(element, option) {
         return $(element).each(function() {
             handler = bootstrap.Tooltip.getInstance(element);
@@ -95,18 +95,22 @@ $(document).ready(function() {
     $('[data-bs-toggle=\'tooltip\']').tooltip();
 });
 
-// Makes tooltips work on ajax generated content
-$(document).ajaxStop(function() {
-    $('[data-bs-toggle=\'tooltip\']').tooltip();
-});
-
 // Tooltip remove fixed
 $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
     $('body > .tooltip').remove();
 });
 
+/*
+// Makes tooltips work on ajax generated content
+$(document).ajaxStop(function() {
+   // $('[data-bs-toggle=\'tooltip\']').tooltip();
+});
+
+
+
 // Tabs
-+(function($) {
+
+(function($) {
     $.fn.tab = function(element, option) {
 
         return $(element).each(function() {
@@ -129,9 +133,9 @@ $(document).ready(function() {
 });
 
 $(document).ajaxStop(function(e) {
-    $('.nav-tabs li:first-child [data-bs-toggle=\'tab\']').tab('show');
+  //  $('.nav-tabs li:first-child [data-bs-toggle=\'tab\']').tab('show');
 });
-
+*/
 // Forms
 $(document).on('click', '[data-oc-action]', function() {
     var element = this;
@@ -154,6 +158,8 @@ $(document).on('click', '[data-oc-action]', function() {
         },
         success: function(json) {
             $('.invalid-tooltip, .alert-dismissible').remove();
+
+            console.log(json);
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -200,6 +206,8 @@ $(document).on('click', '[data-oc-action]', function() {
                     $(target).load(url);
                 }
 
+                $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
+
                 delete json['success'];
             }
 
@@ -227,7 +235,7 @@ $(document).on('click', '[data-oc-upload]', function() {
         if (this.files[0].size > 0) {
             $(this).val('');
 
-            alert('{{ error_upload_size }}');
+            alert('');
         }
     });
 
@@ -298,7 +306,7 @@ $(document).on('click', '[data-oc-loading-text]', function() {
 */
 
 // Button
-+(function($) {
+(function($) {
     $.fn.button = function(state) {
         console.log(state);
 
@@ -459,7 +467,6 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
         },
         success: function(html) {
             $('body').append(html);
-
 
             var element = document.querySelector('#modal-image');
 

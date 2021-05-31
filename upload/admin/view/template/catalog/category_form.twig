@@ -25,7 +25,7 @@
 						<li class="nav-item"><a href="#tab-design" data-bs-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
 					</ul>
 					<div class="tab-content">
-						<div class="tab-pane active" id="tab-general">
+						<div id="tab-general" class="tab-pane active">
 							<ul class="nav nav-tabs" id="language">
 								{% for language in languages %}
 									<li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>

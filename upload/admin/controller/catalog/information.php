@@ -293,10 +293,6 @@ class Information extends \Opencart\System\Engine\Controller {
 				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
 
-			if (utf8_strlen(trim($value['description'])) < 3) {
-				$json['error']['description_' . $language_id] = $this->language->get('error_description');
-			}
-
 			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
 				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}

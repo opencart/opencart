@@ -576,17 +576,17 @@ $('.datetime').datetimepicker({
     'allowInputToggle': true
 });
 
-$('#tab-general .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-general .form-group').length) {
-        $('#tab-general .form-group').eq($(this).attr('data-sort')).before(this);
+$('#tab-general [data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-general .row.mb-3').length) {
+        $('#tab-general .row.mb-3').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#tab-general .form-group').length) {
-        $('#tab-general .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#tab-general .row.mb-3').length) {
+        $('#tab-general .row.mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#tab-general .form-group').length) {
-        $('#tab-general .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#tab-general .row.mb-3').length) {
+        $('#tab-general .row.mb-3:first').before(this);
     }
 });
 //--></script>

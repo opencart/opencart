@@ -794,17 +794,17 @@ $('#button-address').on('click', function(e) {
         'allowInputToggle': true
     });
 
-    $('#address-row-' + address_row + ' .form-group[data-sort]').detach().each(function() {
-        if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#address-row-' + address_row + ' .form-group').length) {
-            $('#address-row-' + address_row + ' .form-group').eq($(this).attr('data-sort')).before(this);
+    $('#address-row-' + address_row + ' [data-sort]').detach().each(function() {
+        if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#address-row-' + address_row + ' .row.mb-3').length) {
+            $('#address-row-' + address_row + ' [data-sort]').eq($(this).attr('data-sort')).before(this);
         }
 
-        if ($(this).attr('data-sort') > $('#address-row-' + address_row + ' .form-group').length) {
-            $('#address-row-' + address_row + ' .form-group:last').after(this);
+        if ($(this).attr('data-sort') > $('#address-row-' + address_row + ' .row.mb-3').length) {
+            $('#address-row-' + address_row + ' [data-sort]:last').after(this);
         }
 
-        if ($(this).attr('data-sort') < -$('#address-row-' + address_row + ' .form-group').length) {
-            $('#address-row-' + address_row + ' .form-group:first').before(this);
+        if ($(this).attr('data-sort') < -$('#address-row-' + address_row + ' .row.mb-3').length) {
+            $('#address-row-' + address_row + ' [data-sort]:first').before(this);
         }
     });
 
@@ -1122,33 +1122,33 @@ $('.datetime').datetimepicker({
 // Sort the custom fields
 {% set address_row = 0 %}
 {% for address in addresses %}
-$('#address-row-{{ address_row }} .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#address-row-{{ address_row }} .form-group').length) {
-        $('#address-row-{{ address_row }} .form-group').eq($(this).attr('data-sort')).before(this);
+$('#address-row-{{ address_row }} [data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#address-row-{{ address_row }} .row.mb-3').length) {
+        $('#address-row-{{ address_row }} .row.mb-3').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#address-row-{{ address_row }} .form-group').length) {
-        $('#address-row-{{ address_row }} .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#address-row-{{ address_row }} .row.mb-3').length) {
+        $('#address-row-{{ address_row }} .row.mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#address-row-{{ address_row }} .form-group').length) {
-        $('#address-row-{{ address_row }} .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#address-row-{{ address_row }} .row.mb-3').length) {
+        $('#address-row-{{ address_row }} .row.mb-3:first').before(this);
     }
 });
 {% set address_row = address_row + 1 %}
 {% endfor %}
 
-$('#tab-customer .form-group[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .form-group').length) {
-        $('#tab-customer .form-group').eq($(this).attr('data-sort')).before(this);
+$('#tab-customer [data-sort]').detach().each(function() {
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .row.mb-3').length) {
+        $('#tab-customer .row.mb-3').eq($(this).attr('data-sort')).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#tab-customer .form-group').length) {
-        $('#tab-customer .form-group:last').after(this);
+    if ($(this).attr('data-sort') > $('#tab-customer .row.mb-3').length) {
+        $('#tab-customer .row.mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#tab-customer .form-group').length) {
-        $('#tab-customer .form-group:first').before(this);
+    if ($(this).attr('data-sort') < -$('#tab-customer .row.mb-3').length) {
+        $('#tab-customer .row.mb-3:first').before(this);
     }
 });
 //--></script>

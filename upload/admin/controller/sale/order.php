@@ -68,12 +68,34 @@ class Order extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('sale/order|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['add'] = $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('sale/order|delete', 'user_token=' . $this->session->data['user_token']);
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token']);
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		$data['stores'] = [];
+
+		$data['stores'][] = [
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		];
+
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
+		foreach ($stores as $store) {
+			$data['stores'][] = [
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			];
+		}
+
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -295,10 +317,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
 		$data['sort_order'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.order_id' . $url);
 		$data['sort_store_name'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.store_name' . $url);
 		$data['sort_customer'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
@@ -374,28 +392,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->load->model('setting/store');
-
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
-		];
-
-		$stores = $this->model_setting_store->getStores();
-
-		foreach ($stores as $store) {
-			$data['stores'][] = [
-				'store_id' => $store['store_id'],
-				'name'     => $store['name']
-			];
-		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		return $this->load->view('sale/order_list', $data);
 	}
@@ -498,7 +494,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['order_id'] = $order_id;
 
 		// Invoice
-		if ($order_info['invoice_no']) {
+		if (!empty($order_info['invoice_no'])) {
 			$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 		} else {
 			$data['invoice_no'] = '';

@@ -2012,9 +2012,9 @@ $('#modal-payment-address select[name=\'country_id\']').on('change', function() 
         },
         success: function(json) {
             if (json['postcode_required'] == '1') {
-                $('#modal-payment-address input[name=\'postcode\']').closest('.form-group').addClass('required');
+                $('#modal-payment-address input[name=\'postcode\']').closest('.row.mb-3').addClass('required');
             } else {
-                $('#modal-payment-address input[name=\'postcode\']').closest('.form-group').removeClass('required');
+                $('#modal-payment-address input[name=\'postcode\']').closest('.row.mb-3').removeClass('required');
             }
 
             html = '<option value="">{{ text_select }}</option>';
@@ -2058,9 +2058,7 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
             $(element).button('reset');
         },
         success: function(json) {
-
             console.log(json);
-
 
             $('.alert-dismissible, .invalid-tooltip').remove();
             $('.is-invalid').removeClass('is-invalid');
@@ -2166,9 +2164,9 @@ $('#modal-shipping-address select[name=\'country_id\']').on('change', function()
         },
         success: function(json) {
             if (json['postcode_required'] == '1') {
-                $('#modal-shipping-address input[name=\'postcode\']').closest('.form-group').addClass('required');
+                $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').addClass('required');
             } else {
-                $('#modal-shipping-address input[name=\'postcode\']').closest('.form-group').removeClass('required');
+                $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').removeClass('required');
             }
 
             html = '<option value="">{{ text_select }}</option>';

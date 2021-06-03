@@ -24,7 +24,6 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/report/customer_activity|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_customer_activity_status'] = $this->config->get('report_customer_activity_status');
@@ -117,7 +116,7 @@ class CustomerActivity extends \Opencart\System\Engine\Controller {
 			];
 
 			$replace = [
-				$this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
+				$this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
 				$this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=')
 			];
 

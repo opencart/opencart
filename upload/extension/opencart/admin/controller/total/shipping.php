@@ -24,7 +24,6 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/total/shipping|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
 		$data['total_shipping_estimator'] = $this->config->get('total_shipping_estimator');

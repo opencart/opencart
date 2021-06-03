@@ -258,19 +258,15 @@ $('input[name=\'category\']').autocomplete({
 $('#coupon-category').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
-//--></script>
-{% if coupon_id %}
-	<script type="text/javascript"><!--
-  $('#history').on('click', '.pagination a', function(e) {
-      e.preventDefault();
 
-      $('#history').load(this.href);
-  });
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
 
-  $('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id=' + $('input[name=\'coupon_id\']').val());
-  //--></script>
-{% endif %}
-<script type="text/javascript"><!--
+    $('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id=' + $('input[name=\'coupon_id\']').val());
+
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
     'locale': '{{ datepicker }}',

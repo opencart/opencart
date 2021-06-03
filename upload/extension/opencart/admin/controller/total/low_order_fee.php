@@ -24,7 +24,6 @@ class LowOrderFee extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/total/low_order_fee|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
 		$data['total_low_order_fee_total'] = $this->config->get('total_low_order_fee_total');

@@ -102,7 +102,10 @@
 							</div>
 						</div>
 						<div id="tab-history" class="tab-pane">
-							<div id="history"></div>
+							<fieldset>
+								<legend>{{ text_history }}</legend>
+								<div id="history"></div>
+							</fieldset>
 						</div>
 					</div>
 				</form>
@@ -110,45 +113,42 @@
 		</div>
 	</div>
 </div>
-{% if voucher_id %}
-	<script type="text/javascript"><!--
-  $('#button-send').on('click', function() {
-      $.ajax({
-          url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
-          type: 'post',
-          dataType: 'json',
-          data: 'voucher_id=' + $('input[name=\'voucher_id\']').val(),
-          beforeSend: function() {
-              $('#button-send').prop('disabled', true);
-          },
-          complete: function() {
-              $('#button-send').prop('disabled', false);
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
+<script type="text/javascript"><!--
+$('#button-send').on('click', function() {
+    $.ajax({
+        url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
+        type: 'post',
+        dataType: 'json',
+        data: 'voucher_id=' + $('input[name=\'voucher_id\']').val(),
+        beforeSend: function() {
+            $('#button-send').prop('disabled', true);
+        },
+        complete: function() {
+            $('#button-send').prop('disabled', false);
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
 
-              if (json['error']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
+            if (json['error']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
 
-              if (json['success']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  })
-  //--></script>
-	<script type="text/javascript"><!--
-  $('#history').on('click', '.pagination a', function(e) {
-      e.preventDefault();
+            if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 
-      $('#history').load(this.href);
-  });
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
 
-  $('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id=' + $('input[name=\'voucher_id\']').val());
-  //--></script>
-{% endif %}
+    $('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id=' + $('input[name=\'voucher_id\']').val());
+//--></script>
 {{ footer }}

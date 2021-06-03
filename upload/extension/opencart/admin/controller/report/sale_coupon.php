@@ -24,7 +24,6 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/report/sale_coupon|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_sale_coupon_status'] = $this->config->get('report_sale_coupon_status');

@@ -24,7 +24,6 @@ class Fixer extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/currency/fixer|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency');
 
 		$data['currency_fixer_api'] = $this->config->get('currency_fixer_api');

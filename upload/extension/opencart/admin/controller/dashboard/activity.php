@@ -24,7 +24,6 @@ class Activity extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/dashboard/activity|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
 		$data['dashboard_activity_width'] = $this->config->get('dashboard_activity_width');
@@ -85,9 +84,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 			];
 
 			$replace = [
-				$this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
+				$this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
 				$this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id='),
-				$this->url->link('sale/return|edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=')
+				$this->url->link('sale/return|form', 'user_token=' . $this->session->data['user_token'] . '&return_id=')
 			];
 
 			$data['activities'][] = [

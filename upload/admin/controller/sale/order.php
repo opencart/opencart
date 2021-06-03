@@ -870,16 +870,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			foreach ($vouchers as $voucher) {
 				$data['order_vouchers'][] = [
 					'description' => $voucher['description'],
-					'amount' => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-					'href' => $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+					'href'        => $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
 				];
-			}
-
-			// Vouchers
-			if (!empty($order_info)) {
-				$data['order_vouchers'] = $this->model_sale_order->getVouchers($order_id);
-			} else {
-				$data['shipping_code'] = '';
 			}
 
 			// Totals
@@ -1008,20 +1001,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['total'] = 0;
 
-			$data['order_status_id'] = $this->config->get('config_order_status_id');
 
-			$data['affiliate_id'] = 0;
-			$data['affiliate'] = '';
 
 			$data['coupon'] = '';
 			$data['voucher'] = '';
 			$data['reward'] = '';
 
-
-
-
-
-
+			$data['affiliate_id'] = 0;
+			$data['affiliate'] = '';
 
 			$data['addresses'] = [];
 
@@ -1060,6 +1047,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_products'] = [];
 			$data['order_vouchers'] = [];
 			$data['order_totals'] = [];
+
+			$data['order_status_id'] = $this->config->get('config_order_status_id');
 
 			$data['comment'] = '';
 

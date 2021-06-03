@@ -332,7 +332,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer_id'])) {
-			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
+			$url .= '&filter_customer_id=' . $this->request->get['filter_customer_id'];
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -340,7 +340,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+			$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
@@ -348,7 +348,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . (int)$this->request->get['filter_order_status_id'];
+			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
 		if (isset($this->request->get['filter_total'])) {
@@ -421,7 +421,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_customer_id'])) {
-			$url .= '&filter_customer_id=' . (int)$this->request->get['filter_customer_id'];
+			$url .= '&filter_customer_id=' . $this->request->get['filter_customer_id'];
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -429,7 +429,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_store_id'])) {
-			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+			$url .= '&filter_store_id=' . $this->request->get['filter_store_id'];
 		}
 
 		if (isset($this->request->get['filter_order_status'])) {
@@ -437,7 +437,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . (int)$this->request->get['filter_order_status_id'];
+			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
 		if (isset($this->request->get['filter_total'])) {
@@ -501,8 +501,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['stores'][] = [
-				'store_id' => $result['store_id'],
-				'name' => $result['name']
+				'store_id' 	=> $result['store_id'],
+				'name' 		=> $result['name']
 			];
 		}
 
@@ -588,16 +588,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_method'] = $order_info['payment_method'];
 			$data['payment_code'] = $order_info['payment_code'];
 
-
-
-
-
-
 			// Reward Points
 			if (!empty($order_info)) {
 				$data['reward'] = $order_info['reward'];
 			} else {
-				$data['reward'] = '';
+				$data['reward'] = 0;
 			}
 
 			if (!empty($order_info)) {
@@ -622,14 +617,10 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
-
 			// Coupon, Voucher, Reward
 			$data['coupon'] = '';
 			$data['voucher'] = '';
 			$data['reward'] = '';
-
-
 
 			// Vouchers
 			if (!empty($order_info)) {
@@ -703,7 +694,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 
-
 			// Addresses
 			$this->load->model('customer/customer');
 
@@ -730,16 +720,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 
 			$replace = [
-				'firstname' => $order_info['payment_firstname'],
-				'lastname' => $order_info['payment_lastname'],
-				'company' => $order_info['payment_company'],
-				'address_1' => $order_info['payment_address_1'],
-				'address_2' => $order_info['payment_address_2'],
-				'city' => $order_info['payment_city'],
-				'postcode' => $order_info['payment_postcode'],
-				'zone' => $order_info['payment_zone'],
-				'zone_code' => $order_info['payment_zone_code'],
-				'country' => $order_info['payment_country']
+				'firstname' 	=> $order_info['payment_firstname'],
+				'lastname' 		=> $order_info['payment_lastname'],
+				'company' 		=> $order_info['payment_company'],
+				'address_1' 	=> $order_info['payment_address_1'],
+				'address_2' 	=> $order_info['payment_address_2'],
+				'city' 			=> $order_info['payment_city'],
+				'postcode' 		=> $order_info['payment_postcode'],
+				'zone' 			=> $order_info['payment_zone'],
+				'zone_code' 	=> $order_info['payment_zone_code'],
+				'country' 		=> $order_info['payment_country']
 			];
 
 			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
@@ -760,9 +750,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				if ($upload_info) {
 					$data['payment_custom_fields'][] = [
-						'name' => $custom_field['name'],
-						'value' => $upload_info['name'],
-						'sort_order' => $custom_field['sort_order']
+						'name' 			=> $custom_field['name'],
+						'value' 		=> $upload_info['name'],
+						'sort_order' 	=> $custom_field['sort_order']
 					];
 				}
 			}
@@ -788,16 +778,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 
 			$replace = [
-				'firstname' => $order_info['shipping_firstname'],
-				'lastname' => $order_info['shipping_lastname'],
-				'company' => $order_info['shipping_company'],
-				'address_1' => $order_info['shipping_address_1'],
-				'address_2' => $order_info['shipping_address_2'],
-				'city' => $order_info['shipping_city'],
-				'postcode' => $order_info['shipping_postcode'],
-				'zone' => $order_info['shipping_zone'],
-				'zone_code' => $order_info['shipping_zone_code'],
-				'country' => $order_info['shipping_country']
+				'firstname' 	=> $order_info['shipping_firstname'],
+				'lastname' 		=> $order_info['shipping_lastname'],
+				'company' 		=> $order_info['shipping_company'],
+				'address_1' 	=> $order_info['shipping_address_1'],
+				'address_2' 	=> $order_info['shipping_address_2'],
+				'city' 			=> $order_info['shipping_city'],
+				'postcode' 		=> $order_info['shipping_postcode'],
+				'zone' 			=> $order_info['shipping_zone'],
+				'zone_code' 	=> $order_info['shipping_zone_code'],
+				'country' 		=> $order_info['shipping_country']
 			];
 
 			$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
@@ -813,21 +803,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_zone_id'] = $order_info['shipping_zone_id'];
 			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
 
-
 			// Shipping method
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['shipping_code'] = $order_info['shipping_code'];
-
-
-
-
-
-
-
-
-
-
-
 
 			// Products
 			$data['order_products'] = [];
@@ -861,16 +839,16 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['order_products'][] = [
-					'order_product_id' => $product['order_product_id'],
-					'product_id' => $product['product_id'],
-					'name' => $product['name'],
-					'model' => $product['model'],
-					'option' => $option_data,
-					'quantity' => $product['quantity'],
-					'price' => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total' => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'reward' => $product['reward'],
-					'href' => $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+					'order_product_id' 	=> $product['order_product_id'],
+					'product_id' 		=> $product['product_id'],
+					'name' 				=> $product['name'],
+					'model' 			=> $product['model'],
+					'option' 			=> $option_data,
+					'quantity' 			=> $product['quantity'],
+					'price' 			=> $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total' 			=> $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'reward' 			=> $product['reward'],
+					'href' 				=> $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
 				];
 			}
 
@@ -898,7 +876,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'text' => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
 				];
 			}
-
 
 			$data['comment'] = $order_info['comment'];
 			$data['comment'] = nl2br($order_info['comment']);
@@ -945,7 +922,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			/*
 			// Order Status
 			$this->load->model('localisation/order_status');
@@ -957,8 +933,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['order_status'] = '';
 			}
-
-
 
 			$data['order_status_id'] = $order_info['order_status_id'];
 
@@ -974,7 +948,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['voucher'] = '';
 			$data['reward'] = '';
 			*/
-
 
 			// Additional information
 			$data['ip'] = $order_info['ip'];
@@ -1057,7 +1030,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['currency_id'] = 0;
 			$data['currency_code'] = $this->config->get('config_currency');
-
 
 			// Additional information
 			$data['ip'] = '';

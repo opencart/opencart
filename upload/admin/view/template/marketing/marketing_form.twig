@@ -74,16 +74,13 @@ $('#input-code').on('keyup', function(e) {
 });
 
 $('#input-code').trigger('keyup');
+
+$('#report').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#report').load(this.href);
+});
+
+$('#report').load('index.php?route=marketing/marketing|report&user_token={{ user_token }}&marketing_id=' + $('input[name=\'marketing_id\']').val());
 //--></script>
-{% if marketing_id %}
-	<script type="text/javascript"><!--
-  $('#report').on('click', '.pagination a', function(e) {
-      e.preventDefault();
-
-      $('#report').load(this.href);
-  });
-
-  $('#report').load('index.php?route=marketing/marketing|report&user_token={{ user_token }}&marketing_id=' + $('input[name=\'marketing_id\']').val());
-  //--></script>
-{% endif %}
 {{ footer }}

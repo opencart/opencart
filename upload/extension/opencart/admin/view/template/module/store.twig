@@ -14,11 +14,6 @@
     </div>
   </div>
   <div class="container-fluid">
-    {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="btn-close" data-dismiss="alert"></button>
-      </div>
-    {% endif %}
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
       <div class="card-body">
@@ -26,7 +21,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_admin }}</label>
             <div class="col-sm-10">
-              <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+              <div class="btn-group">
                 {% if module_store_admin %}
                   <label class="btn btn-outline-secondary active"><input type="radio" name="module_store_admin" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
                   <label class="btn btn-outline-secondary"><input type="radio" name="module_store_admin" value="0" class="btn-check"/> {{ text_no }}</label>

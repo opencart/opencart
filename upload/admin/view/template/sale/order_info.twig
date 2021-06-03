@@ -22,7 +22,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
 										<br/>
 										{{ invoice_no }}&nbsp;
@@ -38,7 +38,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
 										<br/>
 										<a href="{{ store_url }}" target="_blank">{{ store_name }}</a></p>
@@ -48,7 +48,7 @@
 						</div>
 
 						<div class="col">
-							<div class="form-control-plaintext p-0 border rounded mb-3">
+							<div class="form-control-plaintext p-0 border rounded-start mb-3">
 								<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
 									<br/>
 									{{ date_added }}
@@ -57,8 +57,9 @@
 						</div>
 
 						<div class="col">
+
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
 										<br/>
 										{% if customer %}
@@ -70,47 +71,16 @@
 								</div>
 								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 							</div>
+
 						</div>
+
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
-									<p class="lead p-2 mb-0"><strong>{{ text_customer_group }}</strong>
-										<br/>
-										{{ customer_group }}</p>
-								</div>
-								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-							</div>
-						</div>
-
-						<div class="col">
-							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
-									<p class="lead p-2 m-0"><strong>{{ text_email }}</strong>
-										<br/>
-										<a href="mailto:{{ email }}">{{ email }}</a></p>
-								</div>
-								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-							</div>
-						</div>
-
-						<div class="col">
-							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
-									<p class="lead p-2 mb-0"><strong>{{ text_telephone }}</strong>
-										<br/>
-										{{ telephone }}
-									</p>
-								</div>
-								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-							</div>
-						</div>
-						<div class="col">
-							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_language }}</strong>
 										<br/>
-										{{ language }}
+										{{ language_name }}
 									</p>
 								</div>
 								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-language" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
@@ -119,10 +89,10 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_currency }}</strong>
 										<br/>
-										{{ currency }}
+										{{ currency_title }}
 									</p>
 								</div>
 								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-currency" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
@@ -130,7 +100,7 @@
 						</div>
 
 						<div class="col">
-							<div class="form-control-plaintext p-0 border rounded mb-3">
+							<div class="form-control p-0 border rounded mb-3">
 								<p class="lead p-2 mb-0"><strong>{{ text_total }}</strong>
 									<br/>
 									{{ total }}
@@ -140,7 +110,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
 										<br/>
 										{{ payment_method }}
@@ -153,7 +123,7 @@
 						{% if shipping_method %}
 							<div class="col">
 								<div class="input-group mb-3">
-									<div class="form-control-plaintext p-0 border rounded-left">
+									<div class="form-control p-0 border rounded-start">
 										<p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
 											<br/>
 											{{ shipping_method }}
@@ -166,7 +136,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_coupon }}</strong>
 										<br/>
 										{{ coupon }}&nbsp;
@@ -178,7 +148,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_voucher }}</strong>
 										<br/>
 										{{ voucher }}&nbsp;
@@ -190,7 +160,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_reward }}</strong>
 										<br/>
 										{{ reward }}</p>
@@ -210,7 +180,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
 										<br/>
 										{% if affiliate %}
@@ -226,7 +196,7 @@
 
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_commission }}</strong>
 										<br/>
 										{{ commission }}
@@ -243,12 +213,12 @@
 					</div>
 				</div>
 
-				<button type="button" id="button-collapse" class="btn btn-light btn-lg btn-block mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
+				<button type="button" id="button-collapse" class="btn btn-light btn-lg d-block mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
 
 				<div class="row">
 					<div class="col">
 						<div class="input-group mb-3">
-							<div class="form-control-plaintext p-0 border rounded-left">
+							<div class="form-control-plaintext p-0 border rounded-start">
 								<p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
 									<br/>
 									{{ payment_address }}
@@ -261,7 +231,7 @@
 					{% if shipping_method %}
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control-plaintext p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
 										<br/>
 										{{ shipping_address }}
@@ -363,7 +333,7 @@
 					<div class="row">
 						<div class="col">
 							<div class="input-group mb-3">
-								<div class="form-control-plaintext p-0 border rounded-left">
+								<div class="form-control-plaintext p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_comment }}</strong>
 										<br/>
 										{{ comment }}
@@ -409,8 +379,8 @@
 							<div class="row mb-3">
 								<label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
-										<label class="btn btn-outline-secondary"><input type="radio" name="override" value="1"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="override" value="0" checked="checked"/> {{ text_no }}</label>
+									<div class="btn-group">
+										<label class="btn btn-outline-secondary"><input type="radio" name="override" value="1" class="btn-check"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="override" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
 									</div>
 									<div class="form-text text-muted">{{ help_override }}</div>
 								</div>
@@ -418,8 +388,8 @@
 							<div class="row mb-3">
 								<label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
-										<label class="btn btn-outline-secondary"><input type="radio" name="notify" value="1" class="form-check-input"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="notify" value="0" checked="checked"/> {{ text_no }}</label>
+									<div class="btn-group">
+										<label class="btn btn-outline-secondary"><input type="radio" name="notify" value="1" class="btn-check"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="notify" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
 									</div>
 								</div>
 							</div>
@@ -435,67 +405,6 @@
 						</div>
 					</div>
 					<div id="tab-additional" class="tab-pane">
-
-						{% if account_custom_fields %}
-							<div class="table-responsive">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<td colspan="2">{{ text_account_custom_field }}</td>
-										</tr>
-									</thead>
-									<tbody>
-										{% for custom_field in account_custom_fields %}
-											<tr>
-												<td>{{ custom_field.name }}</td>
-												<td>{{ custom_field.value }}</td>
-											</tr>
-										{% endfor %}
-									</tbody>
-								</table>
-							</div>
-						{% endif %}
-
-						{% if payment_custom_fields %}
-							<div class="table-responsive">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<td colspan="2">{{ text_payment_custom_field }}</td>
-										</tr>
-									</thead>
-									<tbody>
-										{% for custom_field in payment_custom_fields %}
-											<tr>
-												<td>{{ custom_field.name }}</td>
-												<td>{{ custom_field.value }}</td>
-											</tr>
-										{% endfor %}
-									</tbody>
-								</table>
-							</div>
-						{% endif %}
-
-						{% if shipping_method and shipping_custom_fields %}
-							<div class="table-responsive">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<td colspan="2">{{ text_shipping_custom_field }}</td>
-										</tr>
-									</thead>
-									<tbody>
-										{% for custom_field in shipping_custom_fields %}
-											<tr>
-												<td>{{ custom_field.name }}</td>
-												<td>{{ custom_field.value }}</td>
-											</tr>
-										{% endfor %}
-									</tbody>
-								</table>
-							</div>
-						{% endif %}
-
 						<div class="table-responsive">
 							<table class="table table-bordered">
 								<thead>
@@ -525,7 +434,6 @@
 								</tbody>
 							</table>
 						</div>
-
 					</div>
 					{% for tab in tabs %}
 						<div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
@@ -604,12 +512,11 @@
 					{% endfor %}
 				</select>
 			</div>
-			<div class="modal-footer text-end"
-			">
-			<button type="button" id="button-currency" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-currency" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 <div id="modal-customer" class="modal">
@@ -640,16 +547,22 @@
 				</div>
 
 				<div class="mb-3 required">
-					<label for="input-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+					<label for="input-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
 				</div>
 				<div class="mb-3 required">
-					<label for="input-lastname" class="col-form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+					<label for="input-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
 				</div>
 				<div class="mb-3 required">
-					<label for="input-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+					<label for="input-email" class="form-label">{{ entry_email }}</label>
+
+
+					<div class="input-group">
+						<input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/> <a href="mailto:{{ email }}" class="btn btn-outline-secondary"><i class="fa fa-envelope"></i></a>
+					</div>
+
 				</div>
 				<div class="mb-3 required">
-					<label for="input-telephone" class="col-form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+					<label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
 				</div>
 
 				{% for custom_field in custom_fields %}
@@ -657,7 +570,7 @@
 
 						{% if custom_field.type == 'select' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
+								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
 									<option value="">{{ text_select }}</option>
 									{% for custom_field_value in custom_field.custom_field_value %}
 										{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
@@ -672,7 +585,7 @@
 
 						{% if custom_field.type == 'radio' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label class="col-form-label">{{ custom_field.name }}</label>
+								<label class="form-label">{{ custom_field.name }}</label>
 								<div id="input-custom-field-{{ custom_field.custom_field_id }}">
 									{% for custom_field_value in custom_field.custom_field_value %}
 										<label class="form-check">
@@ -691,7 +604,7 @@
 
 						{% if custom_field.type == 'checkbox' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label class="col-form-label">{{ custom_field.name }}</label>
+								<label class="form-label">{{ custom_field.name }}</label>
 								<div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
 									{% for custom_field_value in custom_field.custom_field_value %}
 										<label class="form-check">
@@ -710,19 +623,19 @@
 
 						{% if custom_field.type == 'text' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 							</div>
 						{% endif %}
 
 						{% if custom_field.type == 'textarea' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
+								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
 							</div>
 						{% endif %}
 
 						{% if custom_field.type == 'file' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label class="col-form-label">{{ custom_field.name }}</label>
+								<label class="form-label">{{ custom_field.name }}</label>
 								<div id="input-custom-field-{{ custom_field.custom_field_id }}">
 									<button type="button" id="button-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
 									<input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}"/>
@@ -732,7 +645,7 @@
 
 						{% if custom_field.type == 'date' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
+								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
 								<div class="input-group date">
 									<input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 									<div class="input-group-text"><i class="fas fa-calendar"></i></div>
@@ -742,7 +655,7 @@
 
 						{% if custom_field.type == 'time' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
+								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
 								<div class="input-group time">
 									<input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 									<div class="input-group-text"><i class="fas fa-calendar"></i></div>
@@ -752,7 +665,7 @@
 
 						{% if custom_field.type == 'datetime' %}
 							<div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
-								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
+								<label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
 								<div class="input-group datetime">
 									<input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
 									<div class="input-group-text"><i class="fas fa-calendar"></i></div>
@@ -763,12 +676,11 @@
 					{% endif %}
 				{% endfor %}
 			</div>
-			<div class="modal-footer text-end"
-			">
-			<button type="button" id="button-customer" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-customer" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <div id="modal-shipping-method" class="modal">
 	<div class="modal-dialog">
@@ -1325,7 +1237,6 @@
 	</div>
 </div>
 
-</div>
 
 <script type="text/javascript"><!--
 $(document).on('click', '#button-collapse', function() {
@@ -1874,7 +1785,7 @@ $(document).on('click', '#button-reward-add, #button-reward-remove, #button-comm
     var part = $(this).attr('id').split('-');
 
     $.ajax({
-        url: 'index.php?route=sale/api|' + part[2] + part[1] + '&user_token={{ user_token }}&order_id={{ order_id }}',
+        url: 'index.php?route=sale/api|' + part[2] + part[1] + '&user_token={{ user_token }}&order_id=' + $('input[name=\'order_id\']').val(),
         type: 'post',
         dataType: 'json',
         beforeSend: function() {

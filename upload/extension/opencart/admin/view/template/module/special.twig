@@ -1,86 +1,81 @@
 {{ header }}{{ column_left }}
 <div id="content">
-  <div class="page-header">
-    <div class="container-fluid">
-      <div class="float-end">
-        <button type="button" data-oc-action="{{ save }}" data-oc-form="#module-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
-      <h1>{{ heading_title }}</h1>
-      <ol class="breadcrumb">
-        {% for breadcrumb in breadcrumbs %}
-          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="container-fluid">
-    {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="btn-close" data-dismiss="alert"></button>
-      </div>
-    {% endif %}
-    <div class="card">
-      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
-      <div class="card-body">
-        <form id="module-form">
-          <div class="row mb-3">
-            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-axis" class="col-sm-2 col-form-label">{{ entry_axis }}</label>
-            <div class="col-sm-10">
-              <select name="axis" id="input-axis" class="form-select">
-                {% if axis == 'horizontal' %}
-                  <option value="0" selected="selected">{{ text_horizontal }}</option>
-                {% else %}
-                  <option value="horizontal">{{ text_horizontal }}</option>
-                {% endif %}
-                {% if axis == 'vertical' %}
-                  <option value="vertical" selected="selected">{{ text_vertical }}</option>
-                {% else %}
-                  <option value="vertical">{{ text_vertical }}</option>
-                {% endif %}
-              </select>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-limit" class="col-sm-2 col-form-label">{{ entry_limit }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control"/>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-width" class="col-sm-2 col-form-label">{{ entry_width }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-height" class="col-sm-2 col-form-label">{{ entry_height }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
-            <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-select">
-                {% if status %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
-                  <option value="0">{{ text_disabled }}</option>
-                {% else %}
-                  <option value="1">{{ text_enabled }}</option>
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+				<button type="button" data-oc-action="{{ save }}" data-oc-form="#module-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+			<div class="card-body">
+				<form id="module-form">
+					<div class="row mb-3">
+						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="input-axis" class="col-sm-2 col-form-label">{{ entry_axis }}</label>
+						<div class="col-sm-10">
+							<select name="axis" id="input-axis" class="form-select">
+								{% if axis == 'horizontal' %}
+									<option value="0" selected="selected">{{ text_horizontal }}</option>
+								{% else %}
+									<option value="horizontal">{{ text_horizontal }}</option>
+								{% endif %}
+								{% if axis == 'vertical' %}
+									<option value="vertical" selected="selected">{{ text_vertical }}</option>
+								{% else %}
+									<option value="vertical">{{ text_vertical }}</option>
+								{% endif %}
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="input-limit" class="col-sm-2 col-form-label">{{ entry_limit }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control"/>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="input-width" class="col-sm-2 col-form-label">{{ entry_width }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="input-height" class="col-sm-2 col-form-label">{{ entry_height }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="status" id="input-status" class="form-select">
+								{% if status %}
+									<option value="1" selected="selected">{{ text_enabled }}</option>
+									<option value="0">{{ text_disabled }}</option>
+								{% else %}
+									<option value="1">{{ text_enabled }}</option>
+									<option value="0" selected="selected">{{ text_disabled }}</option>
+								{% endif %}
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 {{ footer }}

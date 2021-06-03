@@ -275,13 +275,13 @@ $('#history').on('click', '.pagination a', function(e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/returns|history&user_token={{ user_token }}&return_id={{ return_id }}');
+$('#history').load('index.php?route=sale/returns|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
 
 $('#button-history').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/returns|addhistory&user_token={{ user_token }}&return_id={{ return_id }}',
+        url: 'index.php?route=sale/returns|addhistory&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val(),
         type: 'post',
         dataType: 'json',
         data: 'return_status_id=' + encodeURIComponent($('#tab-history select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
@@ -299,7 +299,7 @@ $('#button-history').on('click', function(e) {
             }
 
             if (json['success']) {
-                $('#history').load('index.php?route=sale/returns|history&user_token={{ user_token }}&return_id={{ return_id }}');
+                $('#history').load('index.php?route=sale/returns|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
 
                 $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 

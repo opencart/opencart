@@ -25,9 +25,7 @@
 					<input type="hidden" name="voucher_id" value="{{ voucher_id }}" id="input-voucher-id"/>
 					<ul class="nav nav-tabs">
 						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-						{% if voucher_id %}
-							<li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
-						{% endif %}
+						<li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
@@ -103,11 +101,9 @@
 								</div>
 							</div>
 						</div>
-						{% if voucher_id %}
-							<div id="tab-history" class="tab-pane">
-								<div id="history"></div>
-							</div>
-						{% endif %}
+						<div id="tab-history" class="tab-pane">
+							<div id="history"></div>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -121,7 +117,7 @@
           url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
           type: 'post',
           dataType: 'json',
-          data: 'voucher_id={{ voucher_id }}',
+          data: 'voucher_id=' + $('input[name=\'voucher_id\']').val(),
           beforeSend: function() {
               $('#button-send').prop('disabled', true);
           },
@@ -152,7 +148,7 @@
       $('#history').load(this.href);
   });
 
-  $('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id={{ voucher_id }}');
+  $('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id=' + $('input[name=\'voucher_id\']').val());
   //--></script>
 {% endif %}
 {{ footer }}

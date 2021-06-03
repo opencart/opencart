@@ -21,6 +21,7 @@
 					<input type="hidden" name="coupon_id" value="{{ coupon_id }}" id="input-coupon-id"/>
 					<ul class="nav nav-tabs">
 						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+						<li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
@@ -71,7 +72,7 @@
 							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+									<div class="btn-group">
 										{% if logged %}
 											<label class="btn btn-outline-secondary active"><input type="radio" name="logged" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
 											<label class="btn btn-outline-secondary"><input type="radio" name="logged" value="0" class="btn-check"/> {{ text_no }}</label>
@@ -86,7 +87,7 @@
 							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
 								<div class="col-sm-10">
-									<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+									<div class="btn-group">
 										{% if shipping %}
 											<label class="btn btn-outline-secondary active"><input type="radio" name="shipping" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
 											<label class="btn btn-outline-secondary"><input type="radio" name="shipping" value="0" class="btn-check"/> {{ text_no }}</label>
@@ -178,14 +179,12 @@
 								</div>
 							</div>
 						</div>
-						{% if coupon_id %}
-							<div id="tab-history" class="tab-pane">
-								<fieldset>
-									<legend>{{ text_coupon }}</legend>
-									<div id="history"></div>
-								</fieldset>
-							</div>
-						{% endif %}
+						<div id="tab-history" class="tab-pane">
+							<fieldset>
+								<legend>{{ text_coupon }}</legend>
+								<div id="history"></div>
+							</fieldset>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -268,7 +267,7 @@ $('#coupon-category').on('click', '.btn', function() {
       $('#history').load(this.href);
   });
 
-  $('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id={{ coupon_id }}');
+  $('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id=' + $('input[name=\'coupon_id\']').val());
   //--></script>
 {% endif %}
 <script type="text/javascript"><!--

@@ -22,9 +22,7 @@
 					<input type="hidden" name="download_id" value="{{ download_id }}" id="input-download-id"/>
 					<ul class="nav nav-tabs">
 						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-						{% if download_id %}
-							<li class="nav-item"><a href="#tab-report" data-bs-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
-						{% endif %}
+						<li class="nav-item"><a href="#tab-report" data-bs-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab-general">
@@ -76,7 +74,7 @@ $('#report').on('click', '.pagination a', function(e) {
     $('#report').load(this.href);
 });
 
-$('#report').load('index.php?route=catalog/download|report&user_token={{ user_token }}&download_id={{ download_id }}');
+$('#report').load('index.php?route=catalog/download|report&user_token={{ user_token }}&download_id=' + $('input[name=\'download_id\']').val());
 //--></script>
 <script type="text/javascript"><!--
 $('#button-upload').on('click', function() {

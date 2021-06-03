@@ -410,11 +410,10 @@ a {
 }
 
 .nav-tabs li.nav-item a.active {
-    font-weight: bold;
     color: #333;
 }
 
-.col-form-label {
+.form-label, .col-form-label {
     font-weight: bold;
 }
 

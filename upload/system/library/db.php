@@ -89,4 +89,10 @@ class DB {
 	public function isConnected(): bool {
 		return $this->adaptor->isConnected();
 	}
+	
+	public function __call($name, $arguments) {
+	       if (method_exists($this->adaptor, $name)) {
+		   return $this->adaptor->$name(...$arguments);
+	       }
+	}
 }

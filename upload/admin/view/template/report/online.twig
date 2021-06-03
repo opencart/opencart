@@ -2,7 +2,8 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-end"><button type="button" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-online').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button> <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fas fa-sync"></i></button>
+			<div class="float-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-online').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+				<button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-light"><i class="fas fa-sync"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -24,7 +25,7 @@
 						<div class="mb-3">
 							<label for="input-ip" class="form-label">{{ entry_ip }}</label> <input type="text" name="filter_ip" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>
 						</div>
-						<div class="mb-3 text-end">
+						<div class="text-end">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 						</div>
 					</div>

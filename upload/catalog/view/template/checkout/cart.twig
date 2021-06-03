@@ -63,10 +63,8 @@
 									<td class="text-start">
 										<div class="input-group">
 											<input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="form-control">
-											<div class="input-group-append">
-												<button type="button" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
-												<button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fas fa-times-circle"></i></button>
-											</div>
+											<button type="button" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
+											<button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="cart.remove('{{ product.cart_id }}');"><i class="fas fa-times-circle"></i></button>
 										</div>
 									</td>
 									<td class="text-end">{{ product.price }}</td>
@@ -81,9 +79,7 @@
 									<td class="text-start">
 										<div class="input-group">
 											<input type="text" name="" value="1" size="1" disabled="disabled" class="form-control"/>
-											<div class="input-group-append">
-												<button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="voucher.remove('{{ voucher.key }}');"><i class="fas fa-times-circle"></i></button>
-											</div>
+											<button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="voucher.remove('{{ voucher.key }}');"><i class="fas fa-times-circle"></i></button>
 										</div>
 									</td>
 									<td class="text-end">{{ voucher.amount }}</td>

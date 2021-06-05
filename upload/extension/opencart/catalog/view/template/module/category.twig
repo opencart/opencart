@@ -11,7 +11,8 @@
           {% endif %}
         {% endfor %}
       {% endif %}
-    {% else %} <a href="{{ category.href }}" class="list-group-item">{{ category.name }}</a>
+    {% else %} 
+      <a href="{{ category.href }}" class="list-group-item">{{ category.name }}</a>
     {% endif %}
   {% endfor %}
 </div>

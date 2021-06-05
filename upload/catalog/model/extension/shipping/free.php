@@ -16,6 +16,13 @@ class ModelExtensionShippingFree extends Model {
 		if ($this->cart->getSubTotal() < $this->config->get('shipping_free_total')) {
 			$status = false;
 		}
+		
+		if (!$status) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "freeshipping_postcode WHERE postcode = '" . $address['postcode'] . "' AND country_id = '" . (int)$address['country_id'] . "'");
+			if ($query->num_rows) {
+				$status = true;
+			}
+		}
 
 		$method_data = array();
 

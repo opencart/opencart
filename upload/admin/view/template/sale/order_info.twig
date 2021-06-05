@@ -48,7 +48,7 @@
 						</div>
 
 						<div class="col">
-							<div class="form-control-plaintext p-0 border rounded-start mb-3">
+							<div class="form-control-plaintext p-0 border rounded mb-3">
 								<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
 									<br/>
 									{{ date_added }}
@@ -65,7 +65,7 @@
 										{% if customer %}
 											<a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a>
 										{% else %}
-											{{ firstname }} {{ lastname }} &nsbp;
+											{{ firstname }} {{ lastname }} &nbsp;
 										{% endif %}
 									</p>
 								</div>
@@ -113,26 +113,32 @@
 								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
 										<br/>
-										{{ payment_method }}
+										{% if payment_method %}
+											{{ payment_method }}
+										{% else %}
+											&nbsp;
+										{% endif %}
 									</p>
 								</div>
 								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 							</div>
 						</div>
 
-
 						<div class="col">
 							<div class="input-group mb-3">
 								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
 										<br/>
-										{{ shipping_method }}
+										{% if shipping_method %}
+											{{ shipping_method }}
+										{% else %}
+											&nbsp;
+										{% endif %}
 									</p>
 								</div>
 								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 							</div>
 						</div>
-
 
 						<div class="col">
 							<div class="input-group mb-3">
@@ -227,7 +233,12 @@
 							<div class="form-control p-0 border rounded-start">
 								<p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
 									<br/>
-									{{ payment_address }}
+									{% if payment_address %}
+										{{ payment_address }}
+									{% else %}
+										&nbsp;
+										<br/>&nbsp;
+									{% endif %}
 								</p>
 							</div>
 							<button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
@@ -238,7 +249,12 @@
 							<div class="form-control p-0 border rounded-start">
 								<p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
 									<br/>
-									{{ shipping_address }}
+									{% if shipping_address %}
+										{{ shipping_address }}
+									{% else %}
+										&nbsp;
+										<br/>&nbsp;
+									{% endif %}
 								</p>
 							</div>
 							<button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
@@ -402,7 +418,7 @@
 							</div>
 						</fieldset>
 						<div class="text-end">
-							<button id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+							<button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
 						</div>
 					</div>
 					<div id="tab-additional" class="tab-pane">
@@ -1230,1537 +1246,1587 @@
 			</div>
 		</div>
 	</div>
-
-
-	<script type="text/javascript"><!--
-  $(document).on('click', '#button-collapse', function() {
-      var element = this;
-
-      if ($('#collapse-order').css('max-height') == '78px') {
-          $('#button-collapse').html('{{ text_less }} <i class="fas fa-angle-up"></i>');
-
-          $('#collapse-order').animate({'max-height': $('#container').height() + 'px'});
-      } else {
-          $('#button-collapse').html('{{ text_more }} <i class="fas fa-angle-down"></i>');
-
-          $('#collapse-order').animate({'max-height': '78px'});
-      }
-  });
-
-  $(document).on('click', '#button-invoice', function() {
-      $.ajax({
-          url: 'index.php?route=sale/order|createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
-          dataType: 'json',
-          beforeSend: function() {
-              $('#button-invoice').button('loading');
-          },
-          complete: function() {
-              $('#button-invoice').button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['invoice_no']) {
-                  $('#invoice').html(json['invoice_no']);
-
-                  $('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success"><i class="fas fa-cog"></i></button>');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  $('#modal-store #button-store').on('click', function() {
-      // Refresh products, vouchers and totals
-      $('#button-refresh').trigger('click');
-  });
-
-  // Customer
-  $('#modal-customer input[name=\'customer\']').autocomplete({
-      'source': function(request, response) {
-          $.ajax({
-              url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-              dataType: 'json',
-              success: function(json) {
-                  json.unshift({
-                      customer_id: '0',
-                      customer_group_id: '{{ customer_group_id }}',
-                      name: '{{ text_none }}',
-                      customer_group: '',
-                      firstname: '',
-                      lastname: '',
-                      email: '',
-                      telephone: '',
-                      custom_field: [],
-                      address: []
-                  });
-
-                  response($.map(json, function(item) {
-                      return {
-                          category: item['customer_group'],
-                          label: item['name'],
-                          value: item['customer_id'],
-                          customer_group_id: item['customer_group_id'],
-                          firstname: item['firstname'],
-                          lastname: item['lastname'],
-                          email: item['email'],
-                          telephone: item['telephone'],
-                          custom_field: item['custom_field'],
-                          address: item['address']
-                      }
-                  }));
-              }
-          });
-      },
-      'select': function(item) {
-          // Reset all custom fields
-          $('#modal-customer input[type=\'text\'], #modal-customer textarea').not('#modal-customer input[name=\'customer\'], #modal-customer input[name=\'customer_id\']').val('');
-          $('#modal-customer select option').removeAttr('selected');
-          $('#modal-customer input[type=\'checkbox\'], #modal-customer input[type=\'radio\']').removeAttr('checked');
-
-          $('#modal-customer input[name=\'customer\']').val(item['label']);
-          $('#modal-customer input[name=\'customer_id\']').val(item['value']);
-          $('#modal-customer select[name=\'customer_group_id\']').val(item['customer_group_id']);
-          $('#modal-customer input[name=\'firstname\']').val(item['firstname']);
-          $('#modal-customer input[name=\'lastname\']').val(item['lastname']);
-          $('#modal-customer input[name=\'email\']').val(item['email']);
-          $('#modal-customer input[name=\'telephone\']').val(item['telephone']);
-
-          for (i in item.custom_field) {
-              $('#modal-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-              $('#modal-customer textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-              $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
-              $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
-              $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);
-
-              if (item.custom_field[i] instanceof Array) {
-                  for (j = 0; j < item.custom_field[i].length; j++) {
-                      $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i][j] + '\']').prop('checked', true);
-                  }
-              }
-          }
-
-          $('#modal-customer select[name=\'customer_group_id\']').trigger('change');
-
-          html = '<option value="0">{{ text_none }}</option>';
-
-          for (i in item['address']) {
-              html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
-          }
-
-          $('#modal-payment-address select[name=\'payment_address\']').html(html);
-          $('#modal-shipping-address select[name=\'shipping_address\']').html(html);
-      }
-  });
-
-  // Custom Fields
-  $('#modal-customer select[name=\'customer_group_id\']').on('change', function() {
-      $.ajax({
-          url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
-          dataType: 'json',
-          success: function(json) {
-              $('.custom-field').hide();
-              $('.custom-field').removeClass('required');
-
-              for (i = 0; i < json.length; i++) {
-                  custom_field = json[i];
-
-                  $('.custom-field' + custom_field['custom_field_id']).show();
-
-                  if (custom_field['required']) {
-                      $('.custom-field' + custom_field['custom_field_id']).addClass('required');
-                  }
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  $('#modal-customer select[name=\'customer_group_id\']').trigger('change');
-
-  // Customer
-  $('#modal-customer #button-customer').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|customer&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          dataType: 'json',
-          data: $('#modal-customer input[type=\'text\'], #modal-customer input[type=\'hidden\'], #modal-customer input[type=\'radio\']:checked, #modal-customer input[type=\'checkbox\']:checked, #modal-customer select, #modal-customer textarea'),
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible, .invalid-tooltip').remove();
-              $('.is-invalid').removeClass('is-invalid');
-
-              // Check for errors
-              if (json['error']) {
-                  if (json['error']['warning']) {
-                      $('#modal-customer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                  }
-
-                  for (i in json['error']) {
-                      var element = $('#modal-customer #input-' + i.replaceAll('_', '-'));
-
-                      // Highlight any found errors
-                      $(element).addClass('is-invalid');
-
-                      if ($(element).parent().hasClass('input-group')) {
-                          $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                      } else {
-                          $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                      }
-                  }
-              }
-
-              if (json['success']) {
-                  $('#modal-customer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Language
-  $('#button-language').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|language&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          dataType: 'json',
-          data: 'language=' + $('select[name=\'language\'] option:selected').val(),
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#modal-language .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#modal-language .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Currency
-  $('#button-currency').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|currency&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          dataType: 'json',
-          data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#modal-currency .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#modal-currency .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Shipping Method
-  $('#modal-shipping-method #button-shipping-methods').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|shippingmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              if (json['error']) {
-                  $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              } else {
-                  // Shipping Methods
-                  html = '<option value="">{{ text_select }}</option>';
-
-                  if (json['shipping_methods']) {
-                      for (i in json['shipping_methods']) {
-                          html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
-
-                          if (!json['shipping_methods'][i]['error']) {
-                              for (j in json['shipping_methods'][i]['quote']) {
-                                  if (json['shipping_methods'][i]['quote'][j]['code'] == $('#modal-shipping-method select[name=\'shipping_method\'] option:selected').val()) {
-                                      html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                                  } else {
-                                      html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                                  }
-                              }
-                          } else {
-                              html += '<option value="" style="color: #ff0000;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
-                          }
-
-                          html += '</optgroup>';
-                      }
-                  }
-
-                  $('select[name=\'shipping_method\']').html(html);
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  $('#modal-shipping-method #button-shipping-method').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|shippingmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Payment Method
-  $('#modal-payment-method #button-payment-methods').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|paymentmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              if (json['error']) {
-                  $('#collapse-payment .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              } else {
-                  html = '<option value="">{{ text_select }}</option>';
-
-                  if (json['payment_methods']) {
-                      for (i in json['payment_methods']) {
-                          if (json['payment_methods'][i]['code'] == $('select[name=\'payment_method\'] option:selected').val()) {
-                              html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
-                          } else {
-                              html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                          }
-                      }
-                  }
-
-                  $('select[name=\'payment_method\']').html(html);
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  $('#modal-payment-method #button-payment-method').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|paymentmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('lo ading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#modal-payment-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#modal-payment-method .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Coupon
-  $('#modal-coupon #button-coupon').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|coupon&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: 'coupon=' + $('input[name=\'coupon\']').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#modal-coupon .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#modal-coupon .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Voucher
-  $('#modal-voucher #button-voucher').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|voucher&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: 'voucher=' + $('input[name=\'voucher\']').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#modal-voucher .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#modal-voucher .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Reward
-  $('#modal-reward #button-reward').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|reward&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: 'reward=' + $('input[name=\'reward\']').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible, .invalid-tooltip').remove();
-              $('.is-invalid').removeClass('is-invalid');
-
-              if (json['error']) {
-                  $('#modal-reward .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Highlight any found errors
-                  $('input[name=\'reward\']').addClass('is-invalid');
-              }
-
-              if (json['success']) {
-                  $('#modal-reward .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Merged rewards and commission together
-  $(document).on('click', '#button-reward-add, #button-reward-remove, #button-commission-add, #button-commission-remove', function(e) {
-      var element = this;
-
-      var part = $(this).attr('id').split('-');
-
-      $.ajax({
-          url: 'index.php?route=sale/api|' + part[2] + part[1] + '&user_token={{ user_token }}&order_id=' + $('input[name=\'order_id\']').val(),
-          type: 'post',
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              if (json['error']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  if (part[1] == 'reward') {
-                      if (part[2] == 'add') {
-                          $(element).replaceWith('<button id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
-                      } else {
-                          $(element).replaceWith('<button id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
-                      }
-                  }
-
-                  if (part[1] == 'commission') {
-                      if (part[2] == 'add') {
-                          $(element).replaceWith('<button id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
-                      } else {
-                          $(element).replaceWith('<button id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
-                      }
-                  }
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Affiliate
-  $('input[name=\'affiliate\']').autocomplete({
-      'source': function(request, response) {
-          $.ajax({
-              url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
-              dataType: 'json',
-              success: function(json) {
-                  json.unshift({
-                      customer_id: 0,
-                      name: '{{ text_none }}'
-                  });
-
-                  response($.map(json, function(item) {
-                      return {
-                          label: item['name'],
-                          value: item['customer_id']
-                      }
-                  }));
-              }
-          });
-      },
-      'select': function(item) {
-          $('input[name=\'affiliate\']').val(item['label']);
-          $('input[name=\'affiliate_id\']').val(item['value']);
-      }
-  });
-
-  // Payment Address
-  $('#modal-payment-address select[name=\'payment_address\']').on('change', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=customer/customer|address&user_token={{ user_token }}&address_id=' + this.value,
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).prop('disabled', true);
-          },
-          complete: function() {
-              $(element).prop('disabled', false);
-          },
-          success: function(json) {
-              // Reset all fields
-              $('#modal-payment-address input[type=\'text\'], #modal-payment-address input[type=\'text\'], #modal-payment-address textarea').val('');
-              $('#modal-payment-address select option').not('#modal-payment-address select[name=\'payment_address\']').removeAttr('selected');
-              $('#modal-payment-address input[type=\'checkbox\'], #modal-payment-address input[type=\'radio\']').removeAttr('checked');
-
-              $('#modal-payment-address input[name=\'firstname\']').val(json['firstname']);
-              $('#modal-payment-address input[name=\'lastname\']').val(json['lastname']);
-              $('#modal-payment-address input[name=\'company\']').val(json['company']);
-              $('#modal-payment-address input[name=\'address_1\']').val(json['address_1']);
-              $('#modal-payment-address input[name=\'address_2\']').val(json['address_2']);
-              $('#modal-payment-address input[name=\'city\']').val(json['city']);
-              $('#modal-payment-address input[name=\'postcode\']').val(json['postcode']);
-              $('#modal-payment-address select[name=\'country_id\']').val(json['country_id']);
-
-              payment_zone_id = json['zone_id'];
-
-              for (i in json['custom_field']) {
-                  $('#modal-payment-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                  $('#modal-payment-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                  $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
-                  $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
-                  $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-                  $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-
-                  if (json['custom_field'][i] instanceof Array) {
-                      for (j = 0; j < json['custom_field'][i].length; j++) {
-                          $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
-                      }
-                  }
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      }).done(function() {
-          $('#modal-payment-address select[name=\'country_id\']').trigger('change');
-      });
-  });
-
-  var payment_zone_id = '{{ payment_zone_id }}';
-
-  $('#modal-payment-address select[name=\'country_id\']').on('change', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).prop('disabled', true);
-          },
-          complete: function() {
-              $(element).prop('disabled', false);
-          },
-          success: function(json) {
-              if (json['postcode_required'] == '1') {
-                  $('#modal-payment-address input[name=\'postcode\']').closest('.row.mb-3').addClass('required');
-              } else {
-                  $('#modal-payment-address input[name=\'postcode\']').closest('.row.mb-3').removeClass('required');
-              }
-
-              html = '<option value="">{{ text_select }}</option>';
-
-              if (json['zone'] && json['zone'] != '') {
-                  for (i = 0; i < json['zone'].length; i++) {
-                      html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-                      if (json['zone'][i]['zone_id'] == payment_zone_id) {
-                          html += ' selected="selected"';
-                      }
-
-                      html += '>' + json['zone'][i]['name'] + '</option>';
-                  }
-              } else {
-                  html += '<option value="0" selected="selected">{{ text_none }}</option>';
-              }
-
-              $('#modal-payment-address select[name=\'zone_id\']').html(html);
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  $('#modal-payment-address select[name=\'country_id\']').trigger('change');
-
-  $('#modal-payment-address #button-payment-address').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|paymentaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: $('#modal-payment-address input[type=\'text\'], #modal-payment-address input[type=\'hidden\'], #modal-payment-address input[type=\'radio\']:checked, #modal-payment-address input[type=\'checkbox\']:checked, #modal-payment-address select, #modal-payment-address textarea'),
-          dataType: 'html',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              console.log(json);
-
-              $('.alert-dismissible, .invalid-tooltip').remove();
-              $('.is-invalid').removeClass('is-invalid');
-
-              if (json['error']) {
-                  if (json['error']['warning']) {
-                      $('#modal-payment-address .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                  }
-
-                  for (i in json['error']) {
-                      var element = $('#input-payment-' + i.replace('_', '-'));
-
-                      // Highlight any found errors
-                      $(element).addClass('is-invalid');
-
-                      if ($(element).parent().hasClass('input-group')) {
-                          $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                      } else {
-                          $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                      }
-                  }
-              }
-
-              if (json['success']) {
-                  $('#modal-payment-address .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Shipping Address
-  $('#modal-shipping-address select[name=\'shipping_address\']').on('change', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=customer/customer|address&user_token={{ user_token }}&address_id=' + this.value,
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).prop('disabled', true);
-          },
-          complete: function() {
-              $(element).prop('disabled', false);
-          },
-          success: function(json) {
-              // Reset all fields
-              $('#modal-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'text\'], #modal-shipping-address textarea').val('');
-              $('#modal-shipping-address select option').not('#modal-shipping-address select[name=\'shipping_address\']').removeAttr('selected');
-              $('#modal-shipping-address input[type=\'checkbox\'], #modal-shipping-address input[type=\'radio\']').removeAttr('checked');
-
-              $('#modal-shipping-address input[name=\'firstname\']').val(json['firstname']);
-              $('#modal-shipping-address input[name=\'lastname\']').val(json['lastname']);
-              $('#modal-shipping-address input[name=\'company\']').val(json['company']);
-              $('#modal-shipping-address input[name=\'address_1\']').val(json['address_1']);
-              $('#modal-shipping-address input[name=\'address_2\']').val(json['address_2']);
-              $('#modal-shipping-address input[name=\'city\']').val(json['city']);
-              $('#modal-shipping-address input[name=\'postcode\']').val(json['postcode']);
-              $('#modal-shipping-address select[name=\'country_id\']').val(json['country_id']);
-
-              shipping_zone_id = json['zone_id'];
-
-              for (i in json['custom_field']) {
-                  $('#modal-shipping-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                  $('#modal-shipping-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                  $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
-                  $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
-                  $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-                  $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-
-                  if (json['custom_field'][i] instanceof Array) {
-                      for (j = 0; j < json['custom_field'][i].length; j++) {
-                          $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
-                      }
-                  }
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      }).done(function() {
-          $('#modal-shipping-address select[name=\'country_id\']').trigger('change');
-      });
-  });
-
-  var shipping_zone_id = '{{ shipping_zone_id }}';
-
-  $('#modal-shipping-address select[name=\'country_id\']').on('change', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).prop('disabled', true);
-          },
-          complete: function() {
-              $(element).prop('disabled', false);
-          },
-          success: function(json) {
-              if (json['postcode_required'] == '1') {
-                  $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').addClass('required');
-              } else {
-                  $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').removeClass('required');
-              }
-
-              html = '<option value="">{{ text_select }}</option>';
-
-              if (json['zone'] && json['zone'] != '') {
-                  for (i = 0; i < json['zone'].length; i++) {
-                      html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-                      if (json['zone'][i]['zone_id'] == shipping_zone_id) {
-                          html += ' selected="selected"';
-                      }
-
-                      html += '>' + json['zone'][i]['name'] + '</option>';
-                  }
-              } else {
-                  html += '<option value="0" selected="selected">{{ text_none }}</option>';
-              }
-
-              $('#modal-shipping-address select[name=\'zone_id\']').html(html);
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  $('#modal-shipping-address select[name=\'country_id\']').trigger('change');
-
-  $('#modal-shipping-address #button-shipping-address').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api/shippingaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: $('#modal-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'hidden\'], #modal-shipping-address input[type=\'radio\']:checked, #modal-shipping-address input[type=\'checkbox\']:checked, #modal-shipping-address select, #modal-shipping-address textarea'),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible, .invalid-tooltip').remove();
-              $('.is-invalid').removeClass('is-invalid');
-
-              // Check for errors
-              if (json['error']) {
-                  if (json['error']['warning']) {
-                      $('#modal-shipping-address .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                  }
-
-                  for (i in json['error']) {
-                      var element = $('#modal-shipping-address #input-shipping-' + i.replaceAll('_', '-'));
-
-                      // Highlight any found errors
-                      $(element).addClass('is-invalid');
-
-                      if ($(element).parent().hasClass('input-group')) {
-                          $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                      } else {
-                          $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                      }
-                  }
-              }
-
-              if (json['success']) {
-                  $('#modal-shipping-address .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Product
-  $('#modal-cart input[name=\'product\']').autocomplete({
-      'source': function(request, response) {
-          $.ajax({
-              url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-              dataType: 'json',
-              success: function(json) {
-                  response($.map(json, function(item) {
-                      return {
-                          label: item['name'],
-                          value: item['product_id'],
-                          model: item['model'],
-                          option: item['option'],
-                          price: item['price']
-                      }
-                  }));
-              }
-          });
-      },
-      'select': function(item) {
-          $('#modal-cart input[name=\'product\']').val(item['label']);
-          $('#modal-cart input[name=\'product_id\']').val(item['value']);
-
-          if (item['option'] != '') {
-              html = '<fieldset>';
-              html += '  <legend>{{ entry_option }}</legend>';
-
-              for (i = 0; i < item['option'].length; i++) {
-                  option = item['option'][i];
-
-                  if (option['type'] == 'select') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-
-                      html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
-                      html += '    <option value="">{{ text_select }}</option>';
-
-                      for (j = 0; j < option['product_option_value'].length; j++) {
-                          option_value = option['product_option_value'][j];
-
-                          html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
-
-                          if (option_value['price']) {
-                              html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
-                          }
-
-                          html += '</option>';
-                      }
-
-                      html += '  </select>';
-
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'radio') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-
-                      html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
-                      html += '    <option value="">{{ text_select }}</option>';
-
-                      for (j = 0; j < option['product_option_value'].length; j++) {
-                          option_value = option['product_option_value'][j];
-
-                          html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
-
-                          if (option_value['price']) {
-                              html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
-                          }
-
-                          html += '</option>';
-                      }
-
-                      html += '  </select>';
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'checkbox') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label class="col-form-label">' + option['name'] + '</label>';
-
-                      html += '  <div id="input-option-' + option['product_option_id'] + '">';
-
-                      for (j = 0; j < option['product_option_value'].length; j++) {
-                          option_value = option['product_option_value'][j];
-
-                          html += '<label class="form-check"><input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" class="form-check-input"/> ' + option_value['name'];
-
-                          if (option_value['price']) {
-                              html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
-                          }
-
-                          html += '</label>';
-                      }
-
-                      html += '  </div>';
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'image') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-
-                      html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
-                      html += '    <option value="">{{ text_select }}</option>';
-
-                      for (j = 0; j < option['product_option_value'].length; j++) {
-                          option_value = option['product_option_value'][j];
-
-                          html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
-
-                          if (option_value['price']) {
-                              html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
-                          }
-
-                          html += '</option>';
-                      }
-
-                      html += '  </select>';
-                      ;
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'text') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                      html += '  <input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" />';
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'textarea') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                      html += '  <textarea name="option[' + option['product_option_id'] + ']" rows="5" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control">' + option['value'] + '</textarea>';
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'file') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label class="col-form-label">' + option['name'] + '</label>';
-                      html += '  <div><button type="button" id="button-upload-' + option['product_option_id'] + '" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button><input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '" /></div>';
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'date') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                      html += '  <div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '"  id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'datetime') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                      html += '  <div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
-                      html += '</div>';
-                  }
-
-                  if (option['type'] == 'time') {
-                      html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
-                      html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                      html += '  <div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
-                      html += '</div>';
-                  }
-              }
-
-              html += '</fieldset>';
-
-              $('#option').html(html);
-
-              $('.date').datetimepicker({
-                  'format': 'YYYY-MM-DD',
-                  'locale': '{{ datepicker }}',
-                  'allowInputToggle': true
-              });
-
-              $('.time').datetimepicker({
-                  'format': 'HH:mm',
-                  'locale': '{{ datepicker }}',
-                  'allowInputToggle': true
-              });
-
-              $('.datetime').datetimepicker({
-                  'format': 'YYYY-MM-DD HH:mm',
-                  'locale': '{{ datepicker }}',
-                  'allowInputToggle': true
-              });
-          } else {
-              $('#option').html('');
-          }
-      }
-  });
-
-
-  $('#modal-cart #button-product-add').on('click', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|addProduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible, .invalid-tooltip').remove();
-              $('.is-invalid').removeClass('is-invalid');
-
-              if (json['error']) {
-                  if (json['error']['warning']) {
-                      $('#modal-product .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                  }
-
-                  if (json['error']['option']) {
-                      for (i in json['error']['option']) {
-                          var element = $('#input-option-' + i.replace('_', '-'));
-
-                          // Highlight any found errors
-                          $(element).addClass('is-invalid');
-
-                          if (element.parent().hasClass('input-group')) {
-                              $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error']['option'][i] + '</div>');
-                          } else {
-                              $(element).after('<div class="invalid-tooltip d-inline">' + json['error']['option'][i] + '</div>');
-                          }
-                      }
-                  }
-
-                  if (json['error']['store']) {
-                      $('#modal-product .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
-                  }
-              } else {
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  $('#modal-cart #button-remove').on('click', '.btn-danger', function() {
-      var element = this;
-
-      $.ajax({
-          url: 'index.php?route=sale/api|removeproduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: 'key=' + encodeURIComponent(this.value),
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible, .invalid-tooltip').remove();
-
-              // Check for errors
-              if (json['error']) {
-                  $('#tab-cart .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              } else {
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Voucher
-  $('#modal-cart #button-voucher-add').on('click', function() {
-      $.ajax({
-          url: '{{ catalog }}index.php?route=sale/api|voucheradd&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          type: 'post',
-          data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
-          dataType: 'json',
-          beforeSend: function() {
-              $('#button-voucher-add').button('loading');
-          },
-          complete: function() {
-              $('#button-voucher-add').button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible, .invalid-tooltip').remove();
-              $('.is-invalid').removeClass('is-invalid');
-
-              if (json['error']) {
-                  if (json['error']['warning']) {
-                      $('#tab-voucher').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                  }
-
-                  for (i in json['error']) {
-                      var element = $('#input-' + i.replaceAll('_', '-'));
-
-                      // Highlight any found errors
-                      $(element).addClass('is-invalid');
-
-                      $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                  }
-              } else {
-                  $('input[name=\'from_name\']').val('');
-                  $('input[name=\'from_email\']').val('');
-                  $('input[name=\'to_name\']').val('');
-                  $('input[name=\'to_email\']').val('');
-                  $('textarea[name=\'message\']').val('');
-                  $('input[name=\'amount\']').val('{{ voucher_min|escape('js') }}');
-
-                  // Refresh products, vouchers and totals
-                  $('#button-refresh').trigger('click');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-  // Refresh all products, vouchers and totals
-  $('#button-refresh').on('click', function() {
-      $.ajax({
-          url: 'index.php?route=api/cart|products&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-          dataType: 'json',
-          beforeSend: function() {
-              $('#button-refresh').button('loading');
-          },
-          complete: function() {
-              $('#button-refresh').button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
-
-              // Check for errors
-              if (json['error']) {
-                  if (json['error']['warning']) {
-                      $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                  }
-
-                  if (json['error']['stock']) {
-                      $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
-                  }
-
-                  if (json['error']['minimum']) {
-                      for (i in json['error']['minimum']) {
-                          $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                      }
-                  }
-              }
-
-              var shipping = false;
-
-              html = '';
-
-              if (json['products'].length) {
-                  for (i = 0; i < json['products'].length; i++) {
-                      product = json['products'][i];
-
-                      html += '<tr>';
-                      html += '  <td class="text-start">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
-                      html += '  <input type="hidden" name="product[' + i + '][product_id]" value="' + product['product_id'] + '" />';
-
-                      if (product['option']) {
-                          for (j = 0; j < product['option'].length; j++) {
-                              option = product['option'][j];
-
-                              html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-
-                              if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
-                                  html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
-                              }
-
-                              if (option['type'] == 'checkbox') {
-                                  html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
-                              }
-
-                              if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
-                                  html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
-                              }
-                          }
-                      }
-
-                      html += '</td>';
-                      html += '  <td class="text-start">' + product['model'] + '</td>';
-                      html += '  <td class="text-end"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><button type="button" data-bs-toggle="tooltip" title="{{ button_refresh }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-sync"></i></button></div></td>';
-                      html += '  <td class="text-end">' + product['price'] + '</td>';
-                      html += '  <td class="text-end">' + product['total'] + '</td>';
-                      html += '  <td class="text-end" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
-                      html += '</tr>';
-
-                      if (product['shipping'] != 0) {
-                          shipping = true;
-                      }
-                  }
-              }
-
-              if (!shipping) {
-                  $('select[name=\'shipping_method\'] option').removeAttr('selected');
-                  $('select[name=\'shipping_method\']').prop('disabled', true);
-                  $('#button-shipping-method').prop('disabled', true);
-              } else {
-                  $('select[name=\'shipping_method\']').prop('disabled', false);
-                  $('#button-shipping-method').prop('disabled', false);
-              }
-
-              if (json['vouchers'].length) {
-                  for (i in json['vouchers']) {
-                      voucher = json['vouchers'][i];
-
-                      html += '<tr>';
-                      html += '  <td class="text-start">' + voucher['description'];
-                      html += '    <input type="hidden" name="voucher[' + i + '][code]" value="' + voucher['code'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][description]" value="' + voucher['description'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][from_name]" value="' + voucher['from_name'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][from_email]" value="' + voucher['from_email'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][to_name]" value="' + voucher['to_name'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][to_email]" value="' + voucher['to_email'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][message]" value="' + voucher['message'] + '" />';
-                      html += '    <input type="hidden" name="voucher[' + i + '][amount]" value="' + voucher['amount'] + '" />';
-                      html += '  </td>';
-                      html += '  <td class="text-start"></td>';
-                      html += '  <td class="text-end">1</td>';
-                      html += '  <td class="text-end">' + voucher['price'] + '</td>';
-                      html += '  <td class="text-end">' + voucher['price'] + '</td>';
-                      html += '  <td class="text-end-start" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
-                      html += '</tr>';
-                  }
-              }
-
-              if (!json['products'].length && !json['vouchers'].length) {
-                  html += '<tr>';
-                  html += '  <td colspan="6" class="text-center">{{ text_no_results }}</td>';
-                  html += '</tr>';
-              }
-
-              $('#cart').html(html);
-
-              // Totals
-              html = '';
-
-              if (json['products'].length) {
-                  for (i = 0; i < json['products'].length; i++) {
-                      product = json['products'][i];
-
-                      html += '<tr>';
-                      html += '  <td class="text-start">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
-
-                      if (product['option']) {
-                          for (j = 0; j < product['option'].length; j++) {
-                              option = product['option'][j];
-
-                              html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-                          }
-                      }
-
-                      html += '  </td>';
-                      html += '  <td class="text-start">' + product['model'] + '</td>';
-                      html += '  <td class="text-end">' + product['quantity'] + '</td>';
-                      html += '  <td class="text-end">' + product['price'] + '</td>';
-                      html += '  <td class="text-end">' + product['total'] + '</td>';
-                      html += '</tr>';
-                  }
-              }
-
-              if (json['vouchers'].length) {
-                  for (i in json['vouchers']) {
-                      voucher = json['vouchers'][i];
-
-                      html += '<tr>';
-                      html += '  <td class="text-start">' + voucher['description'] + '</td>';
-                      html += '  <td class="text-end"></td>';
-                      html += '  <td class="text-end">1</td>';
-                      html += '  <td class="text-end">' + voucher['amount'] + '</td>';
-                      html += '  <td class="text-end">' + voucher['amount'] + '</td>';
-                      html += '</tr>';
-                  }
-              }
-
-              if (json['totals'].length) {
-                  for (i in json['totals']) {
-                      total = json['totals'][i];
-
-                      html += '<tr>';
-                      html += '  <td class="text-start" colspan="4">' + total['title'] + ':</td>';
-                      html += '  <td class="text-end">' + total['text'] + '</td>';
-                      html += '</tr>';
-                  }
-              }
-
-              if (!json['totals'].length && !json['products'].length && !json['vouchers'].length) {
-                  html += '<tr>';
-                  html += '  <td colspan="5" class="text-center">{{ text_no_results }}</td>';
-                  html += '</tr>';
-              }
-
-              $('#total').html(html);
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-
-  // Checkout
-  $('#button-save').on('click', function() {
-      if ($('input[name=\'order_id\']').val() == 0) {
-          var url = 'index.php?route=api/order|add&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val();
-      } else {
-          var url = 'index.php?route=api/order|edit&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
-      }
-
-      $.ajax({
-          url: url,
-          type: 'post',
-          data: $('select[name=\'payment_method\'] option:selected, select[name=\'shipping_method\'] option:selected, select, textarea[name=\'comment\'], input[name=\'affiliate_id\']'),
-          dataType: 'json',
-          beforeSend: function() {
-              $('#button-save').button('loading');
-          },
-          complete: function() {
-              $('#button-save').button('reset');
-          },
-          success: function(json) {
-              $('.alert-dismissible, .invalid-tooltip').remove();
-
-              if (json['error']) {
-                  $('#tab-total .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['success']) {
-                  $('#tab-total .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-
-              if (json['order_id']) {
-                  $('input[name=\'order_id\']').val(json['order_id']);
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  });
-
-
-  $('.modal').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-custom-field\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', function() {
-      var element = this;
-
-      $('#upload-form').remove();
-
-      $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-      $('#upload-form input[name=\'file\']').trigger('click');
-
-      $('#upload-form input[name=\'file\']').on('change', function() {
-          if (this.files[0].size > {{ config_file_max_size }}) {
-              alert('{{ error_upload_size }}');
-          }
-      });
-
-      if (typeof timer != 'undefined') {
-          clearInterval(timer);
-      }
-
-      timer = setInterval(function() {
-          if ($('#upload-form input[name=\'file\']').val() != '') {
-              clearInterval(timer);
-
-              $.ajax({
-                  url: 'index.php?route=tool/upload|upload&user_token={{ user_token }}',
-                  type: 'post',
-                  dataType: 'json',
-                  data: new FormData($('#upload-form')[0]),
-                  cache: false,
-                  contentType: false,
-                  processData: false,
-                  beforeSend: function() {
-                      $(element).button('loading');
-                  },
-                  complete: function() {
-                      $(element).button('reset');
-                  },
-                  success: function(json) {
-                      $(element).parent().find('.invalid-tooltip').remove();
-
-                      if (json['error']) {
-                          $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
-                      }
-
-                      if (json['success']) {
-                          alert(json['success']);
-                      }
-
-                      if (json['code']) {
-                          $(element).parent().find('input[type=\'hidden\']').val(json['code']);
-                      }
-                  },
-                  error: function(xhr, ajaxOptions, thrownError) {
-                      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                  }
-              });
-          }
-      }, 500);
-  });
-  //--></script>
+</div>
+
+<script type="text/javascript"><!--
+$(document).on('click', '#button-collapse', function() {
+    var element = this;
+
+    if ($('#collapse-order').css('max-height') == '78px') {
+        $('#button-collapse').html('{{ text_less }} <i class="fas fa-angle-up"></i>');
+
+        $('#collapse-order').animate({'max-height': $('#container').height() + 'px'});
+    } else {
+        $('#button-collapse').html('{{ text_more }} <i class="fas fa-angle-down"></i>');
+
+        $('#collapse-order').animate({'max-height': '78px'});
+    }
+});
+
+$(document).on('click', '#button-invoice', function() {
+    $.ajax({
+        url: 'index.php?route=sale/order|createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-invoice').button('loading');
+        },
+        complete: function() {
+            $('#button-invoice').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['invoice_no']) {
+                $('#invoice').html(json['invoice_no']);
+
+                $('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success"><i class="fas fa-cog"></i></button>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-store #button-store').on('click', function() {
+    // Refresh products, vouchers and totals
+    $('#button-refresh').trigger('click');
+});
+
+// Customer
+$('#modal-customer input[name=\'customer\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                json.unshift({
+                    customer_id: '0',
+                    customer_group_id: '{{ customer_group_id }}',
+                    name: '{{ text_none }}',
+                    customer_group: '',
+                    firstname: '',
+                    lastname: '',
+                    email: '',
+                    telephone: '',
+                    custom_field: [],
+                    address: []
+                });
+
+                response($.map(json, function(item) {
+                    return {
+                        category: item['customer_group'],
+                        label: item['name'],
+                        value: item['customer_id'],
+                        customer_group_id: item['customer_group_id'],
+                        firstname: item['firstname'],
+                        lastname: item['lastname'],
+                        email: item['email'],
+                        telephone: item['telephone'],
+                        custom_field: item['custom_field'],
+                        address: item['address']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        // Reset all custom fields
+        $('#modal-customer input[type=\'text\'], #modal-customer textarea').not('#modal-customer input[name=\'customer\'], #modal-customer input[name=\'customer_id\']').val('');
+        $('#modal-customer select option').removeAttr('selected');
+        $('#modal-customer input[type=\'checkbox\'], #modal-customer input[type=\'radio\']').removeAttr('checked');
+
+        $('#modal-customer input[name=\'customer\']').val(item['label']);
+        $('#modal-customer input[name=\'customer_id\']').val(item['value']);
+        $('#modal-customer select[name=\'customer_group_id\']').val(item['customer_group_id']);
+        $('#modal-customer input[name=\'firstname\']').val(item['firstname']);
+        $('#modal-customer input[name=\'lastname\']').val(item['lastname']);
+        $('#modal-customer input[name=\'email\']').val(item['email']);
+        $('#modal-customer input[name=\'telephone\']').val(item['telephone']);
+
+        for (i in item.custom_field) {
+            $('#modal-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+            $('#modal-customer textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+            $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+            $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+            $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);
+
+            if (item.custom_field[i] instanceof Array) {
+                for (j = 0; j < item.custom_field[i].length; j++) {
+                    $('#modal-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i][j] + '\']').prop('checked', true);
+                }
+            }
+        }
+
+        $('#modal-customer select[name=\'customer_group_id\']').trigger('change');
+
+        html = '<option value="0">{{ text_none }}</option>';
+
+        for (i in item['address']) {
+            html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
+        }
+
+        $('#modal-payment-address select[name=\'payment_address\']').html(html);
+        $('#modal-shipping-address select[name=\'shipping_address\']').html(html);
+    }
+});
+
+// Custom Fields
+$('#modal-customer select[name=\'customer_group_id\']').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+        dataType: 'json',
+        success: function(json) {
+            $('.custom-field').hide();
+            $('.custom-field').removeClass('required');
+
+            for (i = 0; i < json.length; i++) {
+                custom_field = json[i];
+
+                $('.custom-field-' + custom_field['custom_field_id']).show();
+
+                if (custom_field['required']) {
+                    $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-customer select[name=\'customer_group_id\']').trigger('change');
+
+// Customer
+$('#modal-customer #button-customer').on('click', function() {
+    var element = this;
+
+    console.log('json');
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&action=customer',
+        type: 'post',
+        dataType: 'json',
+        data: $('#modal-customer input[type=\'text\'], #modal-customer input[type=\'hidden\'], #modal-customer input[type=\'radio\']:checked, #modal-customer input[type=\'checkbox\']:checked, #modal-customer select, #modal-customer textarea'),
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.is-invalid').removeClass('is-invalid');
+
+            // Check for errors
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#modal-customer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                console.log(json['error']);
+
+                for (i in json['error']) {
+                    var input = $('#modal-customer #input-' + i.replaceAll('_', '-'));
+
+                    console.log(input);
+
+                    // Highlight any found errors
+                    $(input).addClass('is-invalid');
+
+                    if ($(input).parent().hasClass('input-group')) {
+                        $(input).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
+                    } else {
+                        $(input).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
+                    }
+                }
+            }
+
+            if (json['success']) {
+                $('#modal-customer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Language
+$('#button-language').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|language&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        dataType: 'json',
+        data: 'language=' + $('select[name=\'language\'] option:selected').val(),
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-language .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#modal-language .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Currency
+$('#button-currency').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|currency&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        dataType: 'json',
+        data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-currency .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#modal-currency .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Shipping Method
+$('#modal-shipping-method #button-shipping-methods').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|shippingmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            if (json['error']) {
+                $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            } else {
+                // Shipping Methods
+                html = '<option value="">{{ text_select }}</option>';
+
+                if (json['shipping_methods']) {
+                    for (i in json['shipping_methods']) {
+                        html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+
+                        if (!json['shipping_methods'][i]['error']) {
+                            for (j in json['shipping_methods'][i]['quote']) {
+                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('#modal-shipping-method select[name=\'shipping_method\'] option:selected').val()) {
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                                } else {
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                                }
+                            }
+                        } else {
+                            html += '<option value="" style="color: #ff0000;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
+                        }
+
+                        html += '</optgroup>';
+                    }
+                }
+
+                $('select[name=\'shipping_method\']').html(html);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-shipping-method #button-shipping-method').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|shippingmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#modal-shipping-method .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Payment Method
+$('#modal-payment-method #button-payment-methods').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|paymentmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            if (json['error']) {
+                $('#collapse-payment .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            } else {
+                html = '<option value="">{{ text_select }}</option>';
+
+                if (json['payment_methods']) {
+                    for (i in json['payment_methods']) {
+                        if (json['payment_methods'][i]['code'] == $('select[name=\'payment_method\'] option:selected').val()) {
+                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+                        } else {
+                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                        }
+                    }
+                }
+
+                $('select[name=\'payment_method\']').html(html);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-payment-method #button-payment-method').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|paymentmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('lo ading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-payment-method .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#modal-payment-method .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Coupon
+$('#modal-coupon #button-coupon').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|coupon&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: 'coupon=' + $('input[name=\'coupon\']').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-coupon .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#modal-coupon .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Voucher
+$('#modal-voucher #button-voucher').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|voucher&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: 'voucher=' + $('input[name=\'voucher\']').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#modal-voucher .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#modal-voucher .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Reward
+$('#modal-reward #button-reward').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|reward&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: 'reward=' + $('input[name=\'reward\']').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.is-invalid').removeClass('is-invalid');
+
+            if (json['error']) {
+                $('#modal-reward .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Highlight any found errors
+                $('input[name=\'reward\']').addClass('is-invalid');
+            }
+
+            if (json['success']) {
+                $('#modal-reward .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Merged rewards and commission together
+$(document).on('click', '#button-reward-add, #button-reward-remove, #button-commission-add, #button-commission-remove', function(e) {
+    var element = this;
+
+    var part = $(this).attr('id').split('-');
+
+    $.ajax({
+        url: 'index.php?route=sale/api|' + part[2] + part[1] + '&user_token={{ user_token }}&order_id=' + $('input[name=\'order_id\']').val(),
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                if (part[1] == 'reward') {
+                    if (part[2] == 'add') {
+                        $(element).replaceWith('<button id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                    } else {
+                        $(element).replaceWith('<button id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                    }
+                }
+
+                if (part[1] == 'commission') {
+                    if (part[2] == 'add') {
+                        $(element).replaceWith('<button id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                    } else {
+                        $(element).replaceWith('<button id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                    }
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Affiliate
+$('input[name=\'affiliate\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                json.unshift({
+                    customer_id: 0,
+                    name: '{{ text_none }}'
+                });
+
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'affiliate\']').val(item['label']);
+        $('input[name=\'affiliate_id\']').val(item['value']);
+    }
+});
+
+// Payment Address
+$('#modal-payment-address select[name=\'payment_address\']').on('change', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=customer/customer|address&user_token={{ user_token }}&address_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            // Reset all fields
+            $('#modal-payment-address input[type=\'text\'], #modal-payment-address input[type=\'text\'], #modal-payment-address textarea').val('');
+            $('#modal-payment-address select option').not('#modal-payment-address select[name=\'payment_address\']').removeAttr('selected');
+            $('#modal-payment-address input[type=\'checkbox\'], #modal-payment-address input[type=\'radio\']').removeAttr('checked');
+
+            $('#modal-payment-address input[name=\'firstname\']').val(json['firstname']);
+            $('#modal-payment-address input[name=\'lastname\']').val(json['lastname']);
+            $('#modal-payment-address input[name=\'company\']').val(json['company']);
+            $('#modal-payment-address input[name=\'address_1\']').val(json['address_1']);
+            $('#modal-payment-address input[name=\'address_2\']').val(json['address_2']);
+            $('#modal-payment-address input[name=\'city\']').val(json['city']);
+            $('#modal-payment-address input[name=\'postcode\']').val(json['postcode']);
+            $('#modal-payment-address select[name=\'country_id\']').val(json['country_id']);
+
+            payment_zone_id = json['zone_id'];
+
+            for (i in json['custom_field']) {
+                $('#modal-payment-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#modal-payment-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+                $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+                $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+                $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+
+                if (json['custom_field'][i] instanceof Array) {
+                    for (j = 0; j < json['custom_field'][i].length; j++) {
+                        $('#modal-payment-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
+                    }
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    }).done(function() {
+        $('#modal-payment-address select[name=\'country_id\']').trigger('change');
+    });
+});
+
+var payment_zone_id = '{{ payment_zone_id }}';
+
+$('#modal-payment-address select[name=\'country_id\']').on('change', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            if (json['postcode_required'] == '1') {
+                $('#modal-payment-address input[name=\'postcode\']').closest('.row.mb-3').addClass('required');
+            } else {
+                $('#modal-payment-address input[name=\'postcode\']').closest('.row.mb-3').removeClass('required');
+            }
+
+            html = '<option value="">{{ text_select }}</option>';
+
+            if (json['zone'] && json['zone'] != '') {
+                for (i = 0; i < json['zone'].length; i++) {
+                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+                    if (json['zone'][i]['zone_id'] == payment_zone_id) {
+                        html += ' selected="selected"';
+                    }
+
+                    html += '>' + json['zone'][i]['name'] + '</option>';
+                }
+            } else {
+                html += '<option value="0" selected="selected">{{ text_none }}</option>';
+            }
+
+            $('#modal-payment-address select[name=\'zone_id\']').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-payment-address select[name=\'country_id\']').trigger('change');
+
+$('#modal-payment-address #button-payment-address').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|paymentaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: $('#modal-payment-address input[type=\'text\'], #modal-payment-address input[type=\'hidden\'], #modal-payment-address input[type=\'radio\']:checked, #modal-payment-address input[type=\'checkbox\']:checked, #modal-payment-address select, #modal-payment-address textarea'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.is-invalid').removeClass('is-invalid');
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#modal-payment-address .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (i in json['error']) {
+                    var element = $('#input-payment-' + i.replace('_', '-'));
+
+                    // Highlight any found errors
+                    $(element).addClass('is-invalid');
+
+                    if ($(element).parent().hasClass('input-group')) {
+                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
+                    } else {
+                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
+                    }
+                }
+            }
+
+            if (json['success']) {
+                $('#modal-payment-address .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Shipping Address
+$('#modal-shipping-address select[name=\'shipping_address\']').on('change', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=customer/customer|address&user_token={{ user_token }}&address_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            // Reset all fields
+            $('#modal-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'text\'], #modal-shipping-address textarea').val('');
+            $('#modal-shipping-address select option').not('#modal-shipping-address select[name=\'shipping_address\']').removeAttr('selected');
+            $('#modal-shipping-address input[type=\'checkbox\'], #modal-shipping-address input[type=\'radio\']').removeAttr('checked');
+
+            $('#modal-shipping-address input[name=\'firstname\']').val(json['firstname']);
+            $('#modal-shipping-address input[name=\'lastname\']').val(json['lastname']);
+            $('#modal-shipping-address input[name=\'company\']').val(json['company']);
+            $('#modal-shipping-address input[name=\'address_1\']').val(json['address_1']);
+            $('#modal-shipping-address input[name=\'address_2\']').val(json['address_2']);
+            $('#modal-shipping-address input[name=\'city\']').val(json['city']);
+            $('#modal-shipping-address input[name=\'postcode\']').val(json['postcode']);
+            $('#modal-shipping-address select[name=\'country_id\']').val(json['country_id']);
+
+            shipping_zone_id = json['zone_id'];
+
+            for (i in json['custom_field']) {
+                $('#modal-shipping-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#modal-shipping-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+
+                if (json['custom_field'][i] instanceof Array) {
+                    for (j = 0; j < json['custom_field'][i].length; j++) {
+                        $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
+                    }
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    }).done(function() {
+        $('#modal-shipping-address select[name=\'country_id\']').trigger('change');
+    });
+});
+
+var shipping_zone_id = '{{ shipping_zone_id }}';
+
+$('#modal-shipping-address select[name=\'country_id\']').on('change', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            if (json['postcode_required'] == '1') {
+                $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').addClass('required');
+            } else {
+                $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').removeClass('required');
+            }
+
+            html = '<option value="">{{ text_select }}</option>';
+
+            if (json['zone'] && json['zone'] != '') {
+                for (i = 0; i < json['zone'].length; i++) {
+                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+                    if (json['zone'][i]['zone_id'] == shipping_zone_id) {
+                        html += ' selected="selected"';
+                    }
+
+                    html += '>' + json['zone'][i]['name'] + '</option>';
+                }
+            } else {
+                html += '<option value="0" selected="selected">{{ text_none }}</option>';
+            }
+
+            $('#modal-shipping-address select[name=\'zone_id\']').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-shipping-address select[name=\'country_id\']').trigger('change');
+
+$('#modal-shipping-address #button-shipping-address').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api/shippingaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: $('#modal-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'hidden\'], #modal-shipping-address input[type=\'radio\']:checked, #modal-shipping-address input[type=\'checkbox\']:checked, #modal-shipping-address select, #modal-shipping-address textarea'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.is-invalid').removeClass('is-invalid');
+
+            // Check for errors
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#modal-shipping-address .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (i in json['error']) {
+                    var element = $('#modal-shipping-address #input-shipping-' + i.replaceAll('_', '-'));
+
+                    // Highlight any found errors
+                    $(element).addClass('is-invalid');
+
+                    if ($(element).parent().hasClass('input-group')) {
+                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
+                    } else {
+                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
+                    }
+                }
+            }
+
+            if (json['success']) {
+                $('#modal-shipping-address .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Product
+$('#modal-cart input[name=\'product\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id'],
+                        model: item['model'],
+                        option: item['option'],
+                        price: item['price']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#modal-cart input[name=\'product\']').val(item['label']);
+        $('#modal-cart input[name=\'product_id\']').val(item['value']);
+
+        if (item['option'] != '') {
+            html = '<fieldset>';
+            html += '  <legend>{{ entry_option }}</legend>';
+
+            for (i = 0; i < item['option'].length; i++) {
+                option = item['option'][i];
+
+                if (option['type'] == 'select') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+
+                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '    <option value="">{{ text_select }}</option>';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '</option>';
+                    }
+
+                    html += '  </select>';
+
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'radio') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+
+                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '    <option value="">{{ text_select }}</option>';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '</option>';
+                    }
+
+                    html += '  </select>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'checkbox') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label class="col-form-label">' + option['name'] + '</label>';
+
+                    html += '  <div id="input-option-' + option['product_option_id'] + '">';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<label class="form-check"><input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" class="form-check-input"/> ' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '</label>';
+                    }
+
+                    html += '  </div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'image') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+
+                    html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
+                    html += '    <option value="">{{ text_select }}</option>';
+
+                    for (j = 0; j < option['product_option_value'].length; j++) {
+                        option_value = option['product_option_value'][j];
+
+                        html += '<option value="' + option_value['product_option_value_id'] + '">' + option_value['name'];
+
+                        if (option_value['price']) {
+                            html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
+                        }
+
+                        html += '</option>';
+                    }
+
+                    html += '  </select>';
+                    ;
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'text') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+                    html += '  <input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" />';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'textarea') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+                    html += '  <textarea name="option[' + option['product_option_id'] + ']" rows="5" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control">' + option['value'] + '</textarea>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'file') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label class="col-form-label">' + option['name'] + '</label>';
+                    html += '  <div><button type="button" id="button-upload-' + option['product_option_id'] + '" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button><input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '" /></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'date') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+                    html += '  <div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '"  id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'datetime') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+                    html += '  <div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
+                    html += '</div>';
+                }
+
+                if (option['type'] == 'time') {
+                    html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
+                    html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
+                    html += '  <div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
+                    html += '</div>';
+                }
+            }
+
+            html += '</fieldset>';
+
+            $('#option').html(html);
+
+            $('.date').datetimepicker({
+                'format': 'YYYY-MM-DD',
+                'locale': '{{ datepicker }}',
+                'allowInputToggle': true
+            });
+
+            $('.time').datetimepicker({
+                'format': 'HH:mm',
+                'locale': '{{ datepicker }}',
+                'allowInputToggle': true
+            });
+
+            $('.datetime').datetimepicker({
+                'format': 'YYYY-MM-DD HH:mm',
+                'locale': '{{ datepicker }}',
+                'allowInputToggle': true
+            });
+        } else {
+            $('#option').html('');
+        }
+    }
+});
+
+
+$('#modal-cart #button-product-add').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|addProduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.is-invalid').removeClass('is-invalid');
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#modal-product .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['error']['option']) {
+                    for (i in json['error']['option']) {
+                        var element = $('#input-option-' + i.replace('_', '-'));
+
+                        // Highlight any found errors
+                        $(element).addClass('is-invalid');
+
+                        if (element.parent().hasClass('input-group')) {
+                            $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error']['option'][i] + '</div>');
+                        } else {
+                            $(element).after('<div class="invalid-tooltip d-inline">' + json['error']['option'][i] + '</div>');
+                        }
+                    }
+                }
+
+                if (json['error']['store']) {
+                    $('#modal-product .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
+                }
+            } else {
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#modal-cart #button-remove').on('click', '.btn-danger', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/api|removeproduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: 'key=' + encodeURIComponent(this.value),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible, .invalid-tooltip').remove();
+
+            // Check for errors
+            if (json['error']) {
+                $('#tab-cart .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            } else {
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Voucher
+$('#modal-cart #button-voucher-add').on('click', function() {
+    $.ajax({
+        url: '{{ catalog }}index.php?route=sale/api|voucheradd&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        type: 'post',
+        data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-voucher-add').button('loading');
+        },
+        complete: function() {
+            $('#button-voucher-add').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.is-invalid').removeClass('is-invalid');
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#tab-voucher').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (i in json['error']) {
+                    var element = $('#input-' + i.replaceAll('_', '-'));
+
+                    // Highlight any found errors
+                    $(element).addClass('is-invalid');
+
+                    $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
+                }
+            } else {
+                $('input[name=\'from_name\']').val('');
+                $('input[name=\'from_email\']').val('');
+                $('input[name=\'to_name\']').val('');
+                $('input[name=\'to_email\']').val('');
+                $('textarea[name=\'message\']').val('');
+                $('input[name=\'amount\']').val('{{ voucher_min|escape('js') }}');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Refresh all products, vouchers and totals
+$('#button-refresh').on('click', function() {
+    $.ajax({
+        url: 'index.php?route=api/cart|products&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-refresh').button('loading');
+        },
+        complete: function() {
+            $('#button-refresh').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            // Check for errors
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['error']['stock']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+                }
+
+                if (json['error']['minimum']) {
+                    for (i in json['error']['minimum']) {
+                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+                }
+            }
+
+            var shipping = false;
+
+            html = '';
+
+            if (json['products'].length) {
+                for (i = 0; i < json['products'].length; i++) {
+                    product = json['products'][i];
+
+                    html += '<tr>';
+                    html += '  <td class="text-start">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+                    html += '  <input type="hidden" name="product[' + i + '][product_id]" value="' + product['product_id'] + '" />';
+
+                    if (product['option']) {
+                        for (j = 0; j < product['option'].length; j++) {
+                            option = product['option'][j];
+
+                            html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+
+                            if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+                                html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
+                            }
+
+                            if (option['type'] == 'checkbox') {
+                                html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
+                            }
+
+                            if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+                                html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+                            }
+                        }
+                    }
+
+                    html += '</td>';
+                    html += '  <td class="text-start">' + product['model'] + '</td>';
+                    html += '  <td class="text-end"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><button type="button" data-bs-toggle="tooltip" title="{{ button_refresh }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-sync"></i></button></div></td>';
+                    html += '  <td class="text-end">' + product['price'] + '</td>';
+                    html += '  <td class="text-end">' + product['total'] + '</td>';
+                    html += '  <td class="text-end" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+                    html += '</tr>';
+
+                    if (product['shipping'] != 0) {
+                        shipping = true;
+                    }
+                }
+            }
+
+            if (!shipping) {
+                $('select[name=\'shipping_method\'] option').removeAttr('selected');
+                $('select[name=\'shipping_method\']').prop('disabled', true);
+                $('#button-shipping-method').prop('disabled', true);
+            } else {
+                $('select[name=\'shipping_method\']').prop('disabled', false);
+                $('#button-shipping-method').prop('disabled', false);
+            }
+
+            if (json['vouchers'].length) {
+                for (i in json['vouchers']) {
+                    voucher = json['vouchers'][i];
+
+                    html += '<tr>';
+                    html += '  <td class="text-start">' + voucher['description'];
+                    html += '    <input type="hidden" name="voucher[' + i + '][code]" value="' + voucher['code'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][description]" value="' + voucher['description'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_name]" value="' + voucher['from_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_email]" value="' + voucher['from_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_name]" value="' + voucher['to_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_email]" value="' + voucher['to_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][message]" value="' + voucher['message'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][amount]" value="' + voucher['amount'] + '" />';
+                    html += '  </td>';
+                    html += '  <td class="text-start"></td>';
+                    html += '  <td class="text-end">1</td>';
+                    html += '  <td class="text-end">' + voucher['price'] + '</td>';
+                    html += '  <td class="text-end">' + voucher['price'] + '</td>';
+                    html += '  <td class="text-end-start" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+                    html += '</tr>';
+                }
+            }
+
+            if (!json['products'].length && !json['vouchers'].length) {
+                html += '<tr>';
+                html += '  <td colspan="6" class="text-center">{{ text_no_results }}</td>';
+                html += '</tr>';
+            }
+
+            $('#cart').html(html);
+
+            // Totals
+            html = '';
+
+            if (json['products'].length) {
+                for (i = 0; i < json['products'].length; i++) {
+                    product = json['products'][i];
+
+                    html += '<tr>';
+                    html += '  <td class="text-start">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+
+                    if (product['option']) {
+                        for (j = 0; j < product['option'].length; j++) {
+                            option = product['option'][j];
+
+                            html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+                        }
+                    }
+
+                    html += '  </td>';
+                    html += '  <td class="text-start">' + product['model'] + '</td>';
+                    html += '  <td class="text-end">' + product['quantity'] + '</td>';
+                    html += '  <td class="text-end">' + product['price'] + '</td>';
+                    html += '  <td class="text-end">' + product['total'] + '</td>';
+                    html += '</tr>';
+                }
+            }
+
+            if (json['vouchers'].length) {
+                for (i in json['vouchers']) {
+                    voucher = json['vouchers'][i];
+
+                    html += '<tr>';
+                    html += '  <td class="text-start">' + voucher['description'] + '</td>';
+                    html += '  <td class="text-end"></td>';
+                    html += '  <td class="text-end">1</td>';
+                    html += '  <td class="text-end">' + voucher['amount'] + '</td>';
+                    html += '  <td class="text-end">' + voucher['amount'] + '</td>';
+                    html += '</tr>';
+                }
+            }
+
+            if (json['totals'].length) {
+                for (i in json['totals']) {
+                    total = json['totals'][i];
+
+                    html += '<tr>';
+                    html += '  <td class="text-start" colspan="4">' + total['title'] + ':</td>';
+                    html += '  <td class="text-end">' + total['text'] + '</td>';
+                    html += '</tr>';
+                }
+            }
+
+            if (!json['totals'].length && !json['products'].length && !json['vouchers'].length) {
+                html += '<tr>';
+                html += '  <td colspan="5" class="text-center">{{ text_no_results }}</td>';
+                html += '</tr>';
+            }
+
+            $('#total').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('input[name=\'order_id\']').val());
+
+$('#button-history').on('click', function(e) {
+    e.preventDefault();
+
+    //console.log(json);
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|history&order_id=' + $('input[name=\'order_id\']').val(),
+        type: 'post',
+        dataType: 'json',
+        data: 'order_id=' + encodeURIComponent($('#tab-history select[name=\'order_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+        beforeSend: function() {
+            $('#button-history').button('loading');
+        },
+        complete: function() {
+            $('#button-history').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#history').load('index.php?route=sale/api|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
+
+                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#tab-history textarea[name=\'comment\']').val('');
+            }
+        }
+    });
+});
+
+// Checkout
+$('#button-save').on('click', function() {
+    if ($('input[name=\'order_id\']').val() == 0) {
+        var url = 'index.php?route=api/order|add&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val();
+    } else {
+        var url = 'index.php?route=api/order|edit&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
+    }
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: $('select[name=\'payment_method\'] option:selected, select[name=\'shipping_method\'] option:selected, select, textarea[name=\'comment\'], input[name=\'affiliate_id\']'),
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-save').button('loading');
+        },
+        complete: function() {
+            $('#button-save').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible, .invalid-tooltip').remove();
+
+            if (json['error']) {
+                $('#tab-total .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#tab-total .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['order_id']) {
+                $('input[name=\'order_id\']').val(json['order_id']);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('.modal').on('click', 'button[id^=\'button-upload\'], button[id^=\'button-custom-field\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', function() {
+    var element = this;
+
+    $('#upload-form').remove();
+
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+    $('#upload-form input[name=\'file\']').trigger('click');
+
+    $('#upload-form input[name=\'file\']').on('change', function() {
+        if (this.files[0].size > {{ config_file_max_size }}) {
+            alert('{{ error_upload_size }}');
+        }
+    });
+
+    if (typeof timer != 'undefined') {
+        clearInterval(timer);
+    }
+
+    timer = setInterval(function() {
+        if ($('#upload-form input[name=\'file\']').val() != '') {
+            clearInterval(timer);
+
+            $.ajax({
+                url: 'index.php?route=tool/upload|upload&user_token={{ user_token }}',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#upload-form')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $(element).button('loading');
+                },
+                complete: function() {
+                    $(element).button('reset');
+                },
+                success: function(json) {
+                    $(element).parent().find('.invalid-tooltip').remove();
+
+                    if (json['error']) {
+                        $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
+                    }
+
+                    if (json['success']) {
+                        alert(json['success']);
+                    }
+
+                    if (json['code']) {
+                        $(element).parent().find('input[type=\'hidden\']').val(json['code']);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
+});
+//--></script>
 {{ footer }}

@@ -15,17 +15,15 @@
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			<div id="filter-recurring" class="col-md-3 col-sm-12 order-lg-last d-none d-md-block mb-3">
+			<div id="filter-recurring" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
 				<div class="card">
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
 						<div class="mb-3">
-							<label for="input-order-recurring-id" class="form-label">{{ entry_order_recurring_id }}</label>
-							<input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_recurring_id }}" id="input-order-recurring-id" class="form-control"/>
+							<label for="input-order-recurring-id" class="form-label">{{ entry_order_recurring_id }}</label> <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_recurring_id }}" id="input-order-recurring-id" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label class="form-label">{{ entry_customer }}</label>
-							<input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+							<label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
 						</div>
 						<div class="mb-3">
 							<label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
@@ -57,7 +55,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-9 col-sm-12">
+			<div class="col-lg-9 col-md-12">
 				<div class="card">
 					<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
 					<div id="recurring" class="card-body">{{ list }}</div>

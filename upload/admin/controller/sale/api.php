@@ -121,6 +121,68 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->store = $registry;
 	}
 
+
+	public function delete(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('sale/order');
+
+			foreach ($selected as $order_id) {
+				$this->model_sale_order->deleteOrder($order_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function createInvoiceNo(): void {
+		$this->load->language('sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/order');
+
+			$invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
+
+			if ($invoice_no) {
+				$json['invoice_no'] = $invoice_no;
+			} else {
+				$json['error'] = $this->language->get('error_action');
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+
+
+
 	public function add(): void {
 		// 1. We set some defaults so there are no undefined indexes.
 		$defaults = [
@@ -717,49 +779,5 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($this->store->response->getOutput());
-	}
-
-	public function history(): void {
-		$this->load->language('sale/order');
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$data['histories'] = [];
-
-		$this->load->model('sale/order');
-
-		$results = $this->model_sale_order->getHistories($order_id, ($page - 1) * 10, 10);
-
-		foreach ($results as $result) {
-			$data['histories'][] = [
-				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
-				'status'     => $result['status'],
-				'comment'    => nl2br($result['comment']),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
-		}
-
-		$history_total = $this->model_sale_order->getTotalHistories($order_id);
-
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $history_total,
-			'page'  => $page,
-			'limit' => 10,
-			'url'   => $this->url->link('sale/order|history', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&page={page}')
-		]);
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
-
-		$this->response->setOutput($this->load->view('sale/order_history', $data));
 	}
 }

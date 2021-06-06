@@ -605,8 +605,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . $url)
 			];
 
-			$this->load->helper('bbcode');
-
 			$data['banner'] = $response_info['banner'];
 
 			$data['extension_id'] = (int)$this->request->get['extension_id'];
@@ -643,8 +641,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 					'popup' => $result['popup']
 				];
 			}
-
-			$this->load->model('setting/extension');
 
 			$data['downloads'] = [];
 

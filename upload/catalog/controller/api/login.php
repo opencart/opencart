@@ -37,9 +37,9 @@ class Login extends \Opencart\System\Engine\Controller {
 				
 				// Create Token
 				$json['api_token'] = $session->getId();
-			} else {
-				$json['error']['key'] = $this->language->get('error_key');
 			}
+		}else {
+			$json['error']['key'] = $this->language->get('error_key');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

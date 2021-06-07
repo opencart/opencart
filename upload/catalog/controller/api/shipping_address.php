@@ -14,7 +14,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['api_id'])) {
 				$json['error']['warning'] = $this->language->get('error_permission');
-			} else {
+			}
+
+			if (!$json) {
 				// Add keys for missing post vars
 				$keys = [
 					'firstname',

@@ -10,17 +10,19 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} elseif ($this->cart->hasShipping()) {
+		$json['shipping_methods'] = [];
+
+		if ($this->cart->hasShipping()) {
+			if (!isset($this->session->data['api_id'])) {
+				$json['error'] = $this->language->get('error_permission');
+			}
+
 			if (!isset($this->session->data['shipping_address'])) {
 				$json['error'] = $this->language->get('error_address');
 			}
 
 			if (!$json) {
 				// Shipping Methods
-				$json['shipping_methods'] = [];
-
 				$this->load->model('setting/extension');
 
 				$results = $this->model_setting_extension->getExtensionsByType('shipping');
@@ -53,11 +55,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				if ($json['shipping_methods']) {
 					$this->session->data['shipping_methods'] = $json['shipping_methods'];
 				} else {
-					$json['error'] = $this->language->get('error_no_shipping');
+					$json['error'] = $this->language->get('error_not_shipping');
 				}
 			}
 		} else {
-			$json['shipping_methods'] = [];
+			$json['error'] = $this->language->get('error_product');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -74,8 +76,10 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
-			if ($this->cart->hasShipping()) {
+		}
+
+		if ($this->cart->hasShipping()) {
+			if (!$json) {
 				// Shipping Address
 				if (!isset($this->session->data['shipping_address'])) {
 					$json['error'] = $this->language->get('error_address');
@@ -104,6 +108,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
+		} else {
+			$json['error'] = $this->language->get('error_product');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

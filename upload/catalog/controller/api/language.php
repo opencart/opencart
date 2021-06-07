@@ -8,7 +8,9 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('localisation/language');
 
 			$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['language']);

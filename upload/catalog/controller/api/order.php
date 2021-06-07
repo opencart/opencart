@@ -723,6 +723,36 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function load(): void {
+		$this->load->language('api/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if ($order_info) {
+
+
+
+
+
+
+
+			$json['success'] = $this->language->get('text_success');
+		} else {
+			$json['error'] = $this->language->get('error_not_found');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function info(): void {
 		$this->load->language('api/order');
 
@@ -743,51 +773,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			if ($order_info) {
 				$json['order'] = $order_info;
-
-				$json['success'] = $this->language->get('text_success');
-			} else {
-				$json['error'] = $this->language->get('error_not_found');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function history(): void {
-		$this->load->language('api/order');
-
-		$json = [];
-
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			// Add keys for missing post vars
-			$keys = [
-				'order_status_id',
-				'notify',
-				'override',
-				'comment'
-			];
-
-			foreach ($keys as $key) {
-				if (!isset($this->request->post[$key])) {
-					$this->request->post[$key] = '';
-				}
-			}
-
-			$this->load->model('checkout/order');
-
-			if (isset($this->request->get['order_id'])) {
-				$order_id = (int)$this->request->get['order_id'];
-			} else {
-				$order_id = 0;
-			}
-
-			$order_info = $this->model_checkout_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->model_checkout_order->addHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
 
 				$json['success'] = $this->language->get('text_success');
 			} else {

@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -35,29 +35,7 @@
 								{% endif %}
 							</div>
 						</div>
-
 						<div class="col">
-							<div class="input-group mb-3">
-								<div class="form-control p-0 border rounded-start">
-									<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
-										<br/>
-										<a href="{{ store_url }}" target="_blank">{{ store_name }}</a></p>
-								</div>
-								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-							</div>
-						</div>
-
-						<div class="col">
-							<div class="form-control-plaintext p-0 border rounded mb-3">
-								<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
-									<br/>
-									{{ date_added }}
-								</p>
-							</div>
-						</div>
-
-						<div class="col">
-
 							<div class="input-group mb-3">
 								<div class="form-control p-0 border rounded-start">
 									<p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
@@ -71,9 +49,28 @@
 								</div>
 								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
 							</div>
-
 						</div>
 
+
+						<div class="col">
+							<div class="form-control-plaintext p-0 border rounded mb-3">
+								<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
+									<br/>
+									{{ date_added }}
+								</p>
+							</div>
+						</div>
+
+						<div class="col">
+							<div class="input-group mb-3">
+								<div class="form-control p-0 border rounded-start">
+									<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
+										<br/>
+										<a href="{{ store_url }}" target="_blank">{{ store_name }}</a></p>
+								</div>
+								<button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+							</div>
+						</div>
 
 						<div class="col">
 							<div class="input-group mb-3">
@@ -261,6 +258,7 @@
 						</div>
 					</div>
 				</div>
+
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -346,6 +344,7 @@
 
 					</tbody>
 				</table>
+
 				{% if comment %}
 					<div class="row">
 						<div class="col">
@@ -361,6 +360,7 @@
 						</div>
 					</div>
 				{% endif %}
+
 			</div>
 		</div>
 		<div class="card mb-3">
@@ -459,90 +459,17 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-store" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_store_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<select name="store_id" id="input-store" class="form-select">
-						{% for store in stores %}
-							{% if store.store_id == store_id %}
-								<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
-							{% else %}
-								<option value="{{ store.store_id }}">{{ store.name }}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-store" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+<div id="modal-customer" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_customer_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
-		</div>
-	</div>
-
-	<div id="modal-language" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_language_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<select name="language" id="input-language" class="form-select">
-						{% for language in languages %}
-							{% if language.code == language_code %}
-								<option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
-							{% else %}
-								<option value="{{ language.code }}">{{ language.name }}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-language" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="modal-currency" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_currency_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<select name="currency" id="input-currency" class="form-select">
-						{% for currency in currencies %}
-							{% if currency.code == currency_code %}
-								<option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
-							{% else %}
-								<option value="{{ currency.code }}">{{ currency.title }}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-currency" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="modal-customer" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_customer_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+			<div class="modal-body">
+				<form id="form-customer">
 					<div class="mb-3">
 						<label for="input-customer" class="form-label">{{ entry_customer }}</label>
 						<div class="input-group"><input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
@@ -685,21 +612,107 @@
 
 						{% endif %}
 					{% endfor %}
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-customer" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-customer" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
-	<div id="modal-shipping-method" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_shipping_method_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+</div>
+
+<div id="modal-store" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_store_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-store">
+					<select name="store_id" id="input-store" class="form-select">
+						{% for store in stores %}
+							{% if store.store_id == store_id %}
+								<option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+							{% else %}
+								<option value="{{ store.store_id }}">{{ store.name }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-store" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal-language" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_language_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-language">
+					<select name="language" id="input-language" class="form-select">
+
+						{% for language in languages %}
+							{% if language.code == language_code %}
+								<option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
+							{% else %}
+								<option value="{{ language.code }}">{{ language.name }}</option>
+							{% endif %}
+						{% endfor %}
+
+					</select>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-language" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal-currency" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_currency_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-currency">
+					<select name="currency" id="input-currency" class="form-select">
+						{% for currency in currencies %}
+							{% if currency.code == currency_code %}
+								<option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
+							{% else %}
+								<option value="{{ currency.code }}">{{ currency.title }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-currency" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal-shipping-method" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_shipping_method_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-shipping-method">
 					<div class="input-group">
 						<select name="shipping_method" id="input-shipping-method" class="form-select">
 							<option value="">{{ text_select }}</option>
@@ -709,21 +722,24 @@
 						</select>
 						<button type="button" id="button-shipping-methods" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
 					</div>
-				</div>
-				<div class="modal-footer text-start">
-					<button type="button" id="button-shipping-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-start">
+				<button type="button" id="button-shipping-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
-	<div id="modal-payment-method" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_payment_method_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+</div>
+
+<div id="modal-payment-method" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_payment_method_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-payment-method">
 					<div class="input-group">
 						<select name="payment_method" id="input-payment-method" class="form-select">
 							<option value="">{{ text_select }}</option>
@@ -733,90 +749,100 @@
 						</select>
 						<button type="button" id="button-payment-methods" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
 					</div>
-				</div>
-				<div class="modal-footer text-start">
-					<button type="button" id="button-payment-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-start">
+				<button type="button" id="button-payment-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-coupon" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_coupon_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+<div id="modal-coupon" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_coupon_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-coupon">
 					<input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/>
-				</div>
-				<div class="modal-footer text-start">
-					<button type="button" id="button-coupon" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-start">
+				<button type="button" id="button-coupon" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-voucher" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_voucher_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+<div id="modal-voucher" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_voucher_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-voucher">
 					<input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" data-oc-loading-text="{{ text_loading }}" class="form-control"/>
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-voucher" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-voucher" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-reward" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_reward_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+<div id="modal-reward" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_reward_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-reward">
 					<input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" data-oc-loading-text="{{ text_loading }}" class="form-control"/>
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-affiliate" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_affiliate_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+<div id="modal-affiliate" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_affiliate_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-affiliate">
 					<input type="text" name="affiliate" value="{% if affiliate_id %}{{ affiliate_firstname }} {{ affiliate_lastname }}{% endif %}" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}"/>
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-affiliate" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-affiliate" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-payment-address" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_payment_address_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+<div id="modal-payment-address" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_payment_address_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-payment-address">
 
 					<div class="mb-3">
 						<label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
@@ -984,22 +1010,24 @@
 						{% endif %}
 
 					{% endfor %}
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-payment-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-payment-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-shipping-address" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_shipping_address_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+<div id="modal-shipping-address" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_shipping_address_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-shipping-address">
 					<div class="mb-3">
 						<label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
 							<option value="0" selected="selected">{{ text_none }}</option>
@@ -1155,28 +1183,31 @@
 
 						{% endif %}
 					{% endfor %}
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-shipping-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-shipping-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-cart" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_cart_add }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<ul class="nav nav-tabs">
-						<li class="nav-item"><a href="#tab-product" data-bs-toggle="tab" class="nav-link active">{{ tab_product }}</a></li>
-						<li class="nav-item"><a href="#tab-voucher" data-bs-toggle="tab" class="nav-link">{{ tab_voucher }}</a></li>
-					</ul>
-					<div class="tab-content">
-						<div class="tab-pane active" id="tab-product">
+<div id="modal-cart" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_cart_add }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a href="#tab-product" data-bs-toggle="tab" class="nav-link active">{{ tab_product }}</a></li>
+					<li class="nav-item"><a href="#tab-voucher" data-bs-toggle="tab" class="nav-link">{{ tab_voucher }}</a></li>
+				</ul>
+				<div class="tab-content">
+
+					<div class="tab-pane active" id="tab-product">
+						<form id="form-cart">
 							<fieldset>
 								<legend>{{ text_product_add }}</legend>
 								<div class="mb-3">
@@ -1190,8 +1221,12 @@
 							<div class="text-end">
 								<button type="button" id="button-product-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 							</div>
-						</div>
-						<div class="tab-pane" id="tab-voucher">
+						</form>
+					</div>
+
+					<div class="tab-pane" id="tab-voucher">
+
+						<form id="form-cart">
 							<fieldset>
 								<legend>{{ text_voucher_add }}</legend>
 								<div class="mb-3 required">
@@ -1223,26 +1258,29 @@
 							<div class="text-end">
 								<button type="button" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 							</div>
-						</div>
+						</form>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div id="modal-comment" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ text_comment_edit }}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
+<div id="modal-comment" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_comment_edit }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="form-comment">
 					<textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
-				</div>
-				<div class="modal-footer text-end">
-					<button type="button" id="button-comment" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-				</div>
+				</form>
+			</div>
+			<div class="modal-footer text-end">
+				<button type="button" id="button-comment" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
 			</div>
 		</div>
 	</div>
@@ -1402,6 +1440,13 @@ $('#modal-customer select[name=\'customer_group_id\']').on('change', function() 
 
 $('#modal-customer select[name=\'customer_group_id\']').trigger('change');
 
+
+$('#modal-customer #button-customer').on('click', function() {
+
+
+});
+
+
 // Customer
 $('#modal-customer #button-customer').on('click', function() {
     var element = this;
@@ -1467,7 +1512,7 @@ $('#button-language').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|language&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|language&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         dataType: 'json',
         data: 'language=' + $('select[name=\'language\'] option:selected').val(),
@@ -1502,7 +1547,7 @@ $('#button-currency').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|currency&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|currency&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         dataType: 'json',
         data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
@@ -1537,7 +1582,7 @@ $('#modal-shipping-method #button-shipping-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|shippingmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|shippingmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -1585,7 +1630,7 @@ $('#modal-shipping-method #button-shipping-method').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|shippingmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|shippingmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
         dataType: 'json',
@@ -1620,7 +1665,7 @@ $('#modal-payment-method #button-payment-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|paymentmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|paymentmethods&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -1657,7 +1702,7 @@ $('#modal-payment-method #button-payment-method').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|paymentmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|paymentmethod&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
         dataType: 'json',
@@ -1692,7 +1737,7 @@ $('#modal-coupon #button-coupon').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|coupon&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|coupon&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: 'coupon=' + $('input[name=\'coupon\']').val(),
         dataType: 'json',
@@ -1727,7 +1772,7 @@ $('#modal-voucher #button-voucher').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|voucher&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|voucher&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: 'voucher=' + $('input[name=\'voucher\']').val(),
         dataType: 'json',
@@ -1762,7 +1807,7 @@ $('#modal-reward #button-reward').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|reward&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|reward&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: 'reward=' + $('input[name=\'reward\']').val(),
         dataType: 'json',
@@ -1803,7 +1848,7 @@ $(document).on('click', '#button-reward-add, #button-reward-remove, #button-comm
     var part = $(this).attr('id').split('-');
 
     $.ajax({
-        url: 'index.php?route=sale/api|' + part[2] + part[1] + '&user_token={{ user_token }}&order_id=' + $('input[name=\'order_id\']').val(),
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=' + part[2] + part[1] + '&order_id=' + $('input[name=\'order_id\']').val(),
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
@@ -1976,7 +2021,7 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|paymentaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|paymentaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#modal-payment-address input[type=\'text\'], #modal-payment-address input[type=\'hidden\'], #modal-payment-address input[type=\'radio\']:checked, #modal-payment-address input[type=\'checkbox\']:checked, #modal-payment-address select, #modal-payment-address textarea'),
         dataType: 'html',
@@ -2128,7 +2173,7 @@ $('#modal-shipping-address #button-shipping-address').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api/shippingaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call/shippingaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#modal-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'hidden\'], #modal-shipping-address input[type=\'radio\']:checked, #modal-shipping-address input[type=\'checkbox\']:checked, #modal-shipping-address select, #modal-shipping-address textarea'),
         dataType: 'json',
@@ -2373,7 +2418,7 @@ $('#modal-cart #button-product-add').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|addProduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|addProduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
         dataType: 'json',
@@ -2425,7 +2470,7 @@ $('#modal-cart #button-remove').on('click', '.btn-danger', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/api|removeproduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|removeproduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: 'key=' + encodeURIComponent(this.value),
         dataType: 'json',
@@ -2455,7 +2500,7 @@ $('#modal-cart #button-remove').on('click', '.btn-danger', function() {
 // Voucher
 $('#modal-cart #button-voucher-add').on('click', function() {
     $.ajax({
-        url: '{{ catalog }}index.php?route=sale/api|voucheradd&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: '{{ catalog }}index.php?route=sale/order|call|voucheradd&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
         dataType: 'json',
@@ -2503,7 +2548,7 @@ $('#modal-cart #button-voucher-add').on('click', function() {
 // Refresh all products, vouchers and totals
 $('#button-refresh').on('click', function() {
     $.ajax({
-        url: 'index.php?route=api/cart|products&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call/cart|products&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         dataType: 'json',
         beforeSend: function() {
             $('#button-refresh').button('loading');
@@ -2696,8 +2741,6 @@ $('#history').load('index.php?route=sale/order|history&user_token={{ user_token 
 $('#button-history').on('click', function(e) {
     e.preventDefault();
 
-    //console.log(json);
-
     $.ajax({
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|history&order_id=' + $('input[name=\'order_id\']').val(),
         type: 'post',
@@ -2719,7 +2762,7 @@ $('#button-history').on('click', function(e) {
             }
 
             if (json['success']) {
-                $('#history').load('index.php?route=sale/api|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
+                $('#history').load('index.php?route=sale/order|call|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
 
                 $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
@@ -2732,9 +2775,9 @@ $('#button-history').on('click', function(e) {
 // Checkout
 $('#button-save').on('click', function() {
     if ($('input[name=\'order_id\']').val() == 0) {
-        var url = 'index.php?route=api/order|add&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val();
+        var url = 'index.php?route=sale/order|call|add&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val();
     } else {
-        var url = 'index.php?route=api/order|edit&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
+        var url = 'index.php?route=sale/order|call|edit&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
     }
 
     $.ajax({

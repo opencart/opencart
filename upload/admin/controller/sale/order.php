@@ -1198,28 +1198,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$customer = new \Opencart\System\Library\Cart\Customer($this->registry);
 		$registry->set('customer', $customer);
 
+		// Call the required api controller
 		if (isset($this->request->get['action'])) {
-			$action = $this->request->get['action'];
-
-			$allowed = [
-				'login',
-				'customer',
-				'currency',
-				'language',
-				'payment_address',
-				'payment_method',
-				'shipping_address',
-				'shipping_method',
-				'cart',
-				'coupon',
-				'voucher',
-				'reward',
-				'order'
-			];
-
-			if (in_array(subtr($action, 0, 10), $allowed)) {
-				$registry->load->controller('api/' . $action);
-			}
+			$registry->load->controller('api/' . $this->request->get['action']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

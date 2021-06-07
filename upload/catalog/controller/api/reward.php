@@ -11,7 +11,9 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$points = $this->customer->getRewardPoints();
 
 			$points_total = 0;

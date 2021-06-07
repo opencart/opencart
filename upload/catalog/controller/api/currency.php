@@ -8,7 +8,9 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('localisation/currency');
 
 			$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['currency']);

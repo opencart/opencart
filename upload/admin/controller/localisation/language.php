@@ -106,6 +106,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$data['languages'][] = [
 				'language_id' => $result['language_id'],
 				'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : ''),
+				'status'      => $result['status'],
 				'code'        => $result['code'],
 				'sort_order'  => $result['sort_order'],
 				'edit'        => $this->url->link('localisation/language|form', 'user_token=' . $this->session->data['user_token'] . '&language_id=' . $result['language_id'] . $url)
@@ -278,19 +279,35 @@ class Language extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
-
+	
 		if (!$json) {
 			$this->load->model('localisation/language');
-
-			if (!$this->request->post['language_id']) {
-				$json['language_id'] = $this->model_localisation_language->addLanguage($this->request->post);
+			
+			// get all status
+			$results = $this->model_localisation_language->getLanguages();
+		
+			$status_exists = false;
+			foreach ($results as $result) {
+				if ($result['language_id'] == $this->request->post['language_id']) {
+					$status_exists |= (bool) $this->request->post['status'];
+				} else {
+					$status_exists |= (bool) $result['status'];
+				} 
+			}			
+		
+			if (!$status_exists) {
+				$json['error'] = $this->language->get('error_status');
 			} else {
-				$this->model_localisation_language->editLanguage($this->request->post['language_id'], $this->request->post);
+				if (!$this->request->post['language_id']) {
+				$json['language_id'] = $this->model_localisation_language->addLanguage($this->request->post);
+				} else {
+					$this->model_localisation_language->editLanguage($this->request->post['language_id'], $this->request->post);
+				}
+			
+				$json['success'] = $this->language->get('text_success');
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
-
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

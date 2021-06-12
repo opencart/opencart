@@ -8,6 +8,8 @@ class Featured extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		$data['products'] = [];
+		
+		$products = [];
 
 		if (!empty($setting['product'])) {
 			$product_data = [];

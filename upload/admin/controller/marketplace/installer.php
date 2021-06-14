@@ -190,6 +190,14 @@ class Installer extends \Opencart\System\Engine\Controller {
 							$name = '';
 						}
 
+						$code = $dom->getElementsByTagName('code')->item(0);
+
+						if ($code) {
+							$code = $code->nodeValue;
+						} else {
+							$code = basename($filename, '.ocmod.zip');
+						}
+
 						$version = $dom->getElementsByTagName('version')->item(0);
 
 						if ($version) {
@@ -230,7 +238,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 							'extension_id'          => 0,
 							'extension_download_id' => 0,
 							'name'                  => $name,
-							'code'              	=> basename($filename, '.ocmod.zip'),
+							'code'              	=> $code,
 							'version'               => $version,
 							'author'                => $author,
 							'link'                  => $link,

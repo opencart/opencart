@@ -172,13 +172,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 			$safe = true;
 
-			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
+			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, utf8_strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
 				$safe = false;
 			}
 
 			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
 
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, strlen($directory)) != $directory) {
+			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, utf8_strlen($directory)) != $directory) {
 				$safe = false;
 			}
 
@@ -236,7 +236,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		// Default template load
 		$directory = DIR_CATALOG . 'view/template';
 
-		if (is_file($directory . '/' . $path) && (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, strlen($directory)) == $directory)) {
+		if (is_file($directory . '/' . $path) && (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, utf8_strlen($directory)) == $directory)) {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/template/' . $path);
 		}
 
@@ -253,13 +253,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 			$safe = true;
 
-			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
+			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, utf8_strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
 				$safe = false;
 			}
 
 			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
 
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, strlen($directory)) != $directory) {
+			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, utf8_strlen($directory)) != $directory) {
 				$safe = false;
 			}
 
@@ -338,7 +338,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		$directory = DIR_CATALOG . 'view/template';
 
-		if (is_file($directory . '/' . $path) && (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, strlen($directory)) == $directory)) {
+		if (is_file($directory . '/' . $path) && (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, utf8_strlen($directory)) == $directory)) {
 			$json['code'] = file_get_contents(DIR_CATALOG . 'view/template/' . $path);
 		}
 
@@ -355,13 +355,13 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 			$safe = true;
 
-			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
+			if (substr(str_replace('\\', '/', realpath(DIR_EXTENSION . $extension)), 0, utf8_strlen(DIR_EXTENSION)) != DIR_EXTENSION) {
 				$safe = false;
 			}
 
 			$directory = DIR_EXTENSION . $extension . '/catalog/view/template';
 
-			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, strlen($directory)) != $directory) {
+			if (substr(str_replace('\\', '/', realpath($directory . '/' . $route)), 0, utf8_strlen($directory)) != $directory) {
 				$safe = false;
 			}
 

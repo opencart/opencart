@@ -334,7 +334,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		return $this->load->view('customer/customer_list', $data);
+		return $this->load->view('customer/customer', $data);
 	}
 
 	public function form(): void {

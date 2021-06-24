@@ -31,6 +31,7 @@ $_['error_exists']      = 'Warning: You have already added this language!';
 $_['error_name']        = 'Language Name must be between 1 and 32 characters!';
 $_['error_code']        = 'Language Code must be between 2 and 5 characters!';
 $_['error_locale']      = 'Locale required!';
+$_['error_status']      = 'All languages are inactived. You must active one of them!';
 $_['error_default']     = 'Warning: This language cannot be deleted as it is currently assigned as the default store language!';
 $_['error_admin']       = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_store']       = 'Warning: This language cannot be deleted as it is currently assigned to %s stores!';

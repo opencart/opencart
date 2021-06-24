@@ -44,7 +44,7 @@ class Session extends \Opencart\System\Engine\Controller {
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
-				'SameSite' => 'Strict'
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
 			$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');

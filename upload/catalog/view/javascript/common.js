@@ -82,8 +82,6 @@ $(document).ready(function() {
 		}
 	});
 
-
-
 	// Product List
 	$('#list-view').click(function() {
 		$('#content .product-grid > .clearfix').remove();

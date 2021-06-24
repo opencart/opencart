@@ -43,6 +43,7 @@ $_['session_path']         = '/';
 $_['session_expire']       = 360000;
 $_['session_probability']  = 1;
 $_['session_divisor']      = 5;
+$_['session_samesite']     = 'Strict';
 
 // Template
 $_['template_engine']      = 'twig';

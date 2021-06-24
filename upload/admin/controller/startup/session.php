@@ -24,7 +24,7 @@ class Session extends \Opencart\System\Engine\Controller {
 			'path'     => !empty($_SERVER['PHP_SELF']) ? $path : '',
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,
-			'SameSite' => 'Strict'
+			'SameSite' => $this->config->get('session_samesite')
 		];
 
 		setcookie($this->config->get('session_name'), $session->getId(), $option);

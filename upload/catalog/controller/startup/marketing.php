@@ -7,7 +7,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$option = [
 				'expires'  => time() + 3600 * 24 * 1000,
 				'path'     => '/',
-				'SameSite' => 'Strict'
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
 			setcookie('tracking', $this->request->get['tracking'], $option);

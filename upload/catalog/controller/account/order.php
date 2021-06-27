@@ -349,12 +349,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			if ($order_product_info) {
 				$this->load->model('catalog/product');
 
-				$product_info = $this->model_catalog_product->getProduct($order_product_info['product_id']);
+				$product_info = $this->model_catalog_product->getProduct($order_product_id);
 
 				if ($product_info) {
 					$option_data = [];
 
-					$order_options = $this->model_account_order->getOptions($order_product_info['order_id'], $order_product_id);
+					$order_options = $this->model_account_order->getOptions($order_product_id, $order_product_id);
 
 					foreach ($order_options as $order_option) {
 						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
@@ -368,7 +368,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data);
+					$this->cart->add($order_product_id, $order_product_info['quantity'], $option_data);
 
 					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 

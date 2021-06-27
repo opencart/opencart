@@ -363,12 +363,12 @@ class ControllerAccountOrder extends Controller {
 			if ($order_product_info) {
 				$this->load->model('catalog/product');
 
-				$product_info = $this->model_catalog_product->getProduct($order_product_info['product_id']);
+				$product_info = $this->model_catalog_product->getProduct($order_product_id);
 
 				if ($product_info) {
 					$option_data = array();
 
-					$order_options = $this->model_account_order->getOrderOptions($order_product_info['order_id'], $order_product_id);
+					$order_options = $this->model_account_order->getOrderOptions($order_product_id, $order_product_id);
 
 					foreach ($order_options as $order_option) {
 						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {

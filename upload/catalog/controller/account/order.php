@@ -89,7 +89,7 @@ class ControllerAccountOrder extends Controller {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -132,7 +132,7 @@ class ControllerAccountOrder extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, true)
+				'href' => $this->url->link('account/order/info', 'order_id=' . $order_id . $url, true)
 			);
 
 			if (isset($this->session->data['error'])) {
@@ -238,12 +238,12 @@ class ControllerAccountOrder extends Controller {
 			// Products
 			$data['products'] = array();
 
-			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
+			$products = $this->model_account_order->getOrderProducts($order_id);
 
 			foreach ($products as $product) {
 				$option_data = array();
 
-				$options = $this->model_account_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+				$options = $this->model_account_order->getOrderOptions($order_id, $product['order_product_id']);
 
 				foreach ($options as $option) {
 					if ($option['type'] != 'file') {
@@ -280,14 +280,14 @@ class ControllerAccountOrder extends Controller {
 					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'reorder'  => $reorder,
-					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], true)
+					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_id . '&product_id=' . $product['product_id'], true)
 				);
 			}
 
 			// Voucher
 			$data['vouchers'] = array();
 
-			$vouchers = $this->model_account_order->getOrderVouchers($this->request->get['order_id']);
+			$vouchers = $this->model_account_order->getOrderVouchers($order_id);
 
 			foreach ($vouchers as $voucher) {
 				$data['vouchers'][] = array(
@@ -299,7 +299,7 @@ class ControllerAccountOrder extends Controller {
 			// Totals
 			$data['totals'] = array();
 
-			$totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+			$totals = $this->model_account_order->getOrderTotals($order_id);
 
 			foreach ($totals as $total) {
 				$data['totals'][] = array(
@@ -313,7 +313,7 @@ class ControllerAccountOrder extends Controller {
 			// History
 			$data['histories'] = array();
 
-			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);
+			$results = $this->model_account_order->getOrderHistories($order_id);
 
 			foreach ($results as $result) {
 				$data['histories'][] = array(
@@ -342,7 +342,7 @@ class ControllerAccountOrder extends Controller {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
-			$order_id = $this->request->get['order_id'];
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
 		}
@@ -353,7 +353,7 @@ class ControllerAccountOrder extends Controller {
 
 		if ($order_info) {
 			if (isset($this->request->get['order_product_id'])) {
-				$order_product_id = $this->request->get['order_product_id'];
+				$order_product_id = (int)$this->request->get['order_product_id'];
 			} else {
 				$order_product_id = 0;
 			}

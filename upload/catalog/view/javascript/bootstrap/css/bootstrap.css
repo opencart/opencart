@@ -2652,6 +2652,15 @@ html {
     margin-top: 4px \9;
     margin-left: -20px;
   }
+html[dir=rtl] .checkbox input[type="checkbox"],
+html[dir=rtl] .checkbox-inline input[type="checkbox"],
+html[dir=rtl] .radio input[type="radio"],
+html[dir=rtl] .radio-inline input[type="radio"] {
+    position: absolute;
+    margin-top: 4px\9;
+    margin-right: -20px;
+    margin-left: unset;
+}
   .radio + .radio,
   .checkbox + .checkbox {
     margin-top: -5px;
@@ -4103,6 +4112,29 @@ html {
     top: auto;
     left: auto;
   }
+
+html[dir=rtl] .input-group-btn:last-child > .btn{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+html[dir=rtl] .input-group .form-control:first-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+}
+html[dir=rtl] .container .row:first-child  .col-sm-4, html[dir=rtl] .container .row:first-child  .col-sm-5 {
+  float: right;
+
+}
+html[dir=rtl] #cart .dropdown-menu {
+  left: 0;
+  right: auto;
+
+}
+
   @media (min-width: 768px) {
     .nav-tabs.nav-justified > li {
       display: table-cell;
@@ -4404,8 +4436,15 @@ html {
       float: left;
       margin: 0;
     }
+    html[dir=rtl] .navbar-nav {
+        float: right;
+        margin: 0;
+    }
     .navbar-nav > li {
       float: left;
+    }
+    html[dir=rtl] .navbar-nav > li {
+        float: right;
     }
     .navbar-nav > li > a {
       padding-top: 15px;

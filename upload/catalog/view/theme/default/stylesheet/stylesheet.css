@@ -382,10 +382,9 @@ html[dir=rtl] .breadcrumb > li::after {
   height: 26px;
   border-left: 1px solid #DDD;
   border-top: 1px solid #DDD;
-	right: unset;
-
-	border-right: unset;
-	border-bottom:unset;
+  right: unset;
+  border-right: unset;
+  border-bottom:unset;
 
 }
 .pagination {

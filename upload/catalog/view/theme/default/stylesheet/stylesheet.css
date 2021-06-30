@@ -375,6 +375,19 @@ footer h5 {
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
+html[dir=rtl] .breadcrumb > li::after {
+  top: -3px;
+  left: -5px;
+  width: 26px;
+  height: 26px;
+  border-left: 1px solid #DDD;
+  border-top: 1px solid #DDD;
+	right: unset;
+
+	border-right: unset;
+	border-bottom:unset;
+
+}
 .pagination {
 	margin: 0;
 }

@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Tool;
 class Upload extends \Opencart\System\Engine\Model {
 	public function addUpload(string $name, string $filename): string {
-		$code = sha1(uniqid(mt_rand(), true));
+		$code = sha1(uniqid(random_bytes(64), true));
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "upload` SET `name` = '" . $this->db->escape($name) . "', `filename` = '" . $this->db->escape($filename) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
 

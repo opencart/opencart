@@ -375,6 +375,19 @@ footer h5 {
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
+html[dir=rtl] .breadcrumb > li::after {
+  top: -3px;
+  left: -5px;
+  width: 26px;
+  height: 26px;
+  border-left: 1px solid #DDD;
+  border-top: 1px solid #DDD;
+	right: unset;
+
+	border-right: unset;
+	border-bottom:unset;
+
+}
 .pagination {
 	margin: 0;
 }
@@ -747,4 +760,46 @@ h2.price {
 .btn-info:hover, .btn-info:active, .btn-info.active, .btn-info.disabled, .btn-info[disabled] {
     background-image: none;
     background-color: #df5c39;
+}
+html[dir=rtl] .checkbox input[type="checkbox"],
+html[dir=rtl] .checkbox-inline input[type="checkbox"],
+html[dir=rtl] .radio input[type="radio"],
+html[dir=rtl] .radio-inline input[type="radio"] {
+    position: absolute;
+    margin-top: 4px\9;
+    margin-right: -20px;
+      margin-left: unset;
+}
+html[dir=rtl] .input-group-btn:last-child > .btn{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+html[dir=rtl] .input-group .form-control:first-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+}
+html[dir=rtl] .container .row:first-child  .col-sm-4, html[dir=rtl] .container .row:first-child  .col-sm-5 {
+  float: right;
+
+}
+html[dir=rtl] #cart .dropdown-menu {
+  left: 0;
+  right: auto;
+
+}
+@media (min-width: 768px) {
+   
+    html[dir=rtl] .navbar-nav {
+        float: right;
+        margin: 0;
+    }
+    
+    html[dir=rtl] .navbar-nav > li {
+        float: right;
+    }
+   
 }

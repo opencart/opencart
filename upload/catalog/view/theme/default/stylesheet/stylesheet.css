@@ -770,7 +770,7 @@ html[dir=rtl] .radio-inline input[type="radio"] {
     margin-right: -20px;
       margin-left: unset;
 }
-html[dir=rtl] .input-group-btn:last-child > .btn{
+html[dir=rtl] .input-group-btn:last-child > .btn {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-top-left-radius: 5px;

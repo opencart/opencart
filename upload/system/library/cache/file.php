@@ -70,7 +70,11 @@ class File {
 	}
 
 	public function delete(string $key): void {
-		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
+		if($key == '*'){
+			$files = glob(DIR_CACHE . 'cache.*');
+		}else{
+			$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
+		}
 
 		if ($files) {
 			foreach ($files as $file) {

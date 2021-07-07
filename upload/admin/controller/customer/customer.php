@@ -1115,7 +1115,7 @@ class ControllerCustomerCustomer extends Controller {
 				$this->error['tracking'] = $this->language->get('error_tracking');
 			}
 
-			$affiliate_info = $this->model_customer_customer->getAffliateByTracking($this->request->post['tracking']);
+			$affiliate_info = $this->model_customer_customer->getAffiliateByTracking($this->request->post['tracking']);
 
 			if (!isset($this->request->get['customer_id'])) {
 				if ($affiliate_info) {

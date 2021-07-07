@@ -106,22 +106,20 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['timezones'] = [];
 
-		$timestamp = time();
+		$timestamp = date_create('now');
 
 		$timezones = timezone_identifiers_list();
 
 		foreach ($timezones as $timezone) {
-			date_default_timezone_set($timezone);
+			date_timezone_set($timestamp, timezone_open($timezone));
 
-			$hour = ' (' . date('P', $timestamp) . ')';
+			$hour = ' (' . date_format($timestamp, 'P') . ')';
 
 			$data['timezones'][] = [
 				'text'  => $timezone . $hour,
 				'value' => $timezone
 			];
 		}
-
-		date_default_timezone_set($this->config->get('config_timezone'));
 
 		$data['config_language'] = $this->config->get('config_language');
 

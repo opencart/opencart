@@ -225,7 +225,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

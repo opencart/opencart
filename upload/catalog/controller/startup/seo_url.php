@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Catalog\Controller\Startup;
 class SeoUrl extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
@@ -38,7 +38,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function rewrite($link) {
+	public function rewrite(string $link): string {
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
 		// Build the url

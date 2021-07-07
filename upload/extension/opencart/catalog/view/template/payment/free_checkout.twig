@@ -6,7 +6,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/opencart/payment/free_checkout/confirm',
+		url: 'index.php?route=extension/opencart/payment/free_checkout|confirm',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').button('loading');

@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Reward extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$points = $this->customer->getRewardPoints();
 
 		$points_total = 0;
@@ -26,10 +26,12 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 
 			return $this->load->view('extension/opencart/total/reward', $data);
+		} else {
+			return '';
 		}
 	}
 
-	public function reward() {
+	public function reward(): void {
 		$this->load->language('extension/opencart/total/reward');
 
 		$json = [];
@@ -60,7 +62,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$this->session->data['reward'] = abs($this->request->post['reward']);
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

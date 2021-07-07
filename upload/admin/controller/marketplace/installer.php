@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Marketplace;
+namespace Opencart\Admin\Controller\Marketplace;
 class Installer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('marketplace/installer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -18,7 +18,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		if (isset($this->request->get['filter_extension_id'])) {
 			$data['filter_extension_download_id'] = (int)$this->request->get['filter_extension_download_id'];
@@ -26,32 +28,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$data['filter_extension_download_id'] = '';
 		}
 
-		/*
-		// Code to grab pre installed extensions
-		$extensions = $this->model_setting_extension->getDownloaded('analytics');
-
-		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/core&version=' . VERSION);
-
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-
-		$response_info = json_decode($response, true);
-
-		foreach ($response_info['extension'] as $extension) {
-			$this->model_setting_extension->addExtension($extension, '');
-		}
-
-		echo VERSION . "\n";
-		echo $response;
-		*/
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -60,7 +37,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
-	public function extension() {
+	public function extension(): void {
 		$this->load->language('marketplace/installer');
 
 		if (isset($this->request->get['filter_extension_download_id'])) {
@@ -95,8 +72,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'filter_extension_download_id' => $filter_extension_download_id,
 			'sort'                         => $sort,
 			'order'                        => $order,
-			'start'                        => ($page - 1) * $this->config->get('config_pagination'),
-			'limit'                        => $this->config->get('config_pagination')
+			'start'                        => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'                        => $this->config->get('config_pagination_admin')
 		];
 
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
@@ -125,7 +102,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($extension_total - $this->config->get('config_pagination'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $extension_total, ceil($extension_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($extension_total - $this->config->get('config_pagination_admin'))) ? $extension_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $extension_total, ceil($extension_total / $this->config->get('config_pagination_admin')));
 
 		$url = '';
 
@@ -141,12 +118,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['sort_name'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_version'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
-		$data['sort_date_added'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_date_added' . $url);
+		$data['sort_date_added'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
+			'limit' => $this->config->get('config_pagination_admin'),
 			'url'   => $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
@@ -156,7 +133,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/installer_extension', $data));
 	}
 
-	public function upload() {
+	public function upload(): void {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
@@ -236,7 +213,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 						} else {
 							$link = '';
 						}
-					} catch(Exception $exception) {
+
+						$composer = $dom->getElementsByTagName('composer')->item(0);
+
+						if ($composer) {
+							$composer = $composer->nodeValue;
+						} else {
+							$composer = '';
+						}
+					} catch(\Exception $exception) {
 						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
 
@@ -248,7 +233,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 							'code'              	=> basename($filename, '.ocmod.zip'),
 							'version'               => $version,
 							'author'                => $author,
-							'link'                  => $link
+							'link'                  => $link,
+							'composer'              => $composer
 						];
 
 						$this->load->model('setting/extension');
@@ -257,7 +243,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_upload');
 			} else {
 				$json['error'] = sprintf($this->language->get('error_file'), $filename);
 			}
@@ -269,7 +255,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function install() {
+	public function install(): void {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
@@ -314,7 +300,13 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$source = $zip->getNameIndex($i);
 
 					// Only extract the contents of the upload folder
-					$destination = str_replace('\\', '/', substr($source, strlen('upload/')));
+					if (substr($source, 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
+						$remove = strlen($extension_install_info['code'] . '/upload/');
+					} else {
+						$remove = strlen('upload/');
+					}
+
+					$destination = str_replace('\\', '/', substr($source, $remove));
 
 					$path = '';
 					$base = '';
@@ -333,39 +325,54 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					// image > image
 					if (substr($destination, 0, 6) == 'image/') {
-						$path = substr($destination, 6);
-						$base = DIR_IMAGE;
+						$path = $destination;
+						$base = substr(DIR_IMAGE, 0, -6);
 					}
 
-					if (substr($destination, 0, 7) == 'system/') {
+					// Add the system directory if it doesn't exist.
+					if ($destination == 'system/') {
 						$path = $extension_install_info['code'] . '/' . $destination;
 						$base = DIR_EXTENSION;
 					}
 
-					// system/config > system/config
+					// Config
 					if (substr($destination, 0, 14) == 'system/config/') {
-						$path = substr($destination, 14);
-						$base = DIR_CONFIG;
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
-					// system/storage/vendor > system/storage/vendor
+					// Helper
+					if (substr($destination, 0, 14) == 'system/helper/') {
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
+					}
+
+					// Library
+					if (substr($destination, 0, 15) == 'system/library/') {
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
+					}
+
+					// We need to store the path differently for vendor folders.
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
-						$path = substr($destination, 22);
-						$base = DIR_STORAGE . 'vendor/';
+						$path = substr($destination, 15);
+						$base = DIR_STORAGE;
 					}
 
 					if ($path) {
-						if (!is_file($base . $path)) {
+						if (substr($path, -1) != '/' && is_file($base . $path)) {
+							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+
+							break;
+						}
+
+						if (!is_dir($base . $path)) {
 							$extract[] = [
 								'source'      => $source,
 								'destination' => $destination,
 								'base'        => $base,
 								'path'        => $path
 							];
-						} else {
-							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
-
-							break;
 						}
 					}
 				}
@@ -394,14 +401,27 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_extension->editStatus($extension_install_id, 1);
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_install');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function uninstall() {
+	public function composer(): void {
+		$this->load->language('marketplace/installer');
+
+		$json = [];
+
+
+
+
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function uninstall(): void {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
@@ -432,24 +452,19 @@ class Installer extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$path = '';
 
-				// admin > extension/{directory}/admin
+				// Remove extension directory and files
 				if (substr($result['path'], 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
 					$path = DIR_EXTENSION . $result['path'];
 				}
 
-				// Image
+				// Remove images
 				if (substr($result['path'], 0, 6) == 'image/') {
 					$path = DIR_IMAGE . substr($result['path'], 6);
 				}
 
-				// Config
-				if (substr($result['path'], 0, 14) == 'system/config/') {
-					$path = DIR_CONFIG . substr($result['path'], 14);
-				}
-
-				// Storage
-				if (substr($result['path'], 0, 22) == 'system/storage/vendor/') {
-					$path = DIR_STORAGE . 'vendor/' . substr($result['path'], 22);
+				// Remove vendor files
+				if (substr($result['path'], 0, 7) == 'vendor/') {
+					$path = DIR_STORAGE . $result['path'];
 				}
 
 				// Check if the location exists or not
@@ -467,14 +482,14 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_extension->editStatus($extension_install_id, 0);
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_uninstall');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
@@ -507,7 +522,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_extension->deleteInstall($extension_install_id);
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_delete');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

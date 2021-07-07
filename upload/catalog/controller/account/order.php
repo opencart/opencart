@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Order extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 
@@ -85,7 +85,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/order_list', $data));
 	}
 
-	public function info() {
+	public function info(): object|null {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -134,22 +134,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				'text' => $this->language->get('text_order'),
 				'href' => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $this->request->get['order_id'] . $url)
 			];
-
-			if (isset($this->session->data['error'])) {
-				$data['error_warning'] = $this->session->data['error'];
-
-				unset($this->session->data['error']);
-			} else {
-				$data['error_warning'] = '';
-			}
-
-			if (isset($this->session->data['success'])) {
-				$data['success'] = $this->session->data['success'];
-
-				unset($this->session->data['success']);
-			} else {
-				$data['success'] = '';
-			}
 
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
@@ -333,12 +317,14 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('account/order_info', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 
-	public function reorder() {
+	public function reorder(): void {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -378,7 +364,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						} elseif ($order_option['type'] == 'text' || $order_option['type'] == 'textarea' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
 							$option_data[$order_option['product_option_id']] = $order_option['value'];
 						} elseif ($order_option['type'] == 'file') {
-							$option_data[$order_option['product_option_id']] = $this->encryption->encrypt($this->config->get('config_encryption'), $order_option['value']);
+							$option_data[$order_option['product_option_id']] = $order_option['value'];
 						}
 					}
 

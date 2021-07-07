@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Coupon extends \Opencart\System\Engine\Model {
-	public function getCoupon($code) {
+	public function getCoupon(string $code): array {
 		$status = true;
 
 		$coupon_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon` WHERE `code` = '" . $this->db->escape($code) . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) AND `status` = '1'");
@@ -23,7 +23,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 			if ($this->customer->getId()) {
 				$customer_total = $this->getTotalHistoriesByCustomerId($code, $this->customer->getId());
-				
+
 				if ($coupon_query->row['uses_customer'] > 0 && ($customer_total >= $coupon_query->row['uses_customer'])) {
 					$status = false;
 				}
@@ -57,7 +57,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 					}
 
 					foreach ($coupon_category_data as $category_id) {
-						$coupon_category_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product['product_id'] . "' AND `category_id` = '" . (int)$category_id . "'");
+						$coupon_category_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product['product_id'] . "' AND `category_id` = '" . (int)$category_id . "'");
 
 						if ($coupon_category_query->row['total']) {
 							$product_data[] = $product['product_id'];
@@ -91,10 +91,12 @@ class Coupon extends \Opencart\System\Engine\Model {
 				'status'        => $coupon_query->row['status'],
 				'date_added'    => $coupon_query->row['date_added']
 			];
+		} else {
+			return [];
 		}
 	}
 
-	public function getTotal(&$totals, &$taxes, &$total) {
+	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('extension/opencart/total/coupon', 'coupon');
 
@@ -170,6 +172,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 				if ($discount_total > 0) {
 					$totals[] = [
+						'extension'  => 'opencart',
 						'code'       => 'coupon',
 						'title'      => sprintf($this->language->get('coupon_text_coupon'), $this->session->data['coupon']),
 						'value'      => -$discount_total,
@@ -182,7 +185,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function confirm($order_info, $order_total) {
+	public function confirm(array $order_info, array $order_total): int {
 		$code = '';
 
 		$start = strpos($order_total['title'], '(') + 1;
@@ -194,25 +197,25 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 		if ($code) {
 			$status = true;
-			
+
 			$coupon_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "coupon` WHERE `code` = '" . $this->db->escape($code) . "' AND `status` = '1'");
 
 			if ($coupon_query->num_rows) {
 				$coupon_total = $this->getTotalHistoriesByCoupon($code);
-	
+
 				if ($coupon_query->row['uses_total'] > 0 && ($coupon_total >= $coupon_query->row['uses_total'])) {
 					$status = false;
 				}
-				
+
 				if ($order_info['customer_id']) {
 					$customer_total = $this->getTotalHistoriesByCustomerId($code, $order_info['customer_id']);
-					
+
 					if ($coupon_query->row['uses_customer'] > 0 && ($customer_total >= $coupon_query->row['uses_customer'])) {
 						$status = false;
 					}
 				}
 			} else {
-				$status = false;	
+				$status = false;
 			}
 
 			if ($status) {
@@ -221,21 +224,23 @@ class Coupon extends \Opencart\System\Engine\Model {
 				return $this->config->get('config_fraud_status_id');
 			}
 		}
+
+		return 0;
 	}
 
-	public function unconfirm($order_id) {
+	public function unconfirm(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
-	
-	public function getTotalHistoriesByCoupon($coupon) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "'");	
-		
+
+	public function getTotalHistoriesByCoupon(string $coupon): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "'");
+
 		return $query->row['total'];
 	}
-	
-	public function getTotalHistoriesByCustomerId($coupon, $customer_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "' AND ch.`customer_id` = '" . (int)$customer_id . "'");
-		
+
+	public function getTotalHistoriesByCustomerId(string $coupon, int $customer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "' AND ch.`customer_id` = '" . (int)$customer_id . "'");
+
 		return $query->row['total'];
 	}
 }

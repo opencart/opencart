@@ -1,30 +1,46 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Cookie extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
+		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
+			$this->load->model('catalog/information');
+
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_cookie_id'));
+
+			if ($information_info) {
+				$this->load->language('common/cookie');
+
+				$data['text_cookie'] = sprintf($this->language->get('text_cookie'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_info['information_id']));
+
+				$data['agree'] = $this->url->link('common/cookie|confirm', 'language=' . $this->config->get('config_language') . '&agree=1');
+				$data['disagree'] = $this->url->link('common/cookie|confirm', 'language=' . $this->config->get('config_language') . '&agree=0');
+
+				return $this->load->view('common/cookie', $data);
+			}
+		}
+
+		return '';
+	}
+
+	public function confirm(): void {
+		$json = [];
+
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->language('common/cookie');
 
-			$data['text_cookie'] = sprintf($this->language->get('text_cookie'), $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_cookie_id')));
+			if (isset($this->request->get['agree'])) {
+				$agree = (int)$this->request->get['agree'];
+			} else {
+				$agree = 0;
+			}
 
-			return $this->load->view('common/cookie', $data);
-		}
-	}
-
-	public function agree() {
-		$this->load->language('common/cookie');
-
-		$json = [];
-
-		if (!isset($this->cookie['policy'])) {
 			$option = [
-				'max-age'  => strtotime('+10 years'),
-				'path'     => '/',
-				'SameSite' => 'lax'
+				'expires'  => time() + 60 * 60 * 24 * 365,
+				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
-			// Using time as the policy value allows you to see when te policy was agreed.
-			oc_setcookie('policy', time(), $option);
+			setcookie('policy', $agree, $option);
 
 			$json['success'] = $this->language->get('text_success');
 		}

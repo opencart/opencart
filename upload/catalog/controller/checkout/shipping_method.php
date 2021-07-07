@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Checkout;
+namespace Opencart\Catalog\Controller\Checkout;
 class ShippingMethod extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
 
 		if (isset($this->session->data['shipping_address'])) {
@@ -63,28 +63,28 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['comment'] = '';
 		}
-		
+
 		$this->response->setOutput($this->load->view('checkout/shipping_method', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
 		if (!$this->cart->hasShipping()) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate if shipping address has been set.
 		if (!isset($this->session->data['shipping_address'])) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -100,7 +100,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;
 			}

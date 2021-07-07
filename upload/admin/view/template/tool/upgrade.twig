@@ -12,19 +12,19 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-      <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     {% endif %}
     {% if success %}
-      <div class="alert alert-success"><i class="fas fa-check-circle"></i> {{ success }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     {% endif %}
     <div id="collapse">
       <div class="card">
-        <div class="card-header" data-toggle="collapse" data-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
-        <div id="collapse-version" data-parent="#collapse" class="collapse show">
+        <div class="card-header" data-bs-toggle="collapse" data-bs-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
+        <div id="collapse-version" data-bs-parent="#collapse" class="collapse show">
           <div class="card-body">
             <fieldset>
               {% if error_warning %}
@@ -51,22 +51,22 @@
               <textarea wrap="off" rows="10" readonly class="form-control">{{ log }}</textarea>
             </fieldset>
             <br/>
-            <div class="text-right"><a href="#collapse-compatible" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-end"><a href="#collapse-compatible" data-bs-toggle="collapse" data-bs-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
-        <div id="collapse-compatible" data-parent="#collapse" class="collapse">
+        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
+        <div id="collapse-compatible" data-bs-parent="#collapse" class="collapse">
           <div class="card-body">
             <div class="alert alert-warning">
               {{ text_before }}
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-left">{{ column_name }}</td>
+                  <td class="text-start">{{ column_name }}</td>
                   <td class="text-center">{{ column_compatible }}</td>
                   <td class="text-center">{{ column_available }}</td>
                 </tr>
@@ -75,7 +75,7 @@
                 {% if extensions %}
                   {% for extension in extensions %}
                     <tr>
-                      <td class="text-left"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
+                      <td class="text-start"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
                       <td class="text-center">{% if extension.compatible %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
                       <td class="text-center">{% if extension.available %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
                     </tr>
@@ -88,17 +88,17 @@
               </tbody>
             </table>
             <br/>
-            <div class="text-right"><a href="#collapse-upgrade" data-toggle="collapse" data-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
+            <div class="text-end"><a href="#collapse-upgrade" data-bs-toggle="collapse" data-bs-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
-        <div id="collapse-upgrade" data-parent="#collapse" class="collapse">
+        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
+        <div id="collapse-upgrade" data-bs-parent="#collapse" class="collapse">
           <div class="card-body">
             <fieldset>
               <legend>{{ text_progress }}</legend>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
                 <div class="col-sm-10">
                   <div id="progress-download" class="progress">
@@ -108,11 +108,11 @@
                 </div>
               </div>
               <div class="col-sm-10 offset-sm-2">
-                <div class="form-group row">
+                <div class="row mb-3">
                   {% if upgrade %}
-                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-play"></i> {{ button_start }}</button>
+                    <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-play"></i> {{ button_start }}</button>
                   {% else %}
-                    <button type="button" id="button-upgrade" data-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fas fa-play"></i> {{ button_start }}</button>
+                    <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fas fa-play"></i> {{ button_start }}</button>
                   {% endif %}
                 </div>
               </div>
@@ -129,65 +129,63 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function() {
-	var i = 0;
+    var i = 0;
 
-	$('#progress-bar').css('width', '0%').removeClass('progress-bar-danger progress-bar-success');
-	$('#progress-text').html('{{ text_download }}');
-	$('#log').append('{{ text_download }}' + "\n");
+    $('#progress-bar').css('width', '0%').removeClass('progress-bar-danger progress-bar-success');
+    $('#progress-text').html('{{ text_download }}');
+    $('#log').append('{{ text_download }}' + "\n");
 
-	var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val(), this);
+    var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
 
-	var upgrade = function() {
-		return $.ajax({
-			url: 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}',
-			dataType: 'json',
-			beforeSend: function() {
-				$('#button-upgrade').button('loading');
-			},
-			complete: function() {
-				$('#button-upgrade').button('reset');
-			},
-			success: function(json) {
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
-					$('#log').append(json['error'] + "\n");
-				}
+    var upgrade = function() {
+        return $.ajax({
+            url: 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}',
+            dataType: 'json',
+            beforeSend: function() {
+                $('#button-upgrade').button('loading');
+            },
+            complete: function() {
+                $('#button-upgrade').button('reset');
+            },
+            success: function(json) {
+                if (json['error']) {
+                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
+                    $('#log').append(json['error'] + "\n");
+                }
 
-
-				if (json['success']) {
-					$('#progress-bar').addClass('progress-bar-success');
-					$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
-					$('#log').append(json['success'] + "\n");
-
-
-					$('#button-upgrade').button('reset');
-				}
+                if (json['success']) {
+                    $('#progress-bar').addClass('progress-bar-success');
+                    $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+                    $('#log').append(json['success'] + "\n");
 
 
-				if (json['text']) {
-					i = i + 1;
+                    $('#button-upgrade').button('reset');
+                }
 
-					$('#progress-bar').css('width', (i * 20) + '%');
+                if (json['text']) {
+                    i = i + 1;
 
-					$('#progress-bar').css('width', '20%');
-					$('#progress-text').html(json['text']);
-					$('#log').append(json['text'] + "\n");
-				}
+                    $('#progress-bar').css('width', (i * 20) + '%');
 
-				if (json['next']) {
-					next = json['next'];
+                    $('#progress-bar').css('width', '20%');
+                    $('#progress-text').html(json['text']);
+                    $('#log').append(json['text'] + "\n");
+                }
 
-					chain.attach(upgrade);
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				$('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
+                if (json['next']) {
+                    next = json['next'];
 
-	chain.attach(upgrade);
+                    chain.attach(upgrade);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                $('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+
+    chain.attach(upgrade);
 });
 //--></script>
 {{ footer }}

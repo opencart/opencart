@@ -81,14 +81,14 @@ trait DecryptionTrait
             $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
         );
 
-        $decryptionSteam = $this->getDecryptingStream(
+        $decryptionStream = $this->getDecryptingStream(
             $cipherText,
             $cek,
             $cipherOptions
         );
         unset($cek);
 
-        return $decryptionSteam;
+        return $decryptionStream;
     }
 
     private function getTagFromCiphertextStream(

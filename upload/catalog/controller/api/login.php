@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Api;
+namespace Opencart\Catalog\Controller\Api;
 class Login extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('api/login');
 
 		$json = [];
@@ -28,7 +28,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 
-				$session = new \Opencart\Engine\Library\Session($this->config->get('session_engine'), $this->registry);
+				$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
 				$session->start();
 				
 				$this->model_account_api->addSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);
@@ -37,9 +37,9 @@ class Login extends \Opencart\System\Engine\Controller {
 				
 				// Create Token
 				$json['api_token'] = $session->getId();
-			} else {
-				$json['error']['key'] = $this->language->get('error_key');
 			}
+		}else {
+			$json['error']['key'] = $this->language->get('error_key');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

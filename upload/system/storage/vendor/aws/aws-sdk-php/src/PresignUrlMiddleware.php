@@ -16,6 +16,8 @@ class PresignUrlMiddleware
     private $nextHandler;
     /** @var array names of operations that require presign url */
     private $commandPool;
+    /** @var array query params that are not on the operation's model to add before signing */
+    private $extraQueryParams;
     /** @var string */
     private $serviceName;
     /** @var string */
@@ -34,7 +36,12 @@ class PresignUrlMiddleware
         $this->nextHandler = $nextHandler;
         $this->commandPool = $options['operations'];
         $this->serviceName = $options['service'];
-        $this->presignParam = $options['presign_param'];
+        $this->presignParam = !empty($options['presign_param'])
+            ? $options['presign_param']
+            : 'PresignedUrl';
+        $this->extraQueryParams = !empty($options['extra_query_params'])
+            ? $options['extra_query_params']
+            : [];
         $this->requireDifferentRegion = !empty($options['require_different_region']);
     }
 
@@ -55,6 +62,9 @@ class PresignUrlMiddleware
             && (!isset($cmd->{'__skip' . $cmd->getName()}))
         ) {
             $cmd['DestinationRegion'] = $this->client->getRegion();
+            if (!empty($cmd['SourceRegion']) && !empty($cmd[$this->presignParam])) {
+                goto nexthandler;
+            }
             if (!$this->requireDifferentRegion
                 || (!empty($cmd['SourceRegion'])
                     && $cmd['SourceRegion'] !== $cmd['DestinationRegion'])
@@ -62,9 +72,9 @@ class PresignUrlMiddleware
                 $cmd[$this->presignParam] = $this->createPresignedUrl($this->client, $cmd);
             }
         }
-
-        $f = $this->nextHandler;
-        return $f($cmd, $request);
+        nexthandler:
+        $nextHandler = $this->nextHandler;
+        return $nextHandler($cmd, $request);
     }
 
     private function createPresignedUrl(
@@ -90,8 +100,18 @@ class PresignUrlMiddleware
         // Create a presigned URL for our generated request.
         $signer = new SignatureV4($this->serviceName, $cmd['SourceRegion']);
 
+        $currentQueryParams = (string) $request->getBody();
+        $paramsToAdd = false;
+        if (!empty($this->extraQueryParams[$cmdName])) {
+            foreach ($this->extraQueryParams[$cmdName] as $param) {
+                if (!strpos($currentQueryParams, $param)) {
+                    $paramsToAdd =  "&{$param}={$cmd[$param]}";
+                }
+            }
+        }
+
         return (string) $signer->presign(
-            SignatureV4::convertPostToGet($request),
+            SignatureV4::convertPostToGet($request, $paramsToAdd ?: ""),
             $client->getCredentials()->wait(),
             '+1 hour'
         )->getUri();

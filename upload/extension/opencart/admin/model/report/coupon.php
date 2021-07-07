@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Report;
+namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Coupon extends \Opencart\System\Engine\Model {
-	public function getCoupons($data = []) {
-		$sql = "SELECT ch.`coupon_id`, c.`name`, c.`code`, COUNT(DISTINCT ch.`order_id`) AS orders, SUM(ch.`amount`) AS total FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`)";
+	public function getCoupons(array $data = []): array {
+		$sql = "SELECT ch.`coupon_id`, c.`name`, c.`code`, COUNT(DISTINCT ch.`order_id`) AS orders, SUM(ch.`amount`) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`)";
 
 		$implode = [];
 
@@ -37,8 +37,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalCoupons($data = []) {
-		$sql = "SELECT COUNT(DISTINCT `coupon_id`) AS total FROM `" . DB_PREFIX . "coupon_history`";
+	public function getTotalCoupons(array $data = []): int {
+		$sql = "SELECT COUNT(DISTINCT `coupon_id`) AS `total` FROM `" . DB_PREFIX . "coupon_history`";
 
 		$implode = [];
 

@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Cart extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('common/cart');
 
 		// Totals
@@ -50,9 +50,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
-				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 			} else {
-				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 			}
 
 			$option_data = [];
@@ -130,7 +130,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $this->load->view('common/cart', $data);
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->response->setOutput($this->index());
 	}
 }

@@ -1,8 +1,12 @@
 <?php
-namespace Opencart\Application\Controller\Checkout;
+namespace Opencart\Catalog\Controller\Checkout;
 class Guest extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
+
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		$data['customer_groups'] = [];
 
@@ -134,7 +138,7 @@ class Guest extends \Opencart\System\Engine\Controller {
 		// Captcha
 		$this->load->model('setting/extension');
 
-		$extension_info = $this->model_setting_extension->getExtensionByCode($this->config->get('config_captcha'));
+		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
 
 		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('guest', (array)$this->config->get('config_captcha_page'))) {
 			$data['captcha'] = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code']);
@@ -145,27 +149,56 @@ class Guest extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/guest', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
 
 		// Validate if customer is logged in.
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Check if guest checkout is available.
 		if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {
+			$this->session->data['shipping_address']['firstname'] = $this->request->post['firstname'];
+			$this->session->data['shipping_address']['lastname'] = $this->request->post['lastname'];
+			$this->session->data['shipping_address']['company'] = $this->request->post['company'];
+			$this->session->data['shipping_address']['address_1'] = $this->request->post['address_1'];
+			$this->session->data['shipping_address']['address_2'] = $this->request->post['address_2'];
+			$this->session->data['shipping_address']['postcode'] = $this->request->post['postcode'];
+			$this->session->data['shipping_address']['city'] = $this->request->post['city'];
+			$this->session->data['shipping_address']['country_id'] = $this->request->post['country_id'];
+			$this->session->data['shipping_address']['zone_id'] = $this->request->post['zone_id'];
+
+			$keys = [
+				'firstname',
+				'lastname',
+				'email',
+				'telephone',
+				'company',
+				'address_1',
+				'city',
+				'postcode',
+				'country_id',
+				'zone_id'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -216,20 +249,20 @@ class Guest extends \Opencart\System\Engine\Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
-					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 				}
 			}
 
 			// Captcha
 			$this->load->model('setting/extension');
 
-			$extension_info = $this->model_setting_extension->getExtensionByCode($this->config->get('config_captcha'));
+			$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
 
 			if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('guest', (array)$this->config->get('config_captcha_page'))) {
 				$captcha = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');

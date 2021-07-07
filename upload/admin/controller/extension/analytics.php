@@ -1,73 +1,19 @@
 <?php
-namespace Opencart\Application\Controller\Extension;
+namespace Opencart\Admin\Controller\Extension;
 class Analytics extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
-		$this->load->language('extension/analytics');
-
-		$this->load->model('setting/extension');
-
+	public function index(): void {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function install() {
+	public function getList(): string {
 		$this->load->language('extension/analytics');
 
-		$this->load->model('setting/extension');
-
-		if ($this->validate()) {
-			$this->model_setting_extension->install('analytics', $this->request->get['extension'], $this->request->get['code']);
-
-			$this->load->model('user/user_group');
-
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code']);
-
-			// Call install method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code'] . '/install');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->setOutput($this->getList());
-	}
-
-	public function uninstall() {
-		$this->load->language('extension/analytics');
-
-		$this->load->model('setting/extension');
-
-		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('analytics', $this->request->get['code']);
-
-			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code'] . '/uninstall');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->setOutput($this->getList());
-	}
-
-	public function getList() {
-		$this->load->language('extension/analytics');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
+		// Promotion
+		$data['promotion'] = $this->load->controller('marketplace/promotion');
 
 		$available = [];
+
+		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/analytics/%.php');
 
@@ -87,12 +33,12 @@ class Analytics extends \Opencart\System\Engine\Controller {
 				$this->model_setting_extension->uninstall('analytics', $extension['code']);
 			}
 		}
-		
+
 		$this->load->model('setting/store');
 		$this->load->model('setting/setting');
 
 		$stores = $this->model_setting_store->getStores();
-		
+
 		$data['extensions'] = [];
 
 		$this->load->model('setting/extension');
@@ -104,7 +50,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 				$code = basename($result['path'], '.php');
 
 				$this->load->language('extension/' . $extension . '/analytics/' . $code, $code);
-				
+
 				$store_data = [];
 
 				$store_data[] = [
@@ -112,7 +58,7 @@ class Analytics extends \Opencart\System\Engine\Controller {
 					'edit'   => $this->url->link('extension/' . $extension . '/analytics/' . $code, 'user_token=' . $this->session->data['user_token'] . '&store_id=0'),
 					'status' => $this->config->get('analytics_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				];
-				
+
 				foreach ($stores as $store) {
 					$store_data[] = [
 						'name'   => $store['name'],
@@ -122,25 +68,68 @@ class Analytics extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['extensions'][] = [
-					'name'      => $this->language->get($code . '_heading_title'),
-					'install'   => $this->url->link('extension/analytics|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'name' => $this->language->get($code . '_heading_title'),
+					'install' => $this->url->link('extension/analytics|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/analytics|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
-					'store'     => $store_data
+					'store' => $store_data
 				];
 			}
 		}
 
-		$data['promotion'] = $this->load->controller('marketplace/promotion');
-
 		return $this->load->view('extension/analytics', $data);
 	}
 
-	protected function validate() {
+	public function install(): void {
+		$this->load->language('extension/analytics');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/analytics')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->install('analytics', $this->request->get['extension'], $this->request->get['code']);
+
+			$this->load->model('user/user_group');
+
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code']);
+
+			// Call install method if it exists
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code'] . '|install');
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function uninstall(): void {
+		$this->load->language('extension/analytics');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/analytics')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->uninstall('analytics', $this->request->get['code']);
+
+			// Call uninstall method if it exists
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/analytics/' . $this->request->get['code'] . '|uninstall');
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

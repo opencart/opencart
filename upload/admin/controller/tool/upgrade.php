@@ -32,9 +32,9 @@ Upgrade
 
 8. Replace the files
 */
-namespace Opencart\Application\Controller\Tool;
+namespace Opencart\Admin\Controller\Tool;
 class Upgrade extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('tool/upgrade');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -50,8 +50,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'])
 		];
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['version'] = VERSION;
 		$data['upgrade'] = false;
@@ -135,6 +133,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
 		$data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -142,7 +142,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
-	public function modified() {
+	public function modified(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -219,7 +219,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function download() {
+	public function download(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -269,7 +269,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function unzip() {
+	public function unzip(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -310,7 +310,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function move() {
+	public function move(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -402,7 +402,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function remove(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];
@@ -477,44 +477,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function db() {
-		$this->load->language('tool/upgrade');
-
-		$json = [];
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'tool/upgrade')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$files = glob(DIR_APPLICATION .  'model/upgrade/*.php');
-
-			if ($files) {
-				foreach ($files AS $file) {
-					$upgrade = basename($file, '.php');
-
-					$this->load->model('upgrade/' . $upgrade);
-
-					$this->{'model_upgrade_' . $upgrade}->upgrade();
-				}
-			}
-
-			$json['text'] = $this->language->get('text_clear');
-
-			$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|clear', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('tool/upgrade');
 
 		$json = [];

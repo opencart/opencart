@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Download extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 
@@ -79,7 +79,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $download_total,
 			'page'  => $page,
-			'limit' => $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'),
+			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&page={page}')
 		]);
 
@@ -97,7 +97,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/download', $data));
 	}
 
-	public function download() {
+	public function download(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 

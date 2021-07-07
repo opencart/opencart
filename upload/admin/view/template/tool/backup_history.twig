@@ -4,8 +4,8 @@
       <tr>
         <td>{{ column_filename }}</td>
         <td>{{ column_size }}</td>
-        <td>{{ column_date_added }}</td>
-        <td class="text-right">{{ column_action }}</td>
+        <td class="d-none d-lg-table-cell">{{ column_date_added }}</td>
+        <td class="text-end">{{ column_action }}</td>
       </tr>
     </thead>
     <tbody>
@@ -14,11 +14,11 @@
           <tr>
             <td>{{ history.filename }}</td>
             <td>{{ history.size }}</td>
-            <td>{{ history.date_added }}</td>
-            <td class="text-right">
-              <button type="button" value="{{ history.filename }}" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_restore }}" class="btn btn-warning"><i class="fas fa-sync"></i></button>
-              <button type="button" onclick="location = '{{ history.download }}';" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fas fa-download"></i></button>
-              <button type="button" value="{{ history.filename }}" onclick="" data-loading="{{ text_loading }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+            <td class="d-none d-lg-table-cell">{{ history.date_added }}</td>
+            <td class="text-end">
+              <button type="button" value="{{ history.filename }}" data-oc-loading="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_restore }}" class="btn btn-warning"><i class="fas fa-sync"></i></button>
+              <button type="button" onclick="location = '{{ history.download }}';" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-info"><i class="fas fa-download"></i></button>
+              <button type="button" value="{{ history.filename }}" onclick=" data-oc-loading="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
             </td>
           </tr>
         {% endfor %}
@@ -31,6 +31,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

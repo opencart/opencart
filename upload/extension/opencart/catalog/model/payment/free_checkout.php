@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Payment;
+namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 class FreeCheckout extends \Opencart\System\Engine\Model {
-	public function getMethod($address, $total) {
+	public function getMethod(array $address, float $total): array {
 		$this->load->language('extension/opencart/payment/free_checkout');
 
 		if ($total <= 0.00) {

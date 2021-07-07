@@ -3,9 +3,9 @@
 $_['heading_title']        = 'Mail';
 
 // Text
+$_['text_mail']            = 'Send e-mail\'s to customers';
 $_['text_success']         = 'Your message has been successfully sent!';
 $_['text_sent']            = 'Your message has been successfully sent to %s - %s recipients!';
-$_['text_list']            = 'Mail List';
 $_['text_default']         = 'Default';
 $_['text_newsletter']      = 'All Newsletter Subscribers';
 $_['text_customer_all']    = 'All Customers';

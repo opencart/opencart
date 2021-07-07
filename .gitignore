@@ -24,8 +24,8 @@
 !/upload/system/storage/logs/index.html
 
 # Marketplace Files
-/upload/system/storage/marketplace/*
-!/upload/system/storage/marketplace/index.html
+# /upload/system/storage/marketplace/*
+# !/upload/system/storage/marketplace/index.html
 
 # Session Files
 /upload/system/storage/session/*
@@ -38,6 +38,7 @@
 # If you want to ignore install file use following lines [on development mode]
 # /upload/install/*
 
-# IDE Project files
+# IDE Project filescd  xampp
+
 /.idea
 /upload/.idea

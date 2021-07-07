@@ -1,49 +1,42 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		// Analytics
-		$this->load->model('setting/extension');
-
 		$data['analytics'] = [];
 
-		$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
+		if (!$this->config->get('config_cookie_id') || (isset($this->request->cookie['policy']) && $this->request->cookie['policy'])) {
+			$this->load->model('setting/extension');
 
-		foreach ($analytics as $analytic) {
-			if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
-				$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+			$analytics = $this->model_setting_extension->getExtensionsByType('analytics');
+
+			foreach ($analytics as $analytic) {
+				if ($this->config->get('analytics_' . $analytic['code'] . '_status')) {
+					$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
+				}
 			}
 		}
 
-		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$this->document->addLink($this->config->get('config_url') . 'image/' . $this->config->get('config_icon'), 'icon');
-		}
+		$data['lang'] = $this->language->get('code');
+		$data['direction'] = $this->language->get('direction');
 
 		$data['title'] = $this->document->getTitle();
 		$data['base'] = $this->config->get('config_url');
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
+
+		// Hard coding css so they can be replaced via the events system.
+		$data['bootstrap_css'] = 'catalog/view/stylesheet/bootstrap.css';
+		$data['fonts'] = '//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700';
+		$data['icons'] = 'catalog/view/stylesheet/icon/fontawesome/css/all.css';
+		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts so they can be replaced via the events system.
+		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.6.0.min.js';
+
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts('header');
-		$data['lang'] = $this->language->get('code');
-		$data['direction'] = $this->language->get('direction');
-
-		// Hardcoding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.3.1.min.js';
-		$data['bootstrap'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
-
-		$data['bootstrap'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
-/*
-  <link href="catalog/view/stylesheet/bootstrap.css" rel="stylesheet" media="screen"/>
-  <script src="catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-  <link href="catalog/view/javascript/fontawesome/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
-  <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css"/>
-
-  <link href="catalog/view/stylesheet/stylesheet.css" rel="stylesheet">
-*/
-
-
 
 		$data['name'] = $this->config->get('config_name');
 
@@ -79,7 +72,6 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));
 		$data['telephone'] = $this->config->get('config_telephone');
 
-		$data['cookie'] = $this->load->controller('common/cookie');
 		$data['language'] = $this->load->controller('common/language');
 		$data['currency'] = $this->load->controller('common/currency');
 		$data['search'] = $this->load->controller('common/search');

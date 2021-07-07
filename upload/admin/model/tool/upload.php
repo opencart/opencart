@@ -1,31 +1,31 @@
 <?php
-namespace Opencart\Application\Model\Tool;
+namespace Opencart\Admin\Model\Tool;
 class Upload extends \Opencart\System\Engine\Model {
-	public function addUpload($name, $filename) {
+	public function addUpload(string $name, string $filename): string {
 		$code = sha1(uniqid(mt_rand(), true));
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "upload` SET `name` = '" . $this->db->escape($name) . "', `filename` = '" . $this->db->escape($filename) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
 
 		return $code;
 	}
-		
-	public function deleteUpload($upload_id) {
+
+	public function deleteUpload(int $upload_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "upload` WHERE `upload_id` = '" . (int)$upload_id . "'");
 	}
 
-	public function getUpload($upload_id) {
+	public function getUpload(int $upload_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE `upload_id` = '" . (int)$upload_id . "'");
 
 		return $query->row;
 	}
 
-	public function getUploadByCode($code) {
+	public function getUploadByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}
 
-	public function getUploads($data = []) {
+	public function getUploads(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "upload`";
 
 		$implode = [];
@@ -53,7 +53,7 @@ class Upload extends \Opencart\System\Engine\Model {
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
 			$sql .= " ORDER BY `date_added`";
 		}
@@ -81,8 +81,8 @@ class Upload extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalUploads($data = []) {
-		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "upload`";
+	public function getTotalUploads(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "upload`";
 
 		$implode = [];
 
@@ -104,6 +104,6 @@ class Upload extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

@@ -19,7 +19,7 @@ $_['text_date_added']    = 'Date Added:';
 $_['text_comment']       = 'Return Comments';
 $_['text_history']       = 'Return History';
 $_['text_no_results']    = 'You have not made any previous returns!';
-$_['text_agree']         = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
+$_['text_agree']         = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
 
 // Column
 $_['column_return_id']   = 'Return ID';
@@ -52,6 +52,7 @@ $_['entry_fault_detail'] = 'Faulty or other details';
 
 // Error
 $_['text_error']         = 'The returns you requested could not be found!';
+$_['error_token']        = 'Warning: Reset token invalid!';
 $_['error_order_id']     = 'Order ID required!';
 $_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';

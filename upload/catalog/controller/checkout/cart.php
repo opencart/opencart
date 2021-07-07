@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Checkout;
+namespace Opencart\Catalog\Controller\Checkout;
 class Cart extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/cart');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -30,7 +30,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
-				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account|register', 'language=' . $this->config->get('config_language')));
+				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 			} else {
 				$data['attention'] = '';
 			}
@@ -80,9 +80,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($product['image']) {
-					$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+					$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 				}
 
 				$option_data = [];
@@ -248,7 +248,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('checkout/cart');
 
 		$json = [];
@@ -325,7 +325,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']));
+				$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id'], true);
 			}
 		}
 
@@ -333,7 +333,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('checkout/cart');
 
 		$json = [];
@@ -369,7 +369,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function remove(): void {
 		$this->load->language('checkout/cart');
 
 		$json = [];

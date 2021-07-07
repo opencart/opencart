@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Footer extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('common/footer');
 
 		$this->load->model('catalog/information');
@@ -36,6 +36,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['affiliate'] = false;
 		}
+
 		$data['special'] = $this->url->link('product/special', 'language=' . $this->config->get('config_language'));
 		$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
@@ -71,7 +72,11 @@ class Footer extends \Opencart\System\Engine\Controller {
 			$this->model_tool_online->addOnline($ip, $this->customer->getId(), $url, $referer);
 		}
 
+		$data['bootstrap_js'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+
 		$data['scripts'] = $this->document->getScripts('footer');
+
+		$data['cookie'] = $this->load->controller('common/cookie');
 
 		return $this->load->view('common/footer', $data);
 	}

@@ -1,17 +1,26 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
-	public function index() {
-		$data['title'] = $this->document->getTitle();
+	public function index(): string {
+		$data['lang'] = $this->language->get('code');
+		$data['direction'] = $this->language->get('direction');
 
+		$data['title'] = $this->document->getTitle();
 		$data['base'] = HTTP_SERVER;
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
+
+		// Hard coding css so they can be replaced via the events system.
+		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
+		$data['icons'] = 'view/stylesheet/icon/fontawesome/css/all.css';
+		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
+
+		// Hard coding scripts so they can be replaced via the events system.
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.6.0.min.js';
+
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts();
-		$data['lang'] = $this->language->get('code');
-		$data['direction'] = $this->language->get('direction');
 
 		$this->load->language('common/header');
 		
@@ -23,16 +32,36 @@ class Header extends \Opencart\System\Engine\Controller {
 			$data['logged'] = true;
 
 			$data['home'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
+			$data['profile'] = $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token']);
 			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
-			$data['profile'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
+
+			// Notifications
+			$data['notifications'] = [];
+
+			$this->load->model('tool/notification');
+
+			$data['notification_total'] = $this->model_tool_notification->getTotalNotifications(['filter_status' => 0]);
+
+			$filter_data = [
+				'start' => 0,
+				'limit' => 5
+			];
+
+			$results = $this->model_tool_notification->getNotifications($filter_data);
+
+			foreach ($results as $result) {
+				$data['notifications'][] = [
+					'title' => $result['title'],
+					'href'  => $this->url->link('tool/notification|info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'])
+				];
+			}
+
+			$data['notification_all'] = $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token']);
 
 			$this->load->model('tool/image');
 
-			$data['firstname'] = '';
-			$data['lastname'] = '';
-			$data['user_group'] = '';
 			$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
-						
+
 			$this->load->model('user/user');
 	
 			$user_info = $this->model_user_user->getUser($this->user->getId());
@@ -46,9 +75,13 @@ class Header extends \Opencart\System\Engine\Controller {
 				if (is_file(DIR_IMAGE . html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'))) {
 					$data['image'] = $this->model_tool_image->resize(html_entity_decode($user_info['image'], ENT_QUOTES, 'UTF-8'), 45, 45);
 				}
-			} 		
+			}  else {
+				$data['firstname'] = '';
+				$data['lastname'] = '';
+				$data['user_group'] = '';
+			}
 			
-			// Online Stores
+			// Stores
 			$data['stores'] = [];
 
 			$data['stores'][] = [

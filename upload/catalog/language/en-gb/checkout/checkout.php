@@ -23,7 +23,7 @@ $_['text_forgotten']                 = 'Forgotten Password';
 $_['text_your_details']              = 'Your Personal Details';
 $_['text_your_address']              = 'Your Address';
 $_['text_your_password']             = 'Your Password';
-$_['text_agree']                     = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
+$_['text_agree']                     = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
 $_['text_address_new']               = 'I want to use a new address';
 $_['text_address_existing']          = 'I want to use an existing address';
 $_['text_shipping_method']           = 'Please select the preferred shipping method to use on this order.';
@@ -91,3 +91,4 @@ $_['error_no_shipping']              = 'Warning: No Shipping options are availab
 $_['error_payment']                  = 'Warning: Payment method required!';
 $_['error_no_payment']               = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
 $_['error_custom_field']             = '%s required!';
+$_['error_regex']                    = '%s not a valid input!';

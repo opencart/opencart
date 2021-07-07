@@ -18,8 +18,8 @@
           </div>
           <div class="col-md-1 d-none d-md-block">
             <div class="btn-group">
-              <button type="button" id="list-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
-              <button type="button" id="grid-view" class="btn btn-light" data-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
+              <button type="button" id="list-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
+              <button type="button" id="grid-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
             </div>
           </div>
           <div class="col-md-4 offset-md-1 col-6">
@@ -27,7 +27,7 @@
               <div class="input-group-prepend">
                 <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
               </div>
-              <select id="input-sort" class="form-control" onchange="location = this.value;">
+              <select id="input-sort" class="form-select" onchange="location = this.value;">
                 {% for sorts in sorts %}
                   {% if sorts.value == '%s-%s'|format(sort, order) %}
                     <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
@@ -43,7 +43,7 @@
               <div class="input-group-prepend">
                 <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
               </div>
-              <select id="input-limit" class="form-control" onchange="location = this.value;">
+              <select id="input-limit" class="form-select" onchange="location = this.value;">
                 {% for limits in limits %}
                   {% if limits.value == limit %}
                     <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
@@ -61,13 +61,13 @@
           {% endfor %}
         </div>
         <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
         </div>
       {% else %}
         <p>{{ text_no_results }}</p>
         <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+          <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
         </div>
       {% endif %}
       {{ content_bottom }}</div>

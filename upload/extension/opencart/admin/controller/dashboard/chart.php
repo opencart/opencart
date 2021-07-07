@@ -1,28 +1,10 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Dashboard;
+namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 class Chart extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/chart');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('dashboard_chart', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,33 +23,19 @@ class Chart extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/dashboard/chart', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/dashboard/chart', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/dashboard/chart|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
+		$data['dashboard_chart_width'] = $this->config->get('dashboard_chart_width');
 
-		if (isset($this->request->post['dashboard_chart_width'])) {
-			$data['dashboard_chart_width'] = $this->request->post['dashboard_chart_width'];
-		} else {
-			$data['dashboard_chart_width'] = $this->config->get('dashboard_chart_width');
-		}
-	
 		$data['columns'] = [];
-		
+
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
-		if (isset($this->request->post['dashboard_chart_status'])) {
-			$data['dashboard_chart_status'] = $this->request->post['dashboard_chart_status'];
-		} else {
-			$data['dashboard_chart_status'] = $this->config->get('dashboard_chart_status');
-		}
 
-		if (isset($this->request->post['dashboard_chart_sort_order'])) {
-			$data['dashboard_chart_sort_order'] = $this->request->post['dashboard_chart_sort_order'];
-		} else {
-			$data['dashboard_chart_sort_order'] = $this->config->get('dashboard_chart_sort_order');
-		}
+		$data['dashboard_chart_status'] = $this->config->get('dashboard_chart_status');
+		$data['dashboard_chart_sort_order'] = $this->config->get('dashboard_chart_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -76,15 +44,28 @@ class Chart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/chart_form', $data));
 	}
 
-	protected function validate() {
+	public function save(): void {
+		$this->load->language('extension/opencart/dashboard/chart');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/chart')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
-	}	
-	
-	public function dashboard() {
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('dashboard_chart', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/chart');
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -97,7 +78,8 @@ class Chart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$this->load->model('extension/opencart/dashboard/chart');
+		$this->load->model('extension/opencart/report/customer');
+		$this->load->model('extension/opencart/report/sale');
 
 		$json['order'] = [];
 		$json['customer'] = [];
@@ -117,13 +99,13 @@ class Chart extends \Opencart\System\Engine\Controller {
 		switch ($range) {
 			default:
 			case 'day':
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalOrdersByDay();
+				$results = $this->model_extension_opencart_report_sale->getTotalOrdersByDay();
 
 				foreach ($results as $key => $value) {
 					$json['order']['data'][] = [$key, $value['total']];
 				}
 
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalCustomersByDay();
+				$results = $this->model_extension_opencart_report_customer->getTotalCustomersByDay();
 
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = [$key, $value['total']];
@@ -134,13 +116,13 @@ class Chart extends \Opencart\System\Engine\Controller {
 				}
 				break;
 			case 'week':
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalOrdersByWeek();
+				$results = $this->model_extension_opencart_report_sale->getTotalOrdersByWeek();
 
 				foreach ($results as $key => $value) {
 					$json['order']['data'][] = [$key, $value['total']];
 				}
 
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalCustomersByWeek();
+				$results = $this->model_extension_opencart_report_customer->getTotalCustomersByWeek();
 
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = [$key, $value['total']];
@@ -155,13 +137,13 @@ class Chart extends \Opencart\System\Engine\Controller {
 				}
 				break;
 			case 'month':
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalOrdersByMonth();
+				$results = $this->model_extension_opencart_report_sale->getTotalOrdersByMonth();
 
 				foreach ($results as $key => $value) {
 					$json['order']['data'][] = [$key, $value['total']];
 				}
 
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalCustomersByMonth();
+				$results = $this->model_extension_opencart_report_customer->getTotalCustomersByMonth();
 
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = [$key, $value['total']];
@@ -174,13 +156,13 @@ class Chart extends \Opencart\System\Engine\Controller {
 				}
 				break;
 			case 'year':
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalOrdersByYear();
+				$results = $this->model_extension_opencart_report_sale->getTotalOrdersByYear();
 
 				foreach ($results as $key => $value) {
 					$json['order']['data'][] = [$key, $value['total']];
 				}
 
-				$results = $this->model_extension_opencart_dashboard_chart->getTotalCustomersByYear();
+				$results = $this->model_extension_opencart_report_customer->getTotalCustomersByYear();
 
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = [$key, $value['total']];

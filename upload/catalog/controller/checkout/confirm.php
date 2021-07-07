@@ -1,18 +1,18 @@
 <?php
-namespace Opencart\Application\Controller\Checkout;
+namespace Opencart\Catalog\Controller\Checkout;
 class Confirm extends \Opencart\System\Engine\Controller {
-	public function index() {
-		$redirect = '';
+	public function index(): void {
+		$json = [];
 
 		if ($this->cart->hasShipping()) {
 			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
-				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 			}
 
 			// Validate if shipping method has been set.
 			if (!isset($this->session->data['shipping_method'])) {
-				$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 			}
 		} else {
 			unset($this->session->data['shipping_address']);
@@ -22,28 +22,25 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
-			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if payment method has been set.
-		$extension_info = $this->model_setting_extension->getExtensionByCode($this->session->data['payment_method']['code']);
+		$this->load->model('setting/extension');
 
 		if (isset($this->session->data['payment_method'])) {
+			// Validate if payment method has been set.
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
 
-
-			if ($extension_info) {
-
+			if (!$extension_info) {
+				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 			}
 		} else {
-			$redirect = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
-
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
-
-
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -59,21 +56,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$redirect = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;
 			}
 		}
 
-		if (!$redirect) {
+		if (!$json) {
 			$order_data = [];
 
 			$totals = [];
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
-
-			$this->load->model('setting/extension');
-
 			$sort_order = [];
 
 			$results = $this->model_setting_extension->getExtensionsByType('total');
@@ -220,18 +214,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				}
 
 				$order_data['products'][] = [
-					'product_id' 	=> $product['product_id'],
-					'master_id' 	=> $product['master_id'],
-					'name' 		=> $product['name'],
-					'model' 	=> $product['model'],
-					'option' 	=> $option_data,
-					'download' 	=> $product['download'],
-					'quantity' 	=> $product['quantity'],
-					'subtract' 	=> $product['subtract'],
-					'price' 	=> $product['price'],
-					'total' 	=> $product['total'],
-					'tax' 		=> $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward' 	=> $product['reward']
+					'product_id' => $product['product_id'],
+					'master_id'  => $product['master_id'],
+					'name' 		 => $product['name'],
+					'model' 	 => $product['model'],
+					'option' 	 => $option_data,
+					'download' 	 => $product['download'],
+					'quantity' 	 => $product['quantity'],
+					'subtract' 	 => $product['subtract'],
+					'price' 	 => $product['price'],
+					'total' 	 => $product['total'],
+					'tax' 		 => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward' 	 => $product['reward']
 				];
 			}
 
@@ -323,11 +317,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$this->load->model('tool/upload');
 
 			$frequencies = [
-				'day' 		=> $this->language->get('text_day'),
-				'week' 		=> $this->language->get('text_week'),
-				'semi_month' 	=> $this->language->get('text_semi_month'),
-				'month' 	=> $this->language->get('text_month'),
-				'year' 		=> $this->language->get('text_year'),
+				'day' 		 => $this->language->get('text_day'),
+				'week' 		 => $this->language->get('text_week'),
+				'semi_month' => $this->language->get('text_semi_month'),
+				'month' 	 => $this->language->get('text_month'),
+				'year' 		 => $this->language->get('text_year')
 			];
 
 			$data['products'] = [];
@@ -349,7 +343,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 					}
 
 					$option_data[] = [
-						'name' => $option['name'],
+						'name'  => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 					];
 				}
@@ -404,15 +398,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$extension_info = $this->model_setting_extension->getExtensionByCode($this->session->data['payment_method']['code']);
+			$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 
-			if ($extension_info) {
-				$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
-			}
+			$this->response->setOutput($this->load->view('checkout/confirm', $data));
 		} else {
-			$data['redirect'] = str_replace('&amp;', '&', $redirect);
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
 		}
-
-		$this->response->setOutput($this->load->view('checkout/confirm', $data));
 	}
 }

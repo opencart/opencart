@@ -12,6 +12,7 @@ $_['entry_password'] = 'Password';
 $_['entry_confirm']  = 'Confirm';
 
 // Error
+$_['error_token']    = 'Warning: Reset token invalid!';
 $_['error_password'] = 'Password must be between 4 and 20 characters!';
 $_['error_confirm']  = 'Password and password confirmation do not match!';
 $_['error_code']     = 'Password reset code is invalid or was used previously!';

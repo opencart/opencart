@@ -40,9 +40,6 @@ $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
-$_['column_entry']           = 'Entry Name';
-$_['column_master']          = 'Master';
-$_['column_variant']         = 'Variant';
 $_['column_action']          = 'Action';
 
 // Entry

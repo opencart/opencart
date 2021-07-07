@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class File {
-	private $expire;
+	private int $expire;
 
-	public function __construct($expire = 3600) {
+	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 
 		$files = glob(DIR_CACHE . 'cache.*');
@@ -21,7 +21,7 @@ class File {
 		}
 	}
 
-	public function get($key) {
+	public function get(string $key): array|string|null {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {
@@ -44,13 +44,17 @@ class File {
 			return json_decode($data, true);
 		}
 
-		return false;
+		return [];
 	}
 
-	public function set($key, $value) {
+	public function set(string $key, array|string|null $value, int $expire = 0): void {
 		$this->delete($key);
 
-		$file = DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $this->expire);
+		if (!$expire) {
+			$expire = $this->expire;
+		}
+
+		$file = DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $expire);
 
 		$handle = fopen($file, 'w');
 
@@ -65,7 +69,7 @@ class File {
 		fclose($handle);
 	}
 
-	public function delete($key) {
+	public function delete(string $key): void {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {

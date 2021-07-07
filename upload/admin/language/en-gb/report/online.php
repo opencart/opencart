@@ -20,8 +20,6 @@ $_['column_action']     = 'Action';
 // Entry
 $_['entry_ip']          = 'IP';
 $_['entry_customer']    = 'Customer';
-$_['entry_status']      = 'Status';
-$_['entry_sort_order']  = 'Sort Order';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify customers online report!';

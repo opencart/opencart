@@ -12,9 +12,9 @@
  */
 namespace Opencart\System\Engine;
 class Action {
-	private $route;
-	private $class;
-	private $method;
+	private string $route;
+	private string $class;
+	private string $method;
 
 	/**
 	 * Constructor
@@ -27,10 +27,10 @@ class Action {
 		$pos = strrpos($this->route, '|');
 
 		if ($pos === false) {
-			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
+			$this->class  = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));
 			$this->method = 'index';
 		} else {
-			$this->class  = 'Opencart\Application\Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
+			$this->class  = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords(substr($this->route, 0, $pos), '_/'));
 			$this->method = substr($this->route, $pos + 1);
 		}
 	}
@@ -41,7 +41,7 @@ class Action {
 	 * @return    string
 	 *
 	 */
-	public function getId() {
+	public function getId(): string {
 		return $this->route;
 	}
 
@@ -54,15 +54,24 @@ class Action {
 	 *
 	 * @return	mixed
 	 */
-	public function execute(Registry $registry, array &$args = []) {
+	public function execute(\Opencart\System\Engine\Registry $registry, array &$args = []): mixed {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return new \Exception('Error: Calls to magic methods are not allowed!');
 		}
 
+		// Get the current namespace being used by the config
+		$class = 'Opencart\\' . $registry->get('config')->get('application') . '\\' . $this->class;
+
 		// Initialize the class
-		if (class_exists($this->class)) {
-			return call_user_func_array([new $this->class($registry), $this->method], $args);
+		if (class_exists($class)) {
+			$controller = new $class($registry);
+		} else {
+			return new \Exception('Error: Could not call route ' . $this->route . '!');
+		}
+
+		if (is_callable([$controller, $this->method])) {
+			return call_user_func_array([$controller, $this->method], $args);
 		} else {
 			return new \Exception('Error: Could not call route ' . $this->route . '!');
 		}

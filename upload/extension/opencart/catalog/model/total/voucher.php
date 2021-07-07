@@ -1,17 +1,17 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Voucher extends \Opencart\System\Engine\Model {
-	public function addVoucher($order_id, $data) {
+	public function addVoucher(int $order_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '1', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	public function disableVoucher($order_id) {
+	public function disableVoucher(int $order_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET `status` = '0' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
-	public function getVoucher($code) {
+	public function getVoucher(string $code): array {
 		$status = true;
 
 		$voucher_query = $this->db->query("SELECT *, vtd.`name` AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN `" . DB_PREFIX . "voucher_theme` vt ON (v.`voucher_theme_id` = vt.`voucher_theme_id`) LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE v.`code` = '" . $this->db->escape($code) . "' AND vtd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND v.`status` = '1'");
@@ -37,7 +37,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 				}
 			}
 
-			$voucher_history_query = $this->db->query("SELECT SUM(`amount`) AS total FROM `" . DB_PREFIX . "voucher_history` vh WHERE vh.`voucher_id` = '" . (int)$voucher_query->row['voucher_id'] . "' GROUP BY vh.`voucher_id`");
+			$voucher_history_query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "voucher_history` vh WHERE vh.`voucher_id` = '" . (int)$voucher_query->row['voucher_id'] . "' GROUP BY vh.`voucher_id`");
 
 			if ($voucher_history_query->num_rows) {
 				$amount = $voucher_query->row['amount'] + $voucher_history_query->row['total'];
@@ -68,10 +68,12 @@ class Voucher extends \Opencart\System\Engine\Model {
 				'status'           => $voucher_query->row['status'],
 				'date_added'       => $voucher_query->row['date_added']
 			];
+		} else {
+			return [];
 		}
 	}
 
-	public function getTotal(&$totals, &$taxes, &$total) {
+	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if (isset($this->session->data['voucher'])) {
 			$this->load->language('extension/opencart/total/voucher', 'voucher');
 
@@ -82,6 +84,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 
 				if ($amount > 0) {
 					$totals[] = [
+						'extension'  => 'opencart',
 						'code'       => 'voucher',
 						'title'      => sprintf($this->language->get('voucher_text_voucher'), $this->session->data['voucher']),
 						'value'      => -$amount,
@@ -98,7 +101,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function confirm($order_info, $order_total) {
+	public function confirm(array $order_info, array $order_total): int {
 		$code = '';
 
 		$start = strpos($order_total['title'], '(') + 1;
@@ -117,9 +120,11 @@ class Voucher extends \Opencart\System\Engine\Model {
 				return $this->config->get('config_fraud_status_id');
 			}
 		}
+
+		return 0;
 	}
 
-	public function unconfirm($order_id) {
+	public function unconfirm(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

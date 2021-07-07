@@ -1,15 +1,19 @@
 <?php
+
 if (version_compare(PHP_VERSION, '5.6') < 0) {
     throw new \Exception('scssphp requires PHP 5.6 or above');
 }
 
 if (! class_exists('ScssPhp\ScssPhp\Version', false)) {
     include_once __DIR__ . '/src/Base/Range.php';
+    include_once __DIR__ . '/src/OutputStyle.php';
     include_once __DIR__ . '/src/Block.php';
     include_once __DIR__ . '/src/Cache.php';
     include_once __DIR__ . '/src/Colors.php';
     include_once __DIR__ . '/src/Compiler.php';
     include_once __DIR__ . '/src/Compiler/Environment.php';
+    include_once __DIR__ . '/src/Exception/SassException.php';
+    include_once __DIR__ . '/src/Exception/SassScriptException.php';
     include_once __DIR__ . '/src/Exception/CompilerException.php';
     include_once __DIR__ . '/src/Exception/ParserException.php';
     include_once __DIR__ . '/src/Exception/RangeException.php';

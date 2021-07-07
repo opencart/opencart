@@ -18,17 +18,13 @@ trait ResourceTypeAndIdTrait
 
     private static function parseResourceTypeAndId(array $data)
     {
-        $data['resource_type'] = null;
-        $data['resource_id'] = null;
-        $length = strlen($data['resource']);
-        for ($i = 0; $i < $length; $i++) {
-            if (in_array($data['resource'][$i], ['/', ':'])) {
-                $data['resource_type'] = substr($data['resource'], 0, $i);
-                $data['resource_id'] = substr($data['resource'], $i + 1);
-                break;
-            }
-        }
-
+        $resourceData = preg_split("/[\/:]/", $data['resource'], 2);
+        $data['resource_type'] = isset($resourceData[0])
+            ? $resourceData[0]
+            : null;
+        $data['resource_id'] = isset($resourceData[1])
+            ? $resourceData[1]
+            : null;
         return $data;
     }
 }

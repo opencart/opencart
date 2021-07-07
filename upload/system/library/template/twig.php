@@ -1,10 +1,10 @@
 <?php
 namespace Opencart\System\Library\Template;
 class Twig {
-	protected $root;
-	protected $loader;
-	protected $directory;
-	protected $path = [];
+	protected string $root;
+	protected object $loader;
+	protected string $directory;
+	protected array $path = [];
 
 	/**
 	 * Constructor
@@ -14,7 +14,7 @@ class Twig {
 	 */
 	public function __construct() {
 		// Unfortunately we have to set the web root directory as the base since Twig confuses which template cache to use.
-		$this->root = $_SERVER['DOCUMENT_ROOT'];
+		$this->root = substr(DIR_OPENCART, 0, -1);
 
 		// We have to add the C directory as the base directory because twig can only accept the fist namespace/
 		// rather than a multiple namespace system which took me less than a minute to write. If symphony is like
@@ -28,7 +28,7 @@ class Twig {
 	 * @param    string $namespace
 	 * @param    string $directory
 	 */
-	public function addPath($namespace, $directory = '') {
+	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
 		} else {
@@ -45,7 +45,7 @@ class Twig {
 	 *
 	 * @return	array
 	 */
-	public function render($filename, $data = [], $code = '') {
+	public function render(string $filename, array $data = [], string $code = ''): string {
 		$file = $this->directory . $filename . '.twig';
 
 		/*
@@ -81,7 +81,7 @@ class Twig {
 
 		if ($code) {
 			// render from modified template code
-			$loader = new \Twig\Loader\ArrayLoader([$file . '.twig' => $code]);
+			$loader = new \Twig\Loader\ArrayLoader([$file => $code]);
 		} else {
 			$loader = $this->loader;
 		}
@@ -100,8 +100,7 @@ class Twig {
 
 			return $twig->render($file, $data);
 		} catch (Twig_Error_Syntax $e) {
-			error_log('Error: Could not load template ' . $filename . '!');
-			exit();
+			throw new \Exception('Error: Could not load template ' . $filename . '!');
 		}
 	}
 }

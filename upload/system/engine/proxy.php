@@ -17,7 +17,7 @@ class Proxy {
 	 *
 	 * @param	string	$key
 	 */
-	public function &__get($key) {
+	public function &__get(string $key): object {
 		return $this->{$key};
 	}
 
@@ -27,11 +27,11 @@ class Proxy {
 	 * @param	string	$key
 	 * @param	string	$value
 	 */
-	public function __set($key, $value) {
+	public function __set(string $key, object $value): void {
 		$this->{$key} = $value;
 	}
 
-	public function __call($method, $args) {
+	public function __call(string $method, array $args): mixed {
 		// Hack for pass-by-reference
 		foreach ($args as $key => &$value);
 

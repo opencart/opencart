@@ -2,24 +2,24 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-left">{{ column_date_added }}</td>
-        <td class="text-left">{{ column_description }}</td>
-        <td class="text-right">{{ column_points }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
+        <td class="text-start">{{ column_description }}</td>
+        <td class="text-end">{{ column_points }}</td>
       </tr>
     </thead>
     <tbody>
       {% if rewards %}
         {% for reward in rewards %}
           <tr>
-            <td class="text-left">{{ reward.date_added }}</td>
-            <td class="text-left">{{ reward.description }}</td>
-            <td class="text-right">{{ reward.points }}</td>
+            <td class="text-start">{{ reward.date_added }}</td>
+            <td class="text-start">{{ reward.description }}</td>
+            <td class="text-end">{{ reward.points }}</td>
           </tr>
         {% endfor %}
         <tr>
           <td></td>
-          <td class="text-right"><b>{{ text_balance }}</b></td>
-          <td class="text-right">{{ balance }}</td>
+          <td class="text-end"><b>{{ text_balance }}</b></td>
+          <td class="text-end">{{ balance }}</td>
         </tr>
       {% else %}
         <tr>
@@ -30,6 +30,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

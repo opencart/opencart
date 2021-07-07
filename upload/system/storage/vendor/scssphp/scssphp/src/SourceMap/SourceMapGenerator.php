@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -153,14 +154,16 @@ class SourceMapGenerator
     /**
      * Generates the JSON source map
      *
+     * @param string $prefix A prefix added in the output file, which needs to shift mappings
+     *
      * @return string
      *
      * @see https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit#
      */
-    public function generateJson()
+    public function generateJson($prefix = '')
     {
         $sourceMap = [];
-        $mappings  = $this->generateMappings();
+        $mappings  = $this->generateMappings($prefix);
 
         // File version (always the first entry in the object) and must be a positive integer.
         $sourceMap['version'] = self::VERSION;
@@ -231,13 +234,20 @@ class SourceMapGenerator
     /**
      * Generates the mappings string
      *
+     * @param string $prefix A prefix added in the output file, which needs to shift mappings
+     *
      * @return string
      */
-    public function generateMappings()
+    public function generateMappings($prefix = '')
     {
         if (! \count($this->mappings)) {
             return '';
         }
+
+        $prefixLines = substr_count($prefix, "\n");
+        $lastPrefixNewLine = strrpos($prefix, "\n");
+        $lastPrefixLineStart = false === $lastPrefixNewLine ? 0 : $lastPrefixNewLine + 1;
+        $prefixColumn = strlen($prefix) - $lastPrefixLineStart;
 
         $this->sourceKeys = array_flip(array_keys($this->sources));
 
@@ -253,6 +263,12 @@ class SourceMapGenerator
         $lastGeneratedLine = $lastOriginalIndex = $lastOriginalLine = $lastOriginalColumn = 0;
 
         foreach ($groupedMap as $lineNumber => $lineMap) {
+            if ($lineNumber > 1) {
+                // The prefix only impacts the column for the first line of the original output
+                $prefixColumn = 0;
+            }
+            $lineNumber += $prefixLines;
+
             while (++$lastGeneratedLine < $lineNumber) {
                 $groupedMapEncoded[] = ';';
             }
@@ -261,8 +277,10 @@ class SourceMapGenerator
             $lastGeneratedColumn = 0;
 
             foreach ($lineMap as $m) {
-                $mapEncoded = $this->encoder->encode($m['generated_column'] - $lastGeneratedColumn);
-                $lastGeneratedColumn = $m['generated_column'];
+                $generatedColumn = $m['generated_column'] + $prefixColumn;
+
+                $mapEncoded = $this->encoder->encode($generatedColumn - $lastGeneratedColumn);
+                $lastGeneratedColumn = $generatedColumn;
 
                 // find the index
                 if ($m['source_file']) {

@@ -1,8 +1,12 @@
 <?php
-namespace Opencart\Application\Controller\Checkout;
+namespace Opencart\Catalog\Controller\Checkout;
 class ShippingAddress extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/checkout');
+
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+
+		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['address_id'] = $this->session->data['shipping_address']['address_id'];
@@ -41,7 +45,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
@@ -58,24 +62,24 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('checkout/shipping_address', $data));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
 
 		// Validate if customer is logged in.
 		if (!$this->customer->isLogged()) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
 		if (!$this->cart->hasShipping()) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -91,13 +95,30 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;
 			}
 		}
 
 		if (!$json) {
+			$keys = [
+				'firstname',
+				'lastname',
+				'company',
+				'address_1',
+				'city',
+				'postcode',
+				'country_id',
+				'zone_id'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
+
 			$this->load->model('account/address');
 
 			if (isset($this->request->post['shipping_address']) && $this->request->post['shipping_address'] == 'existing') {
@@ -149,14 +170,14 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				// Custom field validation
 				$this->load->model('account/custom_field');
 
-				$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+				$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
 				foreach ($custom_fields as $custom_field) {
 					if ($custom_field['location'] == 'address') {
 						if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 							$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/' . html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8') . '/']])) {
-							$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+							$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 						}
 					}
 				}

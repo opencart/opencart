@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Shipping extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('extension/opencart/total/shipping');
 
@@ -34,10 +34,12 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			}
 
 			return $this->load->view('extension/opencart/total/shipping', $data);
+		} else {
+			return '';
 		}
 	}
 
-	public function quote() {
+	public function quote(): void {
 		$this->load->language('extension/opencart/total/shipping');
 
 		$json = [];
@@ -115,7 +117,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getExtensions('shipping');
+			$results = $this->model_setting_extension->getExtensionsByType('shipping');
 
 			foreach ($results as $result) {
 				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
@@ -155,7 +157,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function shipping() {
+	public function shipping(): void {
 		$this->load->language('extension/opencart/total/shipping');
 
 		$json = [];
@@ -176,7 +178,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class ContentBottom extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->model('design/layout');
 
 		if (isset($this->request->get['route'])) {
@@ -67,7 +67,7 @@ class ContentBottom extends \Opencart\System\Engine\Controller {
 				$setting_info = $this->model_setting_module->getModule($part[2]);
 
 				if ($setting_info && $setting_info['status']) {
-					$output = $this->load->controller('extension/' .  $part[0] . 'module/' . $part[1], $setting_info);
+					$output = $this->load->controller('extension/' .  $part[0] . '/module/' . $part[1], $setting_info);
 
 					if ($output) {
 						$data['modules'][] = $output;

@@ -26,7 +26,7 @@ $_['text_check']          = 'Check the extensions installed are compatible with 
 $_['text_better']         = 'It\'s better if you could copy your site to a test server and practise upgrading before starting with the live web site.';
 $_['text_tips']           = 'Tips: Before upgrading it\'s very important to';
 $_['text_here']           = 'here';
-$_['text_backup']         = 'Backup';
+$_['text_backup']         = 'Database Backup';
 $_['text_cloud']          = 'If you are using the cloud version, you can backup with your opencart account';
 
 // Column

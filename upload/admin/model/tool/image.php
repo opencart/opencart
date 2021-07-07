@@ -1,9 +1,9 @@
 <?php
-namespace Opencart\Application\Model\Tool;
+namespace Opencart\Admin\Model\Tool;
 class Image extends \Opencart\System\Engine\Model {
-	public function resize($filename, $width, $height) {
-		if (!is_file(DIR_IMAGE . $filename) || get_path(DIR_IMAGE . $filename, DIR_IMAGE) != str_replace('\\', '/', DIR_IMAGE)) {
-			return;
+	public function resize(string $filename, int $width, int $height): string {
+		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != DIR_IMAGE) {
+			return '';
 		}
 
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);

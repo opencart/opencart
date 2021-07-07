@@ -136,25 +136,52 @@ $(document).ready(function() {
 		$('#content .product-module').attr('class', 'product-layout product-module col-lg-3 col-md-3 col-sm-6 col-12');
 	}
 
-	// Cookie Policy
-	$('#button-cookie').on('click', function(e) {
+
+
+
+
+	/* Agree to Terms */
+	$('body').on('click', '.modal-link', function(e) {
 		e.preventDefault();
 
+		var element = this;
+
+		$('#modal-information').remove();
+
 		$.ajax({
-			url: 'index.php?route=common/cookie|agree',
+			url: $(element).attr('href'),
+			dataType: 'html',
+			success: function(html) {
+				$('body').append(html);
+
+				$('#modal-information').modal('show');
+			}
+		});
+	});
+
+	// Cookie Policy
+	$('#cookie button').on('click', function() {
+		var element = this;
+
+		$.ajax({
+			url: $(this).val(),
+			type: 'get',
 			dataType: 'json',
 			beforeSend: function() {
-				$('#button-cookie').button('loading');
+				$(element).button('loading');
 			},
 			complete: function() {
-				$('#button-cookie').button('reset');
+				$(element).button('reset');
 			},
 			success: function(json) {
 				if (json['success']) {
-					$('#cookie').slideUp(400, function() {
+					$('#cookie').fadeOut(400, function() {
 						$('#cookie').remove();
 					});
 				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	});
@@ -166,7 +193,7 @@ var cart = {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|add',
 			type: 'post',
-			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
+			data: 'product_id=' + product_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#cart > button').button('loading');
@@ -183,19 +210,14 @@ var cart = {
 				}
 
 				if (json['success']) {
-					html  = '<div id="toast" class="toast">';
-					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
-					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
-					html += '  </div>';
-					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html  = '<div class="toast">';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('body').append(html);
+					$('#toast').prepend(html);
 
-					$('#toast').toast({'delay': 3000});
-
-					$('#toast').toast('show');
+					$('#toast .toast:first-child').toast({'delay': 3000});
+					$('#toast .toast:first-child').toast('show');
 
 					// Need to set timeout otherwise it wont update the total
 					$('#cart').parent().load('index.php?route=common/cart|info');
@@ -210,7 +232,7 @@ var cart = {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|edit',
 			type: 'post',
-			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
+			data: 'key=' + key + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#cart > button').button('loading');
@@ -294,26 +316,21 @@ var wishlist = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('#toast').remove();
+				$('.toast').remove();
 
 				if (json['redirect']) {
 					location = json['redirect'];
 				}
 
 				if (json['success']) {
-					html  = '<div id="toast" class="toast">';
-					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
-					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
-					html += '  </div>';
-					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html  = '<div class="toast">';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('body').append(html);
+					$('#toast').prepend(html);
 
-					$('#toast').toast({'delay': 3000});
-
-					$('#toast').toast('show');
+					$('#toast .toast:first-child').toast({'delay': 3000});
+					$('#toast .toast:first-child').toast('show');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -337,22 +354,17 @@ var compare = {
 			data: 'product_id=' + product_id,
 			dataType: 'json',
 			success: function(json) {
-				$('#toast').remove();
+				$('.toast').remove();
 
 				if (json['success']) {
-					html  = '<div id="toast" class="toast">';
-					html += '  <div class="toast-header">';
-					html += '    <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Shopping Cart</strong>';
-					html += '    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>';
-					html += '  </div>';
-					html += '  <div class="toast-body">' + json['success'] + '</div>';
+					html  = '<div class="toast">';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
 					html += '</div>';
 
-					$('body').append(html);
+					$('#toast').prepend(html);
 
-					$('#toast').toast({'delay': 3000});
-
-					$('#toast').toast('show');
+					$('#toast .toast:first-child').toast({'delay': 3000});
+					$('#toast .toast:first-child').toast('show');
 
 					$('#compare-total').html(json['total']);
 				}
@@ -367,34 +379,90 @@ var compare = {
 	}
 };
 
-/* Agree to Terms */
-$(document).delegate('.agree', 'click', function(e) {
-	e.preventDefault();
-
-	$('#modal-agree').remove();
-
+// Forms
+$(document).on('click', '[data-oc-action]', function() {
 	var element = this;
 
+	var form = $(element).attr('data-oc-form');
+
 	$.ajax({
-		url: $(element).attr('href'),
-		type: 'get',
-		dataType: 'html',
-		success: function(data) {
-			html = '<div id="modal-agree" class="modal fade">';
-			html += '  <div class="modal-dialog">';
-			html += '    <div class="modal-content">';
-			html += '      <div class="modal-header">';
-			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
-			html += '        <button type="button" class="close" data-dismiss="modal">&times;</button>';
-			html += '      </div>';
-			html += '      <div class="modal-body">' + data + '</div>';
-			html += '    </div>';
-			html += '  </div>';
-			html += '</div>';
+		url: $(element).attr('data-oc-action'),
+		type: 'post',
+		dataType: 'json',
+		data: new FormData($(form)[0]),
+		cache: false,
+		contentType: false,
+		processData: false,
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.invalid-tooltip, .alert-dismissible').remove();
 
-			$('body').append(html);
+			console.log(json);
 
-			$('#modal-agree').modal('show');
+			console.log(Array.isArray(json['error']));
+
+			if (json['redirect']) {
+				location = json['redirect'];
+
+				// Not sure this part works
+				delete json['redirect'];
+			}
+
+
+			if (typeof json['error'] == 'object') {
+				if (json['error']['warning']) {
+					$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+				}
+
+				for (key in json['error']) {
+					var element = $(form).find('#input-' + key.replaceAll('_', '-'));
+
+					// Highlight any found errors
+					$(element).addClass('is-invalid');
+
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+					} else {
+						$(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+					}
+				}
+
+				delete json['error'];
+			}
+
+			if (typeof json['error'] == 'string') {
+				$('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+				delete json['error'];
+			}
+
+			if (json['success']) {
+				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+				// Refresh
+				var url = $(form).attr('data-oc-load');
+				var target = $(form).attr('data-oc-target');
+
+				if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+					$(target).load(url);
+				}
+
+				delete json['success'];
+			}
+
+			for (key in json) {
+				$(form).find('[name=\'' + key + '\']').val(json[key]);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
@@ -629,7 +697,6 @@ var chain = new Chain();
 			this.$element.toggleClass('active')
 		}
 	}
-
 
 	// BUTTON PLUGIN DEFINITION
 	// ========================

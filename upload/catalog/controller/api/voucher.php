@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Api;
+namespace Opencart\Catalog\Controller\Api;
 class Voucher extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('api/voucher');
 
 		// Delete past voucher in case there is an error
@@ -15,7 +15,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$this->load->model('extension/opencart/total/voucher');
 
 			if (isset($this->request->post['voucher'])) {
-				$voucher = $this->request->post['voucher'];
+				$voucher = (string)$this->request->post['voucher'];
 			} else {
 				$voucher = '';
 			}
@@ -35,7 +35,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('api/voucher');
 
 		$json = [];

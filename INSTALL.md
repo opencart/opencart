@@ -26,7 +26,6 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 8. After successful install, delete the /install/ directory from ftp.
 9. If you have downloaded the compiled version with a folder called "vendor" - this should be uploaded above the webroot (so the same folder where the public_html or httpdocs is)
 
-
 ## Windows Install
 
 1. Upload all the files and folders to your server from the "Upload" folder. This can be to anywhere of your choice. e.g. /wwwroot/store or /wwwroot
@@ -61,6 +60,17 @@ If your hosting on godaddy you might need to rename the php.ini to user.ini
 It seems godadddy has started changing the industry standard names of files.
 
 ----------------------------
+
+## Going live
+When your site is ready to go live open file system/config/default.php 
+
+**Find:**
+
+`$_['error_display'] = true;`
+
+**Replace with:**
+
+`$_['error_display'] = false;`
 
 ## COMPOSER OR NOT TO COMPOSER
 

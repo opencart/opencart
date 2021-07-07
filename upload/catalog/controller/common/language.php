@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Language extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('common/language');
 
 		$data['code'] = $this->config->get('config_language');
@@ -41,7 +41,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		return $this->load->view('common/language', $data);
 	}
 
-	public function language() {
+	public function language(): void {
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
@@ -49,18 +49,18 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['redirect'])) {
-			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT, 'UTF-8');
+			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT);
 		} else {
 			$redirect = '';
 		}
 
 		$option = [
-			'max-age'  => time() + 60 * 60 * 24 * 30,
+			'expires'  => time() + 60 * 60 * 24 * 30,
 			'path'     => '/',
-			'SameSite' => 'lax'
+			'SameSite' => 'Lax'
 		];
 
-		oc_setcookie('language', $code, $option);
+		setcookie('language', $code, $option);
 
 		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect($redirect);

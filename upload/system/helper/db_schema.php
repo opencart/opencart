@@ -2055,7 +2055,7 @@ function db_schema() {
 			[
 				'name' => 'description',
 				'type' => 'text',
-				'not_null' => true
+				'not_null' => false
 			],
 			[
 				'name' => 'trigger',

@@ -633,7 +633,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$data['member_date_added'] = $response_info['member_date_added'];
 			$data['filter_member'] = $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token'] . '&filter_member=' . $response_info['member_username']);
 
-			$data['comment_total'] = $response_info['comment_total'];
+			$data['comment_total'] = !empty($response_info['comment_total']) ? $response_info['comment_total'] : 0;
 
 			$data['images'] = [];
 
@@ -1018,9 +1018,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$data['comments'] = [];
 
-		$comment_total = $json['comment_total'];
+		$comment_total = !empty($json['comment_total']) ? $json['comment_total'] : 0;
 
-		if ($json['comments']) {
+		if (!empty($json['comments'])) {
 			$results = $json['comments'];
 
 			foreach ($results as $result) {

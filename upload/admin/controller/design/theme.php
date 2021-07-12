@@ -106,7 +106,7 @@ class ControllerDesignTheme extends Controller {
 		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
 
 		// This is only here for compatibility with old themes.
-		if ($theme == 'theme_default') {
+		if ($theme == 'default') {
 			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);
 		}
 
@@ -172,7 +172,7 @@ class ControllerDesignTheme extends Controller {
 		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
 
 		// This is only here for compatibility with old themes.
-		if ($theme == 'theme_default') {
+		if ($theme == 'default') {
 			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);
 		}
 
@@ -214,7 +214,7 @@ class ControllerDesignTheme extends Controller {
 		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
 
 		// This is only here for compatibility with old themes.
-		if ($theme == 'theme_default') {
+		if ($theme == 'default') {
 			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);
 		}
 
@@ -263,7 +263,7 @@ class ControllerDesignTheme extends Controller {
 		$theme = $this->model_setting_setting->getSettingValue('config_theme', $store_id);
 
 		// This is only here for compatibility with old themes.
-		if ($theme == 'theme_default') {
+		if ($theme == 'default') {
 			$theme = $this->model_setting_setting->getSettingValue('theme_default_directory', $store_id);
 		}
 

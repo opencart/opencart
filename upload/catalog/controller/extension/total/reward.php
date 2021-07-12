@@ -44,7 +44,6 @@ class ControllerExtensionTotalReward extends Controller {
 		}
 
 		if (!isset($this->request->post['reward']) || !filter_var($this->request->post['reward'], FILTER_VALIDATE_INT) || ($this->request->post['reward'] <= 0)) {
-
 			$json['error'] = $this->language->get('error_reward');
 		}
 

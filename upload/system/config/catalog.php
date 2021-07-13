@@ -34,6 +34,7 @@ $_['action_pre_action']  = array(
 	'startup/startup',
 	'startup/error',
 	'startup/event',
+	'startup/sass',
 	'startup/maintenance',
 	'startup/seo_url'
 );

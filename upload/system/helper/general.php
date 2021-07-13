@@ -5,15 +5,9 @@ function token($length = 32) {
 		$length = 32;
 	}
 
-	if (function_exists('random_bytes')) {
-		$token = bin2hex(random_bytes($length));
-	}
+	$token = bin2hex(random_bytes(($length + 1) / 2));
 
-	if (function_exists('openssl_random_pseudo_bytes')) {
-		$token = bin2hex(openssl_random_pseudo_bytes($length));
-	}
-
-	return substr($token, -$length, $length);
+	return substr($token, 0, $length);
 }
 
 /**

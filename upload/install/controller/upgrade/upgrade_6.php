@@ -8,9 +8,9 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 
 		try {
 			// Set Product Meta Title default to product name if empty
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `meta_title` = `name` WHERE meta_title = ''");
-			$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `meta_title` = `name` WHERE meta_title = ''");
-			$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `meta_title` = `title` WHERE meta_title = ''");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `meta_title` = `name` WHERE `meta_title` = ''");
+			$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `meta_title` = `name` WHERE `meta_title` = ''");
+			$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `meta_title` = `title` WHERE `meta_title` = ''");
 
 			//  Option
 			$this->db->query("UPDATE `" . DB_PREFIX . "option` SET `type` = 'radio' WHERE `type` = 'image'");
@@ -19,7 +19,7 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_option' AND COLUMN_NAME = 'option_value'");
 
 			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET `option_value` = `value`");
+				$this->db->query("UPDATE `" . DB_PREFIX . "product_option` SET `option_value` = 'value'");
 			}
 
 			// tags
@@ -48,7 +48,7 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 				$banner_image_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image`");
 
 				foreach ($banner_image_query->rows as $banner_image) {
-					$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE banner_image_id = '" . (int)$banner_image['banner_image_id'] . "'");
+					$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `banner_image_id` = '" . (int)$banner_image['banner_image_id'] . "'");
 
 					$banner_image_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "banner_image_description` WHERE `banner_image_id` = '" . (int)$banner_image['banner_image_id'] . "'");
 

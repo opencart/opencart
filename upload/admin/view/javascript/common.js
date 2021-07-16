@@ -114,45 +114,50 @@ $(document).ready(function() {
 
 		$element.popover('show');
 
-		$('#button-image').on('click', function() {
-			var $button = $(this);
-			var $icon   = $button.find('> i');
+		setTimeout(function(){ // fix bind events on new popover when 
 
-			$('#modal-image').remove();
+			$('#button-image').on('click', function() {
+				var $button = $(this);
+				var $icon   = $button.find('> i');
 
-			$.ajax({
-				url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $element.parent().find('input').attr('id') + '&thumb=' + $element.attr('id'),
-				dataType: 'html',
-				beforeSend: function() {
-					$button.prop('disabled', true);
-					if ($icon.length) {
-						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
+				$('#modal-image').remove();
+
+				$.ajax({
+					url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + $element.parent().find('input').attr('id') + '&thumb=' + $element.attr('id'),
+					dataType: 'html',
+					beforeSend: function() {
+						$button.prop('disabled', true);
+						if ($icon.length) {
+							$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
+						}
+					},
+					complete: function() {
+						$button.prop('disabled', false);
+
+						if ($icon.length) {
+							$icon.attr('class', 'fa fa-pencil');
+						}
+					},
+					success: function(html) {
+						$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+						$('#modal-image').modal('show');
 					}
-				},
-				complete: function() {
-					$button.prop('disabled', false);
+				});
 
-					if ($icon.length) {
-						$icon.attr('class', 'fa fa-pencil');
-					}
-				},
-				success: function(html) {
-					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-
-					$('#modal-image').modal('show');
-				}
+				$element.popover('destroy');
 			});
 
-			$element.popover('destroy');
-		});
+			$('#button-clear').on('click', function() {
+				$element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
 
-		$('#button-clear').on('click', function() {
-			$element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
+				$element.parent().find('input').val('');
 
-			$element.parent().find('input').val('');
-
-			$element.popover('destroy');
-		});
+				$element.popover('destroy');
+			});
+			
+		}, 250); // end timeout fix
+			
 	});
 });
 

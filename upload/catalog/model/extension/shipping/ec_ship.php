@@ -499,7 +499,7 @@ class ModelExtensionShippingECShip extends Model {
 						$quote_data[$key] = array(
 							'code'         => 'ec_ship.' . $key,
 							'title'        => $value['getTotalPostageReturn']['serviceName'],
-							'cost'         => $value['getTotalPostageReturn']['totalPostage'],
+							'cost'         => $this->currency->convert($value['getTotalPostageReturn']['totalPostage'], 'HKD', $this->session->data['currency']),
 							'tax_class_id' => $this->config->get('shipping_ec_ship_tax_class_id'),
 							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($value['getTotalPostageReturn']['totalPostage'], 'HKD', $this->session->data['currency']), $this->config->get('shipping_ec_ship_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 						);

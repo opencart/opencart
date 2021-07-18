@@ -272,7 +272,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -312,7 +312,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -353,7 +353,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -392,7 +392,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -427,7 +427,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -462,7 +462,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -497,7 +497,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -820,7 +820,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -915,7 +915,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -1006,7 +1006,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -1251,7 +1251,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;
@@ -1286,7 +1286,7 @@ class ModelExtensionShippingRoyalMail extends Model {
 
 					if ($data[0] >= $weight) {
 						if (isset($data[1])) {
-							$cost = $data[1];
+							$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 						}
 
 						break;

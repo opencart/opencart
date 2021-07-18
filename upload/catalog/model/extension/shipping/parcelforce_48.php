@@ -27,9 +27,8 @@ class ModelExtensionShippingParcelforce48 extends Model {
 
 				if ($data[0] >= $weight) {
 					if (isset($data[1])) {
-						$cost = $data[1];
+						$cost = $this->currency->convert($data[1], $this->config->get('config_currency'), $this->session->data['currency']);
 					}
-
 					break;
 				}
 			}
@@ -43,7 +42,6 @@ class ModelExtensionShippingParcelforce48 extends Model {
 					if (isset($data[1])) {
 						$insurance = $data[1];
 					}
-
 					break;
 				}
 			}
@@ -70,7 +68,7 @@ class ModelExtensionShippingParcelforce48 extends Model {
 					'title'        => $text,
 					'cost'         => $cost,
 					'tax_class_id' => $this->config->get('shipping_parcelforce_48_tax_class_id'),
-					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('shipping_parcelforce_48_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
+					'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $this->config->get('shipping_parcelforce_48_tax_class_id'), $this->session->data['currency']), $this->config->get('shipping_parcelforce_48_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 				);
 
 				$method_data = array(

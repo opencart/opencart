@@ -72,7 +72,7 @@ class ModelExtensionShippingAusPost extends Model {
 							$quote_data[$response_service['name']] = array(
 								'code'         => 'auspost.' .  $response_service['name'],
 								'title'        => $response_service['name'],
-								'cost'         => $this->currency->convert($response_service['price'], 'AUD', $this->config->get('config_currency')),
+								'cost'         => $this->currency->convert($response_service['price'], 'AUD', $this->session->data['currency']),
 								'tax_class_id' => $this->config->get('shipping_auspost_tax_class_id'),
 								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($response_service['price'], 'AUD', $this->session->data['currency']), $this->config->get('shipping_auspost_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 							);

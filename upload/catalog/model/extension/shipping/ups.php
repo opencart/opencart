@@ -268,7 +268,7 @@ class ModelExtensionShippingUps extends Model {
 							$quote_data[$code] = array(
 								'code'         => 'ups.' . $code,
 								'title'        => $service_code[$this->config->get('shipping_ups_origin')][$code],
-								'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
+								'cost'         => $this->currency->convert($cost, $currency, $this->session->data['currency']),
 								'tax_class_id' => $this->config->get('shipping_ups_tax_class_id'),
 								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('shipping_ups_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 							);

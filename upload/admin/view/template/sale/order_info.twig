@@ -2021,7 +2021,7 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call|paymentaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_address&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#modal-payment-address input[type=\'text\'], #modal-payment-address input[type=\'hidden\'], #modal-payment-address input[type=\'radio\']:checked, #modal-payment-address input[type=\'checkbox\']:checked, #modal-payment-address select, #modal-payment-address textarea'),
         dataType: 'html',
@@ -2173,7 +2173,7 @@ $('#modal-shipping-address #button-shipping-address').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call/shippingaddress&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=shipping_address&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#modal-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'hidden\'], #modal-shipping-address input[type=\'radio\']:checked, #modal-shipping-address input[type=\'checkbox\']:checked, #modal-shipping-address select, #modal-shipping-address textarea'),
         dataType: 'json',
@@ -2418,7 +2418,7 @@ $('#modal-cart #button-product-add').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call|addProduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
         dataType: 'json',
@@ -2470,7 +2470,7 @@ $('#modal-cart #button-remove').on('click', '.btn-danger', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call|removeproduct&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=cart/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: 'key=' + encodeURIComponent(this.value),
         dataType: 'json',
@@ -2500,7 +2500,7 @@ $('#modal-cart #button-remove').on('click', '.btn-danger', function() {
 // Voucher
 $('#modal-cart #button-voucher-add').on('click', function() {
     $.ajax({
-        url: '{{ catalog }}index.php?route=sale/order|call|voucheradd&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+        url: '{{ catalog }}index.php?route=sale/order|call&user_token={{ user_token }}&action=voucher/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
         dataType: 'json',
@@ -2775,9 +2775,9 @@ $('#button-history').on('click', function(e) {
 // Checkout
 $('#button-save').on('click', function() {
     if ($('input[name=\'order_id\']').val() == 0) {
-        var url = 'index.php?route=sale/order|call|add&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val();
+        var url = 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|add&store_id=' + $('select[name=\'store_id\'] option:selected').val();
     } else {
-        var url = 'index.php?route=sale/order|call|edit&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
+        var url = 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|edit&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
     }
 
     $.ajax({

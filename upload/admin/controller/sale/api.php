@@ -248,7 +248,6 @@ class Api extends \Opencart\System\Engine\Controller {
 				$order[$key] = $value;
 			}
 		}
-
 	}
 
 	public function edit(): void {

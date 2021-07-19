@@ -13,10 +13,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$json['shipping_methods'] = [];
 
 		if ($this->cart->hasShipping()) {
-			if (!isset($this->session->data['api_id'])) {
-				$json['error'] = $this->language->get('error_permission');
-			}
-
 			if (!isset($this->session->data['shipping_address'])) {
 				$json['error'] = $this->language->get('error_address');
 			}
@@ -74,42 +70,35 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
 		if ($this->cart->hasShipping()) {
-			if (!$json) {
-				// Shipping Address
-				if (!isset($this->session->data['shipping_address'])) {
-					$json['error'] = $this->language->get('error_address');
-				}
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error'] = $this->language->get('error_address');
+			}
 
-				// Shipping Method
-				if (empty($this->session->data['shipping_methods'])) {
-					$json['error'] = $this->language->get('error_no_shipping');
-				} elseif (!isset($this->request->post['shipping_method'])) {
-					$json['error'] = $this->language->get('error_method');
-				} else {
-					$shipping = explode('.', $this->request->post['shipping_method']);
-
-					if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-						$json['error'] = $this->language->get('error_method');
-					}
-				}
-
-				if (!$json) {
-					$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-
-					$json['success'] = $this->language->get('text_success');
-				}
+			// Shipping Method
+			if (empty($this->session->data['shipping_methods'])) {
+				$json['error'] = $this->language->get('error_no_shipping');
+			} elseif (!isset($this->request->post['shipping_method'])) {
+				$json['error'] = $this->language->get('error_method');
 			} else {
-				unset($this->session->data['shipping_address']);
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
+				$shipping = explode('.', $this->request->post['shipping_method']);
+
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+					$json['error'] = $this->language->get('error_method');
+				}
 			}
 		} else {
 			$json['error'] = $this->language->get('error_product');
+
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+		}
+
+		if (!$json) {
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

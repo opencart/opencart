@@ -701,6 +701,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
+		$this->load->model('checkout/order');
+
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if (!$order_info) {
@@ -794,30 +796,51 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['shipping_address'] = [
-				'firstname'      => $order_info['firstname'],
-				'lastname'       => $order_info['lastname'],
-				'company'        => $order_info['company'],
-				'address_1'      => $order_info['address_1'],
-				'address_2'      => $order_info['address_2'],
-				'postcode'       => $order_info['postcode'],
-				'city'           => $order_info['city'],
-				'zone_id'        => $order_info['zone_id'],
+				'firstname'      => $order_info['shipping_firstname'],
+				'lastname'       => $order_info['shipping_lastname'],
+				'company'        => $order_info['shipping_company'],
+				'address_1'      => $order_info['shipping_address_1'],
+				'address_2'      => $order_info['shipping_address_2'],
+				'postcode'       => $order_info['shipping_postcode'],
+				'city'           => $order_info['shipping_city'],
+				'zone_id'        => $order_info['shipping_zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
-				'country_id'     => $order_info['country_id'],
+				'country_id'     => $order_info['shipping_country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => $order_info['custom_field']
+				'custom_field'   => $order_info['shipping_custom_field']
 			];
 
-			$results = $this->model_checkout_order->getProducts($order_id);
 
-			foreach ($results as $result) {
+			$this->cart->clear();
 
+			$products = $this->model_checkout_order->getProducts($order_id);
+
+			foreach ($products as $product) {
+				$options = $this->model_checkout_order->getOptions($order_id, $product['order_product_id']);
+
+				foreach ($options as $option) {
+					if (isset($product['product_option_id'])) {
+						$option = $product['option'];
+					} else {
+						$option = [];
+					}
+
+				}
+
+				$this->cart->add($product['product_id'], $product['quantity'], $option);
+			}
+
+			$vouchers = $this->model_checkout_order->getVouchers($order_id);
+
+			foreach ($vouchers as $voucher) {
 
 			}
+
+
 
 
 			$json['success'] = $this->language->get('text_success');
@@ -836,10 +859,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
-		}
-
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('checkout/order');
@@ -871,9 +890,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
@@ -902,8 +919,18 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_id = 0;
 		}
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
+		// Add keys for missing post vars
+		$keys = [
+			'order_status_id',
+			'notify',
+			'override',
+			'comment'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
 		}
 
 		$this->load->model('checkout/order');
@@ -915,20 +942,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Add keys for missing post vars
-			$keys = [
-				'order_status_id',
-				'notify',
-				'override',
-				'comment'
-			];
-
-			foreach ($keys as $key) {
-				if (!isset($this->request->post[$key])) {
-					$this->request->post[$key] = '';
-				}
-			}
-
 			$this->model_checkout_order->addHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
 
 			$json['success'] = $this->language->get('text_success');

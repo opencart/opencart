@@ -677,11 +677,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 
 					$this->model_checkout_order->addHistory($order_id, $order_status_id);
-
-					// When order editing is completed, delete added order status for Void the order first.
-					if ($order_status_id) {
-						$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "' AND `order_status_id` = '0'");
-					}
 				}
 			} else {
 				$json['error'] = $this->language->get('error_not_found');
@@ -692,37 +687,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete(): void {
-		$this->load->language('api/order');
-
-		$json = [];
-
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('checkout/order');
-
-			if (isset($this->request->get['order_id'])) {
-				$order_id = (int)$this->request->get['order_id'];
-			} else {
-				$order_id = 0;
-			}
-
-			$order_info = $this->model_checkout_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->model_checkout_order->deleteOrder($order_id);
-
-				$json['success'] = $this->language->get('text_success');
-			} else {
-				$json['error'] = $this->language->get('error_not_found');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
+	/*
+	 * Loads order info
+	 * */
 	public function load(): void {
 		$this->load->language('api/order');
 
@@ -736,17 +703,157 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
+		if (!$order_info) {
+			$json['error'] = $this->language->get('error_not_found');
+		}
+
 		if ($order_info) {
+			$this->session->data['customer'] = [
+				'customer_id'       => $order_info['customer_id'],
+				'customer_group_id' => $order_info['customer_group_id'],
+				'firstname'         => $order_info['firstname'],
+				'lastname'          => $order_info['lastname'],
+				'email'             => $order_info['email'],
+				'telephone'         => $order_info['telephone'],
+				'custom_field'      => $order_info['custom_field']
+			];
+
+			$this->load->model('localisation/country');
+
+			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+
+			if ($country_info) {
+				$country = $country_info['name'];
+				$iso_code_2 = $country_info['iso_code_2'];
+				$iso_code_3 = $country_info['iso_code_3'];
+				$address_format = $country_info['address_format'];
+			} else {
+				$country = '';
+				$iso_code_2 = '';
+				$iso_code_3 = '';
+				$address_format = '';
+			}
+
+			$this->load->model('localisation/zone');
+
+			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+
+			if ($zone_info) {
+				$zone = $zone_info['name'];
+				$zone_code = $zone_info['code'];
+			} else {
+				$zone = '';
+				$zone_code = '';
+			}
+
+			$this->session->data['payment_address'] = [
+				'firstname'      => $order_info['payment_firstname'],
+				'lastname'       => $order_info['payment_lastname'],
+				'company'        => $order_info['payment_company'],
+				'address_1'      => $order_info['payment_address_1'],
+				'address_2'      => $order_info['payment_address_2'],
+				'postcode'       => $order_info['payment_postcode'],
+				'city'           => $order_info['payment_city'],
+				'zone_id'        => $order_info['payment_zone_id'],
+				'zone'           => $zone,
+				'zone_code'      => $zone_code,
+				'country_id'     => $order_info['payment_country_id'],
+				'country'        => $country,
+				'iso_code_2'     => $iso_code_2,
+				'iso_code_3'     => $iso_code_3,
+				'address_format' => $address_format,
+				'custom_field'   => $order_info['payment_custom_field']
+			];
+
+			$this->load->model('localisation/country');
+
+			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+
+			if ($country_info) {
+				$country = $country_info['name'];
+				$iso_code_2 = $country_info['iso_code_2'];
+				$iso_code_3 = $country_info['iso_code_3'];
+				$address_format = $country_info['address_format'];
+			} else {
+				$country = '';
+				$iso_code_2 = '';
+				$iso_code_3 = '';
+				$address_format = '';
+			}
+
+			$this->load->model('localisation/zone');
+
+			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+
+			if ($zone_info) {
+				$zone = $zone_info['name'];
+				$zone_code = $zone_info['code'];
+			} else {
+				$zone = '';
+				$zone_code = '';
+			}
+
+			$this->session->data['shipping_address'] = [
+				'firstname'      => $order_info['firstname'],
+				'lastname'       => $order_info['lastname'],
+				'company'        => $order_info['company'],
+				'address_1'      => $order_info['address_1'],
+				'address_2'      => $order_info['address_2'],
+				'postcode'       => $order_info['postcode'],
+				'city'           => $order_info['city'],
+				'zone_id'        => $order_info['zone_id'],
+				'zone'           => $zone,
+				'zone_code'      => $zone_code,
+				'country_id'     => $order_info['country_id'],
+				'country'        => $country,
+				'iso_code_2'     => $iso_code_2,
+				'iso_code_3'     => $iso_code_3,
+				'address_format' => $address_format,
+				'custom_field'   => $order_info['custom_field']
+			];
+
+			$results = $this->model_checkout_order->getProducts($order_id);
+
+			foreach ($results as $result) {
 
 
-
-
-
+			}
 
 
 			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function delete(): void {
+		$this->load->language('api/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
 		} else {
+			$order_id = 0;
+		}
+
+		if (!isset($this->session->data['api_id'])) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if (!$order_info) {
 			$json['error'] = $this->language->get('error_not_found');
+		}
+
+		if (!$json) {
+			$this->model_checkout_order->deleteOrder($order_id);
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -758,26 +865,73 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if (!$order_info) {
+			$json['error'] = $this->language->get('error_not_found');
+		}
+
+		if (!$json) {
 			$this->load->model('checkout/order');
 
-			if (isset($this->request->get['order_id'])) {
-				$order_id = (int)$this->request->get['order_id'];
-			} else {
-				$order_id = 0;
+			$json['order'] = $order_info;
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function addHistory() {
+		$this->load->language('api/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (!isset($this->session->data['api_id'])) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if (!$order_info) {
+			$json['error'] = $this->language->get('error_not_found');
+		}
+
+		if (!$json) {
+			// Add keys for missing post vars
+			$keys = [
+				'order_status_id',
+				'notify',
+				'override',
+				'comment'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
 			}
 
-			$order_info = $this->model_checkout_order->getOrder($order_id);
+			$this->model_checkout_order->addHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
 
-			if ($order_info) {
-				$json['order'] = $order_info;
-
-				$json['success'] = $this->language->get('text_success');
-			} else {
-				$json['error'] = $this->language->get('error_not_found');
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

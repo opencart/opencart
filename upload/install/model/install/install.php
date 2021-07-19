@@ -2,7 +2,12 @@
 namespace Opencart\Install\Model\Install;
 class Install extends \Opencart\System\Engine\Model {
 	public function database(array $data): void {
-		$db = new \Opencart\System\Library\DB($data['db_driver'], html_entity_decode($data['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8'), $data['db_port']);
+		$db = new \Opencart\System\Library\DB($data['db_driver'],
+		    html_entity_decode($data['db_hostname'], ENT_QUOTES, 'UTF-8'),
+	        html_entity_decode($data['db_username'], ENT_QUOTES, 'UTF-8'),
+			html_entity_decode($data['db_password'], ENT_QUOTES, 'UTF-8'),
+			html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8'),
+			$data['db_port']);
 
 		// Structure
 		$this->load->helper('db_schema');
@@ -10,7 +15,8 @@ class Install extends \Opencart\System\Engine\Model {
 		$tables = db_schema();
 
 		foreach ($tables as $table) {
-			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
+			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' 
+																					  AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
 
 			if ($table_query->num_rows) {
 				$db->query("DROP TABLE `" . $data['db_prefix'] . $table['name'] . "`");
@@ -19,7 +25,11 @@ class Install extends \Opencart\System\Engine\Model {
 			$sql = "CREATE TABLE `" . $data['db_prefix'] . $table['name'] . "` (" . "\n";
 
 			foreach ($table['field'] as $field) {
-				$sql .= "  `" . $field['name'] . "` " . $field['type'] . (!empty($field['not_null']) ? " NOT NULL" : "") . (isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") . (!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") . ",\n";
+				$sql .= "  `" . $field['name'] . "` " . $field['type'] .
+					(!empty($field['not_null']) ? " NOT NULL" : "") .
+					(isset($field['default']) ? " DEFAULT '" . $db->escape($field['default']) . "'" : "") .
+					(!empty($field['auto_increment']) ? " AUTO_INCREMENT" : "") .
+					",\n";
 			}
 
 			if (isset($table['primary'])) {
@@ -80,7 +90,11 @@ class Install extends \Opencart\System\Engine\Model {
 		$db->query("SET CHARACTER SET utf8");
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE `user_id` = '1'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($data['username']) . "', `password` = '" . $db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($data['email']) . "', `status` = '1', `date_added` = NOW()");
+		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET `user_id` = '1', `user_group_id` = '1',
+														  `username` = '" . $db->escape($data['username']) . "',
+														  `password` = '" . $db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "',
+														  `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($data['email']) . "',
+														  `status` = '1', `date_added` = NOW()");
 		
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_email'");
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($data['email']) . "'");

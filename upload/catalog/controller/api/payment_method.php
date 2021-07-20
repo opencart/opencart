@@ -96,10 +96,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
 		// Payment Address
 		if (!isset($this->session->data['payment_address'])) {
 			$json['error'] = $this->language->get('error_address');

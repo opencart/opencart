@@ -991,6 +991,7 @@ html[dir="rtl"] .text-right {
     html[dir="rtl"] .col-md-push-9 {
         left: 0% !important;
     }
+    
     html[dir="rtl"] .col-md-pull-3 {
         right: 0% !important;
     }
@@ -1006,6 +1007,7 @@ html[dir="rtl"] .text-right {
         margin-right: 235px !important;
         margin-left: 0px !important;
     }
+
     html[dir="rtl"] .navbar-header {
         float: right !important;
     }

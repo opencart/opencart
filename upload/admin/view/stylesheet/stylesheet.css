@@ -988,14 +988,13 @@ html[dir="rtl"] .text-right {
 }
 
 @media (min-width: 992px) {
-    .col-md-push-9 {
+    html[dir=rtl] .col-md-push-9 {
         left: 0% !important;
     }
-    .col-md-pull-3 {
+    html[dir=rtl] .col-md-pull-3 {
         right: 0% !important;
     }
 }
-
 
 @media (min-width: 768px) {
     html[dir=rtl] #column-left {

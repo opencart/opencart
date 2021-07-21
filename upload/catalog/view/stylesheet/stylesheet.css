@@ -147,6 +147,7 @@ div.required .col-form-label:before {
   font-size: 12px;
   line-height: 18px;
   color: #FFF;
+  width: 100%;
 }
 #cart .btn-lg {
   padding: 0.65rem 1rem;
@@ -165,7 +166,6 @@ div.required .col-form-label:before {
 #cart .dropdown-menu {
   background: #eee;
   z-index: 1001;
-  min-width: 100%;
 }
 #cart .dropdown-menu table {
   margin-bottom: 10px;

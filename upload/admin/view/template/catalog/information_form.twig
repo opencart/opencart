@@ -94,13 +94,13 @@
 								<label class="col-sm-2 col-form-label">{{ entry_bottom }}</label>
 								<div class="col-sm-10">
 									<div class="btn-group">
-										{% if bottom %}
-											<label class="btn btn-outline-secondary active"><input type="radio" name="bottom" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary"><input type="radio" name="bottom" value="0" class="btn-check"/> {{ text_no }}</label>
-										{% else %}
-											<label class="btn btn-outline-secondary"><input type="radio" name="bottom" value="1" class="btn-check"/> {{ text_yes }}</label>
-											<label class="btn btn-outline-secondary active"><input type="radio" name="bottom" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
-										{% endif %}
+
+										<input type="radio" name="top" value="1" id="input-bottom-yes" class="btn-check"{% if bottom %} checked{% endif %}/>
+										<label for="input-bottom-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+										<input type="radio" name="top" value="0" id="input-bottom-no" class="btn-check"{% if not bottom %} checked{% endif %}/>
+										<label for="input-bottom-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
 									</div>
 									<div class="form-text text-muted">{{ help_bottom }}</div>
 								</div>

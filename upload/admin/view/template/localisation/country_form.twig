@@ -48,13 +48,13 @@
 						<label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
 						<div class="col-sm-10">
 							<div class="btn-group">
-								{% if postcode_required %}
-									<label class="btn btn-outline-secondary active"><input type="radio" name="postcode_required" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
-									<label class="btn btn-outline-secondary"><input type="radio" name="postcode_required" value="0" class="btn-check"/> {{ text_no }}</label>
-								{% else %}
-									<label class="btn btn-outline-secondary"><input type="radio" name="postcode_required" value="1" class="btn-check"/> {{ text_yes }}</label>
-									<label class="btn btn-outline-secondary active"><input type="radio" name="postcode_required" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
-								{% endif %}
+
+								<input type="radio" name="postcode_required" value="1" id="input-postcode-required-yes" class="btn-check"{% if postcode_required %} checked{% endif %}/>
+								<label for="input-postcode-required-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+								<input type="radio" name="postcode_required" value="0" id="input-postcode-required-no" class="btn-check"{% if not postcode_required %} checked{% endif %}/>
+								<label for="input-postcode-required-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
 							</div>
 						</div>
 					</div>

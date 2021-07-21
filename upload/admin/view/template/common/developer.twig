@@ -23,16 +23,14 @@
 						<td>{{ entry_sass }}</td>
 						<td>
 							<div class="btn-group">
-								{% if developer_sass %}
-									<label class="btn btn-outline-secondary active"> <input type="radio" name="developer_sass" value="1" class="btn-check" checked>{{ button_on }}</label>
-								{% else %}
-									<label class="btn btn-outline-secondary"><input type="radio" name="developer_sass" value="1" class="btn-check">{{ button_on }}</label>
-								{% endif %}
-								{% if not developer_sass %}
-									<label class="btn btn-outline-secondary active"><input type="radio" name="developer_sass" value="0" class="btn-check" checked>{{ button_off }}</label>
-								{% else %}
-									<label class="btn btn-outline-secondary"><input type="radio" name="developer_sass" value="0" class="btn-check">{{ button_off }}</label>
-								{% endif %}</div>
+
+								<input type="radio" name="developer_sass" value="1" id="input-developer-sass-yes" class="btn-check"{% if developer_sass %} checked{% endif %}/>
+								<label for="input-developer-sass-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+								<input type="radio" name="developer_sass" value="0" id="input-developer-sass-no" class="btn-check"{% if not developer_sass %} checked{% endif %}/>
+								<label for="input-developer-sass-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
+							</div>
 						</td>
 						<td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fas fa-sync"></i></button></td>
 					</tr>

@@ -225,13 +225,13 @@
 									<label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
 									<div class="col-sm-10">
 										<div class="btn-group">
-											{% if newsletter %}
-												<label class="btn btn-outline-secondary active"><input type="radio" name="newsletter" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
-												<label class="btn btn-outline-secondary"><input type="radio" name="newsletter" value="0" class="btn-check"/> {{ text_no }}</label>
-											{% else %}
-												<label class="btn btn-outline-secondary"><input type="radio" name="newsletter" value="1" class="btn-check"/> {{ text_yes }}</label>
-												<label class="btn btn-outline-secondary active"><input type="radio" name="newsletter" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
-											{% endif %}
+
+											<input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="btn-check"{% if newsletter %} checked{% endif %}/>
+											<label for="input-newsletter-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+											<input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="btn-check"{% if not newsletter %} checked{% endif %}/>
+											<label for="input-newsletter-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
 										</div>
 									</div>
 								</div>
@@ -239,13 +239,13 @@
 									<label class="col-sm-2 col-form-label">{{ entry_status }}</label>
 									<div class="col-sm-10">
 										<div class="btn-group">
-											{% if status %}
-												<label class="btn btn-outline-secondary active"><input type="radio" name="status" value="1" class="btn-check" checked="checked"/> {{ text_enabled }}</label>
-												<label class="btn btn-outline-secondary"><input type="radio" name="status" value="0" class="btn-check"/> {{ text_disabled }}</label>
-											{% else %}
-												<label class="btn btn-outline-secondary"><input type="radio" name="status" value="1" class="btn-check"/> {{ text_enabled }}</label>
-												<label class="btn btn-outline-secondary active"><input type="radio" name="status" value="0" class="btn-check" checked="checked"/> {{ text_disabled }}</label>
-											{% endif %}
+
+											<input type="radio" name="status" value="1" id="input-status-yes" class="btn-check"{% if status %} checked{% endif %}/>
+											<label for="input-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+											<input type="radio" name="status" value="0" id="input-status-no" class="btn-check"{% if not status %} checked{% endif %}/>
+											<label for="input-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
 										</div>
 									</div>
 								</div>
@@ -253,13 +253,13 @@
 									<label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
 									<div class="col-sm-10">
 										<div class="btn-group">
-											{% if safe %}
-												<label class="btn btn-outline-secondary active"><input type="radio" name="safe" value="1" class="btn-check" checked="checked"/> {{ text_yes }}</label>
-												<label class="btn btn-outline-secondary"><input type="radio" name="safe" value="0" class="btn-check"/> {{ text_no }}</label>
-											{% else %}
-												<label class="btn btn-outline-secondary"><input type="radio" name="safe" value="1" class="btn-check"/> {{ text_yes }}</label>
-												<label class="btn btn-outline-secondary active"><input type="radio" name="safe" value="0" class="btn-check" checked="checked"/> {{ text_no }}</label>
-											{% endif %}
+
+											<input type="radio" name="safe" value="1" id="input-safe-yes" class="btn-check"{% if safe %} checked{% endif %}/>
+											<label for="input-safe-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+											<input type="radio" name="safe" value="0" id="input-safe-no" class="btn-check"{% if not safe %} checked{% endif %}/>
+											<label for="input-safe-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
 										</div>
 										<div class="form-text text-muted">{{ help_safe }}</div>
 									</div>

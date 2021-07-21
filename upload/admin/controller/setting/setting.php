@@ -236,6 +236,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_cart_weight'] = $this->config->get('config_cart_weight');
 		$data['config_checkout_guest'] = $this->config->get('config_checkout_guest');
+		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_checkout_id'] = $this->config->get('config_checkout_id');
 
 		if ($this->config->get('config_invoice_prefix')) {

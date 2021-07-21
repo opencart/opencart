@@ -15,7 +15,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function voucher(): void {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/voucher');
 
 		$json = [];

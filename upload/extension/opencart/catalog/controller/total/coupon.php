@@ -15,7 +15,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function coupon(): void {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/coupon');
 
 		$json = [];

@@ -157,7 +157,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function shipping(): void {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/shipping');
 
 		$json = [];

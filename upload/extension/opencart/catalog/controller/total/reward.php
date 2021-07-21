@@ -31,7 +31,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function reward(): void {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/reward');
 
 		$json = [];

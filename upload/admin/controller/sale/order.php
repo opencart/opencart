@@ -1185,6 +1185,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$pre_actions = [
 			'startup/setting',
 			'startup/extension',
+			'startup/application',
 			'startup/startup',
 			'startup/event'
 		];

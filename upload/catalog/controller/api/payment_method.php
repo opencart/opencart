@@ -87,36 +87,4 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-	public function method(): void {
-		$this->load->language('api/payment_method');
-
-		// Delete old payment method so not to cause any issues if there is an error
-		unset($this->session->data['payment_method']);
-
-		$json = [];
-
-		// Payment Address
-		if (!isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->language->get('error_address');
-		}
-
-		// Payment Method
-		if (empty($this->session->data['payment_methods'])) {
-			$json['error'] = $this->language->get('error_no_payment');
-		} elseif (!isset($this->request->post['payment_method'])) {
-			$json['error'] = $this->language->get('error_method');
-		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-			$json['error'] = $this->language->get('error_method');
-		}
-
-		if (!$json) {
-			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 }

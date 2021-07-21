@@ -1207,7 +1207,7 @@
 				<div class="tab-content">
 
 					<div class="tab-pane active" id="tab-product">
-						<form id="form-cart">
+						<form id="form-cart-product">
 							<fieldset>
 								<legend>{{ text_product_add }}</legend>
 								<div class="mb-3">
@@ -1226,7 +1226,7 @@
 
 					<div class="tab-pane" id="tab-voucher">
 
-						<form id="form-cart">
+						<form id="form-cart-voucher">
 							<fieldset>
 								<legend>{{ text_voucher_add }}</legend>
 								<div class="mb-3 required">
@@ -1441,22 +1441,15 @@ $('#modal-customer select[name=\'customer_group_id\']').on('change', function() 
 $('#modal-customer select[name=\'customer_group_id\']').trigger('change');
 
 
-$('#modal-customer #button-customer').on('click', function() {
-
-
-});
-
 
 // Customer
 $('#modal-customer #button-customer').on('click', function() {
     var element = this;
 
-    console.log('json');
-
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&action=customer',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&action=customer|load',
         type: 'post',
-        dataType: 'json',
+        dataType: 'html',
         data: $('#modal-customer input[type=\'text\'], #modal-customer input[type=\'hidden\'], #modal-customer input[type=\'radio\']:checked, #modal-customer input[type=\'checkbox\']:checked, #modal-customer select, #modal-customer textarea'),
         beforeSend: function() {
             $(element).button('loading');
@@ -2184,6 +2177,8 @@ $('#modal-shipping-address #button-shipping-address').on('click', function() {
             $(element).button('reset');
         },
         success: function(json) {
+        		console.log(json);
+
             $('.alert-dismissible, .invalid-tooltip').remove();
             $('.is-invalid').removeClass('is-invalid');
 

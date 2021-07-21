@@ -75,6 +75,7 @@ $(document).ready(function() {
 });
 
 // Tooltip
+/*
 (function($) {
     $.fn.tooltip = function(element, option) {
         return $(element).each(function() {
@@ -91,13 +92,14 @@ $(document).ready(function() {
     }
 })(jQuery);
 
+
 $(document).ready(function() {
-    $('[data-bs-toggle=\'tooltip\']').tooltip();
+    //$('[data-bs-toggle=\'tooltip\']').tooltip();
 });
 
 // Tooltip remove fixed
 $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
-    $('body > .tooltip').remove();
+   // $('body > .tooltip').remove();
 });
 
 /*
@@ -303,7 +305,7 @@ $(document).on('click', '[data-oc-loading-text]', function() {
 //    }
 });
 
-*/
+
 
 // Button
 (function($) {
@@ -330,7 +332,7 @@ $(document).ready(function() {
     $('[data-oc-loading-text]').button('loading');
 });
 
-
+*/
 /*
 +function($) {
     'use strict';

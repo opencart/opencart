@@ -1,42 +1,38 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="card">
-			<div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ text_list }}</div>
-			<div class="card-body">
-				<fieldset>
-					<legend>{{ text_type }}</legend>
-					<div class="card bg-light">
-						<div class="card-body">
-							<div class="input-group">
-								<select name="type" class="form-select">
-									{% for category in categories %}
-										{% if type == category.code %}
-											<option value="{{ category.href }}" selected="selected">{{ category.text }}</option>
-										{% else %}
-											<option value="{{ category.href }}">{{ category.text }}</option>
-										{% endif %}
-									{% endfor %}
-								</select>
-								<div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>
-							</div>
-						</div>
-					</div>
-				</fieldset>
-				<div id="extension">{{ extension }}</div>
-			</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ text_list }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_type }}</legend>
+          <div class="card bg-light">
+            <div class="card-body">
+              <div class="input-group">
+                <select name="type" class="form-select">
+                  {% for category in categories %}
+                    <option value="{{ category.href }}"{% if type == category.code %} selected="selected"{% endif %}>{{ category.text }}</option>
+                  {% endfor %}
+                </select>
+                <div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div id="extension">{{ extension }}</div>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {

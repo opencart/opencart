@@ -121,7 +121,9 @@
       </div>
     </fieldset>
   </div>
+
   <div class="col-sm-6">
+{% if config_chekout_addresss %}
     <fieldset id="address">
       <legend>{{ text_your_address }}</legend>
       <div class="row mb-3">
@@ -237,8 +239,11 @@
         {% endif %}
       {% endfor %}
     </fieldset>
+		{% endif %}
+
     {{ captcha }}
   </div>
+
 </div>
 <div class="form-check">
   <label><input type="checkbox" name="newsletter" value="1" class="form-check-input"/>

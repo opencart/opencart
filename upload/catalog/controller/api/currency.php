@@ -6,25 +6,21 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
+		$this->load->model('localisation/currency');
+
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['currency']);
+
+		if (!$currency_info) {
+			$json['error'] = $this->language->get('error_currency');
 		}
 
 		if (!$json) {
-			$this->load->model('localisation/currency');
+			$this->session->data['currency'] = $this->request->post['currency'];
 
-			$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->request->post['currency']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
 
-			if ($currency_info) {
-				$this->session->data['currency'] = $this->request->post['currency'];
-
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-
-				$json['success'] = $this->language->get('text_success');
-			} else {
-				$json['error'] = $this->language->get('error_currency');
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

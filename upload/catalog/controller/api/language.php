@@ -6,25 +6,21 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['language']);
+
+		if (!$language_info) {
+			$json['error'] = $this->language->get('error_language');
 		}
 
 		if (!$json) {
-			$this->load->model('localisation/language');
+			$this->session->data['language'] = $this->request->post['language'];
 
-			$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['language']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
 
-			if ($language_info) {
-				$this->session->data['language'] = $this->request->post['language'];
-
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-
-				$json['success'] = $this->language->get('text_success');
-			} else {
-				$json['error'] = $this->language->get('error_language');
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

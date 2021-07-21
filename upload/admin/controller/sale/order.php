@@ -1171,7 +1171,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Document
 		$registry->set('document', new \Opencart\System\Library\Document());
 
-		// 2. Add the request vars and remove thew unneeded ones
+		// 2. Add the request vars and remove the unneeded ones
 		$request->get = $this->request->get;
 
 		unset($request->get['route']);

@@ -172,8 +172,8 @@
                       <div class="col-sm-10">
                         <select name="return_status_id" id="input-return-status" class="form-select">
                           {% for return_status in return_statuses %}
-                            {% if return_status.return_status_id == return_status_id %}
-                              <option value="{{ return_status.return_status_id }}" selected="selected">{{ return_status.name }}</option>
+
+                              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == return_status_id %} selected="selected">{{ return_status.name }}</option>
                             {% else %}
                               <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
                             {% endif %}

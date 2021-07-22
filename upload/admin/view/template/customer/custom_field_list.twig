@@ -4,31 +4,11 @@
 			<thead>
 				<tr>
 					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-					<td class="text-start">{% if sort == 'cfd.name' %}
-							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-						{% else %}
-							<a href="{{ sort_name }}">{{ column_name }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'cf.location' %}
-							<a href="{{ sort_location }}" class="{{ order|lower }}">{{ column_location }}</a>
-						{% else %}
-							<a href="{{ sort_location }}">{{ column_location }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'cf.type' %}
-							<a href="{{ sort_type }}" class="{{ order|lower }}">{{ column_type }}</a>
-						{% else %}
-							<a href="{{ sort_type }}">{{ column_type }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'cf.status' %}
-							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-						{% else %}
-							<a href="{{ sort_status }}">{{ column_status }}</a>
-						{% endif %}</td>
-					<td class="text-end d-none d-lg-table-cell">{% if sort == 'cf.sort_order' %}
-							<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
-						{% else %}
-							<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
-						{% endif %}</td>
+					<td class="text-start"><a href="{{ sort_name }}"{% if sort == 'cfd.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+					<td class="text-start"><a href="{{ sort_location }}"{% if sort == 'cf.location' %} class="{{ order|lower }}"{% endif %}>{{ column_location }}</a>a</td>
+					<td class="text-start"><a href="{{ sort_type }}"{% if sort == 'cf.type' %} class="{{ order|lower }}"{% endif %}>{{ column_type }}</a></td>
+					<td class="text-start"><a href="{{ sort_status }}"{% if sort == 'cf.status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></td>
+					<td class="text-end d-none d-lg-table-cell"><a href="{{ sort_sort_order }}"{% if sort == 'cf.sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
 					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>

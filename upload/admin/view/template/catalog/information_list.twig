@@ -4,16 +4,8 @@
 			<thead>
 				<tr>
 					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-					<td class="text-start">{% if sort == 'id.title' %}
-							<a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
-						{% else %}
-							<a href="{{ sort_title }}">{{ column_title }}</a>
-						{% endif %}</td>
-					<td class="text-end">{% if sort == 'i.sort_order' %}
-							<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
-						{% else %}
-							<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
-						{% endif %}</td>
+					<td class="text-start"><a href="{{ sort_title }}"{% if sort == 'id.title' %} class="{{ order|lower }}"{% endif %}>{{ column_title }}</a></td>
+					<td class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'i.sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
 					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>

@@ -6,11 +6,7 @@
     <div id="shipping-existing">
       <select name="address_id" class="form-select">
         {% for address in addresses %}
-          {% if address.address_id == address_id %}
-            <option value="{{ address.address_id }}" selected="selected">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-          {% else %}
-            <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-          {% endif %}
+          <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
         {% endfor %}
       </select>
     </div>
@@ -68,11 +64,7 @@
         <select name="country_id" id="input-shipping-country" class="form-select">
           <option value="">{{ text_select }}</option>
           {% for country in countries %}
-            {% if country.country_id == country_id %}
-              <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-            {% else %}
-              <option value="{{ country.country_id }}">{{ country.name }}</option>
-            {% endif %}
+            <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
           {% endfor %}
         </select>
       </div>
@@ -193,253 +185,253 @@
 </form>
 <script type="text/javascript"><!--
 $('input[name=\'shipping_address\']').on('change', function() {
-	if (this.value == 'new') {
-		$('#shipping-existing').hide();
-		$('#shipping-new').show();
-	} else {
-		$('#shipping-existing').show();
-		$('#shipping-new').hide();
-	}
+    if (this.value == 'new') {
+        $('#shipping-existing').hide();
+        $('#shipping-new').show();
+    } else {
+        $('#shipping-existing').show();
+        $('#shipping-new').hide();
+    }
 });
 
 // Shipping Address
 $('#button-shipping-address').on('click', function() {
-	chain.attach(function() {
-		return $.ajax({
-			url: 'index.php?route=checkout/shipping_address|save',
-			type: 'post',
-			data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
-			dataType: 'json',
-			beforeSend: function() {
-				$('#button-shipping-address').button('loading');
-			},
-			success: function(json) {
-				$('.alert-dismissible, .text-danger').remove();
-				$('.mb-3').removeClass('has-error');
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/shipping_address|save',
+            type: 'post',
+            data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
+            dataType: 'json',
+            beforeSend: function() {
+                $('#button-shipping-address').button('loading');
+            },
+            success: function(json) {
+                $('.alert-dismissible, .text-danger').remove();
+                $('.mb-3').removeClass('has-error');
 
-				if (json['redirect']) {
-					location = json['redirect'];
-				} else if (json['error']) {
-					$('#button-shipping-address').button('reset');
+                if (json['redirect']) {
+                    location = json['redirect'];
+                } else if (json['error']) {
+                    $('#button-shipping-address').button('reset');
 
-					if (json['error']['warning']) {
-						$('#collapse-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
-					}
+                    if (json['error']['warning']) {
+                        $('#collapse-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
+                    }
 
-					for (i in json['error']) {
-						var element = $('#input-shipping-' + i.replace('_', '-'));
+                    for (i in json['error']) {
+                        var element = $('#input-shipping-' + i.replace('_', '-'));
 
-						if ($(element).parent().hasClass('input-group')) {
-							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-						} else {
-							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
-						}
+                        if ($(element).parent().hasClass('input-group')) {
+                            $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+                        } else {
+                            $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+                        }
 
-						$(element).addClass('is-invalid');
-					}
+                        $(element).addClass('is-invalid');
+                    }
 
-					// Highlight any found errors
-					$('.text-danger').parent().parent().addClass('has-error');
-				} else {
-					chain.attach(function() {
-						return $.ajax({
-							url: 'index.php?route=checkout/shipping_method',
-							dataType: 'html',
-							complete: function() {
-								$('#button-shipping-address').button('reset');
-							},
-							success: function(html) {
-								$('#collapse-shipping-method .card-body').html(html);
+                    // Highlight any found errors
+                    $('.text-danger').parent().parent().addClass('has-error');
+                } else {
+                    chain.attach(function() {
+                        return $.ajax({
+                            url: 'index.php?route=checkout/shipping_method',
+                            dataType: 'html',
+                            complete: function() {
+                                $('#button-shipping-address').button('reset');
+                            },
+                            success: function(html) {
+                                $('#collapse-shipping-method .card-body').html(html);
 
-								$('#heading-shipping-method').attr('data-bs-toggle', 'collapse');
+                                $('#heading-shipping-method').attr('data-bs-toggle', 'collapse');
 
-								$('#heading-shipping-method').trigger('click');
+                                $('#heading-shipping-method').trigger('click');
 
-								$('#heading-payment-method').removeAttr('data-bs-toggle');
-								$('#heading-checkout-confirm').removeAttr('data-bs-toggle');
-							},
-							error: function(xhr, ajaxOptions, thrownError) {
-								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-							}
-						});
-					});
+                                $('#heading-payment-method').removeAttr('data-bs-toggle');
+                                $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                            }
+                        });
+                    });
 
-					chain.attach(function() {
-						return $.ajax({
-							url: 'index.php?route=checkout/payment_address',
-							dataType: 'html',
-							success: function(html) {
-								$('#collapse-payment-address .card-body').html(html);
-							},
-							error: function(xhr, ajaxOptions, thrownError) {
-								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-							}
-						});
-					});
+                    chain.attach(function() {
+                        return $.ajax({
+                            url: 'index.php?route=checkout/payment_address',
+                            dataType: 'html',
+                            success: function(html) {
+                                $('#collapse-payment-address .card-body').html(html);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                            }
+                        });
+                    });
 
-					chain.attach(function() {
-						return $.ajax({
-							url: 'index.php?route=checkout/shipping_address',
-							dataType: 'html',
-							success: function(html) {
-								$('#collapse-shipping-address .card-body').html(html);
-							},
-							error: function(xhr, ajaxOptions, thrownError) {
-								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-							}
-						});
-					});
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
+                    chain.attach(function() {
+                        return $.ajax({
+                            url: 'index.php?route=checkout/shipping_address',
+                            dataType: 'html',
+                            success: function(html) {
+                                $('#collapse-shipping-address .card-body').html(html);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                            }
+                        });
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address .mb-3[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping-address .mb-3').length - 2) {
-		$('#collapse-shipping-address .mb-3').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
-	}
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
+    }
 
-	if ($(this).attr('data-sort') > $('#collapse-shipping-address .mb-3').length - 2) {
-		$('#collapse-shipping-address .mb-3:last').after(this);
-	}
+    if ($(this).attr('data-sort') > $('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3:last').after(this);
+    }
 
-	if ($(this).attr('data-sort') == $('#collapse-shipping-address .mb-3').length - 2) {
-		$('#collapse-shipping-address .mb-3:last').after(this);
-	}
+    if ($(this).attr('data-sort') == $('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3:last').after(this);
+    }
 
-	if ($(this).attr('data-sort') < -$('#collapse-shipping-address .mb-3').length - 2) {
-		$('#collapse-shipping-address .mb-3:first').before(this);
-	}
+    if ($(this).attr('data-sort') < -$('#collapse-shipping-address .mb-3').length - 2) {
+        $('#collapse-shipping-address .mb-3:first').before(this);
+    }
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on('click', function() {
-	var element = this;
+    var element = this;
 
-	$('#form-upload').remove();
+    $('#form-upload').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
-	$('#form-upload input[name=\'file\']').trigger('click');
+    $('#form-upload input[name=\'file\']').trigger('click');
 
-	$('#form-upload input[name=\'file\']').on('change', function() {
-		if (this.files[0].size > {{ config_file_max_size }}) {
-			$(this).val('');
+    $('#form-upload input[name=\'file\']').on('change', function() {
+        if (this.files[0].size > {{ config_file_max_size }}) {
+            $(this).val('');
 
-			alert('{{ error_upload_size }}');
-		}
-	});
+            alert('{{ error_upload_size }}');
+        }
+    });
 
-	if (typeof timer != 'undefined') {
-		clearInterval(timer);
-	}
+    if (typeof timer != 'undefined') {
+        clearInterval(timer);
+    }
 
-	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);
+    timer = setInterval(function() {
+        if ($('#form-upload input[name=\'file\']').val() != '') {
+            clearInterval(timer);
 
-			$.ajax({
-				url: 'index.php?route=tool/upload',
-				type: 'post',
-				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function() {
-					$(element).button('loading');
-				},
-				complete: function() {
-					$(element).button('reset');
-				},
-				success: function(json) {
-					$(element).parent().find('.text-danger').remove();
+            $.ajax({
+                url: 'index.php?route=tool/upload',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $(element).button('loading');
+                },
+                complete: function() {
+                    $(element).button('reset');
+                },
+                success: function(json) {
+                    $(element).parent().find('.text-danger').remove();
 
-					if (json['error']) {
-						$(element).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
-					}
+                    if (json['error']) {
+                        $(element).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
+                    }
 
-					if (json['success']) {
-						alert(json['success']);
+                    if (json['success']) {
+                        alert(json['success']);
 
-						$(element).parent().find('input[name^=\'custom_field\']').val(json['code']);
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-			});
-		}
-	}, 500);
+                        $(element).parent().find('input[name^=\'custom_field\']').val(json['code']);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
 });
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
+    'format': 'YYYY-MM-DD',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
 });
 
 $('.time').datetimepicker({
-	'format': 'HH:mm',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
+    'format': 'HH:mm',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
 });
 
 $('.datetime').datetimepicker({
-	'format': 'YYYY-MM-DD HH:mm',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
+    'format': 'YYYY-MM-DD HH:mm',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
 
-	chain.attach(function() {
-		return $.ajax({
-			url: 'index.php?route=localisation/country&country_id=' + $('#collapse-shipping-address select[name=\'country_id\']').val(),
-			dataType: 'json',
-			beforeSend: function() {
-				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
-			},
-			complete: function() {
-				$('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
-			},
-			success: function(json) {
-				if (json['postcode_required'] == '1') {
-					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
-				} else {
-					$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
-				}
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=localisation/country&country_id=' + $('#collapse-shipping-address select[name=\'country_id\']').val(),
+            dataType: 'json',
+            beforeSend: function() {
+                $('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
+            },
+            complete: function() {
+                $('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
+            },
+            success: function(json) {
+                if (json['postcode_required'] == '1') {
+                    $('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
+                } else {
+                    $('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
+                }
 
-				html = '<option value="">{{ text_select }}</option>';
+                html = '<option value="">{{ text_select }}</option>';
 
-				if (json['zone'] && json['zone'] != '') {
-					for (i = 0; i < json['zone'].length; i++) {
-						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+                if (json['zone'] && json['zone'] != '') {
+                    for (i = 0; i < json['zone'].length; i++) {
+                        html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-						if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-							html += ' selected="selected"';
-						}
+                        if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+                            html += ' selected="selected"';
+                        }
 
-						html += '>' + json['zone'][i]['name'] + '</option>';
-					}
-				} else {
-					html += '<option value="0" selected="selected">{{ text_none }}</option>';
-				}
+                        html += '>' + json['zone'][i]['name'] + '</option>';
+                    }
+                } else {
+                    html += '<option value="0" selected="selected">{{ text_none }}</option>';
+                }
 
-				$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
+                $('#collapse-shipping-address select[name=\'zone_id\']').html(html);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
 });
 
 $('#collapse-shipping-address select[name=\'country_id\']').trigger('change');

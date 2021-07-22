@@ -24,15 +24,19 @@
 
 				<div class="card">
 					{% if not logged and account != 'guest' %}
+
 						<h4 id="heading-payment-address" class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
 						<div id="collapse-payment-address" class="collapse" data-parent="#accordion">
 							<div class="card-body"></div>
 						</div>
+
 					{% else %}
+
 						<h4 id="heading-payment-address" class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
 						<div id="collapse-payment-address" class="collapse" data-parent="#accordion">
 							<div class="card-body"></div>
 						</div>
+
 					{% endif %}
 				</div>
 
@@ -43,6 +47,7 @@
 							<div class="card-body"></div>
 						</div>
 					</div>
+
 					<div class="card">
 						<h4 id="heading-shipping-method" class="card-header collapsed" data-target="#collapse-shipping-method">{{ text_checkout_shipping_method }}</h4>
 						<div id="collapse-shipping-method" class="collapse" data-parent="#accordion">

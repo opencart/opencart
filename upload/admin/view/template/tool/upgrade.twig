@@ -27,11 +27,7 @@
         <div id="collapse-version" data-bs-parent="#collapse" class="collapse show">
           <div class="card-body">
             <fieldset>
-              {% if error_warning %}
-                <legend id="btn-version" class="text-danger">{{ text_update }}</legend>
-              {% else %}
-                <legend id="btn-version">{{ text_update }}</legend>
-              {% endif %}
+              <legend id="btn-version"{% if error_warning %} class="text-danger"{% endif %}>{{ text_update }}</legend>
             </fieldset>
             <div class="alert alert-info">
               <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
@@ -109,11 +105,7 @@
               </div>
               <div class="col-sm-10 offset-sm-2">
                 <div class="row mb-3">
-                  {% if upgrade %}
-                    <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-play"></i> {{ button_start }}</button>
-                  {% else %}
-                    <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success" disabled="disabled"><i class="fas fa-play"></i> {{ button_start }}</button>
-                  {% endif %}
+                  <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success" {% if not upgrade %} disabled="disabled"{% endif %}><i class="fas fa-play"></i> {{ button_start }}</button>
                 </div>
               </div>
             </fieldset>

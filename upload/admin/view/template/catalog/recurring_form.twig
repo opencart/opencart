@@ -105,13 +105,8 @@
               <label for="input-trial-status" class="col-sm-2 col-form-label">{{ entry_trial_status }}</label>
               <div class="col-sm-10">
                 <select name="trial_status" id="input-trial-status" class="form-select">
-                  {% if trial_status %}
-                    <option value="0">{{ text_disabled }}</option>
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                  {% else %}
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <option value="1">{{ text_enabled }}</option>
-                  {% endif %}
+                  <option value="1"{% if trial_status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if not trial_status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
             </div>

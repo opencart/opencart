@@ -1,108 +1,72 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<div class="float-end">
-				<button type="button" data-oc-action="{{ save }}" data-oc-form="#form-review" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="card">
-			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
-			<div class="card-body">
-				<form id="form-review">
-					<input type="hidden" name="review_id" value="{{ review_id }}" id="input-review-id"/>
-					<div class="row mb-3 required">
-						<label for="input-author" class="col-sm-2 col-form-label">{{ entry_author }}</label>
-						<div class="col-sm-10">
-							<input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
-						</div>
-					</div>
-					<div class="row mb-3 required">
-						<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
-						<div class="col-sm-10">
-							<input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
-							<div class="form-text text-muted">{{ help_product }}</div>
-						</div>
-					</div>
-					<div class="row mb-3 required">
-						<label for="input-text" class="col-sm-2 col-form-label">{{ entry_text }}</label>
-						<div class="col-sm-10">
-							<textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
-						</div>
-					</div>
-					<div class="row mb-3 required">
-						<label for="input-rating" class="col-sm-2 col-form-label">{{ entry_rating }}</label>
-						<div class="col-sm-10">
-							<div id="input-rating">
-								<label class="form-check form-check-inline">
-									{% if rating == 1 %}
-										<input type="radio" name="rating" value="1" class="form-check-input" checked="checked"/>
-										1
-									{% else %}
-										<input type="radio" name="rating" value="1" class="form-check-input"/>
-										1
-									{% endif %}</label> <label class="form-check form-check-inline">
-									{% if rating == 2 %}
-										<input type="radio" name="rating" value="2" class="form-check-input" checked="checked"/>
-										2
-									{% else %}
-										<input type="radio" name="rating" value="2" class="form-check-input"/>
-										2
-									{% endif %}</label> <label class="form-check form-check-inline">
-									{% if rating == 3 %}
-										<input type="radio" name="rating" value="3" class="form-check-input" checked="checked"/>
-										3
-									{% else %}
-										<input type="radio" name="rating" value="3" class="form-check-input"/>
-										3
-									{% endif %}</label> <label class="form-check form-check-inline">
-									{% if rating == 4 %}
-										<input type="radio" name="rating" value="4" class="form-check-input" checked="checked"/>
-										4
-									{% else %}
-										<input type="radio" name="rating" value="4" class="form-check-input"/>
-										4
-									{% endif %}</label> <label class="form-check form-check-inline">
-									{% if rating == 5 %}
-										<input type="radio" name="rating" value="5" id="input-rating" class="form-check-input" checked="checked"/>
-										5
-									{% else %}
-										<input type="radio" name="rating" value="5" id="input-rating" class="form-check-input"/>
-										5
-									{% endif %}
-								</label></div>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<label for="input-date-added" class="col-sm-2 col-form-label">{{ entry_date_added }}</label>
-						<div class="col-sm-10 col-md-4">
-							<div class="input-group datetime">
-								<input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
-								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-							</div>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
-						<div class="col-sm-10">
-							<select name="status" id="input-status" class="form-select">
-								<option value="1"{% if status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
-								<option value="0"{% if not status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
-							</select>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-review" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-review">
+          <input type="hidden" name="review_id" value="{{ review_id }}" id="input-review-id"/>
+          <div class="row mb-3 required">
+            <label for="input-author" class="col-sm-2 col-form-label">{{ entry_author }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3 required">
+            <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
+              <div class="form-text text-muted">{{ help_product }}</div>
+            </div>
+          </div>
+          <div class="row mb-3 required">
+            <label for="input-text" class="col-sm-2 col-form-label">{{ entry_text }}</label>
+            <div class="col-sm-10">
+              <textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
+            </div>
+          </div>
+          <div class="row mb-3 required">
+            <label for="input-rating" class="col-sm-2 col-form-label">{{ entry_rating }}</label>
+            <div class="col-sm-10">
+              <div id="input-rating">
+                <label class="form-check form-check-inline"><input type="radio" name="rating" value="1" class="form-check-input"{% if rating == 1 %} checked="checked"{% endif %}/> 1</label> <label class="form-check form-check-inline"><input type="radio" name="rating" value="2" class="form-check-input"{% if rating == 2 %} checked="checked"{% endif %}/> 2</label> <label class="form-check form-check-inline"><input type="radio" name="rating" value="3" class="form-check-input"{% if rating == 3 %} checked="checked"{% endif %}/> 3</label> <label class="form-check form-check-inline"><input type="radio" name="rating" value="4" class="form-check-input"{% if rating == 4 %} checked="checked"{% endif %}/> 4</label> <label class="form-check form-check-inline"><input type="radio" name="rating" value="5" id="input-rating" class="form-check-input"{% if rating == 5 %} checked="checked"{% endif %}/> 5</label></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-date-added" class="col-sm-2 col-form-label">{{ entry_date_added }}</label>
+            <div class="col-sm-10 col-md-4">
+              <div class="input-group datetime">
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" id="input-status" class="form-select">
+                <option value="1"{% if status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+                <option value="0"{% if not status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('.datetime').datetimepicker({

@@ -157,14 +157,8 @@
                   <div class="col-sm-10">
                     <div class="form-control" style="height: 150px; overflow: auto;">
                       {% for location in locations %}
-                        <label class="form-check">
-                          {% if location.location_id in config_location %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input" checked="checked"/>
-                            {{ location.name }}
-                          {% else %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"/>
-                            {{ location.name }}
-                          {% endif %}
+                        <label class="form-check"> <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked="checked"{% endif %}/>
+                          {{ location.name }}
                         </label>
                       {% endfor %}
                     </div>
@@ -283,16 +277,8 @@
                     <div class="col-sm-10">
                       <select name="config_tax_default" id="input-tax-default" class="form-select">
                         <option value="">{{ text_none }}</option>
-                        {% if config_tax_default == 'shipping' %}
-                          <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                        {% else %}
-                          <option value="shipping">{{ text_shipping }}</option>
-                        {% endif %}
-                        {% if config_tax_default == 'payment' %}
-                          <option value="payment" selected="selected">{{ text_payment }}</option>
-                        {% else %}
-                          <option value="payment">{{ text_payment }}</option>
-                        {% endif %}
+                        <option value="shipping"{% if config_tax_default == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
+                        <option value="payment"{% if config_tax_default == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
                       </select>
                       <div class="form-text text-muted">{{ help_tax_default }}</div>
                     </div>
@@ -302,16 +288,8 @@
                     <div class="col-sm-10">
                       <select name="config_tax_customer" id="input-tax-customer" class="form-select">
                         <option value="">{{ text_none }}</option>
-                        {% if config_tax_customer == 'shipping' %}
-                          <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                        {% else %}
-                          <option value="shipping">{{ text_shipping }}</option>
-                        {% endif %}
-                        {% if config_tax_customer == 'payment' %}
-                          <option value="payment" selected="selected">{{ text_payment }}</option>
-                        {% else %}
-                          <option value="payment">{{ text_payment }}</option>
-                        {% endif %}
+                        <option value="shipping"{% if config_tax_customer == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
+                        <option value="payment"{% if config_tax_customer == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
                       </select>
                       <div class="form-text text-muted">{{ help_tax_customer }}</div>
                     </div>
@@ -338,13 +316,8 @@
                       <div class="form-control" style="height: 150px; overflow: auto;">
                         {% for customer_group in customer_groups %}
                           <label class="form-check">
-                            {% if customer_group.customer_group_id in config_customer_group_display %}
-                              <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input" checked="checked"/>
-                              {{ customer_group.name }}
-                            {% else %}
-                              <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
-                              {{ customer_group.name }}
-                            {% endif %}
+                            <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_display %} checked="checked"{% endif %}/>
+                            {{ customer_group.name }}
                           </label>
                         {% endfor %}
                       </div>

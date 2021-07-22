@@ -100,11 +100,7 @@
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
                       <label class="form-check">
-                        {% if store.store_id in category_store %}
-                          <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" class="form-check-input" checked="checked"/>
-                        {% else %}
-                          <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" class="form-check-input"/>
-                        {% endif %}
+                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in category_store %} checked="checked"{% endif %}/>
                         {{ store.name }}
                       </label>
                     {% endfor %}
@@ -128,11 +124,8 @@
                 <div class="col-sm-10">
                   <div>
                     <div class="btn-group">
-
                       <input type="radio" name="top" value="1" id="input-top-yes" class="btn-check"{% if top %} checked{% endif %}/> <label for="input-top-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="top" value="0" id="input-top-no" class="btn-check"{% if not top %} checked{% endif %}/> <label for="input-top-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                   </div>
                   <div class="form-text text-muted">{{ help_top }}</div>

@@ -102,11 +102,7 @@
                     <div class="col-sm-10">
                       <select name="return_reason_id" id="input-return-reason" class="form-select">
                         {% for return_reason in return_reasons %}
-                          {% if return_reason.return_reason_id == return_reason_id %}
-                            <option value="{{ return_reason.return_reason_id }}" selected="selected">{{ return_reason.name }}</option>
-                          {% else %}
-                            <option value="{{ return_reason.return_reason_id }}">{{ return_reason.name }}</option>
-                          {% endif %}
+                          <option value="{{ return_reason.return_reason_id }}"{% if return_reason.return_reason_id == return_reason_id %} selected="selected"{% endif %}>{{ return_reason.name }}</option>
                         {% endfor %}
                       </select>
                     </div>
@@ -115,13 +111,8 @@
                     <label for="input-opened" class="col-sm-2 col-form-label">{{ entry_opened }}</label>
                     <div class="col-sm-10">
                       <select name="opened" id="input-opened" class="form-select">
-                        {% if opened %}
-                          <option value="1" selected="selected">{{ text_opened }}</option>
-                          <option value="0">{{ text_unopened }}</option>
-                        {% else %}
-                          <option value="1">{{ text_opened }}</option>
-                          <option value="0" selected="selected">{{ text_unopened }}</option>
-                        {% endif %}
+                        <option value="1"{% if opened %} selected="selected"{% endif %}>{{ text_opened }}</option>
+                        <option value="0"{% if not opened %} selected="selected"{% endif %}>{{ text_unopened }}</option>
                       </select>
                     </div>
                   </div>
@@ -172,11 +163,7 @@
                       <div class="col-sm-10">
                         <select name="return_status_id" id="input-return-status" class="form-select">
                           {% for return_status in return_statuses %}
-
-                              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == return_status_id %} selected="selected">{{ return_status.name }}</option>
-                            {% else %}
-                              <option value="{{ return_status.return_status_id }}">{{ return_status.name }}</option>
-                            {% endif %}
+                            <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == return_status_id %} selected="selected">{{ return_status.name }}</option>
                           {% endfor %}
                         </select>
                       </div>

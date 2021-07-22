@@ -615,14 +615,8 @@
                   <div class="input-group">
                     <div id="product-store" class="form-control" style="height: 150px; overflow: auto;">
                       {% for store in stores %}
-                        <label class="form-check">
-                          {% if store.store_id in product_store %}
-                            <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input" checked="checked"/>
-                            {{ store.name }}
-                          {% else %}
-                            <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"/>
-                            {{ store.name }}
-                          {% endif %}
+                        <label class="form-check"> <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in product_store %} checked="checked"{% endif %}/>
+                          {{ store.name }}
                         </label>
                       {% endfor %}
                     </div>
@@ -747,13 +741,8 @@
                         <label for="input-required-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_required }}</label>
                         <div class="col-sm-10">
                           <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
-                            {% if product_option.required %}
-                              <option value="1" selected="selected">{{ text_yes }}</option>
-                              <option value="0">{{ text_no }}</option>
-                            {% else %}
-                              <option value="1">{{ text_yes }}</option>
-                              <option value="0" selected="selected">{{ text_no }}</option>
-                            {% endif %}
+                            <option value="1"{% if product_option.required %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+                            <option value="0"{% if not product_option.required %} selected="selected"{% endif %}>{{ text_disabled }}</option>
                           </select>
                         </div>
                       </div>
@@ -903,17 +892,10 @@
                             <select name="variant[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
                               <option value="">{{ text_select }}</option>
                               {% for option_value in option.product_option_value %}
-                                {% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %}
-                                  <option value="{{ option_value.product_option_value_id }}" selected>{{ option_value.name }}
-                                    {% if option_value.price %}
-                                      ({{ option_value.price_prefix }}{{ option_value.price }})
-                                    {% endif %}</option>
-                                {% else %}
-                                  <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
-                                    {% if option_value.price %}
-                                      ({{ option_value.price_prefix }}{{ option_value.price }})
-                                    {% endif %}</option>
-                                {% endif %}
+                                <option value="{{ option_value.product_option_value_id }}"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} selected{% endif %}>{{ option_value.name }}
+                                  {% if option_value.price %}
+                                    ({{ option_value.price_prefix }}{{ option_value.price }})
+                                  {% endif %}</option>
                               {% endfor %}
                             </select>
                             <div class="input-group-text">
@@ -934,12 +916,7 @@
                             <div id="input-option-{{ option.product_option_id }}" class="form-control" style="height: 150px; overflow: auto;">
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
-                                  <label>
-                                    {% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %}
-                                      <input type="radio" name="variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input" checked/>
-                                    {% else %}
-                                      <input type="radio" name="variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
-                                    {% endif %}
+                                  <label> <input type="radio" name="variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} checked{% endif %}/>
                                     {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
@@ -968,11 +945,7 @@
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
                                   <label>
-                                    {% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %}
-                                      <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input" checked/>
-                                    {% else %}
-                                      <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
-                                    {% endif %}
+                                    <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/>
                                     {% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}

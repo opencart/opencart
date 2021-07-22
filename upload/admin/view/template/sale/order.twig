@@ -40,17 +40,9 @@
             <div class="mb-3">
               <label for="input-order-status" class="form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
                 <option value=""></option>
-                {% if filter_order_status_id == '0' %}
-                  <option value="0" selected="selected">{{ text_missing }}</option>
-                {% else %}
-                  <option value="0">{{ text_missing }}</option>
-                {% endif %}
+                <option value="0"{% if filter_order_status_id == '0' %} selected="selected"{% endif %}>{{ text_missing }}</option>
                 {% for order_status in order_statuses %}
-                  {% if order_status.order_status_id == filter_order_status_id %}
-                    <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                  {% else %}
-                    <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                  {% endif %}
+                  <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
                 {% endfor %}
               </select>
             </div>

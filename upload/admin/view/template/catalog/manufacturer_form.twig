@@ -38,13 +38,8 @@
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
                       <label class="form-check">
-                        {% if store.store_id in manufacturer_store %}
-                          <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" class="form-check-input" checked="checked"/>
-                          {{ store.name }}
-                        {% else %}
-                          <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" class="form-check-input"/>
-                          {{ store.name }}
-                        {% endif %}
+                        <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in manufacturer_store %} checked="checked"{% endif %}/>
+                        {{ store.name }}
                       </label>
                     {% endfor %}
                   </div>

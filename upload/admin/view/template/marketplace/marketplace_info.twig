@@ -3,15 +3,12 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-
 				{% if not error_signature %}
 					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
 				{% else %}
 					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
 				{% endif %}
-
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
-
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">

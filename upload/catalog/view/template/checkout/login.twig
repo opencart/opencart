@@ -1,42 +1,28 @@
 <div class="row">
-	<div class="col-sm-6">
-		<h2>{{ text_new_customer }}</h2>
-		<p>{{ text_checkout }}</p>
-		<div class="form-check">
-			<label>
-				{% if account == 'register' %}
-					<input type="radio" name="account" value="register" class="form-check-input" checked="checked"/>
-				{% else %}
-					<input type="radio" name="account" value="register" class="form-check-input"/>
-				{% endif %}
-				{{ text_register }}
-			</label>
-		</div>
-		{% if checkout_guest %}
-			<div class="form-check">
-				<label>
-					{% if account == 'guest' %}
-						<input type="radio" name="account" value="guest" class="form-check-input" checked="checked"/>
-					{% else %}
-						<input type="radio" name="account" value="guest" class="form-check-input"/>
-					{% endif %}
-					{{ text_guest }}
-				</label>
-			</div>
-		{% endif %}
-		<p>{{ text_register_account }}</p>
-		<button type="button" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
-	</div>
-	<div class="col-sm-6">
-		<h2>{{ text_returning_customer }}</h2>
-		<p>{{ text_i_am_returning_customer }}</p>
-		<div class="row mb-3">
-			<label for="input-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
-		</div>
-		<div class="row mb-3">
-			<label for="input-password" class="col-form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/> <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
-		<button type="button" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_login }}</button>
-	</div>
+  <div class="col-sm-6">
+    <h2>{{ text_new_customer }}</h2>
+    <p>{{ text_checkout }}</p>
+    <div class="form-check">
+      <label><input type="radio" name="account" value="register" class="form-check-input"{% if account == 'register' %} checked="checked"{% endif %}/> {{ text_register }}</label>
+    </div>
+    {% if checkout_guest %}
+      <div class="form-check">
+        <label><input type="radio" name="account" value="guest" class="form-check-input"{% if account == 'guest' %} checked="checked"{% endif %}/> {{ text_guest }}</label>
+      </div>
+    {% endif %}
+    <p>{{ text_register_account }}</p>
+    <button type="button" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+  </div>
+  <div class="col-sm-6">
+    <h2>{{ text_returning_customer }}</h2>
+    <p>{{ text_i_am_returning_customer }}</p>
+    <div class="row mb-3">
+      <label for="input-email" class="col-form-label">{{ entry_email }}</label> <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+    </div>
+    <div class="row mb-3">
+      <label for="input-password" class="col-form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/> <a href="{{ forgotten }}">{{ text_forgotten }}</a></div>
+    <button type="button" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_login }}</button>
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-account').on('click', function() {

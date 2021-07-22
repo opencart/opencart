@@ -37,13 +37,8 @@
 						<label for="input-status" class="col-sm-2 col-form-label"> {{ entry_status }} </label>
 						<div class="col-sm-10">
 							<select name="fraud_ip_status" id="input-status" class="form-select">
-								{% if fraud_ip_status %}
-									<option selected="selected" value="1"> {{ text_enabled }} </option>
-									<option value="0">{{ text_disabled }}</option>
-								{% else %}
-									<option value="1">{{ text_enabled }}</option>
-									<option selected="selected" value="0"> {{ text_disabled }} </option>
-								{% endif %}
+								<option value="1"{% if fraud_ip_status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+								<option value="0"{% if not fraud_ip_status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
 							</select>
 						</div>
 					</div>

@@ -108,11 +108,7 @@
                 <tr>
                   <td>{{ attribute.name }}</td>
                   {% for product in products %}
-                    {% if product.attribute[key] %}
-                      <td> {{ product.attribute[key] }}</td>
-                    {% else %}
-                      <td></td>
-                    {% endif %}
+                    <td>{% if product.attribute[key] %}{{ product.attribute[key] }}{% endif %}</td>
                   {% endfor %}
                 </tr>
               </tbody>

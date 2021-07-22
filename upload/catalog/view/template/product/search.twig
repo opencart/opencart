@@ -31,23 +31,14 @@
         <div class="col-md-3">
           <div class="form-check form-check-inline">
             <div class="form-check-input">
-              {% if sub_category %}
-                <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input" checked="checked"/>
-              {% else %}
-                <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"/>
-              {% endif %}
+              <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"{% if sub_category %} checked="checked"{% endif %}/>
             </div>
             <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
           </div>
         </div>
       </div>
       <div class="form-check mb-3">
-        {% if description %}
-          <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input" checked="checked"/>
-        {% else %}
-          <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"/>
-        {% endif %}
-        <label for="input-description" class="form-check-label">{{ entry_description }}</label>
+        <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"{% if description %} checked="checked"{% endif %}/> <label for="input-description" class="form-check-label">{{ entry_description }}</label>
       </div>
       <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
       <hr/>
@@ -72,11 +63,7 @@
               </div>
               <select id="input-sort" class="form-select" onchange="location = this.value;">
                 {% for sorts in sorts %}
-                  {% if sorts.value == '%s-%s'|format(sort, order) %}
-                    <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                  {% else %}
-                    <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                  {% endif %}
+                  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected="selected"{% endif %}>{{ sorts.text }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -88,11 +75,7 @@
               </div>
               <select id="input-limit" class="form-select" onchange="location = this.value;">
                 {% for limits in limits %}
-                  {% if limits.value == limit %}
-                    <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
-                  {% else %}
-                    <option value="{{ limits.href }}">{{ limits.text }}</option>
-                  {% endif %}
+                  <option value="{{ limits.href }}"{% if limits.value == limit %} selected="selected"{% endif %}>{{ limits.text }}</option>
                 {% endfor %}
               </select>
             </div>

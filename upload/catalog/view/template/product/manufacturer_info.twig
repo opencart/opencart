@@ -29,11 +29,7 @@
               </div>
               <select id="input-sort" class="form-select" onchange="location = this.value;">
                 {% for sorts in sorts %}
-                  {% if sorts.value == '%s-%s'|format(sort, order) %}
-                    <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                  {% else %}
-                    <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                  {% endif %}
+                  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected="selected"{% endif %}>{{ sorts.text }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -45,11 +41,7 @@
               </div>
               <select id="input-limit" class="form-select" onchange="location = this.value;">
                 {% for limits in limits %}
-                  {% if limits.value == limit %}
-                    <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
-                  {% else %}
-                    <option value="{{ limits.href }}">{{ limits.text }}</option>
-                  {% endif %}
+                  <option value="{{ limits.href }}"{% if limits.value == limit %} selected="selected"{% endif %}>{{ limits.text }}</option>
                 {% endfor %}
               </select>
             </div>

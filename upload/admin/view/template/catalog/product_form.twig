@@ -298,11 +298,7 @@
                       <select name="tax_class_id" id="input-tax-class" class="form-select">
                         <option value="0">{{ text_none }}</option>
                         {% for tax_class in tax_classes %}
-                          {% if tax_class.tax_class_id == tax_class_id %}
-                            <option value="{{ tax_class.tax_class_id }}" selected="selected">{{ tax_class.title }}</option>
-                          {% else %}
-                            <option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
-                          {% endif %}
+                          <option value="{{ tax_class.tax_class_id }}"{% if tax_class.tax_class_id == tax_class_id %} selected="selected"{% endif %}>{{ tax_class.title }}</option>
                         {% endfor %}
                       </select>
                       {% if master_id %}
@@ -512,13 +508,8 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <select name="status" id="input-status" class="form-select">
-                        {% if status %}
-                          <option value="1" selected="selected">{{ text_enabled }}</option>
-                          <option value="0">{{ text_disabled }}</option>
-                        {% else %}
-                          <option value="1">{{ text_enabled }}</option>
-                          <option value="0" selected="selected">{{ text_disabled }}</option>
-                        {% endif %}
+                        <option value="1"{% if status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+                        <option value="0"{% if not status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
                       </select>
                       {% if master_id %}
                         <div class="input-group-text">

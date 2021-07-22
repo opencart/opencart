@@ -5,15 +5,9 @@
       <div class="row mb-3 required{{ customer_groups|length <= 1 ? ' d-none' }}">
         <label class="col-form-label">{{ entry_customer_group }}</label>
         {% for customer_group in customer_groups %}
-          {% if customer_group.customer_group_id == customer_group_id %}
-            <div class="form-check">
-              <label><input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input" checked="checked"/> {{ customer_group.name }}</label>
-            </div>
-          {% else %}
-            <div class="form-check">
-              <label><input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"/> {{ customer_group.name }}</label>
-            </div>
-          {% endif %}
+          <div class="form-check">
+            <label><input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked="checked"{% endif %}/> {{ customer_group.name }}</label>
+          </div>
         {% endfor %}</div>
       <div class="row mb-3 required">
         <label for="input-payment-firstname" class="col-form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>

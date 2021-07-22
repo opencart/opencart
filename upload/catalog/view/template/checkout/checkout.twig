@@ -15,25 +15,26 @@
 			{{ content_top }}
 			<h1>{{ heading_title }}</h1>
 			<div id="accordion">
-				<div class="card">
-					<h4 id="heading-checkout-option" data-target="#collapse-checkout-option" class="card-header collapsed">{{ text_checkout_option }}</h4>
-					<div id="collapse-checkout-option" class="collapse" data-parent="#accordion">
+
+				<div class="accordion-item">
+					<h2 id="heading-checkout-option" data-bs-target="#collapse-checkout-option" class="card-header collapsed in">{{ text_checkout_option }}</h4>
+					<div id="collapse-checkout-option" class="collapse" data-bs-parent="#accordion">
 						<div class="card-body"></div>
 					</div>
 				</div>
 
-				<div class="card">
+				<div class="accordion-item">
 					{% if not logged and account != 'guest' %}
 
-						<h4 id="heading-payment-address" class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
-						<div id="collapse-payment-address" class="collapse" data-parent="#accordion">
+						<h4 id="heading-payment-address" class="card-header collapsed" data-bs-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
+						<div id="collapse-payment-address" class="collapse" data-bs-parent="#accordion">
 							<div class="card-body"></div>
 						</div>
 
 					{% else %}
 
-						<h4 id="heading-payment-address" class="card-header collapsed" data-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
-						<div id="collapse-payment-address" class="collapse" data-parent="#accordion">
+						<h4 id="heading-payment-address" class="card-header collapsed" data-bs-target="#collapse-payment-address">{{ text_checkout_account }}</h4>
+						<div id="collapse-payment-address" class="collapse" data-bs-parent="#accordion">
 							<div class="card-body"></div>
 						</div>
 
@@ -41,30 +42,30 @@
 				</div>
 
 				{% if shipping_required %}
-					<div class="card">
-						<h4 id="heading-shipping-address" class="card-header collapsed" data-target="#collapse-shipping-address">{{ text_checkout_shipping_address }}</h4>
-						<div id="collapse-shipping-address" class="collapse" data-parent="#accordion">
+					<div class="accordion-item">
+						<h4 id="heading-shipping-address" class="card-header collapsed" data-bs-bs-target="#collapse-shipping-address">{{ text_checkout_shipping_address }}</h4>
+						<div id="collapse-shipping-address" class="collapse" data-bs-parent="#accordion">
 							<div class="card-body"></div>
 						</div>
 					</div>
 
-					<div class="card">
-						<h4 id="heading-shipping-method" class="card-header collapsed" data-target="#collapse-shipping-method">{{ text_checkout_shipping_method }}</h4>
-						<div id="collapse-shipping-method" class="collapse" data-parent="#accordion">
+					<div class="accordion-item">
+						<h4 id="heading-shipping-method" class="card-header collapsed" data-bs-target="#collapse-shipping-method">{{ text_checkout_shipping_method }}</h4>
+						<div id="collapse-shipping-method" class="collapse" data-bs-parent="#accordion">
 							<div class="card-body"></div>
 						</div>
 					</div>
 				{% endif %}
 
-				<div class="card">
-					<h4 id="heading-payment-method" class="card-header collapsed" data-target="#collapse-payment-method">{{ text_checkout_payment_method }}</h4>
-					<div id="collapse-payment-method" class="collapse" data-parent="#accordion">
+				<div class="accordion-item">
+					<h4 id="heading-payment-method" class="card-header collapsed" data-bs-target="#collapse-payment-method">{{ text_checkout_payment_method }}</h4>
+					<div id="collapse-payment-method" class="collapse" data-bs-parent="#accordion">
 						<div class="card-body"></div>
 					</div>
 				</div>
-				<div class="card">
-					<h4 id="heading-checkout-confirm" class="card-header collapsed" data-target="#collapse-checkout-confirm">{{ text_checkout_confirm }}</h4>
-					<div id="collapse-checkout-confirm" class="collapse" data-parent="#accordion">
+				<div class="accordion-item">
+					<h4 id="heading-checkout-confirm" class="card-header collapsed" data-bs-target="#collapse-checkout-confirm">{{ text_checkout_confirm }}</h4>
+					<div id="collapse-checkout-confirm" class="collapse" data-bs-parent="#accordion">
 						<div class="card-body"></div>
 					</div>
 				</div>

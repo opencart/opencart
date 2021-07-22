@@ -5,7 +5,7 @@
 				<tr>
 					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
 					<td class="text-end"><a href="{{ sort_order }}"{% if sort == 'o.order_id' %} class="{{ order|lower }}"{% endif %}>{{ column_order_id }}</a></td>
-					<td class="text-start"><a href="{{ sort_store_name }}"{% if sort == 'o.store_name' %}{% if sort == 'o.store_name' %} class="{{ order|lower }}"{% endif %}>{{ column_store }}</a></td>
+					<td class="text-start"><a href="{{ sort_store_name }}"{% if sort == 'o.store_name' %} class="{{ order|lower }}"{% endif %}>{{ column_store }}</a></td>
 					<td class="text-start"><a href="{{ sort_customer }}"{% if sort == 'customer' %} class="{{ order|lower }}"{% endif %}>{{ column_customer }}</a></td>
 					<td class="text-start"><a href="{{ sort_status }}"{% if sort == 'order_status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></td>
 					<td class="text-end d-none d-lg-table-cell"><a href="{{ sort_total }}"{% if sort == 'o.total' %} class="{{ order|lower }}"{% endif %}>{{ column_total }}</a></td>

@@ -78,6 +78,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['text_agree'] = '';
 		}
 
+		$data['payment_required'] = $this->config->get('config_checkout_address');
 		$data['shipping_required'] = $this->cart->hasShipping();
 
 		$this->response->setOutput($this->load->view('checkout/register', $data));

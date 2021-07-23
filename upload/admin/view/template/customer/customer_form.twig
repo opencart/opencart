@@ -21,7 +21,6 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-customer">
-          <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-address" data-bs-toggle="tab" class="nav-link">{{ tab_address }}</a></li>
@@ -31,7 +30,7 @@
             <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-general">
+            <div id="tab-general" class="tab-pane active">
               <fieldset>
                 <legend>{{ text_account }}</legend>
                 <div class="row mb-3">
@@ -214,11 +213,8 @@
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="status" value="1" id="input-status-yes" class="btn-check"{% if status %} checked{% endif %}/> <label for="input-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="status" value="0" id="input-status-no" class="btn-check"{% if not status %} checked{% endif %}/> <label for="input-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                   </div>
                 </div>
@@ -226,11 +222,8 @@
                   <label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="safe" value="1" id="input-safe-yes" class="btn-check"{% if safe %} checked{% endif %}/> <label for="input-safe-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="safe" value="0" id="input-safe-no" class="btn-check"{% if not safe %} checked{% endif %}/> <label for="input-safe-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                     <div class="form-text text-muted">{{ help_safe }}</div>
                   </div>
@@ -501,6 +494,7 @@
               </fieldset>
             </div>
           </div>
+          <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
         </form>
       </div>
     </div>

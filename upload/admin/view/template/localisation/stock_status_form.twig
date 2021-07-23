@@ -18,7 +18,6 @@
 			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="form-stock-status">
-					<input type="hidden" name="stock_status_id" value="{{ stock_status_id }}" id="input-stock-status-id"/>
 					<div class="row mb-3 required">
 						<label class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
@@ -30,6 +29,7 @@
 							{% endfor %}
 						</div>
 					</div>
+					<input type="hidden" name="stock_status_id" value="{{ stock_status_id }}" id="input-stock-status-id"/>
 				</form>
 			</div>
 		</div>

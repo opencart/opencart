@@ -374,7 +374,7 @@
           {% endfor %}
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab-history">
+          <div id="tab-history" class="tab-pane active">
             <div id="history"></div>
             <br/>
             <fieldset>
@@ -449,7 +449,7 @@
             </div>
           </div>
           {% for tab in tabs %}
-            <div class="tab-pane" id="tab-{{ tab.code }}">{{ tab.content }}</div>
+            <div id="tab-{{ tab.code }}" class="tab-pane">{{ tab.content }}</div>
           {% endfor %}
         </div>
       </div>
@@ -1129,7 +1129,7 @@
         </ul>
         <div class="tab-content">
 
-          <div class="tab-pane active" id="tab-product">
+          <div id="tab-product" class="tab-pane active">
             <form id="form-cart-product">
               <fieldset>
                 <legend>{{ text_product_add }}</legend>
@@ -1147,7 +1147,7 @@
             </form>
           </div>
 
-          <div class="tab-pane" id="tab-voucher">
+          <div id="tab-voucher" class="tab-pane">
 
             <form id="form-cart-voucher">
               <fieldset>

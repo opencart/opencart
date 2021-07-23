@@ -18,7 +18,6 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-custom-field">
-          <input type="hidden" name="custom_field_id" value="{{ custom_field_id }}" id="input-custom-field-id"/>
           <fieldset>
             <legend>{{ text_custom_field }}</legend>
             <div class="row mb-3 required">
@@ -162,6 +161,7 @@
               </table>
             </fieldset>
           </div>
+          <input type="hidden" name="custom_field_id" value="{{ custom_field_id }}" id="input-custom-field-id"/>
         </form>
       </div>
     </div>

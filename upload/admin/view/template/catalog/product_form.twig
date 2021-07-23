@@ -21,7 +21,7 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-product">
-          <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
@@ -40,12 +40,12 @@
             <div class="tab-pane active" id="tab-general">
               <ul class="nav nav-tabs" id="language">
                 {% for language in languages %}
-                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if languages.index == 0 %} active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
                 {% endfor %}
               </ul>
               <div class="tab-content">
                 {% for language in languages %}
-                  <div class="tab-pane" id="language-{{ language.language_id }}">
+                  <div id="language-{{ language.language_id }}" class="tab-pane{% if languages.index == 0 %} active{% endif %}">
                     <div class="row mb-3 required">
                       <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                       <div class="col-sm-10">
@@ -343,11 +343,8 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="btn-group" id="input-subtract">
-
                         <input type="radio" name="top" value="1" id="input-subtract-yes" class="btn-check"{% if subtract %} checked{% endif %}/> <label for="input-subtract-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="top" value="0" id="input-subtract-no" class="btn-check"{% if not subtract %} checked{% endif %}/> <label for="input-subtract-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -403,11 +400,8 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="btn-group" id="input-shipping">
-
                         <input type="radio" name="top" value="1" id="input-shipping-yes" class="btn-check"{% if shipping %} checked{% endif %}/> <label for="input-shipping-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="top" value="0" id="input-shipping-no" class="btn-check"{% if not shipping %} checked{% endif %}/> <label for="input-shipping-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -1324,7 +1318,6 @@
                   </div>
                 </div>
               </fieldset>
-
               <fieldset>
                 <legend>{{ text_points }}</legend>
                 <div class="table-responsive">
@@ -1353,7 +1346,6 @@
                 </div>
               </fieldset>
             </div>
-
             <div id="tab-seo" class="tab-pane">
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div id="product-seo" class="table-responsive">
@@ -1381,7 +1373,6 @@
                 </table>
               </div>
             </div>
-
             <div id="tab-design" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-layout" class="table table-bordered table-hover">
@@ -1414,8 +1405,8 @@
 
               </div>
             </div>
-
           </div>
+          <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
         </form>
       </div>
     </div>

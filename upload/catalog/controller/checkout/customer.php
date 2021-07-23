@@ -1,7 +1,6 @@
-
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
-class Register extends \Opencart\System\Engine\Controller {
+class Customer extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/checkout');
 

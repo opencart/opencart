@@ -28,13 +28,12 @@
             <div id="tab-general" class="tab-pane active">
               <ul class="nav nav-tabs" id="language">
                 {% for language in languages %}
-                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if languages.index == 0 %} active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
                 {% endfor %}
               </ul>
               <div class="tab-content">
-                <input type="hidden" name="category_id" value="{{ category_id }}" id="input-category-id"/>
                 {% for language in languages %}
-                  <div class="tab-pane" id="language-{{ language.language_id }}">
+                  <div id="language-{{ language.language_id }}" class="tab-pane {% if languages.index == 0 %}active{% endif %}">
                     <div class="row mb-3 required">
                       <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                       <div class="col-sm-10">
@@ -99,8 +98,7 @@
                 <div class="col-sm-10">
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
-                      <label class="form-check">
-                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in category_store %} checked{% endif %}/>
+                      <label class="form-check"> <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in category_store %} checked{% endif %}/>
                         {{ store.name }}
                       </label>
                     {% endfor %}
@@ -124,8 +122,7 @@
                 <div class="col-sm-10">
                   <div>
                     <div class="btn-group">
-                      <input type="radio" name="top" value="1" id="input-top-yes" class="btn-check"{% if top %} checked{% endif %}/> <label for="input-top-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                      <input type="radio" name="top" value="0" id="input-top-no" class="btn-check"{% if not top %} checked{% endif %}/> <label for="input-top-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="top" value="1" id="input-top-yes" class="btn-check"{% if top %} checked{% endif %}/> <label for="input-top-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="top" value="0" id="input-top-no" class="btn-check"{% if not top %} checked{% endif %}/> <label for="input-top-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                   </div>
                   <div class="form-text text-muted">{{ help_top }}</div>
@@ -208,6 +205,7 @@
               </div>
             </div>
           </div>
+          <input type="hidden" name="category_id" value="{{ category_id }}" id="input-category-id"/>
         </form>
       </div>
     </div>

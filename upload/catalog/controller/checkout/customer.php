@@ -1,3 +1,4 @@
+
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Register extends \Opencart\System\Engine\Controller {
@@ -25,28 +26,6 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
-
-		if (isset($this->session->data['shipping_address']['postcode'])) {
-			$data['postcode'] = $this->session->data['shipping_address']['postcode'];
-		} else {
-			$data['postcode'] = '';
-		}
-
-		if (isset($this->session->data['shipping_address']['country_id'])) {
-			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
-		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
-		}
-
-		if (isset($this->session->data['shipping_address']['zone_id'])) {
-			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
-		} else {
-			$data['zone_id'] = '';
-		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom Fields
 		$this->load->model('account/custom_field');
@@ -77,9 +56,6 @@ class Register extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['text_agree'] = '';
 		}
-
-		$data['payment_required'] = $this->config->get('config_checkout_address');
-		$data['shipping_required'] = $this->cart->hasShipping();
 
 		return $this->load->view('checkout/register', $data);
 	}

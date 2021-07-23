@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class ShippingAddress extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+	public function index(): string {
 		$this->load->language('checkout/checkout');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -59,7 +59,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['shipping_address_custom_field'] = [];
 		}
 
-		$this->response->setOutput($this->load->view('checkout/shipping_address', $data));
+		return $this->load->view('checkout/shipping_address', $data);
 	}
 
 	public function save(): void {

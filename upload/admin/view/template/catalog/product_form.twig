@@ -615,7 +615,7 @@
                   <div class="input-group">
                     <div id="product-store" class="form-control" style="height: 150px; overflow: auto;">
                       {% for store in stores %}
-                        <label class="form-check"> <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in product_store %} checked="checked"{% endif %}/>
+                        <label class="form-check"> <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in product_store %} checked{% endif %}/>
                           {{ store.name }}
                         </label>
                       {% endfor %}

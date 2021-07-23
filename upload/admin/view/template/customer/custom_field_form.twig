@@ -85,7 +85,7 @@
                 <div class="form-control" style="height: 150px; overflow: auto;">
                   {% set customer_group_row = 0 %}
                   {% for customer_group in customer_groups %}
-                    <label class="form-check"> <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_customer_group %} checked="checked"{% endif %}/>
+                    <label class="form-check"> <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][customer_group_id]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_customer_group %} checked{% endif %}/>
                       {{ customer_group.name }}
                     </label>
                     {% set customer_group_row = customer_group_row + 1 %}
@@ -99,7 +99,7 @@
                   {% set customer_group_row = 0 %}
                   {% for customer_group in customer_groups %}
                     <label class="form-check">
-                      <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_required %} checked="checked"{% endif %}/>
+                      <input type="checkbox" name="custom_field_customer_group[{{ customer_group_row }}][required]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in custom_field_required %} checked{% endif %}/>
                       {{ customer_group.name }}
                     </label>
                     {% set customer_group_row = customer_group_row + 1 %}

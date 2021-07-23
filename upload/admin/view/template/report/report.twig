@@ -22,7 +22,7 @@
             <div class="input-group">
               <select name="report" class="form-select">
                 {% for report in reports %}
-                  <option value="{{ report.href }}"{% if code == report.code %} selected="selected" {% endif %}>{{ report.text }}</option>
+                  <option value="{{ report.href }}"{% if code == report.code %} selected="selected"{% endif %}>{{ report.text }}</option>
                 {% endfor %}
               </select>
               <div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>

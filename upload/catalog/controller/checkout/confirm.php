@@ -21,9 +21,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment address has been set.
-		if (!isset($this->session->data['payment_address'])) {
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
+
+
+
 
 		$this->load->model('setting/extension');
 

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class PaymentAddress extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+	public function index(): string {
 		$this->load->language('checkout/checkout');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
@@ -55,7 +55,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$data['shipping_required'] = $this->cart->hasShipping();
 
-		$this->response->setOutput($this->load->view('checkout/payment_address', $data));
+		return $this->load->view('checkout/payment_address', $data);
 	}
 
 	public function save(): void {

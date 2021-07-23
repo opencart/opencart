@@ -67,7 +67,7 @@
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-select">
                     {% for theme in themes %}
-                      <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected="selected">{{ theme.text }}</option>
+                      <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected="selected"{% endif %}>{{ theme.text }}</option>
                     {% endfor %}
                   </select>
                   <br/>
@@ -79,7 +79,7 @@
                 <div class="col-sm-10">
                   <select name="config_layout_id" id="input-layout" class="form-select">
                     {% for layout in layouts %}
-                      <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %}{% if layout.layout_id == config_layout_id %} selected="selected"{% endif %}>{{ layout.name }}</option>
+                      <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %} selected="selected"{% endif %}>{{ layout.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -155,7 +155,7 @@
                   <div class="col-sm-10">
                     <div class="form-control" style="height: 150px; overflow: auto;">
                       {% for location in locations %}
-                        <label class="form-check"> <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked="checked"{% endif %}/>
+                        <label class="form-check"> <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/>
                           {{ location.name }}
                         </label>
                       {% endfor %}
@@ -197,7 +197,7 @@
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-select">
                     {% for language in languages %}
-                    <option value="{{ language.code }}"{% if language.code == config_language %} selected="selected"{% endif %}{% endif %}>{{ language.name }}</option>
+                      <option value="{{ language.code }}"{% if language.code == config_language %} selected="selected"{% endif %}>{{ language.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -249,7 +249,7 @@
                 <div class="col-sm-10">
                   <select name="config_length_class_id" id="input-length-class" class="form-select">
                     {% for length_class in length_classes %}
-                      <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == config_length_class_id %}{% if length_class.length_class_id == config_length_class_id %} selected="selected"{% endif %}>{{ length_class.title }}</option>
+                      <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == config_length_class_id %} selected="selected"{% endif %}>{{ length_class.title }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -376,7 +376,7 @@
                       <select name="config_gdpr_id" id="input-gdpr" class="form-select">
                         <option value="0">{{ text_none }}</option>
                         {% for information in informations %}
-                          <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected="selected" {% endif %}>{{ information.title }}</option>
+                          <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected="selected"{% endif %}>{{ information.title }}</option>
                         {% endfor %}
                       </select>
                       <div class="form-text text-muted">{{ help_gdpr }}</div>
@@ -487,7 +487,7 @@
                     <div class="col-sm-10">
                       <div class="form-control" style="height: 150px; overflow: auto;">
                         {% for customer_group in customer_groups %}
-                          <label class="form-check"> <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_display %} checked="checked"{% endif %}/>
+                          <label class="form-check"> <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_display %} checked{% endif %}/>
                             {{ customer_group.name }}
                           </label>
                         {% endfor %}
@@ -499,11 +499,7 @@
                     <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
-                        <input type="radio" name="config_customer_price" value="1" id="input-customer-price-yes" class="btn-check"{% if config_customer_price %} checked{% endif %}/> <label for="input-customer-price-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
-                        <input type="radio" name="config_customer_price" value="0" id="input-customer-price-no" class="btn-check"{% if not config_customer_price %} checked{% endif %}/> <label for="input-customer-price-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
+                        <input type="radio" name="config_customer_price" value="1" id="input-customer-price-yes" class="btn-check"{% if config_customer_price %} checked{% endif %}/> <label for="input-customer-price-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_customer_price" value="0" id="input-customer-price-no" class="btn-check"{% if not config_customer_price %} checked{% endif %}/> <label for="input-customer-price-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                       </div>
                       <div class="form-text text-muted">{{ help_customer_price }}</div>
                     </div>
@@ -602,7 +598,7 @@
                     <div class="col-sm-10">
                       <div class="form-control" style="height: 150px; overflow: auto;">
                         {% for order_status in order_statuses %}
-                          <label class="form-check"><input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"{% if order_status.order_status_id in config_processing_status %} checked="checked" {% endif %}/>{{ order_status.name }}</label>
+                          <label class="form-check"><input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"{% if order_status.order_status_id in config_processing_status %} checked{% endif %}/>{{ order_status.name }}</label>
                         {% endfor %}
                       </div>
                       <div class="form-text text-muted">{{ help_processing_status }}</div>
@@ -613,7 +609,7 @@
                     <div class="col-sm-10">
                       <div class="form-control" style="height: 150px; overflow: auto;">
                         {% for order_status in order_statuses %}
-                          <label class="form-check"> <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"{% if order_status.order_status_id in config_complete_status %} checked="checked" {% endif %}/>
+                          <label class="form-check"> <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" class="form-check-input"{% if order_status.order_status_id in config_complete_status %} checked{% endif %}/>
                             {{ order_status.name }}
                           </label>
                         {% endfor %}
@@ -773,7 +769,7 @@
                       <select name="config_return_id" id="input-return" class="form-select">
                         <option value="0">{{ text_none }}</option>
                         {% for information in informations %}
-                          <option value="{{ information.information_id }}"{% if information.information_id == config_return_id %} selected="selected" {% endif %}>{{ information.title }}</option>
+                          <option value="{{ information.information_id }}"{% if information.information_id == config_return_id %} selected="selected"{% endif %}>{{ information.title }}</option>
                         {% endfor %}
                       </select>
                       <div class="form-text text-muted">{{ help_return }}</div>
@@ -801,7 +797,7 @@
                       <select name="config_captcha" id="input-captcha" class="form-select">
                         <option value="">{{ text_none }}</option>
                         {% for captcha in captchas %}
-                          <option value="{{ captcha.value }}"{% if captcha.value == config_captcha %} selected="selected" {% endif %}>{{ captcha.text }}</option>
+                          <option value="{{ captcha.value }}"{% if captcha.value == config_captcha %} selected="selected"{% endif %}>{{ captcha.text }}</option>
                         {% endfor %}
                       </select>
                       <div class="form-text text-muted">{{ help_captcha }}</div>
@@ -812,7 +808,7 @@
                     <div class="col-sm-10">
                       <div class="form-control" style="height: 150px; overflow: auto;">
                         {% for captcha_page in captcha_pages %}
-                          <label class="form-check"> <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" class="form-check-input" {% if captcha_page.value in config_captcha_page %} checked="checked"{% endif %}/>
+                          <label class="form-check"> <input type="checkbox" name="config_captcha_page[]" value="{{ captcha_page.value }}" class="form-check-input"{% if captcha_page.value in config_captcha_page %} checked{% endif %}/>
                             {{ captcha_page.text }}
                           </label>
                         {% endfor %}
@@ -964,7 +960,7 @@
                   <label for="input-mail-engine" class="col-sm-2 col-form-label">{{ entry_mail_engine }}</label>
                   <div class="col-sm-10">
                     <select name="config_mail_engine" id="input-mail-engine" class="form-select">
-                      <option value="mail"{% if config_mail_engine == 'mail' %}{% if config_mail_engine == 'mail' %} selected="selected"{% endif %}>{{ text_mail }}</option>
+                      <option value="mail"{% if config_mail_engine == 'mail' %} selected="selected"{% endif %}>{{ text_mail }}</option>
                       <option value="smtp"{% if config_mail_engine == 'smtp' %} selected="selected"{% endif %}>{{ text_smtp }}</option>
                     </select>
                     <div class="form-text text-muted">{{ help_mail_engine }}</div>
@@ -1017,8 +1013,7 @@
                   <div class="col-sm-10">
                     <div class="form-control" style="height: 150px; overflow: auto;">
                       {% for mail_alert in mail_alerts %}
-                        <label class="form-check">
-                          <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" class="form-check-input"{% if mail_alert.value in config_mail_alert %} checked="checked"{% endif %}/>
+                        <label class="form-check"> <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" class="form-check-input"{% if mail_alert.value in config_mail_alert %} checked{% endif %}/>
                           {{ mail_alert.text }}
                         </label>
                       {% endfor %}

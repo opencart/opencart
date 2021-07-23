@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
-          <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'v.code' %}{% if sort == 'v.code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
+          <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'v.code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
           <td class="text-start"><a href="{{ sort_from }}"{% if sort == 'v.from_name' %} class="{{ order|lower }}"{% endif %}>{{ column_from }}</a></td>
           <td class="text-start"><a href="{{ sort_to }}"{% if sort == 'v.to_name' %} class="{{ order|lower }}"{% endif %}>{{ column_to }}</a></td>
           <td class="text-end"><a href="{{ sort_amount }}"{% if sort == 'v.amount' %} class="{{ order|lower }}"{% endif %}>{{ column_amount }}</a></td>

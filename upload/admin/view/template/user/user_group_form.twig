@@ -47,7 +47,7 @@
                       <tr>
                         <td><label>{{ permission }}</label></td>
                         <td class="text-center"><input type="checkbox" name="permission[access][]" value="{{ permission }}" class="form-check-input"{% if permission in access %} checked{% endif %}/></td>
-                        <td class="text-center"><input type="checkbox" name="permission[modify][]" value="{{ permission }}" class="form-check-input"{% if permission in modify %} checked{% endif %}{% endif %}/></td>
+                        <td class="text-center"><input type="checkbox" name="permission[modify][]" value="{{ permission }}" class="form-check-input"{% if permission in modify %} checked{% endif %}/></td>
                       </tr>
                     {% endfor %}
                   </tbody>

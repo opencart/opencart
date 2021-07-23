@@ -202,7 +202,7 @@
                                 {% for extension in extensions %}
                                   <optgroup label="{{ extension.name }}">
                                     {% if not extension.module %}
-                                    <option value="{{ extension.code }}"{% if extension.code == layout_module.code %}{% if extension.code == layout_module.code %} selected="selected"{% endif %}>{{ extension.name }}</option>
+                                    <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected="selected"{% endif %}>{{ extension.name }}</option>
                                   {% else %}
                                     {% for module in extension.module %}
                                       <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected="selected"{% endif %}>{{ module.name }}</option>
